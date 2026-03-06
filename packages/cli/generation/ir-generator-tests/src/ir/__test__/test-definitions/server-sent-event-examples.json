@@ -819,7 +819,115 @@
             "docs": null
         }
     },
-    "errors": {},
+    "errors": {
+        "error_completions:BadRequestError": {
+            "name": {
+                "name": {
+                    "originalName": "BadRequestError",
+                    "camelCase": {
+                        "unsafeName": "badRequestError",
+                        "safeName": "badRequestError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bad_request_error",
+                        "safeName": "bad_request_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BAD_REQUEST_ERROR",
+                        "safeName": "BAD_REQUEST_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BadRequestError",
+                        "safeName": "BadRequestError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
+                },
+                "errorId": "error_completions:BadRequestError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "BadRequestError",
+                    "camelCase": {
+                        "unsafeName": "badRequestError",
+                        "safeName": "badRequestError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bad_request_error",
+                        "safeName": "bad_request_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BAD_REQUEST_ERROR",
+                        "safeName": "BAD_REQUEST_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BadRequestError",
+                        "safeName": "BadRequestError"
+                    }
+                },
+                "wireValue": "BadRequestError"
+            },
+            "statusCode": 400,
+            "isWildcardStatusCode": null,
+            "type": {
+                "_type": "primitive",
+                "primitive": {
+                    "v1": "STRING",
+                    "v2": {
+                        "type": "string",
+                        "default": null,
+                        "validation": null
+                    }
+                }
+            },
+            "examples": [],
+            "v2Examples": null,
+            "displayName": null,
+            "headers": [],
+            "docs": null
+        }
+    },
     "services": {
         "service_completions": {
             "availability": null,
@@ -1146,7 +1254,76 @@
                         "docs": null
                     },
                     "v2Responses": null,
-                    "errors": [],
+                    "errors": [
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "BadRequestError",
+                                    "camelCase": {
+                                        "unsafeName": "badRequestError",
+                                        "safeName": "badRequestError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bad_request_error",
+                                        "safeName": "bad_request_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BAD_REQUEST_ERROR",
+                                        "safeName": "BAD_REQUEST_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BadRequestError",
+                                        "safeName": "BadRequestError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "completions",
+                                            "camelCase": {
+                                                "unsafeName": "completions",
+                                                "safeName": "completions"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "completions",
+                                                "safeName": "completions"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "COMPLETIONS",
+                                                "safeName": "COMPLETIONS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Completions",
+                                                "safeName": "Completions"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "completions",
+                                        "camelCase": {
+                                            "unsafeName": "completions",
+                                            "safeName": "completions"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "completions",
+                                            "safeName": "completions"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "COMPLETIONS",
+                                            "safeName": "COMPLETIONS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Completions",
+                                            "safeName": "Completions"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_completions:BadRequestError"
+                            },
+                            "docs": null
+                        }
+                    ],
                     "userSpecifiedExamples": [
                         {
                             "example": {
@@ -1850,6 +2027,165 @@
                                 "docs": null
                             },
                             "codeSamples": null
+                        },
+                        {
+                            "example": {
+                                "id": "Bad request",
+                                "name": {
+                                    "originalName": "Bad request",
+                                    "camelCase": {
+                                        "unsafeName": "badRequest",
+                                        "safeName": "badRequest"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bad_request",
+                                        "safeName": "bad_request"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BAD_REQUEST",
+                                        "safeName": "BAD_REQUEST"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BadRequest",
+                                        "safeName": "BadRequest"
+                                    }
+                                },
+                                "url": "/stream",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "query",
+                                                    "camelCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "QUERY",
+                                                        "safeName": "QUERY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Query",
+                                                        "safeName": "Query"
+                                                    }
+                                                },
+                                                "wireValue": "query"
+                                            },
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": ""
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": ""
+                                            },
+                                            "originalTypeDeclaration": null
+                                        }
+                                    ],
+                                    "extraProperties": null,
+                                    "jsonExample": {
+                                        "query": ""
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "error": {
+                                        "name": {
+                                            "originalName": "BadRequestError",
+                                            "camelCase": {
+                                                "unsafeName": "badRequestError",
+                                                "safeName": "badRequestError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "bad_request_error",
+                                                "safeName": "bad_request_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "BAD_REQUEST_ERROR",
+                                                "safeName": "BAD_REQUEST_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "BadRequestError",
+                                                "safeName": "BadRequestError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "completions",
+                                                    "camelCase": {
+                                                        "unsafeName": "completions",
+                                                        "safeName": "completions"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "completions",
+                                                        "safeName": "completions"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "COMPLETIONS",
+                                                        "safeName": "COMPLETIONS"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Completions",
+                                                        "safeName": "Completions"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "completions",
+                                                "camelCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "COMPLETIONS",
+                                                    "safeName": "COMPLETIONS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Completions",
+                                                    "safeName": "Completions"
+                                                }
+                                            }
+                                        },
+                                        "errorId": "error_completions:BadRequestError"
+                                    },
+                                    "body": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "bad request"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "bad request"
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
                         }
                     ],
                     "autogeneratedExamples": [
@@ -2228,6 +2564,146 @@
                                 },
                                 "docs": null
                             }
+                        },
+                        {
+                            "example": {
+                                "id": "cbc87cc2",
+                                "url": "/stream",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "query",
+                                                    "camelCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "QUERY",
+                                                        "safeName": "QUERY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Query",
+                                                        "safeName": "Query"
+                                                    }
+                                                },
+                                                "wireValue": "query"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "query"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "query"
+                                            }
+                                        }
+                                    ],
+                                    "extraProperties": null,
+                                    "jsonExample": {
+                                        "query": "query"
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "BadRequestError",
+                                            "camelCase": {
+                                                "unsafeName": "badRequestError",
+                                                "safeName": "badRequestError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "bad_request_error",
+                                                "safeName": "bad_request_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "BAD_REQUEST_ERROR",
+                                                "safeName": "BAD_REQUEST_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "BadRequestError",
+                                                "safeName": "BadRequestError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "completions",
+                                                    "camelCase": {
+                                                        "unsafeName": "completions",
+                                                        "safeName": "completions"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "completions",
+                                                        "safeName": "completions"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "COMPLETIONS",
+                                                        "safeName": "COMPLETIONS"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Completions",
+                                                        "safeName": "Completions"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "completions",
+                                                "camelCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "COMPLETIONS",
+                                                    "safeName": "COMPLETIONS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Completions",
+                                                    "safeName": "Completions"
+                                                }
+                                            }
+                                        },
+                                        "errorId": "error_completions:BadRequestError"
+                                    }
+                                },
+                                "docs": null
+                            }
                         }
                     ],
                     "pagination": null,
@@ -2504,7 +2980,76 @@
                         "docs": null
                     },
                     "v2Responses": null,
-                    "errors": [],
+                    "errors": [
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "BadRequestError",
+                                    "camelCase": {
+                                        "unsafeName": "badRequestError",
+                                        "safeName": "badRequestError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bad_request_error",
+                                        "safeName": "bad_request_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BAD_REQUEST_ERROR",
+                                        "safeName": "BAD_REQUEST_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BadRequestError",
+                                        "safeName": "BadRequestError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "completions",
+                                            "camelCase": {
+                                                "unsafeName": "completions",
+                                                "safeName": "completions"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "completions",
+                                                "safeName": "completions"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "COMPLETIONS",
+                                                "safeName": "COMPLETIONS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Completions",
+                                                "safeName": "Completions"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "completions",
+                                        "camelCase": {
+                                            "unsafeName": "completions",
+                                            "safeName": "completions"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "completions",
+                                            "safeName": "completions"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "COMPLETIONS",
+                                            "safeName": "COMPLETIONS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Completions",
+                                            "safeName": "Completions"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_completions:BadRequestError"
+                            },
+                            "docs": null
+                        }
+                    ],
                     "userSpecifiedExamples": [
                         {
                             "example": {
@@ -2833,6 +3378,165 @@
                                 "docs": null
                             },
                             "codeSamples": null
+                        },
+                        {
+                            "example": {
+                                "id": "Bad request",
+                                "name": {
+                                    "originalName": "Bad request",
+                                    "camelCase": {
+                                        "unsafeName": "badRequest",
+                                        "safeName": "badRequest"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bad_request",
+                                        "safeName": "bad_request"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BAD_REQUEST",
+                                        "safeName": "BAD_REQUEST"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BadRequest",
+                                        "safeName": "BadRequest"
+                                    }
+                                },
+                                "url": "/stream-events",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "query",
+                                                    "camelCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "QUERY",
+                                                        "safeName": "QUERY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Query",
+                                                        "safeName": "Query"
+                                                    }
+                                                },
+                                                "wireValue": "query"
+                                            },
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": ""
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": ""
+                                            },
+                                            "originalTypeDeclaration": null
+                                        }
+                                    ],
+                                    "extraProperties": null,
+                                    "jsonExample": {
+                                        "query": ""
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "error": {
+                                        "name": {
+                                            "originalName": "BadRequestError",
+                                            "camelCase": {
+                                                "unsafeName": "badRequestError",
+                                                "safeName": "badRequestError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "bad_request_error",
+                                                "safeName": "bad_request_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "BAD_REQUEST_ERROR",
+                                                "safeName": "BAD_REQUEST_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "BadRequestError",
+                                                "safeName": "BadRequestError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "completions",
+                                                    "camelCase": {
+                                                        "unsafeName": "completions",
+                                                        "safeName": "completions"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "completions",
+                                                        "safeName": "completions"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "COMPLETIONS",
+                                                        "safeName": "COMPLETIONS"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Completions",
+                                                        "safeName": "Completions"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "completions",
+                                                "camelCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "COMPLETIONS",
+                                                    "safeName": "COMPLETIONS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Completions",
+                                                    "safeName": "Completions"
+                                                }
+                                            }
+                                        },
+                                        "errorId": "error_completions:BadRequestError"
+                                    },
+                                    "body": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "bad request"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "bad request"
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
                         }
                     ],
                     "autogeneratedExamples": [
@@ -3140,6 +3844,146 @@
                                                 "event": "completion"
                                             }
                                         ]
+                                    }
+                                },
+                                "docs": null
+                            }
+                        },
+                        {
+                            "example": {
+                                "id": "cbc87cc2",
+                                "url": "/stream-events",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "inlinedRequestBody",
+                                    "properties": [
+                                        {
+                                            "name": {
+                                                "name": {
+                                                    "originalName": "query",
+                                                    "camelCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "QUERY",
+                                                        "safeName": "QUERY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Query",
+                                                        "safeName": "Query"
+                                                    }
+                                                },
+                                                "wireValue": "query"
+                                            },
+                                            "originalTypeDeclaration": null,
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "query"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "query"
+                                            }
+                                        }
+                                    ],
+                                    "extraProperties": null,
+                                    "jsonExample": {
+                                        "query": "query"
+                                    }
+                                },
+                                "response": {
+                                    "type": "error",
+                                    "body": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    },
+                                    "error": {
+                                        "name": {
+                                            "originalName": "BadRequestError",
+                                            "camelCase": {
+                                                "unsafeName": "badRequestError",
+                                                "safeName": "badRequestError"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "bad_request_error",
+                                                "safeName": "bad_request_error"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "BAD_REQUEST_ERROR",
+                                                "safeName": "BAD_REQUEST_ERROR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "BadRequestError",
+                                                "safeName": "BadRequestError"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "completions",
+                                                    "camelCase": {
+                                                        "unsafeName": "completions",
+                                                        "safeName": "completions"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "completions",
+                                                        "safeName": "completions"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "COMPLETIONS",
+                                                        "safeName": "COMPLETIONS"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Completions",
+                                                        "safeName": "Completions"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "completions",
+                                                "camelCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "COMPLETIONS",
+                                                    "safeName": "COMPLETIONS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Completions",
+                                                    "safeName": "Completions"
+                                                }
+                                            }
+                                        },
+                                        "errorId": "error_completions:BadRequestError"
                                     }
                                 },
                                 "docs": null
@@ -4177,7 +5021,9 @@
                 "type_completions:ErrorEvent",
                 "type_completions:StreamEvent"
             ],
-            "errors": [],
+            "errors": [
+                "error_completions:BadRequestError"
+            ],
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,

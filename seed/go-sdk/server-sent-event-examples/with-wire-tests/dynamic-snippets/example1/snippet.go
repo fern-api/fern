@@ -14,7 +14,7 @@ func do() {
         ),
     )
     request := &sse.StreamCompletionRequest{
-        Query: "query",
+        Query: "",
     }
     client.Completions.Stream(
         context.TODO(),
