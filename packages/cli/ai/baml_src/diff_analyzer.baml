@@ -28,7 +28,8 @@ function AnalyzeSdkDiff(
     diff: string @description("The git diff to analyze"),
     language: string @description("The SDK programming language, e.g. 'typescript', 'python', 'java'"),
     previous_version: string @description("The current published version before this change, e.g. '1.2.3'"),
-    prior_changelog: string @description("The last 3 changelog entries for this SDK, empty string if none. Use this to match the existing commit message style and understand the versioning pattern.")
+    prior_changelog: string @description("The last 3 changelog entries for this SDK, empty string if none. Use this to match the existing commit message style and understand the versioning pattern."),
+    spec_commit_message: string @description("The commit message from the API spec repository that triggered this SDK generation. Use as a hint for the intent of the change, but verify against the actual diff. Empty string if unavailable.")
 ) -> AnalyzeCommitDiffResponse {
   client DefaultClient
 
@@ -577,6 +578,13 @@ function AnalyzeSdkDiff(
     {{prior_changelog}}
     ---
     Match the tone and format of these entries in your commit message.
+    {% endif %}
+
+    {% if spec_commit_message %}
+    The API spec change that triggered this SDK generation had the following commit message:
+    "{{spec_commit_message}}"
+    Use this as a hint for understanding the intent of the change, but always verify
+    against the actual diff below. The commit message may be vague or inaccurate.
     {% endif %}
 
     Previous version: {{previous_version}}

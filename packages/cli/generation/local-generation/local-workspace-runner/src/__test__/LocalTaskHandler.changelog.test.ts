@@ -185,8 +185,8 @@ describe("LocalTaskHandler - prior_changelog BAML integration", () => {
     it("passes extracted changelog to AnalyzeSdkDiff", () => {
         // Verify the call site passes priorChangelog to AnalyzeSdkDiff
         expect(localTaskHandlerSource).toContain("await this.readPriorChangelog(3)");
-        expect(localTaskHandlerSource).toContain(
-            "await bamlClient.AnalyzeSdkDiff(cleanedDiff, language, previousVersion, priorChangelog)"
-        );
+        // The BAML call now spans multiple lines; verify priorChangelog is passed as an argument
+        expect(localTaskHandlerSource).toContain("await bamlClient.AnalyzeSdkDiff(");
+        expect(localTaskHandlerSource).toContain("priorChangelog,");
     });
 });
