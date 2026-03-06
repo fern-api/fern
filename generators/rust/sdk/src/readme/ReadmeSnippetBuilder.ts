@@ -40,13 +40,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
-        if (this.context.ir.readmeConfig?.defaultEndpoint != null) {
-            this.defaultEndpointId = this.context.ir.readmeConfig.defaultEndpoint;
-        } else if (endpointSnippets.length > 0) {
-            this.defaultEndpointId = this.getDefaultEndpointId();
-        } else {
-            this.defaultEndpointId = undefined;
-        }
+        this.defaultEndpointId =
+            this.context.ir.readmeConfig?.defaultEndpoint != null
+                ? this.context.ir.readmeConfig.defaultEndpoint
+                : endpointSnippets.length > 0
+                  ? this.getDefaultEndpointId()
+                  : undefined;
         this.crateName = this.context.getCrateName();
     }
 
@@ -607,15 +606,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return [];
         }
 
-        const { clientName } = names;
         const clientMessages = channel.messages.filter((m) => m.origin === "client");
         const serverMessages = channel.messages.filter((m) => m.origin === "server");
 
         // Get the subpackage access path (e.g., "market_data" or "realtime")
         const subpackageName = subpackage.name.snakeCase.safeName;
 
-        // Build connect params from IR
-        const connectParams: string[] = ['"wss://api.example.com"'];
+        // Build connect params from IR (without the url, since connectors provide it from config)
+        const connectParams: string[] = [];
         for (const pathParam of channel.pathParameters) {
             connectParams.push(`"${pathParam.name.snakeCase.safeName}"`);
         }
@@ -633,24 +631,51 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         const snippets: string[] = [];
 
-        // --- Snippet: Connect + send + receive + close ---
+        // --- Snippet: Connect via root client + send + receive + close ---
         const writer = new Writer();
 
-        // Use statement for the WebSocket client
-        writer.write(`use ${crateName}::api::websocket::${clientName};`);
+        // Use statement
+        writer.write(`use ${crateName}::prelude::*;`);
         writer.newLine();
         writer.newLine();
 
-        // Connect
-        writer.write(`let mut ${subpackageName} = ${clientName}::connect(`);
+        // Create client config and root client (same pattern as pagination snippets)
+        const rootClientName = this.context.getClientName();
+        const configStatement = Statement.let({
+            name: "config",
+            value: this.getClientConfigStruct("error")
+        });
+        configStatement.write(writer);
         writer.newLine();
-        writer.indent();
-        for (const param of connectParams) {
-            writer.write(param + ",");
+        const clientBuild = Expression.methodCall({
+            target: Expression.raw(`${rootClientName}::new(config)`),
+            method: "expect",
+            args: [Expression.stringLiteral("Failed to build client")]
+        });
+        const clientStatement = Statement.let({
+            name: "client",
+            value: clientBuild
+        });
+        clientStatement.write(writer);
+        writer.newLine();
+        writer.newLine();
+
+        // Connect via root client accessor (e.g., client.realtime.connect(...))
+        writer.write(`// Connect to the WebSocket`);
+        writer.newLine();
+        if (connectParams.length > 0) {
+            writer.write(`let mut ${subpackageName} = client.${subpackageName}.connect(`);
             writer.newLine();
+            writer.indent();
+            for (const param of connectParams) {
+                writer.write(param + ",");
+                writer.newLine();
+            }
+            writer.dedent();
+            writer.write(").await.expect(\"Failed to connect\");");
+        } else {
+            writer.write(`let mut ${subpackageName} = client.${subpackageName}.connect().await.expect("Failed to connect");`);
         }
-        writer.dedent();
-        writer.write(").await.expect(\"Failed to connect\");");
         writer.newLine();
         writer.newLine();
 

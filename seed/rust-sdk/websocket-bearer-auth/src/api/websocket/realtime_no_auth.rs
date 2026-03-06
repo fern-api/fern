@@ -57,3 +57,22 @@ impl RealtimeNoAuthClient {
         self.ws.close().await
     }
 }
+/// Connector for the RealtimeNoAuth WebSocket channel.
+/// Provides access to the WebSocket channel through the root client.
+pub struct RealtimeNoAuthConnector {
+    base_url: String,
+}
+
+impl RealtimeNoAuthConnector {
+    pub fn new(base_url: String) -> Self {
+        Self { base_url }
+    }
+
+    pub async fn connect(
+        &self,
+        session_id: &str,
+        model: Option<&str>,
+    ) -> Result<RealtimeNoAuthClient, ApiError> {
+        RealtimeNoAuthClient::connect(&self.base_url, session_id, model).await
+    }
+}

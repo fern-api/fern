@@ -103,10 +103,16 @@ let request = GetTokenRequest {
 The SDK supports WebSocket connections for real-time communication. Use the generated channel clients to connect, send, and receive messages.
 
 ```rust
-use seed_websocket_auth::api::websocket::RealtimeClient;
+use seed_websocket_auth::prelude::*;
 
-let mut realtime = RealtimeClient::connect(
-    "wss://api.example.com",
+let config = ClientConfig {
+    base_url: " ".to_string(),
+    api_key: Some("your-api-key".to_string())
+};
+let client = WebsocketAuthClient::new(config).expect("Failed to build client");
+
+// Connect to the WebSocket
+let mut realtime = client.realtime.connect(
     "session_id",
     None,
     None,

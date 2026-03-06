@@ -36,11 +36,16 @@ A full reference for this library is available [here](./reference.md).
 The SDK supports WebSocket connections for real-time communication. Use the generated channel clients to connect, send, and receive messages.
 
 ```rust
-use seed_websocket::api::websocket::EmptyRealtimeClient;
+use seed_websocket::prelude::*;
 
-let mut empty_realtime = EmptyRealtimeClient::connect(
-    "wss://api.example.com",
-).await.expect("Failed to connect");
+let config = ClientConfig {
+    base_url: " ".to_string(),
+    api_key: Some("your-api-key".to_string())
+};
+let client = WebsocketClient::new(config).expect("Failed to build client");
+
+// Connect to the WebSocket
+let mut empty_realtime = client.empty_realtime.connect().await.expect("Failed to connect");
 
 // Close the connection when done
 empty_realtime.close().await.expect("Failed to close");

@@ -14,6 +14,53 @@ export class WebSocketChannelGenerator {
         this.context = context;
     }
 
+    /**
+     * Returns the connector info for each WebSocket channel so the root client
+     * can include connector fields. Each entry maps a channel to its connector
+     * struct name, field name, and the underlying client connect() parameters.
+     */
+    public getConnectorInfo(): Array<{
+        connectorName: string;
+        fieldName: string;
+        clientName: string;
+        moduleName: string;
+        channel: FernIr.WebSocketChannel;
+    }> {
+        const websocketChannels = this.context.ir.websocketChannels;
+        if (!websocketChannels) {
+            return [];
+        }
+
+        // Ensure name map is built
+        if (this.channelNameMap.size === 0) {
+            this.buildChannelNameMap(websocketChannels);
+        }
+
+        const result: Array<{
+            connectorName: string;
+            fieldName: string;
+            clientName: string;
+            moduleName: string;
+            channel: FernIr.WebSocketChannel;
+        }> = [];
+
+        for (const [channelId, channel] of Object.entries(websocketChannels)) {
+            const names = this.channelNameMap.get(channelId);
+            if (names == null) {
+                continue;
+            }
+            result.push({
+                connectorName: `${names.clientName.replace(/Client$/, "")}Connector`,
+                fieldName: names.moduleName,
+                clientName: names.clientName,
+                moduleName: names.moduleName,
+                channel
+            });
+        }
+
+        return result;
+    }
+
     public generateAll(): RustFile[] {
         const files: RustFile[] = [];
         const websocketChannels = this.context.ir.websocketChannels;
@@ -98,6 +145,7 @@ export class WebSocketChannelGenerator {
             }
             moduleDeclarations.push(`pub mod ${names.moduleName};`);
             reExports.push(`pub use ${names.moduleName}::${names.clientName};`);
+            reExports.push(`pub use ${names.moduleName}::${names.clientName.replace(/Client$/, "")}Connector;`);
 
             const serverMessages = channel.messages.filter((m) => m.origin === "server");
             const jsonServerMessages = serverMessages.filter((m) => !this.isBinaryMessage(m));
@@ -159,6 +207,9 @@ export class WebSocketChannelGenerator {
         rawDeclarations.push(
             this.generateImplBlock(clientName, enumPrefix, channel, clientMessages, jsonServerMessages, hasBinaryServerMessages)
         );
+
+        // Generate connector struct that wraps base_url and delegates to the client's connect()
+        rawDeclarations.push(this.generateConnectorStruct(clientName, channel));
 
         const hasJsonServerMessages = jsonServerMessages.length > 0;
         const useStatements = this.generateImports(hasJsonServerMessages);
@@ -420,6 +471,58 @@ ${queryLines.join("\n")}
         return `    pub async fn close(&self) -> Result<(), ApiError> {
         self.ws.close().await
     }`;
+    }
+
+    /**
+     * Generates a connector struct that wraps the base URL and delegates to the
+     * client's connect() method. This allows WebSocket clients to be accessed
+     * through the root client (e.g., `client.realtime.connect(...)`).
+     */
+    private generateConnectorStruct(clientName: string, channel: FernIr.WebSocketChannel): string {
+        const connectorName = `${clientName.replace(/Client$/, "")}Connector`;
+
+        // Build the connect method parameters (same as client but without url)
+        const params: string[] = ["&self"];
+        const forwardArgs: string[] = ["&self.base_url"];
+
+        for (const pathParam of channel.pathParameters) {
+            const paramName = pathParam.name.snakeCase.safeName;
+            params.push(`${paramName}: &str`);
+            forwardArgs.push(paramName);
+        }
+
+        for (const header of channel.headers) {
+            const paramName = header.name.name.snakeCase.safeName;
+            params.push(`${paramName}: &str`);
+            forwardArgs.push(paramName);
+        }
+
+        for (const qp of channel.queryParameters) {
+            const paramName = qp.name.name.snakeCase.safeName;
+            const isOptional = this.isOptionalType(qp.valueType);
+            if (isOptional) {
+                params.push(`${paramName}: Option<&str>`);
+            } else {
+                params.push(`${paramName}: &str`);
+            }
+            forwardArgs.push(paramName);
+        }
+
+        return `/// Connector for the ${clientName.replace(/Client$/, "")} WebSocket channel.
+/// Provides access to the WebSocket channel through the root client.
+pub struct ${connectorName} {
+    base_url: String,
+}
+
+impl ${connectorName} {
+    pub fn new(base_url: String) -> Self {
+        Self { base_url }
+    }
+
+    pub async fn connect(${params.join(", ")}) -> Result<${clientName}, ApiError> {
+        ${clientName}::connect(${forwardArgs.join(", ")}).await
+    }
+}`;
     }
 
     private buildPathExpression(channel: FernIr.WebSocketChannel): string {

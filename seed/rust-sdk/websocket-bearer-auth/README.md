@@ -36,10 +36,16 @@ A full reference for this library is available [here](./reference.md).
 The SDK supports WebSocket connections for real-time communication. Use the generated channel clients to connect, send, and receive messages.
 
 ```rust
-use seed_websocket_bearer_auth::api::websocket::RealtimeNoAuthClient;
+use seed_websocket_bearer_auth::prelude::*;
 
-let mut realtime_no_auth = RealtimeNoAuthClient::connect(
-    "wss://api.example.com",
+let config = ClientConfig {
+    base_url: " ".to_string(),
+    api_key: Some("your-api-key".to_string())
+};
+let client = WebsocketBearerAuthClient::new(config).expect("Failed to build client");
+
+// Connect to the WebSocket
+let mut realtime_no_auth = client.realtime_no_auth.connect(
     "session_id",
     None,
 ).await.expect("Failed to connect");
