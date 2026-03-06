@@ -3,6 +3,7 @@ from typing import Any, Callable, Optional
 from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
+from fern_python.external_dependencies.pydantic import Pydantic
 from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
     PaginationSnippetConfig,
@@ -813,6 +814,19 @@ class EndpointResponseCodeWriter:
                 self._context.core_utilities.instantiate_api_error(
                     headers=AST.Expression(f"{RESPONSE_VARIABLE}.headers"),
                     body=AST.Expression(f"{RESPONSE_VARIABLE}.text"),
+                    status_code=AST.Expression(f"{RESPONSE_VARIABLE}.status_code"),
+                )
+            )
+            writer.write_newline_if_last_line_not()
+        writer.write("except ")
+        writer.write_reference(Pydantic.ValidationError())
+        writer.write_line(":")
+        with writer.indent():
+            writer.write("raise ")
+            writer.write_node(
+                self._context.core_utilities.instantiate_api_error(
+                    headers=AST.Expression(f"{RESPONSE_VARIABLE}.headers"),
+                    body=AST.Expression(f"{RESPONSE_VARIABLE}.json()"),
                     status_code=AST.Expression(f"{RESPONSE_VARIABLE}.status_code"),
                 )
             )
