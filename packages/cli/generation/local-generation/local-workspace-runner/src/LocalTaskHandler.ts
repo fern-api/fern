@@ -10,6 +10,7 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
+import { AutoVersioningCache, CachedAnalysis } from "./AutoVersioningCache.js";
 import {
     AutoVersioningException,
     AutoVersioningService,
@@ -32,6 +33,7 @@ export declare namespace LocalTaskHandler {
         version: string | undefined;
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
+        autoVersioningCache?: AutoVersioningCache;
         generatorLanguage: string | undefined;
     }
 }
@@ -47,6 +49,7 @@ export class LocalTaskHandler {
     private version: string | undefined;
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
+    private autoVersioningCache: AutoVersioningCache | undefined;
     private generatorLanguage: string | undefined;
 
     constructor({
@@ -60,6 +63,7 @@ export class LocalTaskHandler {
         version,
         ai,
         isWhitelabel,
+        autoVersioningCache,
         generatorLanguage
     }: LocalTaskHandler.Init) {
         this.context = context;
@@ -72,6 +76,7 @@ export class LocalTaskHandler {
         this.version = version;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
+        this.autoVersioningCache = autoVersioningCache;
         this.generatorLanguage = generatorLanguage;
     }
 
@@ -192,58 +197,14 @@ export class LocalTaskHandler {
                 );
             }
 
-            // Call AI to analyze the diff
+            // Call AI (or reuse cached analysis) to determine version bump
+            let analysis: CachedAnalysis | null;
             try {
-                // TODO: Need to get project for BAML client configuration
-                const clientRegistry = await this.getClientRegistry();
-                const bamlClient = BamlClient.withOptions({ clientRegistry });
-
-                const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff);
-
-                if (analysis.version_bump === VersionBump.NO_CHANGE) {
-                    this.context.logger.info("AI detected no semantic changes");
-                    return null;
-                }
-
-                let finalBump = analysis.version_bump;
-                let finalMessage = analysis.message;
-
-                // Tier 3: behavioral analysis (only runs when surface analysis found no changes)
-                if (analysis.version_bump === VersionBump.PATCH) {
-                    try {
-                        const behavioralAnalysis = await bamlClient.AnalyzeBehavioralChanges(
-                            cleanedDiff,
-                            this.generatorLanguage ?? "unknown"
-                        );
-                        if (behavioralAnalysis.version_bump === BehavioralBump.MINOR) {
-                            this.context.logger.info(
-                                `Tier 3 behavioral analysis escalated to MINOR: ${behavioralAnalysis.behavioral_changes.join(", ")}`
-                            );
-                            finalBump = VersionBump.MINOR;
-                            // Use Tier 3 message if available, fall back to Tier 2 message
-                            finalMessage = behavioralAnalysis.message || analysis.message;
-                        } else {
-                            this.context.logger.info("Tier 3 behavioral analysis confirmed PATCH");
-                        }
-                    } catch (tier3Error) {
-                        this.context.logger.warn(
-                            `Tier 3 behavioral analysis failed, falling back to PATCH: ${tier3Error}`
-                        );
-                        // Non-fatal: keep the Tier 2 PATCH result
-                    }
-                }
-
-                // Calculate new version
-                const newVersion = this.incrementVersion(previousVersion, finalBump);
-
-                this.context.logger.info(`Version bump: ${finalBump}, new version: ${newVersion}`);
-
-                const commitMessage = this.isWhitelabel ? finalMessage : this.addFernBranding(finalMessage);
-
-                return {
-                    version: newVersion,
-                    commitMessage
-                };
+                analysis = await this.getAnalysis(
+                    cleanedDiff,
+                    this.generatorLanguage ?? "unknown",
+                    previousVersion ?? "0.0.0"
+                );
             } catch (aiError) {
                 const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
                 this.context.logger.warn(
@@ -266,6 +227,50 @@ export class LocalTaskHandler {
                     commitMessage: fallbackMessage
                 };
             }
+
+            // Each generator applies its own previousVersion and branding
+            if (analysis == null) {
+                this.context.logger.info("AI detected no semantic changes");
+                return null;
+            }
+
+            let finalBump = analysis.versionBump;
+            let finalMessage = analysis.message;
+
+            // Tier 3: behavioral analysis (only runs when surface analysis found no changes)
+            if (analysis.versionBump === VersionBump.PATCH) {
+                try {
+                    const clientRegistry = await this.getClientRegistry();
+                    const bamlClient = BamlClient.withOptions({ clientRegistry });
+                    const behavioralAnalysis = await bamlClient.AnalyzeBehavioralChanges(
+                        cleanedDiff,
+                        this.generatorLanguage ?? "unknown"
+                    );
+                    if (behavioralAnalysis.version_bump === BehavioralBump.MINOR) {
+                        this.context.logger.info(
+                            `Tier 3 behavioral analysis escalated to MINOR: ${behavioralAnalysis.behavioral_changes.join(", ")}`
+                        );
+                        finalBump = VersionBump.MINOR;
+                        // Use Tier 3 message if available, fall back to Tier 2 message
+                        finalMessage = behavioralAnalysis.message || analysis.message;
+                    } else {
+                        this.context.logger.info("Tier 3 behavioral analysis confirmed PATCH");
+                    }
+                } catch (tier3Error) {
+                    this.context.logger.warn(`Tier 3 behavioral analysis failed, falling back to PATCH: ${tier3Error}`);
+                    // Non-fatal: keep the Tier 2 PATCH result
+                }
+            }
+
+            const newVersion = this.incrementVersion(previousVersion, finalBump);
+            this.context.logger.info(`Version bump: ${finalBump}, new version: ${newVersion}`);
+
+            const commitMessage = this.isWhitelabel ? finalMessage : this.addFernBranding(finalMessage);
+
+            return {
+                version: newVersion,
+                commitMessage
+            };
         } catch (error) {
             if (error instanceof AutoVersioningException) {
                 // Fall back to initial version when we can't extract the previous version
@@ -296,6 +301,52 @@ export class LocalTaskHandler {
                 }
             }
         }
+    }
+
+    /**
+     * Returns the raw AI analysis for the given cleaned diff, using the cache
+     * (with Promise coalescing) when available. Each concurrent generator with
+     * the same diff awaits the same in-flight AI call.
+     *
+     * On AI failure the method throws so that each generator can apply its own
+     * fallback logic (e.g. PATCH bump with generator-specific previousVersion).
+     */
+    private async getAnalysis(
+        cleanedDiff: string,
+        language: string,
+        previousVersion: string
+    ): Promise<CachedAnalysis | null> {
+        const doAnalysis = async (): Promise<CachedAnalysis | null> => {
+            const clientRegistry = await this.getClientRegistry();
+            const bamlClient = BamlClient.withOptions({ clientRegistry });
+            const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff, language, previousVersion);
+
+            if (analysis.version_bump === VersionBump.NO_CHANGE) {
+                return null;
+            }
+            return {
+                versionBump: analysis.version_bump,
+                message: analysis.message
+            };
+        };
+
+        if (this.autoVersioningCache == null) {
+            return doAnalysis();
+        }
+
+        const cacheKey = this.autoVersioningCache.key(cleanedDiff, language, previousVersion);
+        const { promise, isHit } = this.autoVersioningCache.getOrCompute(cacheKey, doAnalysis);
+
+        if (isHit) {
+            const cached = await promise;
+            this.context.logger.info(
+                `[AutoVersioning] Cache hit — reusing result (key: ${cacheKey.slice(0, 8)}…) ` +
+                    `bump=${cached?.versionBump ?? "NO_CHANGE"}`
+            );
+            return cached;
+        }
+
+        return promise;
     }
 
     /**

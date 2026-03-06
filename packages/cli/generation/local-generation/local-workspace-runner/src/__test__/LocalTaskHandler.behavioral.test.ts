@@ -194,6 +194,11 @@ vi.mock("../AutoVersioningService.js", () => ({
     }
 }));
 
+// Mock AutoVersioningCache
+vi.mock("../AutoVersioningCache.js", () => ({
+    AutoVersioningCache: class MockAutoVersioningCache {}
+}));
+
 // Mock VersionUtils
 vi.mock("../VersionUtils.js", () => ({
     isAutoVersion: vi.fn().mockReturnValue(true)
