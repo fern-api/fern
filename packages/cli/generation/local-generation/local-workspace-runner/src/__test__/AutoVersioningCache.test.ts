@@ -9,7 +9,11 @@ describe("AutoVersioningCache", () => {
         let called = false;
         const { promise, isHit } = cache.getOrCompute(key, async () => {
             called = true;
-            return { versionBump: VersionBump.MINOR, message: "feat: new feature" };
+            return {
+                versionBump: VersionBump.MINOR,
+                message: "feat: new feature",
+                changelogEntry: "New feature available."
+            };
         });
         expect(isHit).toBe(false);
         await promise;
@@ -21,7 +25,11 @@ describe("AutoVersioningCache", () => {
         const diff = "diff --git a/src/index.ts\n+export const foo = true;";
         const key = cache.key(diff, "typescript", "1.0.0");
 
-        const analysis: CachedAnalysis = { versionBump: VersionBump.MINOR, message: "feat: add foo export" };
+        const analysis: CachedAnalysis = {
+            versionBump: VersionBump.MINOR,
+            message: "feat: add foo export",
+            changelogEntry: "New foo export available."
+        };
 
         // First call — populates cache
         const first = cache.getOrCompute(key, async () => analysis);
@@ -32,7 +40,7 @@ describe("AutoVersioningCache", () => {
         let secondComputed = false;
         const second = cache.getOrCompute(key, async () => {
             secondComputed = true;
-            return { versionBump: VersionBump.PATCH, message: "should not be used" };
+            return { versionBump: VersionBump.PATCH, message: "should not be used", changelogEntry: "" };
         });
         expect(second.isHit).toBe(true);
         expect(await second.promise).toEqual(analysis);
@@ -52,7 +60,7 @@ describe("AutoVersioningCache", () => {
         let secondComputed = false;
         const second = cache.getOrCompute(key, async () => {
             secondComputed = true;
-            return { versionBump: VersionBump.PATCH, message: "should not run" };
+            return { versionBump: VersionBump.PATCH, message: "should not run", changelogEntry: "" };
         });
         expect(second.isHit).toBe(true);
         expect(await second.promise).toBeNull();
@@ -83,12 +91,16 @@ describe("AutoVersioningCache", () => {
 
         expect(key1).not.toBe(key2);
 
-        const analysis1: CachedAnalysis = { versionBump: VersionBump.MINOR, message: "feat: add foo" };
+        const analysis1: CachedAnalysis = {
+            versionBump: VersionBump.MINOR,
+            message: "feat: add foo",
+            changelogEntry: "New foo capability."
+        };
         cache.getOrCompute(key1, async () => analysis1);
 
         // key2 should trigger a fresh compute
         let key2Computed = false;
-        const analysis2: CachedAnalysis = { versionBump: VersionBump.PATCH, message: "fix: bar" };
+        const analysis2: CachedAnalysis = { versionBump: VersionBump.PATCH, message: "fix: bar", changelogEntry: "" };
         const result2 = cache.getOrCompute(key2, async () => {
             key2Computed = true;
             return analysis2;
@@ -116,7 +128,11 @@ describe("AutoVersioningCache", () => {
         const diff = "some diff content";
         const key = cache1.key(diff, "typescript", "1.0.0");
 
-        const analysis: CachedAnalysis = { versionBump: VersionBump.MAJOR, message: "feat: breaking change" };
+        const analysis: CachedAnalysis = {
+            versionBump: VersionBump.MAJOR,
+            message: "feat: breaking change",
+            changelogEntry: "Breaking change: migration required."
+        };
         await cache1.getOrCompute(key, async () => analysis).promise;
 
         // cache2 should not have the entry — compute is invoked
@@ -138,7 +154,11 @@ describe("AutoVersioningCache", () => {
             aiCallCount++;
             // Simulate async AI latency
             await new Promise((resolve) => setTimeout(resolve, 10));
-            return { versionBump: VersionBump.MINOR, message: "feat: add new endpoint" };
+            return {
+                versionBump: VersionBump.MINOR,
+                message: "feat: add new endpoint",
+                changelogEntry: "New endpoint available."
+            };
         };
 
         const key = cache.key(cleanedDiff, "typescript", "1.0.0");
@@ -153,7 +173,11 @@ describe("AutoVersioningCache", () => {
         expect(aiCallCount).toBe(1);
         // Both generators receive the same raw analysis
         expect(r1).toEqual(r2);
-        expect(r1).toEqual({ versionBump: VersionBump.MINOR, message: "feat: add new endpoint" });
+        expect(r1).toEqual({
+            versionBump: VersionBump.MINOR,
+            message: "feat: add new endpoint",
+            changelogEntry: "New endpoint available."
+        });
     });
 
     it("evicts failed promises so subsequent callers can retry", async () => {
@@ -170,10 +194,14 @@ describe("AutoVersioningCache", () => {
         let secondCalled = false;
         const second = cache.getOrCompute(key, async () => {
             secondCalled = true;
-            return { versionBump: VersionBump.PATCH, message: "fix: retry succeeded" };
+            return { versionBump: VersionBump.PATCH, message: "fix: retry succeeded", changelogEntry: "" };
         });
         expect(second.isHit).toBe(false);
         expect(secondCalled).toBe(true);
-        expect(await second.promise).toEqual({ versionBump: VersionBump.PATCH, message: "fix: retry succeeded" });
+        expect(await second.promise).toEqual({
+            versionBump: VersionBump.PATCH,
+            message: "fix: retry succeeded",
+            changelogEntry: ""
+        });
     });
 });

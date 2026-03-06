@@ -13,6 +13,8 @@ export interface CachedAnalysis {
     versionBump: VersionBump;
     /** The raw commit message from the AI (before any branding is applied). */
     message: string;
+    /** User-facing changelog entry from the AI. Empty string for PATCH, present for MINOR/MAJOR. */
+    changelogEntry: string;
 }
 
 /**

@@ -41,6 +41,7 @@ export namespace partial_types {
     }
     export interface AnalyzeCommitDiffResponse {
       message?: string | null
+      changelog_entry?: string | null
       version_bump?: types.VersionBump | null
     }
 }

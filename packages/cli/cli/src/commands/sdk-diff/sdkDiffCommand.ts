@@ -91,6 +91,7 @@ export async function sdkDiffCommand({
         context.logger.warn("No differences found between the directories");
         return {
             message: "No changes detected between the directories",
+            changelog_entry: "",
             version_bump: VersionBump.NO_CHANGE
         };
     }

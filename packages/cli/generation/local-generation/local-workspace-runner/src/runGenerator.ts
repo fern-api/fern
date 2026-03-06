@@ -108,6 +108,7 @@ export async function writeFilesToDiskAndRunGenerator({
     generatorConfig: FernGeneratorExec.GeneratorConfig;
     shouldCommit: boolean;
     autoVersioningCommitMessage?: string;
+    autoVersioningChangelogEntry?: string;
 }> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
