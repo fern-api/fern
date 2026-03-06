@@ -250,16 +250,21 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            // Tier 1 sets a floor: if IR diff detects MAJOR, we enforce MAJOR regardless
-            // of what AI returns. We still call AI for a better commit message.
+            // Tier 1 sets a floor: the AI cannot return lower than the IR diff result.
+            // We still call AI for a better commit message.
             // Note: Tier 1 is NOT used as a ceiling because the IR diff analysis does not yet
             // cover all type shapes (union, undiscriminatedUnion, alias). Using an incomplete
             // analysis as a ceiling could incorrectly suppress the AI's correct classification.
-            const tier1Floor = tier1Result?.bump === LocalVersionBump.MAJOR ? VersionBump.MAJOR : undefined;
+            const tier1Floor: VersionBump | undefined =
+                tier1Result?.bump === LocalVersionBump.MAJOR
+                    ? VersionBump.MAJOR
+                    : tier1Result?.bump === LocalVersionBump.MINOR
+                      ? VersionBump.MINOR
+                      : undefined;
             if (tier1Floor != null) {
                 const reasonsSummary = tier1Result?.reasons.map((r) => `- ${r.description}`).join("\n");
                 this.context.logger.info(
-                    `Tier 1 IR diff: MAJOR bump detected (floor). Will call AI for commit message.\nReasons:\n${reasonsSummary}`
+                    `Tier 1 IR diff: ${tier1Floor} bump detected (floor). Will call AI for commit message.\nReasons:\n${reasonsSummary}`
                 );
             }
 
@@ -283,15 +288,8 @@ export class LocalTaskHandler {
                 );
             } catch (aiError) {
                 const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
-                // Use Tier 1 result as floor when AI fails, instead of unconditionally falling back to PATCH
-                const fallbackBump =
-                    tier1Result != null && (BUMP_ORDER[tier1Result.bump] ?? 0) > (BUMP_ORDER[VersionBump.PATCH] ?? 1)
-                        ? tier1Result.bump === LocalVersionBump.MAJOR
-                            ? VersionBump.MAJOR
-                            : tier1Result.bump === LocalVersionBump.MINOR
-                              ? VersionBump.MINOR
-                              : VersionBump.PATCH
-                        : VersionBump.PATCH;
+                // Use Tier 1 floor when AI fails, instead of unconditionally falling back to PATCH
+                const fallbackBump = tier1Floor != null ? tier1Floor : VersionBump.PATCH;
                 this.context.logger.warn(
                     `AI analysis failed, falling back to ${fallbackBump === VersionBump.PATCH ? "PATCH" : "Tier 1 result (" + fallbackBump + ")"}. ` +
                         `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
@@ -319,21 +317,26 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            // Apply Tier 1 floor: if IR diff detected MAJOR, enforce it regardless of AI result
+            // Apply Tier 1 floor: enforce at least the IR diff result regardless of AI
             let effectiveBump: VersionBump = analysis?.versionBump ?? VersionBump.PATCH;
-            if (tier1Floor != null && tier1Floor === VersionBump.MAJOR) {
-                if (effectiveBump !== VersionBump.MAJOR) {
+            if (tier1Floor != null) {
+                const floored = this.applyFloor(effectiveBump, tier1Floor);
+                if (floored !== effectiveBump) {
                     this.context.logger.info(
-                        `AI suggested ${effectiveBump} but Tier 1 floor is MAJOR, enforcing MAJOR`
+                        `AI suggested ${effectiveBump} but Tier 1 floor is ${tier1Floor}, enforcing ${floored}`
                     );
+                    effectiveBump = floored;
                 }
-                effectiveBump = VersionBump.MAJOR;
             }
 
             const newVersion = this.incrementVersion(previousVersion, effectiveBump);
             this.context.logger.info(`Version bump: ${effectiveBump}, new version: ${newVersion}`);
 
-            const message = analysis?.message ?? "feat: breaking API changes";
+            const message =
+                analysis?.message ??
+                (tier1Result != null
+                    ? `feat: API changes\n\n${tier1Result.reasons.map((r) => `- ${r.description}`).join("\n")}`
+                    : "feat: API changes");
             const commitMessage = this.isWhitelabel ? message : this.addFernBranding(message);
 
             return {
