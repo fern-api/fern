@@ -1272,9 +1272,7 @@ describe("IrDiffAnalyzer", () => {
         it("classifies STRING → optional<INTEGER> as MAJOR (property_type_changed) for ruby", () => {
             const previousIr = makeBaseIr({
                 types: {
-                    type_Plant: makeObjectType("Plant", [
-                        { wireValue: "height", valueType: primitiveType("STRING") }
-                    ])
+                    type_Plant: makeObjectType("Plant", [{ wireValue: "height", valueType: primitiveType("STRING") }])
                 }
             });
             const currentIr = makeBaseIr({
@@ -1294,9 +1292,7 @@ describe("IrDiffAnalyzer", () => {
         it("classifies STRING → optional<STRING> as property_required_to_optional (MINOR) for ruby", () => {
             const previousIr = makeBaseIr({
                 types: {
-                    type_Plant: makeObjectType("Plant", [
-                        { wireValue: "height", valueType: primitiveType("STRING") }
-                    ])
+                    type_Plant: makeObjectType("Plant", [{ wireValue: "height", valueType: primitiveType("STRING") }])
                 }
             });
             const currentIr = makeBaseIr({
@@ -1315,9 +1311,7 @@ describe("IrDiffAnalyzer", () => {
         it("classifies STRING → optional<INTEGER> as MAJOR for typescript", () => {
             const previousIr = makeBaseIr({
                 types: {
-                    type_Plant: makeObjectType("Plant", [
-                        { wireValue: "height", valueType: primitiveType("STRING") }
-                    ])
+                    type_Plant: makeObjectType("Plant", [{ wireValue: "height", valueType: primitiveType("STRING") }])
                 }
             });
             const currentIr = makeBaseIr({
