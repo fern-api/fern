@@ -12,7 +12,6 @@ import { LambdaParameter } from "./LambdaParameter.js";
 import { Method } from "./Method.js";
 import { MethodArgument } from "./MethodArgument.js";
 import { MethodInvocation } from "./MethodInvocation.js";
-import { ModuleImport } from "./ModuleImport.js";
 import { Operator } from "./Operator.js";
 import { Parameter } from "./Parameter.js";
 import { PythonFile } from "./PythonFile.js";
