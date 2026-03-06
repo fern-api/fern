@@ -453,10 +453,11 @@ ${queryLines.join("\n")}
             return msg.body.name.pascalCase.safeName;
         }
         // For reference body types, derive variant name from the referenced type
+        // Use disambiguated name so variant matches body type (e.g., AuthResponse2(AuthResponse2))
         if (msg.body.type === "reference") {
             const typeRef = msg.body.bodyType;
             if (typeRef.type === "named") {
-                return typeRef.name.pascalCase.safeName;
+                return this.context.getUniqueTypeNameForReference(typeRef);
             }
         }
         // Fallback: capitalize the message type ID
@@ -481,7 +482,10 @@ ${queryLines.join("\n")}
         if (msg.body.type === "reference") {
             const typeRef = msg.body.bodyType;
             if (typeRef.type === "named") {
-                return typeRef.name.pascalCase.safeName;
+                // Use the context's type disambiguation to get the correct unique type name.
+                // Without this, types like AuthResponse in the trading namespace would resolve
+                // to the market_data AuthResponse instead of the disambiguated AuthResponse2.
+                return this.context.getUniqueTypeNameForReference(typeRef);
             }
             if (typeRef.type === "primitive") {
                 return "String";
