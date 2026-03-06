@@ -6,6 +6,13 @@ import { writeFile } from "fs/promises";
 import { minimatch } from "minimatch";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import {
+    detectAffected,
+    findRepoRoot,
+    getChangedFiles,
+    resolveAffectedFixtures,
+    resolveAffectedGenerators
+} from "./commands/affected/index.js";
 import { cleanOrphanedSeedFolders } from "./commands/clean/index.js";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog.js";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog.js";
@@ -65,6 +72,7 @@ export async function tryRunCli(): Promise<void> {
     addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
     addListTestFixturesCommand(cli);
+    addAffectedCommand(cli);
     addCleanCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
@@ -143,10 +151,61 @@ function addTestCommand(cli: Argv) {
                     choices: ["docker", "podman"],
                     demandOption: false,
                     description: "Explicitly specify which container runtime to use (docker or podman)"
+                })
+                .option("base-ref", {
+                    type: "string",
+                    demandOption: false,
+                    default: "origin/main",
+                    description: 'Git ref to diff against when using "affected" mode (default: origin/main)'
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
-            if (argv.generator != null) {
+
+            // Handle "affected" mode for --generator and --fixture
+            const isGeneratorAffected =
+                argv.generator != null && argv.generator.length === 1 && argv.generator[0] === "affected";
+            const isFixtureAffected =
+                argv.fixture != null && argv.fixture.length === 1 && argv.fixture[0] === "affected";
+
+            let affectedResult = undefined;
+            if (isGeneratorAffected || isFixtureAffected) {
+                const repoRoot = findRepoRoot();
+                const changedFiles = getChangedFiles(argv.baseRef, repoRoot);
+                affectedResult = detectAffected(changedFiles, generators);
+
+                // Log the detection summary
+                console.log("\n=== Affected Detection ===");
+                for (const line of affectedResult.summary) {
+                    console.log(`  ${line}`);
+                }
+
+                if (isGeneratorAffected) {
+                    const affectedGenerators = resolveAffectedGenerators(affectedResult, generators);
+                    if (affectedGenerators.length === 0) {
+                        console.log("No affected generators detected. Nothing to run.");
+                        return;
+                    }
+                    argv.generator = affectedGenerators.map((g) => g.workspaceName);
+                    console.log(`Affected generators: ${argv.generator.join(", ")}`);
+                }
+
+                if (isFixtureAffected) {
+                    if (affectedResult.allFixturesAffected) {
+                        // Let the per-generator fixture resolution handle it (will use all fixtures)
+                        argv.fixture = undefined;
+                        console.log("All fixtures affected.");
+                    } else if (affectedResult.affectedFixtures.length === 0) {
+                        console.log("No affected fixtures detected. Nothing to run.");
+                        return;
+                    } else {
+                        argv.fixture = affectedResult.affectedFixtures;
+                        console.log(`Affected fixtures: ${argv.fixture.join(", ")}`);
+                    }
+                }
+                console.log("==========================\n");
+            }
+
+            if (argv.generator != null && !isGeneratorAffected) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
             }
 
@@ -165,6 +224,16 @@ function addTestCommand(cli: Argv) {
                 // If no fixtures passed in, use all available fixtures (without output folders)
                 if (argv.fixture == null) {
                     argv.fixture = getAvailableFixtures(generator, false);
+                } else if (isFixtureAffected && affectedResult != null && !affectedResult.allFixturesAffected) {
+                    // In affected mode, resolve fixtures per-generator (filter by what's available)
+                    const available = getAvailableFixtures(generator, false);
+                    argv.fixture = resolveAffectedFixtures(affectedResult, available);
+                    if (argv.fixture.length === 0) {
+                        console.log(
+                            `No affected fixtures available for generator ${generator.workspaceName}. Skipping.`
+                        );
+                        continue;
+                    }
                 } else {
                     const availableFixturesForGlobbing = getAvailableFixtures(generator, false);
                     argv.fixture = expandFixtureGlobs(argv.fixture, availableFixturesForGlobbing);
@@ -649,6 +718,71 @@ function addListTestFixturesCommand(cli: Argv) {
 
             // Output JSON to stdout (can be piped or captured directly)
             console.log(JSON.stringify({ generators: result }));
+        }
+    );
+}
+
+function addAffectedCommand(cli: Argv) {
+    cli.command(
+        "affected",
+        "Detect which generators and fixtures are affected by changes in the current branch",
+        (yargs) =>
+            yargs
+                .option("base-ref", {
+                    type: "string",
+                    demandOption: false,
+                    default: "origin/main",
+                    description: "Git ref to diff against (default: origin/main)"
+                })
+                .option("json", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Output results as JSON"
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            const repoRoot = findRepoRoot();
+            const changedFiles = getChangedFiles(argv.baseRef, repoRoot);
+            const affected = detectAffected(changedFiles, generators);
+
+            if (argv.json) {
+                const resolvedGenerators = resolveAffectedGenerators(affected, generators);
+                console.log(
+                    JSON.stringify(
+                        {
+                            allGeneratorsAffected: affected.allGeneratorsAffected,
+                            allFixturesAffected: affected.allFixturesAffected,
+                            generators: resolvedGenerators.map((g) => g.workspaceName),
+                            fixtures: affected.affectedFixtures,
+                            summary: affected.summary
+                        },
+                        null,
+                        2
+                    )
+                );
+            } else {
+                console.log("\n=== Affected Detection ===");
+                for (const line of affected.summary) {
+                    console.log(`  ${line}`);
+                }
+
+                const resolvedGenerators = resolveAffectedGenerators(affected, generators);
+                console.log(`\nAffected generators (${resolvedGenerators.length}):`);
+                for (const gen of resolvedGenerators) {
+                    console.log(`  - ${gen.workspaceName}`);
+                }
+
+                if (!affected.allFixturesAffected && affected.affectedFixtures.length > 0) {
+                    console.log(`\nAffected fixtures (${affected.affectedFixtures.length}):`);
+                    for (const fixture of affected.affectedFixtures) {
+                        console.log(`  - ${fixture}`);
+                    }
+                } else if (affected.allFixturesAffected) {
+                    console.log("\nAll fixtures affected.");
+                }
+                console.log("==========================\n");
+            }
         }
     );
 }
