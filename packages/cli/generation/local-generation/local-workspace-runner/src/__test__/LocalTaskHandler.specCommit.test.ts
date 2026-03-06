@@ -179,6 +179,7 @@ describe("LocalTaskHandler spec_commit_message integration", () => {
         expect(diffAnalyzerBaml).toContain(
             "The commit message from the API spec repository that triggered this SDK generation"
         );
+        expect(diffAnalyzerBaml).toContain("Use as a hint for the intent of the change");
     });
 
     it("BAML prompt includes conditional spec_commit_message block", () => {
@@ -187,7 +188,7 @@ describe("LocalTaskHandler spec_commit_message integration", () => {
             "The API spec change that triggered this SDK generation had the following commit message:"
         );
         expect(diffAnalyzerBaml).toContain("{{spec_commit_message}}");
-        expect(diffAnalyzerBaml).toContain("Use this as ground truth for the nature of the change");
+        expect(diffAnalyzerBaml).toContain("Use this as a hint for understanding the intent of the change");
     });
 
     it("BAML function signature includes prior_changelog parameter", () => {
