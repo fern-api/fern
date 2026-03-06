@@ -1,4 +1,155 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.14.0
+  changelogEntry:
+    - summary: |
+        Merge behavioral analysis into the unified AnalyzeSdkDiff prompt. The
+        AI now classifies both public API surface changes AND behavioral changes
+        (HTTP status handling, default parameter values, serialization behavior,
+        retry/backoff configuration) in a single call — producing the version
+        bump, commit message, and changelog entry in one pass. This replaces the
+        previous two-call approach where a separate Tier 3 analysis ran after
+        Tier 2 returned PATCH.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.13.0
+  changelogEntry:
+    - summary: |
+        Include the last 3 prior changelog entries from the SDK's CHANGELOG.md
+        in the AI prompt for AUTO versioning. This gives the AI context on the
+        SDK's versioning cadence and commit message style, producing more
+        consistent and appropriately-toned commit messages. The changelog is
+        read case-insensitively, capped at 2 KB, and gracefully skipped if
+        the file is missing or unreadable.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.12.0
+  changelogEntry:
+    - summary: |
+        Pass the API spec repo commit message to the AI prompt during AUTO
+        versioning. When `fern generate` runs, the CLI now reads the most recent
+        git commit message that touched the `.fern/` directory and includes it
+        in the `AnalyzeSdkDiff` prompt as `spec_commit_message`. This gives the
+        AI ground-truth context about why the API changed, producing more
+        accurate version bumps and commit messages. Merge commits, empty
+        messages, and messages shorter than 5 characters are filtered out.
+        Messages longer than 500 characters are truncated.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.11.0
+  changelogEntry:
+    - summary: |
+        Add language-specific breaking change rules to the AnalyzeSdkDiff BAML
+        prompt. The prompt now uses Jinja conditionals to include only the rules
+        for the SDK language being analyzed (typescript, python, java, go, ruby,
+        csharp, php, swift, rust, kotlin), keeping the prompt focused and
+        improving version bump accuracy. A new `extractLanguageFromGeneratorName`
+        utility maps generator names (e.g. `fernapi/fern-typescript-node-sdk`)
+        to normalized language identifiers as a fallback when
+        `generatorInvocation.language` is not set.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+- version: 4.10.0
+  changelogEntry:
+    - summary: |
+        Separate commit message from changelog entry during AUTO versioning.
+        The AI now produces a developer-facing git commit message and a separate
+        user-facing changelog entry for CHANGELOG.md and GitHub Releases. PATCH
+        changes produce an empty changelog entry. MINOR/MAJOR changes produce
+        user-facing prose describing the impact on SDK consumers. The PR body
+        uses the changelog entry when available, falling back to the commit
+        message body when absent.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+- version: 4.9.0
+  changelogEntry:
+    - summary: |
+        Deduplicate AI calls during AUTO versioning when multiple generators
+        run in a single `fern generate` invocation. An in-memory cache keyed on
+        `sha256(cleanedDiff + language + previousVersion)` is shared across all
+        generators so the AI analysis is performed exactly once per unique
+        combination of diff, language, and previous version. Subsequent generators
+        with the same inputs receive the cached result immediately, eliminating
+        redundant AI calls and ensuring consistent version bump decisions.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.8.0
+  changelogEntry:
+    - summary: |
+        Add few-shot examples to the AnalyzeSdkDiff prompt for more consistent
+        version bump classification. The examples cover the three most common
+        misclassification cases (removed export -> MAJOR, new optional parameter
+        -> MINOR, internal constant change -> PATCH) across TypeScript, Python,
+        Java, and Go, plus "when in doubt" guidance for boundary decisions.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.7.0
+  changelogEntry:
+    - summary: |
+        Pass `previous_version` and `language` to the AI prompt for AUTO
+        versioning diff analysis. The `AnalyzeSdkDiff` BAML function now
+        accepts three parameters (`diff`, `language`, `previous_version`)
+        instead of just `diff`, giving the AI meaningful calibration context
+        for commit messages and version bump decisions. New repos with no
+        previous version pass `"0.0.0"` as a sentinel value.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.6.0
+  changelogEntry:
+    - summary: |
+        Expand AUTO versioning diff exclusion list to strip noise files before
+        AI analysis. The cleaned diff now excludes lock files (`pnpm-lock.yaml`,
+        `poetry.lock`, `yarn.lock`, etc.), test files by naming convention
+        (`*.test.ts`, `*_test.go`, `*Test.java`, `__tests__/`, `wiremock/`),
+        snapshot files (`*.snap`, `__snapshots__/`), generated documentation
+        (`reference.md`), CI/editor config (`.github/`, `.editorconfig`,
+        `.prettierrc*`, `biome.json`), linting configs (`.eslintrc*`,
+        `.rubocop*`, `phpstan.neon`, `rustfmt.toml`, etc.), and build/devtool
+        configs (`tsconfig*.json`, `Makefile`, `Rakefile`, `snippet.json`,
+        `.gitignore`, etc.). `CHANGELOG*`/`README*` exclusion confirmed
+        case-insensitive. This dramatically reduces diff sizes sent to the AI
+        endpoint, fixing silent failures on large SDK diffs.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.5.0
+  changelogEntry:
+    - summary: |
+        Add .fern/metadata.json fallback for AUTO version resolution. When both
+        package registry lookups and GitHub release lookups fail to determine the current
+        SDK version, the CLI now reads the sdkVersion field from the .fern/metadata.json
+        file in the GitHub repository (written by Fern generators during previous
+        generations). This provides an additional fallback layer for version resolution.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.4.5
+  changelogEntry:
+    - summary: |
+        Improve error messages when AI analysis fails during AUTO versioning.
+        Error and warning logs now include diff size (in characters and KB),
+        number of files changed, and guidance when the diff exceeds the FAI
+        endpoint's 100,000 character limit. Previously, failures only logged a
+        generic "AI analysis failed, falling back to PATCH" message with no
+        actionable context.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
 - version: 4.4.4
   changelogEntry:
     - summary: |

@@ -946,8 +946,9 @@ export class SubClientGenerator {
             if (part.pathParameter) {
                 const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
                 if (pathParam) {
+                    const paramName = this.context.escapeRustKeyword(pathParam.name.snakeCase.safeName);
                     params.push({
-                        name: pathParam.name.snakeCase.safeName,
+                        name: paramName,
                         type: generateRustTypeForTypeReference(pathParam.valueType, this.context),
                         isRef: this.shouldPassByReference(pathParam.valueType),
                         optional: false
@@ -1394,9 +1395,10 @@ export class SubClientGenerator {
                 const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
                 if (pathParam) {
                     path += "{}";
+                    const escapedName = this.context.escapeRustKeyword(pathParam.name.snakeCase.safeName);
                     const paramName = this.getPathParameterExpression(
                         pathParam.valueType,
-                        pathParam.name.snakeCase.safeName
+                        escapedName
                     );
                     pathParams.push(paramName);
                 }

@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.28.2
+  changelogEntry:
+    - summary: |
+        Upgrade generated CI workflow to use `golangci/golangci-lint-action@v9`
+        (from `@v6`) for proper compatibility with golangci-lint v2.x.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 61
+
 - version: 1.28.1
   changelogEntry:
     - summary: |
