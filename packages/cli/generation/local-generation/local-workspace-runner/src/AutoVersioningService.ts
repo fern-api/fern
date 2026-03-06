@@ -421,6 +421,74 @@ export class AutoVersioningService {
     }
 
     /**
+     * Splits a cleaned diff into chunks that each fit within a byte budget.
+     * File sections are ranked by semantic priority (same 5-tier system as
+     * truncateDiff) so the first chunk always contains the highest-signal
+     * sections. Each chunk contains only complete file sections — no partial
+     * files.
+     *
+     * If a single file section exceeds `maxBytesPerChunk`, it is placed alone
+     * in its own chunk so no information is lost.
+     *
+     * @param diff The cleaned diff string (output of cleanDiffForAI)
+     * @param maxBytesPerChunk Maximum byte size for each chunk
+     * @return Array of diff chunk strings (at least one element for non-empty diffs)
+     */
+    public chunkDiff(diff: string, maxBytesPerChunk: number): string[] {
+        const lines = diff.split("\n");
+        const fileSections = this.parseFileSections(lines);
+
+        if (fileSections.length === 0) {
+            return [diff];
+        }
+
+        // Classify and rank each file section (highest priority first)
+        const ranked = fileSections
+            .map((section) => ({
+                text: section.lines.join("\n"),
+                priority: this.classifySection(section)
+            }))
+            .sort((a, b) => a.priority - b.priority);
+
+        const chunks: string[] = [];
+        let currentChunkTexts: string[] = [];
+        let currentChunkBytes = 0;
+
+        for (const entry of ranked) {
+            const sectionBytes = Buffer.byteLength(entry.text, "utf-8");
+
+            // If this section alone exceeds the budget, give it its own chunk
+            if (sectionBytes > maxBytesPerChunk) {
+                // Flush any accumulated sections first
+                if (currentChunkTexts.length > 0) {
+                    chunks.push(currentChunkTexts.join("\n"));
+                    currentChunkTexts = [];
+                    currentChunkBytes = 0;
+                }
+                chunks.push(entry.text);
+                continue;
+            }
+
+            // If adding this section would exceed the budget, start a new chunk
+            if (currentChunkBytes + sectionBytes > maxBytesPerChunk && currentChunkTexts.length > 0) {
+                chunks.push(currentChunkTexts.join("\n"));
+                currentChunkTexts = [];
+                currentChunkBytes = 0;
+            }
+
+            currentChunkTexts.push(entry.text);
+            currentChunkBytes += sectionBytes;
+        }
+
+        // Flush remaining sections
+        if (currentChunkTexts.length > 0) {
+            chunks.push(currentChunkTexts.join("\n"));
+        }
+
+        return chunks;
+    }
+
+    /**
      * Classifies a file section into a priority bucket for truncation ranking.
      * Lower number = higher priority (included first).
      *

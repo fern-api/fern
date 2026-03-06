@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { AutoVersioningService } from "../AutoVersioningService.js";
-import { MAX_AI_DIFF_BYTES } from "../VersionUtils.js";
+import { MAX_AI_DIFF_BYTES, maxVersionBump } from "../VersionUtils.js";
 
 // Mock logger for tests
 const mockLogger = {
@@ -683,58 +683,224 @@ describe("Cross-language signature detection and truncation", () => {
     });
 });
 
-describe("LocalTaskHandler size gate", () => {
-    it("emits WARN log when diff exceeds MAX_AI_DIFF_BYTES", async () => {
-        // This test verifies the integration logic by checking that
-        // the truncation path is exercised for large diffs.
-        const warnFn = vi.fn();
+describe("AutoVersioningService.chunkDiff", () => {
+    const service = new AutoVersioningService({ logger: mockLogger });
+
+    it("returns single chunk for diff under budget", () => {
+        const diff = makeFileSection("src/client.ts", [
+            "-export function oldMethod(): void {}",
+            "+export function newMethod(): void {}"
+        ]);
+
+        const chunks = service.chunkDiff(diff, MAX_AI_DIFF_BYTES);
+        expect(chunks).toHaveLength(1);
+        expect(chunks[0]).toBe(diff);
+    });
+
+    it("returns single chunk for empty diff", () => {
+        const chunks = service.chunkDiff("", MAX_AI_DIFF_BYTES);
+        expect(chunks).toHaveLength(1);
+        expect(chunks[0]).toBe("");
+    });
+
+    it("splits large diff into multiple chunks", () => {
+        const largeDiff = makeLargeDiff(100, 20, "+");
+        expect(Buffer.byteLength(largeDiff, "utf-8")).toBeGreaterThan(MAX_AI_DIFF_BYTES);
+
+        const chunks = service.chunkDiff(largeDiff, MAX_AI_DIFF_BYTES);
+        expect(chunks.length).toBeGreaterThan(1);
+
+        // Each chunk (except oversized single sections) should be within budget
+        for (const chunk of chunks) {
+            // A chunk may exceed budget only if it's a single oversized file section
+            const sectionCount = (chunk.match(/^diff --git /gm) || []).length;
+            if (sectionCount > 1) {
+                expect(Buffer.byteLength(chunk, "utf-8")).toBeLessThanOrEqual(MAX_AI_DIFF_BYTES);
+            }
+        }
+    });
+
+    it("preserves all file sections across chunks (no data loss)", () => {
+        const largeDiff = makeLargeDiff(50, 10, "+");
+        const originalSectionCount = (largeDiff.match(/^diff --git /gm) || []).length;
+
+        const chunks = service.chunkDiff(largeDiff, 5_000);
+
+        let totalSections = 0;
+        for (const chunk of chunks) {
+            totalSections += (chunk.match(/^diff --git /gm) || []).length;
+        }
+        expect(totalSections).toBe(originalSectionCount);
+    });
+
+    it("places oversized single section in its own chunk", () => {
+        // Create one huge section + some small ones
+        const hugeLines: string[] = [];
+        for (let i = 0; i < 1000; i++) {
+            hugeLines.push(`-removed line ${i} with lots of padding to make this very large`);
+        }
+        const hugeSection = makeFileSection("src/huge.ts", hugeLines);
+        const smallSection = makeFileSection("src/small.ts", ["+added line"]);
+
+        const diff = smallSection + "\n" + hugeSection;
+        const budget = 5_000;
+
+        expect(Buffer.byteLength(hugeSection, "utf-8")).toBeGreaterThan(budget);
+
+        const chunks = service.chunkDiff(diff, budget);
+
+        // The huge section should be in its own chunk
+        const hugeChunk = chunks.find((c) => c.includes("huge.ts"));
+        expect(hugeChunk).toBeDefined();
+        expect(hugeChunk).not.toContain("small.ts");
+    });
+
+    it("ranks sections by priority within chunks (deletions in first chunk)", () => {
+        // Create sections with different priorities
+        const deletionSection = makeFileSection("src/removed.ts", ["-export function removed(): void {}"]);
+
+        const additionSection = makeFileSection("src/added.ts", ["+const newThing = true;"]);
+
+        // Put addition first, deletion second
+        const diff = additionSection + "\n" + deletionSection;
+
+        // Budget only fits one section
+        const budget = Buffer.byteLength(deletionSection, "utf-8");
+        const chunks = service.chunkDiff(diff, budget);
+
+        // First chunk should contain the deletion (higher priority)
+        expect(chunks[0]).toContain("removed.ts");
+    });
+
+    it("produces chunks containing only complete file sections", () => {
+        const sections: string[] = [];
+        for (let i = 0; i < 20; i++) {
+            sections.push(makeFileSection(`src/file${i}.ts`, [`+line in file ${i} with some content to fill space`]));
+        }
+        const diff = sections.join("\n");
+        const chunks = service.chunkDiff(diff, 2_000);
+
+        for (const chunk of chunks) {
+            // Every chunk should start with a "diff --git" header
+            expect(chunk).toMatch(/^diff --git /);
+            // No partial lines — every "diff --git" should be at the start of a line
+            const headers = chunk.match(/diff --git /g) || [];
+            const lineStartHeaders = chunk.match(/^diff --git /gm) || [];
+            expect(headers.length).toBe(lineStartHeaders.length);
+        }
+    });
+
+    it("handles multi-language diff with priority-based chunking", () => {
+        // Priority 1: deletion-only (Java removed endpoint)
+        const javaRemoved = makeFileSection("src/main/java/DeprecatedApi.java", [
+            "-public class DeprecatedApi {",
+            "-    public void oldEndpoint() { }"
+        ]);
+        // Priority 2: mixed with signatures (Python)
+        const pythonChanged = makeFileSection("src/user/client.py", [
+            "-    def get_user(self, user_id: str) -> User:",
+            "+    def get_user(self, user_id: str, *, request_options: Optional[RequestOptions] = None) -> User:"
+        ]);
+        // Priority 4: addition-only (Go)
+        const goAdded = makeFileSection("types.go", ["+type NewRequest struct {"]);
+        // Priority 4: addition-only (TypeScript)
+        const tsAdded = makeFileSection("src/types/NewType.ts", ["+export interface NewType {"]);
+
+        // Put them in reverse order
+        const diff = [tsAdded, goAdded, pythonChanged, javaRemoved].join("\n");
+
+        // Budget that fits ~2 sections
+        const budget = Buffer.byteLength(javaRemoved, "utf-8") + Buffer.byteLength(pythonChanged, "utf-8");
+        const chunks = service.chunkDiff(diff, budget);
+
+        // First chunk should contain deletion and signature sections
+        expect(chunks[0]).toContain("DeprecatedApi.java");
+        expect(chunks[0]).toContain("client.py");
+
+        // Remaining sections in later chunk(s)
+        expect(chunks.length).toBeGreaterThan(1);
+    });
+});
+
+describe("maxVersionBump", () => {
+    it("returns MAJOR when compared with any other bump", () => {
+        expect(maxVersionBump("MAJOR", "MINOR")).toBe("MAJOR");
+        expect(maxVersionBump("MINOR", "MAJOR")).toBe("MAJOR");
+        expect(maxVersionBump("MAJOR", "PATCH")).toBe("MAJOR");
+        expect(maxVersionBump("MAJOR", "NO_CHANGE")).toBe("MAJOR");
+    });
+
+    it("returns MINOR when compared with PATCH or NO_CHANGE", () => {
+        expect(maxVersionBump("MINOR", "PATCH")).toBe("MINOR");
+        expect(maxVersionBump("PATCH", "MINOR")).toBe("MINOR");
+        expect(maxVersionBump("MINOR", "NO_CHANGE")).toBe("MINOR");
+    });
+
+    it("returns PATCH when compared with NO_CHANGE", () => {
+        expect(maxVersionBump("PATCH", "NO_CHANGE")).toBe("PATCH");
+        expect(maxVersionBump("NO_CHANGE", "PATCH")).toBe("PATCH");
+    });
+
+    it("returns NO_CHANGE when both are NO_CHANGE", () => {
+        expect(maxVersionBump("NO_CHANGE", "NO_CHANGE")).toBe("NO_CHANGE");
+    });
+
+    it("returns same bump when both are equal", () => {
+        expect(maxVersionBump("MAJOR", "MAJOR")).toBe("MAJOR");
+        expect(maxVersionBump("MINOR", "MINOR")).toBe("MINOR");
+        expect(maxVersionBump("PATCH", "PATCH")).toBe("PATCH");
+    });
+});
+
+describe("LocalTaskHandler chunked analysis", () => {
+    it("produces multiple chunks for large diffs and logs chunk count", () => {
+        const infoFn = vi.fn();
         const spyLogger = {
             ...mockLogger,
-            warn: warnFn
+            info: infoFn
         };
 
         const service = new AutoVersioningService({ logger: spyLogger });
 
         // Create a diff larger than MAX_AI_DIFF_BYTES
         const largeDiff = makeLargeDiff(100, 20, "+");
-        expect(largeDiff.length).toBeGreaterThan(MAX_AI_DIFF_BYTES);
+        expect(Buffer.byteLength(largeDiff, "utf-8")).toBeGreaterThan(MAX_AI_DIFF_BYTES);
 
-        // Simulate the size gate logic from LocalTaskHandler
-        let diffToAnalyze = largeDiff;
-        if (largeDiff.length > MAX_AI_DIFF_BYTES) {
-            const { truncated, omittedFiles } = service.truncateDiff(largeDiff, MAX_AI_DIFF_BYTES);
-            spyLogger.warn(
-                `Diff too large for AI analysis (${largeDiff.length} bytes). ` +
-                    `Truncated to ${truncated.length} bytes, omitting ${omittedFiles} files.`
+        // Simulate the chunking logic from LocalTaskHandler
+        const cleanedDiffBytes = Buffer.byteLength(largeDiff, "utf-8");
+        const chunks = service.chunkDiff(largeDiff, MAX_AI_DIFF_BYTES);
+
+        if (chunks.length > 1) {
+            spyLogger.info(
+                `Diff too large for single AI call (${cleanedDiffBytes} bytes). ` +
+                    `Split into ${chunks.length} chunks for analysis.`
             );
-            diffToAnalyze = truncated;
         }
 
-        expect(warnFn).toHaveBeenCalledTimes(1);
-        expect(warnFn).toHaveBeenCalledWith(expect.stringContaining("Diff too large for AI analysis"));
-        expect(warnFn).toHaveBeenCalledWith(expect.stringContaining("bytes"));
-        expect(diffToAnalyze).not.toBe(largeDiff);
+        expect(chunks.length).toBeGreaterThan(1);
+        expect(infoFn).toHaveBeenCalledWith(expect.stringContaining("Split into"));
+        expect(infoFn).toHaveBeenCalledWith(expect.stringContaining("chunks for analysis"));
     });
 
-    it("passes truncated diff to AI when original exceeds limit", async () => {
+    it("produces single chunk for small diffs (no splitting)", () => {
         const service = new AutoVersioningService({ logger: mockLogger });
 
-        // Create a diff larger than MAX_AI_DIFF_BYTES
+        const smallDiff = makeFileSection("src/client.ts", ["+const x = 1;"]);
+        expect(Buffer.byteLength(smallDiff, "utf-8")).toBeLessThan(MAX_AI_DIFF_BYTES);
+
+        const chunks = service.chunkDiff(smallDiff, MAX_AI_DIFF_BYTES);
+        expect(chunks).toHaveLength(1);
+    });
+
+    it("all chunks contain valid diff content", () => {
+        const service = new AutoVersioningService({ logger: mockLogger });
+
         const largeDiff = makeLargeDiff(100, 20, "+");
-        expect(largeDiff.length).toBeGreaterThan(MAX_AI_DIFF_BYTES);
+        const chunks = service.chunkDiff(largeDiff, MAX_AI_DIFF_BYTES);
 
-        // Simulate the size gate logic from LocalTaskHandler
-        let diffToAnalyze = largeDiff;
-        if (largeDiff.length > MAX_AI_DIFF_BYTES) {
-            const { truncated } = service.truncateDiff(largeDiff, MAX_AI_DIFF_BYTES);
-            diffToAnalyze = truncated;
+        for (const chunk of chunks) {
+            // Each chunk should contain at least one diff header
+            expect(chunk).toContain("diff --git");
         }
-
-        // The diff passed to AI should be the truncated version
-        expect(diffToAnalyze).not.toBe(largeDiff);
-        expect(diffToAnalyze.length).toBeLessThan(largeDiff.length);
-        // It should contain the truncation note
-        expect(diffToAnalyze).toContain("[Diff truncated:");
-        expect(diffToAnalyze).toContain("files omitted due to size limit");
     });
 });

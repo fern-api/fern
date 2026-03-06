@@ -18,7 +18,7 @@ import {
     DIFF_SIZE_LIMIT,
     formatSizeKB
 } from "./AutoVersioningService.js";
-import { isAutoVersion, MAX_AI_DIFF_BYTES } from "./VersionUtils.js";
+import { isAutoVersion, MAX_AI_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -154,18 +154,6 @@ export class LocalTaskHandler {
                     `Cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} chars), ${cleanedFileCount} files remaining`
             );
 
-            // Truncate diff if it exceeds the AI analysis size limit
-            let diffToAnalyze = cleanedDiff;
-            const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
-            if (cleanedDiffBytes > MAX_AI_DIFF_BYTES) {
-                const { truncated, omittedFiles } = autoVersioningService.truncateDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
-                this.context.logger.warn(
-                    `Diff too large for AI analysis (${cleanedDiffBytes} bytes). ` +
-                        `Truncated to ${Buffer.byteLength(truncated, "utf-8")} bytes, omitting ${omittedFiles} files.`
-                );
-                diffToAnalyze = truncated;
-            }
-
             // Handle new SDK repository with no previous version
             if (previousVersion == null) {
                 this.context.logger.info(
@@ -200,25 +188,69 @@ export class LocalTaskHandler {
                 );
             }
 
-            // Call AI to analyze the diff
+            // Split diff into chunks and analyze each one with the AI
+            const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
+            const chunks = autoVersioningService.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
+
+            if (chunks.length > 1) {
+                this.context.logger.info(
+                    `Diff too large for single AI call (${cleanedDiffBytes} bytes). ` +
+                        `Split into ${chunks.length} chunks for analysis.`
+                );
+            }
+
             try {
-                // TODO: Need to get project for BAML client configuration
                 const clientRegistry = await this.getClientRegistry();
                 const bamlClient = BamlClient.withOptions({ clientRegistry });
 
-                const analysis = await bamlClient.AnalyzeSdkDiff(diffToAnalyze);
+                let bestBump = VersionBump.NO_CHANGE;
+                let bestMessage = "";
 
-                if (analysis.version_bump === VersionBump.NO_CHANGE) {
-                    this.context.logger.info("AI detected no semantic changes");
+                for (let i = 0; i < chunks.length; i++) {
+                    const chunk = chunks[i];
+                    if (chunk == null) {
+                        continue;
+                    }
+                    this.context.logger.debug(
+                        `Analyzing chunk ${i + 1}/${chunks.length} ` + `(${Buffer.byteLength(chunk, "utf-8")} bytes)`
+                    );
+
+                    const analysis = await bamlClient.AnalyzeSdkDiff(chunk);
+                    const prevBest = bestBump;
+                    bestBump = maxVersionBump(bestBump, analysis.version_bump);
+
+                    // Keep the message from the chunk that produced the highest bump
+                    if (bestBump !== prevBest) {
+                        bestMessage = analysis.message;
+                    }
+
+                    this.context.logger.debug(
+                        `Chunk ${i + 1} result: ${analysis.version_bump}` +
+                            (bestBump !== prevBest ? ` (new highest: ${bestBump})` : "")
+                    );
+
+                    // Short-circuit: MAJOR is the highest possible bump
+                    if (bestBump === VersionBump.MAJOR) {
+                        this.context.logger.debug(
+                            `MAJOR bump detected in chunk ${i + 1}; skipping remaining ${chunks.length - i - 1} chunks.`
+                        );
+                        break;
+                    }
+                }
+
+                if (bestBump === VersionBump.NO_CHANGE) {
+                    this.context.logger.info("AI detected no semantic changes across all chunks");
                     return null;
                 }
 
-                // Calculate new version
-                const newVersion = this.incrementVersion(previousVersion, analysis.version_bump);
+                const newVersion = this.incrementVersion(previousVersion, bestBump);
 
-                this.context.logger.info(`Version bump: ${analysis.version_bump}, new version: ${newVersion}`);
+                this.context.logger.info(
+                    `Version bump: ${bestBump}, new version: ${newVersion}` +
+                        (chunks.length > 1 ? ` (from ${chunks.length} chunks)` : "")
+                );
 
-                const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
+                const commitMessage = this.isWhitelabel ? bestMessage : this.addFernBranding(bestMessage);
 
                 return {
                     version: newVersion,

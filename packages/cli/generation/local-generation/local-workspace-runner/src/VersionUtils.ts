@@ -17,6 +17,29 @@ export enum VersionBump {
     NO_CHANGE = "NO_CHANGE"
 }
 
+/**
+ * Numeric rank for each VersionBump level.
+ * Higher number = more significant change.
+ * Used by chunked analysis to pick the maximum bump across chunks.
+ */
+const VERSION_BUMP_RANK: Record<string, number> = {
+    [VersionBump.MAJOR]: 3,
+    [VersionBump.MINOR]: 2,
+    [VersionBump.PATCH]: 1,
+    [VersionBump.NO_CHANGE]: 0
+};
+
+/**
+ * Returns whichever version bump string is more significant.
+ * MAJOR > MINOR > PATCH > NO_CHANGE.
+ *
+ * Accepts plain strings so callers using the BAML-generated VersionBump enum
+ * (from @fern-api/cli-ai) or the local VersionBump enum can both use this.
+ */
+export function maxVersionBump(a: string, b: string): string {
+    return (VERSION_BUMP_RANK[a] ?? 0) >= (VERSION_BUMP_RANK[b] ?? 0) ? a : b;
+}
+
 const SEMVER_PATTERN = /^(v)?(\d+)\.(\d+)\.(\d+)(?:-([\w.-]+))?(?:\+([\w.-]+))?$/;
 
 /**
