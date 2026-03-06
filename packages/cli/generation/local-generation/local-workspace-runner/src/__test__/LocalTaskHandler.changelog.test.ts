@@ -21,10 +21,18 @@ const localTaskHandlerSource = readFileSync(localTaskHandlerPath, "utf-8");
 function createMockContext(): any {
     return {
         logger: {
-            info: () => {},
-            debug: () => {},
-            warn: () => {},
-            error: () => {}
+            info: () => {
+                // noop
+            },
+            debug: () => {
+                // noop
+            },
+            warn: () => {
+                // noop
+            },
+            error: () => {
+                // noop
+            }
         }
     };
 }
@@ -175,17 +183,13 @@ describe("LocalTaskHandler - readPriorChangelog", () => {
 describe("LocalTaskHandler - prior_changelog BAML integration", () => {
     it("AnalyzeSdkDiff BAML function signature includes prior_changelog parameter", () => {
         expect(diffAnalyzerBaml).toContain("prior_changelog: string @description(");
-        expect(diffAnalyzerBaml).toContain(
-            "The last 3 changelog entries for this SDK, empty string if none."
-        );
+        expect(diffAnalyzerBaml).toContain("The last 3 changelog entries for this SDK, empty string if none.");
     });
 
     it("prompt includes prior_changelog conditional block", () => {
         expect(diffAnalyzerBaml).toContain("{% if prior_changelog %}");
         expect(diffAnalyzerBaml).toContain("{{prior_changelog}}");
-        expect(diffAnalyzerBaml).toContain(
-            "Match the tone and format of these entries in your commit message."
-        );
+        expect(diffAnalyzerBaml).toContain("Match the tone and format of these entries in your commit message.");
     });
 
     it("passes extracted changelog to AnalyzeSdkDiff", () => {
