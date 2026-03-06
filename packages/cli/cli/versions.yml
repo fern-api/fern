@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.8.0
+- version: 4.9.0
   changelogEntry:
     - summary: |
         Add Tier 1 deterministic IR diff analysis for AUTO versioning. Before
@@ -7,13 +7,24 @@
         against a stored `.fern/ir-snapshot.json` snapshot from the previous
         generation. Breaking changes (endpoint removal, path/method changes,
         required field additions/removals, auth scheme changes, etc.) are
-        classified as MAJOR deterministically without any AI call. Non-breaking
-        changes constrain the AI ceiling so it cannot over-escalate. This is
+        classified as MAJOR deterministically — the AI is still called for
+        high-quality changelog messages but cannot downgrade the bump. This is
         faster, cheaper, and handles large SDK diffs that previously failed.
       type: feat
   createdAt: "2026-03-05"
   irVersion: 65
 
+- version: 4.8.0
+  changelogEntry:
+    - summary: |
+        Add few-shot examples to the AnalyzeSdkDiff prompt for more consistent
+        version bump classification. The examples cover the three most common
+        misclassification cases (removed export -> MAJOR, new optional parameter
+        -> MINOR, internal constant change -> PATCH) across TypeScript, Python,
+        Java, and Go, plus "when in doubt" guidance for boundary decisions.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
 - version: 4.7.0
   changelogEntry:
     - summary: |

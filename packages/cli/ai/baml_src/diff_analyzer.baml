@@ -39,6 +39,64 @@ function AnalyzeSdkDiff(
     - PATCH: Bug fixes, documentation, internal refactoring, or other changes that don't affect the public API
     - NO_CHANGE: The diff is empty
 
+    --- Examples ---
+
+    Examples of correct classifications:
+
+    --- MAJOR: removed exported TypeScript function ---
+    diff --git a/src/api/client.ts b/src/api/client.ts
+    -export async function getUser(id: string): Promise<User> {
+    -    return this.request("GET", `/users/${id}`);
+    -}
+    version_bump: MAJOR
+    reason: Existing callers of getUser() will get a compile error.
+
+    --- MAJOR: removed Python public method ---
+    diff --git a/vital/client.py b/vital/client.py
+    -    def get_user(self, user_id: str) -> User:
+    -        return self._request("GET", f"/users/{user_id}")
+    version_bump: MAJOR
+    reason: Existing callers crash with AttributeError.
+
+    --- MINOR: new optional TypeScript parameter ---
+    diff --git a/src/api/client.ts b/src/api/client.ts
+    -async createUser(name: string): Promise<User>
+    +async createUser(name: string, role?: UserRole): Promise<User>
+    version_bump: MINOR
+    reason: Existing callers unaffected — new parameter is optional.
+
+    --- MINOR: new Java public method ---
+    diff --git a/src/.../UsersClient.java b/src/.../UsersClient.java
+    +    public CompletableFuture<User> getUserAsync(String userId) {
+    +        return this.httpClient.sendAsync(...);
+    +    }
+    version_bump: MINOR
+    reason: New capability added, nothing removed or changed.
+
+    --- PATCH: internal retry constant ---
+    diff --git a/src/core/http_client.py b/src/core/http_client.py
+    -MAX_RETRIES = 3
+    +MAX_RETRIES = 5
+    version_bump: PATCH
+    reason: Implementation detail — public API surface unchanged.
+
+    --- PATCH: Go import reorganization ---
+    diff --git a/client.go b/client.go
+    -import "fmt"
+    -import "net/http"
+    +import (
+    +    "fmt"
+    +    "net/http"
+    +)
+    version_bump: PATCH
+    reason: Formatting change only, no functional difference.
+
+    --- End Examples ---
+
+    Apply these patterns to the diff below. When in doubt between MINOR and PATCH,
+    prefer MINOR. When in doubt between MAJOR and MINOR, examine whether existing
+    callers would break without any code changes on their side.
+
     Message Format (use this exact structure):
     ```
     <type>: <short summary>
