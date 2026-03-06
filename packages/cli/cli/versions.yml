@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.16.0
+  changelogEntry:
+    - summary: |
+        Add `fern merge` CLI command to merge an overrides file (e.g.
+        AI-generated examples) into an OpenAPI spec. Usage:
+        `fern merge openapi.yml overrides.yml -o output.yml`. The command
+        deep-merges the overrides into the base spec, allowing users to
+        combine `x-fern-examples` and other extensions without manual editing.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
 - version: 4.15.0
   changelogEntry:
     - summary: |
