@@ -91,6 +91,7 @@ export async function sdkDiffCommand({
         context.logger.warn("No differences found between the directories");
         return {
             message: "No changes detected between the directories",
+            changelog_entry: "",
             version_bump: VersionBump.NO_CHANGE
         };
     }
@@ -113,7 +114,7 @@ export async function sdkDiffCommand({
         // Create a BAML client with options if we have a custom registry
         const bamlClient = BamlClient.withOptions({ clientRegistry });
 
-        const analysis = await bamlClient.AnalyzeSdkDiff(gitDiff);
+        const analysis = await bamlClient.AnalyzeSdkDiff(gitDiff, "unknown", "0.0.0", "", "");
         context.logger.debug("Analysis complete");
         return analysis;
     } catch (error) {

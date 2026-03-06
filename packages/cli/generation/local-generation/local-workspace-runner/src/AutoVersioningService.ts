@@ -24,6 +24,11 @@ export interface AutoVersionResult {
      * The commit message describing the changes.
      */
     commitMessage: string;
+    /**
+     * User-facing changelog entry for CHANGELOG.md and GitHub Releases.
+     * Undefined for PATCH changes, present for MINOR/MAJOR.
+     */
+    changelogEntry?: string;
 }
 
 /**
@@ -81,6 +86,7 @@ const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     /(?:^|\/)reference\.md$/i,
     /(?:^|\/)changelog(?:\.[^/]*)?$/i,
     /(?:^|\/)readme(?:\.[^/]*)?$/i,
+    /(?:^|\/)license(?:\.[^/]*)?$/i,
 
     // Lock files (dependency resolution, zero semantic value)
     /(?:^|\/)pnpm-lock\.yaml$/i,
