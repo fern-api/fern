@@ -58,7 +58,10 @@ export class ContainerTestRunner extends TestRunner {
             throw new Error(`Failed to build the container for ${this.generator.workspaceName}.`);
         }
 
-        // Start a reusable long-lived container for generation
+        // Start a reusable long-lived container for generation (guard against double build() calls)
+        if (this.reusableContainer != null) {
+            return;
+        }
         this.reusableContainer = new ReusableContainerExecutionEnvironment({
             imageName: this.getContainerImageName(),
             runner: this.runner
