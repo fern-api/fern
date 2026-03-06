@@ -59,6 +59,22 @@ export class SubClientGenerator {
 
         // Generate regular client file for subpackages without subclients
         const filename = this.context.getUniqueFilenameForSubpackage(this.subpackage);
+
+        // Check if this standalone file would collide with a directory created by
+        // another subpackage. This happens when multiple subpackages map to the same
+        // path (e.g., from HTTP + AsyncAPI sources) and one has children that create
+        // a subdirectory matching this file's module name. In Rust, both `X.rs` and
+        // `X/mod.rs` resolve to module `X`, causing an ambiguity error.
+        const moduleName = filename.replace(".rs", "");
+        const parentDir = fernFilepathDir ?? "";
+        const potentialConflictDir = parentDir ? `${parentDir}/${moduleName}` : moduleName;
+        const wouldCollideWithDirectory = Object.values(this.context.ir.subpackages).some((otherSubpackage) => {
+            const otherDir = this.context.getDirectoryForFernFilepath(otherSubpackage.fernFilepath);
+            return otherDir === potentialConflictDir || (otherDir != null && otherDir.startsWith(potentialConflictDir + "/"));
+        });
+        if (wouldCollideWithDirectory) {
+            return null; // Skip standalone file; another subpackage creates a directory with the same module name
+        }
         const endpoints = this.service?.endpoints || [];
 
         const rustClient = rust.client({

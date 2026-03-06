@@ -335,14 +335,23 @@ export class RootClientGenerator {
     }
 
     private generateUnifiedModFileIfNeeded(subpackages: FernIr.Subpackage[], currentPath: string): RustFile | null {
-        // Find the subpackage that corresponds to this directory path
-        const targetSubpackage = subpackages.find((subpackage) => {
+        // Find all subpackages that correspond to this directory path.
+        // Multiple subpackages can map to the same path (e.g., from HTTP + AsyncAPI sources).
+        const matchingSubpackages = subpackages.filter((subpackage) => {
             const fernFilepathDir = this.context.getDirectoryForFernFilepath(subpackage.fernFilepath);
             return fernFilepathDir === currentPath;
         });
 
-        if (!targetSubpackage) {
+        if (matchingSubpackages.length === 0) {
             return null; // No direct subpackage for this path
+        }
+
+        // Prefer the subpackage that has children (subclients), since it needs a unified mod.rs.
+        // When multiple subpackages share the same path, only one typically has children.
+        const targetSubpackage =
+            matchingSubpackages.find((sp) => sp.subpackages.length > 0) ?? matchingSubpackages[0];
+        if (!targetSubpackage) {
+            return null;
         }
 
         // Check if this subpackage has subclients (nested structure)
@@ -354,7 +363,6 @@ export class RootClientGenerator {
         }
 
         // Generate unified mod.rs with client struct + submodule declarations
-        const subClientGenerator = new SubClientGenerator(this.context, targetSubpackage);
         return this.generateUnifiedModFileContent(targetSubpackage, subClientSubpackages, currentPath);
     }
 
