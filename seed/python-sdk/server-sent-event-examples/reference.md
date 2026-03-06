@@ -21,7 +21,7 @@ client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.completions.stream(
-    query="foo",
+    query="",
 )
 for chunk in response.data:
     yield chunk
@@ -79,7 +79,7 @@ client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
 response = client.completions.stream_events(
-    query="query",
+    query="",
 )
 for chunk in response.data:
     yield chunk
