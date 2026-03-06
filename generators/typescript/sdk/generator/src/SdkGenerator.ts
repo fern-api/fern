@@ -1935,6 +1935,7 @@ export class SdkGenerator {
                 coreUtilitiesManager: this.coreUtilitiesManager,
                 dependencyManager: this.dependencyManager,
                 fernConstants: this.intermediateRepresentation.constants,
+                // Shared by reference intentionally — all contexts accumulate exports into the same manager
                 exportsManager: this.exportsManager,
                 versionGenerator: this.versionGenerator,
                 versionDeclarationReferencer: this.versionDeclarationReferencer,

@@ -231,6 +231,8 @@ export class ExportsManager {
         // Group exports by resolved source file to handle path variants (e.g. "src" vs "/src")
         // that map to the same index.ts file. The old addExportDeclaration() approach appended
         // per call, but replaceWithText() overwrites, so we must accumulate all lines first.
+        // Note: replaceWithText is safe here because index.ts files are exclusively written by
+        // this method — no other code populates them before writeExportsToProject is called.
         const exportLinesByFile = new Map<SourceFile, string[]>();
 
         const sortedExports = Object.entries(this.exports).sort(([a], [b]) => a.localeCompare(b));
