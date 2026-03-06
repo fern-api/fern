@@ -189,7 +189,9 @@ export async function sdkDiffCommand({
         context.failWithoutThrowing(
             `Failed to analyze SDK diff. ` +
                 `Diff stats: ${gitDiff.length.toLocaleString()} chars, ${diffSizeKB}KB, ${fileCount} files changed. ` +
-                (gitDiff.length > DIFF_SIZE_LIMIT ? `The diff exceeds the AI endpoint's 100,000 character limit. ` : "") +
+                (gitDiff.length > DIFF_SIZE_LIMIT
+                    ? `The diff exceeds the AI endpoint's 100,000 character limit. `
+                    : "") +
                 `Error: ${errorMessage}`
         );
         throw new FernCliError();
