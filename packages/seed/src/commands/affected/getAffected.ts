@@ -4,15 +4,23 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 
 /**
  * Result of affected detection — which generators and fixtures need to run.
+ *
+ * Supports granular per-generator fixture resolution:
+ * - If a generator's source changed, it needs ALL its fixtures → listed in generatorsWithAllFixtures
+ * - If a test definition changed, ALL generators need that fixture → listed in affectedFixtures
+ * - When both happen, each generator gets the union: generators with source changes run all fixtures,
+ *   other generators run only the changed fixtures (no unnecessary full cross-product)
  */
 export interface AffectedResult {
-    /** If true, ALL generators are affected (e.g. IR/seed infrastructure changed) */
+    /** If true, ALL generators are affected (e.g. IR/seed infrastructure changed, or test defs changed) */
     allGeneratorsAffected: boolean;
-    /** If true, ALL fixtures are affected for the affected generators */
+    /** If true, ALL fixtures are affected for ALL generators (e.g. global infrastructure changed) */
     allFixturesAffected: boolean;
     /** Specific generator workspace names that are affected (empty if allGeneratorsAffected) */
     affectedGenerators: string[];
-    /** Specific fixture names that are affected (empty if allFixturesAffected) */
+    /** Generators whose source code changed — these need ALL their fixtures run */
+    generatorsWithAllFixtures: string[];
+    /** Specific fixture names that changed — ALL generators need to run these */
     affectedFixtures: string[];
     /** Summary of what was detected, for logging */
     summary: string[];
@@ -260,6 +268,7 @@ export function detectAffected(
             allGeneratorsAffected: true,
             allFixturesAffected: true,
             affectedGenerators: [],
+            generatorsWithAllFixtures: [],
             affectedFixtures: [],
             summary
         };
@@ -306,6 +315,7 @@ export function detectAffected(
             allGeneratorsAffected: true,
             allFixturesAffected: true,
             affectedGenerators: [],
+            generatorsWithAllFixtures: [],
             affectedFixtures: [],
             summary
         };
@@ -345,6 +355,9 @@ export function detectAffected(
     }
 
     // === SEED.YML DETECTION (always via git diff) ===
+    // When a generator's seed.yml changes, that generator needs all its fixtures.
+    // The generator is added to affectedGeneratorSet which flows into generatorsWithAllFixtures,
+    // so resolveAffectedFixtures will return all fixtures for that specific generator.
     for (const file of changedFiles) {
         if (file.startsWith("seed/") && file.endsWith("/seed.yml")) {
             const parts = file.split("/");
@@ -352,23 +365,21 @@ export function detectAffected(
                 const generatorName = parts[1];
                 if (generatorName != null && allGeneratorNames.includes(generatorName)) {
                     affectedGeneratorSet.add(generatorName);
-                    allFixturesAffected = true;
-                    summary.push(`seed.yml changed for generator: ${generatorName}`);
+                    summary.push(`seed.yml changed for generator: ${generatorName} (needs all fixtures)`);
                 }
             }
         }
     }
 
-    // If test definitions changed, all generators need to run those fixtures
+    // If test definitions changed, all generators need to run those specific fixtures
     if (affectedFixtureSet.size > 0) {
         allGeneratorsAffected = true;
-        summary.push("Test definitions changed — all generators affected for changed fixtures.");
+        summary.push("Test definitions changed — all generators need to run changed fixtures.");
     }
 
-    // If generator source changed, all fixtures need to run for those generators
+    // Generators whose source changed need all their fixtures
     if (affectedGeneratorSet.size > 0) {
-        allFixturesAffected = true;
-        summary.push("Generator source changed — all fixtures affected for changed generators.");
+        summary.push(`Generator source changed — ${[...affectedGeneratorSet].join(", ")} need all fixtures.`);
     }
 
     // If nothing was detected as affected, fall back to running everything
@@ -378,6 +389,7 @@ export function detectAffected(
             allGeneratorsAffected: true,
             allFixturesAffected: true,
             affectedGenerators: [],
+            generatorsWithAllFixtures: [],
             affectedFixtures: [],
             summary
         };
@@ -387,6 +399,7 @@ export function detectAffected(
         allGeneratorsAffected,
         allFixturesAffected,
         affectedGenerators: allGeneratorsAffected ? [] : [...affectedGeneratorSet],
+        generatorsWithAllFixtures: [...affectedGeneratorSet],
         affectedFixtures: allFixturesAffected ? [] : [...affectedFixtureSet],
         summary
     };
@@ -408,10 +421,20 @@ export function resolveAffectedGenerators(
 
 /**
  * Resolve affected fixtures for a given generator.
- * Returns the filtered list of fixture names that need to run.
+ * If the generator's source changed (it's in generatorsWithAllFixtures), run ALL its fixtures.
+ * Otherwise, run only the specific fixtures that changed (affectedFixtures).
+ * This avoids the full cross-product when both generators and fixtures change.
  */
-export function resolveAffectedFixtures(affected: AffectedResult, availableFixtures: string[]): string[] {
+export function resolveAffectedFixtures(
+    affected: AffectedResult,
+    availableFixtures: string[],
+    generatorName?: string
+): string[] {
     if (affected.allFixturesAffected) {
+        return availableFixtures;
+    }
+    // If this generator's source changed, it needs all its fixtures
+    if (generatorName != null && affected.generatorsWithAllFixtures.includes(generatorName)) {
         return availableFixtures;
     }
     return availableFixtures.filter((f) => {

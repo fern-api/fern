@@ -197,12 +197,26 @@ function addTestCommand(cli: Argv) {
                         // Let the per-generator fixture resolution handle it (will use all fixtures)
                         argv.fixture = undefined;
                         console.log("All fixtures affected.");
-                    } else if (affectedResult.affectedFixtures.length === 0) {
+                    } else if (
+                        affectedResult.affectedFixtures.length === 0 &&
+                        affectedResult.generatorsWithAllFixtures.length === 0
+                    ) {
                         console.log("No affected fixtures detected. Nothing to run.");
                         return;
                     } else {
-                        argv.fixture = affectedResult.affectedFixtures;
-                        console.log(`Affected fixtures: ${argv.fixture.join(", ")}`);
+                        // Keep argv.fixture non-null so the per-generator loop enters
+                        // the affected resolution branch (not the "all fixtures" branch).
+                        // resolveAffectedFixtures handles per-generator logic:
+                        // generators with source changes get all fixtures,
+                        // others get only the changed fixtures.
+                        if (affectedResult.affectedFixtures.length > 0) {
+                            console.log(`Changed fixtures: ${affectedResult.affectedFixtures.join(", ")}`);
+                        }
+                        if (affectedResult.generatorsWithAllFixtures.length > 0) {
+                            console.log(
+                                `Generators needing all fixtures: ${affectedResult.generatorsWithAllFixtures.join(", ")}`
+                            );
+                        }
                     }
                 }
                 console.log("==========================\n");
@@ -230,9 +244,11 @@ function addTestCommand(cli: Argv) {
                 if (argv.fixture == null) {
                     fixturesForGenerator = getAvailableFixtures(generator, false);
                 } else if (isFixtureAffected && affectedResult != null && !affectedResult.allFixturesAffected) {
-                    // In affected mode, resolve fixtures per-generator (filter by what's available)
+                    // In affected mode, resolve fixtures per-generator:
+                    // - Generators whose source changed get ALL their fixtures
+                    // - Other generators get only the changed fixtures
                     const available = getAvailableFixtures(generator, false);
-                    fixturesForGenerator = resolveAffectedFixtures(affectedResult, available);
+                    fixturesForGenerator = resolveAffectedFixtures(affectedResult, available, generator.workspaceName);
                     if (fixturesForGenerator.length === 0) {
                         console.log(
                             `No affected fixtures available for generator ${generator.workspaceName}. Skipping.`
@@ -762,6 +778,7 @@ function addAffectedCommand(cli: Argv) {
                             allGeneratorsAffected: affected.allGeneratorsAffected,
                             allFixturesAffected: affected.allFixturesAffected,
                             generators: resolvedGenerators.map((g) => g.workspaceName),
+                            generatorsWithAllFixtures: affected.generatorsWithAllFixtures,
                             fixtures: affected.affectedFixtures,
                             summary: affected.summary
                         },
@@ -778,11 +795,12 @@ function addAffectedCommand(cli: Argv) {
                 const resolvedGenerators = resolveAffectedGenerators(affected, generators);
                 console.log(`\nAffected generators (${resolvedGenerators.length}):`);
                 for (const gen of resolvedGenerators) {
-                    console.log(`  - ${gen.workspaceName}`);
+                    const needsAllFixtures = affected.generatorsWithAllFixtures.includes(gen.workspaceName);
+                    console.log(`  - ${gen.workspaceName}${needsAllFixtures ? " (all fixtures)" : ""}`);
                 }
 
                 if (!affected.allFixturesAffected && affected.affectedFixtures.length > 0) {
-                    console.log(`\nAffected fixtures (${affected.affectedFixtures.length}):`);
+                    console.log(`\nChanged fixtures — all generators run these (${affected.affectedFixtures.length}):`);
                     for (const fixture of affected.affectedFixtures) {
                         console.log(`  - ${fixture}`);
                     }
