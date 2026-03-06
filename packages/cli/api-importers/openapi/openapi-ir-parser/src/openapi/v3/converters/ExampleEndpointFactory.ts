@@ -471,7 +471,7 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
+            if (example != null && !isExamplePrimitive(example, true)) {
                 this.logger.debug(
                     `Expected a primitive example but got ${example.type} for path parameter ${
                         pathParameter.name
@@ -505,12 +505,26 @@ export class ExampleEndpointFactory {
             });
             if (example != null && !isExamplePrimitive(example)) {
                 this.logger.debug(
-                    `Expected a primitive example but got ${example.type} for query parameter ${
+                    `Expected a primitive or array example but got ${example.type} for query parameter ${
                         queryParameter.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
                 );
                 example = undefined;
             }
+
+            // For arrays, also validate that all items are primitives
+            if (example != null && example.type === "array") {
+                const allItemsArePrimitive = example.value.every((item) => isExamplePrimitive(item, false));
+                if (!allItemsArePrimitive) {
+                    this.logger.debug(
+                        `Array contains non-primitive items for query parameter ${
+                            queryParameter.name
+                        } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
+                    );
+                    example = undefined;
+                }
+            }
+
             if (required && example == null) {
                 return [];
             } else if (example != null) {
@@ -542,6 +556,20 @@ export class ExampleEndpointFactory {
                 );
                 example = undefined;
             }
+
+            // For arrays, also validate that all items are primitives
+            if (example != null && example.type === "array") {
+                const allItemsArePrimitive = example.value.every((item) => isExamplePrimitive(item, false));
+                if (!allItemsArePrimitive) {
+                    this.logger.debug(
+                        `Array contains non-primitive items for header parameter ${
+                            header.name
+                        } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
+                    );
+                    example = undefined;
+                }
+            }
+
             if (required && example == null) {
                 return [];
             } else if (example != null) {
@@ -594,6 +622,20 @@ export class ExampleEndpointFactory {
                 );
                 example = undefined;
             }
+
+            // For arrays, also validate that all items are primitives
+            if (example != null && example.type === "array") {
+                const allItemsArePrimitive = example.value.every((item) => isExamplePrimitive(item, false));
+                if (!allItemsArePrimitive) {
+                    this.logger.debug(
+                        `Array contains non-primitive items for global header parameter ${
+                            globalHeader.name
+                        } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
+                    );
+                    example = undefined;
+                }
+            }
+
             if (example != null) {
                 headers.push({
                     name: globalHeader.header,
@@ -861,7 +903,7 @@ function getResponseSchema(response: ResponseWithExample | null | undefined): Sc
     return { type: "present", schema: response.schema, examples: response.fullExamples ?? [] };
 }
 
-export function isExamplePrimitive(example: FullExample): boolean {
+export function isExamplePrimitive(example: FullExample, path = false): boolean {
     switch (example.type) {
         case "primitive":
         case "enum":
@@ -870,6 +912,12 @@ export function isExamplePrimitive(example: FullExample): boolean {
         case "unknown":
             return isExamplePrimitive(example);
         case "array":
+            // path cannot accept arrays
+            if (path) {
+                return false;
+            } else {
+                return true;
+            }
         case "object":
         case "map":
             return false;
