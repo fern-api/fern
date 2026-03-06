@@ -1,3 +1,4 @@
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod b;
@@ -11,6 +12,7 @@ pub struct AClient {
     pub b: BClient,
     pub c: CClient,
 }
+
 impl AClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
