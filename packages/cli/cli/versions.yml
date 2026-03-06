@@ -10,7 +10,7 @@
         Behavioral changes escalate the version bump from PATCH to MINOR. Tier 3
         failure is non-fatal and falls back to PATCH.
       type: feat
-  createdAt: "2026-03-05"
+  createdAt: "2026-03-06"
   irVersion: 65
 
 - version: 4.10.0
