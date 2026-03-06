@@ -7,6 +7,7 @@ import {
     stopContainer
 } from "@fern-api/docker-utils";
 import { Logger } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
 import {
     CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
     CONTAINER_FERN_DIRECTORY,
@@ -300,7 +301,6 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
     }
 
     private async getImageEntrypoint(logger: Logger): Promise<string[]> {
-        const { loggingExeca } = await import("@fern-api/logging-execa");
         const { stdout, stderr, exitCode } = await loggingExeca(
             logger,
             this.runner,
