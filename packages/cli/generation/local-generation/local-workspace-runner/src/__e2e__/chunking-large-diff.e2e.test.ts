@@ -361,7 +361,6 @@ describe("E2E: Large Diff Chunking Pipeline", () => {
 
             console.log(`  ${oversizedChunks} oversized single-file chunks out of ${chunks.length} total`);
         });
-
     });
 
     describe("Realistic 700-file Java SDK diff", () => {
