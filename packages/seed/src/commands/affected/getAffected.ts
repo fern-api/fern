@@ -124,7 +124,7 @@ interface TurboLsOutput {
  */
 export function getTurboAffectedPackages(repoRoot: string, baseRef: string): TurboPackage[] | null {
     try {
-        const output = execFileSync("npx", ["turbo", "ls", "--affected", "--output=json"], {
+        const output = execFileSync("pnpm", ["turbo", "ls", "--affected", "--output=json"], {
             cwd: repoRoot,
             encoding: "utf-8",
             timeout: 60000,
