@@ -20,11 +20,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
     private static ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId =
         "ADDITIONAL_QUERY_STRING_PARAMETERS";
+    private static WEBSOCKETS_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKETS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<FernIr.EndpointId, EndpointWithFilepath> = {};
     private readonly prerenderedSnippetsByEndpointId: Record<FernIr.EndpointId, string> = {};
-    private readonly defaultEndpointId: FernIr.EndpointId;
+    private readonly defaultEndpointId: FernIr.EndpointId | undefined;
     private readonly crateName: string;
 
     constructor({
@@ -39,10 +40,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
-        this.defaultEndpointId =
-            this.context.ir.readmeConfig?.defaultEndpoint != null
-                ? this.context.ir.readmeConfig.defaultEndpoint
-                : this.getDefaultEndpointId();
+        if (this.context.ir.readmeConfig?.defaultEndpoint != null) {
+            this.defaultEndpointId = this.context.ir.readmeConfig.defaultEndpoint;
+        } else if (endpointSnippets.length > 0) {
+            this.defaultEndpointId = this.getDefaultEndpointId();
+        } else {
+            this.defaultEndpointId = undefined;
+        }
         this.crateName = this.context.getCrateName();
     }
 
@@ -71,6 +75,12 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
             this.buildAdditionalQueryStringParametersSnippets();
 
+        // WebSocket
+        const wsSnippets = this.buildWebSocketSnippets();
+        if (wsSnippets.length > 0) {
+            snippets[ReadmeSnippetBuilder.WEBSOCKETS_FEATURE_ID] = wsSnippets;
+        }
+
         // Pagination disable it for now, currently only support normal pagination
         // snippets[ReadmeSnippetBuilder.PAGINATION_FEATURE_ID] = this.buildPaginationSnippets();
 
@@ -81,6 +91,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const endpointIds = this.getConfiguredEndpointIdsForFeature(FernGeneratorCli.StructuredFeatureId.Usage);
         if (endpointIds != null && endpointIds.length > 0) {
             return endpointIds.map((endpointId) => this.getSnippetForEndpointId(endpointId)).filter(isNonNullish);
+        }
+        if (this.defaultEndpointId == null) {
+            return [];
         }
         const snippet = this.getSnippetForEndpointId(this.defaultEndpointId);
         return snippet != null ? [snippet] : [];
@@ -213,7 +226,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getEndpointsForFeature(featureId: FernIr.FeatureId): EndpointWithFilepath[] {
-        const endpointIds = this.getConfiguredEndpointIdsForFeature(featureId) ?? [this.defaultEndpointId];
+        const configuredIds = this.getConfiguredEndpointIdsForFeature(featureId);
+        const endpointIds = configuredIds ?? (this.defaultEndpointId != null ? [this.defaultEndpointId] : []);
         return endpointIds.map(this.lookupEndpointById.bind(this)).filter(isNonNullish);
     }
 
@@ -565,6 +579,180 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }`);
 
         return [configVar, clientVar, streamVar, whileLoop];
+    }
+
+    private buildWebSocketSnippets(): string[] {
+        if (!this.context.hasWebSocketChannels()) {
+            return [];
+        }
+
+        const websocketChannels = this.context.ir.websocketChannels;
+        if (!websocketChannels) {
+            return [];
+        }
+
+        const snippets: string[] = [];
+        const crateName = this.crateName;
+
+        // Build channel name map using the same logic as WebSocketChannelGenerator
+        const channelNameMap = this.buildWebSocketChannelNameMap(websocketChannels);
+
+        for (const [channelId, channel] of Object.entries(websocketChannels)) {
+            const names = channelNameMap.get(channelId);
+            if (names == null) {
+                continue;
+            }
+
+            const { clientName, moduleName } = names;
+            const clientMessages = channel.messages.filter((m) => m.origin === "client");
+            const serverMessages = channel.messages.filter((m) => m.origin === "server");
+
+            const writer = new Writer();
+
+            // Import statement
+            writer.write(`use ${crateName}::api::websocket::${clientName};`);
+            writer.newLine();
+            writer.newLine();
+
+            // Build connect call
+            const connectParams: string[] = ['"wss://api.example.com"'];
+            for (const pathParam of channel.pathParameters) {
+                connectParams.push(`"${pathParam.name.snakeCase.safeName}"`);
+            }
+            for (const header of channel.headers) {
+                connectParams.push(`"${header.name.name.snakeCase.safeName}"`);
+            }
+            for (const qp of channel.queryParameters) {
+                const isOptional = qp.valueType.type === "container" && qp.valueType.container.type === "optional";
+                if (isOptional) {
+                    connectParams.push("None");
+                } else {
+                    connectParams.push(`"${qp.name.name.snakeCase.safeName}"`);
+                }
+            }
+
+            writer.write(`let mut client = ${clientName}::connect(`);
+            writer.newLine();
+            writer.indent();
+            for (let i = 0; i < connectParams.length; i++) {
+                writer.write(connectParams[i] + ",");
+                writer.newLine();
+            }
+            writer.dedent();
+            writer.write(").await.expect(\"Failed to connect\");");
+            writer.newLine();
+            writer.newLine();
+
+            // Show a send example if there are client messages
+            if (clientMessages.length > 0) {
+                const firstMsg = clientMessages[0];
+                if (firstMsg != null) {
+                    const methodName = this.getWebSocketMessageMethodName(firstMsg, "send");
+                    const bodyType = this.getWebSocketMessageBodyType(firstMsg);
+                    if (bodyType) {
+                        writer.write(`// Send a message`);
+                        writer.newLine();
+                        writer.write(`client.${methodName}(&${bodyType} { /* fields */ }).await.expect("Failed to send");`);
+                    } else {
+                        writer.write(`// Send a message`);
+                        writer.newLine();
+                        writer.write(`client.${methodName}(&serde_json::json!({})).await.expect("Failed to send");`);
+                    }
+                    writer.newLine();
+                    writer.newLine();
+                }
+            }
+
+            // Show receive example if there are server messages
+            if (serverMessages.length > 0) {
+                writer.write(`// Receive messages`);
+                writer.newLine();
+                writer.write(`while let Some(Ok(message)) = client.recv().await {`);
+                writer.newLine();
+                writer.indent();
+                writer.write(`println!("{:?}", message);`);
+                writer.dedent();
+                writer.newLine();
+                writer.write(`}`);
+                writer.newLine();
+                writer.newLine();
+            }
+
+            // Close
+            writer.write(`// Close the connection`);
+            writer.newLine();
+            writer.write(`client.close().await.expect("Failed to close");`);
+
+            snippets.push(writer.toString().trim() + "\n");
+
+            // Only generate one snippet — the first channel is enough for the README
+            break;
+        }
+
+        return snippets;
+    }
+
+    private buildWebSocketChannelNameMap(
+        websocketChannels: Record<FernIr.WebSocketChannelId, FernIr.WebSocketChannel>
+    ): Map<string, { moduleName: string; clientName: string }> {
+        const nameMap = new Map<string, { moduleName: string; clientName: string }>();
+
+        // Detect name collisions
+        const nameCount = new Map<string, number>();
+        for (const channel of Object.values(websocketChannels)) {
+            const baseName = channel.name.snakeCase.safeName;
+            nameCount.set(baseName, (nameCount.get(baseName) ?? 0) + 1);
+        }
+
+        for (const [channelId, channel] of Object.entries(websocketChannels)) {
+            const baseName = channel.name.snakeCase.safeName;
+
+            if ((nameCount.get(baseName) ?? 0) > 1) {
+                // Derive unique name from channel ID
+                const cleaned = channelId.replace(/^channel_/, "").replace(/\//g, "_");
+                const pascalCase = cleaned
+                    .split("_")
+                    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+                    .join("");
+                nameMap.set(channelId, {
+                    moduleName: cleaned,
+                    clientName: `${pascalCase}Client`
+                });
+            } else {
+                nameMap.set(channelId, {
+                    moduleName: channel.name.snakeCase.safeName,
+                    clientName: `${channel.name.pascalCase.safeName}Client`
+                });
+            }
+        }
+
+        return nameMap;
+    }
+
+    private getWebSocketMessageMethodName(msg: FernIr.WebSocketMessage, prefix: string): string {
+        const name = msg.body.type === "inlinedBody"
+            ? msg.body.name.snakeCase.safeName
+            : msg.type
+                .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+                .replace(/([A-Z])([A-Z][a-z])/g, "$1_$2")
+                .toLowerCase();
+        return `${prefix}_${name}`;
+    }
+
+    private getWebSocketMessageBodyType(msg: FernIr.WebSocketMessage): string | undefined {
+        if (msg.body.type === "reference") {
+            const typeRef = msg.body.bodyType;
+            if (typeRef.type === "named") {
+                return this.context.getUniqueTypeNameForReference(typeRef);
+            }
+            if (typeRef.type === "primitive") {
+                return undefined;
+            }
+        }
+        if (msg.body.type === "inlinedBody") {
+            return msg.body.name.pascalCase.safeName;
+        }
+        return undefined;
     }
 
     private writeCode(code: string): string {
