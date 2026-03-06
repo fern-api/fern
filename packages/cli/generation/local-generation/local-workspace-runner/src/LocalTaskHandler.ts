@@ -314,7 +314,7 @@ export class LocalTaskHandler {
                             changelogEntry:
                                 allChangelogEntries.length > 1
                                     ? allChangelogEntries.map((e) => `- ${e}`).join("\n")
-                                    : allChangelogEntries[0]
+                                    : (allChangelogEntries[0] ?? "")
                         };
                     }
                 }
