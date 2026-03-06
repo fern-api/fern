@@ -13,7 +13,6 @@ import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-util
 import {
     AutoVersioningService,
     countFilesInDiff,
-    DIFF_SIZE_LIMIT,
     formatSizeKB,
     MAX_AI_DIFF_BYTES,
     MAX_CHUNKS,
@@ -189,8 +188,8 @@ export async function sdkDiffCommand({
         context.failWithoutThrowing(
             `Failed to analyze SDK diff. ` +
                 `Diff stats: ${gitDiff.length.toLocaleString()} chars, ${diffSizeKB}KB, ${fileCount} files changed. ` +
-                (gitDiff.length > DIFF_SIZE_LIMIT
-                    ? `The diff exceeds the AI endpoint's 100,000 character limit. `
+                (cappedChunks.length > 1
+                    ? `The diff was split into ${cappedChunks.length} chunks but analysis still failed. `
                     : "") +
                 `Error: ${errorMessage}`
         );

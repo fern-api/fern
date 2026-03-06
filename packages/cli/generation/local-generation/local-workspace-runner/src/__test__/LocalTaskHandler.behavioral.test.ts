@@ -190,7 +190,6 @@ vi.mock("../AutoVersioningService.js", () => ({
             this.name = "AutoVersioningException";
         }
     },
-    DIFF_SIZE_LIMIT: 100_000,
     countFilesInDiff: (diff: string) => {
         return (diff.match(/diff --git/g) ?? []).length;
     },

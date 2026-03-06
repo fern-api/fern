@@ -16,7 +16,6 @@ import {
     AutoVersioningService,
     AutoVersionResult,
     countFilesInDiff,
-    DIFF_SIZE_LIMIT,
     formatSizeKB
 } from "./AutoVersioningService.js";
 import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, maxVersionBump } from "./VersionUtils.js";
@@ -207,16 +206,6 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            if (cleanedDiff.length > DIFF_SIZE_LIMIT) {
-                this.context.logger.warn(
-                    `Cleaned diff is too large for AI analysis ` +
-                        `(${cleanedDiff.length.toLocaleString()} chars / ${cleanedDiffSizeKB}KB, ${cleanedFileCount} files). ` +
-                        `The AI endpoint limit is 100,000 characters. ` +
-                        `Lock files, test files, and generated docs are already excluded. ` +
-                        `Consider splitting the SDK into smaller packages or reducing the number of endpoints.`
-                );
-            }
-
             // Read spec repo commit message for AI context
             const specCommitMessage = await this.readSpecCommitMessage();
             if (specCommitMessage) {
@@ -324,10 +313,8 @@ export class LocalTaskHandler {
                     `AI analysis failed, falling back to PATCH increment. ` +
                         `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
                         `(${cleanedDiffSizeKB}KB cleaned, ${rawDiffSizeKB}KB raw), ${cleanedFileCount} files remaining. ` +
-                        (cleanedDiff.length > DIFF_SIZE_LIMIT
-                            ? `The diff exceeds the AI endpoint's 100,000 character limit. ` +
-                              `Lock files, test files, and generated docs are already excluded. ` +
-                              `Consider splitting the SDK into smaller packages or reducing the number of endpoints. `
+                        (cappedChunks.length > 1
+                            ? `The diff was split into ${cappedChunks.length} chunks but analysis still failed. `
                             : "") +
                         `Error: ${errorMessage}`
                 );

@@ -32,13 +32,6 @@ export interface AutoVersionResult {
 }
 
 /**
- * Maximum diff size in characters that the FAI /sdks/analyze-commit-diff endpoint accepts.
- * Roughly 100KB ≈ 25k–30k tokens for Claude. Diffs exceeding this are rejected with HTTP 413.
- * This constant is the single source of truth — LocalTaskHandler and sdkDiffCommand both reference it.
- */
-export const DIFF_SIZE_LIMIT = 100_000;
-
-/**
  * Counts the number of files changed in a git diff by scanning for "diff --git" headers.
  * Uses indexOf-based scanning instead of regex to avoid O(n) regex overhead on large diffs.
  */
