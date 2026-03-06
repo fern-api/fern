@@ -624,15 +624,6 @@ export class LocalTaskHandler {
     }
 
     /**
-     * Generates a git diff file for automatic versioning analysis.
-     * This compares the current state against HEAD to see what changes have been made.
-     *
-     * Uses `git add -N .` (intent-to-add) before diffing so that newly created files
-     * (e.g. from a namespace rename) appear in the diff. Without this, `git diff HEAD`
-     * silently ignores untracked files, which causes namespace changes to be invisible
-     * when the copy path does not stage files (copyGeneratedFilesNoFernIgnorePreservingGit).
-     */
-    /**
      * Reads the most recent git commit message that touched the .fern/ directory
      * in the spec repo. This provides context to the AI about why the API changed.
      */
@@ -671,6 +662,15 @@ export class LocalTaskHandler {
         }
     }
 
+    /**
+     * Generates a git diff file for automatic versioning analysis.
+     * This compares the current state against HEAD to see what changes have been made.
+     *
+     * Uses `git add -N .` (intent-to-add) before diffing so that newly created files
+     * (e.g. from a namespace rename) appear in the diff. Without this, `git diff HEAD`
+     * silently ignores untracked files, which causes namespace changes to be invisible
+     * when the copy path does not stage files (copyGeneratedFilesNoFernIgnorePreservingGit).
+     */
     private async generateDiffFile(): Promise<string> {
         const diffFile = pathJoin(tmpdir(), `git-diff-${Date.now()}.patch`);
 
