@@ -592,12 +592,32 @@ function diffObjectType(
         if (prevType !== curType) {
             // Check if this is a required -> optional transition
             if (!isOptionalOrNullable(prevProp.valueType) && isOptionalOrNullable(curProp.valueType)) {
-                const bump = RESPONSE_OPTIONAL_MAJOR_LANGUAGES.has(language) ? VersionBump.MAJOR : VersionBump.MINOR;
-                reasons.push({
-                    rule: "property_required_to_optional",
-                    description: `Property "${wireValue}" on type "${prevDecl.name.name.originalName}" changed from required to optional`,
-                    bump
-                });
+                // Unwrap the inner type to check if the underlying type also changed
+                const innerCurType =
+                    curProp.valueType.type === "container"
+                        ? curProp.valueType.container.type === "optional"
+                            ? serializeTypeReference(curProp.valueType.container.optional)
+                            : curProp.valueType.container.type === "nullable"
+                              ? serializeTypeReference(curProp.valueType.container.nullable)
+                              : curType
+                        : curType;
+                if (prevType !== innerCurType) {
+                    // Both type and optionality changed — this is a full type change (always MAJOR)
+                    reasons.push({
+                        rule: "property_type_changed",
+                        description: `Property "${wireValue}" on type "${prevDecl.name.name.originalName}" type changed from ${prevType} to ${curType}`,
+                        bump: VersionBump.MAJOR
+                    });
+                } else {
+                    const bump = RESPONSE_OPTIONAL_MAJOR_LANGUAGES.has(language)
+                        ? VersionBump.MAJOR
+                        : VersionBump.MINOR;
+                    reasons.push({
+                        rule: "property_required_to_optional",
+                        description: `Property "${wireValue}" on type "${prevDecl.name.name.originalName}" changed from required to optional`,
+                        bump
+                    });
+                }
             } else {
                 reasons.push({
                     rule: "property_type_changed",

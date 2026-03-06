@@ -1268,6 +1268,71 @@ describe("IrDiffAnalyzer", () => {
         });
     });
 
+    describe("simultaneous type and optionality change", () => {
+        it("classifies STRING → optional<INTEGER> as MAJOR (property_type_changed) for ruby", () => {
+            const previousIr = makeBaseIr({
+                types: {
+                    type_Plant: makeObjectType("Plant", [
+                        { wireValue: "height", valueType: primitiveType("STRING") }
+                    ])
+                }
+            });
+            const currentIr = makeBaseIr({
+                types: {
+                    type_Plant: makeObjectType("Plant", [
+                        { wireValue: "height", valueType: optionalType(primitiveType("INTEGER")) }
+                    ])
+                }
+            });
+            const result = analyzeIrDiff(previousIr as never, currentIr as never, "ruby");
+            expect(result.bump).toBe(VersionBump.MAJOR);
+            expect(result.reasons.some((r) => r.rule === "property_type_changed")).toBe(true);
+            // Should NOT be classified as merely required_to_optional
+            expect(result.reasons.some((r) => r.rule === "property_required_to_optional")).toBe(false);
+        });
+
+        it("classifies STRING → optional<STRING> as property_required_to_optional (MINOR) for ruby", () => {
+            const previousIr = makeBaseIr({
+                types: {
+                    type_Plant: makeObjectType("Plant", [
+                        { wireValue: "height", valueType: primitiveType("STRING") }
+                    ])
+                }
+            });
+            const currentIr = makeBaseIr({
+                types: {
+                    type_Plant: makeObjectType("Plant", [
+                        { wireValue: "height", valueType: optionalType(primitiveType("STRING")) }
+                    ])
+                }
+            });
+            const result = analyzeIrDiff(previousIr as never, currentIr as never, "ruby");
+            expect(result.bump).toBe(VersionBump.MINOR);
+            expect(result.reasons.some((r) => r.rule === "property_required_to_optional")).toBe(true);
+            expect(result.reasons.some((r) => r.rule === "property_type_changed")).toBe(false);
+        });
+
+        it("classifies STRING → optional<INTEGER> as MAJOR for typescript", () => {
+            const previousIr = makeBaseIr({
+                types: {
+                    type_Plant: makeObjectType("Plant", [
+                        { wireValue: "height", valueType: primitiveType("STRING") }
+                    ])
+                }
+            });
+            const currentIr = makeBaseIr({
+                types: {
+                    type_Plant: makeObjectType("Plant", [
+                        { wireValue: "height", valueType: optionalType(primitiveType("INTEGER")) }
+                    ])
+                }
+            });
+            const result = analyzeIrDiff(previousIr as never, currentIr as never, "typescript");
+            expect(result.bump).toBe(VersionBump.MAJOR);
+            expect(result.reasons.some((r) => r.rule === "property_type_changed")).toBe(true);
+        });
+    });
+
     describe("enum_value_added across all languages", () => {
         // MAJOR for exhaustive switch languages
         for (const lang of ["typescript", "java"]) {
