@@ -18,9 +18,8 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
-
-client.completions.stream(
-    query="foo",
+response = client.completions.stream(
+    query="",
 )
 
 ```
@@ -75,9 +74,8 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
-
-client.completions.stream_events(
-    query="query",
+response = client.completions.stream_events(
+    query="",
 )
 
 ```

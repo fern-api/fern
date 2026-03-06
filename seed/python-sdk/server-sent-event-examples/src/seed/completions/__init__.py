@@ -14,7 +14,9 @@ if typing.TYPE_CHECKING:
         StreamEvent_Error,
         StreamedCompletion,
     )
+    from .errors import BadRequestError
 _dynamic_imports: typing.Dict[str, str] = {
+    "BadRequestError": ".errors",
     "CompletionEvent": ".types",
     "ErrorEvent": ".types",
     "StreamEvent": ".types",
@@ -46,6 +48,7 @@ def __dir__():
 
 
 __all__ = [
+    "BadRequestError",
     "CompletionEvent",
     "ErrorEvent",
     "StreamEvent",

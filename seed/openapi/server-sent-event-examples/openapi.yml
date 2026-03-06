@@ -12,6 +12,15 @@ paths:
       responses:
         '204':
           description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Bad request:
+                  value: bad request
       requestBody:
         required: true
         content:
@@ -28,6 +37,9 @@ paths:
               Stream completions:
                 value:
                   query: foo
+              Bad request:
+                value:
+                  query: ''
   /stream-events:
     post:
       operationId: completions_streamEvents
@@ -37,6 +49,15 @@ paths:
       responses:
         '204':
           description: ''
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Bad request:
+                  value: bad request
       requestBody:
         required: true
         content:
@@ -53,6 +74,9 @@ paths:
               Stream events:
                 value:
                   query: query
+              Bad request:
+                value:
+                  query: ''
 components:
   schemas:
     StreamedCompletion:

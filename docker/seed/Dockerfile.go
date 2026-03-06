@@ -14,6 +14,10 @@ ENV PATH="/usr/local/go/bin:${PATH}" \
 
 RUN mkdir -p "${GOPATH}/src" "${GOPATH}/bin"
 
+# Install golangci-lint
+ENV GOLANGCI_LINT_VERSION=v2.10.1
+RUN wget -O- -nv https://golangci-lint.run/install.sh | sh -s -- -b /usr/local/bin ${GOLANGCI_LINT_VERSION}
+
 # Create entrypoint script to start dockerd and execute commands
 RUN echo '#!/bin/sh' > /entrypoint.sh && \
     echo 'dockerd &' >> /entrypoint.sh && \

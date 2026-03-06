@@ -18,7 +18,7 @@ catalog:
   "@biomejs/biome": 2.4.4
   "@blueprintjs/eslint-plugin": ^6.1.22
   "@blueprintjs/stylelint-plugin": ^4.1.14
-  "@boundaryml/baml": ^0.211.2
+  "@boundaryml/baml": ^0.219.0
   "@bufbuild/protobuf": ^2.2.5
   "@bufbuild/protoplugin": 2.2.5
   "@fern-api/docs-parsers": 0.0.65
@@ -194,7 +194,7 @@ catalog:
   stylelint-config-prettier-scss: ^0.0.1
   stylelint-config-standard-scss: ^5.0.0
   swagger2openapi: 7.0.8
-  tar: ^7.5.8
+  tar: ^7.5.10
   terminal-link: ^3.0.0
   tinycolor2: ^1.6.0
   title: ^3.5.3

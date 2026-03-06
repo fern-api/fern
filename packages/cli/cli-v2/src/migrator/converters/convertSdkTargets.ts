@@ -397,18 +397,67 @@ function convertOutputConfig(
     return { output, publish };
 }
 
-function convertReadme(readme: generatorsYml.ReadmeSchema): schemas.ReadmeSchema | undefined {
-    if (readme.defaultEndpoint != null) {
-        const endpoint = readme.defaultEndpoint;
-        if (typeof endpoint === "string") {
-            return { defaultEndpoint: endpoint };
-        }
-        // If it's an object with method/path, convert to "METHOD /path" format
-        if (typeof endpoint === "object" && "method" in endpoint && "path" in endpoint) {
-            return { defaultEndpoint: `${endpoint.method} ${endpoint.path}` };
-        }
+function convertReadmeEndpoint(endpoint: generatorsYml.ReadmeEndpointSchema): schemas.ReadmeEndpointSchema {
+    if (typeof endpoint === "string") {
+        return endpoint;
     }
-    return undefined;
+    return {
+        method: endpoint.method,
+        path: endpoint.path,
+        ...(endpoint.stream != null ? { stream: endpoint.stream } : {})
+    };
+}
+
+function convertReadme(readme: generatorsYml.ReadmeSchema): schemas.ReadmeSchema | undefined {
+    const result: schemas.ReadmeSchema = {};
+    let hasFields = false;
+
+    if (readme.bannerLink != null) {
+        result.bannerLink = readme.bannerLink;
+        hasFields = true;
+    }
+    if (readme.introduction != null) {
+        result.introduction = readme.introduction;
+        hasFields = true;
+    }
+    if (readme.apiReferenceLink != null) {
+        result.apiReferenceLink = readme.apiReferenceLink;
+        hasFields = true;
+    }
+    if (readme.apiName != null) {
+        result.apiName = readme.apiName;
+        hasFields = true;
+    }
+    if (readme.disabledSections != null) {
+        result.disabledSections = readme.disabledSections;
+        hasFields = true;
+    }
+    if (readme.defaultEndpoint != null) {
+        result.defaultEndpoint = convertReadmeEndpoint(readme.defaultEndpoint);
+        hasFields = true;
+    }
+    if (readme.features != null) {
+        const features: Record<string, schemas.ReadmeEndpointSchema[]> = {};
+        for (const [key, endpoints] of Object.entries(readme.features)) {
+            features[key] = endpoints.map(convertReadmeEndpoint);
+        }
+        result.features = features;
+        hasFields = true;
+    }
+    if (readme.customSections != null) {
+        result.customSections = readme.customSections.map((section) => ({
+            title: section.title,
+            language: section.language as schemas.SdkTargetLanguageSchema | undefined,
+            content: section.content
+        }));
+        hasFields = true;
+    }
+    if (readme.exampleStyle != null) {
+        result.exampleStyle = readme.exampleStyle as schemas.ExampleStyleSchema;
+        hasFields = true;
+    }
+
+    return hasFields ? result : undefined;
 }
 
 export interface ConvertSdkTargetsFromRawOptions {
@@ -789,13 +838,53 @@ function convertRawOutputConfig(
 function convertRawReadme(readme: RawReadmeConfig): schemas.ReadmeSchema | undefined {
     const endpoint = readme.defaultEndpoint ?? readme["default-endpoint"];
 
-    if (endpoint != null) {
-        if (typeof endpoint === "string") {
-            return { defaultEndpoint: endpoint };
-        }
-        if (typeof endpoint === "object" && "method" in endpoint && "path" in endpoint) {
-            return { defaultEndpoint: `${endpoint.method} ${endpoint.path}` };
-        }
+    const result: schemas.ReadmeSchema = {};
+    let hasFields = false;
+
+    if (readme.bannerLink != null) {
+        result.bannerLink = readme.bannerLink;
+        hasFields = true;
     }
-    return undefined;
+    if (readme.introduction != null) {
+        result.introduction = readme.introduction;
+        hasFields = true;
+    }
+    if (readme.apiReferenceLink != null) {
+        result.apiReferenceLink = readme.apiReferenceLink;
+        hasFields = true;
+    }
+    if (readme.apiName != null) {
+        result.apiName = readme.apiName;
+        hasFields = true;
+    }
+    if (readme.disabledSections != null) {
+        result.disabledSections = readme.disabledSections;
+        hasFields = true;
+    }
+    if (endpoint != null) {
+        result.defaultEndpoint = convertReadmeEndpoint(endpoint);
+        hasFields = true;
+    }
+    if (readme.features != null) {
+        const features: Record<string, schemas.ReadmeEndpointSchema[]> = {};
+        for (const [key, endpoints] of Object.entries(readme.features)) {
+            features[key] = endpoints.map(convertReadmeEndpoint);
+        }
+        result.features = features;
+        hasFields = true;
+    }
+    if (readme.customSections != null) {
+        result.customSections = readme.customSections.map((section) => ({
+            title: section.title,
+            language: section.language as schemas.SdkTargetLanguageSchema | undefined,
+            content: section.content
+        }));
+        hasFields = true;
+    }
+    if (readme.exampleStyle != null) {
+        result.exampleStyle = readme.exampleStyle as schemas.ExampleStyleSchema;
+        hasFields = true;
+    }
+
+    return hasFields ? result : undefined;
 }

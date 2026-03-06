@@ -88,14 +88,15 @@ RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     mv package glob && \
     rm glob-11.1.0.tgz
 
-# Patch npm's bundled tar to 7.5.8 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w, GHSA-83g3-92jg-28cx
+# Patch npm's bundled tar to 7.5.10 to fix GHSA-34x7-hfp2-rc4v, GHSA-r6q2-hw4h-h46w, GHSA-83g3-92jg-28cx,
+# GHSA-qffp-2rhf-9h96 (Hardlink Path Traversal via Drive-Relative Linkpath)
 # Note: We use curl instead of npm pack because npm pack depends on tar itself
 RUN cd /usr/local/lib/node_modules/npm/node_modules && \
     rm -rf tar && \
-    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.8.tgz -o tar-7.5.8.tgz && \
-    tar -xzf tar-7.5.8.tgz && \
+    curl -sL https://registry.npmjs.org/tar/-/tar-7.5.10.tgz -o tar-7.5.10.tgz && \
+    tar -xzf tar-7.5.10.tgz && \
     mv package tar && \
-    rm tar-7.5.8.tgz
+    rm tar-7.5.10.tgz
 
 # Patch minimatch to 10.2.3 to fix GHSA-7r86-cg39-jmmj, GHSA-23c5-xmqv-rm74
 # (ReDoS via combinatorial backtracking in matchOne() and nested *() extglobs)

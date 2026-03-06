@@ -280,7 +280,6 @@ export function addAddCommand(cli: Argv<GlobalArgs>, parentPath?: string): void 
                 })
                 .option("yes", {
                     type: "boolean",
-                    alias: "y",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
                 }),
