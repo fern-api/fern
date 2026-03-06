@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.14.0
+  changelogEntry:
+    - summary: |
+        Merge behavioral analysis into the unified AnalyzeSdkDiff prompt. The
+        AI now classifies both public API surface changes AND behavioral changes
+        (HTTP status handling, default parameter values, serialization behavior,
+        retry/backoff configuration) in a single call — producing the version
+        bump, commit message, and changelog entry in one pass. This replaces the
+        previous two-call approach where a separate Tier 3 analysis ran after
+        Tier 2 returned PATCH.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
 - version: 4.13.0
   changelogEntry:
     - summary: |
@@ -41,7 +55,6 @@
       type: feat
   createdAt: "2026-03-06"
   irVersion: 65
-
 - version: 4.10.0
   changelogEntry:
     - summary: |

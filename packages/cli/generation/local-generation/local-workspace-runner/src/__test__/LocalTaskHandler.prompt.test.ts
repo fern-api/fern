@@ -77,7 +77,7 @@ describe("LocalTaskHandler prompt - previous_version parameter", () => {
     it("rules cover SDK-specific patterns like version headers and RequestOptions", () => {
         expect(diffAnalyzerBaml).toContain("Updating SDK version headers");
         expect(diffAnalyzerBaml).toContain("RequestOptions");
-        expect(diffAnalyzerBaml).toContain("retry logic");
+        expect(diffAnalyzerBaml).toContain("retry");
     });
 
     it("typescript rules cover type narrowing, discriminated unions, and generics", () => {
