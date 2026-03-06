@@ -145,13 +145,15 @@ function exitGracefully(code: number): Promise<never> {
     // We set process.exitCode above so the correct code is used.
     process.stdout.end();
 
-    // Safety: force exit after 5s in case lingering handles prevent natural exit.
-    const timeout = setTimeout(() => process.exit(code), 5000);
+    // Safety: force exit after 2s in case lingering handles prevent natural exit.
+    const timeout = setTimeout(() => process.exit(code), 2000);
     timeout.unref();
 
     // Return a never-resolving promise — the process will exit via
     // natural drain or the safety timeout, not via this promise.
-    return new Promise<never>(() => {});
+    return new Promise<never>(() => {
+        /* no-op */
+    });
 }
 
 function parseLogLevel(level: string): LogLevel {
