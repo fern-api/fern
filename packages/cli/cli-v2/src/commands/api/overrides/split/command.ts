@@ -22,7 +22,6 @@ const execFileAsync = promisify(execFile);
 export declare namespace SplitCommand {
     export interface Args extends GlobalArgs {
         api?: string;
-        spec?: string;
         "merge-into"?: string;
         output?: string;
     }
@@ -44,7 +43,7 @@ export class SplitCommand {
             throw new CliError({ message: "Cannot use both --merge-into and --output at the same time." });
         }
 
-        const entries = filterSpecs(workspace, { api: args.api, spec: args.spec });
+        const entries = filterSpecs(workspace, { api: args.api });
 
         if (entries.length === 0) {
             context.stderr.info(chalk.dim("No matching OpenAPI/AsyncAPI specs found."));
@@ -194,17 +193,12 @@ export function addSplitCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     description: "Filter by API name"
                 })
-                .option("spec", {
-                    type: "string",
-                    description: "Filter by spec file path"
-                })
                 .option("merge-into", {
                     type: "string",
                     description: "Merge the extracted diff into this existing override file"
                 })
                 .option("output", {
                     type: "string",
-                    alias: "o",
                     description: "Custom output path for the new override file"
                 })
     );

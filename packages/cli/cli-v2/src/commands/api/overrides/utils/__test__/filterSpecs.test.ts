@@ -81,17 +81,6 @@ describe("filterSpecs", () => {
         expect(result[0]?.apiName).toBe("users");
     });
 
-    it("filters by spec path suffix", () => {
-        const spec1: OpenApiSpec = { openapi: AbsoluteFilePath.of("/project/fern/openapi.yml") };
-        const spec2: OpenApiSpec = { openapi: AbsoluteFilePath.of("/project/fern/other.yml") };
-        const workspace = makeWorkspace({
-            api: { specs: [spec1, spec2] }
-        });
-        const result = filterSpecs(workspace, { spec: "other.yml" });
-        expect(result).toHaveLength(1);
-        expect(result[0]?.specFilePath).toBe("/project/fern/other.yml");
-    });
-
     it("returns undefined overrides when spec has none", () => {
         const workspace = makeWorkspace({
             api: { specs: [openapiSpec] }

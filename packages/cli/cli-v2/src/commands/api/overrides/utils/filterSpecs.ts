@@ -15,9 +15,9 @@ export interface SpecEntry {
 
 /**
  * Returns specs from the workspace that support overrides (OpenAPI, AsyncAPI),
- * optionally filtered by API name and/or spec file path.
+ * optionally filtered by API name.
  */
-export function filterSpecs(workspace: Workspace, options: { api?: string; spec?: string }): SpecEntry[] {
+export function filterSpecs(workspace: Workspace, options: { api?: string }): SpecEntry[] {
     const results: SpecEntry[] = [];
 
     for (const [apiName, apiDef] of Object.entries(workspace.apis)) {
@@ -36,10 +36,6 @@ export function filterSpecs(workspace: Workspace, options: { api?: string; spec?
                 specFilePath = apiSpec.asyncapi;
                 overrides = apiSpec.overrides;
             } else {
-                continue;
-            }
-
-            if (options.spec != null && !specFilePath.endsWith(options.spec)) {
                 continue;
             }
 

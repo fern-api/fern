@@ -14,8 +14,7 @@ import { loadSpec, serializeSpec } from "../utils/loadSpec.js";
 export declare namespace MergeCommand {
     export interface Args extends GlobalArgs {
         api?: string;
-        spec?: string;
-        cleanup?: boolean;
+        delete?: boolean;
     }
 }
 
@@ -27,14 +26,14 @@ export class MergeCommand {
             throw new CliError({ message: "No APIs found in workspace." });
         }
 
-        const entries = filterSpecs(workspace, { api: args.api, spec: args.spec });
+        const entries = filterSpecs(workspace, { api: args.api });
 
         if (entries.length === 0) {
             context.stderr.info(chalk.dim("No matching OpenAPI/AsyncAPI specs found."));
             return;
         }
 
-        const editor = args.cleanup === true ? await FernYmlApiEditor.load(context.cwd) : undefined;
+        const editor = args.delete === true ? await FernYmlApiEditor.load(context.cwd) : undefined;
         let mergedCount = 0;
 
         for (const entry of entries) {
@@ -108,11 +107,7 @@ export function addMergeCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     description: "Filter by API name"
                 })
-                .option("spec", {
-                    type: "string",
-                    description: "Filter by spec file path"
-                })
-                .option("cleanup", {
+                .option("delete", {
                     type: "boolean",
                     default: false,
                     description: "Delete override files and remove references from fern.yml after merge"
