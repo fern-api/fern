@@ -98,7 +98,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
 
         
         async AnalyzeSdkDiff(
-        diff: string,
+        diff: string,language: string,previous_version: string,
         __baml_options__?: BamlCallOptions<never>
         ): Promise<types.AnalyzeCommitDiffResponse> {
           try {
@@ -112,7 +112,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
           // Check if onTick is provided - route through streaming if so
           if (__options__.onTick) {
           const __stream__ = this.stream.AnalyzeSdkDiff(
-          diff,
+          diff,language,previous_version,
           __baml_options__
           );
 
@@ -136,7 +136,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
             const __raw__ = await this.runtime.callFunction(
             "AnalyzeSdkDiff",
             {
-            "diff": diff
+            "diff": diff,"language": language,"previous_version": previous_version
             },
             this.ctxManager.cloneContext(),
             __options__.tb?.__tb(),
@@ -168,7 +168,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
 
             
             AnalyzeSdkDiff(
-            diff: string,
+            diff: string,language: string,previous_version: string,
             __baml_options__?: BamlCallOptions<never>
             ): BamlStream<partial_types.AnalyzeCommitDiffResponse, types.AnalyzeCommitDiffResponse>
               {
@@ -217,7 +217,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
                 const __raw__ = this.runtime.streamFunction(
                 "AnalyzeSdkDiff",
                 {
-                "diff": diff
+                "diff": diff,"language": language,"previous_version": previous_version
                 },
                 undefined,
                 this.ctxManager.cloneContext(),

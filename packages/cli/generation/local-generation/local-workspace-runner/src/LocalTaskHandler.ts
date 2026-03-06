@@ -10,7 +10,14 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningException, AutoVersioningService, AutoVersionResult } from "./AutoVersioningService.js";
+import {
+    AutoVersioningException,
+    AutoVersioningService,
+    AutoVersionResult,
+    countFilesInDiff,
+    DIFF_SIZE_LIMIT,
+    formatSizeKB
+} from "./AutoVersioningService.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
@@ -25,6 +32,7 @@ export declare namespace LocalTaskHandler {
         version: string | undefined;
         ai: generatorsYml.AiServicesSchema | undefined;
         isWhitelabel: boolean;
+        generatorLanguage: string | undefined;
     }
 }
 
@@ -39,6 +47,7 @@ export class LocalTaskHandler {
     private version: string | undefined;
     private ai: generatorsYml.AiServicesSchema | undefined;
     private isWhitelabel: boolean;
+    private generatorLanguage: string | undefined;
 
     constructor({
         context,
@@ -50,7 +59,8 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel
+        isWhitelabel,
+        generatorLanguage
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -62,6 +72,7 @@ export class LocalTaskHandler {
         this.version = version;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
+        this.generatorLanguage = generatorLanguage;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -137,8 +148,15 @@ export class LocalTaskHandler {
             const previousVersion = autoVersioningService.extractPreviousVersion(diffContent, this.version);
             const cleanedDiff = autoVersioningService.cleanDiffForAI(diffContent, this.version);
 
-            this.context.logger.debug(`Generated diff size: ${diffContent.length} bytes`);
-            this.context.logger.debug(`Cleaned diff size: ${cleanedDiff.length} bytes`);
+            const rawDiffSizeKB = formatSizeKB(diffContent.length);
+            const cleanedDiffSizeKB = formatSizeKB(cleanedDiff.length);
+            const rawFileCount = countFilesInDiff(diffContent);
+            const cleanedFileCount = countFilesInDiff(cleanedDiff);
+
+            this.context.logger.debug(
+                `Generated diff size: ${rawDiffSizeKB}KB (${diffContent.length} chars), ${rawFileCount} files changed. ` +
+                    `Cleaned diff size: ${cleanedDiffSizeKB}KB (${cleanedDiff.length} chars), ${cleanedFileCount} files remaining`
+            );
 
             // Handle new SDK repository with no previous version
             if (previousVersion == null) {
@@ -164,13 +182,27 @@ export class LocalTaskHandler {
                 return null;
             }
 
+            if (cleanedDiff.length > DIFF_SIZE_LIMIT) {
+                this.context.logger.warn(
+                    `Cleaned diff is too large for AI analysis ` +
+                        `(${cleanedDiff.length.toLocaleString()} chars / ${cleanedDiffSizeKB}KB, ${cleanedFileCount} files). ` +
+                        `The AI endpoint limit is 100,000 characters. ` +
+                        `Lock files, test files, and generated docs are already excluded. ` +
+                        `Consider splitting the SDK into smaller packages or reducing the number of endpoints.`
+                );
+            }
+
             // Call AI to analyze the diff
             try {
                 // TODO: Need to get project for BAML client configuration
                 const clientRegistry = await this.getClientRegistry();
                 const bamlClient = BamlClient.withOptions({ clientRegistry });
 
-                const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff);
+                const analysis = await bamlClient.AnalyzeSdkDiff(
+                    cleanedDiff,
+                    this.generatorLanguage ?? "unknown",
+                    previousVersion ?? "0.0.0"
+                );
 
                 if (analysis.version_bump === VersionBump.NO_CHANGE) {
                     this.context.logger.info("AI detected no semantic changes");
@@ -189,7 +221,18 @@ export class LocalTaskHandler {
                     commitMessage
                 };
             } catch (aiError) {
-                this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
+                const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
+                this.context.logger.warn(
+                    `AI analysis failed, falling back to PATCH increment. ` +
+                        `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
+                        `(${cleanedDiffSizeKB}KB cleaned, ${rawDiffSizeKB}KB raw), ${cleanedFileCount} files remaining. ` +
+                        (cleanedDiff.length > DIFF_SIZE_LIMIT
+                            ? `The diff exceeds the AI endpoint's 100,000 character limit. ` +
+                              `Lock files, test files, and generated docs are already excluded. ` +
+                              `Consider splitting the SDK into smaller packages or reducing the number of endpoints. `
+                            : "") +
+                        `Error: ${errorMessage}`
+                );
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"

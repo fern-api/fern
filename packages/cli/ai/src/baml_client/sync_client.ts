@@ -98,7 +98,7 @@ export class BamlSyncClient {
 
   
   AnalyzeSdkDiff(
-      diff: string,
+      diff: string,language: string,previous_version: string,
       __baml_options__?: BamlCallOptions<never>
   ): types.AnalyzeCommitDiffResponse {
     try {
@@ -130,7 +130,7 @@ export class BamlSyncClient {
       const __raw__ = this.runtime.callFunctionSync(
         "AnalyzeSdkDiff",
         {
-          "diff": diff
+          "diff": diff,"language": language,"previous_version": previous_version
         },
         this.ctxManager.cloneContext(),
         __options__.tb?.__tb(),

@@ -39,7 +39,7 @@ export class HttpRequest {
 
   
   AnalyzeSdkDiff(
-      diff: string,
+      diff: string,language: string,previous_version: string,
       __baml_options__?: BamlCallOptions<never>
   ): HTTPRequest {
     try {
@@ -58,7 +58,7 @@ export class HttpRequest {
       return this.runtime.buildRequestSync(
         "AnalyzeSdkDiff",
         {
-          "diff": diff
+          "diff": diff,"language": language,"previous_version": previous_version
         },
         this.ctxManager.cloneContext(),
         __baml_options__?.tb?.__tb(),
@@ -78,7 +78,7 @@ export class HttpStreamRequest {
 
   
   AnalyzeSdkDiff(
-      diff: string,
+      diff: string,language: string,previous_version: string,
       __baml_options__?: BamlCallOptions<never>
   ): HTTPRequest {
     try {
@@ -97,7 +97,7 @@ export class HttpStreamRequest {
       return this.runtime.buildRequestSync(
         "AnalyzeSdkDiff",
         {
-          "diff": diff
+          "diff": diff,"language": language,"previous_version": previous_version
         },
         this.ctxManager.cloneContext(),
         __baml_options__?.tb?.__tb(),

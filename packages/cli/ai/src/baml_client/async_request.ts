@@ -43,7 +43,7 @@ env?: Record<string, string | undefined>
 
   
   async AnalyzeSdkDiff(
-  diff: string,
+  diff: string,language: string,previous_version: string,
   __baml_options__?: BamlCallOptions<never>
   ): Promise<HTTPRequest> {
     try {
@@ -62,7 +62,7 @@ env?: Record<string, string | undefined>
       return await this.runtime.buildRequest(
       "AnalyzeSdkDiff",
       {
-      "diff": diff
+      "diff": diff,"language": language,"previous_version": previous_version
       },
       this.ctxManager.cloneContext(),
       __baml_options__?.tb?.__tb(),
@@ -82,7 +82,7 @@ env?: Record<string, string | undefined>
 
       
       async AnalyzeSdkDiff(
-      diff: string,
+      diff: string,language: string,previous_version: string,
       __baml_options__?: BamlCallOptions<never>
       ): Promise<HTTPRequest> {
         try {
@@ -101,7 +101,7 @@ env?: Record<string, string | undefined>
           return await this.runtime.buildRequest(
           "AnalyzeSdkDiff",
           {
-          "diff": diff
+          "diff": diff,"language": language,"previous_version": previous_version
           },
           this.ctxManager.cloneContext(),
           __baml_options__?.tb?.__tb(),

@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.7.0
+- version: 4.8.0
   changelogEntry:
     - summary: |
         Add few-shot examples to the AnalyzeSdkDiff prompt for more consistent
@@ -11,6 +11,18 @@
   createdAt: "2026-03-05"
   irVersion: 65
 
+- version: 4.7.0
+  changelogEntry:
+    - summary: |
+        Pass `previous_version` and `language` to the AI prompt for AUTO
+        versioning diff analysis. The `AnalyzeSdkDiff` BAML function now
+        accepts three parameters (`diff`, `language`, `previous_version`)
+        instead of just `diff`, giving the AI meaningful calibration context
+        for commit messages and version bump decisions. New repos with no
+        previous version pass `"0.0.0"` as a sentinel value.
+      type: feat
+  createdAt: "2026-03-05"
+  irVersion: 65
 - version: 4.6.0
   changelogEntry:
     - summary: |
@@ -42,6 +54,18 @@
   createdAt: "2026-03-05"
   irVersion: 65
 
+- version: 4.4.5
+  changelogEntry:
+    - summary: |
+        Improve error messages when AI analysis fails during AUTO versioning.
+        Error and warning logs now include diff size (in characters and KB),
+        number of files changed, and guidance when the diff exceeds the FAI
+        endpoint's 100,000 character limit. Previously, failures only logged a
+        generic "AI analysis failed, falling back to PATCH" message with no
+        actionable context.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
 - version: 4.4.4
   changelogEntry:
     - summary: |
