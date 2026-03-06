@@ -2,12 +2,19 @@
 - version: 4.16.0
   changelogEntry:
     - summary: |
-        Add `fern merge` CLI command to merge an overrides file (e.g.
-        AI-generated examples) into an OpenAPI spec. Usage:
-        `fern merge openapi.yml overrides.yml -o output.yml`. The command
-        deep-merges the overrides into the base spec, allowing users to
-        combine `x-fern-examples` and other extensions without manual editing.
+        Add `fern merge` CLI command that decomposes x-fern-examples from an
+        overrides file into native OpenAPI example fields per endpoint. Usage:
+        `fern merge openapi.yml overrides.yml -o output.yml`.
       type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.15.1
+  changelogEntry:
+    - summary: |
+        Fix `readOnly`/`writeOnly` not being detected on properties that use
+        `$ref` to reference a schema with `readOnly: true`/`writeOnly: true`.
+      type: fix
   createdAt: "2026-03-06"
   irVersion: 65
 

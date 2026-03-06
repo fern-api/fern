@@ -239,9 +239,7 @@
                 },
                 "type": "optional"
               },
-              "audiences": [],
-              "readonly": false,
-              "writeonly": false
+              "audiences": []
             },
             {
               "conflict": {},
@@ -577,9 +575,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -598,9 +594,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -619,9 +613,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
