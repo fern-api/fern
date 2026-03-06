@@ -1590,16 +1590,18 @@ export class DocsDefinitionResolver {
         // We filter by apiName (from docs.yml api-name field) rather than by OSSWorkspace reference,
         // because the OSSWorkspace may not be resolved when the v3 parser fails or is disabled.
         let workspacesToProcess: OSSWorkspace[];
-        // eslint-disable-next-line no-console
-        console.log("[graphql-scoping-debug] apiName:", apiName);
-        // eslint-disable-next-line no-console
-        console.log(
-            "[graphql-scoping-debug] ossWorkspaces:",
-            this.ossWorkspaces.map((ws) => ({
-                workspaceName: ws.workspaceName,
-                absoluteFilePath: ws.absoluteFilePath,
-                type: ws.type
-            }))
+        this.taskContext.logger.warn(
+            "[graphql-scoping-debug] apiName: " + apiName
+        );
+        this.taskContext.logger.warn(
+            "[graphql-scoping-debug] ossWorkspaces: " +
+                JSON.stringify(
+                    this.ossWorkspaces.map((ws) => ({
+                        workspaceName: ws.workspaceName,
+                        absoluteFilePath: ws.absoluteFilePath,
+                        type: ws.type
+                    }))
+                )
         );
         if (apiName != null) {
             // Match by workspaceName first (set to folder name during project loading),
@@ -1608,8 +1610,9 @@ export class DocsDefinitionResolver {
             const matched = this.ossWorkspaces.find(
                 (ws) => ws.workspaceName === apiName || ws.absoluteFilePath.split("/").pop() === apiName
             );
-            // eslint-disable-next-line no-console
-            console.log("[graphql-scoping-debug] matched:", matched?.workspaceName ?? "NONE");
+            this.taskContext.logger.warn(
+                "[graphql-scoping-debug] matched: " + (matched?.workspaceName ?? "NONE")
+            );
             workspacesToProcess = matched ? [matched] : [];
         } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
             workspacesToProcess = [this.ossWorkspaces[0]];
