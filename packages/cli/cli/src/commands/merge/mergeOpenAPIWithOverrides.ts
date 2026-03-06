@@ -7,10 +7,19 @@ import { CliContext } from "../../cli-context/CliContext.js";
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
 type OpenAPISpec = Record<string, any>;
 
+const HTTP_METHODS = new Set(["get", "put", "post", "delete", "options", "head", "patch", "trace"]);
+
 /**
  * Merges an AI examples overrides file into an OpenAPI spec.
- * The overrides file contains paths with x-fern-examples that are deep-merged
- * into the corresponding paths/methods in the OpenAPI spec.
+ * The overrides file contains paths with x-fern-examples that are decomposed
+ * and integrated into native OpenAPI example fields per endpoint.
+ *
+ * Mapping:
+ *   - path-parameters   -> parameters[].example (where in: path)
+ *   - query-parameters  -> parameters[].example (where in: query)
+ *   - headers           -> parameters[].example (where in: header)
+ *   - request.body      -> requestBody.content.*.example
+ *   - response.body     -> responses.<status>.content.*.example
  */
 export async function mergeOpenAPIWithOverrides({
     openapiPath,
@@ -38,8 +47,8 @@ export async function mergeOpenAPIWithOverrides({
         const openapi = await loadYamlOrJson(openapiPath, context);
         const overrides = await loadYamlOrJson(overridesPath, context);
 
-        // Deep merge the overrides into the OpenAPI spec
-        const merged = deepMerge(openapi, overrides);
+        // Merge the x-fern-examples into native OpenAPI examples
+        const merged = mergeExamplesIntoSpec(openapi, overrides, context);
 
         // Determine output format based on input file extension
         const isJson = openapiPath.endsWith(".json");
@@ -66,33 +75,301 @@ async function loadYamlOrJson(filepath: AbsoluteFilePath, context: any): Promise
 }
 
 /**
- * Deep merges the source object into the target object.
- * Arrays are replaced entirely (not concatenated).
- * Objects are recursively merged.
+ * Iterates over paths/methods in the overrides and integrates x-fern-examples
+ * into native OpenAPI example fields in the base spec.
  */
-// biome-ignore lint/suspicious/noExplicitAny: deep merge needs any
-function deepMerge(target: any, source: any): any {
-    if (source === undefined || source === null) {
-        return target;
-    }
-    if (target === undefined || target === null) {
-        return source;
+// biome-ignore lint/suspicious/noExplicitAny: context logger
+function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec, context: any): OpenAPISpec {
+    const merged = structuredClone(spec);
+
+    const overridePaths = overrides.paths;
+    if (overridePaths == null || typeof overridePaths !== "object") {
+        return merged;
     }
 
-    // If source is not an object (or is an array), it replaces target
-    if (typeof source !== "object" || Array.isArray(source)) {
-        return source;
+    if (merged.paths == null) {
+        merged.paths = {};
     }
 
-    // If target is not an object (or is an array), source replaces it
-    if (typeof target !== "object" || Array.isArray(target)) {
-        return source;
+    for (const [path, pathItem] of Object.entries(overridePaths)) {
+        if (pathItem == null || typeof pathItem !== "object") {
+            continue;
+        }
+
+        if (merged.paths[path] == null) {
+            context.logger.warn(`Path ${path} not found in OpenAPI spec, skipping.`);
+            continue;
+        }
+
+        for (const [method, operation] of Object.entries(pathItem as Record<string, unknown>)) {
+            if (!HTTP_METHODS.has(method.toLowerCase())) {
+                continue;
+            }
+
+            const specOperation = merged.paths[path][method];
+            if (specOperation == null || typeof specOperation !== "object") {
+                context.logger.warn(`Operation ${method.toUpperCase()} ${path} not found in OpenAPI spec, skipping.`);
+                continue;
+            }
+
+            // biome-ignore lint/suspicious/noExplicitAny: x-fern-examples has dynamic shape
+            const fernExamples = (operation as any)?.["x-fern-examples"];
+            if (!Array.isArray(fernExamples) || fernExamples.length === 0) {
+                continue;
+            }
+
+            if (fernExamples.length === 1) {
+                applyExampleToOperation(specOperation, fernExamples[0], merged);
+            } else {
+                applyMultipleExamplesToOperation(specOperation, fernExamples, merged);
+            }
+        }
     }
 
-    // Both are objects — merge recursively
-    const result: Record<string, unknown> = { ...target };
-    for (const key of Object.keys(source)) {
-        result[key] = deepMerge(target[key], source[key]);
+    return merged;
+}
+
+/**
+ * Applies a single x-fern-example to an OpenAPI operation using singular `example` fields.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: OpenAPI operations have dynamic shape
+function applyExampleToOperation(operation: any, fernExample: any, spec: OpenAPISpec): void {
+    applyParameterExamples(operation, fernExample["path-parameters"], "path", spec);
+    applyParameterExamples(operation, fernExample["query-parameters"], "query", spec);
+    applyParameterExamples(operation, fernExample.headers, "header", spec);
+
+    const requestBody = fernExample.request?.body;
+    if (requestBody !== undefined) {
+        applyRequestBodyExample(operation, requestBody);
     }
-    return result;
+
+    const responseBody = fernExample.response?.body;
+    if (responseBody !== undefined) {
+        applyResponseBodyExample(operation, responseBody);
+    }
+}
+
+/**
+ * Applies multiple x-fern-examples to an OpenAPI operation using plural `examples` fields.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: OpenAPI operations have dynamic shape
+function applyMultipleExamplesToOperation(operation: any, fernExamples: any[], spec: OpenAPISpec): void {
+    for (let i = 0; i < fernExamples.length; i++) {
+        const fernExample = fernExamples[i];
+        const exampleName = fernExample.name ?? `Example${i + 1}`;
+
+        applyParameterNamedExamples(operation, fernExample["path-parameters"], "path", exampleName, spec);
+        applyParameterNamedExamples(operation, fernExample["query-parameters"], "query", exampleName, spec);
+        applyParameterNamedExamples(operation, fernExample.headers, "header", exampleName, spec);
+
+        const requestBody = fernExample.request?.body;
+        if (requestBody !== undefined) {
+            applyRequestBodyNamedExample(operation, requestBody, exampleName);
+        }
+
+        const responseBody = fernExample.response?.body;
+        if (responseBody !== undefined) {
+            applyResponseBodyNamedExample(operation, responseBody, exampleName);
+        }
+    }
+}
+
+/**
+ * Sets `example` on matching parameters (by name and location).
+ */
+function applyParameterExamples(
+    // biome-ignore lint/suspicious/noExplicitAny: OpenAPI parameter shapes
+    operation: any,
+    paramExamples: Record<string, unknown> | undefined,
+    location: string,
+    spec: OpenAPISpec
+): void {
+    if (paramExamples == null || typeof paramExamples !== "object") {
+        return;
+    }
+    const parameters = resolveParameters(operation, spec);
+    for (const [paramName, exampleValue] of Object.entries(paramExamples)) {
+        // biome-ignore lint/suspicious/noExplicitAny: parameter shape
+        const param = parameters.find((p: any) => p.name === paramName && p.in === location);
+        if (param != null) {
+            param.example = exampleValue;
+        }
+    }
+}
+
+/**
+ * Sets named entries in `examples` on matching parameters.
+ */
+function applyParameterNamedExamples(
+    // biome-ignore lint/suspicious/noExplicitAny: OpenAPI parameter shapes
+    operation: any,
+    paramExamples: Record<string, unknown> | undefined,
+    location: string,
+    exampleName: string,
+    spec: OpenAPISpec
+): void {
+    if (paramExamples == null || typeof paramExamples !== "object") {
+        return;
+    }
+    const parameters = resolveParameters(operation, spec);
+    for (const [paramName, exampleValue] of Object.entries(paramExamples)) {
+        // biome-ignore lint/suspicious/noExplicitAny: parameter shape
+        const param = parameters.find((p: any) => p.name === paramName && p.in === location);
+        if (param != null) {
+            if (param.examples == null) {
+                param.examples = {};
+            }
+            param.examples[exampleName] = { value: exampleValue };
+        }
+    }
+}
+
+/**
+ * Resolves the parameters array for an operation, including any $ref parameters.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: OpenAPI parameter shapes
+function resolveParameters(operation: any, spec: OpenAPISpec): any[] {
+    if (!Array.isArray(operation.parameters)) {
+        return [];
+    }
+    return operation.parameters.map((param: Record<string, unknown>, index: number) => {
+        if (param.$ref != null && typeof param.$ref === "string") {
+            const resolved = resolveRef(spec, param.$ref as string);
+            if (resolved != null) {
+                operation.parameters[index] = { ...resolved };
+                return operation.parameters[index];
+            }
+        }
+        return param;
+    });
+}
+
+/**
+ * Resolves a JSON $ref pointer within the spec.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: ref resolution
+function resolveRef(spec: OpenAPISpec, ref: string): any | undefined {
+    if (!ref.startsWith("#/")) {
+        return undefined;
+    }
+    const parts = ref.substring(2).split("/");
+    // biome-ignore lint/suspicious/noExplicitAny: traversing spec
+    let current: any = spec;
+    for (const part of parts) {
+        if (current == null || typeof current !== "object") {
+            return undefined;
+        }
+        current = current[part];
+    }
+    return current;
+}
+
+/**
+ * Sets `example` on the request body's first content type.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
+function applyRequestBodyExample(operation: any, bodyExample: unknown): void {
+    if (operation.requestBody == null) {
+        operation.requestBody = { content: { "application/json": { schema: {} } } };
+    }
+    const content = operation.requestBody.content;
+    if (content == null) {
+        return;
+    }
+    const contentType = getFirstContentType(content);
+    if (contentType != null) {
+        content[contentType].example = bodyExample;
+    }
+}
+
+/**
+ * Sets a named entry in `examples` on the request body's first content type.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
+function applyRequestBodyNamedExample(operation: any, bodyExample: unknown, exampleName: string): void {
+    if (operation.requestBody == null) {
+        operation.requestBody = { content: { "application/json": { schema: {} } } };
+    }
+    const content = operation.requestBody.content;
+    if (content == null) {
+        return;
+    }
+    const contentType = getFirstContentType(content);
+    if (contentType != null) {
+        if (content[contentType].examples == null) {
+            content[contentType].examples = {};
+        }
+        content[contentType].examples[exampleName] = { value: bodyExample };
+    }
+}
+
+/**
+ * Sets `example` on the first success response's first content type.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
+function applyResponseBodyExample(operation: any, responseExample: unknown): void {
+    const response = getFirstSuccessResponse(operation);
+    if (response == null) {
+        return;
+    }
+    const content = response.content;
+    if (content == null) {
+        return;
+    }
+    const contentType = getFirstContentType(content);
+    if (contentType != null) {
+        content[contentType].example = responseExample;
+    }
+}
+
+/**
+ * Sets a named entry in `examples` on the first success response's first content type.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: OpenAPI operation shape
+function applyResponseBodyNamedExample(operation: any, responseExample: unknown, exampleName: string): void {
+    const response = getFirstSuccessResponse(operation);
+    if (response == null) {
+        return;
+    }
+    const content = response.content;
+    if (content == null) {
+        return;
+    }
+    const contentType = getFirstContentType(content);
+    if (contentType != null) {
+        if (content[contentType].examples == null) {
+            content[contentType].examples = {};
+        }
+        content[contentType].examples[exampleName] = { value: responseExample };
+    }
+}
+
+/**
+ * Returns the first success (2xx) response object from the operation.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: OpenAPI responses shape
+function getFirstSuccessResponse(operation: any): any | undefined {
+    const responses = operation.responses;
+    if (responses == null || typeof responses !== "object") {
+        return undefined;
+    }
+    for (const code of ["200", "201", "202", "203", "204"]) {
+        if (responses[code] != null) {
+            return responses[code];
+        }
+    }
+    for (const code of Object.keys(responses)) {
+        if (code.startsWith("2")) {
+            return responses[code];
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Returns the first content type key from a content map.
+ */
+function getFirstContentType(content: Record<string, unknown>): string | undefined {
+    const keys = Object.keys(content);
+    return keys.length > 0 ? keys[0] : undefined;
 }
