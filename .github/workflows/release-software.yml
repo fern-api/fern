@@ -64,9 +64,9 @@ jobs:
       - name: Skip if triggered by own release commit
         id: check-author
         run: |
-          COMMIT_AUTHOR_EMAIL=$(git log -1 --format='%ae')
-          echo "Last commit author email: $COMMIT_AUTHOR_EMAIL"
-          if [[ "$COMMIT_AUTHOR_EMAIL" == "github-actions[bot]@users.noreply.github.com" ]]; then
+          SUBJECT=$(git log -1 --format='%s')
+          echo "Last commit subject: $SUBJECT"
+          if [[ "$SUBJECT" =~ ^chore\(.+\):\ release\ .+ ]]; then
             echo "Triggered by automated release commit — skipping to avoid loop."
             echo "skip=true" >> $GITHUB_OUTPUT
           else
@@ -85,4 +85,4 @@ jobs:
 
       - name: Run releases for all configured software
         if: steps.check-author.outputs.skip != 'true'
-        run: npx tsx scripts/release-all.ts ${{ inputs.software || 'all' }}
+        run: npx tsx scripts/release-workflow.ts ${{ inputs.software || 'all' }}
