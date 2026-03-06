@@ -5,8 +5,8 @@ import yaml from "js-yaml";
 import { tmpdir } from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { serializeSpec } from "../_shared/loadSpec.js";
-import { generateOverrides } from "../compare/diffSpecs.js";
+import { generateOverrides } from "../split/diffSpecs.js";
+import { serializeSpec } from "../utils/loadSpec.js";
 
 /**
  * Tests that `merge` and `split` are clean inverses of one another.

@@ -5,7 +5,7 @@ import yaml from "js-yaml";
 import { tmpdir } from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { generateOverrides } from "../../compare/diffSpecs.js";
+import { generateOverrides } from "../diffSpecs.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: test data
 type Spec = Record<string, any>;

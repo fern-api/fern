@@ -23,6 +23,7 @@ export function generateOverrides(original: OpenAPISpec, modified: OpenAPISpec):
 /**
  * Recursively diff two objects and return only the differences.
  * Returns undefined if there are no differences.
+ * @internal Exported for testing only.
  */
 // biome-ignore lint/suspicious/noExplicitAny: recursive diff needs any
 export function diffObjects(original: any, modified: any): any {
