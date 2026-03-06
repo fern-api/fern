@@ -173,6 +173,32 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             hostPath: outputPath,
             runner: this.runner
         });
+
+        // Copy snippet files back to the host (generators write these inside the container).
+        // Unlike bind mounts in ContainerExecutionEnvironment, docker cp requires explicit copy-back.
+        if (snippetPath != null) {
+            await copyFromContainer({
+                logger,
+                containerId,
+                containerPath: CONTAINER_PATH_TO_SNIPPET,
+                hostPath: snippetPath,
+                runner: this.runner
+            }).catch((_e: unknown) => {
+                // Snippet file may not exist if the generator didn't produce one
+            });
+        }
+
+        if (snippetTemplatePath != null) {
+            await copyFromContainer({
+                logger,
+                containerId,
+                containerPath: CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
+                hostPath: snippetTemplatePath,
+                runner: this.runner
+            }).catch((_e: unknown) => {
+                // Snippet template file may not exist if the generator didn't produce one
+            });
+        }
     }
 
     /**
