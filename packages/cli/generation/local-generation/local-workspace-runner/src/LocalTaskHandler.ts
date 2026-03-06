@@ -84,6 +84,10 @@ export class LocalTaskHandler {
         const isFernIgnorePresent = await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
 
+        // Read prior changelog BEFORE copy operations overwrite the output directory
+        const priorChangelog =
+            this.version != null && isAutoVersion(this.version) ? await this.readPriorChangelog(3) : "";
+
         if (isFernIgnorePresent && isExistingGitRepo) {
             await this.copyGeneratedFilesWithFernIgnoreInExistingRepo();
         } else if (isFernIgnorePresent && !isExistingGitRepo) {
@@ -108,7 +112,7 @@ export class LocalTaskHandler {
         // Handle automatic semantic versioning if version is AUTO
         if (this.version != null && isAutoVersion(this.version)) {
             const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
-            const autoVersionResult = await this.handleAutoVersioning();
+            const autoVersionResult = await this.handleAutoVersioning(priorChangelog);
             if (autoVersionResult == null) {
                 this.context.logger.info("No semantic changes detected. Skipping GitHub operations.");
                 return { shouldCommit: false, autoVersioningCommitMessage: undefined };
@@ -128,7 +132,7 @@ export class LocalTaskHandler {
      * Handles automatic semantic versioning by analyzing the git diff with AI.
      * Returns the final version to use and the commit message, or null if NO_CHANGE.
      */
-    private async handleAutoVersioning(): Promise<AutoVersionResult | null> {
+    private async handleAutoVersioning(priorChangelog: string): Promise<AutoVersionResult | null> {
         const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
         let diffFile: string | undefined;
 
@@ -196,9 +200,6 @@ export class LocalTaskHandler {
                         `Consider splitting the SDK into smaller packages or reducing the number of endpoints.`
                 );
             }
-
-            // Read prior changelog entries for style context
-            const priorChangelog = await this.readPriorChangelog(3);
 
             // Call AI (or reuse cached analysis) to determine version bump
             let analysis: CachedAnalysis | null;
@@ -593,15 +594,6 @@ export class LocalTaskHandler {
     }
 
     /**
-     * Generates a git diff file for automatic versioning analysis.
-     * This compares the current state against HEAD to see what changes have been made.
-     *
-     * Uses `git add -N .` (intent-to-add) before diffing so that newly created files
-     * (e.g. from a namespace rename) appear in the diff. Without this, `git diff HEAD`
-     * silently ignores untracked files, which causes namespace changes to be invisible
-     * when the copy path does not stage files (copyGeneratedFilesNoFernIgnorePreservingGit).
-     */
-    /**
      * Reads prior changelog entries from the SDK output directory.
      * Looks for CHANGELOG.md (case-insensitive), extracts the last `maxEntries`
      * entries (each starting with a `## ` header), and returns them as a string.
@@ -658,6 +650,15 @@ export class LocalTaskHandler {
         }
     }
 
+    /**
+     * Generates a git diff file for automatic versioning analysis.
+     * This compares the current state against HEAD to see what changes have been made.
+     *
+     * Uses `git add -N .` (intent-to-add) before diffing so that newly created files
+     * (e.g. from a namespace rename) appear in the diff. Without this, `git diff HEAD`
+     * silently ignores untracked files, which causes namespace changes to be invisible
+     * when the copy path does not stage files (copyGeneratedFilesNoFernIgnorePreservingGit).
+     */
     private async generateDiffFile(): Promise<string> {
         const diffFile = pathJoin(tmpdir(), `git-diff-${Date.now()}.patch`);
 
