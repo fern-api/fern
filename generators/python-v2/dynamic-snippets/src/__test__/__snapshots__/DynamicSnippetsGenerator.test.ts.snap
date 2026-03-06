@@ -36,8 +36,7 @@ client.service.get_metadata(
 `;
 
 exports[`snippets > examples > 'POST /big-entity (simple)' 1`] = `
-"from acme import Acme
-from acme.types import Actor, ExtendedMovie, Migration
+"from acme import Acme, Actor, ExtendedMovie, Migration
 
 client = Acme(
     token="<YOUR_API_KEY>",
@@ -130,8 +129,8 @@ client.service.create_movie(
 
 exports[`snippets > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
 "from acme import Acme
-from datetime import datetime, date
-from uuid import UUID
+import datetime
+import uuid
 
 client = Acme(
     token="<YOUR_API_KEY>",
@@ -143,9 +142,9 @@ client.endpoints.object.get_and_return_with_optional_field(
     long=1000000,
     double=1.1,
     bool=True,
-    datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    date=date.fromisoformat("2023-01-15"),
-    uuid=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    uuid=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     base64="SGVsbG8gd29ybGQh",
     list=[
         "list",
@@ -216,8 +215,7 @@ exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] 
 `;
 
 exports[`snippets > exhaustive > 'POST /container/list-of-objects (simp…' 1`] = `
-"from acme import Acme
-from acme.types.object import ObjectWithRequiredField
+"from acme import Acme, ObjectWithRequiredField
 
 client = Acme(
     token="<YOUR_API_KEY>",
@@ -413,9 +411,8 @@ exports[`snippets > multi-url-environment > 'Unrecognized environment' 1`] = `
 `;
 
 exports[`snippets > nullable > 'Body properties' 1`] = `
-"from acme import Acme
-from acme.nullable import Metadata
-from datetime import datetime
+"from acme import Acme, Metadata
+import datetime
 
 client = Acme(
     base_url="https://api.example.com",
@@ -427,8 +424,8 @@ client.nullable.create_user(
         "admin"
     ],
     metadata=Metadata(
-        created_at=datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
-        updated_at=datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
+        created_at=datetime.datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("1980-01-01T00:00:00+00:00"),
         avatar=None,
         activated=None,
     ),
