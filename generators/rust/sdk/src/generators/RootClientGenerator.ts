@@ -37,20 +37,27 @@ export class RootClientGenerator {
         moduleDoc.push("");
 
         // Add documentation based on available subpackages
+        // Deduplicate by display name since multiple subpackages can share the same name
         if (subpackages.length > 0) {
             moduleDoc.push("This module contains client implementations for:");
             moduleDoc.push("");
+            const seenDocNames = new Set<string>();
             subpackages.forEach((subpackage) => {
                 const name = subpackage.name.pascalCase.safeName;
                 const displayName = subpackage.displayName ?? name;
 
                 // Try to get service docs if the subpackage has a service
+                let docEntry: string;
                 if (subpackage.service) {
                     const service = this.context.getHttpServiceOrThrow(subpackage.service);
                     const serviceDisplayName = service.displayName ?? displayName;
-                    moduleDoc.push(`- **${serviceDisplayName}**`);
+                    docEntry = serviceDisplayName;
                 } else {
-                    moduleDoc.push(`- **${displayName}**`);
+                    docEntry = displayName;
+                }
+                if (!seenDocNames.has(docEntry)) {
+                    seenDocNames.add(docEntry);
+                    moduleDoc.push(`- **${docEntry}**`);
                 }
             });
         } else {
@@ -111,11 +118,36 @@ export class RootClientGenerator {
     }
 
     private generateModuleDeclarations(subpackages: FernIr.Subpackage[]): string {
-        return subpackages.map((subpackage) => `pub mod ${subpackage.name.snakeCase.safeName};`).join("\n");
+        // Deduplicate module names - multiple subpackages can share the same name
+        // (e.g., HTTP and AsyncAPI sources both creating a "market_data" subpackage)
+        const seen = new Set<string>();
+        return subpackages
+            .filter((subpackage) => {
+                const moduleName = subpackage.name.snakeCase.safeName;
+                if (seen.has(moduleName)) {
+                    return false;
+                }
+                seen.add(moduleName);
+                return true;
+            })
+            .map((subpackage) => `pub mod ${subpackage.name.snakeCase.safeName};`)
+            .join("\n");
     }
 
     private generateReExports(subpackages: FernIr.Subpackage[]): string {
+        // Deduplicate re-exports - multiple subpackages with the same name/path
+        // resolve to the same client name via getUniqueClientNameForSubpackage
+        const seen = new Set<string>();
         return subpackages
+            .filter((subpackage) => {
+                const clientName = this.getSubClientName(subpackage);
+                const reExport = `${subpackage.name.snakeCase.safeName}::${clientName}`;
+                if (seen.has(reExport)) {
+                    return false;
+                }
+                seen.add(reExport);
+                return true;
+            })
             .map((subpackage) => {
                 const clientName = this.getSubClientName(subpackage);
                 return `pub use ${subpackage.name.snakeCase.safeName}::${clientName};`;

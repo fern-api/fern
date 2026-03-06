@@ -981,6 +981,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private getResourceExports(context: SdkGeneratorContext): string[] {
         const exports: string[] = [];
+        const seen = new Set<string>();
 
         // Only export top-level subpackages from the root package
         const topLevelSubpackageIds = context.ir.rootPackage.subpackages;
@@ -989,8 +990,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const subpackage = context.ir.subpackages[subpackageId];
             if (subpackage) {
                 // Use registered client name from context
+                // Deduplicate - multiple subpackages can resolve to the same client name
+                // (e.g., HTTP and AsyncAPI sources both creating a "market_data" subpackage)
                 const subClientName = context.getUniqueClientNameForSubpackage(subpackage);
-                exports.push(subClientName);
+                if (!seen.has(subClientName)) {
+                    seen.add(subClientName);
+                    exports.push(subClientName);
+                }
             }
         });
 
