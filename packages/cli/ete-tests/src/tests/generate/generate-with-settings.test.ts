@@ -1,9 +1,9 @@
 import {
     AbsoluteFilePath,
-    SnapshotFileOrDirectory,
     getDirectoryContentsForSnapshot,
     join,
-    RelativeFilePath
+    RelativeFilePath,
+    SnapshotFileOrDirectory
 } from "@fern-api/fs-utils";
 import { cp } from "fs/promises";
 import tmp from "tmp-promise";

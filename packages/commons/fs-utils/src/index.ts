@@ -9,9 +9,9 @@ export {
     type Directory,
     type File,
     type FileOrDirectory,
-    type SnapshotFileOrDirectory,
     getDirectoryContents,
-    getDirectoryContentsForSnapshot
+    getDirectoryContentsForSnapshot,
+    type SnapshotFileOrDirectory
 } from "./getDirectoryContents.js";
 export { getFilename } from "./getFilename.js";
 export { isCI } from "./isCI.js";
