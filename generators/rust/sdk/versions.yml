@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 0.18.4
+- version: 0.19.0
   changelogEntry:
     - summary: |
         Add WebSocket connector pattern and README code snippets when `enableWebsockets: true`.
