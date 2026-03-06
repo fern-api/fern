@@ -21,6 +21,15 @@ import {
 } from "./AutoVersioningService.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
+interface DryRunReport {
+    newVersion: string;
+    previousVersion: string;
+    versionBump: VersionBump | string;
+    tier: string;
+    commitMessage: string;
+    diffSizeBytes: number;
+}
+
 export declare namespace LocalTaskHandler {
     export interface Init {
         context: TaskContext;
@@ -35,6 +44,7 @@ export declare namespace LocalTaskHandler {
         isWhitelabel: boolean;
         autoVersioningCache?: AutoVersioningCache;
         generatorLanguage: string | undefined;
+        dryRun?: boolean;
     }
 }
 
@@ -51,6 +61,7 @@ export class LocalTaskHandler {
     private isWhitelabel: boolean;
     private autoVersioningCache: AutoVersioningCache | undefined;
     private generatorLanguage: string | undefined;
+    private dryRun: boolean;
 
     constructor({
         context,
@@ -64,7 +75,8 @@ export class LocalTaskHandler {
         ai,
         isWhitelabel,
         autoVersioningCache,
-        generatorLanguage
+        generatorLanguage,
+        dryRun
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -78,6 +90,7 @@ export class LocalTaskHandler {
         this.isWhitelabel = isWhitelabel;
         this.autoVersioningCache = autoVersioningCache;
         this.generatorLanguage = generatorLanguage;
+        this.dryRun = dryRun ?? false;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -113,6 +126,20 @@ export class LocalTaskHandler {
                 this.context.logger.info("No semantic changes detected. Skipping GitHub operations.");
                 return { shouldCommit: false, autoVersioningCommitMessage: undefined };
             }
+
+            // In dry-run mode, print the report and skip writing files
+            if (this.dryRun) {
+                this.printDryRunReport({
+                    newVersion: autoVersionResult.version,
+                    previousVersion: autoVersionResult.previousVersion ?? "0.0.0",
+                    versionBump: autoVersionResult.versionBump ?? "unknown",
+                    tier: autoVersionResult.tier ?? "unknown",
+                    commitMessage: autoVersionResult.commitMessage,
+                    diffSizeBytes: autoVersionResult.diffSizeBytes ?? 0
+                });
+                return { shouldCommit: false, autoVersioningCommitMessage: undefined };
+            }
+
             // Replace placeholder version with computed version
             await autoVersioningService.replaceMagicVersion(
                 this.absolutePathToLocalOutput,
@@ -121,7 +148,57 @@ export class LocalTaskHandler {
             );
             return { shouldCommit: true, autoVersioningCommitMessage: autoVersionResult.commitMessage };
         }
+
+        // If dry-run is set but version is not AUTO, warn the user
+        if (this.dryRun) {
+            this.context.logger.warn("--dry-run is only meaningful when version is AUTO. Ignoring.");
+        }
+
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };
+    }
+
+    /**
+     * Prints a formatted dry-run report showing the version analysis results.
+     * When the AUTOVERSION_DRY_RUN_JSON=1 env var is set, outputs JSON to stdout instead.
+     */
+    private printDryRunReport(report: DryRunReport): void {
+        if (process.env.AUTOVERSION_DRY_RUN_JSON === "1") {
+            // Machine-readable JSON output to stdout
+            process.stdout.write(
+                JSON.stringify(
+                    {
+                        previousVersion: report.previousVersion,
+                        newVersion: report.newVersion,
+                        versionBump: report.versionBump,
+                        tier: report.tier,
+                        commitMessage: report.commitMessage,
+                        diffSizeBytes: report.diffSizeBytes
+                    },
+                    null,
+                    2
+                ) + "\n"
+            );
+            return;
+        }
+
+        const lines = [
+            "",
+            "\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510",
+            "\u2502        AUTO Version Dry-Run Report       \u2502",
+            "\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+            `  Previous version : ${report.previousVersion}`,
+            `  New version      : ${report.newVersion}`,
+            `  Bump level       : ${report.versionBump}`,
+            `  Decided by       : ${report.tier}`,
+            `  Diff size        : ${report.diffSizeBytes.toLocaleString()} bytes`,
+            "",
+            "  Commit message:",
+            ...report.commitMessage.split("\n").map((l) => `    ${l}`),
+            "",
+            "  (Dry-run mode \u2014 no files were modified)",
+            ""
+        ];
+        this.context.logger.info(lines.join("\n"));
     }
 
     /**
@@ -174,7 +251,11 @@ export class LocalTaskHandler {
                     : "Initial SDK generation\n\n🌿 Generated with Fern";
                 return {
                     version: initialVersion,
-                    commitMessage
+                    commitMessage,
+                    previousVersion: "0.0.0",
+                    versionBump: "INITIAL",
+                    tier: "initial",
+                    diffSizeBytes: cleanedDiff.length
                 };
             }
 
@@ -224,7 +305,11 @@ export class LocalTaskHandler {
                     : "SDK regeneration\n\n🌿 Generated with Fern";
                 return {
                     version: newVersion,
-                    commitMessage: fallbackMessage
+                    commitMessage: fallbackMessage,
+                    previousVersion,
+                    versionBump: VersionBump.PATCH,
+                    tier: "fallback",
+                    diffSizeBytes: cleanedDiff.length
                 };
             }
 
@@ -241,7 +326,11 @@ export class LocalTaskHandler {
 
             return {
                 version: newVersion,
-                commitMessage
+                commitMessage,
+                previousVersion,
+                versionBump: analysis.versionBump,
+                tier: "ai",
+                diffSizeBytes: cleanedDiff.length
             };
         } catch (error) {
             if (error instanceof AutoVersioningException) {
@@ -257,7 +346,11 @@ export class LocalTaskHandler {
                     : "Initial SDK generation\n\n🌿 Generated with Fern";
                 return {
                     version: initialVersion,
-                    commitMessage
+                    commitMessage,
+                    previousVersion: "0.0.0",
+                    versionBump: "INITIAL",
+                    tier: "initial",
+                    diffSizeBytes: 0
                 };
             }
 

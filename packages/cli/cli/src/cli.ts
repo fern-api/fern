@@ -698,6 +698,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                })
+                .option("dry-run", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Preview the computed version without writing any files. Prints the version bump decision and exits. Only meaningful when version is AUTO."
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -737,6 +743,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             }
             const correctedGeneratorFilter =
                 argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
+            if (argv["dry-run"] && !(argv.local || argv.runner != null)) {
+                return cliContext.failWithoutThrowing(
+                    "The --dry-run flag requires local generation (--local or --runner)."
+                );
+            }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
@@ -760,7 +771,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
-                    retryRateLimited: argv["retry-rate-limited"]
+                    retryRateLimited: argv["retry-rate-limited"],
+                    dryRun: argv["dry-run"]
                 });
             }
             if (argv.docs != null) {
@@ -815,7 +827,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
-                retryRateLimited: argv["retry-rate-limited"]
+                retryRateLimited: argv["retry-rate-limited"],
+                dryRun: argv["dry-run"]
             });
         }
     );

@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.10.0
+  changelogEntry:
+    - summary: |
+        Add `--dry-run` flag to `fern generate` for previewing AUTO versioning
+        decisions without writing any files or committing changes. When used with
+        `--local` or `--runner`, the flag runs the full versioning pipeline (IR diff,
+        pre-screen, AI analysis) and prints a formatted report showing the previous
+        version, new version, bump level, deciding tier, diff size, and commit message
+        preview. Set `AUTOVERSION_DRY_RUN_JSON=1` for machine-readable JSON output
+        to stdout. No files are modified, no git commits are created, and the process
+        exits with code 0.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
 - version: 4.9.0
   changelogEntry:
     - summary: |

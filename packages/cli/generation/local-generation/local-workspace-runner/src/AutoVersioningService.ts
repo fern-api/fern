@@ -24,6 +24,23 @@ export interface AutoVersionResult {
      * The commit message describing the changes.
      */
     commitMessage: string;
+    /**
+     * The previous version before the bump (for dry-run reporting).
+     */
+    previousVersion?: string;
+    /**
+     * The version bump level that was applied (for dry-run reporting).
+     */
+    versionBump?: string;
+    /**
+     * Which tier made the versioning decision (for dry-run reporting).
+     * e.g., "ai", "prescreen", "fallback", "initial"
+     */
+    tier?: string;
+    /**
+     * Size of the cleaned diff in bytes (for dry-run reporting).
+     */
+    diffSizeBytes?: number;
 }
 
 /**

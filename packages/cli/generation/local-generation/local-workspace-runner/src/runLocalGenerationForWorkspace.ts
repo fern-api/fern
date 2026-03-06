@@ -45,7 +45,8 @@ export async function runLocalGenerationForWorkspace({
     ai,
     replay,
     noReplay,
-    validateWorkspace
+    validateWorkspace,
+    dryRun
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -61,6 +62,7 @@ export async function runLocalGenerationForWorkspace({
     replay?: generatorsYml.ReplayConfigSchema | undefined;
     noReplay?: boolean;
     validateWorkspace?: boolean;
+    dryRun?: boolean;
 }): Promise<void> {
     // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
     // This avoids wasted work when one generator would fail the version check.
@@ -320,7 +322,8 @@ export async function runLocalGenerationForWorkspace({
                     whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
                     runner,
                     ai,
-                    autoVersioningCache
+                    autoVersioningCache,
+                    dryRun
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
