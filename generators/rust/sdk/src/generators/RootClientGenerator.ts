@@ -1,19 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import {
-    CodeBlock,
-    Expression,
-    Field,
-    ImplBlock,
-    Method,
-    PUBLIC,
-    Reference,
-    rust,
-    Struct,
-    Type,
-    UseStatement
-} from "@fern-api/rust-codegen";
+import { rust, UseStatement } from "@fern-api/rust-codegen";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
@@ -347,14 +335,23 @@ export class RootClientGenerator {
     }
 
     private generateUnifiedModFileIfNeeded(subpackages: FernIr.Subpackage[], currentPath: string): RustFile | null {
-        // Find the subpackage that corresponds to this directory path
-        const targetSubpackage = subpackages.find((subpackage) => {
+        // Find all subpackages that correspond to this directory path.
+        // Multiple subpackages can map to the same path (e.g., from HTTP + AsyncAPI sources).
+        const matchingSubpackages = subpackages.filter((subpackage) => {
             const fernFilepathDir = this.context.getDirectoryForFernFilepath(subpackage.fernFilepath);
             return fernFilepathDir === currentPath;
         });
 
-        if (!targetSubpackage) {
+        if (matchingSubpackages.length === 0) {
             return null; // No direct subpackage for this path
+        }
+
+        // Prefer the subpackage that has children (subclients), since it needs a unified mod.rs.
+        // When multiple subpackages share the same path, only one typically has children.
+        const targetSubpackage =
+            matchingSubpackages.find((sp) => sp.subpackages.length > 0) ?? matchingSubpackages[0];
+        if (!targetSubpackage) {
+            return null;
         }
 
         // Check if this subpackage has subclients (nested structure)
@@ -366,7 +363,6 @@ export class RootClientGenerator {
         }
 
         // Generate unified mod.rs with client struct + submodule declarations
-        const subClientGenerator = new SubClientGenerator(this.context, targetSubpackage);
         return this.generateUnifiedModFileContent(targetSubpackage, subClientSubpackages, currentPath);
     }
 
@@ -403,6 +399,7 @@ export class RootClientGenerator {
             if (fernFilepathDir) {
                 const parts = fernFilepathDir.split("/");
                 const moduleName = parts[parts.length - 1]; // Get the last part (actual directory name)
+
                 const subClientName = this.context.getUniqueClientNameForSubpackage(subClientSubpackage);
 
                 subModuleDeclarations.push(`pub mod ${moduleName};`);
@@ -410,108 +407,14 @@ export class RootClientGenerator {
             }
         });
 
-        // Get the regular client generation, but we'll modify it to include submodules
-        // We need to get the client struct content from SubClientGenerator
-        // Since the methods are private, let's use a different approach
-
-        // For now, let's use the existing generateModFile method pattern but enhance it
-        const clientGeneratorContext = new ClientGeneratorContext({
-            packageOrSubpackage: subpackage,
-            sdkGeneratorContext: this.context
-        });
-
-        // Build the unified content manually
-        const useStatements = [
-            new UseStatement({
-                path: "crate",
-                items: ["ApiError", "ClientConfig", "HttpClient"]
-            })
-        ];
-
-        const clientName = this.context.getUniqueClientNameForSubpackage(subpackage);
-
-        // Create struct fields using AST
-        const structFields: Field[] = [
-            new Field({
-                name: "http_client",
-                type: Type.reference(new Reference({ name: "HttpClient", module: undefined })),
-                visibility: PUBLIC
-            }),
-            ...clientGeneratorContext.subClients.map(
-                ({ fieldName, clientName }) =>
-                    new Field({
-                        name: fieldName,
-                        type: Type.reference(new Reference({ name: clientName, module: undefined })),
-                        visibility: PUBLIC
-                    })
-            )
-        ];
-
-        // Create the struct using AST
-        const clientStruct = new Struct({
-            name: clientName,
-            visibility: PUBLIC,
-            fields: structFields
-        });
-
-        // Create the new method body using Expression
-        const constructorFields: Expression.FieldAssignment[] = [
-            {
-                name: "http_client",
-                value: Expression.try(
-                    Expression.functionCall("HttpClient::new", [
-                        Expression.methodCall({
-                            target: Expression.reference("config"),
-                            method: "clone",
-                            args: []
-                        })
-                    ])
-                )
-            },
-            ...clientGeneratorContext.subClients.map(({ fieldName, clientName }) => ({
-                name: fieldName,
-                value: Expression.try(
-                    Expression.functionCall(`${clientName}::new`, [
-                        Expression.methodCall({
-                            target: Expression.reference("config"),
-                            method: "clone",
-                            args: []
-                        })
-                    ])
-                )
-            }))
-        ];
-
-        const constructorExpression = Expression.ok(Expression.structConstruction("Self", constructorFields));
-        const constructorBody = CodeBlock.fromExpression(constructorExpression);
-
-        // Create the impl block with the new method
-        const implBlock = new ImplBlock({
-            targetType: Type.reference(new Reference({ name: clientName, module: undefined })),
-            methods: [
-                new Method({
-                    name: "new",
-                    visibility: PUBLIC,
-                    parameters: [
-                        {
-                            name: "config",
-                            parameterType: Type.reference(new Reference({ name: "ClientConfig", module: undefined })),
-                            isSelf: false
-                        }
-                    ],
-                    returnType: Type.result(
-                        Type.reference(new Reference({ name: "Self", module: undefined })),
-                        Type.reference(new Reference({ name: "ApiError", module: undefined }))
-                    ),
-                    isStatic: true,
-                    body: constructorBody
-                })
-            ]
-        });
+        // Delegate to SubClientGenerator for the full client code including all
+        // endpoint methods, proper imports, pagination, etc. This ensures the unified
+        // mod.rs has the same functionality as a standalone client file.
+        const clientContent = subClientGenerator.generateRawClientContent();
 
         const module = rust.module({
-            useStatements,
-            rawDeclarations: [...subModuleDeclarations, clientStruct.toString(), implBlock.toString()]
+            useStatements: clientContent.imports,
+            rawDeclarations: [...subModuleDeclarations, ...clientContent.rawDeclarations]
         });
 
         return new RustFile({

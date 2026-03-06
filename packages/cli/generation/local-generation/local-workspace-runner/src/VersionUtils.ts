@@ -1,5 +1,44 @@
 import { AutoVersioningException } from "./AutoVersioningService.js";
 
+/**
+ * Maps a Fern generator name to a normalized language identifier.
+ * e.g. "fernapi/fern-typescript-node-sdk" → "typescript"
+ */
+export function extractLanguageFromGeneratorName(generatorName: string): string {
+    const name = generatorName.toLowerCase();
+    if (name.includes("typescript") || name.includes("ts-sdk") || name.includes("node-sdk")) {
+        return "typescript";
+    }
+    if (name.includes("python")) {
+        return "python";
+    }
+    if (name.includes("java") && !name.includes("javascript")) {
+        return "java";
+    }
+    if (/\bgo\b/.test(name)) {
+        return "go";
+    }
+    if (name.includes("ruby")) {
+        return "ruby";
+    }
+    if (name.includes("csharp") || name.includes("dotnet") || name.includes("c-sharp")) {
+        return "csharp";
+    }
+    if (name.includes("php")) {
+        return "php";
+    }
+    if (name.includes("swift")) {
+        return "swift";
+    }
+    if (name.includes("rust")) {
+        return "rust";
+    }
+    if (name.includes("kotlin")) {
+        return "kotlin";
+    }
+    return "unknown";
+}
+
 export const AUTO_VERSION = "AUTO";
 export const MAGIC_VERSION = "505.503.4455";
 
