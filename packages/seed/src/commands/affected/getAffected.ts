@@ -195,21 +195,16 @@ export function detectAffected(changedFiles: string[], allGenerators: GeneratorW
         }
     }
 
-    // If test definitions changed but no specific generators, all generators are affected
-    // (since test definitions feed into all generators)
-    if (affectedFixtureSet.size > 0 && affectedGeneratorSet.size === 0) {
+    // If test definitions changed, all generators need to run those fixtures
+    if (affectedFixtureSet.size > 0) {
         allGeneratorsAffected = true;
-        summary.push(
-            "Test definitions changed but no generator source changed — all generators affected for changed fixtures."
-        );
+        summary.push("Test definitions changed — all generators affected for changed fixtures.");
     }
 
-    // If generator source changed but no specific fixtures, all fixtures are affected for those generators
-    if (affectedGeneratorSet.size > 0 && affectedFixtureSet.size === 0) {
+    // If generator source changed, all fixtures need to run for those generators
+    if (affectedGeneratorSet.size > 0) {
         allFixturesAffected = true;
-        summary.push(
-            "Generator source changed but no test definitions changed — all fixtures affected for changed generators."
-        );
+        summary.push("Generator source changed — all fixtures affected for changed generators.");
     }
 
     // If nothing was detected as affected, fall back to running everything
