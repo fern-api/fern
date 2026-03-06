@@ -213,6 +213,32 @@ function buildLargeJavaDiff(
 }
 
 // ---------------------------------------------------------------------------
+// Shared helpers
+// ---------------------------------------------------------------------------
+
+/** Creates a mock logger with vi.fn() stubs for all Logger methods. */
+function createMockLogger() {
+    return {
+        info: vi.fn(),
+        warn: vi.fn(),
+        error: vi.fn(),
+        debug: vi.fn(),
+        disable: vi.fn(),
+        enable: vi.fn(),
+        trace: vi.fn(),
+        log: vi.fn()
+    };
+}
+
+/** Creates an AutoVersioningService with a mock logger. */
+function createService(): AutoVersioningService {
+    return new AutoVersioningService({
+        // biome-ignore lint/suspicious/noExplicitAny: test logger mock
+        logger: createMockLogger() as any
+    });
+}
+
+// ---------------------------------------------------------------------------
 // Test suites
 // ---------------------------------------------------------------------------
 
@@ -221,20 +247,7 @@ describe("E2E: Large Diff Chunking Pipeline", () => {
     let service: AutoVersioningService;
 
     beforeEach(() => {
-        const mockLogger = {
-            info: vi.fn(),
-            warn: vi.fn(),
-            error: vi.fn(),
-            debug: vi.fn(),
-            disable: vi.fn(),
-            enable: vi.fn(),
-            trace: vi.fn(),
-            log: vi.fn()
-        };
-        service = new AutoVersioningService({
-            // biome-ignore lint/suspicious/noExplicitAny: test logger mock
-            logger: mockLogger as any
-        });
+        service = createService();
     });
 
     describe("Realistic 1+ MB Java SDK diff", () => {
@@ -374,7 +387,7 @@ describe("E2E: Large Diff Chunking Pipeline", () => {
     });
 
     describe("Realistic 700-file Java SDK diff", () => {
-        const { rawDiff, metadata } = buildLargeJavaDiff(700, 2.0);
+        const { rawDiff } = buildLargeJavaDiff(700, 2.0);
 
         it("handles 700+ file sections efficiently", () => {
             const rawBytes = Buffer.byteLength(rawDiff, "utf-8");
@@ -480,7 +493,6 @@ describe("E2E: Large Diff Chunking Pipeline", () => {
 describe("E2E: maxVersionBump merging logic", () => {
     it("correctly ranks all version bump combinations", () => {
         // Exhaustive pairwise comparison
-        const bumps = [VersionBump.NO_CHANGE, VersionBump.PATCH, VersionBump.MINOR, VersionBump.MAJOR];
         const expected = [
             // NO_CHANGE vs all
             [VersionBump.NO_CHANGE, VersionBump.NO_CHANGE, VersionBump.NO_CHANGE],
@@ -579,20 +591,7 @@ describe("E2E: maxVersionBump merging logic", () => {
 describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
     it("processes a 1+ MB diff end-to-end with mocked AI responses per chunk", () => {
         const magicVersion = "505.503.4455";
-        const mockLogger = {
-            info: vi.fn(),
-            warn: vi.fn(),
-            error: vi.fn(),
-            debug: vi.fn(),
-            disable: vi.fn(),
-            enable: vi.fn(),
-            trace: vi.fn(),
-            log: vi.fn()
-        };
-        const service = new AutoVersioningService({
-            // biome-ignore lint/suspicious/noExplicitAny: test logger mock
-            logger: mockLogger as any
-        });
+        const service = createService();
 
         // Build and clean a realistic large diff
         const { rawDiff } = buildLargeJavaDiff(200, 1.2);
@@ -631,7 +630,9 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
             }
         );
 
-        // Simulate the merging logic from LocalTaskHandler
+        // Simulate the merging logic from LocalTaskHandler (lines 254-297).
+        // This mirrors the production multi-chunk loop so we can verify the
+        // algorithm end-to-end without mocking the full handler.
         let bestBump: string = VersionBump.NO_CHANGE;
         let bestMessage = "";
         let bestChangelogEntry: string | undefined;
@@ -688,20 +689,7 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
 
     it("produces MINOR when no MAJOR bump is present", () => {
         const magicVersion = "505.503.4455";
-        const mockLogger = {
-            info: vi.fn(),
-            warn: vi.fn(),
-            error: vi.fn(),
-            debug: vi.fn(),
-            disable: vi.fn(),
-            enable: vi.fn(),
-            trace: vi.fn(),
-            log: vi.fn()
-        };
-        const service = new AutoVersioningService({
-            // biome-ignore lint/suspicious/noExplicitAny: test logger mock
-            logger: mockLogger as any
-        });
+        const service = createService();
 
         // Build a diff without deletions (no MAJOR signal)
         const sections: string[] = [];
