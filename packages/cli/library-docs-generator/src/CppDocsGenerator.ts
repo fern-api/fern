@@ -177,8 +177,10 @@ function collectCompounds(ns: CppNamespaceIr, rootPrefix: string): CollectedComp
         if (overloads.length === 0) {
             continue;
         }
-        // Safe: length check above guarantees non-empty
-        const representative = overloads[0]!;
+        const representative = overloads[0];
+        if (representative == null) {
+            continue;
+        }
         if (rootPrefix && !representative.path.startsWith(rootPrefix)) {
             continue;
         }

@@ -12,7 +12,7 @@
 
 import type { CppFunctionIr } from "../../../src/types/CppLibraryDocsIr.js";
 import type { CompoundMeta, RenderContext } from "../context.js";
-import { renderSegmentsPlainText, renderSegmentsTrimmed, setCurrentPagePath } from "./DescriptionRenderer.js";
+import { renderSegmentsPlainText, setCurrentPagePath } from "./DescriptionRenderer.js";
 import { renderMethodContent, renderOverloadedMethod } from "./MethodRenderer.js";
 import { renderFrontmatter, trimTrailingBlankLines } from "./shared.js";
 
@@ -31,7 +31,10 @@ export function renderFunctionPage(overloads: CppFunctionIr[], meta: CompoundMet
         return "";
     }
 
-    const representative = overloads[0]!;
+    const representative = overloads[0];
+    if (representative == null) {
+        return "";
+    }
 
     // Set current page path so self-referential links render as plain code
     setCurrentPagePath(representative.path);

@@ -10,11 +10,8 @@
  */
 
 import type {
-    CppDocSegment,
     CppDocstringIr,
     CppFunctionIr,
-    CppParamDoc,
-    CppParameterIr,
     CppTemplateParamIr,
     CppTypeInfo
 } from "../../../src/types/CppLibraryDocsIr.js";
@@ -41,7 +38,7 @@ function capitalizeDescription(desc: string): string {
     // These are special tags that should not have their content capitalized.
     // Skip past them and capitalize the first alphabetic char in the text that follows.
     const boldPrefixMatch = desc.match(/^(\*\*\[[^\]]+\]\*\*\s*)/);
-    const startOffset = boldPrefixMatch ? boldPrefixMatch[1]!.length : 0;
+    const startOffset = boldPrefixMatch?.[1] != null ? boldPrefixMatch[1].length : 0;
 
     // Do not capitalize if the first non-prefix character starts a markdown link [...]
     if (desc[startOffset] === "[") {
@@ -50,7 +47,7 @@ function capitalizeDescription(desc: string): string {
 
     // Find the first alphabetic character starting from the offset
     for (let i = startOffset; i < desc.length; i++) {
-        const ch = desc[i]!;
+        const ch = desc.charAt(i);
         if (/[a-z]/.test(ch)) {
             return desc.substring(0, i) + ch.toUpperCase() + desc.substring(i + 1);
         }
@@ -123,7 +120,7 @@ function parseTemplateParam(tp: CppTemplateParamIr): { typePart: string; namePar
     // Name embedded in type string: "typename T", "class _Resource"
     const parts = tp.type.split(/\s+/);
     if (parts.length >= 2) {
-        const lastPart = parts[parts.length - 1]!;
+        const lastPart = parts[parts.length - 1] ?? "";
         const typePart = parts.slice(0, -1).join(" ");
         return { typePart, namePart: lastPart };
     }
@@ -153,7 +150,10 @@ export function renderClassTemplateParams(
     lines.push("");
 
     for (let i = 0; i < renderableParams.length; i++) {
-        const tp = renderableParams[i]!;
+        const tp = renderableParams[i];
+        if (tp == null) {
+            continue;
+        }
         const { typePart, namePart } = parseTemplateParam(tp);
 
         // Find description from docstring templateParamsDoc or params
@@ -280,7 +280,10 @@ export function renderMethodTemplateParams(func: CppFunctionIr, docstring: CppDo
     lines.push("");
 
     for (let i = 0; i < renderableParams.length; i++) {
-        const tp = renderableParams[i]!;
+        const tp = renderableParams[i];
+        if (tp == null) {
+            continue;
+        }
         const { typePart, namePart } = parseTemplateParam(tp);
 
         const description = findTemplateParamDescription(namePart, docstring, { includeParams: false });
@@ -331,7 +334,10 @@ export function renderMethodParams(func: CppFunctionIr, docstring: CppDocstringI
     lines.push("");
 
     for (let i = 0; i < func.parameters.length; i++) {
-        const param = func.parameters[i]!;
+        const param = func.parameters[i];
+        if (param == null) {
+            continue;
+        }
         // Skip unnamed params (e.g., dummy int for postfix operators)
         if (!param.name || param.name.length === 0) {
             continue;

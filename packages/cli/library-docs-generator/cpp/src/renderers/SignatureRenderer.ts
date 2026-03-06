@@ -35,7 +35,7 @@ export function normalizeAngleBracketSpacing(input: string): string {
     let depth = 0;
 
     for (let i = 0; i < chars.length; i++) {
-        const ch = chars[i]!;
+        const ch = chars[i] ?? "";
         const next = chars[i + 1];
 
         // Detect `<<` shift operator -- not a template bracket
@@ -491,7 +491,7 @@ function splitParams(paramsStr: string): string[] {
     let current = "";
 
     for (let i = 0; i < paramsStr.length; i++) {
-        const ch = paramsStr[i]!;
+        const ch = paramsStr.charAt(i);
         if (ch === "<" || ch === "(") {
             depth++;
             current += ch;

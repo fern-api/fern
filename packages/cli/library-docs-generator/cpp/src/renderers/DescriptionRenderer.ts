@@ -151,9 +151,9 @@ function renderSegment(segment: CppDocSegment): string {
             let codeText = segment.code;
             let possessiveSuffix = "";
             const possessiveMatch = codeText.match(/^(.+?)('s?)\s*$/);
-            if (possessiveMatch) {
-                codeText = possessiveMatch[1]!;
-                possessiveSuffix = possessiveMatch[2]!;
+            if (possessiveMatch && possessiveMatch[1] != null && possessiveMatch[2] != null) {
+                codeText = possessiveMatch[1];
+                possessiveSuffix = possessiveMatch[2];
             }
 
             // codeRef has code + refid + kindref
@@ -531,12 +531,20 @@ function renderList(ordered: boolean, items: CppDocBlock[][], options?: RenderBl
             continue;
         }
         const prefix = ordered ? `${i + 1}.` : "-";
-        const firstBlock = renderBlock(itemBlocks[0]!, options);
+        const firstItem = itemBlocks[0];
+        if (firstItem == null) {
+            continue;
+        }
+        const firstBlock = renderBlock(firstItem, options);
         lines.push(`${prefix} ${firstBlock}`);
 
         // Remaining blocks in the item get indented
         for (let j = 1; j < itemBlocks.length; j++) {
-            const rendered = renderBlock(itemBlocks[j]!, options);
+            const nextItem = itemBlocks[j];
+            if (nextItem == null) {
+                continue;
+            }
+            const rendered = renderBlock(nextItem, options);
             if (rendered) {
                 const indented = rendered
                     .split("\n")
@@ -575,7 +583,10 @@ export function renderDescriptionBlocksDeduped(
     if (blocks.length === 0 || summary.length === 0) {
         return renderDescriptionBlocks(blocks, options);
     }
-    const firstBlock = blocks[0]!;
+    const firstBlock = blocks[0];
+    if (firstBlock == null) {
+        return renderDescriptionBlocks(blocks, options);
+    }
     if (firstBlock.type === "paragraph") {
         const blockText = renderSegments(firstBlock.segments).trim();
         const summaryText = renderSegments(summary).trim();

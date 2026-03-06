@@ -14,7 +14,6 @@
 import type { CppVariableIr } from "../../../src/types/CppLibraryDocsIr.js";
 import type { CompoundMeta } from "../context.js";
 import {
-    renderDescriptionBlocks,
     renderDescriptionBlocksDeduped,
     renderSeeAlso,
     renderSegmentsPlainText,

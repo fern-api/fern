@@ -7,15 +7,15 @@
  * - Enum tables
  */
 
-import type {
-    CppClassIr,
-    CppTypedefIr,
-    CppVariableIr,
-    CppEnumIr
-} from "../../../src/types/CppLibraryDocsIr.js";
-import { renderSegmentsTrimmed, renderTypeInfoDisplay, renderTypeInfoForTable, renderDescriptionBlocks } from "./DescriptionRenderer.js";
-import { getVariableBadges, renderBadge } from "./BadgeRenderer.js";
+import type { CppClassIr, CppEnumIr, CppTypedefIr, CppVariableIr } from "../../../src/types/CppLibraryDocsIr.js";
 import { buildLinkPath } from "../context.js";
+import { getVariableBadges, renderBadge } from "./BadgeRenderer.js";
+import {
+    renderDescriptionBlocks,
+    renderSegmentsTrimmed,
+    renderTypeInfoDisplay,
+    renderTypeInfoForTable
+} from "./DescriptionRenderer.js";
 import { formatLinksJson } from "./SignatureRenderer.js";
 import { trimTrailingBlankLines } from "./shared.js";
 
@@ -49,7 +49,7 @@ export function renderTypedefTable(typedefs: CppTypedefIr[]): string {
     const lines: string[] = [];
 
     // Check if any typedef has a description
-    const hasDescriptions = typedefs.some(td => {
+    const hasDescriptions = typedefs.some((td) => {
         if (!td.docstring) {
             return false;
         }
@@ -67,9 +67,7 @@ export function renderTypedefTable(typedefs: CppTypedefIr[]): string {
             // Wrap definition in backticks (display text only, no inline links)
             const defDisplay = td.typeInfo ? renderTypeInfoDisplay(td.typeInfo) : "";
             const definition = defDisplay ? escapeTableCell(`\`${defDisplay}\``) : "";
-            const description = td.docstring
-                ? escapeTableCell(renderSegmentsTrimmed(td.docstring.summary))
-                : "";
+            const description = td.docstring ? escapeTableCell(renderSegmentsTrimmed(td.docstring.summary)) : "";
             // Trim trailing spaces in empty description cells: "| desc |" or "| |"
             const descCell = description ? ` ${description} ` : " ";
             lines.push(`| ${name} | ${definition} |${descCell}|`);
@@ -114,20 +112,14 @@ export function renderMemberVariableTable(variables: CppVariableIr[], ownerPath:
     for (const v of variables) {
         // Name with badges
         const badges = getVariableBadges(v);
-        const badgeStr = badges.length > 0
-            ? " " + badges.map(b => renderBadge(b)).join(" ")
-            : "";
+        const badgeStr = badges.length > 0 ? " " + badges.map((b) => renderBadge(b)).join(" ") : "";
         const name = `\`${v.name}\`${badgeStr}`;
 
         // Type with link
-        const typeStr = v.typeInfo
-            ? escapeTableCell(renderTypeInfoForTable(v.typeInfo, ownerPath))
-            : "";
+        const typeStr = v.typeInfo ? escapeTableCell(renderTypeInfoForTable(v.typeInfo, ownerPath)) : "";
 
         // Description
-        const description = v.docstring
-            ? escapeTableCell(renderSegmentsTrimmed(v.docstring.summary))
-            : "";
+        const description = v.docstring ? escapeTableCell(renderSegmentsTrimmed(v.docstring.summary)) : "";
 
         // Trim trailing spaces in empty description cells: "| desc |" or "| |"
         const descCell = description ? ` ${description} ` : " ";
@@ -174,9 +166,7 @@ export function renderInnerClass(innerClass: CppClassIr, ownerPath: string): str
     const links: Record<string, string> = {};
     links[ownerShort] = buildLinkPath(ownerPath);
 
-    const linksStr = Object.keys(links).length > 0
-        ? ` links={${formatLinksJson(links)}}`
-        : "";
+    const linksStr = Object.keys(links).length > 0 ? ` links={${formatLinksJson(links)}}` : "";
 
     lines.push(`<CodeBlock${linksStr}>`);
     lines.push("```cpp showLineNumbers={false}");
@@ -214,7 +204,7 @@ export function renderInnerClass(innerClass: CppClassIr, ownerPath: string): str
 
     // Inherits from
     if (innerClass.baseClasses.length > 0) {
-        const baseLinks = innerClass.baseClasses.map(bc => {
+        const baseLinks = innerClass.baseClasses.map((bc) => {
             const access = bc.access !== "public" ? ` (${bc.access})` : " (public)";
             if (bc.typeInfo?.resolvedPath) {
                 return `[\`${bc.name}\`](${buildLinkPath(bc.typeInfo.resolvedPath)})${access}`;
@@ -265,9 +255,9 @@ export function renderRelatedConceptsTable(
         // Pattern: [link text](url) Description text
         // Or: `code` Description text
         const linkMatch = text.match(/^(\[.*?\]\(.*?\))\s+(.*)/);
-        if (linkMatch) {
-            const concept = escapeTableCell(linkMatch[1]!);
-            const desc = escapeTableCell(linkMatch[2]!);
+        if (linkMatch && linkMatch[1] != null && linkMatch[2] != null) {
+            const concept = escapeTableCell(linkMatch[1]);
+            const desc = escapeTableCell(linkMatch[2]);
             lines.push(`| ${concept} | ${desc} |`);
         } else {
             // Just put the whole thing in the first column
@@ -312,9 +302,7 @@ export function renderEnum(enumIr: CppEnumIr): string {
     for (const val of enumIr.values) {
         const name = `\`${val.name}\``;
         const value = val.initializer ? escapeTableCell(val.initializer) : "";
-        const desc = val.docstring
-            ? escapeTableCell(renderSegmentsTrimmed(val.docstring.summary))
-            : "";
+        const desc = val.docstring ? escapeTableCell(renderSegmentsTrimmed(val.docstring.summary)) : "";
         // Trim trailing spaces in empty cells
         const valueCell = value ? ` ${value} ` : " ";
         const descCell = desc ? ` ${desc} ` : " ";

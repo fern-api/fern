@@ -224,7 +224,11 @@ function buildMethodToLabelMap(cls: CppClassIr): Map<string, string> {
         // Keys are method paths -- direct lookup, keyed by method index
         const result = new Map<string, string>();
         for (let i = 0; i < cls.methods.length; i++) {
-            const label = cls.sectionLabels[cls.methods[i]!.path];
+            const method = cls.methods[i];
+            if (method == null) {
+                continue;
+            }
+            const label = cls.sectionLabels[method.path];
             if (label != null) {
                 result.set(String(i), label);
             }
@@ -235,8 +239,14 @@ function buildMethodToLabelMap(cls: CppClassIr): Map<string, string> {
     // Keys are Doxygen refids -- use positional correspondence.
     // The sectionLabels entries correspond to methods in order.
     for (let i = 0; i < labelKeys.length && i < cls.methods.length; i++) {
-        const label = cls.sectionLabels[labelKeys[i]!]!;
-        labelMap.set(String(i), label);
+        const key = labelKeys[i];
+        if (key == null) {
+            continue;
+        }
+        const label = cls.sectionLabels[key];
+        if (label != null) {
+            labelMap.set(String(i), label);
+        }
     }
 
     return labelMap;
@@ -254,7 +264,10 @@ function mergeSiblingMethodSections(sections: MethodSection[]): MethodSection[] 
     const merged: MethodSection[] = [];
 
     for (let i = 0; i < sections.length; i++) {
-        const current = sections[i]!;
+        const current = sections[i];
+        if (current == null) {
+            continue;
+        }
 
         // Check if this section can merge with subsequent sections
         // Collect all sections that share the same method name set and
@@ -267,7 +280,10 @@ function mergeSiblingMethodSections(sections: MethodSection[]): MethodSection[] 
 
         let j = i + 1;
         while (j < sections.length) {
-            const next = sections[j]!;
+            const next = sections[j];
+            if (next == null) {
+                break;
+            }
             const nextMethodNames = new Set(next.methods.map((m) => m.name));
 
             // Check if method name sets overlap (same method names)
@@ -323,17 +339,23 @@ function categorizeMethodSections(cls: CppClassIr): MethodSection[] {
         const sectionOrder: string[] = [];
 
         for (let i = 0; i < cls.methods.length; i++) {
-            const method = cls.methods[i]!;
+            const method = cls.methods[i];
+            if (method == null) {
+                continue;
+            }
             const label = labelMap.get(String(i)) ?? "Utility methods";
             if (!sectionMap.has(label)) {
                 sectionMap.set(label, []);
                 sectionOrder.push(label);
             }
-            sectionMap.get(label)!.push(method);
+            sectionMap.get(label)?.push(method);
         }
 
         for (const label of sectionOrder) {
-            const methods = sectionMap.get(label)!;
+            const methods = sectionMap.get(label);
+            if (methods == null) {
+                continue;
+            }
             if (methods.length > 0) {
                 sections.push({ label, methods });
             }
@@ -411,20 +433,25 @@ function renderMethodSection(label: string, methods: CppFunctionIr[], cls: CppCl
     const isConstructorSection = label.toLowerCase().includes("constructor");
 
     for (let i = 0; i < groupEntries.length; i++) {
-        const [name, funcs] = groupEntries[i]!;
+        const entry = groupEntries[i];
+        if (entry == null) {
+            continue;
+        }
+        const [name, funcs] = entry;
 
         // Detect destructor
         if (name.startsWith("~")) {
-            if (funcs.length === 1) {
-                lines.push(renderDestructor(funcs[0]!, cls, ctx));
+            const first = funcs[0];
+            if (funcs.length === 1 && first != null) {
+                lines.push(renderDestructor(first, cls, ctx));
             } else {
                 // Multiple destructor overloads (unusual but handle gracefully)
                 for (const func of funcs) {
                     lines.push(renderDestructor(func, cls, ctx));
                 }
             }
-        } else if (funcs.length === 1) {
-            lines.push(renderSingleMethod(funcs[0]!, cls, ctx));
+        } else if (funcs.length === 1 && funcs[0] != null) {
+            lines.push(renderSingleMethod(funcs[0], cls, ctx));
         } else {
             lines.push(
                 renderOverloadedMethod(funcs, cls, ctx, {
@@ -463,11 +490,14 @@ function renderStaticMethodsSection(cls: CppClassIr, ctx: RenderContext): string
             sectionMap.set(label, []);
             sectionOrder.push(label);
         }
-        sectionMap.get(label)!.push(method);
+        sectionMap.get(label)?.push(method);
     }
 
     for (const label of sectionOrder) {
-        const methods = sectionMap.get(label)!;
+        const methods = sectionMap.get(label);
+        if (methods == null) {
+            continue;
+        }
         lines.push(renderMethodSection(label, methods, cls, ctx));
     }
 
@@ -535,7 +565,11 @@ function renderInnerClassesSection(cls: CppClassIr): string {
     lines.push("");
 
     for (let i = 0; i < cls.innerClasses.length; i++) {
-        lines.push(renderInnerClass(cls.innerClasses[i]!, cls.path));
+        const inner = cls.innerClasses[i];
+        if (inner == null) {
+            continue;
+        }
+        lines.push(renderInnerClass(inner, cls.path));
         if (i < cls.innerClasses.length - 1) {
             lines.push("");
         }
@@ -614,7 +648,10 @@ export function renderClassPage(cls: CppClassIr, meta: CompoundMeta): string {
 
             for (let i = 0; i < bodySections.length; i++) {
                 sections.push("");
-                sections.push(bodySections[i]!);
+                const section = bodySections[i];
+                if (section != null) {
+                    sections.push(section);
+                }
                 if (i < bodySections.length - 1) {
                     sections.push("");
                     sections.push("---");

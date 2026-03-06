@@ -91,19 +91,21 @@ export function getCommonQualifiers(funcs: CppFunctionIr[]): string[] {
         return [];
     }
     if (funcs.length === 1) {
-        return getFunctionQualifiers(funcs[0]!);
+        const first = funcs[0];
+        if (first == null) {
+            return [];
+        }
+        return getFunctionQualifiers(first);
     }
 
     // Filter out deleted overloads for common qualifier computation
-    const nonDeletedFuncs = funcs.filter(f => !isEffectivelyDeleted(f));
+    const nonDeletedFuncs = funcs.filter((f) => !isEffectivelyDeleted(f));
 
     // If all overloads are deleted, fall back to the original set
     const activeFuncs = nonDeletedFuncs.length > 0 ? nonDeletedFuncs : funcs;
 
-    const allSets = activeFuncs.map(f => new Set(getFunctionQualifiers(f)));
-    const common = BADGE_ORDER.filter(q =>
-        allSets.every(s => s.has(q))
-    );
+    const allSets = activeFuncs.map((f) => new Set(getFunctionQualifiers(f)));
+    const common = BADGE_ORDER.filter((q) => allSets.every((s) => s.has(q)));
     return common as string[];
 }
 
@@ -113,7 +115,7 @@ export function getCommonQualifiers(funcs: CppFunctionIr[]): string[] {
 export function getOverloadSpecificQualifiers(func: CppFunctionIr, commonQuals: string[]): string[] {
     const all = getFunctionQualifiers(func);
     const commonSet = new Set(commonQuals);
-    return all.filter(q => !commonSet.has(q));
+    return all.filter((q) => !commonSet.has(q));
 }
 
 /**

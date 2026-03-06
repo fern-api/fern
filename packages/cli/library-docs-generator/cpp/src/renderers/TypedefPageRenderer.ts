@@ -15,7 +15,6 @@ import type { CppTypedefIr } from "../../../src/types/CppLibraryDocsIr.js";
 import type { CompoundMeta } from "../context.js";
 import { getShortName } from "../context.js";
 import {
-    renderDescriptionBlocks,
     renderDescriptionBlocksDeduped,
     renderSeeAlso,
     renderSegmentsPlainText,
