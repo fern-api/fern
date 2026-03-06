@@ -1,8 +1,8 @@
 import { Audiences } from "@fern-api/configuration";
 import { streamObjectToFile } from "@fern-api/fs-utils";
 import chalk from "chalk";
+import { JsonStreamStringify } from "json-stream-stringify";
 import type { Argv } from "yargs";
-
 import { ApiChecker } from "../../../api/checker/ApiChecker.js";
 import { IrCompiler } from "../../../api/compiler/IrCompiler.js";
 import type { ApiDefinition } from "../../../api/config/ApiDefinition.js";
@@ -118,8 +118,12 @@ export class CompileCommand {
 
     private async writeOutput(context: Context, args: CompileCommand.Args, object: unknown): Promise<void> {
         if (args.output === "-") {
-            context.stdout.info(JSON.stringify(object, null, 4));
-            return;
+            const stream = new JsonStreamStringify(object, undefined, 2);
+            stream.pipe(process.stdout);
+            return new Promise((resolve, reject) => {
+                stream.on("end", resolve);
+                stream.on("error", reject);
+            });
         }
         if (args.output != null) {
             const outputPath = context.resolveOutputFilePath(args.output);
