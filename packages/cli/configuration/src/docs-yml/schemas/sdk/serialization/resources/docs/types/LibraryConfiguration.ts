@@ -3,6 +3,7 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { LibraryConfig } from "./LibraryConfig.js";
 import { LibraryInputConfiguration } from "./LibraryInputConfiguration.js";
 import { LibraryLanguage } from "./LibraryLanguage.js";
 import { LibraryOutputConfiguration } from "./LibraryOutputConfiguration.js";
@@ -14,6 +15,7 @@ export const LibraryConfiguration: core.serialization.ObjectSchema<
     input: LibraryInputConfiguration,
     output: LibraryOutputConfiguration,
     lang: LibraryLanguage,
+    config: LibraryConfig.optional(),
 });
 
 export declare namespace LibraryConfiguration {
@@ -21,5 +23,6 @@ export declare namespace LibraryConfiguration {
         input: LibraryInputConfiguration.Raw;
         output: LibraryOutputConfiguration.Raw;
         lang: LibraryLanguage.Raw;
+        config?: LibraryConfig.Raw | null;
     }
 }

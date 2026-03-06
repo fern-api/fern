@@ -601,6 +601,16 @@
         },
         "lang": {
           "$ref": "#/definitions/docs.LibraryLanguage"
+        },
+        "config": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LibraryConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -608,6 +618,22 @@
         "output",
         "lang"
       ],
+      "additionalProperties": false
+    },
+    "docs.LibraryConfig": {
+      "type": "object",
+      "properties": {
+        "doxyfile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
       "additionalProperties": false
     },
     "docs.SegmentConfig": {
