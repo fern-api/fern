@@ -197,13 +197,17 @@ export class LocalTaskHandler {
                 );
             }
 
+            // Read prior changelog entries for style context
+            const priorChangelog = await this.readPriorChangelog(3);
+
             // Call AI (or reuse cached analysis) to determine version bump
             let analysis: CachedAnalysis | null;
             try {
                 analysis = await this.getAnalysis(
                     cleanedDiff,
                     this.generatorLanguage ?? "unknown",
-                    previousVersion ?? "0.0.0"
+                    previousVersion ?? "0.0.0",
+                    priorChangelog
                 );
             } catch (aiError) {
                 const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
@@ -286,12 +290,13 @@ export class LocalTaskHandler {
     private async getAnalysis(
         cleanedDiff: string,
         language: string,
-        previousVersion: string
+        previousVersion: string,
+        priorChangelog: string = ""
     ): Promise<CachedAnalysis | null> {
         const doAnalysis = async (): Promise<CachedAnalysis | null> => {
             const clientRegistry = await this.getClientRegistry();
             const bamlClient = BamlClient.withOptions({ clientRegistry });
-            const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff, language, previousVersion);
+            const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff, language, previousVersion, priorChangelog);
 
             if (analysis.version_bump === VersionBump.NO_CHANGE) {
                 return null;
@@ -596,6 +601,58 @@ export class LocalTaskHandler {
      * silently ignores untracked files, which causes namespace changes to be invisible
      * when the copy path does not stage files (copyGeneratedFilesNoFernIgnorePreservingGit).
      */
+    /**
+     * Reads prior changelog entries from the SDK output directory.
+     * Looks for CHANGELOG.md (case-insensitive), extracts the last `maxEntries`
+     * entries (each starting with a `## ` header), and returns them as a string.
+     * Returns empty string if not found or on any error. Truncates to 2KB.
+     */
+    public async readPriorChangelog(maxEntries: number): Promise<string> {
+        const MAX_CHANGELOG_SIZE = 2048; // 2KB
+
+        try {
+            // Find CHANGELOG.md case-insensitively
+            const files = await readdir(this.absolutePathToLocalOutput);
+            const changelogFile = files.find((f) => f.toLowerCase() === "changelog.md");
+            if (!changelogFile) {
+                return "";
+            }
+
+            const changelogPath = join(this.absolutePathToLocalOutput, RelativeFilePath.of(changelogFile));
+            const content = await readFile(changelogPath, "utf-8");
+            if (content.trim().length === 0) {
+                return "";
+            }
+
+            // Parse entries: each entry starts with a `## ` header
+            const lines = content.split("\n");
+            const entryStartIndices: number[] = [];
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i]!.startsWith("## ")) {
+                    entryStartIndices.push(i);
+                }
+            }
+
+            if (entryStartIndices.length === 0) {
+                return "";
+            }
+
+            // Take the last maxEntries entries
+            const startIdx = entryStartIndices.length <= maxEntries ? 0 : entryStartIndices.length - maxEntries;
+            const firstLineIndex = entryStartIndices[startIdx]!;
+            const extracted = lines.slice(firstLineIndex).join("\n").trim();
+
+            // Truncate to 2KB if needed
+            if (extracted.length > MAX_CHANGELOG_SIZE) {
+                return extracted.substring(0, MAX_CHANGELOG_SIZE);
+            }
+
+            return extracted;
+        } catch {
+            return "";
+        }
+    }
+
     private async generateDiffFile(): Promise<string> {
         const diffFile = pathJoin(tmpdir(), `git-diff-${Date.now()}.patch`);
 

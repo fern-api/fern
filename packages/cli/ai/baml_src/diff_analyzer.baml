@@ -22,7 +22,8 @@ class AnalyzeCommitDiffResponse {
 function AnalyzeSdkDiff(
     diff: string @description("The git diff to analyze"),
     language: string @description("The SDK programming language, e.g. 'typescript', 'python', 'java'"),
-    previous_version: string @description("The current published version before this change, e.g. '1.2.3'")
+    previous_version: string @description("The current published version before this change, e.g. '1.2.3'"),
+    prior_changelog: string @description("The last 3 changelog entries for this SDK, empty string if none. Use this to match the existing commit message style and understand the versioning pattern.")
 ) -> AnalyzeCommitDiffResponse {
   client DefaultClient
 
@@ -123,6 +124,14 @@ function AnalyzeSdkDiff(
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
     - The previous version is provided for context only. Do not include it
     literally in the commit message summary line.
+
+    {% if prior_changelog %}
+    Prior changelog entries (for style reference):
+    ---
+    {{prior_changelog}}
+    ---
+    Match the tone and format of these entries in your commit message.
+    {% endif %}
 
     Previous version: {{previous_version}}
     SDK language: {{language}}
