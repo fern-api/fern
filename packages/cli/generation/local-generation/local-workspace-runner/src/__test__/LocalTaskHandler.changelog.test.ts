@@ -1,9 +1,8 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { readFileSync } from "fs";
 import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
-import { join } from "path";
-import { readFileSync } from "fs";
-import { dirname, resolve } from "path";
+import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 
@@ -18,6 +17,7 @@ const localTaskHandlerPath = resolve(__dirname, "../LocalTaskHandler.ts");
 const localTaskHandlerSource = readFileSync(localTaskHandlerPath, "utf-8");
 
 // Minimal stub for TaskContext to satisfy LocalTaskHandler constructor
+// biome-ignore lint/suspicious/noExplicitAny: test mock doesn't need full type
 function createMockContext(): any {
     return {
         logger: {

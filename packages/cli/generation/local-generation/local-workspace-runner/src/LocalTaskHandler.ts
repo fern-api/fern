@@ -628,7 +628,7 @@ export class LocalTaskHandler {
             const lines = content.split("\n");
             const entryStartIndices: number[] = [];
             for (let i = 0; i < lines.length; i++) {
-                if (lines[i]!.startsWith("## ")) {
+                if (lines[i]?.startsWith("## ")) {
                     entryStartIndices.push(i);
                 }
             }
@@ -638,7 +638,10 @@ export class LocalTaskHandler {
             }
 
             // Take the first maxEntries entries (most recent are at the top in standard changelogs)
-            const firstLineIndex = entryStartIndices[0]!;
+            const firstLineIndex = entryStartIndices[0];
+            if (firstLineIndex == null) {
+                return "";
+            }
             const endEntryIndex = entryStartIndices[Math.min(maxEntries, entryStartIndices.length)];
             const endLineIndex = endEntryIndex != null ? endEntryIndex : lines.length;
             const extracted = lines.slice(firstLineIndex, endLineIndex).join("\n").trim();
