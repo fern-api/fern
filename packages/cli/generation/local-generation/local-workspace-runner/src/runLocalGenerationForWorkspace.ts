@@ -295,34 +295,39 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
-                const { shouldCommit, autoVersioningCommitMessage } = await writeFilesToDiskAndRunGenerator({
-                    organization: projectConfig.organization,
-                    absolutePathToFernConfig: projectConfig._absolutePath,
-                    workspace: fernWorkspace,
-                    generatorInvocation,
-                    absolutePathToLocalOutput,
-                    absolutePathToLocalSnippetJSON,
-                    absolutePathToLocalSnippetTemplateJSON: undefined,
-                    version,
-                    audiences: generatorGroup.audiences,
-                    workspaceTempDir,
-                    keepDocker,
-                    context: interactiveTaskContext,
-                    irVersionOverride: generatorInvocation.irVersionOverride,
-                    outputVersionOverride: version,
-                    writeUnitTests: true,
-                    generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
-                    generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
-                    includeOptionalRequestPropertyExamples: false,
-                    inspect,
-                    executionEnvironment: undefined, // This should use the Docker fallback with proper image name
-                    ir: intermediateRepresentation,
-                    whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
-                    runner,
-                    ai,
-                    autoVersioningCache,
-                    absolutePathToSpecRepo: dirname(workspace.absoluteFilePath)
-                });
+                const { shouldCommit, autoVersioningCommitMessage, autoVersioningChangelogEntry } =
+                    await writeFilesToDiskAndRunGenerator({
+                        organization: projectConfig.organization,
+                        absolutePathToFernConfig: projectConfig._absolutePath,
+                        workspace: fernWorkspace,
+                        generatorInvocation,
+                        absolutePathToLocalOutput,
+                        absolutePathToLocalSnippetJSON,
+                        absolutePathToLocalSnippetTemplateJSON: undefined,
+                        version,
+                        audiences: generatorGroup.audiences,
+                        workspaceTempDir,
+                        keepDocker,
+                        context: interactiveTaskContext,
+                        irVersionOverride: generatorInvocation.irVersionOverride,
+                        outputVersionOverride: version,
+                        writeUnitTests: true,
+                        generateOauthClients: organization.ok
+                            ? (organization?.body.oauthClientEnabled ?? false)
+                            : false,
+                        generatePaginatedClients: organization.ok
+                            ? (organization?.body.paginationEnabled ?? false)
+                            : false,
+                        includeOptionalRequestPropertyExamples: false,
+                        inspect,
+                        executionEnvironment: undefined, // This should use the Docker fallback with proper image name
+                        ir: intermediateRepresentation,
+                        whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
+                        runner,
+                        ai,
+                        autoVersioningCache,
+                        absolutePathToSpecRepo: dirname(workspace.absoluteFilePath)
+                    });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
@@ -346,6 +351,7 @@ export async function runLocalGenerationForWorkspace({
                                 mode: selfhostedGithubConfig.mode ?? "push",
                                 branch: selfhostedGithubConfig.branch,
                                 commitMessage: autoVersioningCommitMessage,
+                                changelogEntry: autoVersioningChangelogEntry,
                                 previewMode: selfhostedGithubConfig.previewMode,
                                 generatorName: generatorInvocation.name
                             },
