@@ -19,7 +19,7 @@ import {
     DIFF_SIZE_LIMIT,
     formatSizeKB
 } from "./AutoVersioningService.js";
-import { isAutoVersion, MAX_AI_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
+import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, maxVersionBump } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -227,16 +227,25 @@ export class LocalTaskHandler {
             const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
             const chunks = autoVersioningService.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
 
+            // Cap at MAX_CHUNKS to bound latency/cost for very large diffs.
+            // Chunks are ranked by semantic priority, so skipped chunks are
+            // low-priority (addition-only) sections.
+            const cappedChunks = chunks.slice(0, MAX_CHUNKS);
+            const skippedChunks = chunks.length - cappedChunks.length;
+
             if (chunks.length > 1) {
                 this.context.logger.info(
                     `Diff too large for single AI call (${cleanedDiffBytes} bytes). ` +
-                        `Split into ${chunks.length} chunks for analysis.`
+                        `Split into ${chunks.length} chunks for analysis` +
+                        (skippedChunks > 0
+                            ? ` (capped at ${MAX_CHUNKS}, skipping ${skippedChunks} low-priority chunks).`
+                            : ".")
                 );
             }
 
             let analysis: CachedAnalysis | null;
             try {
-                if (chunks.length <= 1) {
+                if (cappedChunks.length <= 1) {
                     // Single chunk (or small diff): use normal path with caching
                     analysis = await this.getAnalysis(
                         cleanedDiff,
@@ -252,13 +261,13 @@ export class LocalTaskHandler {
                     let bestMessage = "";
                     const allChangelogEntries: string[] = [];
 
-                    for (let i = 0; i < chunks.length; i++) {
-                        const chunk = chunks[i];
+                    for (let i = 0; i < cappedChunks.length; i++) {
+                        const chunk = cappedChunks[i];
                         if (chunk == null) {
                             continue;
                         }
                         this.context.logger.debug(
-                            `Analyzing chunk ${i + 1}/${chunks.length} ` +
+                            `Analyzing chunk ${i + 1}/${cappedChunks.length} ` +
                                 `(${Buffer.byteLength(chunk, "utf-8")} bytes)`
                         );
 

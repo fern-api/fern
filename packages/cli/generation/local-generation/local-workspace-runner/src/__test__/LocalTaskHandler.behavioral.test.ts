@@ -761,6 +761,29 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
         expect(splitMessages).toHaveLength(0);
     });
 
+    it("caps chunks at MAX_CHUNKS and logs skipped count", async () => {
+        // Generate 45 chunks (exceeds MAX_CHUNKS = 40)
+        const manyChunks = Array.from({ length: 45 }, (_, i) => `chunk${i + 1} diff`);
+        mockChunkDiff.mockReturnValue(manyChunks);
+
+        // All chunks return PATCH
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "fix: small fix",
+            changelog_entry: ""
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.0.1");
+        // Only MAX_CHUNKS (40) should be analyzed, not all 45
+        expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(40);
+        // Log should mention the cap
+        expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("skipping 5 low-priority chunks"));
+    });
+
     it("falls back to PATCH on AI error during multi-chunk analysis", async () => {
         mockChunkDiff.mockReturnValue(["chunk1 diff", "chunk2 diff"]);
 

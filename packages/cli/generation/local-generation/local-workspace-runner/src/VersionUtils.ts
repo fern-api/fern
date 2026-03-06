@@ -50,6 +50,14 @@ export const MAGIC_VERSION = "505.503.4455";
  */
 export const MAX_AI_DIFF_BYTES = 40_000;
 
+/**
+ * Maximum number of chunks to analyse for a single diff.
+ * Chunks are ranked by semantic priority so the first chunks always contain
+ * the highest-signal sections (deletions, signature changes). Chunks beyond
+ * this limit are skipped — they are typically addition-only (MINOR/PATCH).
+ */
+export const MAX_CHUNKS = 40;
+
 export enum VersionBump {
     MAJOR = "MAJOR",
     MINOR = "MINOR",
