@@ -117,9 +117,16 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             snippetPath,
             snippetTemplatePath,
             licenseFilePath,
-            context
+            context,
+            inspect
         }: ExecutionEnvironment.ExecuteArgs
     ): Promise<void> {
+        if (inspect) {
+            context.logger.warn(
+                "--inspect is not supported with reusable containers (port mapping must be set at container start time). " +
+                    "Use --local mode or the non-reusable container runner for debugging."
+            );
+        }
         if (this.entrypoint == null) {
             throw new Error("Containers not started. Call start() before execute().");
         }
@@ -221,8 +228,13 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                 containerPath: CONTAINER_PATH_TO_SNIPPET,
                 hostPath: snippetPath,
                 runner: this.runner
-            }).catch((_e: unknown) => {
-                // Snippet file may not exist if the generator didn't produce one
+            }).catch((e: unknown) => {
+                // Snippet file may not exist if the generator didn't produce one.
+                // Only swallow "not found" errors; propagate anything else.
+                const msg = e instanceof Error ? e.message : String(e);
+                if (!msg.includes("No such container:path") && !msg.includes("Could not find the file")) {
+                    logger.debug(`Non-fatal: failed to copy snippet file back: ${msg}`);
+                }
             });
         }
 
@@ -233,8 +245,13 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                 containerPath: CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
                 hostPath: snippetTemplatePath,
                 runner: this.runner
-            }).catch((_e: unknown) => {
-                // Snippet template file may not exist if the generator didn't produce one
+            }).catch((e: unknown) => {
+                // Snippet template file may not exist if the generator didn't produce one.
+                // Only swallow "not found" errors; propagate anything else.
+                const msg = e instanceof Error ? e.message : String(e);
+                if (!msg.includes("No such container:path") && !msg.includes("Could not find the file")) {
+                    logger.debug(`Non-fatal: failed to copy snippet template file back: ${msg}`);
+                }
             });
         }
     }
@@ -260,7 +277,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
 
     private async getImageEntrypoint(logger: Logger): Promise<string[]> {
         const { loggingExeca } = await import("@fern-api/logging-execa");
-        const { stdout } = await loggingExeca(
+        const { stdout, stderr, exitCode } = await loggingExeca(
             logger,
             this.runner,
             ["inspect", "--format", "{{json .Config.Entrypoint}}", this.imageName],
@@ -269,6 +286,10 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                 doNotPipeOutput: true
             }
         );
+
+        if (exitCode !== 0) {
+            throw new Error(`Failed to inspect image ${this.imageName} (exit code ${exitCode}).\n${stderr || stdout}`);
+        }
 
         try {
             const entrypoint = JSON.parse(stdout.trim());

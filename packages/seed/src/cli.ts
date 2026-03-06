@@ -274,14 +274,18 @@ function addTestCommand(cli: Argv) {
                 );
             }
 
-            const results = await Promise.all(tests);
+            let results: boolean[];
+            try {
+                results = await Promise.all(tests);
+            } finally {
+                // Always clean up containers and script runners, even if tests throw unexpectedly.
+                for (const scriptRunner of scriptRunners) {
+                    await scriptRunner.stop();
+                }
 
-            for (const scriptRunner of scriptRunners) {
-                await scriptRunner.stop();
-            }
-
-            for (const testRunner of testRunners) {
-                await testRunner.cleanup();
+                for (const testRunner of testRunners) {
+                    await testRunner.cleanup();
+                }
             }
 
             // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
