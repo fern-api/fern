@@ -2,7 +2,7 @@
  * Main generator for C++ library documentation.
  *
  * Orchestrates the full pipeline:
- * 1. Collect compounds (classes/concepts) from the recursive namespace tree
+ * 1. Collect compounds (classes, concepts, functions, enums, typedefs, variables) from the namespace tree
  * 2. Compute page keys, resolving filename collisions for template specializations
  * 3. Render each compound page and stream to disk via MdxFileWriter
  *
@@ -15,7 +15,8 @@ import { getShortName, stripTemplateArgs } from "../cpp/src/context.js";
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderCompoundPage } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderSegmentsTrimmed } from "../cpp/src/renderers/DescriptionRenderer.js";
-import type { CppClassIr, CppConceptIr, CppLibraryDocsIr, CppNamespaceIr } from "./types/CppLibraryDocsIr.js";
+import { groupFunctionsByName } from "../cpp/src/renderers/MethodRenderer.js";
+import type { CppDocstringIr, CppLibraryDocsIr, CppNamespaceIr } from "./types/CppLibraryDocsIr.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
 
 export interface CppGenerateOptions {
@@ -39,7 +40,7 @@ interface CollectedCompound {
     compound: CppCompoundIr;
     path: string;
     namespacePath: string[];
-    docstring: CppClassIr["docstring"] | CppConceptIr["docstring"];
+    docstring: CppDocstringIr | undefined;
 }
 
 /**
@@ -99,6 +100,61 @@ function collectCompounds(ns: CppNamespaceIr, rootPrefix: string): CollectedComp
             path: concept.path,
             namespacePath: stripTemplateArgs(concept.path).split("::").slice(0, -1),
             docstring: concept.docstring
+        });
+    }
+
+    // Group free functions by name so overloads share a single page
+    const functionGroups = groupFunctionsByName(ns.functions);
+    for (const [, overloads] of functionGroups) {
+        if (overloads.length === 0) {
+            continue;
+        }
+        // Safe: length check above guarantees non-empty
+        const representative = overloads[0]!;
+        if (rootPrefix && !representative.path.startsWith(rootPrefix)) {
+            continue;
+        }
+        result.push({
+            compound: { kind: "function", data: overloads },
+            path: representative.path,
+            namespacePath: stripTemplateArgs(representative.path).split("::").slice(0, -1),
+            docstring: representative.docstring
+        });
+    }
+
+    for (const enumIr of ns.enums) {
+        if (rootPrefix && !enumIr.path.startsWith(rootPrefix)) {
+            continue;
+        }
+        result.push({
+            compound: { kind: "enum", data: enumIr },
+            path: enumIr.path,
+            namespacePath: stripTemplateArgs(enumIr.path).split("::").slice(0, -1),
+            docstring: enumIr.docstring
+        });
+    }
+
+    for (const typedef of ns.typedefs) {
+        if (rootPrefix && !typedef.path.startsWith(rootPrefix)) {
+            continue;
+        }
+        result.push({
+            compound: { kind: "typedef", data: typedef },
+            path: typedef.path,
+            namespacePath: stripTemplateArgs(typedef.path).split("::").slice(0, -1),
+            docstring: typedef.docstring
+        });
+    }
+
+    for (const variable of ns.variables) {
+        if (rootPrefix && !variable.path.startsWith(rootPrefix)) {
+            continue;
+        }
+        result.push({
+            compound: { kind: "variable", data: variable },
+            path: variable.path,
+            namespacePath: stripTemplateArgs(variable.path).split("::").slice(0, -1),
+            docstring: variable.docstring
         });
     }
 

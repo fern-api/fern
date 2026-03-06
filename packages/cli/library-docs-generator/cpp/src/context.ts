@@ -17,7 +17,7 @@ export interface CompoundMeta {
     /** Repository this belongs to (e.g., "CUB", "Thrust", "libcudacxx") */
     repo: string;
     /** What kind of compound this is */
-    compoundKind: "class" | "concept";
+    compoundKind: "class" | "concept" | "function" | "enum" | "typedef" | "variable";
     /** Namespace path segments (e.g., ["cub"] or ["cuda", "mr"]) */
     namespacePath: string[];
     /** Frontmatter description override */

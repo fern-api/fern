@@ -12,3 +12,4 @@ export type { CppCompoundIr } from "./renderers/CompoundPageRenderer.js";
 export { renderCompoundPage } from "./renderers/CompoundPageRenderer.js";
 export { renderConceptPage } from "./renderers/ConceptPageRenderer.js";
 export { renderSegmentsTrimmed } from "./renderers/DescriptionRenderer.js";
+export { renderFunctionPage } from "./renderers/FunctionPageRenderer.js";
