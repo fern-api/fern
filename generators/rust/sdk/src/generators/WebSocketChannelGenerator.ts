@@ -50,7 +50,7 @@ export class WebSocketChannelGenerator {
                 continue;
             }
             result.push({
-                connectorName: `${names.clientName.replace(/Client$/, "")}Connector`,
+                connectorName: this.getConnectorName(names.clientName),
                 fieldName: names.moduleName,
                 clientName: names.clientName,
                 moduleName: names.moduleName,
@@ -145,7 +145,7 @@ export class WebSocketChannelGenerator {
             }
             moduleDeclarations.push(`pub mod ${names.moduleName};`);
             reExports.push(`pub use ${names.moduleName}::${names.clientName};`);
-            reExports.push(`pub use ${names.moduleName}::${names.clientName.replace(/Client$/, "")}Connector;`);
+            reExports.push(`pub use ${names.moduleName}::${this.getConnectorName(names.clientName)};`);
 
             const serverMessages = channel.messages.filter((m) => m.origin === "server");
             const jsonServerMessages = serverMessages.filter((m) => !this.isBinaryMessage(m));
@@ -345,22 +345,49 @@ ${methods.join("\n\n")}
 }`;
     }
 
+    /**
+     * Builds the shared connect parameter list from a WebSocket channel's IR definition.
+     * Used by both generateConnectMethod() and generateConnectorStruct() to ensure
+     * parameter signatures stay in sync.
+     */
+    private buildConnectParams(channel: FernIr.WebSocketChannel): Array<{ name: string; type: string }> {
+        const params: Array<{ name: string; type: string }> = [];
+
+        for (const pathParam of channel.pathParameters) {
+            params.push({ name: pathParam.name.snakeCase.safeName, type: "&str" });
+        }
+
+        for (const header of channel.headers) {
+            params.push({ name: header.name.name.snakeCase.safeName, type: "&str" });
+        }
+
+        for (const qp of channel.queryParameters) {
+            const isOptional = this.isOptionalType(qp.valueType);
+            params.push({
+                name: qp.name.name.snakeCase.safeName,
+                type: isOptional ? "Option<&str>" : "&str"
+            });
+        }
+
+        return params;
+    }
+
+    /**
+     * Derives the connector struct name from a client name.
+     * Single source of truth used by getConnectorInfo(), generateWebSocketModFile(),
+     * and generateConnectorStruct().
+     */
+    private getConnectorName(clientName: string): string {
+        return `${clientName.replace(/Client$/, "")}Connector`;
+    }
+
     private generateConnectMethod(
         clientName: string,
         channel: FernIr.WebSocketChannel,
         pathExpression: string
     ): string {
-        const params: string[] = ["url: &str"];
-
-        for (const pathParam of channel.pathParameters) {
-            const paramName = pathParam.name.snakeCase.safeName;
-            params.push(`${paramName}: &str`);
-        }
-
-        for (const header of channel.headers) {
-            const paramName = header.name.name.snakeCase.safeName;
-            params.push(`${paramName}: &str`);
-        }
+        const connectParams = this.buildConnectParams(channel);
+        const params: string[] = ["url: &str", ...connectParams.map((p) => `${p.name}: ${p.type}`)];
 
         const headerInserts = channel.headers
             .map((header) => {
@@ -377,12 +404,10 @@ ${methods.join("\n\n")}
                 const wireValue = qp.name.wireValue;
                 const isOptional = this.isOptionalType(qp.valueType);
                 if (isOptional) {
-                    params.push(`${paramName}: Option<&str>`);
                     queryLines.push(`        if let Some(v) = ${paramName} {`);
                     queryLines.push(`            options.query_params.push(("${wireValue}".to_string(), v.to_string()));`);
                     queryLines.push(`        }`);
                 } else {
-                    params.push(`${paramName}: &str`);
                     queryLines.push(`        options.query_params.push(("${wireValue}".to_string(), ${paramName}.to_string()));`);
                 }
             }
@@ -479,34 +504,12 @@ ${queryLines.join("\n")}
      * through the root client (e.g., `client.realtime.connect(...)`).
      */
     private generateConnectorStruct(clientName: string, channel: FernIr.WebSocketChannel): string {
-        const connectorName = `${clientName.replace(/Client$/, "")}Connector`;
+        const connectorName = this.getConnectorName(clientName);
 
-        // Build the connect method parameters (same as client but without url)
-        const params: string[] = ["&self"];
-        const forwardArgs: string[] = ["&self.base_url"];
-
-        for (const pathParam of channel.pathParameters) {
-            const paramName = pathParam.name.snakeCase.safeName;
-            params.push(`${paramName}: &str`);
-            forwardArgs.push(paramName);
-        }
-
-        for (const header of channel.headers) {
-            const paramName = header.name.name.snakeCase.safeName;
-            params.push(`${paramName}: &str`);
-            forwardArgs.push(paramName);
-        }
-
-        for (const qp of channel.queryParameters) {
-            const paramName = qp.name.name.snakeCase.safeName;
-            const isOptional = this.isOptionalType(qp.valueType);
-            if (isOptional) {
-                params.push(`${paramName}: Option<&str>`);
-            } else {
-                params.push(`${paramName}: &str`);
-            }
-            forwardArgs.push(paramName);
-        }
+        // Reuse shared parameter list — same order and types as generateConnectMethod()
+        const connectParams = this.buildConnectParams(channel);
+        const params: string[] = ["&self", ...connectParams.map((p) => `${p.name}: ${p.type}`)];
+        const forwardArgs: string[] = ["&self.base_url", ...connectParams.map((p) => p.name)];
 
         return `/// Connector for the ${clientName.replace(/Client$/, "")} WebSocket channel.
 /// Provides access to the WebSocket channel through the root client.
