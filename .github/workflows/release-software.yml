@@ -62,7 +62,7 @@ jobs:
           fetch-depth: 0
 
       - name: Skip if triggered by own release commit
-        id: check-author
+        id: skip-release-loop
         run: |
           SUBJECT=$(git log -1 --format='%s')
           echo "Last commit subject: $SUBJECT"
@@ -74,15 +74,15 @@ jobs:
           fi
 
       - name: Configure git
-        if: steps.check-author.outputs.skip != 'true'
+        if: steps.skip-release-loop.outputs.skip != 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Install
-        if: steps.check-author.outputs.skip != 'true'
+        if: steps.skip-release-loop.outputs.skip != 'true'
         uses: ./.github/actions/install
 
       - name: Run releases for all configured software
-        if: steps.check-author.outputs.skip != 'true'
+        if: steps.skip-release-loop.outputs.skip != 'true'
         run: npx tsx scripts/release-workflow.ts ${{ inputs.software || 'all' }}
