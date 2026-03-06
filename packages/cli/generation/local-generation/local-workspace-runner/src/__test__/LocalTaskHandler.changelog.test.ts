@@ -16,24 +16,15 @@ const diffAnalyzerBaml = readFileSync(diffAnalyzerBamlPath, "utf-8");
 const localTaskHandlerPath = resolve(__dirname, "../LocalTaskHandler.ts");
 const localTaskHandlerSource = readFileSync(localTaskHandlerPath, "utf-8");
 
-// Minimal stub for TaskContext to satisfy LocalTaskHandler constructor
+// Minimal stub for TaskContext to satisfy LocalTaskHandler constructor.
+// Only the logger methods used by readPriorChangelog are stubbed here.
 function createMockContext(): LocalTaskHandler.Init["context"] {
-    return {
-        logger: {
-            info: () => {
-                // noop
-            },
-            debug: () => {
-                // noop
-            },
-            warn: () => {
-                // noop
-            },
-            error: () => {
-                // noop
-            }
-        }
+    const noop = () => {
+        // noop
     };
+    return {
+        logger: { info: noop, debug: noop, warn: noop, error: noop }
+    } as LocalTaskHandler.Init["context"];
 }
 
 describe("LocalTaskHandler - readPriorChangelog", () => {
