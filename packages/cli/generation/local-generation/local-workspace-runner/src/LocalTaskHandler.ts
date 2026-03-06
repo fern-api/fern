@@ -626,12 +626,10 @@ export class LocalTaskHandler {
         try {
             // Find the git repo root so we can look for commits touching .fern/
             // regardless of where the workspace directory is nested
-            const repoRootResult = await loggingExeca(
-                this.context.logger,
-                "git",
-                ["rev-parse", "--show-toplevel"],
-                { cwd: this.absolutePathToSpecRepo, doNotPipeOutput: true }
-            );
+            const repoRootResult = await loggingExeca(this.context.logger, "git", ["rev-parse", "--show-toplevel"], {
+                cwd: this.absolutePathToSpecRepo,
+                doNotPipeOutput: true
+            });
             const repoRoot = repoRootResult.stdout.trim();
             if (!repoRoot) {
                 return "";

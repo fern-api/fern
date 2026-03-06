@@ -190,9 +190,7 @@ describe("LocalTaskHandler.readSpecCommitMessage", () => {
         vi.mocked(loggingExeca).mockResolvedValueOnce(
             mockExecaResult("/path/to/repo-root") as Awaited<ReturnType<typeof loggingExeca>>
         );
-        vi.mocked(loggingExeca).mockResolvedValueOnce(
-            mockExecaResult("") as Awaited<ReturnType<typeof loggingExeca>>
-        );
+        vi.mocked(loggingExeca).mockResolvedValueOnce(mockExecaResult("") as Awaited<ReturnType<typeof loggingExeca>>);
 
         const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
         const result = await handler.readSpecCommitMessage();
@@ -202,9 +200,7 @@ describe("LocalTaskHandler.readSpecCommitMessage", () => {
 
     it("returns empty string when rev-parse returns empty output", async () => {
         const { loggingExeca } = await import("@fern-api/logging-execa");
-        vi.mocked(loggingExeca).mockResolvedValueOnce(
-            mockExecaResult("") as Awaited<ReturnType<typeof loggingExeca>>
-        );
+        vi.mocked(loggingExeca).mockResolvedValueOnce(mockExecaResult("") as Awaited<ReturnType<typeof loggingExeca>>);
 
         const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
         const result = await handler.readSpecCommitMessage();
