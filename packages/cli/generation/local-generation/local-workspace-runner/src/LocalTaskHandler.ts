@@ -347,7 +347,13 @@ export class LocalTaskHandler {
             return doAnalysis();
         }
 
-        const cacheKey = this.autoVersioningCache.key(cleanedDiff, language, previousVersion, priorChangelog, specCommitMessage);
+        const cacheKey = this.autoVersioningCache.key(
+            cleanedDiff,
+            language,
+            previousVersion,
+            priorChangelog,
+            specCommitMessage
+        );
         const { promise, isHit } = this.autoVersioningCache.getOrCompute(cacheKey, doAnalysis);
 
         if (isHit) {

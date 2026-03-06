@@ -42,6 +42,7 @@ describe("LocalTaskHandler - readPriorChangelog", () => {
             absolutePathToLocalOutput: AbsoluteFilePath.of(tmpDir),
             absolutePathToLocalSnippetJSON: undefined,
             absolutePathToTmpSnippetTemplatesJSON: undefined,
+            absolutePathToSpecRepo: undefined,
             version: undefined,
             ai: undefined,
             isWhitelabel: false,
