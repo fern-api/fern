@@ -149,9 +149,10 @@ export class LocalTaskHandler {
             return { shouldCommit: true, autoVersioningCommitMessage: autoVersionResult.commitMessage };
         }
 
-        // If dry-run is set but version is not AUTO, warn the user
+        // If dry-run is set but version is not AUTO, warn the user and skip commits
         if (this.dryRun) {
             this.context.logger.warn("--dry-run is only meaningful when version is AUTO. Ignoring.");
+            return { shouldCommit: false, autoVersioningCommitMessage: undefined };
         }
 
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };

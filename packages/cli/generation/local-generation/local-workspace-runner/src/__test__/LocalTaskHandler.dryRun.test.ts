@@ -127,13 +127,14 @@ describe("LocalTaskHandler dry-run mode", () => {
             expect(localTaskHandlerSource).toContain("--dry-run is only meaningful when version is AUTO. Ignoring.");
         });
 
-        it("still returns shouldCommit: true when version is not AUTO and dryRun is true", () => {
-            // After the dryRun warning for non-AUTO, it falls through to return shouldCommit: true
-            const afterDryRunWarning = localTaskHandlerSource.slice(
-                localTaskHandlerSource.indexOf("--dry-run is only meaningful when version is AUTO")
+        it("returns shouldCommit: false when version is not AUTO and dryRun is true", () => {
+            // After the dryRun warning for non-AUTO, it returns shouldCommit: false to prevent commits
+            const dryRunWarningSection = localTaskHandlerSource.slice(
+                localTaskHandlerSource.indexOf("--dry-run is only meaningful when version is AUTO"),
+                localTaskHandlerSource.indexOf("--dry-run is only meaningful when version is AUTO") + 200
             );
-            expect(afterDryRunWarning).toContain(
-                "return { shouldCommit: true, autoVersioningCommitMessage: undefined };"
+            expect(dryRunWarningSection).toContain(
+                "return { shouldCommit: false, autoVersioningCommitMessage: undefined };"
             );
         });
     });
