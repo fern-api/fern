@@ -62,8 +62,28 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                 })
             );
         }
-        this.containers = await Promise.all(startPromises);
-        this.availableContainers = [...this.containers];
+
+        try {
+            this.containers = await Promise.all(startPromises);
+            this.availableContainers = [...this.containers];
+        } catch (error) {
+            // Clean up any containers that started successfully before the failure
+            const settledPromises = await Promise.allSettled(startPromises);
+            for (const result of settledPromises) {
+                if (result.status === "fulfilled") {
+                    await stopContainer({
+                        logger,
+                        containerId: result.value,
+                        runner: this.runner
+                    }).catch(() => {
+                        // Best-effort cleanup
+                    });
+                }
+            }
+            this.containers = [];
+            this.availableContainers = [];
+            throw error;
+        }
 
         logger.info(
             `Started ${this.containers.length} reusable container(s) from image ${this.imageName}: ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
@@ -229,11 +249,13 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                 hostPath: snippetPath,
                 runner: this.runner
             }).catch((e: unknown) => {
-                // Snippet file may not exist if the generator didn't produce one.
-                // Only swallow "not found" errors; propagate anything else.
+                // Swallow "not found" errors — generator didn't produce snippet.
+                // Propagate other errors (permissions, disk space, etc.).
                 const msg = e instanceof Error ? e.message : String(e);
-                if (!msg.includes("No such container:path") && !msg.includes("Could not find the file")) {
-                    logger.debug(`Non-fatal: failed to copy snippet file back: ${msg}`);
+                if (msg.includes("No such container:path") || msg.includes("Could not find the file")) {
+                    logger.debug(`Snippet file not found (expected): ${msg}`);
+                } else {
+                    throw e;
                 }
             });
         }
@@ -246,11 +268,13 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                 hostPath: snippetTemplatePath,
                 runner: this.runner
             }).catch((e: unknown) => {
-                // Snippet template file may not exist if the generator didn't produce one.
-                // Only swallow "not found" errors; propagate anything else.
+                // Swallow "not found" errors — generator didn't produce snippet template.
+                // Propagate other errors (permissions, disk space, etc.).
                 const msg = e instanceof Error ? e.message : String(e);
-                if (!msg.includes("No such container:path") && !msg.includes("Could not find the file")) {
-                    logger.debug(`Non-fatal: failed to copy snippet template file back: ${msg}`);
+                if (msg.includes("No such container:path") || msg.includes("Could not find the file")) {
+                    logger.debug(`Snippet template file not found (expected): ${msg}`);
+                } else {
+                    throw e;
                 }
             });
         }
