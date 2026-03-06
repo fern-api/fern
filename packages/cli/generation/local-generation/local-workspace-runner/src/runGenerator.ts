@@ -210,10 +210,18 @@ export async function writeFilesToDiskAndRunGenerator({
         const snapshotContent = await readFile(snapshotPathInOutput, "utf-8");
         previousIr = JSON.parse(snapshotContent) as IntermediateRepresentation;
         context.logger.debug("Read previous IR snapshot from " + snapshotPathInOutput);
-    } catch {
-        context.logger.debug(
-            "No previous IR snapshot found at " + snapshotPathInOutput + " (new repo or first generation)"
-        );
+    } catch (err) {
+        const isFileNotFound =
+            err instanceof Error && "code" in err && (err as NodeJS.ErrnoException).code === "ENOENT";
+        if (isFileNotFound) {
+            context.logger.debug(
+                "No previous IR snapshot found at " + snapshotPathInOutput + " (new repo or first generation)"
+            );
+        } else {
+            context.logger.warn(
+                "Failed to read/parse previous IR snapshot at " + snapshotPathInOutput + ": " + String(err)
+            );
+        }
     }
 
     await environment.execute({
