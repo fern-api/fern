@@ -1,16 +1,13 @@
 import { GeneratorGroup, GeneratorInvocation } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
-import {
-    AbstractAPIWorkspace,
-    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
-} from "@fern-api/workspace-loader";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
 import { FixtureConfigurations } from "../../config/api/index.js";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 import { Semaphore } from "../../Semaphore.js";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace.js";
-import { LocalScriptRunner, ScriptRunner } from "../test/index.js";
+import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "../test/index.js";
 import { TaskContextFactory } from "../test/TaskContextFactory.js";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner/index.js";
 
@@ -47,7 +44,9 @@ export async function runWithCustomFixture({
     let scriptRunner: ScriptRunner | undefined = undefined;
 
     if (!skipScripts) {
-        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext, logLevel);
+        scriptRunner = local
+            ? new LocalScriptRunner(workspace, skipScripts, taskContext, logLevel)
+            : new ContainerScriptRunner(workspace, skipScripts, taskContext, logLevel);
     }
 
     if (local) {
