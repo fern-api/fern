@@ -78,6 +78,12 @@ describe("extractLanguageFromGeneratorName", () => {
         expect(extractLanguageFromGeneratorName("some-random-generator")).toBe("unknown");
         expect(extractLanguageFromGeneratorName("")).toBe("unknown");
     });
+
+    it("does not false-positive match 'go' in substrings like 'django' or 'mongo'", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-django-sdk")).toBe("unknown");
+        expect(extractLanguageFromGeneratorName("fernapi/fern-mongo-connector")).toBe("unknown");
+        expect(extractLanguageFromGeneratorName("cargo-generator")).toBe("unknown");
+    });
 });
 
 describe("extractLanguageFromGeneratorName integration - runGenerator.ts", () => {

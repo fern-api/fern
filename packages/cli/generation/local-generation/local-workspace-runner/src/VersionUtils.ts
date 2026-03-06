@@ -15,7 +15,7 @@ export function extractLanguageFromGeneratorName(generatorName: string): string 
     if (name.includes("java")) {
         return "java";
     }
-    if (name.includes("go")) {
+    if (/\bgo\b/.test(name)) {
         return "go";
     }
     if (name.includes("ruby")) {
