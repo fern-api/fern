@@ -563,10 +563,9 @@ describe("E2E: maxVersionBump merging logic", () => {
         expect(bestBump).toBe(VersionBump.MINOR);
         // Message should come from chunk 4 (first MINOR)
         expect(bestMessage).toBe("message from chunk 4");
-        // Changelog aggregates all non-empty entries
-        expect(allChangelogs.join("\n")).toBe(
-            "Fixed retry logic.\nAdded new paginator helper.\nNew webhook event types."
-        );
+        // Changelog aggregates all non-empty entries as a markdown list
+        const aggregated = allChangelogs.length > 1 ? allChangelogs.map((e) => `- ${e}`).join("\n") : allChangelogs[0];
+        expect(aggregated).toBe("- Fixed retry logic.\n- Added new paginator helper.\n- New webhook event types.");
     });
 
     it("processes all chunks even with MAJOR bump to collect full changelog", () => {
@@ -590,8 +589,9 @@ describe("E2E: maxVersionBump merging logic", () => {
         }
 
         expect(bestBump).toBe(VersionBump.MAJOR);
-        // All chunks processed — changelog includes entries from all 5 chunks
-        expect(allChangelogs.join("\n")).toBe("New feature added.\nBreaking API removed.\nExtra helpers added.");
+        // All chunks processed — changelog includes entries from all 5 chunks as markdown list
+        const aggregated = allChangelogs.length > 1 ? allChangelogs.map((e) => `- ${e}`).join("\n") : allChangelogs[0];
+        expect(aggregated).toBe("- New feature added.\n- Breaking API removed.\n- Extra helpers added.");
     });
 });
 
@@ -670,7 +670,10 @@ describe("E2E: Full pipeline — clean + chunk + analyze (mocked AI)", () => {
             }
         }
 
-        const aggregatedChangelog = allChangelogEntries.join("\n");
+        const aggregatedChangelog =
+            allChangelogEntries.length > 1
+                ? allChangelogEntries.map((e) => `- ${e}`).join("\n")
+                : (allChangelogEntries[0] ?? "");
         const pipelineElapsed = performance.now() - pipelineStart;
 
         console.log("\n=== Full Pipeline Results ===");

@@ -643,7 +643,7 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
         expect(result?.version).toBe("2.0.0");
         expect(result?.commitMessage).toContain("break: removed public API");
         // Changelog aggregates all non-empty entries from every chunk
-        expect(result?.changelogEntry).toBe("Public API removed. Migration guide: ...\nAdded new helper methods.");
+        expect(result?.changelogEntry).toBe("- Public API removed. Migration guide: ...\n- Added new helper methods.");
         // All 4 chunks analyzed (no short-circuit)
         expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(4);
     });
@@ -695,7 +695,7 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
         // Commit message comes from highest-bump chunk (MAJOR)
         expect(result?.commitMessage).toContain("break: removed deprecated endpoint");
         // Changelog aggregates entries from both chunks
-        expect(result?.changelogEntry).toBe("New helper method added.\nThe deprecated endpoint has been removed.");
+        expect(result?.changelogEntry).toBe("- New helper method added.\n- The deprecated endpoint has been removed.");
     });
 
     it("handles mix of NO_CHANGE and non-null chunk results", async () => {
