@@ -386,8 +386,8 @@ export function detectAffected(
     return {
         allGeneratorsAffected,
         allFixturesAffected,
-        affectedGenerators: [...affectedGeneratorSet],
-        affectedFixtures: [...affectedFixtureSet],
+        affectedGenerators: allGeneratorsAffected ? [] : [...affectedGeneratorSet],
+        affectedFixtures: allFixturesAffected ? [] : [...affectedFixtureSet],
         summary
     };
 }
