@@ -86,6 +86,7 @@ const EXCLUDED_FILE_PATTERNS: RegExp[] = [
     /(?:^|\/)reference\.md$/i,
     /(?:^|\/)changelog(?:\.[^/]*)?$/i,
     /(?:^|\/)readme(?:\.[^/]*)?$/i,
+    /(?:^|\/)license(?:\.[^/]*)?$/i,
 
     // Lock files (dependency resolution, zero semantic value)
     /(?:^|\/)pnpm-lock\.yaml$/i,
