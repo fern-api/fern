@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.15.0
+  changelogEntry:
+    - summary: |
+        Add C++ library documentation generation. Users can now configure
+        `lang: cpp` libraries in docs.yml with an optional Doxyfile path,
+        and `fern docs md generate` will produce structured MDX pages for
+        classes, structs, functions, enums, typedefs, and variables with
+        template parameters, method overload tabs, and hierarchical
+        namespace navigation.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
 - version: 4.14.0
   changelogEntry:
     - summary: |
