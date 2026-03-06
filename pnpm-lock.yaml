@@ -4951,12 +4951,18 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../workspace/commons
+      '@fern-api/api-workspace-validator':
+        specifier: workspace:*
+        version: link:../workspace/api-workspace-validator
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
       '@fern-api/cli-logger':
         specifier: workspace:*
         version: link:../cli-logger
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../cli-source-resolver
       '@fern-api/config':
         specifier: workspace:*
         version: link:../config
@@ -4990,6 +4996,15 @@ importers:
       '@fern-api/github':
         specifier: workspace:*
         version: link:../../commons/github
+      '@fern-api/ir-generator':
+        specifier: workspace:*
+        version: link:../generation/ir-generator
+      '@fern-api/ir-migrations':
+        specifier: workspace:*
+        version: link:../generation/ir-migrations
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../ir-sdk
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
@@ -5083,6 +5098,9 @@ importers:
       js-yaml:
         specifier: 'catalog:'
         version: 4.1.1
+      json-stream-stringify:
+        specifier: 'catalog:'
+        version: 3.1.6
       jsonwebtoken:
         specifier: 'catalog:'
         version: 9.0.3
