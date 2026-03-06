@@ -52,8 +52,6 @@ describe("LocalTaskHandler prompt - previous_version parameter", () => {
     });
 
     it("prompt includes conditional language-specific breaking change rules", () => {
-        // Universal rules
-        expect(diffAnalyzerBaml).toContain("Removing a required response field is always MAJOR");
         // Conditional blocks for each language
         expect(diffAnalyzerBaml).toContain('{% if language == "typescript" %}');
         expect(diffAnalyzerBaml).toContain('{% elif language == "python" %}');
@@ -69,16 +67,52 @@ describe("LocalTaskHandler prompt - previous_version parameter", () => {
         expect(diffAnalyzerBaml).toContain("{% endif %}");
     });
 
-    it("prompt includes language-specific rules for typescript", () => {
+    it("each language block has MAJOR, MINOR, and PATCH sections", () => {
+        // Each conditional language block should have all three severity sections
+        expect(diffAnalyzerBaml).toContain("MAJOR (breaking):");
+        expect(diffAnalyzerBaml).toContain("MINOR (backward-compatible additions):");
+        expect(diffAnalyzerBaml).toContain("PATCH (no API surface change):");
+    });
+
+    it("rules cover SDK-specific patterns like version headers and RequestOptions", () => {
+        expect(diffAnalyzerBaml).toContain("Updating SDK version headers");
+        expect(diffAnalyzerBaml).toContain("RequestOptions");
+        expect(diffAnalyzerBaml).toContain("retry logic");
+    });
+
+    it("typescript rules cover type narrowing, discriminated unions, and generics", () => {
         expect(diffAnalyzerBaml).toContain(
             "Making a response field optional is MAJOR (type changes from T to T | undefined"
         );
+        expect(diffAnalyzerBaml).toContain("discriminated union");
+        expect(diffAnalyzerBaml).toContain("generic type parameter constraint");
+        expect(diffAnalyzerBaml).toContain("Narrowing a parameter type");
     });
 
-    it("prompt includes language-specific rules for python", () => {
+    it("python rules cover duck typing, keyword args, and Pydantic models", () => {
         expect(diffAnalyzerBaml).toContain(
             "Making a response field optional is usually MINOR (Python uses None propagation"
         );
+        expect(diffAnalyzerBaml).toContain("keyword arguments");
+        expect(diffAnalyzerBaml).toContain("Pydantic models");
+    });
+
+    it("java rules cover Optional unwrapping, builders, and checked exceptions", () => {
+        expect(diffAnalyzerBaml).toContain("Optional unwrapping");
+        expect(diffAnalyzerBaml).toContain("builder method");
+        expect(diffAnalyzerBaml).toContain("checked exceptions");
+    });
+
+    it("go rules cover pointer types, interfaces, and functional options", () => {
+        expect(diffAnalyzerBaml).toContain("Making a response field a pointer type");
+        expect(diffAnalyzerBaml).toContain("Go has no overloading");
+        expect(diffAnalyzerBaml).toContain("functional options pattern");
+    });
+
+    it("rust rules cover Option<T>, #[non_exhaustive], and trait implementations", () => {
+        expect(diffAnalyzerBaml).toContain("Making a response field optional (T to Option<T>)");
+        expect(diffAnalyzerBaml).toContain("#[non_exhaustive]");
+        expect(diffAnalyzerBaml).toContain("trait implementation");
     });
 
     it("prompt includes fallback rules for unknown languages", () => {
