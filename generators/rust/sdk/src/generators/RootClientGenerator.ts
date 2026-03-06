@@ -6,12 +6,19 @@ import { rust, UseStatement } from "@fern-api/rust-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { ClientGeneratorContext } from "./ClientGeneratorContext.js";
 import { SubClientGenerator } from "./SubClientGenerator.js";
+import { WebSocketChannelGenerator } from "./WebSocketChannelGenerator.js";
 
 export class RootClientGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly package: FernIr.Package;
     private readonly projectName: string;
     private readonly clientGeneratorContext: ClientGeneratorContext;
+    private readonly wsConnectors: Array<{
+        connectorName: string;
+        fieldName: string;
+        clientName: string;
+        moduleName: string;
+    }>;
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
@@ -21,6 +28,10 @@ export class RootClientGenerator {
             packageOrSubpackage: this.package,
             sdkGeneratorContext: context
         });
+
+        // Gather WebSocket connector info
+        const wsGen = new WebSocketChannelGenerator(context);
+        this.wsConnectors = wsGen.getConnectorInfo();
     }
 
     // =============================================================================
@@ -156,12 +167,26 @@ export class RootClientGenerator {
     }
 
     private generateImports(): UseStatement[] {
-        return [
+        const imports: UseStatement[] = [
             new UseStatement({
                 path: "crate",
                 items: ["ClientConfig", "ApiError"]
             })
         ];
+
+        // Import WebSocket connector types from the websocket module
+        const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
+        const uniqueWsConnectors = this.getUniqueWsConnectors(httpFieldNames);
+        if (uniqueWsConnectors.length > 0) {
+            imports.push(
+                new UseStatement({
+                    path: "crate::api::websocket",
+                    items: uniqueWsConnectors.map((c) => c.connectorName)
+                })
+            );
+        }
+
+        return imports;
     }
 
     // =============================================================================
@@ -179,6 +204,9 @@ export class RootClientGenerator {
     }
 
     private generateFields(subpackages: FernIr.Subpackage[]): rust.Client.Field[] {
+        // Collect HTTP sub-client field names to avoid collisions with WS connectors
+        const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
+
         return [
             {
                 name: "config",
@@ -189,14 +217,37 @@ export class RootClientGenerator {
                 name: fieldName,
                 type: rust.Type.reference(rust.reference({ name: clientName })).toString(),
                 visibility: "pub" as const
+            })),
+            ...this.getUniqueWsConnectors(httpFieldNames).map(({ fieldName, connectorName }) => ({
+                name: fieldName,
+                type: rust.Type.reference(rust.reference({ name: connectorName })).toString(),
+                visibility: "pub" as const
             }))
         ];
     }
 
+    /**
+     * Returns WebSocket connectors that don't collide with existing HTTP sub-client field names.
+     */
+    private getUniqueWsConnectors(httpFieldNames: Set<string>): typeof this.wsConnectors {
+        return this.wsConnectors.filter((c) => !httpFieldNames.has(c.fieldName));
+    }
+
     private generateConstructor(subpackages: FernIr.Subpackage[]): rust.Client.SimpleMethod {
-        const subClientInits = this.clientGeneratorContext.subClients
-            .map(({ fieldName, clientName }) => `${fieldName}: ${clientName}::new(config.clone())?`)
-            .join(",\n            ");
+        const allInits: string[] = [];
+        const httpFieldNames = new Set(this.clientGeneratorContext.subClients.map((c) => c.fieldName));
+
+        // HTTP sub-client initializations
+        for (const { fieldName, clientName } of this.clientGeneratorContext.subClients) {
+            allInits.push(`${fieldName}: ${clientName}::new(config.clone())?`);
+        }
+
+        // WebSocket connector initializations (only those not colliding with HTTP sub-clients)
+        for (const { fieldName, connectorName } of this.getUniqueWsConnectors(httpFieldNames)) {
+            allInits.push(`${fieldName}: ${connectorName}::new(config.base_url.clone())`);
+        }
+
+        const initStr = allInits.join(",\n            ");
 
         const configType = rust.Type.reference(rust.reference({ name: "ClientConfig" }));
         const selfType = rust.Type.reference(rust.reference({ name: "Self" }));
@@ -210,7 +261,7 @@ export class RootClientGenerator {
             isAsync: false,
             body: `Ok(Self {
             config: config.clone(),
-            ${subClientInits}
+            ${initStr}
         })`
         };
     }

@@ -8099,9 +8099,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -8402,9 +8400,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -8651,9 +8647,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -8789,9 +8783,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -9082,9 +9074,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -9104,9 +9094,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -9864,9 +9852,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -9890,9 +9876,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10303,9 +10287,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10565,9 +10547,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10677,9 +10657,7 @@
                         },
                         "type": "reference"
                       },
-                      "audiences": [],
-                      "readonly": false,
-                      "writeonly": false
+                      "audiences": []
                     },
                     {
                       "conflict": {},
@@ -10775,9 +10753,7 @@
                         },
                         "type": "reference"
                       },
-                      "audiences": [],
-                      "readonly": false,
-                      "writeonly": false
+                      "audiences": []
                     },
                     {
                       "conflict": {},
@@ -11460,9 +11436,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11769,9 +11743,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11952,9 +11924,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -12114,9 +12084,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12946,9 +12914,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -13089,9 +13055,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -13165,9 +13129,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -13697,9 +13659,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -14108,9 +14068,7 @@
             },
             "audiences": [],
             "conflict": {},
-            "generatedName": "realtimeBaseMessageMessageType",
-            "readonly": false,
-            "writeonly": false
+            "generatedName": "realtimeBaseMessageMessageType"
           }
         ],
         "generatedName": "RealtimeBaseMessage",

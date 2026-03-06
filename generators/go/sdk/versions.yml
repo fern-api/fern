@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.28.3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation crash for endpoints with bytes request bodies.
+        The wire test generator now skips bytes endpoints, consistent with the
+        wiremock mapping generation which also excludes them. Previously, the
+        generator would throw "No wiremock mapping found" when an API contained
+        file upload endpoints using `application/octet-stream`.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 61
+
 - version: 1.28.2
   changelogEntry:
     - summary: |
