@@ -15,6 +15,7 @@ import { getShortName, stripTemplateArgs } from "../cpp/src/context.js";
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderCompoundPage } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderSegmentsTrimmed } from "../cpp/src/renderers/DescriptionRenderer.js";
+import { namespaceHasEntities, renderIndexPage } from "../cpp/src/renderers/IndexPageRenderer.js";
 import { groupFunctionsByName } from "../cpp/src/renderers/MethodRenderer.js";
 import type { CppDocstringIr, CppLibraryDocsIr, CppNamespaceIr } from "./types/CppLibraryDocsIr.js";
 import { MdxFileWriter } from "./writers/MdxFileWriter.js";
@@ -67,6 +68,13 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
         const meta = deriveCompoundMeta(entry.collected, repo);
         const content = renderCompoundPage(entry.collected.compound, meta);
         writer.writePage(entry.pageKey, content);
+    }
+
+    // Stage 4: Generate index pages for namespaces
+    const slugBaseName = slug.includes("/") ? slug.split("/").pop()! : slug;
+    const libraryNs = ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName);
+    if (libraryNs) {
+        generateIndexPages(libraryNs, slug, true, writer);
     }
 
     return writer.result();
@@ -252,4 +260,34 @@ function deriveCompoundMeta(collected: CollectedCompound, repo: string): Compoun
         namespacePath: collected.namespacePath,
         description
     };
+}
+
+// ---------------------------------------------------------------------------
+// Index page generation (Stage 4)
+// ---------------------------------------------------------------------------
+
+const LIBRARY_TITLES: Record<string, string> = {
+    cub: "CUB API Reference",
+    thrust: "Thrust API Reference",
+    cuda: "libcudacxx API Reference"
+};
+
+/**
+ * Recursively generate index pages for a namespace and all its descendants.
+ *
+ * Skips namespaces that have no entities (directly or recursively).
+ */
+function generateIndexPages(ns: CppNamespaceIr, slug: string, isRoot: boolean, writer: MdxFileWriter): void {
+    if (!namespaceHasEntities(ns)) {
+        return;
+    }
+
+    const title = isRoot ? (LIBRARY_TITLES[ns.name] ?? `${ns.name} API Reference`) : `Namespace ${ns.path}`;
+    const content = renderIndexPage(ns, title);
+    const pageKey = `${slug}/${ns.path.replace(/::/g, "/")}/index.mdx`;
+    writer.writePage(pageKey, content);
+
+    for (const child of ns.namespaces) {
+        generateIndexPages(child, slug, false, writer);
+    }
 }

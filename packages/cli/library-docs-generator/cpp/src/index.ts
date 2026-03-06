@@ -14,5 +14,6 @@ export { renderConceptPage } from "./renderers/ConceptPageRenderer.js";
 export { renderSegmentsTrimmed } from "./renderers/DescriptionRenderer.js";
 export { renderEnumPage } from "./renderers/EnumPageRenderer.js";
 export { renderFunctionPage } from "./renderers/FunctionPageRenderer.js";
+export { namespaceHasEntities, renderIndexPage } from "./renderers/IndexPageRenderer.js";
 export { renderTypedefPage } from "./renderers/TypedefPageRenderer.js";
 export { renderVariablePage } from "./renderers/VariablePageRenderer.js";
