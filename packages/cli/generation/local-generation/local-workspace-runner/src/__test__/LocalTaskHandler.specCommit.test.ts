@@ -89,6 +89,22 @@ describe("LocalTaskHandler.readSpecCommitMessage", () => {
         expect(result).toBe("");
     });
 
+    it("does not filter messages that contain merge but do not start with it", async () => {
+        const { loggingExeca } = await import("@fern-api/logging-execa");
+        vi.mocked(loggingExeca).mockResolvedValueOnce({
+            stdout: "Add emerger service endpoint\n",
+            stderr: "",
+            exitCode: 0,
+            command: "git log",
+            escapedCommand: "git log"
+        } as unknown as Awaited<ReturnType<typeof loggingExeca>>);
+
+        const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
+        const result = await handler.readSpecCommitMessage();
+
+        expect(result).toBe("Add emerger service endpoint");
+    });
+
     it("truncates spec commit message longer than 500 characters", async () => {
         const { loggingExeca } = await import("@fern-api/logging-execa");
         const longMessage = "a".repeat(600);
@@ -187,6 +203,11 @@ describe("LocalTaskHandler spec_commit_message integration", () => {
     it("passes empty string to AnalyzeSdkDiff when spec commit unavailable", () => {
         // The getAnalysis method has a default value of "" for specCommitMessage
         expect(localTaskHandlerSource).toContain('specCommitMessage: string = ""');
+    });
+
+    it("uses startsWith for merge commit detection, not includes", () => {
+        expect(localTaskHandlerSource).toContain('message.toLowerCase().startsWith("merge ")');
+        expect(localTaskHandlerSource).not.toContain('message.toLowerCase().includes("merge")');
     });
 
     it("LocalTaskHandler Init interface includes absolutePathToSpecRepo field", () => {

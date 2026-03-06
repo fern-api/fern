@@ -632,12 +632,13 @@ export class LocalTaskHandler {
             );
             const message = result.stdout.trim();
             // Filter out unhelpful messages
-            if (!message || message.toLowerCase().includes("merge") || message.length < 5) {
+            if (!message || message.toLowerCase().startsWith("merge ") || message.length < 5) {
                 return "";
             }
             // Truncate to 500 chars to avoid bloating the prompt
             return message.length > 500 ? message.slice(0, 500) + "\u2026" : message;
-        } catch {
+        } catch (error) {
+            this.context.logger.debug(`Failed to read spec repo commit message: ${error}`);
             return "";
         }
     }
