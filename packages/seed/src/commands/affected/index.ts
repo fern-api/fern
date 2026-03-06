@@ -3,6 +3,8 @@ export {
     detectAffected,
     findRepoRoot,
     getChangedFiles,
+    getTurboAffectedPackages,
     resolveAffectedFixtures,
-    resolveAffectedGenerators
+    resolveAffectedGenerators,
+    type TurboPackage
 } from "./getAffected.js";
