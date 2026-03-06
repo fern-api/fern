@@ -50,8 +50,8 @@ export async function mergeOpenAPIWithOverrides({
         // Merge the x-fern-examples into native OpenAPI examples
         const merged = mergeExamplesIntoSpec(openapi, overrides, context);
 
-        // Determine output format based on input file extension
-        const isJson = openapiPath.endsWith(".json");
+        // Determine output format based on output file extension
+        const isJson = outputPath.endsWith(".json");
         const output = isJson ? JSON.stringify(merged, null, 2) : yaml.dump(merged, { lineWidth: -1, noRefs: true });
 
         await writeFile(outputPath, output);
