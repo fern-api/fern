@@ -274,6 +274,7 @@ describe("LocalTaskHandler - Unified Behavioral Analysis", () => {
             ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
             isWhitelabel: false,
             generatorLanguage: "typescript",
+            absolutePathToSpecRepo: undefined,
             ...overrides
         });
     }
@@ -443,6 +444,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
                 ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
                 isWhitelabel: false,
                 generatorLanguage: "typescript",
+                absolutePathToSpecRepo: undefined,
                 autoVersioningCache: cache,
                 ...overrides
             }),
@@ -477,6 +479,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
             ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
             isWhitelabel: false,
             generatorLanguage: "typescript",
+            absolutePathToSpecRepo: undefined,
             autoVersioningCache: sharedCache
         });
 
@@ -495,6 +498,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
             ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
             isWhitelabel: false,
             generatorLanguage: "typescript",
+            absolutePathToSpecRepo: undefined,
             autoVersioningCache: sharedCache
         });
 
@@ -538,6 +542,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
             ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
             isWhitelabel: false,
             generatorLanguage: "typescript",
+            absolutePathToSpecRepo: undefined,
             autoVersioningCache: sharedCache
         });
 
@@ -556,6 +561,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
             ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
             isWhitelabel: false,
             generatorLanguage: "typescript",
+            absolutePathToSpecRepo: undefined,
             autoVersioningCache: sharedCache
         });
 
