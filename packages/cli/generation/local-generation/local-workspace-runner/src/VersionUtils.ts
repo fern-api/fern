@@ -12,7 +12,7 @@ export function extractLanguageFromGeneratorName(generatorName: string): string 
     if (name.includes("python")) {
         return "python";
     }
-    if (name.includes("java")) {
+    if (name.includes("java") && !name.includes("javascript")) {
         return "java";
     }
     if (/\bgo\b/.test(name)) {

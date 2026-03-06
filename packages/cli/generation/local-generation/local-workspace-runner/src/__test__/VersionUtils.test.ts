@@ -84,6 +84,10 @@ describe("extractLanguageFromGeneratorName", () => {
         expect(extractLanguageFromGeneratorName("fernapi/fern-mongo-connector")).toBe("unknown");
         expect(extractLanguageFromGeneratorName("cargo-generator")).toBe("unknown");
     });
+
+    it("does not false-positive match 'java' in 'javascript'", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-javascript-sdk")).toBe("unknown");
+    });
 });
 
 describe("extractLanguageFromGeneratorName integration - runGenerator.ts", () => {
