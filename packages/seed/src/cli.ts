@@ -221,14 +221,16 @@ function addTestCommand(cli: Argv) {
                 let testRunner: TestRunner;
                 let scriptRunner: ScriptRunner;
 
-                // If no fixtures passed in, use all available fixtures (without output folders)
+                // Resolve fixtures per-generator using a local variable to avoid leaking
+                // one generator's fixtures to the next iteration
+                let fixturesForGenerator: string[];
                 if (argv.fixture == null) {
-                    argv.fixture = getAvailableFixtures(generator, false);
+                    fixturesForGenerator = getAvailableFixtures(generator, false);
                 } else if (isFixtureAffected && affectedResult != null && !affectedResult.allFixturesAffected) {
                     // In affected mode, resolve fixtures per-generator (filter by what's available)
                     const available = getAvailableFixtures(generator, false);
-                    argv.fixture = resolveAffectedFixtures(affectedResult, available);
-                    if (argv.fixture.length === 0) {
+                    fixturesForGenerator = resolveAffectedFixtures(affectedResult, available);
+                    if (fixturesForGenerator.length === 0) {
                         console.log(
                             `No affected fixtures available for generator ${generator.workspaceName}. Skipping.`
                         );
@@ -236,14 +238,14 @@ function addTestCommand(cli: Argv) {
                     }
                 } else {
                     const availableFixturesForGlobbing = getAvailableFixtures(generator, false);
-                    argv.fixture = expandFixtureGlobs(argv.fixture, availableFixturesForGlobbing);
+                    fixturesForGenerator = expandFixtureGlobs(argv.fixture, availableFixturesForGlobbing);
                 }
 
                 // Get both formats of fixtures and check if the fixtures passed in are of one of the two formats allowed
                 const availableFixtures = getAvailableFixtures(generator, false);
                 const availableFixturesWithOutputFolders = getAvailableFixtures(generator, true);
 
-                for (const fixture of argv.fixture) {
+                for (const fixture of fixturesForGenerator) {
                     if (!availableFixtures.includes(fixture) && !availableFixturesWithOutputFolders.includes(fixture)) {
                         throw new Error(
                             `Fixture ${fixture} not found. Please make sure that it is a valid fixture for the generator ${generator.workspaceName}.`
@@ -254,7 +256,8 @@ function addTestCommand(cli: Argv) {
                 // Verify if there are multiple fixtures passed in or a fixture has a colon separated output folder, that
                 // the flag for the output folder is not also used
                 if (
-                    (argv.fixture.length > 1 || argv.fixture.some((fixture) => fixture.includes(":"))) &&
+                    (fixturesForGenerator.length > 1 ||
+                        fixturesForGenerator.some((fixture) => fixture.includes(":"))) &&
                     argv.outputFolder != null
                 ) {
                     throw new Error(
@@ -333,7 +336,7 @@ function addTestCommand(cli: Argv) {
                     testGenerator({
                         generator,
                         runner: testRunner,
-                        fixtures: argv.fixture,
+                        fixtures: fixturesForGenerator,
                         outputFolder: argv.outputFolder,
                         inspect: argv.inspect
                     })

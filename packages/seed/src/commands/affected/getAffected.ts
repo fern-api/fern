@@ -1,4 +1,4 @@
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
 
@@ -67,7 +67,7 @@ const GENERATOR_SOURCE_PATHS: Record<string, string[]> = {
  */
 export function getChangedFiles(baseRef: string, repoRoot: string): string[] {
     try {
-        const output = execSync(`git diff --name-only --merge-base ${baseRef}`, {
+        const output = execFileSync("git", ["diff", "--name-only", "--merge-base", baseRef], {
             cwd: repoRoot,
             encoding: "utf-8",
             timeout: 30000
@@ -76,10 +76,11 @@ export function getChangedFiles(baseRef: string, repoRoot: string): string[] {
             .trim()
             .split("\n")
             .filter((line) => line.length > 0);
-    } catch {
+    } catch (error) {
+        console.error("git diff --merge-base failed, trying fallback:", error);
         // Fallback: try without --merge-base (for cases where merge-base doesn't work)
         try {
-            const output = execSync(`git diff --name-only ${baseRef}`, {
+            const output = execFileSync("git", ["diff", "--name-only", baseRef], {
                 cwd: repoRoot,
                 encoding: "utf-8",
                 timeout: 30000
@@ -88,8 +89,8 @@ export function getChangedFiles(baseRef: string, repoRoot: string): string[] {
                 .trim()
                 .split("\n")
                 .filter((line) => line.length > 0);
-        } catch {
-            console.error("Failed to get changed files from git. Falling back to running everything.");
+        } catch (innerError) {
+            console.error("Failed to get changed files from git. Falling back to running everything.", innerError);
             return [];
         }
     }
@@ -265,12 +266,13 @@ export function resolveAffectedFixtures(affected: AffectedResult, availableFixtu
  */
 export function findRepoRoot(): string {
     try {
-        const root = execSync("git rev-parse --show-toplevel", {
+        const root = execFileSync("git", ["rev-parse", "--show-toplevel"], {
             encoding: "utf-8",
             timeout: 5000
         }).trim();
         return root;
-    } catch {
+    } catch (error) {
+        console.error("Failed to find repo root via git, falling back to cwd:", error);
         return process.cwd();
     }
 }
