@@ -1,5 +1,11 @@
-export type { ApiSpec } from "./convertApiSpecToFdrDefinition.js";
-export { convertApiSpecToFdrDefinition, convertApiSpecToIr } from "./convertApiSpecToFdrDefinition.js";
+export type { ApiSpec, ApiSpecType } from "./convertApiSpecToFdrDefinition.js";
+export {
+    apiSpecToFdr,
+    apiSpecToIr,
+    convertApiSpecToFdrDefinition,
+    convertApiSpecToIr,
+    detectApiSpecType
+} from "./convertApiSpecToFdrDefinition.js";
 export {
     convertAsyncApiSpecToFdrDefinition,
     convertAsyncApiSpecToIr
