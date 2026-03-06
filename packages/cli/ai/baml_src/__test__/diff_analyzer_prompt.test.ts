@@ -13,9 +13,9 @@ describe("AnalyzeSdkDiff few-shot examples", () => {
         expect(promptContent).toContain("new parameter is optional");
     });
 
-    it("prompt includes PATCH example for internal constant change", () => {
-        expect(promptContent).toContain("PATCH: internal retry constant");
-        expect(promptContent).toContain("public API surface unchanged");
+    it("prompt includes PATCH example for import reorganization", () => {
+        expect(promptContent).toContain("PATCH: Go import reorganization");
+        expect(promptContent).toContain("Formatting change only, no functional difference");
     });
 
     it("prompt covers TypeScript language in examples", () => {
