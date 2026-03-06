@@ -9,8 +9,8 @@ async fn main() {
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
     client
         .completions
-        .stream_events(
-            &StreamEventsRequest {
+        .stream(
+            &StreamCompletionRequest {
                 query: "query".to_string(),
             },
             None,

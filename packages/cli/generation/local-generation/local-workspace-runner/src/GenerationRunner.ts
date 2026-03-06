@@ -128,6 +128,7 @@ export class GenerationRunner {
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         shouldCommit: boolean;
         autoVersioningCommitMessage?: string;
+        autoVersioningChangelogEntry?: string;
     }> {
         context.logger.info(`Starting generation for ${generatorInvocation.name}`);
 
@@ -190,7 +191,8 @@ export class GenerationRunner {
             executionEnvironment: this.executionEnvironment,
             ir: rawIr,
             runner: undefined,
-            ai: workspace.generatorsConfiguration?.ai
+            ai: workspace.generatorsConfiguration?.ai,
+            absolutePathToSpecRepo: undefined
         });
     }
 }
