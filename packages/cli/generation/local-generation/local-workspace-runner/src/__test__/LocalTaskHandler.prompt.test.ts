@@ -51,10 +51,37 @@ describe("LocalTaskHandler prompt - previous_version parameter", () => {
         expect(localTaskHandlerSource).toContain("generatorLanguage: string | undefined;");
     });
 
-    it("prompt includes language-specific breaking change rules", () => {
-        expect(diffAnalyzerBaml).toContain("Language-specific breaking change rules:");
-        expect(diffAnalyzerBaml).toContain("typescript/java/csharp: making a response field optional is MAJOR");
-        expect(diffAnalyzerBaml).toContain("python/go/ruby: making a response field optional is usually MINOR");
-        expect(diffAnalyzerBaml).toContain("All languages: removing a required response field is always MAJOR");
+    it("prompt includes conditional language-specific breaking change rules", () => {
+        // Universal rules
+        expect(diffAnalyzerBaml).toContain("Removing a required response field is always MAJOR");
+        // Conditional blocks for each language
+        expect(diffAnalyzerBaml).toContain('{% if language == "typescript" %}');
+        expect(diffAnalyzerBaml).toContain('{% elif language == "python" %}');
+        expect(diffAnalyzerBaml).toContain('{% elif language == "java" %}');
+        expect(diffAnalyzerBaml).toContain('{% elif language == "go" %}');
+        expect(diffAnalyzerBaml).toContain('{% elif language == "ruby" %}');
+        expect(diffAnalyzerBaml).toContain('{% elif language == "csharp" %}');
+        expect(diffAnalyzerBaml).toContain('{% elif language == "php" %}');
+        expect(diffAnalyzerBaml).toContain('{% elif language == "swift" %}');
+        expect(diffAnalyzerBaml).toContain('{% elif language == "rust" %}');
+        expect(diffAnalyzerBaml).toContain('{% elif language == "kotlin" %}');
+        expect(diffAnalyzerBaml).toContain("{% else %}");
+        expect(diffAnalyzerBaml).toContain("{% endif %}");
+    });
+
+    it("prompt includes language-specific rules for typescript", () => {
+        expect(diffAnalyzerBaml).toContain(
+            "Making a response field optional is MAJOR (type changes from T to T | undefined"
+        );
+    });
+
+    it("prompt includes language-specific rules for python", () => {
+        expect(diffAnalyzerBaml).toContain(
+            "Making a response field optional is usually MINOR (Python uses None propagation"
+        );
+    });
+
+    it("prompt includes fallback rules for unknown languages", () => {
+        expect(diffAnalyzerBaml).toContain("Making a response field optional is MAJOR in statically-typed languages");
     });
 });
