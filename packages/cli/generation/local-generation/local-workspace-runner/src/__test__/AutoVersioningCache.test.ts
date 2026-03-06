@@ -67,25 +67,39 @@ describe("AutoVersioningCache", () => {
         expect(secondComputed).toBe(false);
     });
 
-    it("produces different cache keys for same diff but different language, version, or specCommitMessage", () => {
+    it("produces different cache keys for same diff but different language, version, priorChangelog, or specCommitMessage", () => {
         const cache = new AutoVersioningCache();
         const diff = "diff --git a/src/index.ts\n+export const foo = true;";
 
         const keyTs = cache.key(diff, "typescript", "1.0.0");
         const keyPy = cache.key(diff, "python", "1.0.0");
         const keyTsDiffVer = cache.key(diff, "typescript", "2.0.0");
-        const keyWithSpec = cache.key(diff, "typescript", "1.0.0", "add /payments endpoint");
-        const keyWithDiffSpec = cache.key(diff, "typescript", "1.0.0", "remove /users endpoint");
-        const keyNoSpec = cache.key(diff, "typescript", "1.0.0", "");
+
+        // priorChangelog differentiation (4th param)
+        const keyWithChangelog = cache.key(diff, "typescript", "1.0.0", "## [1.0.0] prior entry", "");
+        const keyWithDiffChangelog = cache.key(diff, "typescript", "1.0.0", "## [0.9.0] other entry", "");
+        const keyNoChangelog = cache.key(diff, "typescript", "1.0.0", "");
+
+        // specCommitMessage differentiation (5th param)
+        const keyWithSpec = cache.key(diff, "typescript", "1.0.0", "", "add /payments endpoint");
+        const keyWithDiffSpec = cache.key(diff, "typescript", "1.0.0", "", "remove /users endpoint");
+        const keyNoSpec = cache.key(diff, "typescript", "1.0.0", "", "");
 
         // Same diff but different language → different keys
         expect(keyTs).not.toBe(keyPy);
         // Same diff and language but different previous version → different keys
         expect(keyTs).not.toBe(keyTsDiffVer);
-        // Same diff but different spec commit message → different keys
+
+        // Different priorChangelog → different keys
+        expect(keyTs).not.toBe(keyWithChangelog);
+        expect(keyWithChangelog).not.toBe(keyWithDiffChangelog);
+        // Empty string priorChangelog matches default (no arg)
+        expect(keyTs).toBe(keyNoChangelog);
+
+        // Different specCommitMessage → different keys
         expect(keyTs).not.toBe(keyWithSpec);
         expect(keyWithSpec).not.toBe(keyWithDiffSpec);
-        // Empty string spec commit message matches default (no arg)
+        // Empty string specCommitMessage matches default (no arg)
         expect(keyTs).toBe(keyNoSpec);
     });
 
