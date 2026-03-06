@@ -601,8 +601,9 @@ describe("Cross-language signature detection and truncation", () => {
         // Put them in reverse order
         const diff = [tsAdded, goAdded, configChanged, pythonChanged, javaRemoved].join("\n");
 
-        // Budget fits ~2 sections
-        const twoSectionBudget = Buffer.byteLength(javaRemoved, "utf-8") + Buffer.byteLength(pythonChanged, "utf-8");
+        // Budget fits ~2 sections (add 1 byte for \n separator between them)
+        const twoSectionBudget =
+            Buffer.byteLength(javaRemoved, "utf-8") + Buffer.byteLength(pythonChanged, "utf-8") + 1;
 
         const result = service.truncateDiff(diff, twoSectionBudget);
 
@@ -809,8 +810,8 @@ describe("AutoVersioningService.chunkDiff", () => {
         // Put them in reverse order
         const diff = [tsAdded, goAdded, pythonChanged, javaRemoved].join("\n");
 
-        // Budget that fits ~2 sections
-        const budget = Buffer.byteLength(javaRemoved, "utf-8") + Buffer.byteLength(pythonChanged, "utf-8");
+        // Budget that fits ~2 sections (add 1 byte for \n separator between them)
+        const budget = Buffer.byteLength(javaRemoved, "utf-8") + Buffer.byteLength(pythonChanged, "utf-8") + 1;
         const chunks = service.chunkDiff(diff, budget);
 
         // First chunk should contain deletion and signature sections

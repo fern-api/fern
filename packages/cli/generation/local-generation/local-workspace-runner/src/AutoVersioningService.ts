@@ -399,13 +399,14 @@ export class AutoVersioningService {
 
         for (const entry of ranked) {
             const sectionBytes = Buffer.byteLength(entry.text, "utf-8");
+            const newlineBytes = includedCount > 0 ? 1 : 0; // Account for \n separator
             // Always include at least one section even if it exceeds the budget,
             // so the AI always has something to analyse.
-            if (includedCount > 0 && currentBytes + sectionBytes > maxBytes) {
+            if (includedCount > 0 && currentBytes + sectionBytes + newlineBytes > maxBytes) {
                 break;
             }
             includedTexts.push(entry.text);
-            currentBytes += sectionBytes;
+            currentBytes += sectionBytes + newlineBytes;
             includedCount++;
         }
 
@@ -462,6 +463,7 @@ export class AutoVersioningService {
 
         for (const entry of ranked) {
             const sectionBytes = Buffer.byteLength(entry.text, "utf-8");
+            const newlineBytes = currentChunkTexts.length > 0 ? 1 : 0; // Account for \n separator
 
             // If this section alone exceeds the budget, give it its own chunk
             if (sectionBytes > maxBytesPerChunk) {
@@ -476,14 +478,14 @@ export class AutoVersioningService {
             }
 
             // If adding this section would exceed the budget, start a new chunk
-            if (currentChunkBytes + sectionBytes > maxBytesPerChunk && currentChunkTexts.length > 0) {
+            if (currentChunkBytes + sectionBytes + newlineBytes > maxBytesPerChunk && currentChunkTexts.length > 0) {
                 chunks.push(currentChunkTexts.join("\n"));
                 currentChunkTexts = [];
                 currentChunkBytes = 0;
             }
 
             currentChunkTexts.push(entry.text);
-            currentChunkBytes += sectionBytes;
+            currentChunkBytes += sectionBytes + (currentChunkTexts.length > 1 ? 1 : 0);
         }
 
         // Flush remaining sections
