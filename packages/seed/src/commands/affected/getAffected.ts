@@ -22,7 +22,13 @@ export interface AffectedResult {
  * Paths that, when changed, affect ALL generators and ALL fixtures.
  * These are infrastructure-level changes.
  */
-const GLOBAL_AFFECT_PATHS = ["packages/ir-sdk/", "packages/seed/", "packages/cli/generation/ir-generator/"];
+const GLOBAL_AFFECT_PATHS = [
+    "packages/ir-sdk/",
+    "packages/seed/",
+    "packages/cli/generation/ir-generator/",
+    "generators/base/",
+    "generators/browser-compatible-base/"
+];
 
 /**
  * Paths for test definitions. Changes here affect specific fixtures.
