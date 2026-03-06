@@ -27,14 +27,10 @@ export { FieldType, EnumBuilder, ClassBuilder }
 export default class TypeBuilder {
     private tb: _TypeBuilder;
     
-    AnalyzeBehavioralResponse: ClassViewer<'AnalyzeBehavioralResponse', "version_bump" | "behavioral_changes" | "message">;
-    
     AnalyzeCommitDiffRequest: ClassViewer<'AnalyzeCommitDiffRequest', "diff">;
     
     AnalyzeCommitDiffResponse: ClassViewer<'AnalyzeCommitDiffResponse', "message" | "changelog_entry" | "version_bump">;
     
-    
-    BehavioralBump: EnumViewer<'BehavioralBump', "MINOR" | "PATCH">;
     
     VersionBump: EnumViewer<'VersionBump', "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE">;
     
@@ -42,17 +38,13 @@ export default class TypeBuilder {
     constructor() {
         this.tb = new _TypeBuilder({
           classes: new Set([
-            "AnalyzeBehavioralResponse","AnalyzeCommitDiffRequest","AnalyzeCommitDiffResponse",
+            "AnalyzeCommitDiffRequest","AnalyzeCommitDiffResponse",
           ]),
           enums: new Set([
-            "BehavioralBump","VersionBump",
+            "VersionBump",
           ]),
           runtime: DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME
         });
-        
-        this.AnalyzeBehavioralResponse = this.tb.classViewer("AnalyzeBehavioralResponse", [
-          "version_bump","behavioral_changes","message",
-        ]);
         
         this.AnalyzeCommitDiffRequest = this.tb.classViewer("AnalyzeCommitDiffRequest", [
           "diff",
@@ -62,10 +54,6 @@ export default class TypeBuilder {
           "message","changelog_entry","version_bump",
         ]);
         
-        
-        this.BehavioralBump = this.tb.enumViewer("BehavioralBump", [
-          "MINOR","PATCH",
-        ]);
         
         this.VersionBump = this.tb.enumViewer("VersionBump", [
           "MAJOR","MINOR","PATCH","NO_CHANGE",

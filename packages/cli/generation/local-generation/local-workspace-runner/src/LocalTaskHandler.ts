@@ -1,5 +1,5 @@
 import { ClientRegistry } from "@boundaryml/baml";
-import { b as BamlClient, BehavioralBump, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
+import { b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -10,7 +10,7 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
-import { AutoVersioningCache, CachedAnalysis, CachedBehavioralAnalysis } from "./AutoVersioningCache.js";
+import { AutoVersioningCache, CachedAnalysis } from "./AutoVersioningCache.js";
 import {
     AutoVersioningException,
     AutoVersioningService,
@@ -246,38 +246,9 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            let finalBump = analysis.versionBump;
-            let finalMessage = analysis.message;
-            let finalChangelogEntry = analysis.changelogEntry;
-
-            // Tier 3: behavioral analysis (only runs when surface analysis found no changes)
-            if (analysis.versionBump === VersionBump.PATCH) {
-                try {
-                    const behavioralAnalysis = await this.getBehavioralAnalysis(
-                        cleanedDiff,
-                        this.generatorLanguage ?? "unknown"
-                    );
-                    if (behavioralAnalysis.versionBump === BehavioralBump.MINOR) {
-                        this.context.logger.info(
-                            `Tier 3 behavioral analysis escalated to MINOR: ${behavioralAnalysis.behavioralChanges.join(", ")}`
-                        );
-                        finalBump = VersionBump.MINOR;
-                        // Use Tier 3 message if available, fall back to Tier 2 message
-                        finalMessage = behavioralAnalysis.message || analysis.message;
-                        // Synthesize changelog entry from behavioral changes since Tier 2 PATCH
-                        // produces an empty changelog_entry and the BAML behavioral response
-                        // does not include one
-                        if (behavioralAnalysis.behavioralChanges.length > 0) {
-                            finalChangelogEntry = behavioralAnalysis.behavioralChanges.join(". ") + ".";
-                        }
-                    } else {
-                        this.context.logger.info("Tier 3 behavioral analysis confirmed PATCH");
-                    }
-                } catch (tier3Error) {
-                    this.context.logger.warn(`Tier 3 behavioral analysis failed, falling back to PATCH: ${tier3Error}`);
-                    // Non-fatal: keep the Tier 2 PATCH result
-                }
-            }
+            const finalBump = analysis.versionBump;
+            const finalMessage = analysis.message;
+            const finalChangelogEntry = analysis.changelogEntry;
 
             const newVersion = this.incrementVersion(previousVersion, finalBump);
             this.context.logger.info(`Version bump: ${finalBump}, new version: ${newVersion}`);
@@ -364,44 +335,6 @@ export class LocalTaskHandler {
             this.context.logger.info(
                 `[AutoVersioning] Cache hit — reusing result (key: ${cacheKey.slice(0, 8)}…) ` +
                     `bump=${cached?.versionBump ?? "NO_CHANGE"}`
-            );
-            return cached;
-        }
-
-        return promise;
-    }
-
-    /**
-     * Returns the Tier 3 behavioral analysis for the given cleaned diff, using
-     * the cache (with Promise coalescing) when available. Concurrent generators
-     * with the same diff and language share a single AI call.
-     *
-     * On AI failure the method throws so the caller can apply fallback logic.
-     */
-    private async getBehavioralAnalysis(cleanedDiff: string, language: string): Promise<CachedBehavioralAnalysis> {
-        const doBehavioralAnalysis = async (): Promise<CachedBehavioralAnalysis> => {
-            const clientRegistry = await this.getClientRegistry();
-            const bamlClient = BamlClient.withOptions({ clientRegistry });
-            const result = await bamlClient.AnalyzeBehavioralChanges(cleanedDiff, language);
-            return {
-                versionBump: result.version_bump,
-                behavioralChanges: result.behavioral_changes,
-                message: result.message
-            };
-        };
-
-        if (this.autoVersioningCache == null) {
-            return doBehavioralAnalysis();
-        }
-
-        const cacheKey = this.autoVersioningCache.behavioralKey(cleanedDiff, language);
-        const { promise, isHit } = this.autoVersioningCache.getOrComputeBehavioral(cacheKey, doBehavioralAnalysis);
-
-        if (isHit) {
-            const cached = await promise;
-            this.context.logger.info(
-                `[AutoVersioning] Tier 3 cache hit — reusing result (key: ${cacheKey.slice(0, 8)}…) ` +
-                    `bump=${cached.versionBump}`
             );
             return cached;
         }

@@ -1,24 +1,24 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 /**
- * Integration tests for Tier 3 behavioral analysis in LocalTaskHandler.
+ * Integration tests for unified behavioral analysis in LocalTaskHandler.
  *
- * These tests mock the BAML client to verify:
- * - Tier 3 is only called when Tier 2 returns PATCH
- * - Tier 3 MINOR escalates the overall result
- * - Tier 3 failure is non-fatal (falls back to PATCH)
- * - Commit message priority is correct
+ * The merged AnalyzeSdkDiff prompt handles both surface-level and behavioral
+ * change detection in a single AI call. These tests verify:
+ * - Behavioral changes (retry counts, HTTP handling, serialization) are classified as MINOR
+ * - Non-behavioral internal changes are classified as PATCH
+ * - Surface-level changes (new/removed APIs) still work as MAJOR/MINOR
+ * - Changelog entries are properly generated for MINOR/MAJOR
+ * - Changelog entries are empty for PATCH
  */
 
 // Use vi.hoisted so mock fns are available in vi.mock factories (which are hoisted)
-const { mockAnalyzeSdkDiff, mockAnalyzeBehavioralChanges, mockWithOptions } = vi.hoisted(() => {
+const { mockAnalyzeSdkDiff, mockWithOptions } = vi.hoisted(() => {
     const mockAnalyzeSdkDiff = vi.fn();
-    const mockAnalyzeBehavioralChanges = vi.fn();
     const mockWithOptions = vi.fn().mockReturnValue({
-        AnalyzeSdkDiff: mockAnalyzeSdkDiff,
-        AnalyzeBehavioralChanges: mockAnalyzeBehavioralChanges
+        AnalyzeSdkDiff: mockAnalyzeSdkDiff
     });
-    return { mockAnalyzeSdkDiff, mockAnalyzeBehavioralChanges, mockWithOptions };
+    return { mockAnalyzeSdkDiff, mockWithOptions };
 });
 
 // Mock @boundaryml/baml (must be before @fern-api/cli-ai mock since it depends on it)
@@ -198,14 +198,9 @@ vi.mock("../AutoVersioningService.js", () => ({
 vi.mock("../AutoVersioningCache.js", () => ({
     AutoVersioningCache: class MockAutoVersioningCache {
         private cache = new Map<string, Promise<unknown>>();
-        private behavioralCache = new Map<string, Promise<unknown>>();
 
         key(cleanedDiff: string, language: string, previousVersion: string) {
-            return `tier2:${language}:${previousVersion}:${cleanedDiff.slice(0, 8)}`;
-        }
-
-        behavioralKey(cleanedDiff: string, language: string) {
-            return `tier3:${language}:${cleanedDiff.slice(0, 8)}`;
+            return `${language}:${previousVersion}:${cleanedDiff.slice(0, 8)}`;
         }
 
         getOrCompute(key: string, compute: () => Promise<unknown>) {
@@ -220,19 +215,6 @@ vi.mock("../AutoVersioningCache.js", () => ({
             this.cache.set(key, promise);
             return { promise, isHit: false };
         }
-
-        getOrComputeBehavioral(key: string, compute: () => Promise<unknown>) {
-            const existing = this.behavioralCache.get(key);
-            if (existing !== undefined) {
-                return { promise: existing, isHit: true };
-            }
-            const promise = compute().catch((error: unknown) => {
-                this.behavioralCache.delete(key);
-                throw error;
-            });
-            this.behavioralCache.set(key, promise);
-            return { promise, isHit: false };
-        }
     }
 }));
 
@@ -242,7 +224,7 @@ vi.mock("../VersionUtils.js", () => ({
 }));
 
 // Import after mocks are set up
-import { BehavioralBump, VersionBump } from "@fern-api/cli-ai";
+import { VersionBump } from "@fern-api/cli-ai";
 
 const mockLogger = {
     info: vi.fn(),
@@ -266,12 +248,11 @@ async function callHandleAutoVersioning(
     return handler.handleAutoVersioning();
 }
 
-describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
+describe("LocalTaskHandler - Unified Behavioral Analysis", () => {
     beforeEach(() => {
         vi.clearAllMocks();
         mockWithOptions.mockReturnValue({
-            AnalyzeSdkDiff: mockAnalyzeSdkDiff,
-            AnalyzeBehavioralChanges: mockAnalyzeBehavioralChanges
+            AnalyzeSdkDiff: mockAnalyzeSdkDiff
         });
     });
 
@@ -297,199 +278,148 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         });
     }
 
-    it("skips Tier 3 when Tier 2 already returns MINOR", async () => {
+    it("classifies behavioral retry count change as MINOR with changelog", async () => {
         mockAnalyzeSdkDiff.mockResolvedValue({
             version_bump: VersionBump.MINOR,
-            message: "feat: add new endpoint for user management"
+            message: "feat: increase default retry count from 3 to 5",
+            changelog_entry: "The default retry count has been increased from 3 to 5."
         });
 
         const handler = await createTaskHandler();
         const result = await callHandleAutoVersioning(handler);
 
         expect(mockAnalyzeSdkDiff).toHaveBeenCalledOnce();
-        expect(mockAnalyzeBehavioralChanges).not.toHaveBeenCalled();
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.1.0");
+        expect(result?.commitMessage).toContain("feat: increase default retry count from 3 to 5");
+        expect(result?.changelogEntry).toBe("The default retry count has been increased from 3 to 5.");
+    });
+
+    it("classifies HTTP 404 handling change as MINOR with changelog", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.MINOR,
+            message: "feat: throw NotFoundError on 404 instead of returning null",
+            changelog_entry:
+                "HTTP 404 responses now throw a NotFoundError instead of returning null. Update error handling accordingly."
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.1.0");
+        expect(result?.commitMessage).toContain("feat: throw NotFoundError on 404");
+        expect(result?.changelogEntry).toContain("NotFoundError");
+    });
+
+    it("classifies date serialization format change as MINOR with changelog", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.MINOR,
+            message: "feat: change date serialization from ISO 8601 to Unix timestamp",
+            changelog_entry: "Date serialization has changed from ISO 8601 to Unix timestamp format."
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.1.0");
+        expect(result?.changelogEntry).toContain("Date serialization");
+    });
+
+    it("classifies import-only reorganization as PATCH with empty changelog", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "refactor: reorganize imports",
+            changelog_entry: ""
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.0.1");
+        expect(result?.changelogEntry).toBeUndefined();
+    });
+
+    it("classifies removed exported function as MAJOR with changelog", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.MAJOR,
+            message: "break: remove deprecated getUser endpoint",
+            changelog_entry: "The `getUser` method has been removed. Use `fetchUser(id)` instead."
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("2.0.0");
+        expect(result?.changelogEntry).toContain("getUser");
+    });
+
+    it("classifies new endpoint addition as MINOR", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.MINOR,
+            message: "feat: add new endpoint for user management",
+            changelog_entry: "New `createUser()` method available on `UsersClient`."
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(mockAnalyzeSdkDiff).toHaveBeenCalledOnce();
         expect(result).not.toBeNull();
         expect(result?.commitMessage).toContain("feat: add new endpoint for user management");
     });
 
-    it("calls Tier 3 when Tier 2 returns PATCH", async () => {
+    it("applies Fern branding to commit message", async () => {
         mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: "chore: internal refactoring"
-        });
-        mockAnalyzeBehavioralChanges.mockResolvedValue({
-            version_bump: BehavioralBump.PATCH,
-            behavioral_changes: [],
-            message: ""
+            version_bump: VersionBump.MINOR,
+            message: "feat: increase default retry count from 3 to 5",
+            changelog_entry: "The default retry count has been increased."
         });
 
-        const handler = await createTaskHandler();
-        await callHandleAutoVersioning(handler);
-
-        expect(mockAnalyzeSdkDiff).toHaveBeenCalledOnce();
-        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledOnce();
-    });
-
-    it("escalates to MINOR when Tier 3 finds behavioral change", async () => {
-        mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: "chore: internal refactoring"
-        });
-        mockAnalyzeBehavioralChanges.mockResolvedValue({
-            version_bump: BehavioralBump.MINOR,
-            behavioral_changes: ["Changed default retry count from 3 to 5"],
-            message: "feat: increase default retry count from 3 to 5"
-        });
-
-        const handler = await createTaskHandler();
+        const handler = await createTaskHandler({ isWhitelabel: false });
         const result = await callHandleAutoVersioning(handler);
 
         expect(result).not.toBeNull();
-        // Version should be incremented as MINOR (1.0.0 -> 1.1.0)
-        expect(result?.version).toBe("1.1.0");
-        expect(result?.commitMessage).toContain("feat: increase default retry count from 3 to 5");
-    });
-
-    it("falls back to PATCH when Tier 3 AI call throws", async () => {
-        mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: "chore: internal refactoring"
-        });
-        mockAnalyzeBehavioralChanges.mockRejectedValue(new Error("AI service unavailable"));
-
-        const handler = await createTaskHandler();
-        const result = await callHandleAutoVersioning(handler);
-
-        expect(result).not.toBeNull();
-        // Version should be incremented as PATCH (1.0.0 -> 1.0.1)
-        expect(result?.version).toBe("1.0.1");
-        // Should log the warning
-        expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("Tier 3 behavioral analysis failed"));
-    });
-
-    it("uses Tier 3 commit message when it escalates from PATCH to MINOR", async () => {
-        const tier3Message = "feat: change HTTP 404 handling from null return to thrown error";
-
-        mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: "chore: code style cleanup"
-        });
-        mockAnalyzeBehavioralChanges.mockResolvedValue({
-            version_bump: BehavioralBump.MINOR,
-            behavioral_changes: ["HTTP 404 now throws instead of returning null"],
-            message: tier3Message
-        });
-
-        const handler = await createTaskHandler();
-        const result = await callHandleAutoVersioning(handler);
-
-        expect(result).not.toBeNull();
-        // Should use Tier 3 message (not Tier 2), with Fern branding
-        expect(result?.commitMessage).toContain(tier3Message);
         expect(result?.commitMessage).toContain("Generated with Fern");
     });
 
-    it("passes generator language to Tier 3", async () => {
+    it("omits Fern branding for whitelabel", async () => {
         mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: "chore: refactoring"
-        });
-        mockAnalyzeBehavioralChanges.mockResolvedValue({
-            version_bump: BehavioralBump.PATCH,
-            behavioral_changes: [],
-            message: ""
+            version_bump: VersionBump.MINOR,
+            message: "feat: increase default retry count from 3 to 5",
+            changelog_entry: "The default retry count has been increased."
         });
 
-        const handler = await createTaskHandler({ generatorLanguage: "python" });
-        await callHandleAutoVersioning(handler);
-
-        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledWith(expect.any(String), "python");
-    });
-
-    it("uses 'unknown' when generatorLanguage is undefined", async () => {
-        mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: "chore: refactoring"
-        });
-        mockAnalyzeBehavioralChanges.mockResolvedValue({
-            version_bump: BehavioralBump.PATCH,
-            behavioral_changes: [],
-            message: ""
-        });
-
-        const handler = await createTaskHandler({ generatorLanguage: undefined });
-        await callHandleAutoVersioning(handler);
-
-        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledWith(expect.any(String), "unknown");
-    });
-
-    it("falls back to Tier 2 message when Tier 3 returns MINOR with empty message", async () => {
-        const tier2Message = "chore: internal code cleanup";
-
-        mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: tier2Message
-        });
-        mockAnalyzeBehavioralChanges.mockResolvedValue({
-            version_bump: BehavioralBump.MINOR,
-            behavioral_changes: ["Changed retry behavior"],
-            message: "" // empty message from AI
-        });
-
-        const handler = await createTaskHandler();
+        const handler = await createTaskHandler({ isWhitelabel: true });
         const result = await callHandleAutoVersioning(handler);
 
         expect(result).not.toBeNull();
-        // Should escalate to MINOR
-        expect(result?.version).toBe("1.1.0");
-        // Should fall back to Tier 2 message since Tier 3 message is empty
-        expect(result?.commitMessage).toContain(tier2Message);
+        expect(result?.commitMessage).not.toContain("Generated with Fern");
     });
 
-    it("synthesizes changelog entry from behavioral changes when Tier 3 escalates", async () => {
+    it("only makes a single AI call for behavioral changes", async () => {
         mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: "chore: internal refactoring",
-            changelog_entry: "" // PATCH produces empty changelog
-        });
-        mockAnalyzeBehavioralChanges.mockResolvedValue({
-            version_bump: BehavioralBump.MINOR,
-            behavioral_changes: ["Changed default retry count from 3 to 5", "Changed timeout from 30s to 60s"],
-            message: "feat: update default retry and timeout values"
+            version_bump: VersionBump.MINOR,
+            message: "feat: change HTTP 404 handling",
+            changelog_entry: "HTTP 404 now throws instead of returning null."
         });
 
         const handler = await createTaskHandler();
-        const result = await callHandleAutoVersioning(handler);
+        await callHandleAutoVersioning(handler);
 
-        expect(result).not.toBeNull();
-        expect(result?.version).toBe("1.1.0");
-        // Changelog entry should be synthesized from behavioral changes
-        expect(result?.changelogEntry).toBe(
-            "Changed default retry count from 3 to 5. Changed timeout from 30s to 60s."
-        );
-    });
-
-    it("does not call Tier 3 when Tier 2 returns MAJOR", async () => {
-        mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.MAJOR,
-            message: "break: remove deprecated endpoint"
-        });
-
-        const handler = await createTaskHandler();
-        const result = await callHandleAutoVersioning(handler);
-
+        // Verify only ONE AI call was made (unified prompt, no separate Tier 3)
         expect(mockAnalyzeSdkDiff).toHaveBeenCalledOnce();
-        expect(mockAnalyzeBehavioralChanges).not.toHaveBeenCalled();
-        expect(result).not.toBeNull();
     });
 });
 
-describe("LocalTaskHandler - Tier 3 Behavioral Analysis with Cache", () => {
+describe("LocalTaskHandler - Unified Analysis with Cache", () => {
     beforeEach(() => {
         vi.clearAllMocks();
         mockWithOptions.mockReturnValue({
-            AnalyzeSdkDiff: mockAnalyzeSdkDiff,
-            AnalyzeBehavioralChanges: mockAnalyzeBehavioralChanges
+            AnalyzeSdkDiff: mockAnalyzeSdkDiff
         });
     });
 
@@ -520,36 +450,11 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis with Cache", () => {
         };
     }
 
-    it("routes Tier 3 through cache when autoVersioningCache is provided", async () => {
+    it("deduplicates concurrent AI calls via cache", async () => {
         mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: "chore: internal refactoring"
-        });
-        mockAnalyzeBehavioralChanges.mockResolvedValue({
-            version_bump: BehavioralBump.MINOR,
-            behavioral_changes: ["Changed retry count"],
-            message: "feat: increase retry count"
-        });
-
-        const { handler } = await createCachedTaskHandler();
-        const result = await callHandleAutoVersioning(handler);
-
-        expect(result).not.toBeNull();
-        expect(result?.version).toBe("1.1.0");
-        expect(result?.commitMessage).toContain("feat: increase retry count");
-        // AI should have been called exactly once
-        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledOnce();
-    });
-
-    it("deduplicates concurrent Tier 3 calls via cache", async () => {
-        mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: "chore: internal refactoring"
-        });
-        mockAnalyzeBehavioralChanges.mockResolvedValue({
-            version_bump: BehavioralBump.MINOR,
-            behavioral_changes: ["Changed default timeout"],
-            message: "feat: increase default timeout"
+            version_bump: VersionBump.MINOR,
+            message: "feat: increase default timeout",
+            changelog_entry: "Default timeout has been increased."
         });
 
         // Create two handlers sharing the same cache (simulating concurrent generators)
@@ -599,68 +504,19 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis with Cache", () => {
             callHandleAutoVersioning(handler2)
         ]);
 
-        // Both should have the escalated MINOR result
+        // Both should have the MINOR result
         expect(result1?.version).toBe("1.1.0");
         expect(result2?.version).toBe("1.1.0");
 
-        // Tier 3 AI should only be called ONCE (second call reuses the cached promise)
-        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledOnce();
+        // AI should only be called ONCE (second call reuses the cached promise)
+        expect(mockAnalyzeSdkDiff).toHaveBeenCalledOnce();
     });
 
-    it("evicts failed Tier 3 from cache so next caller can retry", async () => {
+    it("logs cache hit on second call", async () => {
         mockAnalyzeSdkDiff.mockResolvedValue({
             version_bump: VersionBump.PATCH,
-            message: "chore: internal refactoring"
-        });
-        // First call fails
-        mockAnalyzeBehavioralChanges.mockRejectedValueOnce(new Error("AI timeout"));
-        // Second call succeeds
-        mockAnalyzeBehavioralChanges.mockResolvedValueOnce({
-            version_bump: BehavioralBump.MINOR,
-            behavioral_changes: ["Changed retry count"],
-            message: "feat: increase retry count"
-        });
-
-        // First handler — Tier 3 fails, falls back to PATCH
-        const { handler: handler1, cache } = await createCachedTaskHandler();
-        const result1 = await callHandleAutoVersioning(handler1);
-        expect(result1?.version).toBe("1.0.1"); // PATCH fallback
-
-        // Second handler with same cache — should retry and succeed
-        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
-        const handler2 = new LocalTaskHandler({
-            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
-            context: mockContext as any,
-            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
-            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
-            absolutePathToTmpSnippetJSON: undefined,
-            absolutePathToLocalSnippetTemplateJSON: undefined,
-            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
-            absolutePathToLocalOutput: "/tmp/local-output" as any,
-            absolutePathToLocalSnippetJSON: undefined,
-            absolutePathToTmpSnippetTemplatesJSON: undefined,
-            version: "505.503.4455",
-            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
-            isWhitelabel: false,
-            generatorLanguage: "typescript",
-            autoVersioningCache: cache
-        });
-        const result2 = await callHandleAutoVersioning(handler2);
-        expect(result2?.version).toBe("1.1.0"); // MINOR from retry
-
-        // AI was called twice total (first failed, second succeeded)
-        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledTimes(2);
-    });
-
-    it("logs cache hit for Tier 3", async () => {
-        mockAnalyzeSdkDiff.mockResolvedValue({
-            version_bump: VersionBump.PATCH,
-            message: "chore: internal refactoring"
-        });
-        mockAnalyzeBehavioralChanges.mockResolvedValue({
-            version_bump: BehavioralBump.PATCH,
-            behavioral_changes: [],
-            message: ""
+            message: "chore: internal refactoring",
+            changelog_entry: ""
         });
 
         const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
@@ -708,7 +564,7 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis with Cache", () => {
         // Second call should hit cache
         await callHandleAutoVersioning(handler2);
 
-        // Check that Tier 3 cache hit was logged
-        expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("Tier 3 cache hit"));
+        // Check that cache hit was logged
+        expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("Cache hit"));
     });
 });

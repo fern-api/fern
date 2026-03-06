@@ -20,7 +20,7 @@ $ pnpm add @boundaryml/baml
 
 import type { Image, Audio, Pdf, Video } from "@boundaryml/baml"
 import type { Checked, Check } from "./types"
-import type {  AnalyzeBehavioralResponse,  AnalyzeCommitDiffRequest,  AnalyzeCommitDiffResponse,  BehavioralBump,  VersionBump } from "./types"
+import type {  AnalyzeCommitDiffRequest,  AnalyzeCommitDiffResponse,  VersionBump } from "./types"
 import type * as types from "./types"
 
 /******************************************************************************
@@ -36,11 +36,6 @@ export interface StreamState<T> {
 }
 
 export namespace partial_types {
-    export interface AnalyzeBehavioralResponse {
-      version_bump?: types.BehavioralBump | null
-      behavioral_changes: string[]
-      message?: string | null
-    }
     export interface AnalyzeCommitDiffRequest {
       diff?: string | null
     }

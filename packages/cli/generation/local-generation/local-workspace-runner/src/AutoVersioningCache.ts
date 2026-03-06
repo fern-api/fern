@@ -1,4 +1,4 @@
-import { BehavioralBump, VersionBump } from "@fern-api/cli-ai";
+import { VersionBump } from "@fern-api/cli-ai";
 import crypto from "crypto";
 
 /**
@@ -18,20 +18,6 @@ export interface CachedAnalysis {
 }
 
 /**
- * Cached Tier 3 behavioral analysis result.
- * Stored separately from CachedAnalysis because Tier 3 has different
- * fields (behavioral_changes list) and is keyed without previousVersion.
- */
-export interface CachedBehavioralAnalysis {
-    /** The behavioral bump type as returned by the AI. */
-    versionBump: BehavioralBump;
-    /** List of behavioral changes found (empty for PATCH). */
-    behavioralChanges: string[];
-    /** Commit message if changes found, empty string if no changes. */
-    message: string;
-}
-
-/**
  * Per-invocation in-memory cache that deduplicates AI calls during AUTO versioning.
  *
  * When multiple generators run in a single `fern generate` invocation with
@@ -44,15 +30,8 @@ export interface CachedBehavioralAnalysis {
  */
 export class AutoVersioningCache {
     private readonly cache = new Map<string, Promise<CachedAnalysis | null>>();
-    private readonly behavioralCache = new Map<string, Promise<CachedBehavioralAnalysis>>();
-
     public key(cleanedDiff: string, language: string, previousVersion: string): string {
         return crypto.createHash("sha256").update(`${language}\0${previousVersion}\0${cleanedDiff}`).digest("hex");
-    }
-
-    /** Cache key for Tier 3 behavioral analysis (no previousVersion — Tier 3 doesn't use it). */
-    public behavioralKey(cleanedDiff: string, language: string): string {
-        return crypto.createHash("sha256").update(`behavioral\0${language}\0${cleanedDiff}`).digest("hex");
     }
 
     /**
@@ -79,27 +58,6 @@ export class AutoVersioningCache {
             throw error;
         });
         this.cache.set(key, promise);
-        return { promise, isHit: false };
-    }
-
-    /**
-     * Same as getOrCompute but for Tier 3 behavioral analysis results.
-     * Ensures concurrent generators sharing the same diff get the same Tier 3 decision.
-     */
-    public getOrComputeBehavioral(
-        key: string,
-        compute: () => Promise<CachedBehavioralAnalysis>
-    ): { promise: Promise<CachedBehavioralAnalysis>; isHit: boolean } {
-        const existing = this.behavioralCache.get(key);
-        if (existing !== undefined) {
-            return { promise: existing, isHit: true };
-        }
-
-        const promise = compute().catch((error) => {
-            this.behavioralCache.delete(key);
-            throw error;
-        });
-        this.behavioralCache.set(key, promise);
         return { promise, isHit: false };
     }
 }

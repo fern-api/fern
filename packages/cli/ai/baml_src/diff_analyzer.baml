@@ -8,17 +8,6 @@ enum VersionBump {
     NO_CHANGE
 }
 
-enum BehavioralBump {
-    MINOR
-    PATCH
-}
-
-class AnalyzeBehavioralResponse {
-    version_bump BehavioralBump
-    behavioral_changes string[] @description("List of behavioral changes found, empty if none")
-    message string @description("Commit message if changes found, empty string if no changes")
-}
-
 class AnalyzeCommitDiffRequest {
     diff string @description("The git diff to analyze for generating a commit message")
 }
@@ -51,8 +40,15 @@ function AnalyzeSdkDiff(
 
     Version Bump Guidelines:
     - MAJOR: Breaking changes (removed/renamed functions, changed signatures, removed parameters)
-    - MINOR: New features that are backward compatible (new functions, new optional parameters)
-    - PATCH: Bug fixes, documentation, internal refactoring, or other changes that don't affect the public API
+    - MINOR: New features that are backward compatible (new functions, new optional parameters).
+      Also MINOR: behavioral changes invisible to the public API surface that still affect consumers:
+      - Changed HTTP status code handling (e.g. 404 now throws instead of returning null)
+      - Changed default parameter values (timeout, retry count, page size, base URL)
+      - Changed serialization behavior (date formats, null handling, field ordering)
+      - Changed error message text that consumers may depend on
+      - Changed HTTP header names or values sent to the server
+      - Changed retry or backoff behavior (different retry counts, delay strategies)
+    - PATCH: Bug fixes, documentation, internal refactoring with no observable behavioral change
     - NO_CHANGE: The diff is empty
 
     --- Examples ---
@@ -89,12 +85,12 @@ function AnalyzeSdkDiff(
     version_bump: MINOR
     reason: New capability added, nothing removed or changed.
 
-    --- PATCH: internal retry constant ---
+    --- MINOR: changed default retry count ---
     diff --git a/src/core/http_client.py b/src/core/http_client.py
     -MAX_RETRIES = 3
     +MAX_RETRIES = 5
-    version_bump: PATCH
-    reason: Implementation detail — public API surface unchanged.
+    version_bump: MINOR
+    reason: Changed default retry count — existing consumers will experience different retry behavior.
 
     --- PATCH: Go import reorganization ---
     diff --git a/client.go b/client.go
@@ -147,7 +143,7 @@ function AnalyzeSdkDiff(
     - Changes to internal/private modules (core/, _internal/, utils/) are PATCH
     - Reordering imports, formatting, or comment changes are PATCH
     - Updating SDK version headers (X-Fern-SDK-Version, User-Agent) is PATCH
-    - Changing retry logic, timeout defaults, or HTTP client internals is PATCH
+    - Refactoring HTTP client internals without changing observable defaults or behavior is PATCH
     - Updating dependency versions in package.json is PATCH
     - Adding or modifying JSDoc/TSDoc comments is PATCH
     - Refactoring internal implementation without changing public signatures is PATCH
@@ -190,7 +186,7 @@ function AnalyzeSdkDiff(
     - Changes to type hints only (no runtime effect) are PATCH
     - Reformatting, docstring updates, or comment changes are PATCH
     - Updating SDK version headers (X-Fern-SDK-Version, User-Agent) are PATCH
-    - Changing retry logic, timeout defaults, or httpx/requests client internals is PATCH
+    - Refactoring httpx/requests client internals without changing observable defaults or behavior is PATCH
     - Updating dependency versions in pyproject.toml/setup.py is PATCH
     - Updating serialization/deserialization logic that preserves the same public types is PATCH
     - Refactoring internal implementation without changing public signatures is PATCH
@@ -236,7 +232,7 @@ function AnalyzeSdkDiff(
     - Changes to package-private or private methods are PATCH
     - Changes to annotations (other than public API annotations), Javadoc, or formatting are PATCH
     - Updating SDK version headers (X-Fern-SDK-Version, User-Agent) is PATCH
-    - Changing retry logic, timeout defaults, or OkHttp/HttpClient internals is PATCH
+    - Refactoring OkHttp/HttpClient internals without changing observable defaults or behavior is PATCH
     - Updating dependency versions in build.gradle/pom.xml is PATCH
     - Refactoring internal implementation without changing public signatures is PATCH
     - Updating serialization/deserialization logic (Jackson/Gson config) that preserves public types is PATCH
@@ -278,8 +274,8 @@ function AnalyzeSdkDiff(
     - Changes to unexported (lowercase) functions or types are PATCH
     - Changes to go.mod dependencies, import reordering, or formatting are PATCH
     - Updating SDK version headers (X-Fern-SDK-Version, User-Agent) is PATCH
-    - Changing retry logic, timeout defaults, or http.Client internals is PATCH
-    - Updating serialization/deserialization logic (JSON tags, encoding) that preserves public types is PATCH
+    - Refactoring http.Client internals without changing observable defaults or behavior is PATCH
+    - Updating serialization/deserialization logic (JSON tags, encoding) that preserves identical output is PATCH
     - Refactoring internal implementation without changing exported signatures is PATCH
     - Changes to *_test.go files, Makefile, or CI configuration are PATCH
     - Updating comments, godoc, or code formatting (gofmt) is PATCH
@@ -315,7 +311,7 @@ function AnalyzeSdkDiff(
     - Changes to private methods are PATCH
     - Gemspec metadata, comment, or formatting changes are PATCH
     - Updating SDK version headers is PATCH
-    - Changing retry logic, timeout defaults, or Faraday/Net::HTTP internals is PATCH
+    - Refactoring Faraday/Net::HTTP internals without changing observable defaults or behavior is PATCH
     - Updating dependency versions in Gemfile/gemspec is PATCH
     - Refactoring internal implementation without changing public signatures is PATCH
     - Changes to test files, Rakefile, or CI configuration are PATCH
@@ -355,7 +351,7 @@ function AnalyzeSdkDiff(
     - Changes to internal or private members are PATCH
     - XML doc comments, formatting, or namespace reorganization are PATCH
     - Updating SDK version headers is PATCH
-    - Changing retry logic, timeout defaults, or HttpClient internals is PATCH
+    - Refactoring HttpClient internals without changing observable defaults or behavior is PATCH
     - Updating dependency versions in .csproj is PATCH
     - Refactoring internal implementation without changing public signatures is PATCH
     - Updating serialization/deserialization (System.Text.Json/Newtonsoft) config that preserves public types is PATCH
@@ -393,7 +389,7 @@ function AnalyzeSdkDiff(
     - Changes to private/protected methods are PATCH
     - PHPDoc, formatting, or composer.json metadata changes are PATCH
     - Updating SDK version headers is PATCH
-    - Changing retry logic, timeout defaults, or Guzzle/cURL internals is PATCH
+    - Refactoring Guzzle/cURL internals without changing observable defaults or behavior is PATCH
     - Updating dependency versions in composer.json is PATCH
     - Refactoring internal implementation without changing public signatures is PATCH
     - Changes to test files, phpunit.xml, or CI configuration are PATCH
@@ -432,7 +428,7 @@ function AnalyzeSdkDiff(
     - Changes to internal or private members are PATCH
     - Formatting, comments, or documentation changes are PATCH
     - Updating SDK version headers is PATCH
-    - Changing retry logic, timeout defaults, or URLSession internals is PATCH
+    - Refactoring URLSession internals without changing observable defaults or behavior is PATCH
     - Updating dependency versions in Package.swift is PATCH
     - Refactoring internal implementation without changing public signatures is PATCH
     - Changes to test files, xcconfig, or CI configuration are PATCH
@@ -474,7 +470,7 @@ function AnalyzeSdkDiff(
     - Changes to pub(crate) or private items are PATCH
     - Cargo.toml metadata, formatting, or comment changes are PATCH
     - Updating SDK version headers is PATCH
-    - Changing retry logic, timeout defaults, or reqwest/hyper internals is PATCH
+    - Refactoring reqwest/hyper internals without changing observable defaults or behavior is PATCH
     - Updating dependency versions in Cargo.toml is PATCH
     - Refactoring internal implementation without changing public signatures is PATCH
     - Updating serialization/deserialization (serde) config that preserves public types is PATCH
@@ -515,7 +511,7 @@ function AnalyzeSdkDiff(
     - Changes to internal or private members are PATCH
     - KDoc, formatting, or build.gradle changes are PATCH
     - Updating SDK version headers is PATCH
-    - Changing retry logic, timeout defaults, or OkHttp internals is PATCH
+    - Refactoring OkHttp internals without changing observable defaults or behavior is PATCH
     - Updating dependency versions in build.gradle.kts is PATCH
     - Refactoring internal implementation without changing public signatures is PATCH
     - Updating serialization/deserialization (kotlinx.serialization/Moshi) config that preserves public types is PATCH
@@ -546,7 +542,7 @@ function AnalyzeSdkDiff(
     - Formatting, documentation, or comment changes are PATCH
     - Dependency version updates are PATCH
     - SDK version header updates are PATCH
-    - Retry logic or timeout changes are PATCH
+    - Refactoring retry/timeout internals without changing observable defaults or behavior is PATCH
     - Refactoring internals without changing public signatures is PATCH
     {% endif %}
 
@@ -604,46 +600,4 @@ function AnalyzeSdkDiff(
     - changelog_entry: A user-facing release note (empty string for PATCH)
     - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
   "#
-}
-
-function AnalyzeBehavioralChanges(
-    diff: string @description("The git diff of SDK implementation files"),
-    language: string @description("The SDK programming language")
-) -> AnalyzeBehavioralResponse {
-    client DefaultClient
-
-    prompt #"
-        You are analyzing implementation changes in a generated SDK.
-        The public API surface is unchanged — no method signatures, type
-        definitions, or exports were added, removed, or modified.
-
-        Language: {{language}}
-
-        Your task: identify behavioral changes that may affect SDK consumers.
-
-        Classify as MINOR if you find any of:
-        - Changed HTTP status code handling (e.g. 404 now throws instead of returning null)
-        - Changed default parameter values (timeout, retry count, page size, base URL)
-        - Changed serialization behavior (date formats, null handling, field ordering)
-        - Changed error message text that is part of the documented contract
-        - Changed HTTP header names or values sent to the server
-        - Changed retry or backoff behavior
-
-        Classify as PATCH if only:
-        - Code style or formatting changes
-        - Variable/method renames with identical behavior
-        - Import reorganization
-        - Performance improvements with identical outputs
-        - Comment or documentation changes inside code
-
-        Git Diff:
-        ---
-        {{diff}}
-        ---
-
-        Respond with:
-        - version_bump: MINOR if behavioral changes found, PATCH if not
-        - behavioral_changes: list of specific behavioral changes found (empty list for PATCH)
-        - message: conventional commit message if MINOR, empty string if PATCH
-    "#
 }

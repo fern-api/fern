@@ -1,91 +1,93 @@
 import { describe, expect, it } from "vitest";
-import type { AnalyzeBehavioralResponse } from "../../src/baml_client/types.js";
-import { BehavioralBump } from "../../src/baml_client/types.js";
+import type { AnalyzeCommitDiffResponse } from "../../src/baml_client/types.js";
+import { VersionBump } from "../../src/baml_client/types.js";
 
 /**
- * Tests for the AnalyzeBehavioralChanges BAML function.
+ * Tests for the unified AnalyzeSdkDiff BAML function's behavioral analysis.
  *
- * These tests verify the response structure and classification logic
- * by constructing mock AI responses that match the expected schema.
+ * The merged prompt handles both surface-level and behavioral change detection
+ * in a single AI call. These tests verify the response structure and
+ * classification logic by constructing mock AI responses that match the schema.
  * Actual AI calls are not made — these validate the contract.
  */
-describe("AnalyzeBehavioralChanges", () => {
+describe("AnalyzeSdkDiff - Behavioral Analysis", () => {
     it("returns MINOR when diff changes retry count default", () => {
-        const response: AnalyzeBehavioralResponse = {
-            version_bump: BehavioralBump.MINOR,
-            behavioral_changes: ["Changed default retry count from 3 to 5 in HTTP client configuration"],
-            message: "feat: increase default retry count from 3 to 5"
+        const response: AnalyzeCommitDiffResponse = {
+            version_bump: VersionBump.MINOR,
+            message: "feat: increase default retry count from 3 to 5",
+            changelog_entry:
+                "The default retry count has been increased from 3 to 5, which may affect request behavior for consumers relying on the previous default."
         };
 
-        expect(response.version_bump).toBe(BehavioralBump.MINOR);
-        expect(response.behavioral_changes).toHaveLength(1);
-        expect(response.behavioral_changes[0]).toContain("retry");
+        expect(response.version_bump).toBe(VersionBump.MINOR);
+        expect(response.changelog_entry).not.toBe("");
         expect(response.message).not.toBe("");
     });
 
     it("returns MINOR when diff changes 404 from null-return to throw", () => {
-        const response: AnalyzeBehavioralResponse = {
-            version_bump: BehavioralBump.MINOR,
-            behavioral_changes: ["HTTP 404 responses now throw a NotFoundError instead of returning null"],
-            message: "feat: throw NotFoundError on 404 instead of returning null"
+        const response: AnalyzeCommitDiffResponse = {
+            version_bump: VersionBump.MINOR,
+            message: "feat: throw NotFoundError on 404 instead of returning null",
+            changelog_entry:
+                "HTTP 404 responses now throw a NotFoundError instead of returning null. Consumers handling null returns should update their error handling."
         };
 
-        expect(response.version_bump).toBe(BehavioralBump.MINOR);
-        expect(response.behavioral_changes.length).toBeGreaterThan(0);
-        expect(response.behavioral_changes[0]).toContain("404");
+        expect(response.version_bump).toBe(VersionBump.MINOR);
+        expect(response.changelog_entry).not.toBe("");
         expect(response.message).not.toBe("");
     });
 
     it("returns MINOR when diff changes date serialization format", () => {
-        const response: AnalyzeBehavioralResponse = {
-            version_bump: BehavioralBump.MINOR,
-            behavioral_changes: ["Date serialization changed from ISO 8601 to Unix timestamp format"],
-            message: "feat: change date serialization from ISO 8601 to Unix timestamp"
+        const response: AnalyzeCommitDiffResponse = {
+            version_bump: VersionBump.MINOR,
+            message: "feat: change date serialization from ISO 8601 to Unix timestamp",
+            changelog_entry:
+                "Date serialization has changed from ISO 8601 to Unix timestamp format. Consumers parsing date strings should update their deserialization logic."
         };
 
-        expect(response.version_bump).toBe(BehavioralBump.MINOR);
-        expect(response.behavioral_changes).toHaveLength(1);
+        expect(response.version_bump).toBe(VersionBump.MINOR);
+        expect(response.changelog_entry).not.toBe("");
         expect(response.message).not.toBe("");
     });
 
     it("returns PATCH when diff is import-only reorganization", () => {
-        const response: AnalyzeBehavioralResponse = {
-            version_bump: BehavioralBump.PATCH,
-            behavioral_changes: [],
-            message: ""
+        const response: AnalyzeCommitDiffResponse = {
+            version_bump: VersionBump.PATCH,
+            message: "refactor: reorganize imports",
+            changelog_entry: ""
         };
 
-        expect(response.version_bump).toBe(BehavioralBump.PATCH);
-        expect(response.behavioral_changes).toHaveLength(0);
-        expect(response.message).toBe("");
+        expect(response.version_bump).toBe(VersionBump.PATCH);
+        expect(response.changelog_entry).toBe("");
     });
 
     it("returns PATCH when diff is variable rename with identical behavior", () => {
-        const response: AnalyzeBehavioralResponse = {
-            version_bump: BehavioralBump.PATCH,
-            behavioral_changes: [],
-            message: ""
+        const response: AnalyzeCommitDiffResponse = {
+            version_bump: VersionBump.PATCH,
+            message: "refactor: rename internal variables for clarity",
+            changelog_entry: ""
         };
 
-        expect(response.version_bump).toBe(BehavioralBump.PATCH);
-        expect(response.behavioral_changes).toHaveLength(0);
-        expect(response.message).toBe("");
+        expect(response.version_bump).toBe(VersionBump.PATCH);
+        expect(response.changelog_entry).toBe("");
     });
 
-    it("validates BehavioralBump enum values", () => {
-        expect(BehavioralBump.MINOR).toBe("MINOR");
-        expect(BehavioralBump.PATCH).toBe("PATCH");
+    it("validates VersionBump enum values used for behavioral analysis", () => {
+        expect(VersionBump.MINOR).toBe("MINOR");
+        expect(VersionBump.PATCH).toBe("PATCH");
+        expect(VersionBump.MAJOR).toBe("MAJOR");
+        expect(VersionBump.NO_CHANGE).toBe("NO_CHANGE");
     });
 
-    it("validates AnalyzeBehavioralResponse structure has all required fields", () => {
-        const response: AnalyzeBehavioralResponse = {
-            version_bump: BehavioralBump.PATCH,
-            behavioral_changes: [],
-            message: ""
+    it("validates AnalyzeCommitDiffResponse structure has all required fields", () => {
+        const response: AnalyzeCommitDiffResponse = {
+            version_bump: VersionBump.PATCH,
+            message: "refactor: internal cleanup",
+            changelog_entry: ""
         };
 
         expect(response).toHaveProperty("version_bump");
-        expect(response).toHaveProperty("behavioral_changes");
         expect(response).toHaveProperty("message");
+        expect(response).toHaveProperty("changelog_entry");
     });
 });

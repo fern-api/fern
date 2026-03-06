@@ -47,23 +47,11 @@ export function all_succeeded<CheckName extends string>(checks: Record<CheckName
 export function get_checks<CheckName extends string>(checks: Record<CheckName, Check>): Check[] {
     return Object.values(checks)
 }
-export enum BehavioralBump {
-  MINOR = "MINOR",
-  PATCH = "PATCH",
-}
-
 export enum VersionBump {
   MAJOR = "MAJOR",
   MINOR = "MINOR",
   PATCH = "PATCH",
   NO_CHANGE = "NO_CHANGE",
-}
-
-export interface AnalyzeBehavioralResponse {
-  version_bump: BehavioralBump
-  behavioral_changes: string[]
-  message: string
-  
 }
 
 export interface AnalyzeCommitDiffRequest {
