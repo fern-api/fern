@@ -93,6 +93,16 @@ function AnalyzeSdkDiff(
 
     --- End Examples ---
 
+    Language-specific breaking change rules:
+    - typescript/java/csharp: making a response field optional is MAJOR
+      (type changes from T to T|undefined or Optional<T>, breaking existing access)
+    - python/go/ruby: making a response field optional is usually MINOR
+      (dynamic typing or nil-safe access patterns)
+    - typescript/java: new enum values are MAJOR if the SDK generates exhaustive
+      switch statements; check for exhaustive patterns in the diff
+    - python/go/ruby: new enum values are MINOR (unknown values handled gracefully)
+    - All languages: removing a required response field is always MAJOR
+
     Apply these patterns to the diff below. When in doubt between MINOR and PATCH,
     prefer MINOR. When in doubt between MAJOR and MINOR, examine whether existing
     callers would break without any code changes on their side.

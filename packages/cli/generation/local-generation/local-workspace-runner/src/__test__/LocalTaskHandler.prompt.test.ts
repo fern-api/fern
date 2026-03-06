@@ -50,4 +50,11 @@ describe("LocalTaskHandler prompt - previous_version parameter", () => {
     it("LocalTaskHandler Init interface includes generatorLanguage field", () => {
         expect(localTaskHandlerSource).toContain("generatorLanguage: string | undefined;");
     });
+
+    it("prompt includes language-specific breaking change rules", () => {
+        expect(diffAnalyzerBaml).toContain("Language-specific breaking change rules:");
+        expect(diffAnalyzerBaml).toContain("typescript/java/csharp: making a response field optional is MAJOR");
+        expect(diffAnalyzerBaml).toContain("python/go/ruby: making a response field optional is usually MINOR");
+        expect(diffAnalyzerBaml).toContain("All languages: removing a required response field is always MAJOR");
+    });
 });
