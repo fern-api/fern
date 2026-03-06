@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.18.2
+  changelogEntry:
+    - summary: |
+        Fix Rust module naming collision when a subpackage has children that share the same
+        directory name as the parent's client file. Previously, both `X.rs` and `X/mod.rs` could
+        be generated in the same directory, causing `rustfmt` errors like "file for module found
+        at both". Now the client code is inlined into the unified `mod.rs` when any children exist,
+        and child re-exports are only emitted for subpackages with services or endpoints.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 62
+
 - version: 0.18.1
   changelogEntry:
     - summary: |

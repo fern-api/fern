@@ -44,12 +44,16 @@ export class SubClientGenerator {
     // =============================================================================
 
     public generate(): RustFile | null {
-        const hasSubClients = this.hasSubClients();
         const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
 
-        // If this subpackage has subclients and is in a nested directory,
-        // we'll generate a unified mod.rs instead of a separate client file
-        if (hasSubClients && fernFilepathDir) {
+        // If this subpackage has any children at all and is in a nested directory,
+        // we'll generate a unified mod.rs instead of a separate client file.
+        // We check ALL children (not just service-having ones) because any child
+        // creates a subdirectory via generateNestedModFiles. If the client filename
+        // matches a child directory name, Rust's module resolution finds both
+        // file.rs and file/mod.rs, causing an ambiguity error.
+        const hasAnyChildren = this.subpackage.subpackages.length > 0;
+        if (hasAnyChildren && fernFilepathDir) {
             return null; // Skip separate client file generation
         }
 
@@ -76,6 +80,27 @@ export class SubClientGenerator {
             directory: RelativeFilePath.of(directory),
             fileContents: module.toString()
         });
+    }
+
+    /**
+     * Returns the raw client code (struct + impl with all endpoint methods) and imports
+     * for embedding in a unified mod.rs file. Used by RootClientGenerator when this
+     * subpackage's client code needs to be inlined alongside submodule declarations.
+     */
+    public generateRawClientContent(): { rawDeclarations: string[]; imports: UseStatement[] } {
+        const endpoints = this.service?.endpoints || [];
+
+        const rustClient = rust.client({
+            name: this.subClientName,
+            fields: this.generateFields(),
+            constructors: [this.generateConstructor()],
+            methods: this.convertEndpointsToHttpMethods(endpoints)
+        });
+
+        return {
+            rawDeclarations: [rustClient.toString()],
+            imports: this.generateImports()
+        };
     }
 
     public generateModFile(): RustFile | null {
