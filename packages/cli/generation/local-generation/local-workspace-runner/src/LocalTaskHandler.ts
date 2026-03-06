@@ -80,7 +80,11 @@ export class LocalTaskHandler {
         this.generatorLanguage = generatorLanguage;
     }
 
-    public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
+    public async copyGeneratedFiles(): Promise<{
+        shouldCommit: boolean;
+        autoVersioningCommitMessage?: string;
+        autoVersioningChangelogEntry?: string;
+    }> {
         const isFernIgnorePresent = await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
 
@@ -111,7 +115,11 @@ export class LocalTaskHandler {
             const autoVersionResult = await this.handleAutoVersioning();
             if (autoVersionResult == null) {
                 this.context.logger.info("No semantic changes detected. Skipping GitHub operations.");
-                return { shouldCommit: false, autoVersioningCommitMessage: undefined };
+                return {
+                    shouldCommit: false,
+                    autoVersioningCommitMessage: undefined,
+                    autoVersioningChangelogEntry: undefined
+                };
             }
             // Replace placeholder version with computed version
             await autoVersioningService.replaceMagicVersion(
@@ -119,7 +127,11 @@ export class LocalTaskHandler {
                 this.version,
                 autoVersionResult.version
             );
-            return { shouldCommit: true, autoVersioningCommitMessage: autoVersionResult.commitMessage };
+            return {
+                shouldCommit: true,
+                autoVersioningCommitMessage: autoVersionResult.commitMessage,
+                autoVersioningChangelogEntry: autoVersionResult.changelogEntry
+            };
         }
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };
     }
@@ -239,9 +251,13 @@ export class LocalTaskHandler {
 
             const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
 
+            // changelogEntry is populated for MINOR/MAJOR, undefined for PATCH (empty string from AI)
+            const changelogEntry = analysis.changelogEntry?.trim() || undefined;
+
             return {
                 version: newVersion,
-                commitMessage
+                commitMessage,
+                changelogEntry
             };
         } catch (error) {
             if (error instanceof AutoVersioningException) {
@@ -298,7 +314,8 @@ export class LocalTaskHandler {
             }
             return {
                 versionBump: analysis.version_bump,
-                message: analysis.message
+                message: analysis.message,
+                changelogEntry: analysis.changelog_entry
             };
         };
 
