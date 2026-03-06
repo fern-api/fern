@@ -303,22 +303,17 @@
         {
           "name": "tags",
           "schema": {
-            "generatedName": "SearchRequestTags",
             "value": {
-              "value": {
-                "schema": {
-                  "type": "string"
-                },
-                "generatedName": "SearchRequestTagsItem",
-                "groupName": [],
-                "type": "primitive"
+              "schema": {
+                "type": "string"
               },
-              "generatedName": "SearchRequestTags",
+              "generatedName": "SearchRequestTagsItem",
               "groupName": [],
-              "type": "array"
+              "type": "primitive"
             },
+            "generatedName": "SearchRequestTags",
             "groupName": [],
-            "type": "optional"
+            "type": "array"
           },
           "source": {
             "file": "../openapi.yml",
@@ -384,7 +379,23 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "tags",
+              "value": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "tags",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {

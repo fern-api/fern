@@ -54,7 +54,7 @@ paths:
                 format: date
         - name: tags
           in: query
-          required: false
+          required: true
           schema:
             type: array
             items:
