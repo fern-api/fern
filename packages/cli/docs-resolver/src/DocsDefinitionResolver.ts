@@ -1595,9 +1595,7 @@ export class DocsDefinitionResolver {
             // then fall back to matching the last segment of absoluteFilePath in case
             // workspaceName was overridden or not set.
             const matched = this.ossWorkspaces.find(
-                (ws) =>
-                    ws.workspaceName === apiName ||
-                    ws.absoluteFilePath.split("/").pop() === apiName
+                (ws) => ws.workspaceName === apiName || ws.absoluteFilePath.split("/").pop() === apiName
             );
             workspacesToProcess = matched ? [matched] : [];
         } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
