@@ -15,7 +15,9 @@ import type { CppVariableIr } from "../../../src/types/CppLibraryDocsIr.js";
 import type { CompoundMeta } from "../context.js";
 import {
     renderDescriptionBlocks,
+    renderDescriptionBlocksDeduped,
     renderSeeAlso,
+    renderSegmentsPlainText,
     renderSegmentsTrimmed,
     setCurrentPagePath
 } from "./DescriptionRenderer.js";
@@ -133,7 +135,7 @@ export function renderVariablePage(variable: CppVariableIr, meta: CompoundMeta):
         const docstring = variable.docstring;
 
         // Frontmatter
-        const description = meta.description ?? (docstring ? renderSegmentsTrimmed(docstring.summary) : "");
+        const description = meta.description ?? (docstring ? renderSegmentsPlainText(docstring.summary) : "");
         sections.push(...renderFrontmatter(variable.path, description));
 
         // Summary
@@ -152,7 +154,7 @@ export function renderVariablePage(variable: CppVariableIr, meta: CompoundMeta):
 
         // Description blocks
         if (docstring?.description && docstring.description.length > 0) {
-            const desc = renderDescriptionBlocks(docstring.description);
+            const desc = renderDescriptionBlocksDeduped(docstring.description, docstring.summary);
             if (desc) {
                 sections.push("");
                 sections.push(desc);

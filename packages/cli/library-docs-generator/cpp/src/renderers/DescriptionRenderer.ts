@@ -129,10 +129,7 @@ export function decodeDoxygenRefid(refid: string): string | undefined {
  * 4. Fallback to raw text
  */
 export function resolveCompoundRef(text: string, refid: string): string {
-    return lookupMemberPath(text)
-        ?? lookupMemberPath(getShortName(text))
-        ?? decodeDoxygenRefid(refid)
-        ?? text;
+    return lookupMemberPath(text) ?? lookupMemberPath(getShortName(text)) ?? decodeDoxygenRefid(refid) ?? text;
 }
 
 // ---------------------------------------------------------------------------
@@ -312,38 +309,40 @@ function escapeRemainingMdxSpecials(text: string): string {
     // Handle both double-backtick (``...``) and single-backtick (`...`) code spans.
     // We need to preserve content inside backticks as-is.
     const parts = text.split(/(``[^`]*``|`[^`]*`)/);
-    return parts.map((part, i) => {
-        // Odd-indexed parts are backtick-wrapped (code spans) -- leave as-is
-        if (i % 2 === 1) {
-            return part;
-        }
-        // Even-indexed parts are outside backticks -- escape MDX specials.
-        // Preserve known safe HTML tags (sub, sup, br, em, strong, code, etc.)
-        // by temporarily replacing them, escaping everything else, then restoring.
-        const safeTags: Array<{ placeholder: string; original: string }> = [];
-        let escaped = part;
+    return parts
+        .map((part, i) => {
+            // Odd-indexed parts are backtick-wrapped (code spans) -- leave as-is
+            if (i % 2 === 1) {
+                return part;
+            }
+            // Even-indexed parts are outside backticks -- escape MDX specials.
+            // Preserve known safe HTML tags (sub, sup, br, em, strong, code, etc.)
+            // by temporarily replacing them, escaping everything else, then restoring.
+            const safeTags: Array<{ placeholder: string; original: string }> = [];
+            let escaped = part;
 
-        // Protect safe HTML tags from escaping
-        escaped = escaped.replace(/<(\/?)(?:sub|sup|br|em|strong|code)(\s[^>]*)?\/?>/gi, (match) => {
-            const placeholder = `\x00SAFE${safeTags.length}\x00`;
-            safeTags.push({ placeholder, original: match });
-            return placeholder;
-        });
+            // Protect safe HTML tags from escaping
+            escaped = escaped.replace(/<(\/?)(?:sub|sup|br|em|strong|code)(\s[^>]*)?\/?>/gi, (match) => {
+                const placeholder = `\x00SAFE${safeTags.length}\x00`;
+                safeTags.push({ placeholder, original: match });
+                return placeholder;
+            });
 
-        // Escape remaining angle brackets and curly braces
-        escaped = escaped
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/\{/g, "&#123;")
-            .replace(/\}/g, "&#125;");
+            // Escape remaining angle brackets and curly braces
+            escaped = escaped
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/\{/g, "&#123;")
+                .replace(/\}/g, "&#125;");
 
-        // Restore safe tags
-        for (const { placeholder, original } of safeTags) {
-            escaped = escaped.replace(placeholder, original);
-        }
+            // Restore safe tags
+            for (const { placeholder, original } of safeTags) {
+                escaped = escaped.replace(placeholder, original);
+            }
 
-        return escaped;
-    }).join("");
+            return escaped;
+        })
+        .join("");
 }
 
 /**
@@ -391,6 +390,32 @@ function renderSegments(segments: CppDocSegment[]): string {
  */
 export function renderSegmentsTrimmed(segments: CppDocSegment[]): string {
     return renderSegments(segments).trim();
+}
+
+function renderSegmentPlainText(segment: CppDocSegment): string {
+    switch (segment.type) {
+        case "text":
+            return segment.text;
+        case "code":
+        case "codeRef":
+            return segment.code;
+        case "ref":
+            return segment.text;
+        case "bold":
+        case "emphasis":
+            return segment.text;
+        case "link":
+            return segment.text;
+        case "subscript":
+        case "superscript":
+            return segment.text;
+        default:
+            return "";
+    }
+}
+
+export function renderSegmentsPlainText(segments: CppDocSegment[]): string {
+    return segments.map(renderSegmentPlainText).join("").trim();
 }
 
 // ---------------------------------------------------------------------------
@@ -454,11 +479,7 @@ function renderBlock(block: CppDocBlock, options?: RenderBlockOptions): string {
         }
         case "codeBlock": {
             const lang = block.language || "cpp";
-            return [
-                `\`\`\`${lang} showLineNumbers={false}`,
-                block.code,
-                "```"
-            ].join("\n");
+            return [`\`\`\`${lang} showLineNumbers={false}`, block.code, "```"].join("\n");
         }
         case "verbatim": {
             // Verbatim blocks: pass through raw content with MDX escaping.
@@ -517,7 +538,10 @@ function renderList(ordered: boolean, items: CppDocBlock[][], options?: RenderBl
         for (let j = 1; j < itemBlocks.length; j++) {
             const rendered = renderBlock(itemBlocks[j]!, options);
             if (rendered) {
-                const indented = rendered.split("\n").map(line => `   ${line}`).join("\n");
+                const indented = rendered
+                    .split("\n")
+                    .map((line) => `   ${line}`)
+                    .join("\n");
                 lines.push(indented);
             }
         }
@@ -543,6 +567,25 @@ export function renderDescriptionBlocks(blocks: CppDocBlock[], options?: RenderB
     return parts.join("\n\n");
 }
 
+export function renderDescriptionBlocksDeduped(
+    blocks: CppDocBlock[],
+    summary: CppDocSegment[],
+    options?: RenderBlockOptions
+): string {
+    if (blocks.length === 0 || summary.length === 0) {
+        return renderDescriptionBlocks(blocks, options);
+    }
+    const firstBlock = blocks[0]!;
+    if (firstBlock.type === "paragraph") {
+        const blockText = renderSegments(firstBlock.segments).trim();
+        const summaryText = renderSegments(summary).trim();
+        if (blockText === summaryText) {
+            return renderDescriptionBlocks(blocks.slice(1), options);
+        }
+    }
+    return renderDescriptionBlocks(blocks, options);
+}
+
 // ---------------------------------------------------------------------------
 // Type info rendering (for tables and links props)
 // ---------------------------------------------------------------------------
@@ -558,17 +601,14 @@ export function renderTypeInfoDisplay(typeInfo: CppTypeInfo | undefined): string
     if (typeInfo.display) {
         return typeInfo.display;
     }
-    return typeInfo.parts.map(p => typeof p === "string" ? p : p.text).join("");
+    return typeInfo.parts.map((p) => (typeof p === "string" ? p : p.text)).join("");
 }
 
 /**
  * Render CppTypeInfo parts for a table cell, with links where available.
  * Returns MDX string with links for type refs that have resolved paths.
  */
-export function renderTypeInfoForTable(
-    typeInfo: CppTypeInfo | undefined,
-    ownerPath: string
-): string {
+export function renderTypeInfoForTable(typeInfo: CppTypeInfo | undefined, ownerPath: string): string {
     if (!typeInfo) {
         return "";
     }

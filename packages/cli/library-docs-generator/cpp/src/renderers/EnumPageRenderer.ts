@@ -16,7 +16,9 @@ import type { CppEnumIr, CppEnumValueIr } from "../../../src/types/CppLibraryDoc
 import type { CompoundMeta } from "../context.js";
 import {
     renderDescriptionBlocks,
+    renderDescriptionBlocksDeduped,
     renderSeeAlso,
+    renderSegmentsPlainText,
     renderSegmentsTrimmed,
     setCurrentPagePath
 } from "./DescriptionRenderer.js";
@@ -154,7 +156,7 @@ export function renderEnumPage(enumIr: CppEnumIr, meta: CompoundMeta): string {
         const docstring = enumIr.docstring;
 
         // Frontmatter
-        const description = meta.description ?? (docstring ? renderSegmentsTrimmed(docstring.summary) : "");
+        const description = meta.description ?? (docstring ? renderSegmentsPlainText(docstring.summary) : "");
         sections.push(...renderFrontmatter(enumIr.path, description));
 
         // Summary
@@ -172,7 +174,7 @@ export function renderEnumPage(enumIr: CppEnumIr, meta: CompoundMeta): string {
 
         // Description blocks
         if (docstring?.description && docstring.description.length > 0) {
-            const desc = renderDescriptionBlocks(docstring.description);
+            const desc = renderDescriptionBlocksDeduped(docstring.description, docstring.summary);
             if (desc) {
                 sections.push("");
                 sections.push(desc);

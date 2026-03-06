@@ -14,7 +14,7 @@ import type { CompoundMeta } from "../cpp/src/context.js";
 import { getShortName, stripTemplateArgs } from "../cpp/src/context.js";
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderCompoundPage } from "../cpp/src/renderers/CompoundPageRenderer.js";
-import { renderSegmentsTrimmed } from "../cpp/src/renderers/DescriptionRenderer.js";
+import { renderSegmentsPlainText, renderSegmentsTrimmed } from "../cpp/src/renderers/DescriptionRenderer.js";
 import { namespaceHasEntities, renderIndexPage } from "../cpp/src/renderers/IndexPageRenderer.js";
 import { groupFunctionsByName } from "../cpp/src/renderers/MethodRenderer.js";
 import type { CppDocstringIr, CppLibraryDocsIr, CppNamespaceIr } from "./types/CppLibraryDocsIr.js";
@@ -34,6 +34,57 @@ export interface CppGenerateResult {
     writtenFiles: string[];
     /** Total number of MDX pages generated */
     pageCount: number;
+}
+
+const OPERATOR_SYMBOL_MAP: Array<[string, string]> = [
+    ["operator<<=", "operator_lshift_assign"],
+    ["operator>>=", "operator_rshift_assign"],
+    ["operator<=>", "operator_spaceship"],
+    ["operator<<", "operator_lshift"],
+    ["operator>>", "operator_rshift"],
+    ["operator->*", "operator_arrow_star"],
+    ["operator->", "operator_arrow"],
+    ["operator+=", "operator_plus_assign"],
+    ["operator-=", "operator_minus_assign"],
+    ["operator*=", "operator_mul_assign"],
+    ["operator/=", "operator_div_assign"],
+    ["operator%=", "operator_mod_assign"],
+    ["operator^=", "operator_xor_assign"],
+    ["operator&=", "operator_and_assign"],
+    ["operator|=", "operator_or_assign"],
+    ["operator&&", "operator_logical_and"],
+    ["operator||", "operator_logical_or"],
+    ["operator++", "operator_inc"],
+    ["operator--", "operator_dec"],
+    ["operator<=", "operator_le"],
+    ["operator>=", "operator_ge"],
+    ["operator==", "operator_eq"],
+    ["operator!=", "operator_ne"],
+    ["operator()", "operator_call"],
+    ["operator[]", "operator_subscript"],
+    ["operator<", "operator_lt"],
+    ["operator>", "operator_gt"],
+    ["operator+", "operator_plus"],
+    ["operator-", "operator_minus"],
+    ["operator*", "operator_mul"],
+    ["operator/", "operator_div"],
+    ["operator%", "operator_mod"],
+    ["operator^", "operator_xor"],
+    ["operator&", "operator_and"],
+    ["operator|", "operator_or"],
+    ["operator~", "operator_bitnot"],
+    ["operator!", "operator_not"],
+    ["operator=", "operator_assign"],
+    ["operator,", "operator_comma"]
+];
+
+function sanitizeForFilename(name: string): string {
+    for (const [symbol, safeName] of OPERATOR_SYMBOL_MAP) {
+        if (name === symbol) {
+            return safeName;
+        }
+    }
+    return name.replace(/[^a-zA-Z0-9_-]/g, "_");
 }
 
 /** Intermediate collected compound before page-key assignment. */
@@ -188,7 +239,7 @@ function computePageKeys(compounds: CollectedCompound[], slug: string): PageEntr
     for (const c of compounds) {
         const stripped = stripTemplateArgs(c.path);
         const parts = stripped.split("::");
-        const baseFilename = parts.at(-1) ?? "";
+        const baseFilename = sanitizeForFilename(parts.at(-1) ?? "");
         const dir = parts.slice(0, -1).join("/");
         const groupKey = dir ? `${dir}/${baseFilename}` : baseFilename;
         const existing = groups.get(groupKey);
@@ -249,7 +300,7 @@ function deriveCompoundMeta(collected: CollectedCompound, repo: string): Compoun
 
     let description: string | undefined;
     if (collected.docstring?.summary && collected.docstring.summary.length > 0) {
-        description = renderSegmentsTrimmed(collected.docstring.summary);
+        description = renderSegmentsPlainText(collected.docstring.summary);
     }
 
     return {

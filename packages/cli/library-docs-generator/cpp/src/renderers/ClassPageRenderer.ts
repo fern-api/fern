@@ -22,8 +22,9 @@ import type { CompoundMeta, RenderContext } from "../context.js";
 import { buildLinkPath, clearClassMembers, getShortName, registerClassMembers, stripTemplateArgs } from "../context.js";
 import { renderBadge } from "./BadgeRenderer.js";
 import {
-    renderDescriptionBlocks,
+    renderDescriptionBlocksDeduped,
     renderSeeAlso,
+    renderSegmentsPlainText,
     renderSegmentsTrimmed,
     setCurrentPagePath
 } from "./DescriptionRenderer.js";
@@ -47,7 +48,7 @@ import { renderEnum, renderInnerClass, renderMemberVariableTable, renderTypedefT
  */
 function renderClassFrontmatter(cls: CppClassIr, meta: CompoundMeta): string {
     // Description is expected to be provided by the caller (pipeline/Lambda); fallback extracts from docstring summary
-    const description = meta.description ?? (cls.docstring ? renderSegmentsTrimmed(cls.docstring.summary) : "");
+    const description = meta.description ?? (cls.docstring ? renderSegmentsPlainText(cls.docstring.summary) : "");
 
     return renderFrontmatterLines(cls.path, description).join("\n");
 }
@@ -81,7 +82,9 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         }
 
         if (docstring.description.length > 0) {
-            const desc = renderDescriptionBlocks(docstring.description, { titledSectionHeadingLevel: 2 });
+            const desc = renderDescriptionBlocksDeduped(docstring.description, docstring.summary, {
+                titledSectionHeadingLevel: 2
+            });
             if (desc) {
                 lines.push(desc);
                 lines.push("");

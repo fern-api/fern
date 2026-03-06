@@ -18,7 +18,8 @@ import type { CompoundMeta, RenderContext } from "../context.js";
 import { buildLinkPath, getShortName } from "../context.js";
 import {
     decodeDoxygenRefid,
-    renderDescriptionBlocks,
+    renderDescriptionBlocksDeduped,
+    renderSegmentsPlainText,
     renderSegmentsTrimmed,
     setCurrentPagePath
 } from "./DescriptionRenderer.js";
@@ -155,7 +156,8 @@ export function renderConceptPage(concept: CppConceptIr, meta: CompoundMeta): st
 
     // Frontmatter
     // Description is expected to be provided by the caller (pipeline/Lambda); fallback extracts from docstring summary
-    const description = meta.description ?? (concept.docstring ? renderSegmentsTrimmed(concept.docstring.summary) : "");
+    const description =
+        meta.description ?? (concept.docstring ? renderSegmentsPlainText(concept.docstring.summary) : "");
 
     sections.push(...renderFrontmatter(concept.path, description));
 
@@ -191,7 +193,7 @@ export function renderConceptPage(concept: CppConceptIr, meta: CompoundMeta): st
 
     // Description section
     if (concept.docstring?.description && concept.docstring.description.length > 0) {
-        const desc = renderDescriptionBlocks(concept.docstring.description);
+        const desc = renderDescriptionBlocksDeduped(concept.docstring.description, concept.docstring.summary);
         if (desc) {
             sections.push("");
             sections.push("---");

@@ -18,7 +18,12 @@ import type { CppClassIr, CppDocstringIr, CppFunctionIr } from "../../../src/typ
 import type { RenderContext } from "../context.js";
 import { buildLinkPath, getShortName } from "../context.js";
 import { getCommonQualifiers, getOverloadSpecificQualifiers, renderBadges } from "./BadgeRenderer.js";
-import { renderDescriptionBlocks, renderSeeAlso, renderSegmentsTrimmed } from "./DescriptionRenderer.js";
+import {
+    renderDescriptionBlocks,
+    renderDescriptionBlocksDeduped,
+    renderSeeAlso,
+    renderSegmentsTrimmed
+} from "./DescriptionRenderer.js";
 import { renderMethodParams, renderMethodTemplateParams } from "./ParamRenderer.js";
 import { renderBareCodeBlock, renderCodeBlock, renderSignatureCodeBlock } from "./SignatureRenderer.js";
 import { isEffectivelyDeleted, renderCallout, trimTrailingBlankLines } from "./shared.js";
@@ -651,6 +656,12 @@ function generateMethodTabTitle(func: CppFunctionIr, index: number): string {
         return containerTitle;
     }
 
+    // Execution policy detection (standalone functions, especially Thrust)
+    const firstParamType = func.parameters[0]?.typeInfo?.display ?? "";
+    if (firstParamType.includes("execution_policy")) {
+        return "With execution policy";
+    }
+
     // Const/Mutable differentiation: for method overload pairs, non-const is "Mutable"
     if (func.isConst) {
         return "Const";
@@ -951,7 +962,7 @@ function renderMethodDescription(func: CppFunctionIr, lines: string[]): void {
         }
         // Description blocks
         if (docstring.description.length > 0) {
-            const desc = renderDescriptionBlocks(docstring.description);
+            const desc = renderDescriptionBlocksDeduped(docstring.description, docstring.summary);
             if (desc) {
                 descParts.push(desc);
             }
@@ -1093,8 +1104,13 @@ function renderMethodExamples(docstring: CppDocstringIr | undefined, lines: stri
 export function renderSingleMethod(
     func: CppFunctionIr,
     ownerClass: CppClassIr | undefined,
-    ctx: RenderContext
+    ctx: RenderContext,
+    options?: { skipHeading?: boolean }
 ): string {
+    if (options?.skipHeading) {
+        return renderMethodContent(func, ownerClass, ctx);
+    }
+
     const lines: string[] = [];
     const displayName = escapeNameForHeading(func.name);
 
@@ -1225,13 +1241,14 @@ export function renderOverloadedMethod(
     options: {
         isConstructor?: boolean;
         generateTabTitle?: (func: CppFunctionIr, index: number) => string;
+        skipHeading?: boolean;
     } = {}
 ): string {
     if (funcs.length === 0) {
         return "";
     }
     if (funcs.length === 1) {
-        return renderSingleMethod(funcs[0]!, ownerClass, ctx);
+        return renderSingleMethod(funcs[0]!, ownerClass, ctx, { skipHeading: options.skipHeading });
     }
 
     // Separate deleted and non-deleted overloads
@@ -1247,15 +1264,17 @@ export function renderOverloadedMethod(
 
     // If only one non-deleted overload and no deleted ones, render as single method
     if (nonDeletedFuncs.length === 1 && deletedFuncs.length === 0) {
-        return renderSingleMethod(nonDeletedFuncs[0]!, ownerClass, ctx);
+        return renderSingleMethod(nonDeletedFuncs[0]!, ownerClass, ctx, { skipHeading: options.skipHeading });
     }
 
     const lines: string[] = [];
     const displayName = escapeNameForHeading(funcs[0]!.name);
     const commonQuals = getCommonQualifiers(funcs);
 
-    lines.push(`### ${displayName}`);
-    lines.push("");
+    if (!options.skipHeading) {
+        lines.push(`### ${displayName}`);
+        lines.push("");
+    }
     lines.push("<Tabs>");
 
     const titleGenerator =

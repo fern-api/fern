@@ -11,7 +11,7 @@ export { renderClassPage } from "./renderers/ClassPageRenderer.js";
 export type { CppCompoundIr } from "./renderers/CompoundPageRenderer.js";
 export { renderCompoundPage } from "./renderers/CompoundPageRenderer.js";
 export { renderConceptPage } from "./renderers/ConceptPageRenderer.js";
-export { renderSegmentsTrimmed } from "./renderers/DescriptionRenderer.js";
+export { renderSegmentsPlainText, renderSegmentsTrimmed } from "./renderers/DescriptionRenderer.js";
 export { renderEnumPage } from "./renderers/EnumPageRenderer.js";
 export { renderFunctionPage } from "./renderers/FunctionPageRenderer.js";
 export { namespaceHasEntities, renderIndexPage } from "./renderers/IndexPageRenderer.js";

@@ -16,7 +16,9 @@ import type { CompoundMeta } from "../context.js";
 import { getShortName } from "../context.js";
 import {
     renderDescriptionBlocks,
+    renderDescriptionBlocksDeduped,
     renderSeeAlso,
+    renderSegmentsPlainText,
     renderSegmentsTrimmed,
     setCurrentPagePath
 } from "./DescriptionRenderer.js";
@@ -83,7 +85,7 @@ export function renderTypedefPage(typedef: CppTypedefIr, meta: CompoundMeta): st
         const docstring = typedef.docstring;
 
         // Frontmatter
-        const description = meta.description ?? (docstring ? renderSegmentsTrimmed(docstring.summary) : "");
+        const description = meta.description ?? (docstring ? renderSegmentsPlainText(docstring.summary) : "");
         sections.push(...renderFrontmatter(typedef.path, description));
 
         // Summary
@@ -102,7 +104,7 @@ export function renderTypedefPage(typedef: CppTypedefIr, meta: CompoundMeta): st
 
         // Description blocks
         if (docstring?.description && docstring.description.length > 0) {
-            const desc = renderDescriptionBlocks(docstring.description);
+            const desc = renderDescriptionBlocksDeduped(docstring.description, docstring.summary);
             if (desc) {
                 sections.push("");
                 sections.push(desc);

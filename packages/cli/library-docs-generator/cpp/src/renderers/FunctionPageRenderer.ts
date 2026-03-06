@@ -12,7 +12,7 @@
 
 import type { CppFunctionIr } from "../../../src/types/CppLibraryDocsIr.js";
 import type { CompoundMeta, RenderContext } from "../context.js";
-import { renderSegmentsTrimmed, setCurrentPagePath } from "./DescriptionRenderer.js";
+import { renderSegmentsPlainText, renderSegmentsTrimmed, setCurrentPagePath } from "./DescriptionRenderer.js";
 import { renderMethodContent, renderOverloadedMethod } from "./MethodRenderer.js";
 import { renderFrontmatter, trimTrailingBlankLines } from "./shared.js";
 
@@ -43,7 +43,7 @@ export function renderFunctionPage(overloads: CppFunctionIr[], meta: CompoundMet
         // Frontmatter
         const description =
             meta.description ??
-            (representative.docstring ? renderSegmentsTrimmed(representative.docstring.summary) : "");
+            (representative.docstring ? renderSegmentsPlainText(representative.docstring.summary) : "");
         sections.push(...renderFrontmatter(representative.path, description));
 
         // Function content — renderMethodContent/renderOverloadedMethod handle
@@ -55,7 +55,7 @@ export function renderFunctionPage(overloads: CppFunctionIr[], meta: CompoundMet
         } else {
             // Multiple overloads: render tabbed view
             sections.push("");
-            sections.push(renderOverloadedMethod(overloads, undefined, ctx));
+            sections.push(renderOverloadedMethod(overloads, undefined, ctx, { skipHeading: true }));
         }
 
         trimTrailingBlankLines(sections);

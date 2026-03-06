@@ -25,9 +25,9 @@ interface CorpusEntry {
 }
 
 const CORPORA: CorpusEntry[] = [
-    { filename: "ir_output_cub_v9.json", slug: "cub", label: "CUB" },
-    { filename: "ir_output_thrust_v9.json", slug: "thrust", label: "Thrust" },
-    { filename: "ir_output_libcudacxx_v9.json", slug: "cuda", label: "libcudacxx" }
+    { filename: "ir_output_cub_v10.json", slug: "cub", label: "CUB" },
+    { filename: "ir_output_thrust_v10.json", slug: "thrust", label: "Thrust" },
+    { filename: "ir_output_libcudacxx_v10.json", slug: "cuda", label: "libcudacxx" }
 ];
 
 interface CorpusResult {

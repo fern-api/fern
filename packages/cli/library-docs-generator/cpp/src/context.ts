@@ -130,7 +130,11 @@ export function stripTemplateArgs(name: string): string {
     if (openIdx === -1) {
         return name;
     }
-    return name.substring(0, openIdx).trimEnd();
+    const before = name.substring(0, openIdx);
+    if (/operator\s*$/.test(before)) {
+        return name;
+    }
+    return before.trimEnd();
 }
 
 /**
