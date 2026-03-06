@@ -92,6 +92,10 @@ export class LocalTaskHandler {
         const isFernIgnorePresent = await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
 
+        // Read prior changelog BEFORE copy operations overwrite the output directory
+        const priorChangelog =
+            this.version != null && isAutoVersion(this.version) ? await this.readPriorChangelog(3) : "";
+
         if (isFernIgnorePresent && isExistingGitRepo) {
             await this.copyGeneratedFilesWithFernIgnoreInExistingRepo();
         } else if (isFernIgnorePresent && !isExistingGitRepo) {
@@ -116,7 +120,7 @@ export class LocalTaskHandler {
         // Handle automatic semantic versioning if version is AUTO
         if (this.version != null && isAutoVersion(this.version)) {
             const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
-            const autoVersionResult = await this.handleAutoVersioning();
+            const autoVersionResult = await this.handleAutoVersioning(priorChangelog);
             if (autoVersionResult == null) {
                 this.context.logger.info("No semantic changes detected. Skipping GitHub operations.");
                 return {
@@ -144,7 +148,7 @@ export class LocalTaskHandler {
      * Handles automatic semantic versioning by analyzing the git diff with AI.
      * Returns the final version to use and the commit message, or null if NO_CHANGE.
      */
-    private async handleAutoVersioning(): Promise<AutoVersionResult | null> {
+    private async handleAutoVersioning(priorChangelog: string): Promise<AutoVersionResult | null> {
         const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
         let diffFile: string | undefined;
 
@@ -226,6 +230,7 @@ export class LocalTaskHandler {
                     cleanedDiff,
                     this.generatorLanguage ?? "unknown",
                     previousVersion ?? "0.0.0",
+                    priorChangelog,
                     specCommitMessage
                 );
             } catch (aiError) {
@@ -318,12 +323,12 @@ export class LocalTaskHandler {
         cleanedDiff: string,
         language: string,
         previousVersion: string,
+        priorChangelog: string = "",
         specCommitMessage: string = ""
     ): Promise<CachedAnalysis | null> {
         const doAnalysis = async (): Promise<CachedAnalysis | null> => {
             const clientRegistry = await this.getClientRegistry();
             const bamlClient = BamlClient.withOptions({ clientRegistry });
-            const priorChangelog = "";
             const analysis = await bamlClient.AnalyzeSdkDiff(
                 cleanedDiff,
                 language,
@@ -346,7 +351,13 @@ export class LocalTaskHandler {
             return doAnalysis();
         }
 
-        const cacheKey = this.autoVersioningCache.key(cleanedDiff, language, previousVersion, specCommitMessage);
+        const cacheKey = this.autoVersioningCache.key(
+            cleanedDiff,
+            language,
+            previousVersion,
+            priorChangelog,
+            specCommitMessage
+        );
         const { promise, isHit } = this.autoVersioningCache.getOrCompute(cacheKey, doAnalysis);
 
         if (isHit) {
@@ -625,6 +636,63 @@ export class LocalTaskHandler {
             doNotPipeOutput: true
         });
         return response.stdout;
+    }
+
+    /**
+     * Reads prior changelog entries from the SDK output directory.
+     * Looks for CHANGELOG.md (case-insensitive), extracts the last `maxEntries`
+     * entries (each starting with a `## ` header), and returns them as a string.
+     * Returns empty string if not found or on any error. Truncates to 2KB.
+     */
+    public async readPriorChangelog(maxEntries: number): Promise<string> {
+        const MAX_CHANGELOG_SIZE = 2048; // 2KB
+
+        try {
+            // Find CHANGELOG.md case-insensitively
+            const files = await readdir(this.absolutePathToLocalOutput);
+            const changelogFile = files.find((f) => f.toLowerCase() === "changelog.md");
+            if (!changelogFile) {
+                return "";
+            }
+
+            const changelogPath = join(this.absolutePathToLocalOutput, RelativeFilePath.of(changelogFile));
+            const content = await readFile(changelogPath, "utf-8");
+            if (content.trim().length === 0) {
+                return "";
+            }
+
+            // Parse entries: each entry starts with a `## ` header
+            const lines = content.split("\n");
+            const entryStartIndices: number[] = [];
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i]?.startsWith("## ")) {
+                    entryStartIndices.push(i);
+                }
+            }
+
+            if (entryStartIndices.length === 0) {
+                return "";
+            }
+
+            // Take the first maxEntries entries (most recent are at the top in standard changelogs)
+            const firstLineIndex = entryStartIndices[0];
+            if (firstLineIndex == null) {
+                return "";
+            }
+            const endEntryIndex = entryStartIndices[Math.min(maxEntries, entryStartIndices.length)];
+            const endLineIndex = endEntryIndex != null ? endEntryIndex : lines.length;
+            const extracted = lines.slice(firstLineIndex, endLineIndex).join("\n").trim();
+
+            // Truncate to 2KB if needed
+            if (extracted.length > MAX_CHANGELOG_SIZE) {
+                return extracted.substring(0, MAX_CHANGELOG_SIZE);
+            }
+
+            return extracted;
+        } catch (error) {
+            this.context.logger.debug(`Failed to read prior changelog: ${error}`);
+            return "";
+        }
     }
 
     /**
