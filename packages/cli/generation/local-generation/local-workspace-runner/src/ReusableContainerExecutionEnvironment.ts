@@ -65,8 +65,9 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         // Serialize access — the container uses fixed paths so only one fixture can run at a time.
         const result = this.executionQueue.then(() => this.doExecute(args));
         // Update the queue to wait for this execution (swallow errors so the queue continues)
-        this.executionQueue = result.catch(() => {
-            // Swallow errors so the queue continues to the next fixture
+        this.executionQueue = result.catch((_e: unknown) => {
+            // Swallow errors so the queue continues to the next fixture.
+            // The error is still propagated to the caller via the `result` promise returned above.
         });
         return result;
     }
