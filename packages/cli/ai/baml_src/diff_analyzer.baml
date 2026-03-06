@@ -19,7 +19,11 @@ class AnalyzeCommitDiffResponse {
 }
 
 // Main function that analyzes SDK diffs
-function AnalyzeSdkDiff(diff: string @description("The git diff to analyze for generating a commit message")) -> AnalyzeCommitDiffResponse {
+function AnalyzeSdkDiff(
+    diff: string @description("The git diff to analyze"),
+    language: string @description("The SDK programming language, e.g. 'typescript', 'python', 'java'"),
+    previous_version: string @description("The current published version before this change, e.g. '1.2.3'")
+) -> AnalyzeCommitDiffResponse {
   client DefaultClient
 
   prompt #"
@@ -59,6 +63,11 @@ function AnalyzeSdkDiff(diff: string @description("The git diff to analyze for g
     - Do not use "Fern regeneration" in commit messages - use "SDK regeneration" instead
     - NEVER include the literal version "505.503.4455" in the commit message - if you see this placeholder
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
+    - The previous version is provided for context only. Do not include it
+    literally in the commit message summary line.
+
+    Previous version: {{previous_version}}
+    SDK language: {{language}}
 
     Git Diff:
     ---

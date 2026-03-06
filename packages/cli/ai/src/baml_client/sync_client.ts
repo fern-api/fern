@@ -20,14 +20,14 @@ $ pnpm add @boundaryml/baml
 
 import type { BamlRuntime, FunctionResult, BamlCtxManager, Image, Audio, Pdf, Video, ClientRegistry, Collector, FunctionLog } from "@boundaryml/baml"
 import { toBamlError, BamlAbortError, type HTTPRequest } from "@boundaryml/baml"
-import type { Checked, Check, RecursivePartialNull as MovedRecursivePartialNull } from "./types.js"
-import type * as types from "./types.js"
-import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types.js"
-import type TypeBuilder from "./type_builder.js"
-import { HttpRequest, HttpStreamRequest } from "./sync_request.js"
-import { LlmResponseParser, LlmStreamParser } from "./parser.js"
-import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX, DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals.js"
-import type * as events from "./events.js"
+import type { Checked, Check, RecursivePartialNull as MovedRecursivePartialNull } from "./types"
+import type * as types from "./types"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
+import type TypeBuilder from "./type_builder"
+import { HttpRequest, HttpStreamRequest } from "./sync_request"
+import { LlmResponseParser, LlmStreamParser } from "./parser"
+import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_CTX, DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals"
+import type * as events from "./events"
 
 /**
  * @deprecated Use RecursivePartialNull from 'baml_client/types' instead.
@@ -97,7 +97,7 @@ export class BamlSyncClient {
 
   
   AnalyzeSdkDiff(
-      diff: string,
+      diff: string,language: string,previous_version: string,
       __baml_options__?: BamlCallOptions<never>
   ): types.AnalyzeCommitDiffResponse {
     try {
@@ -121,7 +121,7 @@ export class BamlSyncClient {
       const raw = this.runtime.callFunctionSync(
         "AnalyzeSdkDiff",
         {
-          "diff": diff
+          "diff": diff,"language": language,"previous_version": previous_version
         },
         this.ctxManager.cloneContext(),
         options.tb?.__tb(),

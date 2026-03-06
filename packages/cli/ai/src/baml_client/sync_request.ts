@@ -20,11 +20,11 @@ $ pnpm add @boundaryml/baml
 
 import type { BamlRuntime, BamlCtxManager, ClientRegistry, Image, Audio, Pdf, Video } from "@boundaryml/baml"
 import { toBamlError, HTTPRequest } from "@boundaryml/baml"
-import type { Checked, Check } from "./types.js"
-import type * as types from "./types.js"
-import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types.js"
-import type TypeBuilder from "./type_builder.js"
-import type * as events from "./events.js"
+import type { Checked, Check } from "./types"
+import type * as types from "./types"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
+import type TypeBuilder from "./type_builder"
+import type * as events from "./events"
 
 type BamlCallOptions<EventsT = never> = {
   tb?: TypeBuilder
@@ -38,7 +38,7 @@ export class HttpRequest {
 
   
   AnalyzeSdkDiff(
-      diff: string,
+      diff: string,language: string,previous_version: string,
       __baml_options__?: BamlCallOptions<never>
   ): HTTPRequest {
     try {
@@ -49,7 +49,7 @@ export class HttpRequest {
       return this.runtime.buildRequestSync(
         "AnalyzeSdkDiff",
         {
-          "diff": diff
+          "diff": diff,"language": language,"previous_version": previous_version
         },
         this.ctxManager.cloneContext(),
         __baml_options__?.tb?.__tb(),
@@ -69,7 +69,7 @@ export class HttpStreamRequest {
 
   
   AnalyzeSdkDiff(
-      diff: string,
+      diff: string,language: string,previous_version: string,
       __baml_options__?: BamlCallOptions<never>
   ): HTTPRequest {
     try {
@@ -80,7 +80,7 @@ export class HttpStreamRequest {
       return this.runtime.buildRequestSync(
         "AnalyzeSdkDiff",
         {
-          "diff": diff
+          "diff": diff,"language": language,"previous_version": previous_version
         },
         this.ctxManager.cloneContext(),
         __baml_options__?.tb?.__tb(),
