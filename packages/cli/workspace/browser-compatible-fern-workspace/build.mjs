@@ -5,13 +5,13 @@ import { fileURLToPath } from "url";
 import packageJson from "./package.json" with { type: "json" };
 
 /**
- * Resolves the actual version of @fern-api/fdr-sdk from the pnpm catalog.
- * Reads the root pnpm-workspace.yaml to find the catalog version.
+ * Resolves catalog versions from pnpm-workspace.yaml.
  */
-async function resolveFdrSdkVersion() {
+async function resolveCatalogVersion(packageName) {
     try {
         const workspaceYaml = await readFile(path.join(__dirname, "../../../../pnpm-workspace.yaml"), "utf-8");
-        const match = workspaceYaml.match(/"@fern-api\/fdr-sdk":\s*(.+)/);
+        const escapedName = packageName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const match = workspaceYaml.match(new RegExp(`"${escapedName}":\\s*(.+)`));
         if (match) {
             return match[1].trim();
         }
@@ -31,7 +31,7 @@ async function main() {
 
     // Bundle all workspace:* deps (internal to fern monorepo) into the output.
     // Keep npm-published deps external so consumers manage them via package.json.
-    const externalDeps = ["@fern-api/fdr-sdk", "openapi-types"];
+    const externalDeps = ["@fern-api/fdr-sdk", "@open-rpc/meta-schema", "openapi-types"];
 
     await tsup.build({
         entry: ["src/index.ts"],
@@ -48,7 +48,8 @@ async function main() {
     });
 
     const version = process.argv[2] || process.env.PACKAGE_VERSION || "0.0.1";
-    const fdrSdkVersion = await resolveFdrSdkVersion();
+    const fdrSdkVersion = await resolveCatalogVersion("@fern-api/fdr-sdk");
+    const openRpcMetaSchemaVersion = await resolveCatalogVersion("@open-rpc/meta-schema");
 
     await writeFile(
         path.join(outDirAbs, "package.json"),
@@ -57,7 +58,7 @@ async function main() {
                 name: "@fern-api/browser-compatible-fern-workspace",
                 version,
                 description:
-                    "Browser-compatible OpenAPI to FDR API Definition converter. Converts parsed OpenAPI 3.1 specs to Fern IR and FDR API Definitions without filesystem access.",
+                    "Browser-compatible API spec to FDR API Definition converter. Converts parsed OpenAPI 3.1, AsyncAPI, and OpenRPC specs to Fern IR and FDR API Definitions without filesystem access.",
                 repository: packageJson.repository,
                 type: "module",
                 exports: {
@@ -72,6 +73,7 @@ async function main() {
                 files: ["**"],
                 dependencies: {
                     "@fern-api/fdr-sdk": fdrSdkVersion,
+                    "@open-rpc/meta-schema": openRpcMetaSchemaVersion,
                     "openapi-types": packageJson.dependencies["openapi-types"]
                 },
                 peerDependencies: {

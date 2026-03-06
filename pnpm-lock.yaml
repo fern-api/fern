@@ -7003,6 +7003,9 @@ importers:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
         version: link:../commons
+      '@fern-api/asyncapi-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/asyncapi-to-ir
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../../configuration
@@ -7024,6 +7027,9 @@ importers:
       '@fern-api/openapi-to-ir':
         specifier: workspace:*
         version: link:../../api-importers/openapi-to-ir
+      '@fern-api/openrpc-to-ir':
+        specifier: workspace:*
+        version: link:../../api-importers/openrpc-to-ir
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../commons/path-utils
@@ -7036,6 +7042,9 @@ importers:
       '@fern-api/v3-importer-commons':
         specifier: workspace:*
         version: link:../../api-importers/v3-importer-commons
+      '@open-rpc/meta-schema':
+        specifier: 'catalog:'
+        version: 1.14.9
       openapi-types:
         specifier: ^12.1.3
         version: 12.1.3

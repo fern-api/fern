@@ -1,0 +1,99 @@
+import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
+import { FdrAPI } from "@fern-api/fdr-sdk";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { OpenRPCConverter, OpenRPCConverterContext3_1 } from "@fern-api/openrpc-to-ir";
+import { convertIrToFdrApi } from "@fern-api/register";
+import { TaskContext } from "@fern-api/task-context";
+import { ErrorCollector } from "@fern-api/v3-importer-commons";
+import { OpenrpcDocument } from "@open-rpc/meta-schema";
+
+import { OpenAPIWorkspace } from "./OpenAPIWorkspace.js";
+
+/**
+ * Converts a parsed OpenRPC spec directly to an FDR API Definition,
+ * without requiring filesystem access. This chains:
+ * 1. OpenRPCConverterContext3_1 + OpenRPCConverter to produce Fern IR
+ * 2. convertIrToFdrApi() to produce the FDR API Definition
+ */
+export async function convertOpenRpcSpecToFdrDefinition({
+    spec,
+    context,
+    apiName,
+    namespace,
+    settings
+}: {
+    spec: OpenrpcDocument;
+    context: TaskContext;
+    apiName?: string;
+    namespace?: string;
+    settings?: OpenAPIWorkspace.Settings;
+}): Promise<FdrAPI.api.v1.register.ApiDefinition> {
+    const ir = await convertOpenRpcSpecToIr({ spec, context, namespace, settings });
+
+    return convertIrToFdrApi({
+        ir,
+        snippetsConfig: {
+            typescriptSdk: undefined,
+            pythonSdk: undefined,
+            javaSdk: undefined,
+            rubySdk: undefined,
+            goSdk: undefined,
+            csharpSdk: undefined,
+            phpSdk: undefined,
+            swiftSdk: undefined,
+            rustSdk: undefined
+        },
+        context,
+        apiNameOverride: apiName
+    });
+}
+
+/**
+ * Converts a parsed OpenRPC spec to Fern Intermediate Representation (IR),
+ * without requiring filesystem access.
+ */
+export async function convertOpenRpcSpecToIr({
+    spec,
+    context,
+    namespace,
+    settings
+}: {
+    spec: OpenrpcDocument;
+    context: TaskContext;
+    namespace?: string;
+    settings?: OpenAPIWorkspace.Settings;
+}): Promise<IntermediateRepresentation> {
+    const openApiSettings = getOpenAPISettings({ options: settings });
+
+    const errorCollector = new ErrorCollector({ logger: context.logger });
+
+    const converterContext = new OpenRPCConverterContext3_1({
+        namespace,
+        generationLanguage: "typescript",
+        logger: context.logger,
+        smartCasing: false,
+        spec,
+        exampleGenerationArgs: { disabled: false },
+        errorCollector,
+        enableUniqueErrorsPerEndpoint: false,
+        generateV1Examples: false,
+        settings: openApiSettings
+    });
+
+    const converter = new OpenRPCConverter({ context: converterContext, audiences: { type: "all" } });
+    const result = await converter.convert();
+
+    if (result == null) {
+        throw new Error("Failed to convert OpenRPC spec to intermediate representation");
+    }
+
+    if (errorCollector.hasErrors()) {
+        const errorStats = errorCollector.getErrorStats();
+        if (errorStats.numErrors > 0) {
+            context.logger.error(`OpenRPC conversion completed with ${errorStats.numErrors} errors.`);
+            await errorCollector.logErrors({ logWarnings: false });
+        }
+    }
+
+    return result;
+}
