@@ -471,7 +471,7 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example, true)) {
+            if (example != null && !isExamplePrimitive(example)) {
                 this.logger.debug(
                     `Expected a primitive example but got ${example.type} for path parameter ${
                         pathParameter.name
@@ -503,7 +503,7 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
+            if (example != null && !isExamplePrimitive(example) && !isExampleArrayOfPrimitives(example)) {
                 this.logger.debug(
                     `Expected a primitive or array example but got ${example.type} for query parameter ${
                         queryParameter.name
@@ -535,7 +535,7 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
+            if (example != null && !isExamplePrimitive(example) && !isExampleArrayOfPrimitives(example)) {
                 this.logger.debug(
                     `Expected a primitive example but got ${example.type} for header ${
                         header.name
@@ -588,7 +588,7 @@ export class ExampleEndpointFactory {
                 }
             });
 
-            if (example != null && !isExamplePrimitive(example)) {
+            if (example != null && !isExamplePrimitive(example) && !isExampleArrayOfPrimitives(example)) {
                 this.logger.debug(
                     `Expected a primitive example but got ${example.type} for global header ${
                         globalHeader.header
@@ -864,7 +864,14 @@ function getResponseSchema(response: ResponseWithExample | null | undefined): Sc
     return { type: "present", schema: response.schema, examples: response.fullExamples ?? [] };
 }
 
-export function isExamplePrimitive(example: FullExample, path = false): boolean {
+export function isExampleArrayOfPrimitives(example: FullExample): boolean {
+    if (example.type !== "array") {
+        return false;
+    }
+    return example.value.every((item) => isExamplePrimitive(item));
+}
+
+export function isExamplePrimitive(example: FullExample): boolean {
     switch (example.type) {
         case "primitive":
         case "enum":
@@ -873,13 +880,6 @@ export function isExamplePrimitive(example: FullExample, path = false): boolean 
         case "unknown":
             return isExamplePrimitive(example);
         case "array":
-            // path cannot accept arrays
-            if (path) {
-                return false;
-            } else {
-                // For arrays, validate that all items are primitives
-                return example.value.every((item) => isExamplePrimitive(item));
-            }
         case "object":
         case "map":
             return false;

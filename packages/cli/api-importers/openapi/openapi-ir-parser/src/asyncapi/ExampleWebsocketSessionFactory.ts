@@ -8,7 +8,7 @@ import {
     WebsocketSessionExample
 } from "@fern-api/openapi-ir";
 
-import { isExamplePrimitive } from "../openapi/v3/converters/ExampleEndpointFactory.js";
+import { isExampleArrayOfPrimitives, isExamplePrimitive } from "../openapi/v3/converters/ExampleEndpointFactory.js";
 import { convertSchema } from "../schema/convertSchemas.js";
 import { ExampleTypeFactory } from "../schema/examples/ExampleTypeFactory.js";
 import { isReferenceObject } from "../schema/utils/isReferenceObject.js";
@@ -64,7 +64,7 @@ export class ExampleWebsocketSessionFactory {
                         ignoreOptionals: true
                     }
                 });
-                if (example != null && !isExamplePrimitive(example)) {
+                if (example != null && !isExamplePrimitive(example) && !isExampleArrayOfPrimitives(example)) {
                     example = undefined;
                 }
                 if (required && example == null) {
@@ -90,7 +90,7 @@ export class ExampleWebsocketSessionFactory {
                         ignoreOptionals: true
                     }
                 });
-                if (example != null && !isExamplePrimitive(example)) {
+                if (example != null && !isExamplePrimitive(example) && !isExampleArrayOfPrimitives(example)) {
                     example = undefined;
                 }
                 if (required && example == null) {
@@ -176,7 +176,7 @@ export class ExampleWebsocketSessionFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
+            if (example != null && !isExamplePrimitive(example) && !isExampleArrayOfPrimitives(example)) {
                 example = undefined;
             }
             if (required && example == null) {
@@ -202,7 +202,7 @@ export class ExampleWebsocketSessionFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
+            if (example != null && !isExamplePrimitive(example) && !isExampleArrayOfPrimitives(example)) {
                 example = undefined;
             }
             if (required && example == null) {
