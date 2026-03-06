@@ -199,7 +199,13 @@ vi.mock("../AutoVersioningCache.js", () => ({
     AutoVersioningCache: class MockAutoVersioningCache {
         private cache = new Map<string, Promise<unknown>>();
 
-        key(cleanedDiff: string, language: string, previousVersion: string, priorChangelog: string = "", specCommitMessage: string = "") {
+        key(
+            cleanedDiff: string,
+            language: string,
+            previousVersion: string,
+            priorChangelog: string = "",
+            specCommitMessage: string = ""
+        ) {
             return `${language}:${previousVersion}:${priorChangelog.slice(0, 4)}:${specCommitMessage.slice(0, 4)}:${cleanedDiff.slice(0, 8)}`;
         }
 
