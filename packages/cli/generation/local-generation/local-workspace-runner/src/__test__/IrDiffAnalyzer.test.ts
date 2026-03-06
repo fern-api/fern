@@ -907,6 +907,76 @@ describe("IrDiffAnalyzer", () => {
         expect(result.reasons.some((r) => r.rule === "response_type_changed")).toBe(true);
     });
 
+    // --- Response body removed → MAJOR ---
+    it("classifies response body removal as MAJOR", () => {
+        const previousIr = makeBaseIr({
+            services: {
+                svc1: makeService("svc1", [
+                    makeEndpoint({
+                        id: "ep1",
+                        name: "getPlant",
+                        method: "GET",
+                        fullPath: makePath("/plants"),
+                        response: makeJsonResponse(primitiveType("STRING"))
+                    })
+                ])
+            }
+        });
+
+        const currentIr = makeBaseIr({
+            services: {
+                svc1: makeService("svc1", [
+                    makeEndpoint({
+                        id: "ep1",
+                        name: "getPlant",
+                        method: "GET",
+                        fullPath: makePath("/plants"),
+                        response: { statusCode: 200, isWildcardStatusCode: undefined, body: undefined, docs: undefined }
+                    })
+                ])
+            }
+        });
+
+        const result = analyzeIrDiff(previousIr as never, currentIr as never, "typescript");
+        expect(result.bump).toBe(VersionBump.MAJOR);
+        expect(result.reasons.some((r) => r.rule === "response_body_removed")).toBe(true);
+    });
+
+    // --- Response body added → MINOR ---
+    it("classifies response body addition as MINOR", () => {
+        const previousIr = makeBaseIr({
+            services: {
+                svc1: makeService("svc1", [
+                    makeEndpoint({
+                        id: "ep1",
+                        name: "getPlant",
+                        method: "GET",
+                        fullPath: makePath("/plants"),
+                        response: { statusCode: 200, isWildcardStatusCode: undefined, body: undefined, docs: undefined }
+                    })
+                ])
+            }
+        });
+
+        const currentIr = makeBaseIr({
+            services: {
+                svc1: makeService("svc1", [
+                    makeEndpoint({
+                        id: "ep1",
+                        name: "getPlant",
+                        method: "GET",
+                        fullPath: makePath("/plants"),
+                        response: makeJsonResponse(primitiveType("STRING"))
+                    })
+                ])
+            }
+        });
+
+        const result = analyzeIrDiff(previousIr as never, currentIr as never, "typescript");
+        expect(result.bump).toBe(VersionBump.MINOR);
+        expect(result.reasons.some((r) => r.rule === "response_body_added")).toBe(true);
+    });
+
     // --- Enum value removed → MAJOR ---
     it("classifies enum value removal as MAJOR", () => {
         const previousIr = makeBaseIr({

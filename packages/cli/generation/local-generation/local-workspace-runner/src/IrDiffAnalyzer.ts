@@ -436,6 +436,14 @@ function diffResponse(
                 bump: VersionBump.MINOR
             });
         }
+        // If response body was removed, that's a breaking change
+        if (prevResponse?.body != null && curResponse?.body == null) {
+            reasons.push({
+                rule: "response_body_removed",
+                description: `Response body was removed from endpoint "${prevEndpoint.name.originalName}"`,
+                bump: VersionBump.MAJOR
+            });
+        }
         return;
     }
 
