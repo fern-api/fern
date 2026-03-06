@@ -637,10 +637,11 @@ export class LocalTaskHandler {
                 return "";
             }
 
-            // Take the last maxEntries entries
-            const startIdx = entryStartIndices.length <= maxEntries ? 0 : entryStartIndices.length - maxEntries;
-            const firstLineIndex = entryStartIndices[startIdx]!;
-            const extracted = lines.slice(firstLineIndex).join("\n").trim();
+            // Take the first maxEntries entries (most recent are at the top in standard changelogs)
+            const firstLineIndex = entryStartIndices[0]!;
+            const endEntryIndex = entryStartIndices[Math.min(maxEntries, entryStartIndices.length)];
+            const endLineIndex = endEntryIndex != null ? endEntryIndex : lines.length;
+            const extracted = lines.slice(firstLineIndex, endLineIndex).join("\n").trim();
 
             // Truncate to 2KB if needed
             if (extracted.length > MAX_CHANGELOG_SIZE) {

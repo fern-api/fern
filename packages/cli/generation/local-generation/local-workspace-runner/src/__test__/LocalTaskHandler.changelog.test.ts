@@ -115,13 +115,13 @@ describe("LocalTaskHandler - readPriorChangelog", () => {
         await writeFile(join(tmpDir, "CHANGELOG.md"), changelog);
 
         const result = await handler.readPriorChangelog(3);
-        // Should contain entries 3, 4, 5 (the last 3)
+        // Should contain the 3 most recent entries (top of file)
+        expect(result).toContain("## [2.0.0]");
+        expect(result).toContain("## [1.3.0]");
         expect(result).toContain("## [1.2.3]");
-        expect(result).toContain("## [1.2.2]");
-        expect(result).toContain("## [1.2.1]");
-        // Should NOT contain the first 2 entries
-        expect(result).not.toContain("## [2.0.0]");
-        expect(result).not.toContain("## [1.3.0]");
+        // Should NOT contain the older entries
+        expect(result).not.toContain("## [1.2.2]");
+        expect(result).not.toContain("## [1.2.1]");
     });
 
     it("returns empty string when CHANGELOG.md does not exist", async () => {
