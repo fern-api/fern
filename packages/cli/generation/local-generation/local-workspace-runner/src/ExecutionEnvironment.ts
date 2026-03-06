@@ -18,5 +18,7 @@ export declare namespace ExecutionEnvironment {
 }
 
 export interface ExecutionEnvironment {
+    /** Whether this environment runs inside a container and needs container-internal paths in the generator config. */
+    readonly usesContainerPaths: boolean;
     execute(args: ExecutionEnvironment.ExecuteArgs): Promise<void>;
 }

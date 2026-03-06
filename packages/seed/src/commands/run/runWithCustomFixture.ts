@@ -142,6 +142,7 @@ export async function runWithCustomFixture({
         if (!skipScripts) {
             await scriptRunner?.stop();
         }
+        await testRunner.cleanup();
     }
 }
 

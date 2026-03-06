@@ -154,6 +154,7 @@ function addTestCommand(cli: Argv) {
             const lock = new Semaphore(argv.parallel);
             const tests: Promise<boolean>[] = [];
             const scriptRunners: ScriptRunner[] = [];
+            const testRunners: TestRunner[] = [];
 
             for (const generator of generators) {
                 if (argv.generator != null && !argv.generator.includes(generator.workspaceName)) {
@@ -260,6 +261,7 @@ function addTestCommand(cli: Argv) {
                 }
 
                 scriptRunners.push(scriptRunner);
+                testRunners.push(testRunner);
                 tests.push(
                     testGenerator({
                         generator,
@@ -275,6 +277,10 @@ function addTestCommand(cli: Argv) {
 
             for (const scriptRunner of scriptRunners) {
                 await scriptRunner.stop();
+            }
+
+            for (const testRunner of testRunners) {
+                await testRunner.cleanup();
             }
 
             // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
