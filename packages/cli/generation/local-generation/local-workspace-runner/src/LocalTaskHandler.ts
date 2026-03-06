@@ -29,7 +29,8 @@ import { isAutoVersion, VersionBump as LocalVersionBump } from "./VersionUtils.j
  */
 export function extractLanguageFromGeneratorName(generatorName: string): string {
     // Generator names follow the pattern: "fernapi/fern-{language}-sdk" or "fernapi/fern-{language}-model"
-    const match = generatorName.match(/fern-(\w+?)(?:-sdk|-model|-server|-spring|-express|-fastapi)?$/i);
+    // Use a greedy match for the suffix to handle any suffix (e.g. -sdk, -fiber, -spring, etc.)
+    const match = generatorName.match(/fern-(\w+?)(?:-[a-z][\w-]*)?$/i);
     if (match?.[1] != null) {
         const raw = match[1].toLowerCase();
         // Normalize common aliases

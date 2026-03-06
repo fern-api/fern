@@ -2360,6 +2360,18 @@ describe("extractLanguageFromGeneratorName", () => {
         expect(extractLanguageFromGeneratorName("fernapi/fern-python-fastapi")).toBe("python");
     });
 
+    it("extracts go from fernapi/fern-go-fiber (unknown suffix)", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-go-fiber")).toBe("go");
+    });
+
+    it("extracts ruby from fernapi/fern-ruby-custom-server (unknown suffix)", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-ruby-custom-server")).toBe("ruby");
+    });
+
+    it("extracts csharp from fernapi/fern-csharp-grpc (unknown suffix)", () => {
+        expect(extractLanguageFromGeneratorName("fernapi/fern-csharp-grpc")).toBe("csharp");
+    });
+
     it("defaults to typescript for unknown generator names", () => {
         expect(extractLanguageFromGeneratorName("unknown-generator")).toBe("typescript");
     });
