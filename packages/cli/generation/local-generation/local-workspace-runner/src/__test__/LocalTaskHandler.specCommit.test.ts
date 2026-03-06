@@ -20,6 +20,17 @@ vi.mock("@fern-api/logging-execa", () => ({
     loggingExeca: vi.fn()
 }));
 
+// Helper to create a mock result for loggingExeca
+function mockExecaResult(stdout: string) {
+    return {
+        stdout,
+        stderr: "",
+        exitCode: 0,
+        command: "git",
+        escapedCommand: "git"
+    };
+}
+
 // Helper to create a minimal LocalTaskHandler for testing readSpecCommitMessage
 function createHandler(absolutePathToSpecRepo: AbsoluteFilePath | undefined): LocalTaskHandler {
     const mockLogger = {
@@ -53,13 +64,14 @@ describe("LocalTaskHandler.readSpecCommitMessage", () => {
 
     it("reads most recent .fern/ commit message from spec repo", async () => {
         const { loggingExeca } = await import("@fern-api/logging-execa");
-        vi.mocked(loggingExeca).mockResolvedValueOnce({
-            stdout: "add /payments endpoint\n",
-            stderr: "",
-            exitCode: 0,
-            command: "git log",
-            escapedCommand: "git log"
-        } as unknown as Awaited<ReturnType<typeof loggingExeca>>);
+        // First call: git rev-parse --show-toplevel
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("/path/to/repo-root") as Awaited<ReturnType<typeof loggingExeca>>
+        );
+        // Second call: git log
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("add /payments endpoint\n") as Awaited<ReturnType<typeof loggingExeca>>
+        );
 
         const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
         const result = await handler.readSpecCommitMessage();
@@ -68,20 +80,25 @@ describe("LocalTaskHandler.readSpecCommitMessage", () => {
         expect(loggingExeca).toHaveBeenCalledWith(
             expect.anything(),
             "git",
-            ["log", "-1", "--format=%B", "--", ".fern/"],
+            ["rev-parse", "--show-toplevel"],
             expect.objectContaining({ cwd: "/path/to/spec-repo", doNotPipeOutput: true })
+        );
+        expect(loggingExeca).toHaveBeenCalledWith(
+            expect.anything(),
+            "git",
+            ["log", "-1", "--format=%B", "--", ".fern/"],
+            expect.objectContaining({ cwd: "/path/to/repo-root", doNotPipeOutput: true })
         );
     });
 
     it("returns empty string for merge commit messages", async () => {
         const { loggingExeca } = await import("@fern-api/logging-execa");
-        vi.mocked(loggingExeca).mockResolvedValueOnce({
-            stdout: "Merge branch 'main' into feature/payments\n",
-            stderr: "",
-            exitCode: 0,
-            command: "git log",
-            escapedCommand: "git log"
-        } as unknown as Awaited<ReturnType<typeof loggingExeca>>);
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("/path/to/repo-root") as Awaited<ReturnType<typeof loggingExeca>>
+        );
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("Merge branch 'main' into feature/payments\n") as Awaited<ReturnType<typeof loggingExeca>>
+        );
 
         const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
         const result = await handler.readSpecCommitMessage();
@@ -91,13 +108,12 @@ describe("LocalTaskHandler.readSpecCommitMessage", () => {
 
     it("does not filter messages that contain merge but do not start with it", async () => {
         const { loggingExeca } = await import("@fern-api/logging-execa");
-        vi.mocked(loggingExeca).mockResolvedValueOnce({
-            stdout: "Add emerger service endpoint\n",
-            stderr: "",
-            exitCode: 0,
-            command: "git log",
-            escapedCommand: "git log"
-        } as unknown as Awaited<ReturnType<typeof loggingExeca>>);
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("/path/to/repo-root") as Awaited<ReturnType<typeof loggingExeca>>
+        );
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("Add emerger service endpoint\n") as Awaited<ReturnType<typeof loggingExeca>>
+        );
 
         const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
         const result = await handler.readSpecCommitMessage();
@@ -108,13 +124,12 @@ describe("LocalTaskHandler.readSpecCommitMessage", () => {
     it("truncates spec commit message longer than 500 characters", async () => {
         const { loggingExeca } = await import("@fern-api/logging-execa");
         const longMessage = "a".repeat(600);
-        vi.mocked(loggingExeca).mockResolvedValueOnce({
-            stdout: longMessage,
-            stderr: "",
-            exitCode: 0,
-            command: "git log",
-            escapedCommand: "git log"
-        } as unknown as Awaited<ReturnType<typeof loggingExeca>>);
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("/path/to/repo-root") as Awaited<ReturnType<typeof loggingExeca>>
+        );
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult(longMessage) as Awaited<ReturnType<typeof loggingExeca>>
+        );
 
         const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
         const result = await handler.readSpecCommitMessage();
@@ -123,11 +138,26 @@ describe("LocalTaskHandler.readSpecCommitMessage", () => {
         expect(result).toBe("a".repeat(500) + "\u2026");
     });
 
-    it("returns empty string when git log command fails", async () => {
+    it("returns empty string when git rev-parse fails (not a git repo)", async () => {
         const { loggingExeca } = await import("@fern-api/logging-execa");
         vi.mocked(loggingExeca).mockRejectedValueOnce(new Error("not a git repository"));
 
         const handler = createHandler(AbsoluteFilePath.of("/path/to/not-a-repo"));
+        const result = await handler.readSpecCommitMessage();
+
+        expect(result).toBe("");
+    });
+
+    it("returns empty string when git log command fails", async () => {
+        const { loggingExeca } = await import("@fern-api/logging-execa");
+        // rev-parse succeeds
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("/path/to/repo-root") as Awaited<ReturnType<typeof loggingExeca>>
+        );
+        // git log fails
+        vi.mocked(loggingExeca).mockRejectedValueOnce(new Error("git log failed"));
+
+        const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
         const result = await handler.readSpecCommitMessage();
 
         expect(result).toBe("");
@@ -142,13 +172,12 @@ describe("LocalTaskHandler.readSpecCommitMessage", () => {
 
     it("returns empty string for messages shorter than 5 characters", async () => {
         const { loggingExeca } = await import("@fern-api/logging-execa");
-        vi.mocked(loggingExeca).mockResolvedValueOnce({
-            stdout: "fix\n",
-            stderr: "",
-            exitCode: 0,
-            command: "git log",
-            escapedCommand: "git log"
-        } as unknown as Awaited<ReturnType<typeof loggingExeca>>);
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("/path/to/repo-root") as Awaited<ReturnType<typeof loggingExeca>>
+        );
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("fix\n") as Awaited<ReturnType<typeof loggingExeca>>
+        );
 
         const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
         const result = await handler.readSpecCommitMessage();
@@ -158,18 +187,31 @@ describe("LocalTaskHandler.readSpecCommitMessage", () => {
 
     it("returns empty string for empty git output", async () => {
         const { loggingExeca } = await import("@fern-api/logging-execa");
-        vi.mocked(loggingExeca).mockResolvedValueOnce({
-            stdout: "",
-            stderr: "",
-            exitCode: 0,
-            command: "git log",
-            escapedCommand: "git log"
-        } as unknown as Awaited<ReturnType<typeof loggingExeca>>);
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("/path/to/repo-root") as Awaited<ReturnType<typeof loggingExeca>>
+        );
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("") as Awaited<ReturnType<typeof loggingExeca>>
+        );
 
         const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
         const result = await handler.readSpecCommitMessage();
 
         expect(result).toBe("");
+    });
+
+    it("returns empty string when rev-parse returns empty output", async () => {
+        const { loggingExeca } = await import("@fern-api/logging-execa");
+        vi.mocked(loggingExeca).mockResolvedValueOnce(
+            mockExecaResult("") as Awaited<ReturnType<typeof loggingExeca>>
+        );
+
+        const handler = createHandler(AbsoluteFilePath.of("/path/to/spec-repo"));
+        const result = await handler.readSpecCommitMessage();
+
+        expect(result).toBe("");
+        // Should not proceed to git log when rev-parse returns empty
+        expect(loggingExeca).toHaveBeenCalledTimes(1);
     });
 });
 
@@ -213,5 +255,9 @@ describe("LocalTaskHandler spec_commit_message integration", () => {
 
     it("LocalTaskHandler Init interface includes absolutePathToSpecRepo field", () => {
         expect(localTaskHandlerSource).toContain("absolutePathToSpecRepo: AbsoluteFilePath | undefined;");
+    });
+
+    it("readSpecCommitMessage uses git rev-parse to find repo root", () => {
+        expect(localTaskHandlerSource).toContain('["rev-parse", "--show-toplevel"]');
     });
 });
