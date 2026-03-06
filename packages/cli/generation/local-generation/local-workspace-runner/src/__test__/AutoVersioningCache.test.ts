@@ -67,18 +67,26 @@ describe("AutoVersioningCache", () => {
         expect(secondComputed).toBe(false);
     });
 
-    it("produces different cache keys for same diff but different language or version", () => {
+    it("produces different cache keys for same diff but different language, version, or specCommitMessage", () => {
         const cache = new AutoVersioningCache();
         const diff = "diff --git a/src/index.ts\n+export const foo = true;";
 
         const keyTs = cache.key(diff, "typescript", "1.0.0");
         const keyPy = cache.key(diff, "python", "1.0.0");
         const keyTsDiffVer = cache.key(diff, "typescript", "2.0.0");
+        const keyWithSpec = cache.key(diff, "typescript", "1.0.0", "add /payments endpoint");
+        const keyWithDiffSpec = cache.key(diff, "typescript", "1.0.0", "remove /users endpoint");
+        const keyNoSpec = cache.key(diff, "typescript", "1.0.0", "");
 
         // Same diff but different language → different keys
         expect(keyTs).not.toBe(keyPy);
         // Same diff and language but different previous version → different keys
         expect(keyTs).not.toBe(keyTsDiffVer);
+        // Same diff but different spec commit message → different keys
+        expect(keyTs).not.toBe(keyWithSpec);
+        expect(keyWithSpec).not.toBe(keyWithDiffSpec);
+        // Empty string spec commit message matches default (no arg)
+        expect(keyTs).toBe(keyNoSpec);
     });
 
     it("does not return cached result for a different diff", async () => {
