@@ -52,26 +52,6 @@ function baseArgs(overrides?: Partial<CompileCommand.Args>): CompileCommand.Args
 describe("fern api compile", () => {
     const cmd = new CompileCommand();
 
-    describe("--output - (stdout)", () => {
-        it("writes valid IR JSON to stdout", async () => {
-            const { context, getStdout, getStderr } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
-            await cmd.handle(context, baseArgs({ output: "-" }));
-
-            const stdout = getStdout();
-            expect(stdout.length).toBeGreaterThan(0);
-
-            const ir = JSON.parse(stdout);
-            expect(ir.apiName).toBeDefined();
-        });
-
-        it("writes no human-readable output to stderr at default log level", async () => {
-            const { context, getStderr } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
-            await cmd.handle(context, baseArgs({ output: "-" }));
-
-            expect(getStderr()).toBe("");
-        });
-    });
-
     describe("--output <file>", () => {
         let outputPath: string;
 
@@ -97,6 +77,13 @@ describe("fern api compile", () => {
             const ir = JSON.parse(content);
             expect(ir.apiName).toBeDefined();
         });
+
+        it("writes no human-readable output to stderr at default log level", async () => {
+            const { context, getStderr } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+            await cmd.handle(context, baseArgs({ output: outputPath }));
+
+            expect(getStderr()).toBe("");
+        });
     });
 
     describe("no --output (validate only)", () => {
@@ -116,11 +103,26 @@ describe("fern api compile", () => {
     });
 
     describe("--api flag", () => {
-        it("compiles a specific API by name", async () => {
-            const { context, getStdout } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
-            await cmd.handle(context, baseArgs({ api: "api", output: "-" }));
+        let outputPath: string;
 
-            const ir = JSON.parse(getStdout());
+        beforeEach(() => {
+            outputPath = join(SIMPLE_API_DIR, `ir-test-${randomUUID()}.json`);
+        });
+
+        afterEach(async () => {
+            try {
+                await rm(outputPath, { force: true });
+            } catch {
+                // ignore
+            }
+        });
+
+        it("compiles a specific API by name", async () => {
+            const { context } = createTestContextWithCapture({ cwd: SIMPLE_API_DIR });
+            await cmd.handle(context, baseArgs({ api: "api", output: outputPath }));
+
+            const content = await readFile(outputPath, "utf-8");
+            const ir = JSON.parse(content);
             expect(ir.apiName).toBeDefined();
         });
 
