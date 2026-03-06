@@ -14,10 +14,12 @@ import { TestRunner } from "./TestRunner.js";
 
 export class ContainerTestRunner extends TestRunner {
     private readonly runner: ContainerRunner;
+    private readonly parallelism: number;
     private reusableContainer: ReusableContainerExecutionEnvironment | undefined;
 
-    constructor(args: TestRunner.Args & { runner?: ContainerRunner }) {
+    constructor(args: TestRunner.Args & { runner?: ContainerRunner; parallelism?: number }) {
         super(args);
+        this.parallelism = args.parallelism ?? 4;
 
         if (args.runner != null) {
             this.runner = args.runner;
@@ -64,7 +66,8 @@ export class ContainerTestRunner extends TestRunner {
         }
         this.reusableContainer = new ReusableContainerExecutionEnvironment({
             imageName: this.getContainerImageName(),
-            runner: this.runner
+            runner: this.runner,
+            poolSize: this.parallelism
         });
         await this.reusableContainer.start(CONSOLE_LOGGER);
     }

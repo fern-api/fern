@@ -18,74 +18,112 @@ import {
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 
 /**
- * An execution environment that starts a long-lived container once and reuses it
- * across multiple generator executions. Instead of `docker run` per fixture,
+ * An execution environment that starts a pool of long-lived containers and reuses
+ * them across multiple generator executions. Instead of `docker run` per fixture,
  * files are copied in via `docker cp`, the generator is invoked via `docker exec`,
  * and output is copied back out.
+ *
+ * The pool size controls how many fixtures can run in parallel. Each container in the
+ * pool handles one fixture at a time, providing isolation without needing a mutex.
  */
 export class ReusableContainerExecutionEnvironment implements ExecutionEnvironment {
     public readonly usesContainerPaths = true;
 
-    private containerId: string | undefined;
+    private containers: string[] = [];
+    private availableContainers: string[] = [];
+    private waiters: Array<(containerId: string) => void> = [];
     private entrypoint: string[] | undefined;
     private readonly imageName: string;
     private readonly runner: ContainerRunner;
+    private readonly poolSize: number;
 
-    // Mutex to serialize execute() calls — the container uses fixed paths (/fern/*, /tmp/LICENSE)
-    // so concurrent executions would overwrite each other's files.
-    private executionQueue: Promise<void> = Promise.resolve();
-
-    constructor({ imageName, runner }: { imageName: string; runner?: ContainerRunner }) {
+    constructor({ imageName, runner, poolSize }: { imageName: string; runner?: ContainerRunner; poolSize?: number }) {
         this.imageName = imageName;
         this.runner = runner ?? "docker";
+        this.poolSize = poolSize ?? 1;
     }
 
     /**
-     * Starts the long-lived container and inspects the image for its entrypoint.
+     * Starts the pool of long-lived containers and inspects the image for its entrypoint.
      * Must be called before any `execute()` calls.
      */
     public async start(logger: Logger): Promise<void> {
         // Get the image entrypoint before starting (since we override it with /bin/sh)
         this.entrypoint = await this.getImageEntrypoint(logger);
 
-        this.containerId = await startContainer({
-            logger,
-            imageName: this.imageName,
-            runner: this.runner
-        });
+        // Start N containers in parallel
+        const startPromises = [];
+        for (let i = 0; i < this.poolSize; i++) {
+            startPromises.push(
+                startContainer({
+                    logger,
+                    imageName: this.imageName,
+                    runner: this.runner
+                })
+            );
+        }
+        this.containers = await Promise.all(startPromises);
+        this.availableContainers = [...this.containers];
 
-        logger.info(`Started reusable container ${this.containerId} from image ${this.imageName}`);
+        logger.info(
+            `Started ${this.containers.length} reusable container(s) from image ${this.imageName}: ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
+        );
     }
 
     public async execute(args: ExecutionEnvironment.ExecuteArgs): Promise<void> {
-        if (this.containerId == null || this.entrypoint == null) {
-            throw new Error("Container not started. Call start() before execute().");
+        if (this.containers.length === 0 || this.entrypoint == null) {
+            throw new Error("Containers not started. Call start() before execute().");
         }
 
-        // Serialize access — the container uses fixed paths so only one fixture can run at a time.
-        const result = this.executionQueue.then(() => this.doExecute(args));
-        // Update the queue to wait for this execution (swallow errors so the queue continues)
-        this.executionQueue = result.catch((_e: unknown) => {
-            // Swallow errors so the queue continues to the next fixture.
-            // The error is still propagated to the caller via the `result` promise returned above.
-        });
-        return result;
+        const containerId = await this.acquire();
+        try {
+            await this.doExecute(containerId, args);
+        } finally {
+            this.release(containerId);
+        }
     }
 
-    private async doExecute({
-        irPath,
-        configPath,
-        outputPath,
-        snippetPath,
-        snippetTemplatePath,
-        licenseFilePath,
-        context
-    }: ExecutionEnvironment.ExecuteArgs): Promise<void> {
-        if (this.containerId == null || this.entrypoint == null) {
-            throw new Error("Container not started. Call start() before execute().");
+    /**
+     * Acquires a container from the pool, waiting if all are busy.
+     */
+    private acquire(): Promise<string> {
+        const available = this.availableContainers.shift();
+        if (available != null) {
+            return Promise.resolve(available);
+        }
+        return new Promise<string>((resolve) => {
+            this.waiters.push(resolve);
+        });
+    }
+
+    /**
+     * Releases a container back to the pool, waking up any waiters.
+     */
+    private release(containerId: string): void {
+        const waiter = this.waiters.shift();
+        if (waiter != null) {
+            waiter(containerId);
+        } else {
+            this.availableContainers.push(containerId);
+        }
+    }
+
+    private async doExecute(
+        containerId: string,
+        {
+            irPath,
+            configPath,
+            outputPath,
+            snippetPath,
+            snippetTemplatePath,
+            licenseFilePath,
+            context
+        }: ExecutionEnvironment.ExecuteArgs
+    ): Promise<void> {
+        if (this.entrypoint == null) {
+            throw new Error("Containers not started. Call start() before execute().");
         }
         const entrypoint = this.entrypoint;
-        const containerId = this.containerId;
         const logger = context.logger;
 
         // Clean the entire /fern directory and /tmp/LICENSE to ensure no state leaks between fixtures.
@@ -202,18 +240,22 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
     }
 
     /**
-     * Stops and removes the long-lived container.
+     * Stops and removes all containers in the pool.
      */
     public async stop(logger: Logger): Promise<void> {
-        if (this.containerId != null) {
+        const stopPromises = this.containers.map(async (containerId) => {
             await stopContainer({
                 logger,
-                containerId: this.containerId,
+                containerId,
                 runner: this.runner
             });
-            logger.info(`Stopped reusable container ${this.containerId}`);
-            this.containerId = undefined;
-        }
+        });
+        await Promise.all(stopPromises);
+        logger.info(
+            `Stopped ${this.containers.length} reusable container(s): ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
+        );
+        this.containers = [];
+        this.availableContainers = [];
     }
 
     private async getImageEntrypoint(logger: Logger): Promise<string[]> {

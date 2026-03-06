@@ -256,7 +256,8 @@ function addTestCommand(cli: Argv) {
                         keepContainer: argv.keepContainer,
                         scriptRunner,
                         inspect: argv.inspect,
-                        runner: argv.containerRuntime as "docker" | "podman" | undefined
+                        runner: argv.containerRuntime as "docker" | "podman" | undefined,
+                        parallelism: argv.parallel
                     });
                 }
 
