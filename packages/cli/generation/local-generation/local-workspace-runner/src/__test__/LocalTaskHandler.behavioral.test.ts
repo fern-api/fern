@@ -744,7 +744,7 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
 
         // Should NOT log split message
         const infoCalls = mockLogger.info.mock.calls.map((c: unknown[]) => c[0]);
-        const splitMessages = infoCalls.filter((msg: string) => typeof msg === "string" && msg.includes("Split into"));
+        const splitMessages = infoCalls.filter((msg: unknown) => typeof msg === "string" && msg.includes("Split into"));
         expect(splitMessages).toHaveLength(0);
     });
 
