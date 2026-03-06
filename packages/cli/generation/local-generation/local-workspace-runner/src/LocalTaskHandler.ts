@@ -283,11 +283,15 @@ export class LocalTaskHandler {
      * On AI failure the method throws so that each generator can apply its own
      * fallback logic (e.g. PATCH bump with generator-specific previousVersion).
      */
-    private async getAnalysis(cleanedDiff: string): Promise<CachedAnalysis | null> {
+    private async getAnalysis(
+        cleanedDiff: string,
+        language: string,
+        previousVersion: string
+    ): Promise<CachedAnalysis | null> {
         const doAnalysis = async (): Promise<CachedAnalysis | null> => {
             const clientRegistry = await this.getClientRegistry();
             const bamlClient = BamlClient.withOptions({ clientRegistry });
-            const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff);
+            const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff, language, previousVersion);
 
             if (analysis.version_bump === VersionBump.NO_CHANGE) {
                 return null;
@@ -302,7 +306,7 @@ export class LocalTaskHandler {
             return doAnalysis();
         }
 
-        const cacheKey = this.autoVersioningCache.key(cleanedDiff);
+        const cacheKey = this.autoVersioningCache.key(cleanedDiff, language, previousVersion);
         const { promise, isHit } = this.autoVersioningCache.getOrCompute(cacheKey, doAnalysis);
 
         if (isHit) {
