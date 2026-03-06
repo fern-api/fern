@@ -1591,7 +1591,14 @@ export class DocsDefinitionResolver {
         // because the OSSWorkspace may not be resolved when the v3 parser fails or is disabled.
         let workspacesToProcess: OSSWorkspace[];
         if (apiName != null) {
-            const matched = this.ossWorkspaces.find((ws) => ws.workspaceName === apiName);
+            // Match by workspaceName first (set to folder name during project loading),
+            // then fall back to matching the last segment of absoluteFilePath in case
+            // workspaceName was overridden or not set.
+            const matched = this.ossWorkspaces.find(
+                (ws) =>
+                    ws.workspaceName === apiName ||
+                    ws.absoluteFilePath.split("/").pop() === apiName
+            );
             workspacesToProcess = matched ? [matched] : [];
         } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
             workspacesToProcess = [this.ossWorkspaces[0]];
