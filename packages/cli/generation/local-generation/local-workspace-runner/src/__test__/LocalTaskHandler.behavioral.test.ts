@@ -194,9 +194,46 @@ vi.mock("../AutoVersioningService.js", () => ({
     }
 }));
 
-// Mock AutoVersioningCache
+// Mock AutoVersioningCache — provide real-ish implementation for cache tests
 vi.mock("../AutoVersioningCache.js", () => ({
-    AutoVersioningCache: class MockAutoVersioningCache {}
+    AutoVersioningCache: class MockAutoVersioningCache {
+        private cache = new Map<string, Promise<unknown>>();
+        private behavioralCache = new Map<string, Promise<unknown>>();
+
+        key(cleanedDiff: string, language: string, previousVersion: string) {
+            return `tier2:${language}:${previousVersion}:${cleanedDiff.slice(0, 8)}`;
+        }
+
+        behavioralKey(cleanedDiff: string, language: string) {
+            return `tier3:${language}:${cleanedDiff.slice(0, 8)}`;
+        }
+
+        getOrCompute(key: string, compute: () => Promise<unknown>) {
+            const existing = this.cache.get(key);
+            if (existing !== undefined) {
+                return { promise: existing, isHit: true };
+            }
+            const promise = compute().catch((error: unknown) => {
+                this.cache.delete(key);
+                throw error;
+            });
+            this.cache.set(key, promise);
+            return { promise, isHit: false };
+        }
+
+        getOrComputeBehavioral(key: string, compute: () => Promise<unknown>) {
+            const existing = this.behavioralCache.get(key);
+            if (existing !== undefined) {
+                return { promise: existing, isHit: true };
+            }
+            const promise = compute().catch((error: unknown) => {
+                this.behavioralCache.delete(key);
+                throw error;
+            });
+            this.behavioralCache.set(key, promise);
+            return { promise, isHit: false };
+        }
+    }
 }));
 
 // Mock VersionUtils
@@ -419,5 +456,234 @@ describe("LocalTaskHandler - Tier 3 Behavioral Analysis", () => {
         expect(mockAnalyzeSdkDiff).toHaveBeenCalledOnce();
         expect(mockAnalyzeBehavioralChanges).not.toHaveBeenCalled();
         expect(result).not.toBeNull();
+    });
+});
+
+describe("LocalTaskHandler - Tier 3 Behavioral Analysis with Cache", () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+        mockWithOptions.mockReturnValue({
+            AnalyzeSdkDiff: mockAnalyzeSdkDiff,
+            AnalyzeBehavioralChanges: mockAnalyzeBehavioralChanges
+        });
+    });
+
+    async function createCachedTaskHandler(overrides: Record<string, unknown> = {}) {
+        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
+        const { AutoVersioningCache } = await import("../AutoVersioningCache.js");
+        const cache = new AutoVersioningCache();
+        return {
+            handler: new LocalTaskHandler({
+                // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
+                context: mockContext as any,
+                // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+                absolutePathToTmpOutputDirectory: "/tmp/output" as any,
+                absolutePathToTmpSnippetJSON: undefined,
+                absolutePathToLocalSnippetTemplateJSON: undefined,
+                // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+                absolutePathToLocalOutput: "/tmp/local-output" as any,
+                absolutePathToLocalSnippetJSON: undefined,
+                absolutePathToTmpSnippetTemplatesJSON: undefined,
+                version: "505.503.4455",
+                ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
+                isWhitelabel: false,
+                generatorLanguage: "typescript",
+                autoVersioningCache: cache,
+                ...overrides
+            }),
+            cache
+        };
+    }
+
+    it("routes Tier 3 through cache when autoVersioningCache is provided", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "chore: internal refactoring"
+        });
+        mockAnalyzeBehavioralChanges.mockResolvedValue({
+            version_bump: BehavioralBump.MINOR,
+            behavioral_changes: ["Changed retry count"],
+            message: "feat: increase retry count"
+        });
+
+        const { handler } = await createCachedTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.1.0");
+        expect(result?.commitMessage).toContain("feat: increase retry count");
+        // AI should have been called exactly once
+        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledOnce();
+    });
+
+    it("deduplicates concurrent Tier 3 calls via cache", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "chore: internal refactoring"
+        });
+        mockAnalyzeBehavioralChanges.mockResolvedValue({
+            version_bump: BehavioralBump.MINOR,
+            behavioral_changes: ["Changed default timeout"],
+            message: "feat: increase default timeout"
+        });
+
+        // Create two handlers sharing the same cache (simulating concurrent generators)
+        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
+        const { AutoVersioningCache } = await import("../AutoVersioningCache.js");
+        const sharedCache = new AutoVersioningCache();
+
+        const handler1 = new LocalTaskHandler({
+            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
+            context: mockContext as any,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
+            absolutePathToTmpSnippetJSON: undefined,
+            absolutePathToLocalSnippetTemplateJSON: undefined,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToLocalOutput: "/tmp/local-output" as any,
+            absolutePathToLocalSnippetJSON: undefined,
+            absolutePathToTmpSnippetTemplatesJSON: undefined,
+            version: "505.503.4455",
+            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
+            isWhitelabel: false,
+            generatorLanguage: "typescript",
+            autoVersioningCache: sharedCache
+        });
+
+        const handler2 = new LocalTaskHandler({
+            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
+            context: mockContext as any,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
+            absolutePathToTmpSnippetJSON: undefined,
+            absolutePathToLocalSnippetTemplateJSON: undefined,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToLocalOutput: "/tmp/local-output" as any,
+            absolutePathToLocalSnippetJSON: undefined,
+            absolutePathToTmpSnippetTemplatesJSON: undefined,
+            version: "505.503.4455",
+            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
+            isWhitelabel: false,
+            generatorLanguage: "typescript",
+            autoVersioningCache: sharedCache
+        });
+
+        // Run concurrently — both should get the same result
+        const [result1, result2] = await Promise.all([
+            callHandleAutoVersioning(handler1),
+            callHandleAutoVersioning(handler2)
+        ]);
+
+        // Both should have the escalated MINOR result
+        expect(result1?.version).toBe("1.1.0");
+        expect(result2?.version).toBe("1.1.0");
+
+        // Tier 3 AI should only be called ONCE (second call reuses the cached promise)
+        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledOnce();
+    });
+
+    it("evicts failed Tier 3 from cache so next caller can retry", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "chore: internal refactoring"
+        });
+        // First call fails
+        mockAnalyzeBehavioralChanges.mockRejectedValueOnce(new Error("AI timeout"));
+        // Second call succeeds
+        mockAnalyzeBehavioralChanges.mockResolvedValueOnce({
+            version_bump: BehavioralBump.MINOR,
+            behavioral_changes: ["Changed retry count"],
+            message: "feat: increase retry count"
+        });
+
+        // First handler — Tier 3 fails, falls back to PATCH
+        const { handler: handler1, cache } = await createCachedTaskHandler();
+        const result1 = await callHandleAutoVersioning(handler1);
+        expect(result1?.version).toBe("1.0.1"); // PATCH fallback
+
+        // Second handler with same cache — should retry and succeed
+        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
+        const handler2 = new LocalTaskHandler({
+            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
+            context: mockContext as any,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
+            absolutePathToTmpSnippetJSON: undefined,
+            absolutePathToLocalSnippetTemplateJSON: undefined,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToLocalOutput: "/tmp/local-output" as any,
+            absolutePathToLocalSnippetJSON: undefined,
+            absolutePathToTmpSnippetTemplatesJSON: undefined,
+            version: "505.503.4455",
+            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
+            isWhitelabel: false,
+            generatorLanguage: "typescript",
+            autoVersioningCache: cache
+        });
+        const result2 = await callHandleAutoVersioning(handler2);
+        expect(result2?.version).toBe("1.1.0"); // MINOR from retry
+
+        // AI was called twice total (first failed, second succeeded)
+        expect(mockAnalyzeBehavioralChanges).toHaveBeenCalledTimes(2);
+    });
+
+    it("logs cache hit for Tier 3", async () => {
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "chore: internal refactoring"
+        });
+        mockAnalyzeBehavioralChanges.mockResolvedValue({
+            version_bump: BehavioralBump.PATCH,
+            behavioral_changes: [],
+            message: ""
+        });
+
+        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
+        const { AutoVersioningCache } = await import("../AutoVersioningCache.js");
+        const sharedCache = new AutoVersioningCache();
+
+        const handler1 = new LocalTaskHandler({
+            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
+            context: mockContext as any,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
+            absolutePathToTmpSnippetJSON: undefined,
+            absolutePathToLocalSnippetTemplateJSON: undefined,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToLocalOutput: "/tmp/local-output" as any,
+            absolutePathToLocalSnippetJSON: undefined,
+            absolutePathToTmpSnippetTemplatesJSON: undefined,
+            version: "505.503.4455",
+            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
+            isWhitelabel: false,
+            generatorLanguage: "typescript",
+            autoVersioningCache: sharedCache
+        });
+
+        const handler2 = new LocalTaskHandler({
+            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
+            context: mockContext as any,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
+            absolutePathToTmpSnippetJSON: undefined,
+            absolutePathToLocalSnippetTemplateJSON: undefined,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToLocalOutput: "/tmp/local-output" as any,
+            absolutePathToLocalSnippetJSON: undefined,
+            absolutePathToTmpSnippetTemplatesJSON: undefined,
+            version: "505.503.4455",
+            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
+            isWhitelabel: false,
+            generatorLanguage: "typescript",
+            autoVersioningCache: sharedCache
+        });
+
+        // First call populates cache
+        await callHandleAutoVersioning(handler1);
+        // Second call should hit cache
+        await callHandleAutoVersioning(handler2);
+
+        // Check that Tier 3 cache hit was logged
+        expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("Tier 3 cache hit"));
     });
 });
