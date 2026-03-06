@@ -16,6 +16,7 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -93,6 +94,31 @@ public abstract class UnionTypeSpecGenerator {
                 .addMethods(getStaticConstructors())
                 .addMethods(getIsSubTypeMethods())
                 .addMethods(getSubTypeMethods())
+                .addMethod(MethodSpec.methodBuilder("equals")
+                        .addAnnotation(Override.class)
+                        .addModifiers(Modifier.PUBLIC)
+                        .returns(boolean.class)
+                        .addParameter(Object.class, "other")
+                        .addStatement("if (this == other) return true")
+                        .addStatement(
+                                "return other instanceof $T && $L.equals((($T) other).$L)",
+                                unionClassName,
+                                getValueFieldName(),
+                                unionClassName,
+                                getValueFieldName())
+                        .build())
+                .addMethod(MethodSpec.methodBuilder("hashCode")
+                        .addAnnotation(Override.class)
+                        .addModifiers(Modifier.PUBLIC)
+                        .returns(int.class)
+                        .addStatement("return $T.hash($L)", Objects.class, getValueFieldName())
+                        .build())
+                .addMethod(MethodSpec.methodBuilder("toString")
+                        .addAnnotation(Override.class)
+                        .addModifiers(Modifier.PUBLIC)
+                        .returns(String.class)
+                        .addStatement("return $L.toString()", getValueFieldName())
+                        .build())
                 .addType(generateVisitorInterface())
                 .addType(generateValueInterface())
                 .addTypes(subTypes.stream()
