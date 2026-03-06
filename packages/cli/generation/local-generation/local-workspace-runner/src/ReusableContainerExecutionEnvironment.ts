@@ -75,8 +75,8 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                         logger,
                         containerId: result.value,
                         runner: this.runner
-                    }).catch(() => {
-                        // Best-effort cleanup
+                    }).catch((cleanupErr) => {
+                        logger.debug(`Best-effort cleanup failed for container ${result.value}: ${cleanupErr}`);
                     });
                 }
             }
