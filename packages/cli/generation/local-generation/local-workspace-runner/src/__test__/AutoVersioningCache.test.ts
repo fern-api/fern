@@ -5,7 +5,7 @@ import { AutoVersioningCache, CachedAnalysis } from "../AutoVersioningCache.js";
 describe("AutoVersioningCache", () => {
     it("calls AI when no cache entry exists", async () => {
         const cache = new AutoVersioningCache();
-        const key = cache.key("some diff content");
+        const key = cache.key("some diff content", "typescript", "1.0.0");
         let called = false;
         const { promise, isHit } = cache.getOrCompute(key, async () => {
             called = true;
@@ -19,7 +19,7 @@ describe("AutoVersioningCache", () => {
     it("returns cached result without calling AI on second identical diff", async () => {
         const cache = new AutoVersioningCache();
         const diff = "diff --git a/src/index.ts\n+export const foo = true;";
-        const key = cache.key(diff);
+        const key = cache.key(diff, "typescript", "1.0.0");
 
         const analysis: CachedAnalysis = { versionBump: VersionBump.MINOR, message: "feat: add foo export" };
 
@@ -42,7 +42,7 @@ describe("AutoVersioningCache", () => {
     it("caches NO_CHANGE result and returns it on subsequent identical diff", async () => {
         const cache = new AutoVersioningCache();
         const diff = "diff with no semantic changes";
-        const key = cache.key(diff);
+        const key = cache.key(diff, "python", "2.0.0");
 
         // null represents NO_CHANGE
         const first = cache.getOrCompute(key, async () => null);
@@ -59,13 +59,27 @@ describe("AutoVersioningCache", () => {
         expect(secondComputed).toBe(false);
     });
 
+    it("produces different cache keys for same diff but different language or version", () => {
+        const cache = new AutoVersioningCache();
+        const diff = "diff --git a/src/index.ts\n+export const foo = true;";
+
+        const keyTs = cache.key(diff, "typescript", "1.0.0");
+        const keyPy = cache.key(diff, "python", "1.0.0");
+        const keyTsDiffVer = cache.key(diff, "typescript", "2.0.0");
+
+        // Same diff but different language → different keys
+        expect(keyTs).not.toBe(keyPy);
+        // Same diff and language but different previous version → different keys
+        expect(keyTs).not.toBe(keyTsDiffVer);
+    });
+
     it("does not return cached result for a different diff", async () => {
         const cache = new AutoVersioningCache();
         const diff1 = "diff --git a/src/index.ts\n+export const foo = true;";
         const diff2 = "diff --git a/src/index.ts\n+export const bar = false;";
 
-        const key1 = cache.key(diff1);
-        const key2 = cache.key(diff2);
+        const key1 = cache.key(diff1, "typescript", "1.0.0");
+        const key2 = cache.key(diff2, "typescript", "1.0.0");
 
         expect(key1).not.toBe(key2);
 
@@ -87,8 +101,8 @@ describe("AutoVersioningCache", () => {
         const cache = new AutoVersioningCache();
         const diff = "diff --git a/src/index.ts\n+export const foo = true;";
 
-        const key1 = cache.key(diff);
-        const key2 = cache.key(diff);
+        const key1 = cache.key(diff, "java", "3.0.0");
+        const key2 = cache.key(diff, "java", "3.0.0");
 
         expect(key1).toBe(key2);
         // Keys should be sha256 hex strings (64 chars)
@@ -100,7 +114,7 @@ describe("AutoVersioningCache", () => {
         const cache1 = new AutoVersioningCache();
         const cache2 = new AutoVersioningCache();
         const diff = "some diff content";
-        const key = cache1.key(diff);
+        const key = cache1.key(diff, "typescript", "1.0.0");
 
         const analysis: CachedAnalysis = { versionBump: VersionBump.MAJOR, message: "feat: breaking change" };
         await cache1.getOrCompute(key, async () => analysis).promise;
@@ -127,7 +141,7 @@ describe("AutoVersioningCache", () => {
             return { versionBump: VersionBump.MINOR, message: "feat: add new endpoint" };
         };
 
-        const key = cache.key(cleanedDiff);
+        const key = cache.key(cleanedDiff, "typescript", "1.0.0");
 
         // Fire two concurrent getOrCompute calls (simulating Promise.all generators)
         const [r1, r2] = await Promise.all([
@@ -144,7 +158,7 @@ describe("AutoVersioningCache", () => {
 
     it("evicts failed promises so subsequent callers can retry", async () => {
         const cache = new AutoVersioningCache();
-        const key = cache.key("some diff");
+        const key = cache.key("some diff", "python", "0.1.0");
 
         // First call fails
         const first = cache.getOrCompute(key, async () => {
