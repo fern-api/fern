@@ -590,6 +590,22 @@
         "cpp"
       ]
     },
+    "docs.LibraryConfig": {
+      "type": "object",
+      "properties": {
+        "doxyfile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.LibraryConfiguration": {
       "type": "object",
       "properties": {
@@ -618,22 +634,6 @@
         "output",
         "lang"
       ],
-      "additionalProperties": false
-    },
-    "docs.LibraryConfig": {
-      "type": "object",
-      "properties": {
-        "doxyfile": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
       "additionalProperties": false
     },
     "docs.SegmentConfig": {
