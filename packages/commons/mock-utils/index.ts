@@ -336,7 +336,7 @@ export class WireMock {
     private exampleToQueryOrHeaderValue({ value }: { value: FernIr.ExampleTypeReference }): string | undefined {
         if (typeof value.jsonExample === "string") {
             const maybeDatetime = this.getDateTime(value);
-            return maybeDatetime != null ? maybeDatetime.toISOString() : value.jsonExample;
+            return maybeDatetime != null ? maybeDatetime.toISOString().replace(/\.000Z$/, "Z") : value.jsonExample;
         }
         if (typeof value.jsonExample === "number") {
             return value.jsonExample.toString();
