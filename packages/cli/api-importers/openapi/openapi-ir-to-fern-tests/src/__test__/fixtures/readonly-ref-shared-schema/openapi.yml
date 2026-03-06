@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  title: Readonly Ref Shared Schema API
+  description: >
+    Tests that readOnly on a $ref'd schema propagates correctly when the
+    parent schema is shared between request and response contexts.
+  version: 1.0.0
+
+paths:
+  /orgs/details:
+    get:
+      operationId: getOrgDetails
+      summary: Get organization details
+      responses:
+        "200":
+          description: Organization details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GetOrgDetailsResponse"
+
+    patch:
+      operationId: updateOrgDetails
+      summary: Update organization details
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateOrgDetailsRequest"
+      responses:
+        "200":
+          description: Updated organization details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UpdateOrgDetailsResponse"
+
+components:
+  schemas:
+    # A string type marked readOnly at the schema level (not property level).
+    # When OrgDetails.$id references this via $ref, the readOnly should propagate.
+    OrgId:
+      type: string
+      description: Organization identifier.
+      readOnly: true
+      pattern: "^org_[A-Za-z0-9]{16}$"
+
+    # Shared schema used in both request and response.
+    # The "id" property references OrgId which is readOnly.
+    OrgDetails:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          $ref: "#/components/schemas/OrgId"
+        name:
+          type: string
+          description: The name of this organization.
+        display_name:
+          type: string
+          description: Friendly name of this organization.
+
+    # All three alias the same shared schema
+    GetOrgDetailsResponse:
+      $ref: "#/components/schemas/OrgDetails"
+    UpdateOrgDetailsRequest:
+      $ref: "#/components/schemas/OrgDetails"
+    UpdateOrgDetailsResponse:
+      $ref: "#/components/schemas/OrgDetails"

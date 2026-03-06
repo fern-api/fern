@@ -743,20 +743,24 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private async generateReadme(context: SdkGeneratorContext): Promise<void> {
         try {
             const snippetCount = context.ir.dynamic?.endpoints ? Object.keys(context.ir.dynamic.endpoints).length : 0;
-            context.logger.debug(`Generating README.md with ${snippetCount} endpoint example(s)...`);
+            const hasWebSocket = this.hasWebSocketChannels(context);
+            context.logger.debug(`Generating README.md with ${snippetCount} endpoint example(s), websocket=${hasWebSocket}...`);
 
-            // If there are no endpoints, generate a simplified README
-            if (!snippetCount) {
-                context.logger.debug(`Generated simplified README.md for SDK with no endpoints`);
+            // If there are no endpoints and no WebSocket channels, skip README generation
+            if (!snippetCount && !hasWebSocket) {
+                context.logger.debug(`Generated simplified README.md for SDK with no endpoints and no WebSocket channels`);
                 return;
             }
 
-            // Generate endpoint snippets
-            const endpointSnippets = this.generateSnippets(context);
+            // Generate endpoint snippets (may be empty for WebSocket-only SDKs)
+            let endpointSnippets: FernGeneratorExec.Endpoint[] = [];
+            if (snippetCount) {
+                endpointSnippets = this.generateSnippets(context);
+            }
 
-            // If there are no endpoint snippets (i.e., no examples defined), skip README generation
-            if (endpointSnippets.length === 0) {
-                context.logger.debug(`Skipping README.md generation - no endpoint examples defined`);
+            // If there are no endpoint snippets and no WebSocket channels, skip README generation
+            if (endpointSnippets.length === 0 && !hasWebSocket) {
+                context.logger.debug(`Skipping README.md generation - no endpoint examples defined and no WebSocket channels`);
                 return;
             }
 
