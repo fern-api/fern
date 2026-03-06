@@ -71,7 +71,7 @@ client.bigunion.get(
 
 ```python
 from seed import SeedUnions
-from datetime import datetime
+import datetime
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
@@ -81,8 +81,8 @@ client.bigunion.update(
     request={
         "type": "normalSweet",
         "id": "id",
-        "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "archived_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "archived_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         "value": "value"
     },
 )
@@ -135,7 +135,7 @@ client.bigunion.update(
 
 ```python
 from seed import SeedUnions
-from datetime import datetime
+import datetime
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
@@ -146,15 +146,15 @@ client.bigunion.update_many(
         {
             "type": "normalSweet",
             "id": "id",
-            "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            "archived_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "archived_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
             "value": "value"
         },
         {
             "type": "normalSweet",
             "id": "id",
-            "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-            "archived_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "archived_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
             "value": "value"
         }
     ],

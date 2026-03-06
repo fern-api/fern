@@ -35,14 +35,14 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedTrace
-from uuid import UUID
+import uuid
 
 client = SeedTrace(
     token="<token>",
 )
 
 client.admin.update_test_submission_status(
-    submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     request={
         "type": "stopped"
     },
@@ -55,7 +55,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-from uuid import UUID
+import uuid
 
 from seed import AsyncSeedTrace
 
@@ -66,7 +66,7 @@ client = AsyncSeedTrace(
 
 async def main() -> None:
     await client.admin.update_test_submission_status(
-        submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         request={
             "type": "stopped"
         },

@@ -71,7 +71,7 @@ client.service.get_resource(
 
 ```python
 from seed import SeedMixedCase
-from datetime import date
+import datetime
 
 client = SeedMixedCase(
     base_url="https://yourhost.com/path/to/api",
@@ -79,7 +79,7 @@ client = SeedMixedCase(
 
 client.service.list_resources(
     page_limit=10,
-    before_date=date.fromisoformat("2023-01-01"),
+    before_date=datetime.date.fromisoformat("2023-01-01"),
 )
 
 ```

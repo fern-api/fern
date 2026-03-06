@@ -13,10 +13,9 @@
 <dd>
 
 ```python
-from seed import SeedQueryParameters
-from uuid import UUID
-from datetime import date, datetime
-from seed.user import User, NestedUser
+from seed import SeedQueryParameters, User, NestedUser
+import uuid
+import datetime
 
 client = SeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
@@ -24,9 +23,9 @@ client = SeedQueryParameters(
 
 client.user.get_username(
     limit=1,
-    id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    date=date.fromisoformat("2023-01-15"),
-    deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     bytes="SGVsbG8gd29ybGQh",
     user=User(
         name="name",
@@ -51,7 +50,7 @@ client.user.get_username(
             ],
         )
     ],
-    optional_deadline=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    optional_deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     key_value={
         "keyValue": "keyValue"
     },

@@ -13,8 +13,7 @@
 <dd>
 
 ```python
-from seed import SeedPagination
-from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
+from seed import SeedPagination, StartingAfterPaging, SingleFilterSearchRequest
 
 client = SeedPagination(
     token="<token>",
@@ -691,7 +690,7 @@ paginated endpoint.
 
 ```python
 from seed import SeedPagination
-from uuid import UUID
+import uuid
 
 client = SeedPagination(
     token="<token>",
@@ -699,7 +698,7 @@ client = SeedPagination(
 )
 
 client.inline_users.inline_users.list_with_extended_results(
-    cursor=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
 
 ```
@@ -750,7 +749,7 @@ client.inline_users.inline_users.list_with_extended_results(
 
 ```python
 from seed import SeedPagination
-from uuid import UUID
+import uuid
 
 client = SeedPagination(
     token="<token>",
@@ -758,7 +757,7 @@ client = SeedPagination(
 )
 
 client.inline_users.inline_users.list_with_extended_results(
-    cursor=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
 
 ```
@@ -1615,7 +1614,7 @@ paginated endpoint.
 
 ```python
 from seed import SeedPagination
-from uuid import UUID
+import uuid
 
 client = SeedPagination(
     token="<token>",
@@ -1623,7 +1622,7 @@ client = SeedPagination(
 )
 
 client.users.list_with_extended_results(
-    cursor=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
 
 ```
@@ -1674,7 +1673,7 @@ client.users.list_with_extended_results(
 
 ```python
 from seed import SeedPagination
-from uuid import UUID
+import uuid
 
 client = SeedPagination(
     token="<token>",
@@ -1682,7 +1681,7 @@ client = SeedPagination(
 )
 
 client.users.list_with_extended_results(
-    cursor=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    cursor=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
 
 ```

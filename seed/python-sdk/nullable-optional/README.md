@@ -34,8 +34,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedNullableOptional
-from seed.nullable_optional import Address
+from seed import SeedNullableOptional, Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -63,7 +62,6 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-from seed.nullable_optional import Address
 
 from seed import AsyncSeedNullableOptional
 

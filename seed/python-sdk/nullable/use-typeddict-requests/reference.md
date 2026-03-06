@@ -112,9 +112,8 @@ client.nullable.get_users(
 <dd>
 
 ```python
-from seed import SeedNullable
-from seed.nullable import Metadata
-from datetime import datetime
+from seed import SeedNullable, Metadata
+import datetime
 
 client = SeedNullable(
     base_url="https://yourhost.com/path/to/api",
@@ -127,8 +126,8 @@ client.nullable.create_user(
         "tags"
     ],
     metadata=Metadata(
-        created_at=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        updated_at=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         avatar="avatar",
         activated=True,
         status={

@@ -86,11 +86,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getTypeClassReference(declaration: FernIr.dynamic.Declaration): python.Reference {
         const className = this.getClassName(declaration.name);
-        const modulePath = [
-            ...this.getRootModulePath(),
-            ...declaration.fernFilepath.allParts.map((part) => part.snakeCase.safeName)
-        ];
-        return python.reference({ name: className, modulePath });
+        return python.reference({ name: className, modulePath: this.getRootModulePath() });
     }
 
     public useTypedDictRequests(): boolean {

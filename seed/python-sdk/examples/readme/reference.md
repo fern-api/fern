@@ -611,12 +611,10 @@ client.service.get_metadata(
 <dd>
 
 ```python
-from seed import SeedExamples
+from seed import SeedExamples, Actor, ExtendedMovie, Entity, Metadata, Migration, Node, Tree, Directory, File, Moment
 from seed.environment import SeedExamplesEnvironment
-from seed.types import Actor, ExtendedMovie, Entity, Migration, Node, Tree, Directory, File, Moment
-from seed.commons.types import Metadata
-from uuid import UUID
-from datetime import date, datetime
+import uuid
+import datetime
 
 client = SeedExamples(
     token="<token>",
@@ -821,9 +819,9 @@ client.service.create_big_entity(
         ],
     ),
     moment=Moment(
-        id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        date=date.fromisoformat("2023-01-15"),
-        datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        date=datetime.date.fromisoformat("2023-01-15"),
+        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     ),
 )
 

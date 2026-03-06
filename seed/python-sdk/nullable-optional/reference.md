@@ -98,8 +98,7 @@ Create a new user
 <dd>
 
 ```python
-from seed import SeedNullableOptional
-from seed.nullable_optional import Address
+from seed import SeedNullableOptional, Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -181,8 +180,7 @@ Update a user (partial update)
 <dd>
 
 ```python
-from seed import SeedNullableOptional
-from seed.nullable_optional import Address
+from seed import SeedNullableOptional, Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -469,9 +467,8 @@ Create a complex profile to test nullable enums and unions
 <dd>
 
 ```python
-from seed import SeedNullableOptional
-from datetime import datetime
-from seed.nullable_optional import Address
+from seed import SeedNullableOptional, Address
+import datetime
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -509,8 +506,8 @@ client.nullable_optional.create_complex_profile(
         "username": "username",
         "email": "email",
         "phone": "phone",
-        "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "updated_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         "address": Address(
             street="street",
             city="city",
@@ -527,8 +524,8 @@ client.nullable_optional.create_complex_profile(
         "username": "username",
         "email": "email",
         "phone": "phone",
-        "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "updated_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         "address": Address(
             street="street",
             city="city",
@@ -717,9 +714,8 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```python
-from seed import SeedNullableOptional
-from datetime import datetime
-from seed.nullable_optional import Address
+from seed import SeedNullableOptional, Address
+import datetime
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -741,8 +737,8 @@ client.nullable_optional.update_complex_profile(
         "username": "username",
         "email": "email",
         "phone": "phone",
-        "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "updated_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         "address": Address(
             street="street",
             city="city",
@@ -860,9 +856,8 @@ Test endpoint for validating null deserialization
 <dd>
 
 ```python
-from seed import SeedNullableOptional
-from datetime import datetime
-from seed.nullable_optional import Address, Organization
+from seed import SeedNullableOptional, Address, Organization
+import datetime
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -887,8 +882,8 @@ client.nullable_optional.test_deserialization(
         "username": "username",
         "email": "email",
         "phone": "phone",
-        "created_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        "updated_at": datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "updated_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         "address": Address(
             street="street",
             city="city",

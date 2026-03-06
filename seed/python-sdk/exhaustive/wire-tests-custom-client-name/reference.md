@@ -74,8 +74,7 @@ client.endpoints.container.get_and_return_list_of_primitives(
 <dd>
 
 ```python
-from seed import Exhaustive
-from seed.types.object import ObjectWithRequiredField
+from seed import Exhaustive, ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
@@ -200,8 +199,7 @@ client.endpoints.container.get_and_return_set_of_primitives(
 <dd>
 
 ```python
-from seed import Exhaustive
-from seed.types.object import ObjectWithRequiredField
+from seed import Exhaustive, ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
@@ -323,8 +321,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 <dd>
 
 ```python
-from seed import Exhaustive
-from seed.types.object import ObjectWithRequiredField
+from seed import Exhaustive, ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
@@ -446,8 +443,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
 <dd>
 
 ```python
-from seed import Exhaustive
-from seed.types.object import ObjectWithRequiredField
+from seed import Exhaustive, ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
@@ -509,8 +505,8 @@ client.endpoints.container.get_and_return_optional(
 
 ```python
 from seed import Exhaustive
-from datetime import datetime, date
-from uuid import UUID
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
@@ -523,9 +519,9 @@ client.endpoints.content_type.post_json_patch_content_type(
     long_=1000000,
     double=1.1,
     bool_=True,
-    datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    date=date.fromisoformat("2023-01-15"),
-    uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     base_64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
@@ -588,8 +584,8 @@ client.endpoints.content_type.post_json_patch_content_type(
 
 ```python
 from seed import Exhaustive
-from datetime import datetime, date
-from uuid import UUID
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
@@ -602,9 +598,9 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
     long_=1000000,
     double=1.1,
     bool_=True,
-    datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    date=date.fromisoformat("2023-01-15"),
-    uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     base_64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
@@ -910,8 +906,8 @@ client.endpoints.http_methods.test_put(
 
 ```python
 from seed import Exhaustive
-from datetime import datetime, date
-from uuid import UUID
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
@@ -925,9 +921,9 @@ client.endpoints.http_methods.test_patch(
     long_=1000000,
     double=1.1,
     bool_=True,
-    datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    date=date.fromisoformat("2023-01-15"),
-    uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     base_64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
@@ -1057,8 +1053,8 @@ client.endpoints.http_methods.test_delete(
 
 ```python
 from seed import Exhaustive
-from datetime import datetime, date
-from uuid import UUID
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
@@ -1071,9 +1067,9 @@ client.endpoints.object.get_and_return_with_optional_field(
     long_=1000000,
     double=1.1,
     bool_=True,
-    datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    date=date.fromisoformat("2023-01-15"),
-    uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     base_64="SGVsbG8gd29ybGQh",
     list_=[
         "list",
@@ -1255,10 +1251,9 @@ client.endpoints.object.get_and_return_with_map_of_map(
 <dd>
 
 ```python
-from seed import Exhaustive
-from seed.types.object import ObjectWithOptionalField
-from datetime import datetime, date
-from uuid import UUID
+from seed import Exhaustive, ObjectWithOptionalField
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
@@ -1273,9 +1268,9 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
         long_=1000000,
         double=1.1,
         bool_=True,
-        datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        date=date.fromisoformat("2023-01-15"),
-        uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        date=datetime.date.fromisoformat("2023-01-15"),
+        uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         base_64="SGVsbG8gd29ybGQh",
         list_=[
             "list",
@@ -1338,10 +1333,9 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 <dd>
 
 ```python
-from seed import Exhaustive
-from seed.types.object import ObjectWithOptionalField
-from datetime import datetime, date
-from uuid import UUID
+from seed import Exhaustive, ObjectWithOptionalField
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
@@ -1357,9 +1351,9 @@ client.endpoints.object.get_and_return_nested_with_required_field(
         long_=1000000,
         double=1.1,
         bool_=True,
-        datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        date=date.fromisoformat("2023-01-15"),
-        uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        date=datetime.date.fromisoformat("2023-01-15"),
+        uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         base_64="SGVsbG8gd29ybGQh",
         list_=[
             "list",
@@ -1430,10 +1424,9 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 <dd>
 
 ```python
-from seed import Exhaustive
-from seed.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
-from datetime import datetime, date
-from uuid import UUID
+from seed import Exhaustive, NestedObjectWithRequiredField, ObjectWithOptionalField
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
@@ -1450,9 +1443,9 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
                 long_=1000000,
                 double=1.1,
                 bool_=True,
-                datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-                date=date.fromisoformat("2023-01-15"),
-                uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+                date=datetime.date.fromisoformat("2023-01-15"),
+                uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                 base_64="SGVsbG8gd29ybGQh",
                 list_=[
                     "list",
@@ -1475,9 +1468,9 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
                 long_=1000000,
                 double=1.1,
                 bool_=True,
-                datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-                date=date.fromisoformat("2023-01-15"),
-                uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+                datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+                date=datetime.date.fromisoformat("2023-01-15"),
+                uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                 base_64="SGVsbG8gd29ybGQh",
                 list_=[
                     "list",
@@ -1617,7 +1610,7 @@ without being converted to "2023-08-31T14:15:22.000Z".
 
 ```python
 from seed import Exhaustive
-from datetime import datetime
+import datetime
 
 client = Exhaustive(
     token="<token>",
@@ -1626,7 +1619,7 @@ client = Exhaustive(
 
 client.endpoints.object.get_and_return_with_datetime_like_string(
     datetime_like_string="2023-08-31T14:15:22Z",
-    actual_datetime=datetime.fromisoformat("2023-08-31T14:15:22+00:00"),
+    actual_datetime=datetime.datetime.fromisoformat("2023-08-31T14:15:22+00:00"),
 )
 
 ```
@@ -2761,7 +2754,7 @@ client.endpoints.primitive.get_and_return_bool(
 
 ```python
 from seed import Exhaustive
-from datetime import datetime
+import datetime
 
 client = Exhaustive(
     token="<token>",
@@ -2769,7 +2762,7 @@ client = Exhaustive(
 )
 
 client.endpoints.primitive.get_and_return_datetime(
-    request=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    request=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
 )
 
 ```
@@ -2820,7 +2813,7 @@ client.endpoints.primitive.get_and_return_datetime(
 
 ```python
 from seed import Exhaustive
-from datetime import date
+import datetime
 
 client = Exhaustive(
     token="<token>",
@@ -2828,7 +2821,7 @@ client = Exhaustive(
 )
 
 client.endpoints.primitive.get_and_return_date(
-    request=date.fromisoformat("2023-01-15"),
+    request=datetime.date.fromisoformat("2023-01-15"),
 )
 
 ```
@@ -2879,7 +2872,7 @@ client.endpoints.primitive.get_and_return_date(
 
 ```python
 from seed import Exhaustive
-from uuid import UUID
+import uuid
 
 client = Exhaustive(
     token="<token>",
@@ -2887,7 +2880,7 @@ client = Exhaustive(
 )
 
 client.endpoints.primitive.get_and_return_uuid(
-    request=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    request=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
 )
 
 ```
@@ -3325,10 +3318,9 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```python
-from seed import Exhaustive
-from seed.types.object import ObjectWithOptionalField
-from datetime import datetime, date
-from uuid import UUID
+from seed import Exhaustive, ObjectWithOptionalField
+import datetime
+import uuid
 
 client = Exhaustive(
     token="<token>",
@@ -3344,9 +3336,9 @@ client.inlined_requests.post_with_object_bodyand_response(
         long_=1000000,
         double=1.1,
         bool_=True,
-        datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-        date=date.fromisoformat("2023-01-15"),
-        uuid_=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        date=datetime.date.fromisoformat("2023-01-15"),
+        uuid_=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
         base_64="SGVsbG8gd29ybGQh",
         list_=[
             "list",

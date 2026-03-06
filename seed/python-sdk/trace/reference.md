@@ -65,7 +65,7 @@ client.v_2.test()
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
-from uuid import UUID
+import uuid
 
 client = SeedTrace(
     token="<token>",
@@ -73,7 +73,7 @@ client = SeedTrace(
 )
 
 client.admin.update_test_submission_status(
-    submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     request={
         "type": "stopped"
     },
@@ -136,8 +136,8 @@ client.admin.update_test_submission_status(
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
-from uuid import UUID
-from datetime import datetime
+import uuid
+import datetime
 
 client = SeedTrace(
     token="<token>",
@@ -145,8 +145,8 @@ client = SeedTrace(
 )
 
 client.admin.send_test_submission_update(
-    submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    update_time=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    update_time=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     update_info={
         "type": "running"
     },
@@ -209,7 +209,7 @@ client.admin.send_test_submission_update(
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
-from uuid import UUID
+import uuid
 
 client = SeedTrace(
     token="<token>",
@@ -217,7 +217,7 @@ client = SeedTrace(
 )
 
 client.admin.update_workspace_submission_status(
-    submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     request={
         "type": "stopped"
     },
@@ -280,8 +280,8 @@ client.admin.update_workspace_submission_status(
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
-from uuid import UUID
-from datetime import datetime
+import uuid
+import datetime
 
 client = SeedTrace(
     token="<token>",
@@ -289,8 +289,8 @@ client = SeedTrace(
 )
 
 client.admin.send_workspace_submission_update(
-    submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    update_time=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    update_time=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     update_info={
         "type": "running"
     },
@@ -351,10 +351,9 @@ client.admin.send_workspace_submission_update(
 <dd>
 
 ```python
-from seed import SeedTrace
+from seed import SeedTrace, TestCaseResultWithStdout, TestCaseResult, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
 from seed.environment import SeedTraceEnvironment
-from uuid import UUID
-from seed.submission import TestCaseResultWithStdout, TestCaseResult, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
+import uuid
 
 client = SeedTrace(
     token="<token>",
@@ -362,7 +361,7 @@ client = SeedTrace(
 )
 
 client.admin.store_traced_test_case(
-    submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     test_case_id="testCaseId",
     result=TestCaseResultWithStdout(
         result=TestCaseResult(
@@ -381,7 +380,7 @@ client.admin.store_traced_test_case(
     ),
     trace_responses=[
         TraceResponse(
-            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
             return_value={
                 "type": "integerValue"
@@ -416,7 +415,7 @@ client.admin.store_traced_test_case(
             stdout="stdout",
         ),
         TraceResponse(
-            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
             return_value={
                 "type": "integerValue"
@@ -524,10 +523,9 @@ client.admin.store_traced_test_case(
 <dd>
 
 ```python
-from seed import SeedTrace
+from seed import SeedTrace, TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
 from seed.environment import SeedTraceEnvironment
-from uuid import UUID
-from seed.submission import TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
+import uuid
 
 client = SeedTrace(
     token="<token>",
@@ -535,11 +533,11 @@ client = SeedTrace(
 )
 
 client.admin.store_traced_test_case_v_2(
-    submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     test_case_id="testCaseId",
     request=[
         TraceResponseV2(
-            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
             file=TracedFile(
                 filename="filename",
@@ -578,7 +576,7 @@ client.admin.store_traced_test_case_v_2(
             stdout="stdout",
         ),
         TraceResponseV2(
-            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
             file=TracedFile(
                 filename="filename",
@@ -682,10 +680,9 @@ client.admin.store_traced_test_case_v_2(
 <dd>
 
 ```python
-from seed import SeedTrace
+from seed import SeedTrace, WorkspaceRunDetails, ExceptionInfo, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
 from seed.environment import SeedTraceEnvironment
-from uuid import UUID
-from seed.submission import WorkspaceRunDetails, ExceptionInfo, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
+import uuid
 
 client = SeedTrace(
     token="<token>",
@@ -693,7 +690,7 @@ client = SeedTrace(
 )
 
 client.admin.store_traced_workspace(
-    submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     workspace_run_details=WorkspaceRunDetails(
         exception_v_2={
             "type": "generic",
@@ -710,7 +707,7 @@ client.admin.store_traced_workspace(
     ),
     trace_responses=[
         TraceResponse(
-            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
             return_value={
                 "type": "integerValue"
@@ -745,7 +742,7 @@ client.admin.store_traced_workspace(
             stdout="stdout",
         ),
         TraceResponse(
-            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
             return_value={
                 "type": "integerValue"
@@ -845,10 +842,9 @@ client.admin.store_traced_workspace(
 <dd>
 
 ```python
-from seed import SeedTrace
+from seed import SeedTrace, TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
 from seed.environment import SeedTraceEnvironment
-from uuid import UUID
-from seed.submission import TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
+import uuid
 
 client = SeedTrace(
     token="<token>",
@@ -856,10 +852,10 @@ client = SeedTrace(
 )
 
 client.admin.store_traced_workspace_v_2(
-    submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     request=[
         TraceResponseV2(
-            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
             file=TracedFile(
                 filename="filename",
@@ -898,7 +894,7 @@ client.admin.store_traced_workspace_v_2(
             stdout="stdout",
         ),
         TraceResponseV2(
-            submission_id=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             line_number=1,
             file=TracedFile(
                 filename="filename",
@@ -1183,7 +1179,7 @@ Create a new playlist
 ```python
 from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
-from datetime import datetime
+import datetime
 
 client = SeedTrace(
     token="<token>",
@@ -1192,8 +1188,8 @@ client = SeedTrace(
 
 client.playlist.create_playlist(
     service_param=1,
-    datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
-    optional_datetime=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    optional_datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     name="name",
     problems=[
         "problems",
@@ -1493,9 +1489,8 @@ Updates a playlist
 <dd>
 
 ```python
-from seed import SeedTrace
+from seed import SeedTrace, UpdatePlaylistRequest
 from seed.environment import SeedTraceEnvironment
-from seed.playlist import UpdatePlaylistRequest
 
 client = SeedTrace(
     token="<token>",
@@ -1674,10 +1669,8 @@ Creates a problem
 <dd>
 
 ```python
-from seed import SeedTrace
+from seed import SeedTrace, ProblemDescription, ProblemFiles, FileInfo, VariableTypeAndName, TestCaseWithExpectedResult, TestCase
 from seed.environment import SeedTraceEnvironment
-from seed.problem import ProblemDescription, ProblemFiles, VariableTypeAndName
-from seed.commons import FileInfo, TestCaseWithExpectedResult, TestCase
 
 client = SeedTrace(
     token="<token>",
@@ -1829,10 +1822,8 @@ Updates a problem
 <dd>
 
 ```python
-from seed import SeedTrace
+from seed import SeedTrace, ProblemDescription, ProblemFiles, FileInfo, VariableTypeAndName, TestCaseWithExpectedResult, TestCase
 from seed.environment import SeedTraceEnvironment
-from seed.problem import ProblemDescription, ProblemFiles, VariableTypeAndName
-from seed.commons import FileInfo, TestCaseWithExpectedResult, TestCase
 
 client = SeedTrace(
     token="<token>",
@@ -2066,9 +2057,8 @@ Returns default starter files for problem
 <dd>
 
 ```python
-from seed import SeedTrace
+from seed import SeedTrace, VariableTypeAndName
 from seed.environment import SeedTraceEnvironment
-from seed.problem import VariableTypeAndName
 
 client = SeedTrace(
     token="<token>",

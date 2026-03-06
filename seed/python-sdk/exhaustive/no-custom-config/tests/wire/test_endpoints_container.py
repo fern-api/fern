@@ -1,6 +1,6 @@
 from .conftest import get_client, verify_request_count
 
-from seed.types.object import ObjectWithRequiredField
+from seed import ObjectWithRequiredField
 
 
 def test_endpoints_container_get_and_return_list_of_primitives() -> None:

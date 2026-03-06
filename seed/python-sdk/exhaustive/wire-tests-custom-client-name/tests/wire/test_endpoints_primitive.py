@@ -1,5 +1,5 @@
-from datetime import date, datetime
-from uuid import UUID
+import datetime
+import uuid
 
 from .conftest import get_client, verify_request_count
 
@@ -59,7 +59,7 @@ def test_endpoints_primitive_get_and_return_datetime() -> None:
     test_id = "endpoints.primitive.get_and_return_datetime.0"
     client = get_client(test_id)
     client.endpoints.primitive.get_and_return_datetime(
-        request=datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        request=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     )
     verify_request_count(test_id, "POST", "/primitive/datetime", None, 1)
 
@@ -69,7 +69,7 @@ def test_endpoints_primitive_get_and_return_date() -> None:
     test_id = "endpoints.primitive.get_and_return_date.0"
     client = get_client(test_id)
     client.endpoints.primitive.get_and_return_date(
-        request=date.fromisoformat("2023-01-15"),
+        request=datetime.date.fromisoformat("2023-01-15"),
     )
     verify_request_count(test_id, "POST", "/primitive/date", None, 1)
 
@@ -79,7 +79,7 @@ def test_endpoints_primitive_get_and_return_uuid() -> None:
     test_id = "endpoints.primitive.get_and_return_uuid.0"
     client = get_client(test_id)
     client.endpoints.primitive.get_and_return_uuid(
-        request=UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        request=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     )
     verify_request_count(test_id, "POST", "/primitive/uuid", None, 1)
 
