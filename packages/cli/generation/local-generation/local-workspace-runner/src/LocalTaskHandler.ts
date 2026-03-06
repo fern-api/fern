@@ -11,6 +11,7 @@ import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
 import tmp from "tmp-promise";
+import { AutoVersioningCache, CachedAnalysis } from "./AutoVersioningCache.js";
 import {
     AutoVersioningException,
     AutoVersioningService,
@@ -83,6 +84,7 @@ export declare namespace LocalTaskHandler {
         previousIr: IntermediateRepresentation | undefined;
         currentIr: IntermediateRepresentation;
         generatorName: string;
+        autoVersioningCache?: AutoVersioningCache;
         generatorLanguage: string | undefined;
     }
 }
@@ -101,6 +103,7 @@ export class LocalTaskHandler {
     private previousIr: IntermediateRepresentation | undefined;
     private currentIr: IntermediateRepresentation;
     private generatorName: string;
+    private autoVersioningCache: AutoVersioningCache | undefined;
     private generatorLanguage: string | undefined;
 
     constructor({
@@ -117,6 +120,7 @@ export class LocalTaskHandler {
         previousIr,
         currentIr,
         generatorName,
+        autoVersioningCache,
         generatorLanguage
     }: LocalTaskHandler.Init) {
         this.context = context;
@@ -132,6 +136,7 @@ export class LocalTaskHandler {
         this.previousIr = previousIr;
         this.currentIr = currentIr;
         this.generatorName = generatorName;
+        this.autoVersioningCache = autoVersioningCache;
         this.generatorLanguage = generatorLanguage;
     }
 
@@ -268,45 +273,14 @@ export class LocalTaskHandler {
                 );
             }
 
-            // Call AI to analyze the diff
+            // Call AI (or reuse cached analysis) to determine version bump
+            let analysis: CachedAnalysis | null;
             try {
-                // TODO: Need to get project for BAML client configuration
-                const clientRegistry = await this.getClientRegistry();
-                const bamlClient = BamlClient.withOptions({ clientRegistry });
-
-                const analysis = await bamlClient.AnalyzeSdkDiff(
+                analysis = await this.getAnalysis(
                     cleanedDiff,
                     this.generatorLanguage ?? "unknown",
                     previousVersion ?? "0.0.0"
                 );
-
-                if (analysis.version_bump === VersionBump.NO_CHANGE && tier1Floor == null) {
-                    this.context.logger.info("AI detected no semantic changes");
-                    return null;
-                }
-
-                // Apply Tier 1 floor: if IR diff detected MAJOR, enforce it regardless of AI result
-                let effectiveBump: VersionBump = analysis.version_bump;
-                if (tier1Floor != null && tier1Floor === VersionBump.MAJOR) {
-                    if (effectiveBump !== VersionBump.MAJOR) {
-                        this.context.logger.info(
-                            `AI suggested ${analysis.version_bump} but Tier 1 floor is MAJOR, enforcing MAJOR`
-                        );
-                    }
-                    effectiveBump = VersionBump.MAJOR;
-                }
-
-                // Calculate new version
-                const newVersion = this.incrementVersion(previousVersion, effectiveBump);
-
-                this.context.logger.info(`Version bump: ${effectiveBump}, new version: ${newVersion}`);
-
-                const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
-
-                return {
-                    version: newVersion,
-                    commitMessage
-                };
             } catch (aiError) {
                 const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
                 // Use Tier 1 result as floor when AI fails, instead of unconditionally falling back to PATCH
@@ -338,6 +312,34 @@ export class LocalTaskHandler {
                     commitMessage: fallbackMessage
                 };
             }
+
+            // Each generator applies its own previousVersion and branding
+            if (analysis == null && tier1Floor == null) {
+                this.context.logger.info("AI detected no semantic changes");
+                return null;
+            }
+
+            // Apply Tier 1 floor: if IR diff detected MAJOR, enforce it regardless of AI result
+            let effectiveBump: VersionBump = analysis?.versionBump ?? VersionBump.PATCH;
+            if (tier1Floor != null && tier1Floor === VersionBump.MAJOR) {
+                if (effectiveBump !== VersionBump.MAJOR) {
+                    this.context.logger.info(
+                        `AI suggested ${effectiveBump} but Tier 1 floor is MAJOR, enforcing MAJOR`
+                    );
+                }
+                effectiveBump = VersionBump.MAJOR;
+            }
+
+            const newVersion = this.incrementVersion(previousVersion, effectiveBump);
+            this.context.logger.info(`Version bump: ${effectiveBump}, new version: ${newVersion}`);
+
+            const message = analysis?.message ?? "feat: breaking API changes";
+            const commitMessage = this.isWhitelabel ? message : this.addFernBranding(message);
+
+            return {
+                version: newVersion,
+                commitMessage
+            };
         } catch (error) {
             if (error instanceof AutoVersioningException) {
                 // Fall back to initial version when we can't extract the previous version
@@ -415,6 +417,52 @@ export class LocalTaskHandler {
         const floorLevel = bumpOrder[floor] ?? 0;
 
         return aiLevel >= floorLevel ? aiBump : floor;
+    }
+
+    /**
+     * Returns the raw AI analysis for the given cleaned diff, using the cache
+     * (with Promise coalescing) when available. Each concurrent generator with
+     * the same diff awaits the same in-flight AI call.
+     *
+     * On AI failure the method throws so that each generator can apply its own
+     * fallback logic (e.g. PATCH bump with generator-specific previousVersion).
+     */
+    private async getAnalysis(
+        cleanedDiff: string,
+        language: string,
+        previousVersion: string
+    ): Promise<CachedAnalysis | null> {
+        const doAnalysis = async (): Promise<CachedAnalysis | null> => {
+            const clientRegistry = await this.getClientRegistry();
+            const bamlClient = BamlClient.withOptions({ clientRegistry });
+            const analysis = await bamlClient.AnalyzeSdkDiff(cleanedDiff, language, previousVersion);
+
+            if (analysis.version_bump === VersionBump.NO_CHANGE) {
+                return null;
+            }
+            return {
+                versionBump: analysis.version_bump,
+                message: analysis.message
+            };
+        };
+
+        if (this.autoVersioningCache == null) {
+            return doAnalysis();
+        }
+
+        const cacheKey = this.autoVersioningCache.key(cleanedDiff, language, previousVersion);
+        const { promise, isHit } = this.autoVersioningCache.getOrCompute(cacheKey, doAnalysis);
+
+        if (isHit) {
+            const cached = await promise;
+            this.context.logger.info(
+                `[AutoVersioning] Cache hit — reusing result (key: ${cacheKey.slice(0, 8)}…) ` +
+                    `bump=${cached?.versionBump ?? "NO_CHANGE"}`
+            );
+            return cached;
+        }
+
+        return promise;
     }
 
     /**

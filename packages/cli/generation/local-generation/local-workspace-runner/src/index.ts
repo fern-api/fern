@@ -1,3 +1,4 @@
+export { AutoVersioningCache, type CachedAnalysis } from "./AutoVersioningCache.js";
 export * from "./AutoVersioningService.js";
 export { AutoVersioningException, AutoVersioningService } from "./AutoVersioningService.js";
 export * from "./ContainerExecutionEnvironment.js";

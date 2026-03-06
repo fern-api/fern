@@ -1,0 +1,179 @@
+import { VersionBump } from "@fern-api/cli-ai";
+import { describe, expect, it } from "vitest";
+import { AutoVersioningCache, CachedAnalysis } from "../AutoVersioningCache.js";
+
+describe("AutoVersioningCache", () => {
+    it("calls AI when no cache entry exists", async () => {
+        const cache = new AutoVersioningCache();
+        const key = cache.key("some diff content", "typescript", "1.0.0");
+        let called = false;
+        const { promise, isHit } = cache.getOrCompute(key, async () => {
+            called = true;
+            return { versionBump: VersionBump.MINOR, message: "feat: new feature" };
+        });
+        expect(isHit).toBe(false);
+        await promise;
+        expect(called).toBe(true);
+    });
+
+    it("returns cached result without calling AI on second identical diff", async () => {
+        const cache = new AutoVersioningCache();
+        const diff = "diff --git a/src/index.ts\n+export const foo = true;";
+        const key = cache.key(diff, "typescript", "1.0.0");
+
+        const analysis: CachedAnalysis = { versionBump: VersionBump.MINOR, message: "feat: add foo export" };
+
+        // First call — populates cache
+        const first = cache.getOrCompute(key, async () => analysis);
+        expect(first.isHit).toBe(false);
+        expect(await first.promise).toEqual(analysis);
+
+        // Second call — cache hit, compute never invoked
+        let secondComputed = false;
+        const second = cache.getOrCompute(key, async () => {
+            secondComputed = true;
+            return { versionBump: VersionBump.PATCH, message: "should not be used" };
+        });
+        expect(second.isHit).toBe(true);
+        expect(await second.promise).toEqual(analysis);
+        expect(secondComputed).toBe(false);
+    });
+
+    it("caches NO_CHANGE result and returns it on subsequent identical diff", async () => {
+        const cache = new AutoVersioningCache();
+        const diff = "diff with no semantic changes";
+        const key = cache.key(diff, "python", "2.0.0");
+
+        // null represents NO_CHANGE
+        const first = cache.getOrCompute(key, async () => null);
+        expect(await first.promise).toBeNull();
+
+        // Second call should return cached null without invoking compute
+        let secondComputed = false;
+        const second = cache.getOrCompute(key, async () => {
+            secondComputed = true;
+            return { versionBump: VersionBump.PATCH, message: "should not run" };
+        });
+        expect(second.isHit).toBe(true);
+        expect(await second.promise).toBeNull();
+        expect(secondComputed).toBe(false);
+    });
+
+    it("produces different cache keys for same diff but different language or version", () => {
+        const cache = new AutoVersioningCache();
+        const diff = "diff --git a/src/index.ts\n+export const foo = true;";
+
+        const keyTs = cache.key(diff, "typescript", "1.0.0");
+        const keyPy = cache.key(diff, "python", "1.0.0");
+        const keyTsDiffVer = cache.key(diff, "typescript", "2.0.0");
+
+        // Same diff but different language → different keys
+        expect(keyTs).not.toBe(keyPy);
+        // Same diff and language but different previous version → different keys
+        expect(keyTs).not.toBe(keyTsDiffVer);
+    });
+
+    it("does not return cached result for a different diff", async () => {
+        const cache = new AutoVersioningCache();
+        const diff1 = "diff --git a/src/index.ts\n+export const foo = true;";
+        const diff2 = "diff --git a/src/index.ts\n+export const bar = false;";
+
+        const key1 = cache.key(diff1, "typescript", "1.0.0");
+        const key2 = cache.key(diff2, "typescript", "1.0.0");
+
+        expect(key1).not.toBe(key2);
+
+        const analysis1: CachedAnalysis = { versionBump: VersionBump.MINOR, message: "feat: add foo" };
+        cache.getOrCompute(key1, async () => analysis1);
+
+        // key2 should trigger a fresh compute
+        let key2Computed = false;
+        const analysis2: CachedAnalysis = { versionBump: VersionBump.PATCH, message: "fix: bar" };
+        const result2 = cache.getOrCompute(key2, async () => {
+            key2Computed = true;
+            return analysis2;
+        });
+        expect(result2.isHit).toBe(false);
+        expect(key2Computed).toBe(true);
+    });
+
+    it("generates same cache key for identical diff content", () => {
+        const cache = new AutoVersioningCache();
+        const diff = "diff --git a/src/index.ts\n+export const foo = true;";
+
+        const key1 = cache.key(diff, "java", "3.0.0");
+        const key2 = cache.key(diff, "java", "3.0.0");
+
+        expect(key1).toBe(key2);
+        // Keys should be sha256 hex strings (64 chars)
+        expect(key1).toHaveLength(64);
+        expect(key1).toMatch(/^[0-9a-f]{64}$/);
+    });
+
+    it("does not share cache between separate instances", async () => {
+        const cache1 = new AutoVersioningCache();
+        const cache2 = new AutoVersioningCache();
+        const diff = "some diff content";
+        const key = cache1.key(diff, "typescript", "1.0.0");
+
+        const analysis: CachedAnalysis = { versionBump: VersionBump.MAJOR, message: "feat: breaking change" };
+        await cache1.getOrCompute(key, async () => analysis).promise;
+
+        // cache2 should not have the entry — compute is invoked
+        let cache2Computed = false;
+        const result = cache2.getOrCompute(key, async () => {
+            cache2Computed = true;
+            return analysis;
+        });
+        expect(result.isHit).toBe(false);
+        expect(cache2Computed).toBe(true);
+    });
+
+    it("makes only one AI call when two concurrent generators share identical cleaned diff", async () => {
+        const cache = new AutoVersioningCache();
+        const cleanedDiff = "diff --git a/src/api.ts\n+export function newEndpoint() {}";
+
+        let aiCallCount = 0;
+        const mockAI = async (): Promise<CachedAnalysis> => {
+            aiCallCount++;
+            // Simulate async AI latency
+            await new Promise((resolve) => setTimeout(resolve, 10));
+            return { versionBump: VersionBump.MINOR, message: "feat: add new endpoint" };
+        };
+
+        const key = cache.key(cleanedDiff, "typescript", "1.0.0");
+
+        // Fire two concurrent getOrCompute calls (simulating Promise.all generators)
+        const [r1, r2] = await Promise.all([
+            cache.getOrCompute(key, mockAI).promise,
+            cache.getOrCompute(key, mockAI).promise
+        ]);
+
+        // AI should have been called exactly once
+        expect(aiCallCount).toBe(1);
+        // Both generators receive the same raw analysis
+        expect(r1).toEqual(r2);
+        expect(r1).toEqual({ versionBump: VersionBump.MINOR, message: "feat: add new endpoint" });
+    });
+
+    it("evicts failed promises so subsequent callers can retry", async () => {
+        const cache = new AutoVersioningCache();
+        const key = cache.key("some diff", "python", "0.1.0");
+
+        // First call fails
+        const first = cache.getOrCompute(key, async () => {
+            throw new Error("AI service unavailable");
+        });
+        await expect(first.promise).rejects.toThrow("AI service unavailable");
+
+        // Second call should be a miss (failed promise was evicted) and can succeed
+        let secondCalled = false;
+        const second = cache.getOrCompute(key, async () => {
+            secondCalled = true;
+            return { versionBump: VersionBump.PATCH, message: "fix: retry succeeded" };
+        });
+        expect(second.isHit).toBe(false);
+        expect(secondCalled).toBe(true);
+        expect(await second.promise).toEqual({ versionBump: VersionBump.PATCH, message: "fix: retry succeeded" });
+    });
+});

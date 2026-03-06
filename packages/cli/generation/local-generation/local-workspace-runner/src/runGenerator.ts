@@ -10,6 +10,7 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
+import { AutoVersioningCache } from "./AutoVersioningCache.js";
 import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,
@@ -76,7 +77,8 @@ export async function writeFilesToDiskAndRunGenerator({
     runner,
     whiteLabel,
     ir,
-    ai
+    ai,
+    autoVersioningCache
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -102,6 +104,7 @@ export async function writeFilesToDiskAndRunGenerator({
     whiteLabel?: boolean;
     ir: IntermediateRepresentation;
     ai: generatorsYml.AiServicesSchema | undefined;
+    autoVersioningCache?: AutoVersioningCache;
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -251,6 +254,7 @@ export async function writeFilesToDiskAndRunGenerator({
         previousIr,
         currentIr: latest,
         generatorName: generatorInvocation.name,
+        autoVersioningCache,
         generatorLanguage: generatorInvocation.language
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
