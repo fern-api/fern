@@ -157,21 +157,22 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
                 "--no-audit",
                 "--no-fund"
             ]);
+
+            // Read & import while the lock is held so another process cannot
+            // start a concurrent npm install that overwrites node_modules.
+            const packageJsonContent = await readFile(packageJsonPath, "utf-8");
+            const packageJson = JSON.parse(packageJsonContent) as { main?: string };
+
+            if (packageJson.main == null) {
+                throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
+            }
+
+            const packageEntryPoint = join(packageDir, packageJson.main);
+            const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
+            return migrations as Record<string, MigrationModule>;
         } finally {
             await releaseLock();
         }
-
-        // Read & import outside the lock — no writes happening here
-        const packageJsonContent = await readFile(packageJsonPath, "utf-8");
-        const packageJson = JSON.parse(packageJsonContent) as { main?: string };
-
-        if (packageJson.main == null) {
-            throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
-        }
-
-        const packageEntryPoint = join(packageDir, packageJson.main);
-        const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
-        return migrations as Record<string, MigrationModule>;
     })();
 
     // Reset the cached promise on failure so the next call can retry.
