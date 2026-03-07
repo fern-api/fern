@@ -152,7 +152,7 @@ export function getTurboAffectedPackages(repoRoot: string, baseRef: string): Tur
 /**
  * Map turbo affected package paths to seed workspace names.
  */
-function mapTurboPackagesToSeedWorkspaces(
+export function mapTurboPackagesToSeedWorkspaces(
     turboPackages: TurboPackage[],
     allGeneratorNames: string[]
 ): {

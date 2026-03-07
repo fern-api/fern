@@ -4,6 +4,7 @@ export {
     findRepoRoot,
     getChangedFiles,
     getTurboAffectedPackages,
+    mapTurboPackagesToSeedWorkspaces,
     resolveAffectedFixtures,
     resolveAffectedGenerators,
     type TurboPackage

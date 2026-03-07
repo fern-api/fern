@@ -252,6 +252,18 @@ jobs:
           FORCE_COLOR: "2"
         run: pnpm seed:build
 
+      - name: Dry-run affected detection (shadow mode)
+        shell: bash
+        env:
+          FORCE_COLOR: "2"
+        run: |
+          echo "=== Affected Detection Dry Run ==="
+          echo "This logs what 'seed affected' would detect, without changing which tests run."
+          echo ""
+          node --enable-source-maps packages/seed/dist/cli.cjs affected --json || echo "Affected detection failed (non-blocking)"
+          echo ""
+          echo "=== End Dry Run ==="
+
       - name: Create Dynamic Matrix
         id: create-dynamic-matrix
         shell: bash
