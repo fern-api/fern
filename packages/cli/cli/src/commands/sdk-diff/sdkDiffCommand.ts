@@ -16,6 +16,7 @@ import {
     formatSizeKB,
     MAX_AI_DIFF_BYTES,
     MAX_CHUNKS,
+    MAX_RAW_DIFF_BYTES,
     maxVersionBump
 } from "@fern-api/local-workspace-runner";
 import { Project } from "@fern-api/project-loader";
@@ -107,9 +108,17 @@ export async function sdkDiffCommand({
     const fileCount = countFilesInDiff(gitDiff);
     context.logger.debug(`Generated diff: ${diffSizeKB}KB (${gitDiff.length} chars), ${fileCount} files changed`);
 
-    // Chunk the diff if it exceeds the per-call limit
+    // Reject absurdly large diffs before chunking
     const service = new AutoVersioningService({ logger: context.logger });
     const diffBytes = Buffer.byteLength(gitDiff, "utf-8");
+    if (diffBytes > MAX_RAW_DIFF_BYTES) {
+        return context.failAndThrow(
+            `Diff too large for analysis (${(diffBytes / 1_000_000).toFixed(1)}MB, ` +
+                `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Try excluding generated files or splitting the comparison.`
+        );
+    }
+
+    // Chunk the diff if it exceeds the per-call limit
     const chunks = diffBytes > MAX_AI_DIFF_BYTES ? service.chunkDiff(gitDiff, MAX_AI_DIFF_BYTES) : [gitDiff];
     const cappedChunks = chunks.slice(0, MAX_CHUNKS);
     const skippedChunks = chunks.length - cappedChunks.length;
@@ -180,7 +189,7 @@ export async function sdkDiffCommand({
             message: bestMessage || "SDK regeneration",
             changelog_entry:
                 allChangelogEntries.length > 1
-                    ? allChangelogEntries.map((e) => `- ${e}`).join("\n")
+                    ? allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n")
                     : (allChangelogEntries[0] ?? "")
         };
     } catch (error) {

@@ -57,6 +57,14 @@ export const MAX_AI_DIFF_BYTES = 40_000;
  */
 export const MAX_CHUNKS = 40;
 
+/**
+ * Maximum raw diff size (in bytes) accepted for chunked analysis.
+ * Diffs larger than this are rejected before chunking to prevent
+ * excessive memory/CPU usage from parsing extremely large inputs
+ * (e.g. accidental binary file inclusion). 10 MB.
+ */
+export const MAX_RAW_DIFF_BYTES = 10_000_000;
+
 export enum VersionBump {
     MAJOR = "MAJOR",
     MINOR = "MINOR",

@@ -18,7 +18,7 @@ import {
     countFilesInDiff,
     formatSizeKB
 } from "./AutoVersioningService.js";
-import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, maxVersionBump } from "./VersionUtils.js";
+import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, MAX_RAW_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -212,8 +212,24 @@ export class LocalTaskHandler {
                 this.context.logger.debug(`Spec repo commit message: ${specCommitMessage}`);
             }
 
-            // Split diff into chunks and analyze each one with the AI
+            // Reject absurdly large diffs before chunking to prevent excessive resource usage
             const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
+            if (cleanedDiffBytes > MAX_RAW_DIFF_BYTES) {
+                this.context.logger.warn(
+                    `Diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
+                        `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Falling back to PATCH increment.`
+                );
+                const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
+                const fallbackMessage = this.isWhitelabel
+                    ? "SDK regeneration"
+                    : "SDK regeneration\n\n🌿 Generated with Fern";
+                return {
+                    version: newVersion,
+                    commitMessage: fallbackMessage
+                };
+            }
+
+            // Split diff into chunks and analyze each one with the AI
             const chunks = autoVersioningService.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
 
             // Cap at MAX_CHUNKS to bound latency/cost for very large diffs.
@@ -245,6 +261,8 @@ export class LocalTaskHandler {
                     );
                 } else {
                     // Multiple chunks: analyze each sequentially, merge results.
+                    // Sequential (not parallel) to avoid burst API cost and simplify
+                    // error handling. Worst case: 40 chunks × ~3s = ~2 min.
                     // We process ALL chunks so that every changelog entry is captured.
                     let bestBump: string = VersionBump.NO_CHANGE;
                     let bestMessage = "";
@@ -300,10 +318,10 @@ export class LocalTaskHandler {
                         analysis = {
                             versionBump: bestBump as VersionBump,
                             message: bestMessage,
-                            changelogEntry:
-                                allChangelogEntries.length > 1
-                                    ? allChangelogEntries.map((e) => `- ${e}`).join("\n")
-                                    : (allChangelogEntries[0] ?? "")
+                                changelogEntry:
+                                    allChangelogEntries.length > 1
+                                        ? allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n")
+                                        : (allChangelogEntries[0] ?? "")
                         };
                     }
                 }
