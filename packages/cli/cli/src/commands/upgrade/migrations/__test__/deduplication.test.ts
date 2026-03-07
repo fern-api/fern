@@ -33,7 +33,9 @@ vi.mock("fs/promises", () => ({
             name: "@fern-api/generator-migrations",
             main: "./dist/index.js"
         })
-    )
+    ),
+    readdir: vi.fn(async () => []),
+    rm: vi.fn(async () => undefined)
 }));
 
 // Mock os.homedir
@@ -100,7 +102,9 @@ describe("Migration loader deduplication", () => {
                     name: "@fern-api/generator-migrations",
                     main: "./dist/index.js"
                 })
-            )
+            ),
+            readdir: vi.fn(async () => []),
+            rm: vi.fn(async () => undefined)
         }));
         vi.doMock("os", () => ({
             homedir: vi.fn(() => "/tmp/test-fern-home")

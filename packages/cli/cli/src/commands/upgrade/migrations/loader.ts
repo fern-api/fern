@@ -94,9 +94,9 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
         const packageEntryPoint = join(packageDir, packageJson.main);
         const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
 
-        // Clean up stale install directories from previous processes.
+        // Clean up stale install directories from dead processes.
         // Fire-and-forget: failures are non-fatal.
-        void cleanupStaleInstallDirs(cacheDir, installDir);
+        void cleanupStaleInstallDirs(logger, cacheDir, installDir);
 
         return migrations as Record<string, MigrationModule>;
     })();
@@ -110,25 +110,49 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
 }
 
 /**
- * Removes stale install-* directories from the cache dir, keeping only
- * the current process's directory. This prevents unbounded disk growth
- * from accumulated per-process install dirs.
+ * Returns true if the given PID belongs to a currently running process.
  */
-async function cleanupStaleInstallDirs(cacheDir: string, currentInstallDir: string): Promise<void> {
+function isProcessAlive(pid: number): boolean {
+    try {
+        process.kill(pid, 0);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+/**
+ * Removes install-* directories from the cache dir that belong to dead
+ * processes. Skips the current process's directory and any directory
+ * whose PID is still alive, so concurrent CLI processes are never
+ * disrupted. This prevents unbounded disk growth from accumulated
+ * per-process install dirs.
+ */
+async function cleanupStaleInstallDirs(logger: Logger, cacheDir: string, currentInstallDir: string): Promise<void> {
     try {
         const entries = await readdir(cacheDir, { withFileTypes: true });
         const removePromises = entries
-            .filter(
-                (entry) =>
-                    entry.isDirectory() &&
-                    entry.name.startsWith("install-") &&
-                    join(cacheDir, entry.name) !== currentInstallDir
-            )
-            // biome-ignore lint/suspicious/noEmptyBlockStatements: intentionally swallow per-dir removal errors
-            .map((entry) => rm(join(cacheDir, entry.name), { recursive: true, force: true }).catch(() => {}));
+            .filter((entry) => {
+                if (!entry.isDirectory() || !entry.name.startsWith("install-")) {
+                    return false;
+                }
+                if (join(cacheDir, entry.name) === currentInstallDir) {
+                    return false;
+                }
+                const pid = Number(entry.name.slice("install-".length));
+                if (Number.isNaN(pid) || isProcessAlive(pid)) {
+                    return false;
+                }
+                return true;
+            })
+            .map((entry) =>
+                rm(join(cacheDir, entry.name), { recursive: true, force: true }).catch((err: unknown) => {
+                    logger.debug(`Failed to remove stale install dir ${entry.name}: ${err}`);
+                })
+            );
         await Promise.all(removePromises);
-    } catch {
-        // Non-fatal: if we can't list the directory, just skip cleanup.
+    } catch (err: unknown) {
+        logger.debug(`Failed to clean up stale migration cache dirs: ${err}`);
     }
 }
 
