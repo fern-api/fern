@@ -100,7 +100,7 @@ function addTestCommand(cli: Argv) {
                 })
                 .option("parallel", {
                     type: "number",
-                    default: Math.min(os.cpus().length, 16),
+                    default: Math.max(1, Math.min(os.cpus().length, 16)),
                     alias: "p"
                 })
                 .option("fixture", {
@@ -403,7 +403,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 })
                 .option("parallel", {
                     type: "number",
-                    default: Math.min(os.cpus().length, 16),
+                    default: Math.max(1, Math.min(os.cpus().length, 16)),
                     alias: "p",
                     description: "Number of parallel test cases to run"
                 })
