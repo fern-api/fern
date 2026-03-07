@@ -143,13 +143,19 @@ jobs:
             fi
           fi
 
-          # Fetch the base ref so turbo and git diff can compare against it.
-          # The default checkout is shallow (depth=1) and doesn't include the base commit,
-          # which causes turbo to report ALL packages as affected.
-          # We fetch only the specific commit (no tags) to keep it fast.
+          # Deepen the shallow clone so the base ref is reachable from HEAD.
+          # The default checkout is depth=1, so turbo can't diff against the base commit
+          # (it marks ALL packages as affected when the base is unreachable).
+          # For PRs: deepen by 1 to include parents of the merge commit (base SHA + PR head).
+          # For pushes: the last-successful-run SHA may be several commits back.
           if [[ "$BASE_REF" != "origin/main" ]]; then
-            echo "Fetching base ref $BASE_REF into shallow clone..."
-            git fetch --no-tags --depth=1 origin "$BASE_REF" 2>/dev/null || echo "Warning: could not fetch base ref $BASE_REF"
+            if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+              echo "Deepening shallow clone by 1 to include PR base ref..."
+              git fetch --no-tags --deepen=1 origin 2>/dev/null || true
+            else
+              echo "Deepening shallow clone to reach last successful run SHA..."
+              git fetch --no-tags --deepen=50 origin 2>/dev/null || true
+            fi
           fi
 
           # Force run everything for workflow_dispatch (manual trigger) and metrics collection
