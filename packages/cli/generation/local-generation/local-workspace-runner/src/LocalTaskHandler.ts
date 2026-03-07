@@ -318,10 +318,10 @@ export class LocalTaskHandler {
                         analysis = {
                             versionBump: bestBump as VersionBump,
                             message: bestMessage,
-                                changelogEntry:
-                                    allChangelogEntries.length > 1
-                                        ? allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n")
-                                        : (allChangelogEntries[0] ?? "")
+                            changelogEntry:
+                                allChangelogEntries.length > 1
+                                    ? allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n")
+                                    : (allChangelogEntries[0] ?? "")
                         };
                     }
                 }
