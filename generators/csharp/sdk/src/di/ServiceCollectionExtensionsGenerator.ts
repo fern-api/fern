@@ -4,8 +4,10 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 
 type AuthScheme = FernIr.AuthScheme;
+type OAuthScheme = FernIr.OAuthScheme;
 
 /**
  * Represents a configuration property derived from an auth scheme or header
@@ -16,6 +18,7 @@ interface OptionsProperty {
     pascalName: string;
     docs: string;
     isOptional: boolean;
+    hasEnvironmentVariable: boolean;
 }
 
 /**
@@ -74,7 +77,8 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
                     name,
                     pascalName,
                     docs: header.docs ?? `The ${name} header value.`,
-                    isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional"
+                    isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
+                    hasEnvironmentVariable: false
                 });
                 seenNames.add(name);
             }
@@ -83,7 +87,12 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
         return properties;
     }
 
+    /**
+     * Converts an auth scheme into options properties.
+     * Mirrors the parameter extraction logic in RootClientGenerator.getParameterFromAuthScheme.
+     */
     private getPropertiesFromAuthScheme(scheme: AuthScheme): OptionsProperty[] {
+        const isOptional = this.context.ir.sdkConfig.isAuthMandatory;
         if (scheme.type === "header") {
             const name = scheme.name.name.camelCase.safeName;
             const pascalName = scheme.name.name.pascalCase.safeName;
@@ -92,7 +101,8 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
                     name,
                     pascalName,
                     docs: scheme.docs ?? `The ${name} to use for authentication.`,
-                    isOptional: false
+                    isOptional,
+                    hasEnvironmentVariable: scheme.headerEnvVar != null
                 }
             ];
         } else if (scheme.type === "bearer") {
@@ -103,7 +113,8 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
                     name,
                     pascalName,
                     docs: scheme.docs ?? `The ${name} to use for authentication.`,
-                    isOptional: false
+                    isOptional,
+                    hasEnvironmentVariable: scheme.tokenEnvVar != null
                 }
             ];
         } else if (scheme.type === "basic") {
@@ -116,32 +127,120 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
                     name: usernameName,
                     pascalName: usernamePascal,
                     docs: `The ${usernameName} to use for authentication.`,
-                    isOptional: false
+                    isOptional,
+                    hasEnvironmentVariable: scheme.usernameEnvVar != null
                 },
                 {
                     name: passwordName,
                     pascalName: passwordPascal,
                     docs: `The ${passwordName} to use for authentication.`,
-                    isOptional: false
+                    isOptional,
+                    hasEnvironmentVariable: scheme.passwordEnvVar != null
                 }
             ];
         } else if (scheme.type === "oauth") {
-            return [
+            const oauth = this.context.getOauth();
+            if (oauth == null) {
+                return [];
+            }
+            const properties: OptionsProperty[] = [
                 {
                     name: "clientId",
                     pascalName: "ClientId",
                     docs: "The client ID for OAuth authentication.",
-                    isOptional: false
+                    isOptional,
+                    hasEnvironmentVariable: scheme.configuration.clientIdEnvVar != null
                 },
                 {
                     name: "clientSecret",
                     pascalName: "ClientSecret",
                     docs: "The client secret for OAuth authentication.",
-                    isOptional: false
+                    isOptional,
+                    hasEnvironmentVariable: scheme.configuration.clientSecretEnvVar != null
                 }
             ];
+            // Include additional OAuth parameters (custom properties and scopes)
+            properties.push(...this.getOAuthAdditionalProperties(scheme, isOptional));
+            return properties;
+        } else if (scheme.type === "inferred") {
+            const inferred = this.context.getInferredAuth();
+            if (inferred == null) {
+                return [];
+            }
+            return this.getInferredAuthProperties(inferred, isOptional);
         }
         return [];
+    }
+
+    /**
+     * Gets additional OAuth properties from custom token endpoint properties and scopes.
+     * Mirrors the logic in RootClientGenerator.getOAuthAdditionalConstructorParams.
+     */
+    private getOAuthAdditionalProperties(scheme: OAuthScheme, isOptional: boolean): OptionsProperty[] {
+        const properties: OptionsProperty[] = [];
+        for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+            if (this.isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: customProperty.property.valueType
+            });
+            if (typeRef.isOptional) {
+                continue;
+            }
+            const name = customProperty.property.name.name.camelCase.safeName;
+            const pascalName = customProperty.property.name.name.pascalCase.safeName;
+            properties.push({
+                name,
+                pascalName,
+                docs: `The ${name} for OAuth authentication.`,
+                isOptional,
+                hasEnvironmentVariable: false
+            });
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes && !this.isLiteralTypeReference(scopes.property.valueType)) {
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: scopes.property.valueType
+            });
+            if (!typeRef.isOptional) {
+                const name = scopes.property.name.name.camelCase.safeName;
+                const pascalName = scopes.property.name.name.pascalCase.safeName;
+                properties.push({
+                    name,
+                    pascalName,
+                    docs: `The ${name} for OAuth authentication.`,
+                    isOptional,
+                    hasEnvironmentVariable: false
+                });
+            }
+        }
+        return properties;
+    }
+
+    /**
+     * Gets properties from inferred auth credentials.
+     * Mirrors the logic in RootClientGenerator.getParameterFromAuthScheme for inferred type.
+     */
+    private getInferredAuthProperties(inferred: FernIr.InferredAuthScheme, isOptional: boolean): OptionsProperty[] {
+        const tokenEndpointReference = inferred.tokenEndpoint.endpoint;
+        const tokenEndpointHttpService = this.context.getHttpService(tokenEndpointReference.serviceId);
+        if (tokenEndpointHttpService == null) {
+            return [];
+        }
+        const tokenEndpoint = this.context.resolveEndpoint(tokenEndpointHttpService, tokenEndpointReference.endpointId);
+        const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
+        return credentials.map((credential) => ({
+            name: credential.camelName,
+            pascalName: credential.pascalName,
+            docs: credential.docs ?? `The ${credential.camelName} for authentication.`,
+            isOptional: isOptional || credential.isOptional,
+            hasEnvironmentVariable: false
+        }));
+    }
+
+    private isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
+        return typeReference.type === "container" && typeReference.container.type === "literal";
     }
 
     public doGenerate(): CSharpFile {
@@ -346,9 +445,15 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
                 writer.writeLine("}");
                 writer.writeLine("");
 
-                // Build constructor arguments
-                const constructorArgs = authProperties.map((p) => `options.${p.pascalName}`);
-                constructorArgs.push("clientOptions");
+                // Build constructor arguments, matching root client constructor ordering:
+                // required params first, then optional params, then clientOptions
+                const requiredProps = authProperties.filter((p) => !p.isOptional && !p.hasEnvironmentVariable);
+                const optionalProps = authProperties.filter((p) => p.isOptional || p.hasEnvironmentVariable);
+                const constructorArgs = [
+                    ...requiredProps.map((p) => `options.${p.pascalName}`),
+                    ...optionalProps.map((p) => `options.${p.pascalName}`),
+                    "clientOptions"
+                ];
 
                 writer.writeLine(`return new ${this.clientName}(${constructorArgs.join(", ")});`);
                 writer.dedent();

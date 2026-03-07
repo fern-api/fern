@@ -4,8 +4,10 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
 
 type AuthScheme = FernIr.AuthScheme;
+type OAuthScheme = FernIr.OAuthScheme;
 
 /**
  * Generates {ClientName}Options.cs - a configuration options class for DI registration.
@@ -139,6 +141,10 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
         });
     }
 
+    /**
+     * Converts an auth scheme into options properties.
+     * Mirrors the parameter extraction logic in RootClientGenerator.getParameterFromAuthScheme.
+     */
     private getPropertiesFromAuthScheme(scheme: AuthScheme): Array<{ name: string; pascalName: string; docs: string }> {
         if (scheme.type === "header") {
             const name = scheme.name.name.camelCase.safeName;
@@ -178,7 +184,11 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
                 }
             ];
         } else if (scheme.type === "oauth") {
-            return [
+            const oauth = this.context.getOauth();
+            if (oauth == null) {
+                return [];
+            }
+            const properties: Array<{ name: string; pascalName: string; docs: string }> = [
                 {
                     name: "clientId",
                     pascalName: "ClientId",
@@ -190,7 +200,85 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
                     docs: "The client secret for OAuth authentication."
                 }
             ];
+            // Include additional OAuth parameters (custom properties and scopes)
+            properties.push(...this.getOAuthAdditionalProperties(scheme));
+            return properties;
+        } else if (scheme.type === "inferred") {
+            const inferred = this.context.getInferredAuth();
+            if (inferred == null) {
+                return [];
+            }
+            return this.getInferredAuthProperties(inferred);
         }
         return [];
+    }
+
+    /**
+     * Gets additional OAuth properties from custom token endpoint properties and scopes.
+     * Mirrors the logic in RootClientGenerator.getOAuthAdditionalConstructorParams.
+     */
+    private getOAuthAdditionalProperties(
+        scheme: OAuthScheme
+    ): Array<{ name: string; pascalName: string; docs: string }> {
+        const properties: Array<{ name: string; pascalName: string; docs: string }> = [];
+        for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+            if (this.isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: customProperty.property.valueType
+            });
+            if (typeRef.isOptional) {
+                continue;
+            }
+            const name = customProperty.property.name.name.camelCase.safeName;
+            const pascalName = customProperty.property.name.name.pascalCase.safeName;
+            properties.push({
+                name,
+                pascalName,
+                docs: `The ${name} for OAuth authentication.`
+            });
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes && !this.isLiteralTypeReference(scopes.property.valueType)) {
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: scopes.property.valueType
+            });
+            if (!typeRef.isOptional) {
+                const name = scopes.property.name.name.camelCase.safeName;
+                const pascalName = scopes.property.name.name.pascalCase.safeName;
+                properties.push({
+                    name,
+                    pascalName,
+                    docs: `The ${name} for OAuth authentication.`
+                });
+            }
+        }
+        return properties;
+    }
+
+    /**
+     * Gets properties from inferred auth credentials.
+     * Mirrors the logic in RootClientGenerator.getParameterFromAuthScheme for inferred type.
+     */
+    private getInferredAuthProperties(
+        inferred: FernIr.InferredAuthScheme
+    ): Array<{ name: string; pascalName: string; docs: string }> {
+        const tokenEndpointReference = inferred.tokenEndpoint.endpoint;
+        const tokenEndpointHttpService = this.context.getHttpService(tokenEndpointReference.serviceId);
+        if (tokenEndpointHttpService == null) {
+            return [];
+        }
+        const tokenEndpoint = this.context.resolveEndpoint(tokenEndpointHttpService, tokenEndpointReference.endpointId);
+        const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
+        return credentials.map((credential) => ({
+            name: credential.camelName,
+            pascalName: credential.pascalName,
+            docs: credential.docs ?? `The ${credential.camelName} for authentication.`
+        }));
+    }
+
+    private isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
+        return typeReference.type === "container" && typeReference.container.type === "literal";
     }
 }
