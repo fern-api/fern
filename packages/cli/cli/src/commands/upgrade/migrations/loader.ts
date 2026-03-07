@@ -1,7 +1,7 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { mkdir, readFile } from "fs/promises";
+import { mkdir, readdir, readFile, rm } from "fs/promises";
 import { homedir } from "os";
 import { join } from "path";
 import semver from "semver";
@@ -93,6 +93,11 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
 
         const packageEntryPoint = join(packageDir, packageJson.main);
         const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
+
+        // Clean up stale install directories from previous processes.
+        // Fire-and-forget: failures are non-fatal.
+        void cleanupStaleInstallDirs(cacheDir, installDir);
+
         return migrations as Record<string, MigrationModule>;
     })();
 
@@ -102,6 +107,29 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
     });
 
     return migrationsInstallPromise;
+}
+
+/**
+ * Removes stale install-* directories from the cache dir, keeping only
+ * the current process's directory. This prevents unbounded disk growth
+ * from accumulated per-process install dirs.
+ */
+async function cleanupStaleInstallDirs(cacheDir: string, currentInstallDir: string): Promise<void> {
+    try {
+        const entries = await readdir(cacheDir, { withFileTypes: true });
+        const removePromises = entries
+            .filter(
+                (entry) =>
+                    entry.isDirectory() &&
+                    entry.name.startsWith("install-") &&
+                    join(cacheDir, entry.name) !== currentInstallDir
+            )
+            // biome-ignore lint/suspicious/noEmptyBlockStatements: intentionally swallow per-dir removal errors
+            .map((entry) => rm(join(cacheDir, entry.name), { recursive: true, force: true }).catch(() => {}));
+        await Promise.all(removePromises);
+    } catch {
+        // Non-fatal: if we can't list the directory, just skip cleanup.
+    }
 }
 
 /**
