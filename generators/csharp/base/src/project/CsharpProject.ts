@@ -449,10 +449,7 @@ dotnet_diagnostic.IDE0005.severity = error
         const testProjectName = this.names.files.testProject;
 
         // Compute relative paths from the solution directory to each .csproj file
-        const libraryCsprojAbsolute = join(
-            absolutePathToProjectDirectory,
-            RelativeFilePath.of(`${this.name}.csproj`)
-        );
+        const libraryCsprojAbsolute = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
         const testCsprojAbsolute = join(
             absolutePathToTestProjectDirectory,
             RelativeFilePath.of(`${testProjectName}.csproj`)
