@@ -4,9 +4,8 @@
     - summary: |
         Fix `fern generator upgrade` failing with `ENOENT` on `package.json`
         when multiple CLI processes run concurrently (e.g., in parallel tests).
-        Each CLI process now installs the migration package to a
-        process-specific directory, preventing cross-process npm install races
-        on the shared `~/.fern/migration-cache` prefix.
+        A cross-process file lock now serializes npm installs to the shared
+        `~/.fern/migration-cache` prefix, preventing concurrent install races.
       type: fix
   createdAt: "2026-03-07"
   irVersion: 65

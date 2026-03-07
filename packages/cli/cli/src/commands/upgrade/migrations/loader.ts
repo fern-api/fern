@@ -88,13 +88,15 @@ async function acquireLock(logger: Logger, cacheDir: string): Promise<() => Prom
                     logger.debug(`Removing stale migration lock (pid=${lockContent.trim()}, age=${lockAge}ms)`);
                     try {
                         await unlink(lockPath);
-                    } catch {
+                    } catch (unlinkErr: unknown) {
                         // Another process may have removed it — that's fine
+                        logger.debug(`Failed to remove stale lock: ${unlinkErr}`);
                     }
                     continue;
                 }
-            } catch {
+            } catch (vanishErr: unknown) {
                 // Lock file vanished between open and stat — retry immediately
+                logger.debug(`Lock file vanished during stale check: ${vanishErr}`);
                 continue;
             }
 
@@ -138,34 +140,23 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
         const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
         const packageJsonPath = join(packageDir, "package.json");
 
-        // Acquire cross-process lock before touching node_modules
+        // Acquire cross-process lock so only one process runs npm install at a time.
+        // We always run `npm install @latest` (npm handles version freshness via
+        // registry checks); the lock simply prevents concurrent installs from
+        // corrupting each other's node_modules.
         const releaseLock = await acquireLock(logger, cacheDir);
         try {
-            // Check if the package is already installed (by a prior process).
-            // npm install @latest may have been run by another process while
-            // we waited for the lock — skip the install if package.json exists.
-            let needsInstall = true;
-            try {
-                await stat(packageJsonPath);
-                needsInstall = false;
-                logger.debug("Migration package already installed — skipping npm install.");
-            } catch {
-                // package.json doesn't exist yet — need to install
-            }
-
-            if (needsInstall) {
-                await loggingExeca(logger, "npm", [
-                    "install",
-                    `${MIGRATION_PACKAGE_NAME}@latest`,
-                    "--prefix",
-                    cacheDir,
-                    "--cache",
-                    npmCacheDir,
-                    "--ignore-scripts",
-                    "--no-audit",
-                    "--no-fund"
-                ]);
-            }
+            await loggingExeca(logger, "npm", [
+                "install",
+                `${MIGRATION_PACKAGE_NAME}@latest`,
+                "--prefix",
+                cacheDir,
+                "--cache",
+                npmCacheDir,
+                "--ignore-scripts",
+                "--no-audit",
+                "--no-fund"
+            ]);
         } finally {
             await releaseLock();
         }

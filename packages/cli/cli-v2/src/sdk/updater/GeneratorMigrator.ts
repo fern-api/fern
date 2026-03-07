@@ -192,37 +192,28 @@ export class GeneratorMigrator {
             const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
             const packageJsonPath = join(packageDir, "package.json");
 
-            // Acquire cross-process lock before touching node_modules
+            // Acquire cross-process lock so only one process runs npm install
+            // at a time. We always run `npm install @latest` (npm handles
+            // version freshness); the lock prevents concurrent installs from
+            // corrupting each other's node_modules.
             const releaseLock = await GeneratorMigrator.acquireLock(this.logger, cacheDir);
             try {
-                // Check if the package is already installed (by a prior process).
-                let needsInstall = true;
-                try {
-                    await stat(packageJsonPath);
-                    needsInstall = false;
-                    this.logger.debug("Migration package already installed — skipping npm install.");
-                } catch {
-                    // package.json doesn't exist yet — need to install
-                }
-
-                if (needsInstall) {
-                    await loggingExeca(
-                        this.logger,
-                        "npm",
-                        [
-                            "install",
-                            `${MIGRATION_PACKAGE_NAME}@latest`,
-                            "--prefix",
-                            cacheDir,
-                            "--cache",
-                            npmCacheDir,
-                            "--ignore-scripts",
-                            "--no-audit",
-                            "--no-fund"
-                        ],
-                        { doNotPipeOutput: true }
-                    );
-                }
+                await loggingExeca(
+                    this.logger,
+                    "npm",
+                    [
+                        "install",
+                        `${MIGRATION_PACKAGE_NAME}@latest`,
+                        "--prefix",
+                        cacheDir,
+                        "--cache",
+                        npmCacheDir,
+                        "--ignore-scripts",
+                        "--no-audit",
+                        "--no-fund"
+                    ],
+                    { doNotPipeOutput: true }
+                );
             } finally {
                 await releaseLock();
             }
@@ -303,13 +294,15 @@ export class GeneratorMigrator {
                         logger.debug(`Removing stale migration lock (pid=${lockContent.trim()}, age=${lockAge}ms)`);
                         try {
                             await unlink(lockPath);
-                        } catch {
+                        } catch (unlinkErr: unknown) {
                             // Another process may have removed it
+                            logger.debug(`Failed to remove stale lock: ${unlinkErr}`);
                         }
                         continue;
                     }
-                } catch {
+                } catch (vanishErr: unknown) {
                     // Lock file vanished — retry immediately
+                    logger.debug(`Lock file vanished during stale check: ${vanishErr}`);
                     continue;
                 }
 
