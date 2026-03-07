@@ -1,7 +1,7 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { mkdir, readdir, readFile, rm } from "fs/promises";
+import { close, mkdir, open, readFile, stat, unlink, writeFile } from "fs/promises";
 import { homedir } from "os";
 import { join } from "path";
 import semver from "semver";
@@ -16,98 +16,20 @@ import { Migration, MigrationModule, MigratorResult } from "./types.js";
 const MIGRATION_PACKAGE_NAME = "@fern-api/generator-migrations";
 
 /**
- * Gets the base cache directory for migration packages.
- * The shared npm download cache is stored here for fast installs.
+ * Gets the cache directory for migration packages.
+ * Migrations are installed to ~/.fern/migration-cache/ to avoid polluting the project.
  */
 function getMigrationCacheDir(): string {
     return join(homedir(), ".fern", "migration-cache");
 }
 
-/**
- * Gets a process-specific install directory for the migration package.
- * Each CLI process gets its own install directory to avoid cross-process
- * race conditions when multiple CLI processes (e.g., from concurrent tests)
- * run npm install to the same --prefix directory simultaneously.
- *
- * The shared npm download cache (~/.fern/migration-cache/.npm-cache) still
- * provides fast installs without repeated downloads.
- */
-function getInstallDir(): string {
-    return join(getMigrationCacheDir(), `install-${process.pid}`);
-}
+// ---------------------------------------------------------------------------
+// Cross-process file lock
+// ---------------------------------------------------------------------------
 
-/**
- * Module-level promise that ensures the migration package is installed only once
- * per CLI process. When multiple workspaces are upgraded concurrently via
- * Promise.all, they all await this single promise instead of racing on
- * concurrent npm installs to the same --prefix directory (which causes
- * TAR_ENTRY_ERROR and missing files).
- */
-let migrationsInstallPromise: Promise<Record<string, MigrationModule> | undefined> | undefined;
-
-/**
- * Installs the migration package once and returns the full migrations map.
- * Uses an isolated npm cache to avoid corruption from the system npm cache.
- *
- * Concurrent calls reuse the same in-flight promise, preventing the race
- * condition where multiple npm installs to the same --prefix directory cause
- * tar extraction failures.
- */
-async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string, MigrationModule> | undefined> {
-    if (migrationsInstallPromise != null) {
-        return migrationsInstallPromise.catch((err) => {
-            migrationsInstallPromise = undefined;
-            throw err;
-        });
-    }
-
-    migrationsInstallPromise = (async () => {
-        const cacheDir = getMigrationCacheDir();
-        const installDir = getInstallDir();
-        await mkdir(installDir, { recursive: true });
-
-        // Use a shared npm download cache for fast installs, but a
-        // process-specific --prefix so concurrent CLI processes don't
-        // corrupt each other's node_modules.
-        const npmCacheDir = join(cacheDir, ".npm-cache");
-        await loggingExeca(logger, "npm", [
-            "install",
-            `${MIGRATION_PACKAGE_NAME}@latest`,
-            "--prefix",
-            installDir,
-            "--cache",
-            npmCacheDir,
-            "--ignore-scripts",
-            "--no-audit",
-            "--no-fund"
-        ]);
-
-        const packageDir = join(installDir, "node_modules", MIGRATION_PACKAGE_NAME);
-        const packageJsonPath = join(packageDir, "package.json");
-        const packageJsonContent = await readFile(packageJsonPath, "utf-8");
-        const packageJson = JSON.parse(packageJsonContent) as { main?: string };
-
-        if (packageJson.main == null) {
-            throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
-        }
-
-        const packageEntryPoint = join(packageDir, packageJson.main);
-        const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
-
-        // Clean up stale install directories from dead processes.
-        // Fire-and-forget: failures are non-fatal.
-        void cleanupStaleInstallDirs(logger, cacheDir, installDir);
-
-        return migrations as Record<string, MigrationModule>;
-    })();
-
-    // Reset the cached promise on failure so the next call can retry.
-    migrationsInstallPromise.catch(() => {
-        migrationsInstallPromise = undefined;
-    });
-
-    return migrationsInstallPromise;
-}
+const LOCK_FILENAME = ".install.lock";
+const LOCK_POLL_MS = 200;
+const LOCK_STALE_MS = 5 * 60 * 1000; // 5 minutes
 
 /**
  * Returns true if the given PID belongs to a currently running process.
@@ -122,38 +44,151 @@ function isProcessAlive(pid: number): boolean {
 }
 
 /**
- * Removes install-* directories from the cache dir that belong to dead
- * processes. Skips the current process's directory and any directory
- * whose PID is still alive, so concurrent CLI processes are never
- * disrupted. This prevents unbounded disk growth from accumulated
- * per-process install dirs.
+ * Acquires an exclusive file lock by atomically creating a lock file.
+ * If the lock already exists, polls until it becomes available.
+ * Stale locks (from dead processes or older than LOCK_STALE_MS) are
+ * automatically removed.
+ *
+ * Returns a release function that MUST be called when done.
  */
-async function cleanupStaleInstallDirs(logger: Logger, cacheDir: string, currentInstallDir: string): Promise<void> {
-    try {
-        const entries = await readdir(cacheDir, { withFileTypes: true });
-        const removePromises = entries
-            .filter((entry) => {
-                if (!entry.isDirectory() || !entry.name.startsWith("install-")) {
-                    return false;
+async function acquireLock(logger: Logger, cacheDir: string): Promise<() => Promise<void>> {
+    const lockPath = join(cacheDir, LOCK_FILENAME);
+
+    // eslint-disable-next-line no-constant-condition, @typescript-eslint/no-unnecessary-condition
+    while (true) {
+        try {
+            // O_CREAT | O_EXCL — fails if file already exists (atomic)
+            const fd = await open(lockPath, "wx");
+            await writeFile(fd, String(process.pid));
+            await close(fd);
+
+            return async () => {
+                try {
+                    await unlink(lockPath);
+                } catch (err: unknown) {
+                    logger.debug(`Failed to release migration lock: ${err}`);
                 }
-                if (join(cacheDir, entry.name) === currentInstallDir) {
-                    return false;
+            };
+        } catch (err: unknown) {
+            const code = (err as NodeJS.ErrnoException).code;
+            if (code !== "EEXIST") {
+                // Unexpected error (permissions, disk full, etc.) — let it propagate
+                throw err;
+            }
+
+            // Lock file exists — check if it's stale
+            try {
+                const lockContent = await readFile(lockPath, "utf-8");
+                const lockPid = Number(lockContent.trim());
+                const lockStat = await stat(lockPath);
+                const lockAge = Date.now() - lockStat.mtimeMs;
+
+                if (lockAge > LOCK_STALE_MS || (Number.isFinite(lockPid) && lockPid > 0 && !isProcessAlive(lockPid))) {
+                    // Stale lock — remove it and retry immediately
+                    logger.debug(`Removing stale migration lock (pid=${lockContent.trim()}, age=${lockAge}ms)`);
+                    try {
+                        await unlink(lockPath);
+                    } catch {
+                        // Another process may have removed it — that's fine
+                    }
+                    continue;
                 }
-                const pid = Number(entry.name.slice("install-".length));
-                if (Number.isNaN(pid) || isProcessAlive(pid)) {
-                    return false;
-                }
-                return true;
-            })
-            .map((entry) =>
-                rm(join(cacheDir, entry.name), { recursive: true, force: true }).catch((err: unknown) => {
-                    logger.debug(`Failed to remove stale install dir ${entry.name}: ${err}`);
-                })
-            );
-        await Promise.all(removePromises);
-    } catch (err: unknown) {
-        logger.debug(`Failed to clean up stale migration cache dirs: ${err}`);
+            } catch {
+                // Lock file vanished between open and stat — retry immediately
+                continue;
+            }
+
+            // Lock is held by a live process — wait and retry
+            await new Promise((resolve) => setTimeout(resolve, LOCK_POLL_MS));
+        }
     }
+}
+
+/**
+ * Module-level promise that ensures the migration package is installed only once
+ * per CLI process. When multiple workspaces are upgraded concurrently via
+ * Promise.all, they all await this single promise instead of racing on
+ * concurrent npm installs to the same --prefix directory (which causes
+ * TAR_ENTRY_ERROR and missing files).
+ */
+let migrationsInstallPromise: Promise<Record<string, MigrationModule> | undefined> | undefined;
+
+/**
+ * Installs the migration package once and returns the full migrations map.
+ *
+ * Within a single process, concurrent calls reuse the same in-flight promise.
+ * Across processes, a file lock serializes npm installs so only one process
+ * writes to the shared --prefix directory at a time. Processes that acquire
+ * the lock after another process has already installed the package will find
+ * it already present and skip the npm install entirely.
+ */
+async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string, MigrationModule> | undefined> {
+    if (migrationsInstallPromise != null) {
+        return migrationsInstallPromise.catch((err) => {
+            migrationsInstallPromise = undefined;
+            throw err;
+        });
+    }
+
+    migrationsInstallPromise = (async () => {
+        const cacheDir = getMigrationCacheDir();
+        await mkdir(cacheDir, { recursive: true });
+
+        const npmCacheDir = join(cacheDir, ".npm-cache");
+        const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
+        const packageJsonPath = join(packageDir, "package.json");
+
+        // Acquire cross-process lock before touching node_modules
+        const releaseLock = await acquireLock(logger, cacheDir);
+        try {
+            // Check if the package is already installed (by a prior process).
+            // npm install @latest may have been run by another process while
+            // we waited for the lock — skip the install if package.json exists.
+            let needsInstall = true;
+            try {
+                await stat(packageJsonPath);
+                needsInstall = false;
+                logger.debug("Migration package already installed — skipping npm install.");
+            } catch {
+                // package.json doesn't exist yet — need to install
+            }
+
+            if (needsInstall) {
+                await loggingExeca(logger, "npm", [
+                    "install",
+                    `${MIGRATION_PACKAGE_NAME}@latest`,
+                    "--prefix",
+                    cacheDir,
+                    "--cache",
+                    npmCacheDir,
+                    "--ignore-scripts",
+                    "--no-audit",
+                    "--no-fund"
+                ]);
+            }
+        } finally {
+            await releaseLock();
+        }
+
+        // Read & import outside the lock — no writes happening here
+        const packageJsonContent = await readFile(packageJsonPath, "utf-8");
+        const packageJson = JSON.parse(packageJsonContent) as { main?: string };
+
+        if (packageJson.main == null) {
+            throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
+        }
+
+        const packageEntryPoint = join(packageDir, packageJson.main);
+        const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
+        return migrations as Record<string, MigrationModule>;
+    })();
+
+    // Reset the cached promise on failure so the next call can retry.
+    migrationsInstallPromise.catch(() => {
+        migrationsInstallPromise = undefined;
+    });
+
+    return migrationsInstallPromise;
 }
 
 /**
