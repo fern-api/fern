@@ -25,6 +25,8 @@ export declare namespace CSharpFile {
         generation: Generation;
         /* The header to be written to the file */
         fileHeader?: string;
+        /* The footer to be written to the file */
+        fileFooter?: string;
     }
 }
 
@@ -35,7 +37,8 @@ export class CSharpFile extends File {
         allNamespaceSegments,
         allTypeClassReferences,
         generation,
-        fileHeader
+        fileHeader,
+        fileFooter
     }: CSharpFile.Args) {
         let fileContents = clazz.toString({
             namespace: clazz.namespace,
@@ -45,6 +48,9 @@ export class CSharpFile extends File {
         });
         if (fileHeader) {
             fileContents = `${fileHeader}\n\n${fileContents}`;
+        }
+        if (fileFooter) {
+            fileContents = `${fileContents}\n${fileFooter}`;
         }
 
         super(`${clazz.name}.cs`, directory, fileContents);

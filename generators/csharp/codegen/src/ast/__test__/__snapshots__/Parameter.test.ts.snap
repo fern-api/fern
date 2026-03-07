@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`parameter > ref parameter 1`] = `
+"using System;
+
+namespace Test;
+
+public class TestClass
+{
+    public void TestMethod(ref int value) {
+        
+    }
+
+}
+"
+`;
+
+exports[`parameter > this parameter for extension methods 1`] = `
+"using Microsoft.Extensions.DependencyInjection;
+
+namespace MyApi.Extensions;
+
+public static class ServiceCollectionExtensions
+{
+    public static IServiceCollection AddMyClient(this IServiceCollection services) {
+        return services;
+    }
+
+}
+"
+`;

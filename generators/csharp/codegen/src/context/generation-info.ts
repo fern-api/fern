@@ -201,6 +201,8 @@ export class Generation {
         includeExceptionHandler: () => this.customConfig["include-exception-handler"] ?? false,
         /** Custom name for the exception interceptor class. Default: {PackageName}ExceptionInterceptor. */
         exceptionInterceptorClassName: () => this.customConfig["exception-interceptor-class-name"] ?? "",
+        /** When true, generates dependency injection extension methods for IServiceCollection (.NET Core only). Default: false. */
+        generateDiExtensions: () => this.customConfig["generate-di-extensions"] ?? false,
         /** When true, generates mock server tests for the SDK. Default: true. Also accepts enable-wire-tests as an alias. */
         shouldGenerateMockServerTests: () =>
             this.customConfig["generate-mock-server-tests"] ?? this.customConfig["enable-wire-tests"] ?? true,

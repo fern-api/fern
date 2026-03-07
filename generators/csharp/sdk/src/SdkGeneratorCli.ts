@@ -12,6 +12,8 @@ import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/ser
 import { FernIr } from "@fern-fern/ir-sdk";
 import { fail } from "assert";
 import { writeFile } from "fs/promises";
+import { DependencyInjectionOptionsGenerator } from "./di/DependencyInjectionOptionsGenerator.js";
+import { ServiceCollectionExtensionsGenerator } from "./di/ServiceCollectionExtensionsGenerator.js";
 import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator.js";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator.js";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator.js";
@@ -217,6 +219,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());
+
+        if (context.settings.generateDiExtensions) {
+            const diOptions = new DependencyInjectionOptionsGenerator(context);
+            context.project.addSourceFiles(diOptions.generate());
+
+            const diExtensions = new ServiceCollectionExtensionsGenerator(context);
+            context.project.addSourceFiles(diExtensions.generate());
+        }
 
         const rootServiceId = context.ir.rootPackage.service;
         if (rootServiceId != null) {

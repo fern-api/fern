@@ -786,6 +786,7 @@ ${projectGroup.join("\n")}
         ${this.getSseDependencies().join(`\n${this.generation.constants.formatting.indent}`)}
         ${this.getWebSocketAsyncDependencies().join(`\n${this.generation.constants.formatting.indent}`)}
     </ItemGroup>
+${this.getDiDependencies()}
 ${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${this.generation.constants.formatting.indent}`)}
     <ItemGroup>
         <None Include="${this.readmeRelativePathFromProject}" Pack="true" PackagePath=""/>
@@ -842,6 +843,25 @@ ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.
         return this.context.hasSseEndpoints
             ? ['    <PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" />']
             : [];
+    }
+
+    /**
+     * Adds the NuGet dependencies for dependency injection extensions.
+     * These are conditionally included only for non-NETFRAMEWORK targets.
+     *
+     * @returns a string with the conditional ItemGroup for DI dependencies, or empty string.
+     */
+    private getDiDependencies(): string {
+        if (!this.generation.settings.generateDiExtensions) {
+            return "";
+        }
+        return `    <ItemGroup Condition="'$(TargetFramework)' != 'net462'">
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
+    </ItemGroup>\n`;
     }
 
     private getProtobufDependencies(protobufSourceFilePaths: RelativeFilePath[]): string[] {

@@ -16,6 +16,8 @@ export declare namespace Parameter {
         initializer?: string;
         ref?: boolean;
         out?: boolean;
+        /* Whether this is a 'this' parameter for extension methods */
+        this_?: boolean;
     }
 }
 
@@ -26,8 +28,9 @@ export class Parameter extends AstNode {
     public readonly type: Type;
     private readonly ref: boolean;
     private readonly out: boolean;
+    private readonly this_: boolean;
 
-    constructor({ name, type, docs, initializer, ref, out }: Parameter.Args, generation: Generation) {
+    constructor({ name, type, docs, initializer, ref, out, this_ }: Parameter.Args, generation: Generation) {
         super(generation);
         this.name = name;
         this.type = type;
@@ -35,9 +38,13 @@ export class Parameter extends AstNode {
         this.initializer = initializer;
         this.ref = ref ?? false;
         this.out = out ?? false;
+        this.this_ = this_ ?? false;
     }
 
     public write(writer: Writer): void {
+        if (this.this_) {
+            writer.write("this ");
+        }
         if (this.ref) {
             writer.write("ref ");
         }

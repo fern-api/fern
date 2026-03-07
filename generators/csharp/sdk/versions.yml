@@ -1,4 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.24.0
+  changelogEntry:
+    - summary: |
+        Add opt-in dependency injection and configuration integration for .NET Core.
+        When enabled via `generate-di-extensions: true`, the generator produces
+        `IServiceCollection` extension methods and an options class for registering
+        the SDK client in a DI container. Supports configuration binding from
+        `IConfiguration`, `Action<TOptions>` delegates, and `IConfigurationSection`.
+        Uses `IHttpClientFactory` for proper `HttpClient` lifecycle management.
+        Guarded by `#if !NETFRAMEWORK` preprocessor directives for .NET Core only.
+
+        ```yaml
+        generators:
+          - name: fernapi/fern-csharp-sdk
+            config:
+              generate-di-extensions: true
+        ```
+      type: feat
+  createdAt: "2026-03-07"
+  irVersion: 62
+
 - version: 2.23.6
   changelogEntry:
     - summary: |
