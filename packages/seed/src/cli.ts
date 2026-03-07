@@ -1,3 +1,4 @@
+import os from "os";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin } from "@fern-api/login";
@@ -99,7 +100,7 @@ function addTestCommand(cli: Argv) {
                 })
                 .option("parallel", {
                     type: "number",
-                    default: 4,
+                    default: Math.min(os.cpus().length, 16),
                     alias: "p"
                 })
                 .option("fixture", {
@@ -402,7 +403,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 })
                 .option("parallel", {
                     type: "number",
-                    default: 4,
+                    default: Math.min(os.cpus().length, 16),
                     alias: "p",
                     description: "Number of parallel test cases to run"
                 })
