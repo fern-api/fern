@@ -143,8 +143,11 @@ jobs:
             fi
           fi
 
-          # Force run everything when collecting metrics
-          if [[ "${{ needs.setup.outputs.post-metrics }}" == "true" ]]; then
+          # Force run everything for workflow_dispatch (manual trigger) and metrics collection
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "Manual dispatch — forcing all generators and fixtures to run."
+            AFFECTED_JSON='{"allGeneratorsAffected":true,"allFixturesAffected":true,"generators":[],"generatorsWithAllFixtures":[],"fixtures":[],"summary":["Forced: workflow_dispatch event."]}'
+          elif [[ "${{ needs.setup.outputs.post-metrics }}" == "true" ]]; then
             echo "Metrics collection mode — forcing all generators and fixtures to run."
             AFFECTED_JSON='{"allGeneratorsAffected":true,"allFixturesAffected":true,"generators":[],"generatorsWithAllFixtures":[],"fixtures":[],"summary":["Forced: metrics collection mode."]}'
           else
