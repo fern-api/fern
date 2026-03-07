@@ -13,8 +13,6 @@ type WellKnownProtobufType = FernIr.WellKnownProtobufType;
 const WellKnownProtobufType = FernIr.WellKnownProtobufType;
 
 export class ModelGeneratorContext extends GeneratorContext {
-    private _formatter: AbstractFormatter | undefined;
-
     /**
      * Lazily initializes the CsharpFormatter on first access.
      * The formatter resolves the csharpier tool path and is only needed

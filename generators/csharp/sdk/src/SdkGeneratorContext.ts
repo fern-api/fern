@@ -13,7 +13,6 @@ import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsG
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 
 export class SdkGeneratorContext extends GeneratorContext {
-    private _formatter: AbstractFormatter | undefined;
     public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
