@@ -186,7 +186,5 @@ export function splitFixturesIntoGroups(fixtures: string[], numGroups: number): 
     }
 
     // Filter out empty groups and return fixture lists only
-    return groups
-        .filter((g) => g.fixtures.length > 0)
-        .map((g) => ({ fixtures: g.fixtures }));
+    return groups.filter((g) => g.fixtures.length > 0).map((g) => ({ fixtures: g.fixtures }));
 }

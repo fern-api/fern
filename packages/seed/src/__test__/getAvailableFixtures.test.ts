@@ -459,9 +459,7 @@ describe("splitFixturesIntoGroups", () => {
             expect(result).toHaveLength(4);
 
             // Heavy variants should be distributed across groups
-            const heavyCountPerGroup = result.map(
-                (g) => g.fixtures.filter((f) => f.startsWith("heavy:")).length
-            );
+            const heavyCountPerGroup = result.map((g) => g.fixtures.filter((f) => f.startsWith("heavy:")).length);
             // 10 heavy variants / 4 groups → between 2-3 per group
             heavyCountPerGroup.forEach((count) => {
                 expect(count).toBeGreaterThanOrEqual(1);
@@ -487,12 +485,8 @@ describe("splitFixturesIntoGroups", () => {
             expect(result).toHaveLength(3);
 
             // Both multi-variant families should be spread across groups
-            const exhaustivePerGroup = result.map(
-                (g) => g.fixtures.filter((f) => f.startsWith("exhaustive:")).length
-            );
-            const enumPerGroup = result.map(
-                (g) => g.fixtures.filter((f) => f.startsWith("enum:")).length
-            );
+            const exhaustivePerGroup = result.map((g) => g.fixtures.filter((f) => f.startsWith("exhaustive:")).length);
+            const enumPerGroup = result.map((g) => g.fixtures.filter((f) => f.startsWith("enum:")).length);
 
             // Exhaustive (5 variants, weight=5) should be distributed
             expect(Math.max(...exhaustivePerGroup)).toBeLessThanOrEqual(3);
@@ -569,13 +563,7 @@ describe("getFixtureWeights", () => {
     });
 
     it("assigns higher weight to multi-variant fixtures", () => {
-        const fixtures = [
-            "alias",
-            "exhaustive:v1",
-            "exhaustive:v2",
-            "exhaustive:v3",
-            "basic-auth"
-        ];
+        const fixtures = ["alias", "exhaustive:v1", "exhaustive:v2", "exhaustive:v3", "basic-auth"];
         const weights = getFixtureWeights(fixtures);
 
         // Simple fixtures get weight 1
@@ -588,14 +576,7 @@ describe("getFixtureWeights", () => {
     });
 
     it("handles multiple multi-variant families", () => {
-        const fixtures = [
-            "exhaustive:v1",
-            "exhaustive:v2",
-            "enum:a",
-            "enum:b",
-            "enum:c",
-            "simple"
-        ];
+        const fixtures = ["exhaustive:v1", "exhaustive:v2", "enum:a", "enum:b", "enum:c", "simple"];
         const weights = getFixtureWeights(fixtures);
 
         expect(weights.get("exhaustive:v1")).toBe(2);
