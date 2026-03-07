@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.16.0
+  changelogEntry:
+    - summary: |
+        Add `hide-products` layout option to `docs.yml`. When set to `true`,
+        the docs frontend hides the product switcher dropdown and header tabs,
+        showing only the API reference content. This is useful for docs sites
+        sourced from Postman collections that don't need product navigation.
+      type: feat
+  createdAt: "2026-03-07"
+  irVersion: 65
+
 - version: 4.15.3
   changelogEntry:
     - summary: |
