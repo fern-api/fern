@@ -169,7 +169,7 @@ function mapTurboPackagesToSeedWorkspaces(
     for (const pkg of turboPackages) {
         // Check if this is a global infrastructure package
         for (const globalPath of GLOBAL_AFFECT_PATHS) {
-            if (pkg.path.startsWith(globalPath.replace(/\/$/, ""))) {
+            if (pkg.path === globalPath.replace(/\/$/, "") || pkg.path.startsWith(globalPath)) {
                 allGeneratorsAffected = true;
                 allFixturesAffected = true;
                 summary.push(`Global infrastructure package affected (turbo): ${pkg.name} (${pkg.path})`);
