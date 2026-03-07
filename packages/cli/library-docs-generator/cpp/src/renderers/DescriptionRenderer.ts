@@ -168,7 +168,10 @@ function renderSegment(segment: CppDocSegment): string {
                 }
 
                 const linkPath = buildLinkPath(qualifiedName);
-                return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
+                if (linkPath) {
+                    return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
+                }
+                return `\`${codeText}\`${possessiveSuffix}`;
             }
             // For member refs, try to decode the refid to get a qualified name.
             // Some member refs point to concepts, classes, or methods that have API pages.
@@ -184,7 +187,9 @@ function renderSegment(segment: CppDocSegment): string {
                         qualifiedName = decodedPath + "::" + shortName;
                     }
                     const linkPath = buildLinkPath(qualifiedName);
-                    return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
+                    if (linkPath) {
+                        return `[\`${codeText}\`](${linkPath})${possessiveSuffix}`;
+                    }
                 }
             }
             // Fallback: render as inline code
@@ -205,7 +210,10 @@ function renderSegment(segment: CppDocSegment): string {
                 }
 
                 const linkPath = buildLinkPath(qualifiedName);
-                return `[${escapeAngleBrackets(text)}](${linkPath})`;
+                if (linkPath) {
+                    return `[${escapeAngleBrackets(text)}](${linkPath})`;
+                }
+                return `\`${text}\``;
             }
             // For member refs, also try to resolve as a link
             if (segment.kindref === "member" && segment.refid) {
@@ -217,7 +225,9 @@ function renderSegment(segment: CppDocSegment): string {
                         qualifiedName = decodedPath + "::" + shortName;
                     }
                     const linkPath = buildLinkPath(qualifiedName);
-                    return `[${escapeAngleBrackets(segment.text.trim())}](${linkPath})`;
+                    if (linkPath) {
+                        return `[${escapeAngleBrackets(segment.text.trim())}](${linkPath})`;
+                    }
                 }
             }
             // For unresolvable member refs, render as plain text
@@ -631,7 +641,9 @@ export function renderTypeInfoForTable(typeInfo: CppTypeInfo | undefined, ownerP
     // If the type has a resolved path, create a link
     if (typeInfo.resolvedPath) {
         const linkPath = buildLinkPath(typeInfo.resolvedPath);
-        return `[\`${display}\`](${linkPath})`;
+        if (linkPath) {
+            return `[\`${display}\`](${linkPath})`;
+        }
     }
 
     return `\`${display}\``;

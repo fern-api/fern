@@ -20,6 +20,11 @@ import { renderFrontmatter, trimTrailingBlankLines } from "./shared.js";
 
 export interface EntityEntry {
     displayName: string;
+    linkPath: string | undefined;
+}
+
+export interface NamespaceListEntry {
+    displayName: string;
     linkPath: string;
 }
 
@@ -145,11 +150,13 @@ export function namespaceHasEntities(ns: CppNamespaceIr): boolean {
  * @param title - Page title (e.g., "CUB API Reference" or "Namespace cub::detail")
  * @param categories - Pre-computed non-empty categories with their entries
  * @param hasChildNamespaces - Whether child namespaces with entities exist
+ * @param nsLastSegment - Last segment of the namespace directory path (used as link prefix)
  */
 export function renderNamespaceIndexPage(
     title: string,
     categories: CategoryWithEntries[],
-    hasChildNamespaces: boolean
+    hasChildNamespaces: boolean,
+    nsLastSegment: string
 ): string {
     const lines: string[] = [];
 
@@ -160,12 +167,12 @@ export function renderNamespaceIndexPage(
 
     // Links to non-empty category indexes
     for (const { category } of categories) {
-        lines.push(`- [${category.heading}](./${category.folderName}/index)`);
+        lines.push(`- [${category.heading}](${nsLastSegment}/${category.folderName})`);
     }
 
     // Link to namespaces index if there are child namespaces with entities
     if (hasChildNamespaces) {
-        lines.push("- [Namespaces](./namespaces/index)");
+        lines.push(`- [Namespaces](${nsLastSegment}/namespaces)`);
     }
 
     trimTrailingBlankLines(lines);
@@ -199,7 +206,11 @@ export function renderCategoryIndexPage(
     lines.push("");
 
     for (const entry of entries) {
-        lines.push(`- [\`${entry.displayName}\`](${entry.linkPath})`);
+        if (entry.linkPath) {
+            lines.push(`- [\`${entry.displayName}\`](${entry.linkPath})`);
+        } else {
+            lines.push(`- \`${entry.displayName}\``);
+        }
     }
 
     trimTrailingBlankLines(lines);
@@ -213,13 +224,13 @@ export function renderCategoryIndexPage(
 /**
  * Render the namespaces/index.mdx page listing child namespaces.
  *
- * Each child namespace links to ./{child.name}/index.
+ * Each child namespace links via a pre-computed relative path.
  *
  * @param nsPath - Fully qualified namespace path (e.g., "cub" or "thrust::system")
- * @param childNamespaces - Pre-filtered and sorted child namespaces that have entities
+ * @param childEntries - Pre-computed child namespace entries with display names and link paths
  * @param nsTitle - Human-readable namespace title for the page heading
  */
-export function renderNamespacesIndexPage(nsPath: string, childNamespaces: CppNamespaceIr[], nsTitle: string): string {
+export function renderNamespacesIndexPage(nsPath: string, childEntries: NamespaceListEntry[], nsTitle: string): string {
     const lines: string[] = [];
 
     const title = `${nsTitle} — Namespaces`;
@@ -227,8 +238,8 @@ export function renderNamespacesIndexPage(nsPath: string, childNamespaces: CppNa
     lines.push(...renderFrontmatter(title, description));
     lines.push("");
 
-    for (const child of childNamespaces) {
-        lines.push(`- [\`${child.path}\`](./${child.name}/index)`);
+    for (const entry of childEntries) {
+        lines.push(`- [\`${entry.displayName}\`](${entry.linkPath})`);
     }
 
     trimTrailingBlankLines(lines);
