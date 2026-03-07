@@ -455,12 +455,8 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(`${testProjectName}.csproj`)
         );
 
-        const libraryCsprojRelative = path.posix.normalize(
-            path.relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
-        );
-        const testCsprojRelative = path.posix.normalize(
-            path.relative(absolutePathToSolutionDirectory, testCsprojAbsolute)
-        );
+        const libraryCsprojRelative = path.relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute).replace(/\\/g, "/");
+        const testCsprojRelative = path.relative(absolutePathToSolutionDirectory, testCsprojAbsolute).replace(/\\/g, "/");
 
         const slnxContents = `<Solution>
   <Project Path="${testCsprojRelative}" />
