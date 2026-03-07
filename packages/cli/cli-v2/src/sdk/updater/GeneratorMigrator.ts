@@ -248,7 +248,11 @@ export class GeneratorMigrator {
         try {
             process.kill(pid, 0);
             return true;
-        } catch {
+        } catch (e: unknown) {
+            // EPERM means the process exists but we lack permission to signal it
+            if ((e as NodeJS.ErrnoException).code === "EPERM") {
+                return true;
+            }
             return false;
         }
     }
@@ -278,8 +282,9 @@ export class GeneratorMigrator {
                         if (content.trim() === myPid) {
                             unlinkSync(lockPath);
                         }
-                    } catch {
-                        // Lock file already removed or unreadable — nothing to do
+                    } catch (e: unknown) {
+                        // Lock file already removed or unreadable — best-effort cleanup
+                        void e; // Intentionally suppressed: exit handler cannot log asynchronously
                     }
                 };
                 process.on("exit", exitHandler);
