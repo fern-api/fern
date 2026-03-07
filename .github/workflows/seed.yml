@@ -143,6 +143,15 @@ jobs:
             fi
           fi
 
+          # Fetch the base ref so turbo and git diff can compare against it.
+          # The default checkout is shallow (depth=1) and doesn't include the base commit,
+          # which causes turbo to report ALL packages as affected.
+          # We fetch only the specific commit (no tags) to keep it fast.
+          if [[ "$BASE_REF" != "origin/main" ]]; then
+            echo "Fetching base ref $BASE_REF into shallow clone..."
+            git fetch --no-tags --depth=1 origin "$BASE_REF" 2>/dev/null || echo "Warning: could not fetch base ref $BASE_REF"
+          fi
+
           # Force run everything for workflow_dispatch (manual trigger) and metrics collection
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             echo "Manual dispatch — forcing all generators and fixtures to run."
