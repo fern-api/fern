@@ -180,10 +180,15 @@ export class GeneratorMigrator {
 
         this.migrationsInstallPromise = (async () => {
             const cacheDir = this.cachePath as string;
-            await mkdir(cacheDir, { recursive: true });
+            // Use a process-specific install directory to avoid cross-process
+            // race conditions when multiple CLI processes run npm install to
+            // the same --prefix directory simultaneously.
+            const installDir = join(cacheDir, `install-${process.pid}`);
+            await mkdir(installDir, { recursive: true });
 
-            // Use an isolated npm cache inside the migration cache dir to prevent
-            // corrupt system-level npm cache entries from causing repeated failures.
+            // Use a shared npm download cache for fast installs, but a
+            // process-specific --prefix so concurrent CLI processes don't
+            // corrupt each other's node_modules.
             const npmCacheDir = join(cacheDir, ".npm-cache");
             await loggingExeca(
                 this.logger,
@@ -192,7 +197,7 @@ export class GeneratorMigrator {
                     "install",
                     `${MIGRATION_PACKAGE_NAME}@latest`,
                     "--prefix",
-                    cacheDir,
+                    installDir,
                     "--cache",
                     npmCacheDir,
                     "--ignore-scripts",
@@ -202,7 +207,7 @@ export class GeneratorMigrator {
                 { doNotPipeOutput: true }
             );
 
-            const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
+            const packageDir = join(installDir, "node_modules", MIGRATION_PACKAGE_NAME);
             const packageJsonPath = join(packageDir, "package.json");
             const packageJsonContent = await readFile(packageJsonPath, "utf-8");
             const packageJson = JSON.parse(packageJsonContent) as { main?: string };

@@ -16,14 +16,24 @@ import { Migration, MigrationModule, MigratorResult } from "./types.js";
 const MIGRATION_PACKAGE_NAME = "@fern-api/generator-migrations";
 
 /**
- * Gets the cache directory for migration packages.
- * Migrations are installed to ~/.fern/migration-cache/ to avoid polluting the project.
- *
- * Note: npm's @latest tag resolution ensures we always get the current latest version,
- * and npm's global cache (~/.npm) provides fast installs without repeated downloads.
+ * Gets the base cache directory for migration packages.
+ * The shared npm download cache is stored here for fast installs.
  */
 function getMigrationCacheDir(): string {
     return join(homedir(), ".fern", "migration-cache");
+}
+
+/**
+ * Gets a process-specific install directory for the migration package.
+ * Each CLI process gets its own install directory to avoid cross-process
+ * race conditions when multiple CLI processes (e.g., from concurrent tests)
+ * run npm install to the same --prefix directory simultaneously.
+ *
+ * The shared npm download cache (~/.fern/migration-cache/.npm-cache) still
+ * provides fast installs without repeated downloads.
+ */
+function getInstallDir(): string {
+    return join(getMigrationCacheDir(), `install-${process.pid}`);
 }
 
 /**
@@ -53,16 +63,18 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
 
     migrationsInstallPromise = (async () => {
         const cacheDir = getMigrationCacheDir();
-        await mkdir(cacheDir, { recursive: true });
+        const installDir = getInstallDir();
+        await mkdir(installDir, { recursive: true });
 
-        // Use an isolated npm cache inside the migration cache dir to prevent
-        // corrupt system-level npm cache entries from causing repeated failures.
+        // Use a shared npm download cache for fast installs, but a
+        // process-specific --prefix so concurrent CLI processes don't
+        // corrupt each other's node_modules.
         const npmCacheDir = join(cacheDir, ".npm-cache");
         await loggingExeca(logger, "npm", [
             "install",
             `${MIGRATION_PACKAGE_NAME}@latest`,
             "--prefix",
-            cacheDir,
+            installDir,
             "--cache",
             npmCacheDir,
             "--ignore-scripts",
@@ -70,7 +82,7 @@ async function ensureMigrationsInstalled(logger: Logger): Promise<Record<string,
             "--no-fund"
         ]);
 
-        const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
+        const packageDir = join(installDir, "node_modules", MIGRATION_PACKAGE_NAME);
         const packageJsonPath = join(packageDir, "package.json");
         const packageJsonContent = await readFile(packageJsonPath, "utf-8");
         const packageJson = JSON.parse(packageJsonContent) as { main?: string };
