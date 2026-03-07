@@ -13,17 +13,21 @@
 
 import type { CompoundMeta } from "../cpp/src/context.js";
 import {
+    clearEntityRegistry,
     getShortName,
     OPERATOR_SYMBOL_MAP,
-    stripTemplateArgs,
+    setCurrentPageSlugPath,
     setEntityRegistry,
-    clearEntityRegistry,
-    setCurrentPageSlugPath
+    stripTemplateArgs
 } from "../cpp/src/context.js";
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderCompoundPage } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderSegmentsPlainText } from "../cpp/src/renderers/DescriptionRenderer.js";
-import type { CategoryDefinition, CategoryWithEntries, NamespaceListEntry } from "../cpp/src/renderers/IndexPageRenderer.js";
+import type {
+    CategoryDefinition,
+    CategoryWithEntries,
+    NamespaceListEntry
+} from "../cpp/src/renderers/IndexPageRenderer.js";
 import {
     ENTITY_CATEGORIES,
     namespaceHasEntities,
@@ -282,7 +286,12 @@ function pageKeyToSlugPath(pageKey: string): string {
     return pageKey
         .replace(/\.mdx$/, "")
         .split("/")
-        .map((seg) => seg.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, ""))
+        .map((seg) =>
+            seg
+                .toLowerCase()
+                .replace(/\s+/g, "-")
+                .replace(/[^a-z0-9-]/g, "")
+        )
         .filter((seg) => seg.length > 0)
         .join("/");
 }
@@ -300,8 +309,18 @@ function buildEntityRegistry(entries: PageEntry[]): Map<string, string> {
     for (const entry of entries) {
         const slugPath = pageKeyToSlugPath(entry.pageKey);
         const qualifiedName = stripTemplateArgs(entry.collected.path);
-        if (!registry.has(qualifiedName)) {
+        const fullPath = entry.collected.path;
+
+        // Register stripped name. Base templates (where fullPath === qualifiedName)
+        // always win the stripped-name slot; specializations only claim it if unclaimed.
+        const isBaseTemplate = fullPath === qualifiedName;
+        if (isBaseTemplate || !registry.has(qualifiedName)) {
             registry.set(qualifiedName, slugPath);
+        }
+
+        // Also register the full path (with template args) for specializations
+        if (fullPath !== qualifiedName && !registry.has(fullPath)) {
+            registry.set(fullPath, slugPath);
         }
 
         // For class compounds, also register members as anchors
@@ -495,16 +514,19 @@ function generateIndexPages(
         category: cat,
         entries: cat.collectEntries(ns)
     }));
-    const nsLastSegment = nsDir ? nsDir.split("/").pop()! : ns.name;
-    const indexContent = renderNamespaceIndexPage(title, categoriesForNsIndex, childrenWithEntities.length > 0, nsLastSegment);
+    const nsLastSegment = nsDir.split("/").pop() ?? ns.name;
+    const indexContent = renderNamespaceIndexPage(
+        title,
+        categoriesForNsIndex,
+        childrenWithEntities.length > 0,
+        nsLastSegment
+    );
     writer.writePage(nsIndexPageKey, indexContent);
 
     // 2. Category index pages — set currentPageSlugPath BEFORE collecting entries
     //    so that buildLinkPath() computes relative paths from the correct page
     for (const category of nonEmptyCategories) {
-        const catPageKey = nsDir
-            ? `${nsDir}/${category.folderName}/index.mdx`
-            : `${category.folderName}/index.mdx`;
+        const catPageKey = nsDir ? `${nsDir}/${category.folderName}/index.mdx` : `${category.folderName}/index.mdx`;
         setCurrentPageSlugPath(pageKeyToSlugPath(catPageKey));
         const entries = category.collectEntries(ns);
         const categoryWithEntries: CategoryWithEntries = { category, entries };
@@ -519,9 +541,7 @@ function generateIndexPages(
         const childEntries: NamespaceListEntry[] = childrenWithEntities.map((child) => {
             const childAllNsParts = child.path.split("::");
             const childNsParts =
-                rootNsName != null && childAllNsParts[0] === rootNsName
-                    ? childAllNsParts.slice(1)
-                    : childAllNsParts;
+                rootNsName != null && childAllNsParts[0] === rootNsName ? childAllNsParts.slice(1) : childAllNsParts;
             const childNsDir = namespacePathToFilesystem(childNsParts);
             // Relative from parent: strip parentNsDir prefix
             const linkPath = nsDir === "" ? childNsDir : childNsDir.substring(nsDir.length + 1);

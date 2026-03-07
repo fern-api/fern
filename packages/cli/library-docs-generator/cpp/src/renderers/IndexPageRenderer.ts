@@ -42,7 +42,7 @@ function collectClassEntries(classes: CppClassIr[], kind: "class" | "struct"): E
         .filter((cls) => cls.kind === kind)
         .map((cls) => ({
             displayName: cls.path,
-            linkPath: buildLinkPath(stripTemplateArgs(cls.path))
+            linkPath: buildLinkPath(cls.path)
         }))
         .sort((a, b) => a.displayName.localeCompare(b.displayName));
 }
@@ -51,7 +51,7 @@ function collectEntityEntries<T extends { path: string }>(items: T[]): EntityEnt
     return items
         .map((item) => ({
             displayName: item.path,
-            linkPath: buildLinkPath(stripTemplateArgs(item.path))
+            linkPath: buildLinkPath(item.path)
         }))
         .sort((a, b) => a.displayName.localeCompare(b.displayName));
 }

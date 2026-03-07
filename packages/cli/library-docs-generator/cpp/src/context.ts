@@ -79,9 +79,7 @@ function computeRelativePath(fromSlugPath: string, toSlugPath: string): string {
     }
 
     // The "directory" in URL terms is everything before the last segment
-    const fromDir = effectiveFrom.includes("/")
-        ? effectiveFrom.substring(0, effectiveFrom.lastIndexOf("/"))
-        : "";
+    const fromDir = effectiveFrom.includes("/") ? effectiveFrom.substring(0, effectiveFrom.lastIndexOf("/")) : "";
 
     const fromParts = fromDir ? fromDir.split("/") : [];
     const toParts = toPath.split("/").filter((p) => p.length > 0);
@@ -110,8 +108,13 @@ function computeRelativePath(fromSlugPath: string, toSlugPath: string): string {
  */
 export function buildLinkPath(qualifiedName: string): string | undefined {
     const normalized = qualifiedName.startsWith("::") ? qualifiedName.substring(2) : qualifiedName;
-    const stripped = stripTemplateArgs(normalized);
-    const targetSlugPath = entityRegistry.get(stripped);
+    // Try full name first (handles template specializations)
+    let targetSlugPath = entityRegistry.get(normalized);
+    if (targetSlugPath == null) {
+        // Fall back to stripped template args (handles base templates and short refs)
+        const stripped = stripTemplateArgs(normalized);
+        targetSlugPath = entityRegistry.get(stripped);
+    }
     if (targetSlugPath == null || currentPageSlugPath == null) {
         return undefined;
     }
