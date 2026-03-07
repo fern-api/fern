@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.23.7
+  changelogEntry:
+    - summary: |
+        Optimize context construction performance: replace expensive O(n) string
+        split/filter/join in ModelNavigator's tree indexing with O(1) incremental
+        path building, skip recursion into name-casing variant branches that only
+        contain primitive values, and lazily initialize the CsharpFormatter so
+        the csharpier tool path is only resolved when formatting is actually needed.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
 - version: 2.23.6
   changelogEntry:
     - summary: |
