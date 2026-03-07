@@ -23,10 +23,10 @@ RUN apk add --no-cache \
 # Create symlink for php command
 RUN ln -sf /usr/bin/php83 /usr/bin/php
 
-# Create entrypoint script to start dockerd and execute commands
+# Create entrypoint script to start dockerd and wait until it is ready
 RUN echo '#!/bin/sh' > /entrypoint.sh && \
     echo 'dockerd &' >> /entrypoint.sh && \
-    echo 'sleep 3' >> /entrypoint.sh && \
+    echo 'for i in $(seq 1 30); do docker info >/dev/null 2>&1 && break; sleep 0.1; done' >> /entrypoint.sh && \
     echo 'exec "$@"' >> /entrypoint.sh && \
     chmod +x /entrypoint.sh
 
