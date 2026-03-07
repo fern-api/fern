@@ -34,7 +34,8 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedNullable, Metadata
+from seed import SeedNullable
+from seed.nullable import Metadata
 import datetime
 
 client = SeedNullable(
@@ -69,6 +70,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+from seed.nullable import Metadata
 import datetime
 
 from seed import AsyncSeedNullable

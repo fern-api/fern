@@ -89,7 +89,8 @@ client.headers.send(
 <dd>
 
 ```python
-from seed import SeedLiteral, ATopLevelLiteral, ANestedLiteral
+from seed import SeedLiteral
+from seed.inlined import ATopLevelLiteral, ANestedLiteral
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
@@ -395,7 +396,8 @@ client.query.send(
 <dd>
 
 ```python
-from seed import SeedLiteral, ContainerObject, NestedObjectWithLiterals
+from seed import SeedLiteral
+from seed.reference import ContainerObject, NestedObjectWithLiterals
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",

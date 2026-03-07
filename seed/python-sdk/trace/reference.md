@@ -351,9 +351,10 @@ client.admin.send_workspace_submission_update(
 <dd>
 
 ```python
-from seed import SeedTrace, TestCaseResultWithStdout, TestCaseResult, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
+from seed.submission import TestCaseResultWithStdout, TestCaseResult, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
 
 client = SeedTrace(
     token="<token>",
@@ -523,9 +524,10 @@ client.admin.store_traced_test_case(
 <dd>
 
 ```python
-from seed import SeedTrace, TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
+from seed.submission import TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
 
 client = SeedTrace(
     token="<token>",
@@ -680,9 +682,10 @@ client.admin.store_traced_test_case_v_2(
 <dd>
 
 ```python
-from seed import SeedTrace, WorkspaceRunDetails, ExceptionInfo, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
+from seed.submission import WorkspaceRunDetails, ExceptionInfo, TraceResponse, ExpressionLocation, StackInformation, StackFrame, Scope
 
 client = SeedTrace(
     token="<token>",
@@ -842,9 +845,10 @@ client.admin.store_traced_workspace(
 <dd>
 
 ```python
-from seed import SeedTrace, TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
+from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
 import uuid
+from seed.submission import TraceResponseV2, TracedFile, ExpressionLocation, StackInformation, StackFrame, Scope
 
 client = SeedTrace(
     token="<token>",
@@ -1489,8 +1493,9 @@ Updates a playlist
 <dd>
 
 ```python
-from seed import SeedTrace, UpdatePlaylistRequest
+from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
+from seed.playlist import UpdatePlaylistRequest
 
 client = SeedTrace(
     token="<token>",
@@ -1669,8 +1674,10 @@ Creates a problem
 <dd>
 
 ```python
-from seed import SeedTrace, ProblemDescription, ProblemFiles, FileInfo, VariableTypeAndName, TestCaseWithExpectedResult, TestCase
+from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
+from seed.problem import ProblemDescription, ProblemFiles, VariableTypeAndName
+from seed.commons import FileInfo, TestCaseWithExpectedResult, TestCase
 
 client = SeedTrace(
     token="<token>",
@@ -1822,8 +1829,10 @@ Updates a problem
 <dd>
 
 ```python
-from seed import SeedTrace, ProblemDescription, ProblemFiles, FileInfo, VariableTypeAndName, TestCaseWithExpectedResult, TestCase
+from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
+from seed.problem import ProblemDescription, ProblemFiles, VariableTypeAndName
+from seed.commons import FileInfo, TestCaseWithExpectedResult, TestCase
 
 client = SeedTrace(
     token="<token>",
@@ -2057,8 +2066,9 @@ Returns default starter files for problem
 <dd>
 
 ```python
-from seed import SeedTrace, VariableTypeAndName
+from seed import SeedTrace
 from seed.environment import SeedTraceEnvironment
+from seed.problem import VariableTypeAndName
 
 client = SeedTrace(
     token="<token>",

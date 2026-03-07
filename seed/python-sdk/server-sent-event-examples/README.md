@@ -40,8 +40,9 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.completions.stream(
-    query="",
+
+client.completions.stream(
+    query="foo",
 )
 ```
 
@@ -60,8 +61,8 @@ client = AsyncSeedServerSentEvents(
 
 
 async def main() -> None:
-    response = await client.completions.stream(
-        query="",
+    await client.completions.stream(
+        query="foo",
     )
 
 
@@ -93,8 +94,9 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.completions.stream(
-    query="",
+
+client.completions.stream(
+    query="foo",
 )
 ```
 

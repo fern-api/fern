@@ -35,7 +35,8 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedPagination, StartingAfterPaging, SingleFilterSearchRequest
+from seed import SeedPagination
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 client = SeedPagination(
     token="<token>",
@@ -62,6 +63,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 from seed import AsyncSeedPagination
 
@@ -109,7 +111,8 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-from seed import SeedPagination, StartingAfterPaging, SingleFilterSearchRequest
+from seed import SeedPagination
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 client = SeedPagination(
     token="<token>",

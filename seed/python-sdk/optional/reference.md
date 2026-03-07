@@ -72,7 +72,8 @@ client.optional.send_optional_body(
 <dd>
 
 ```python
-from seed import SeedObjectsWithImports, SendOptionalBodyRequest
+from seed import SeedObjectsWithImports
+from seed.optional import SendOptionalBodyRequest
 
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
@@ -146,7 +147,8 @@ This should not generate wire tests expecting {} when Optional.empty() is passed
 <dd>
 
 ```python
-from seed import SeedObjectsWithImports, DeployParams
+from seed import SeedObjectsWithImports
+from seed.optional import DeployParams
 
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",

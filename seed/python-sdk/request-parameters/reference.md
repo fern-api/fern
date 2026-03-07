@@ -171,7 +171,8 @@ client.user.create_username_with_referenced_type(
 <dd>
 
 ```python
-from seed import SeedRequestParameters, CreateUsernameBodyOptionalProperties
+from seed import SeedRequestParameters
+from seed.user import CreateUsernameBodyOptionalProperties
 
 client = SeedRequestParameters(
     base_url="https://yourhost.com/path/to/api",
@@ -228,9 +229,10 @@ client.user.create_username_optional(
 <dd>
 
 ```python
-from seed import SeedRequestParameters, User, NestedUser
+from seed import SeedRequestParameters
 import uuid
 import datetime
+from seed.user import User, NestedUser
 
 client = SeedRequestParameters(
     base_url="https://yourhost.com/path/to/api",

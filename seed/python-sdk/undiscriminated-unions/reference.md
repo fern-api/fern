@@ -349,7 +349,8 @@ client.union.nested_unions(
 <dd>
 
 ```python
-from seed import SeedUndiscriminatedUnions, TokenizeCard
+from seed import SeedUndiscriminatedUnions
+from seed.union import TokenizeCard
 
 client = SeedUndiscriminatedUnions(
     base_url="https://yourhost.com/path/to/api",

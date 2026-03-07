@@ -74,7 +74,8 @@ client.endpoints.container.get_and_return_list_of_primitives(
 <dd>
 
 ```python
-from seed import Exhaustive, ObjectWithRequiredField
+from seed import Exhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
@@ -199,7 +200,8 @@ client.endpoints.container.get_and_return_set_of_primitives(
 <dd>
 
 ```python
-from seed import Exhaustive, ObjectWithRequiredField
+from seed import Exhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
@@ -321,7 +323,8 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 <dd>
 
 ```python
-from seed import Exhaustive, ObjectWithRequiredField
+from seed import Exhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
@@ -443,7 +446,8 @@ client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
 <dd>
 
 ```python
-from seed import Exhaustive, ObjectWithRequiredField
+from seed import Exhaustive
+from seed.types.object import ObjectWithRequiredField
 
 client = Exhaustive(
     token="<token>",
@@ -1251,7 +1255,8 @@ client.endpoints.object.get_and_return_with_map_of_map(
 <dd>
 
 ```python
-from seed import Exhaustive, ObjectWithOptionalField
+from seed import Exhaustive
+from seed.types.object import ObjectWithOptionalField
 import datetime
 import uuid
 
@@ -1333,7 +1338,8 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 <dd>
 
 ```python
-from seed import Exhaustive, ObjectWithOptionalField
+from seed import Exhaustive
+from seed.types.object import ObjectWithOptionalField
 import datetime
 import uuid
 
@@ -1424,7 +1430,8 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 <dd>
 
 ```python
-from seed import Exhaustive, NestedObjectWithRequiredField, ObjectWithOptionalField
+from seed import Exhaustive
+from seed.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
 import datetime
 import uuid
 
@@ -3318,7 +3325,8 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```python
-from seed import Exhaustive, ObjectWithOptionalField
+from seed import Exhaustive
+from seed.types.object import ObjectWithOptionalField
 import datetime
 import uuid
 

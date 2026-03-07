@@ -34,9 +34,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedQueryParameters, User, NestedUser
+from seed import SeedQueryParameters
 import uuid
 import datetime
+from seed.user import User, NestedUser
 
 client = SeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
@@ -116,6 +117,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 import uuid
 import datetime
+from seed.user import User, NestedUser
 
 from seed import AsyncSeedQueryParameters
 

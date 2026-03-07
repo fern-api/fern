@@ -3,7 +3,7 @@ import uuid
 
 from .conftest import get_client, verify_request_count
 
-from seed import NestedObjectWithRequiredField, ObjectWithOptionalField
+from seed.types.object import NestedObjectWithRequiredField, ObjectWithOptionalField
 
 
 def test_endpoints_object_get_and_return_with_optional_field() -> None:

@@ -112,7 +112,8 @@ client.nullable.get_users(
 <dd>
 
 ```python
-from seed import SeedNullable, Metadata
+from seed import SeedNullable
+from seed.nullable import Metadata
 import datetime
 
 client = SeedNullable(

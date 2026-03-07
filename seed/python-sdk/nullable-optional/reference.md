@@ -98,7 +98,8 @@ Create a new user
 <dd>
 
 ```python
-from seed import SeedNullableOptional, Address
+from seed import SeedNullableOptional
+from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -180,7 +181,8 @@ Update a user (partial update)
 <dd>
 
 ```python
-from seed import SeedNullableOptional, Address
+from seed import SeedNullableOptional
+from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -467,8 +469,9 @@ Create a complex profile to test nullable enums and unions
 <dd>
 
 ```python
-from seed import SeedNullableOptional, Address
+from seed import SeedNullableOptional
 import datetime
+from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -714,8 +717,9 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```python
-from seed import SeedNullableOptional, Address
+from seed import SeedNullableOptional
 import datetime
+from seed.nullable_optional import Address
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",
@@ -856,8 +860,9 @@ Test endpoint for validating null deserialization
 <dd>
 
 ```python
-from seed import SeedNullableOptional, Address, Organization
+from seed import SeedNullableOptional
 import datetime
+from seed.nullable_optional import Address, Organization
 
 client = SeedNullableOptional(
     base_url="https://yourhost.com/path/to/api",

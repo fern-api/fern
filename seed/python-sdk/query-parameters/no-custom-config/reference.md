@@ -13,9 +13,10 @@
 <dd>
 
 ```python
-from seed import SeedQueryParameters, User, NestedUser
+from seed import SeedQueryParameters
 import uuid
 import datetime
+from seed.user import User, NestedUser
 
 client = SeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",

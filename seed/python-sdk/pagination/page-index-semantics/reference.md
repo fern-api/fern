@@ -13,7 +13,8 @@
 <dd>
 
 ```python
-from seed import SeedPagination, StartingAfterPaging, SingleFilterSearchRequest
+from seed import SeedPagination
+from seed.complex_ import StartingAfterPaging, SingleFilterSearchRequest
 
 client = SeedPagination(
     token="<token>",

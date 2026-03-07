@@ -611,8 +611,10 @@ client.service.get_metadata(
 <dd>
 
 ```python
-from seed import SeedExhaustive, Actor, ExtendedMovie, Entity, Metadata, Migration, Node, Tree, Directory, File, Moment
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
+from seed.types import Actor, ExtendedMovie, Entity, Migration, Node, Tree, Directory, File, Moment
+from seed.commons.types import Metadata
 import uuid
 import datetime
 

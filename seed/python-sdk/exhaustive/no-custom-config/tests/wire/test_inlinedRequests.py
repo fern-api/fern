@@ -3,7 +3,7 @@ import uuid
 
 from .conftest import get_client, verify_request_count
 
-from seed import ObjectWithOptionalField
+from seed.types.object import ObjectWithOptionalField
 
 
 def test_inlinedRequests_post_with_object_bodyand_response() -> None:
