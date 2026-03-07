@@ -1,7 +1,7 @@
 import type { generatorsYml } from "@fern-api/configuration";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { close, mkdir, open, readFile, stat, unlink, writeFile } from "fs/promises";
+import { mkdir, open, readFile, stat, unlink } from "fs/promises";
 import { homedir } from "os";
 import { join } from "path";
 import semver from "semver";
@@ -58,9 +58,9 @@ async function acquireLock(logger: Logger, cacheDir: string): Promise<() => Prom
     while (true) {
         try {
             // O_CREAT | O_EXCL — fails if file already exists (atomic)
-            const fd = await open(lockPath, "wx");
-            await writeFile(fd, String(process.pid));
-            await close(fd);
+            const fh = await open(lockPath, "wx");
+            await fh.writeFile(String(process.pid));
+            await fh.close();
 
             return async () => {
                 try {

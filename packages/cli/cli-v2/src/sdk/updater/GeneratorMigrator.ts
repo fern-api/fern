@@ -3,7 +3,7 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import type { Migration, MigrationModule, MigratorResult } from "@fern-api/migrations-base";
-import { close, mkdir, open, readFile, stat, unlink, writeFile } from "fs/promises";
+import { mkdir, open, readFile, stat, unlink } from "fs/promises";
 import { join } from "path";
 import semver from "semver";
 import { pathToFileURL } from "url";
@@ -272,9 +272,9 @@ export class GeneratorMigrator {
         // eslint-disable-next-line no-constant-condition, @typescript-eslint/no-unnecessary-condition
         while (true) {
             try {
-                const fd = await open(lockPath, "wx");
-                await writeFile(fd, String(process.pid));
-                await close(fd);
+                const fh = await open(lockPath, "wx");
+                await fh.writeFile(String(process.pid));
+                await fh.close();
 
                 return async () => {
                     try {

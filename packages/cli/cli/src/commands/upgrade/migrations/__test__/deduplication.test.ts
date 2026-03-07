@@ -26,15 +26,14 @@ vi.mock("@fern-api/logging-execa", () => ({
 }));
 
 // Mock fs/promises
-// The lock file mechanism uses open/writeFile/close/unlink/stat.
-// We mock open("wx") to succeed (returning a fake fd), and stat to throw
-// ENOENT so that ensureMigrationsInstalled always runs npm install.
+// The lock file mechanism uses open("wx") which returns a FileHandle with
+// .writeFile() and .close() methods. We also mock stat to throw ENOENT so
+// that ensureMigrationsInstalled always runs npm install.
+const mockFileHandle = { writeFile: vi.fn(async () => undefined), close: vi.fn(async () => undefined) };
 let mockStatShouldSucceed = false;
 vi.mock("fs/promises", () => ({
     mkdir: vi.fn(async () => undefined),
-    open: vi.fn(async () => 42), // fake file descriptor
-    writeFile: vi.fn(async () => undefined),
-    close: vi.fn(async () => undefined),
+    open: vi.fn(async () => mockFileHandle),
     unlink: vi.fn(async () => undefined),
     stat: vi.fn(async () => {
         if (!mockStatShouldSucceed) {
@@ -112,9 +111,7 @@ describe("Migration loader deduplication", () => {
         mockStatShouldSucceed = false;
         vi.doMock("fs/promises", () => ({
             mkdir: vi.fn(async () => undefined),
-            open: vi.fn(async () => 42),
-            writeFile: vi.fn(async () => undefined),
-            close: vi.fn(async () => undefined),
+            open: vi.fn(async () => mockFileHandle),
             unlink: vi.fn(async () => undefined),
             stat: vi.fn(async () => {
                 if (!mockStatShouldSucceed) {
