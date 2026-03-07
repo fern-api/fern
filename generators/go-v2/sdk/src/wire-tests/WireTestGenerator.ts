@@ -97,6 +97,13 @@ export class WireTestGenerator {
     ): Promise<GoFile> {
         const endpointTestCases = new Map<string, string>();
         for (const endpoint of endpoints) {
+            // Skip bytes request body endpoints — they cannot be properly exercised in wire tests
+            // and have no corresponding wiremock mappings (wiremock mapping generation also skips them).
+            if (endpoint.requestBody?.type === "bytes") {
+                this.context.logger.debug(`Skipping wire test for endpoint ${endpoint.id} - bytes request body`);
+                continue;
+            }
+
             // Skip endpoints that return primitive date types due to Go SDK date parsing issue
             // (Go's time.Time JSON unmarshaling expects RFC3339 datetime format, not date-only)
             if (this.endpointReturnsPrimitiveDate(endpoint)) {

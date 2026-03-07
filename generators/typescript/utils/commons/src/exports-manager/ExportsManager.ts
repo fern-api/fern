@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
-import { Directory, ExportSpecifierStructure, SourceFile, StructureKind } from "ts-morph";
+import { Directory, SourceFile } from "ts-morph";
 
 import { getRelativePathAsModuleSpecifierTo, ModuleSpecifier } from "../referencing/index.js";
 
@@ -228,12 +228,25 @@ export class ExportsManager {
     }
 
     public writeExportsToProject(rootDirectory: Directory): void {
+        // Group exports by resolved source file to handle path variants (e.g. "src" vs "/src")
+        // that map to the same index.ts file. The old addExportDeclaration() approach appended
+        // per call, but replaceWithText() overwrites, so we must accumulate all lines first.
+        // Note: replaceWithText is safe here because index.ts files are exclusively written by
+        // this method — no other code populates them before writeExportsToProject is called.
+        const exportLinesByFile = new Map<SourceFile, string[]>();
+
         const sortedExports = Object.entries(this.exports).sort(([a], [b]) => a.localeCompare(b));
         for (const [pathToDirectory, moduleSpecifierToExports] of sortedExports) {
             const exportsFile = getExportsFileForDirectory({
                 pathToDirectory,
                 rootDirectory
             });
+
+            let exportLines = exportLinesByFile.get(exportsFile);
+            if (exportLines == null) {
+                exportLines = [];
+                exportLinesByFile.set(exportsFile, exportLines);
+            }
 
             const sortedModuleSpecifiers = Object.entries(moduleSpecifierToExports).sort(([a], [b]) =>
                 a.localeCompare(b)
@@ -243,16 +256,11 @@ export class ExportsManager {
                     a.localeCompare(b)
                 );
                 for (const namespaceExport of sortedNamespaceExports) {
-                    exportsFile.addExportDeclaration({
-                        moduleSpecifier,
-                        namespaceExport
-                    });
+                    exportLines.push(`export * as ${namespaceExport} from "${moduleSpecifier}";`);
                 }
 
                 if (combinedExportDeclarations.exportAll) {
-                    exportsFile.addExportDeclaration({
-                        moduleSpecifier
-                    });
+                    exportLines.push(`export * from "${moduleSpecifier}";`);
                 } else if (combinedExportDeclarations.namedExports.size > 0) {
                     const sortedNamedExports = [...combinedExportDeclarations.namedExports.entries()]
                         .sort(([a], [b]) => a.localeCompare(b))
@@ -260,22 +268,23 @@ export class ExportsManager {
                     const areAllTypeExports = sortedNamedExports.every((namedExport) =>
                         NamedExport.isTypeExport(namedExport)
                     );
-                    exportsFile.addExportDeclaration({
-                        moduleSpecifier,
-                        isTypeOnly: areAllTypeExports,
-                        namedExports: sortedNamedExports.map<ExportSpecifierStructure>((namedExport) => ({
-                            kind: StructureKind.ExportSpecifier,
-                            name: NamedExport.getName(namedExport),
-                            leadingTrivia:
-                                !areAllTypeExports && NamedExport.isTypeExport(namedExport) ? "type " : undefined
-                        }))
-                    });
+                    const specifiers = sortedNamedExports
+                        .map((namedExport) => {
+                            const prefix = !areAllTypeExports && NamedExport.isTypeExport(namedExport) ? "type " : "";
+                            return `${prefix}${NamedExport.getName(namedExport)}`;
+                        })
+                        .join(", ");
+                    const typeOnlyPrefix = areAllTypeExports ? "type " : "";
+                    exportLines.push(`export ${typeOnlyPrefix}{ ${specifiers} } from "${moduleSpecifier}";`);
                 }
             }
+        }
 
-            if (exportsFile.getStatements().length === 0) {
-                exportsFile.addExportDeclaration({});
+        for (const [exportsFile, exportLines] of exportLinesByFile) {
+            if (exportLines.length === 0) {
+                exportLines.push("export {};");
             }
+            exportsFile.replaceWithText(exportLines.join("\n") + "\n");
         }
     }
 }

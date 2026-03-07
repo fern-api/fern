@@ -262,13 +262,17 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            const newVersion = this.incrementVersion(previousVersion, analysis.versionBump);
-            this.context.logger.info(`Version bump: ${analysis.versionBump}, new version: ${newVersion}`);
+            const finalBump = analysis.versionBump;
+            const finalMessage = analysis.message;
+            const finalChangelogEntry = analysis.changelogEntry;
 
-            const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
+            const newVersion = this.incrementVersion(previousVersion, finalBump);
+            this.context.logger.info(`Version bump: ${finalBump}, new version: ${newVersion}`);
+
+            const commitMessage = this.isWhitelabel ? finalMessage : this.addFernBranding(finalMessage);
 
             // changelogEntry is populated for MINOR/MAJOR, undefined for PATCH (empty string from AI)
-            const changelogEntry = analysis.changelogEntry?.trim() || undefined;
+            const changelogEntry = finalChangelogEntry?.trim() || undefined;
 
             return {
                 version: newVersion,

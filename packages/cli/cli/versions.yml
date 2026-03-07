@@ -1,4 +1,51 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.15.2
+  changelogEntry:
+    - summary: |
+        Fix CLI error logging during local generation. `FernCliError` exceptions
+        are no longer double-logged, `LoggableFernCliError` now surfaces its
+        structured message, and all other errors pass the original error object
+        to `failWithoutThrowing` so the full stack trace is preserved.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.15.1
+  changelogEntry:
+    - summary: |
+        Fix `readOnly`/`writeOnly` not being detected on properties that use
+        `$ref` to reference a schema with `readOnly: true`/`writeOnly: true`.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.15.0
+  changelogEntry:
+    - summary: |
+        Add C++ library documentation generation. Users can now configure
+        `lang: cpp` libraries in docs.yml with an optional Doxyfile path,
+        and `fern docs md generate` will produce structured MDX pages for
+        classes, structs, functions, enums, typedefs, and variables with
+        template parameters, method overload tabs, and hierarchical
+        namespace navigation.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.14.0
+  changelogEntry:
+    - summary: |
+        Merge behavioral analysis into the unified AnalyzeSdkDiff prompt. The
+        AI now classifies both public API surface changes AND behavioral changes
+        (HTTP status handling, default parameter values, serialization behavior,
+        retry/backoff configuration) in a single call — producing the version
+        bump, commit message, and changelog entry in one pass. This replaces the
+        previous two-call approach where a separate Tier 3 analysis ran after
+        Tier 2 returned PATCH.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 65
+
 - version: 4.13.0
   changelogEntry:
     - summary: |
@@ -41,7 +88,6 @@
       type: feat
   createdAt: "2026-03-06"
   irVersion: 65
-
 - version: 4.10.0
   changelogEntry:
     - summary: |

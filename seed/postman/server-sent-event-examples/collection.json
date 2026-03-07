@@ -95,6 +95,46 @@
               "_postman_previewlanguage": "json"
             },
             {
+              "name": "Bad Request Error",
+              "status": "Bad Request Error",
+              "code": 400,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/stream",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stream"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"query\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "\"bad request\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
               "name": "Success",
               "status": "OK",
               "code": 200,
@@ -132,6 +172,46 @@
               },
               "description": null,
               "body": "[\n    {\n        \"delta\": \"delta\",\n        \"tokens\": 1\n    }\n]",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Bad Request Error",
+              "status": "Bad Request Error",
+              "code": 400,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/stream",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stream"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"query\": \"query\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "\"string\"",
               "_postman_previewlanguage": "json"
             }
           ]
@@ -213,6 +293,46 @@
               "_postman_previewlanguage": "json"
             },
             {
+              "name": "Bad Request Error",
+              "status": "Bad Request Error",
+              "code": 400,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/stream-events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stream-events"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"query\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "\"bad request\"",
+              "_postman_previewlanguage": "json"
+            },
+            {
               "name": "Success",
               "status": "OK",
               "code": 200,
@@ -250,6 +370,46 @@
               },
               "description": null,
               "body": "[\n    {\n        \"event\": \"completion\",\n        \"content\": \"content\"\n    }\n]",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Bad Request Error",
+              "status": "Bad Request Error",
+              "code": 400,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/stream-events",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "stream-events"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"query\": \"query\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "\"string\"",
               "_postman_previewlanguage": "json"
             }
           ]

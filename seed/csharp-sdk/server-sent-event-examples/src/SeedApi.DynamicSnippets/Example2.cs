@@ -11,8 +11,8 @@ public class Example2
             }
         );
 
-        await foreach (var item in client.Completions.StreamEventsAsync(
-            new StreamEventsRequest {
+        await foreach (var item in client.Completions.StreamAsync(
+            new StreamCompletionRequest {
                 Query = "query"
             }
         ))

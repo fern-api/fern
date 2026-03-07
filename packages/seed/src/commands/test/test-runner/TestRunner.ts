@@ -125,6 +125,14 @@ export abstract class TestRunner {
 
     public abstract build(): Promise<void>;
 
+    /**
+     * Cleans up any resources (e.g., long-lived containers) used by this runner.
+     * Override in subclasses that manage resources requiring explicit cleanup.
+     */
+    public async cleanup(): Promise<void> {
+        // Default no-op; subclasses like ContainerTestRunner override this.
+    }
+
     public async run({
         fixture,
         configuration,

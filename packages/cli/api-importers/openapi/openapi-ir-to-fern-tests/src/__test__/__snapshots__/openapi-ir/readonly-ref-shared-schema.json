@@ -1,0 +1,313 @@
+{
+  "title": "Readonly Ref Shared Schema API",
+  "description": "Tests that readOnly on a $ref'd schema propagates correctly when the parent schema is shared between request and response contexts.\n",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Get organization details",
+      "audiences": [],
+      "operationId": "getOrgDetails",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetOrgDetailsRequest",
+      "response": {
+        "description": "Organization details",
+        "schema": {
+          "generatedName": "GetOrgDetailsResponse",
+          "schema": "GetOrgDetailsResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/orgs/details",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "display_name": {
+                  "value": {
+                    "value": "display_name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Update organization details",
+      "audiences": [],
+      "operationId": "updateOrgDetails",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UpdateOrgDetailsRequest",
+      "request": {
+        "schema": {
+          "generatedName": "UpdateOrgDetailsRequest",
+          "schema": "UpdateOrgDetailsRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Updated organization details",
+        "schema": {
+          "generatedName": "UpdateOrgDetailsResponse",
+          "schema": "UpdateOrgDetailsResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "PATCH",
+      "path": "/orgs/details",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "display_name": {
+                  "value": {
+                    "value": "display_name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "OrgId": {
+        "description": "Organization identifier.",
+        "schema": {
+          "pattern": "^org_[A-Za-z0-9]{16}$",
+          "type": "string"
+        },
+        "generatedName": "OrgId",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "OrgDetails": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "orgDetailsId",
+            "key": "id",
+            "schema": {
+              "generatedName": "OrgDetailsId",
+              "value": {
+                "generatedName": "OrgDetailsId",
+                "schema": "OrgId",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": true
+          },
+          {
+            "conflict": {},
+            "generatedName": "orgDetailsName",
+            "key": "name",
+            "schema": {
+              "generatedName": "OrgDetailsName",
+              "description": "The name of this organization.",
+              "value": {
+                "description": "The name of this organization.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "OrgDetailsName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "orgDetailsDisplayName",
+            "key": "display_name",
+            "schema": {
+              "generatedName": "OrgDetailsDisplayName",
+              "description": "Friendly name of this organization.",
+              "value": {
+                "description": "Friendly name of this organization.",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "OrgDetailsDisplayName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "OrgDetails",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "GetOrgDetailsResponse": {
+        "generatedName": "GetOrgDetailsResponse",
+        "schema": "OrgDetails",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "UpdateOrgDetailsRequest": {
+        "generatedName": "UpdateOrgDetailsRequest",
+        "schema": "OrgDetails",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "UpdateOrgDetailsResponse": {
+        "generatedName": "UpdateOrgDetailsResponse",
+        "schema": "OrgDetails",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
