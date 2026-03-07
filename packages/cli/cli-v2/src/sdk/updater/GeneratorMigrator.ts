@@ -3,6 +3,7 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import type { Migration, MigrationModule, MigratorResult } from "@fern-api/migrations-base";
+import { readFileSync, unlinkSync } from "fs";
 import { mkdir, open, readFile, stat, unlink } from "fs/promises";
 import { join } from "path";
 import semver from "semver";
@@ -260,17 +261,41 @@ export class GeneratorMigrator {
      */
     private static async acquireLock(logger: Logger, cacheDir: string): Promise<() => Promise<void>> {
         const lockPath = join(cacheDir, GeneratorMigrator.LOCK_FILENAME);
+        const myPid = String(process.pid);
 
         // eslint-disable-next-line no-constant-condition, @typescript-eslint/no-unnecessary-condition
         while (true) {
             try {
                 const fh = await open(lockPath, "wx");
-                await fh.writeFile(String(process.pid));
+                await fh.writeFile(myPid);
                 await fh.close();
 
-                return async () => {
+                // Register a synchronous exit handler so the lock is cleaned up
+                // even if the process crashes or is killed (SIGTERM/SIGINT).
+                const exitHandler = (): void => {
                     try {
-                        await unlink(lockPath);
+                        const content = readFileSync(lockPath, "utf-8");
+                        if (content.trim() === myPid) {
+                            unlinkSync(lockPath);
+                        }
+                    } catch {
+                        // Lock file already removed or unreadable — nothing to do
+                    }
+                };
+                process.on("exit", exitHandler);
+
+                return async () => {
+                    process.removeListener("exit", exitHandler);
+                    try {
+                        // Verify we still own the lock before removing it.
+                        const currentContent = await readFile(lockPath, "utf-8");
+                        if (currentContent.trim() === myPid) {
+                            await unlink(lockPath);
+                        } else {
+                            logger.debug(
+                                `Lock file owned by another process (expected pid=${myPid}, found=${currentContent.trim()}); skipping release`
+                            );
+                        }
                     } catch (err: unknown) {
                         logger.debug(`Failed to release migration lock: ${err}`);
                     }
