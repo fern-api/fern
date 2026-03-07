@@ -110,9 +110,9 @@ describe("Migration loader deduplication", () => {
     it("should only run npm install once when called concurrently", async () => {
         // We need to mock the dynamic import that happens inside ensureMigrationsInstalled.
         // The function does: const { migrations } = await import(packageEntryPoint);
-        // We mock the path module to return a predictable path, then mock that path's import.
+        // The install dir is process-specific: ~/.fern/migration-cache/install-{pid}/
         vi.doMock(
-            "/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js",
+            `/tmp/test-fern-home/.fern/migration-cache/install-${process.pid}/node_modules/@fern-api/generator-migrations/dist/index.js`,
             () => ({
                 migrations: mockMigrationsMap
             })
@@ -149,7 +149,7 @@ describe("Migration loader deduplication", () => {
 
     it("should retry npm install after a transient failure", async () => {
         vi.doMock(
-            "/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js",
+            `/tmp/test-fern-home/.fern/migration-cache/install-${process.pid}/node_modules/@fern-api/generator-migrations/dist/index.js`,
             () => ({
                 migrations: mockMigrationsMap
             })
@@ -187,7 +187,7 @@ describe("Migration loader deduplication", () => {
 
     it("should return undefined for unknown generators", async () => {
         vi.doMock(
-            "/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js",
+            `/tmp/test-fern-home/.fern/migration-cache/install-${process.pid}/node_modules/@fern-api/generator-migrations/dist/index.js`,
             () => ({
                 migrations: mockMigrationsMap
             })
