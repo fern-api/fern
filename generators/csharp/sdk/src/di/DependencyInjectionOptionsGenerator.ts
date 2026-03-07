@@ -117,7 +117,7 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
         class_.addField({
             access: ast.Access.Public,
             origin: class_.explicit("MaxRetries"),
-            type: this.Primitive.int,
+            type: this.Primitive.integer,
             get: true,
             set: true,
             summary: "The maximum number of retries for failed requests. Defaults to 2.",
