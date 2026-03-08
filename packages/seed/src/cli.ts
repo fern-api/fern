@@ -4,6 +4,7 @@ import { askToLogin } from "@fern-api/login";
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import { minimatch } from "minimatch";
+import os from "os";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import {
@@ -99,7 +100,7 @@ function addTestCommand(cli: Argv) {
                 })
                 .option("parallel", {
                     type: "number",
-                    default: 4,
+                    default: Math.max(1, Math.min(os.cpus().length, 16)),
                     alias: "p"
                 })
                 .option("fixture", {
@@ -402,7 +403,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 })
                 .option("parallel", {
                     type: "number",
-                    default: 4,
+                    default: Math.max(1, Math.min(os.cpus().length, 16)),
                     alias: "p",
                     description: "Number of parallel test cases to run"
                 })
