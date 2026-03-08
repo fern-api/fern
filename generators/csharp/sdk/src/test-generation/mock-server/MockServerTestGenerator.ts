@@ -44,7 +44,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     public override shouldGenerate(): boolean {
-        if (this.endpoint.pagination?.type === "custom") {
+        if (
+            this.endpoint.pagination?.type === "custom" ||
+            this.endpoint.pagination?.type === "uri" ||
+            this.endpoint.pagination?.type === "path"
+        ) {
             return false;
         }
         return super.shouldGenerate();

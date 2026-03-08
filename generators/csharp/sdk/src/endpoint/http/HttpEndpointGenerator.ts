@@ -50,24 +50,38 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         }
     ) {
         if (this.hasPagination(endpoint)) {
-            this.generatePagerMethod(cls, {
-                serviceId,
-                endpoint,
-                rawClientReference,
-                rawClient
-            });
-
-            if (
-                endpoint.pagination.type !== "custom" &&
-                endpoint.pagination.type !== "uri" &&
-                endpoint.pagination.type !== "path"
-            ) {
-                this.generateUnpagedMethod(cls, {
-                    serviceId,
-                    endpoint,
-                    rawClientReference,
-                    rawClient
-                });
+            switch (endpoint.pagination.type) {
+                case "offset":
+                case "cursor":
+                    this.generatePagerMethod(cls, {
+                        serviceId,
+                        endpoint,
+                        rawClientReference,
+                        rawClient
+                    });
+                    this.generateUnpagedMethod(cls, {
+                        serviceId,
+                        endpoint,
+                        rawClientReference,
+                        rawClient
+                    });
+                    break;
+                case "custom":
+                    this.generatePagerMethod(cls, {
+                        serviceId,
+                        endpoint,
+                        rawClientReference,
+                        rawClient
+                    });
+                    break;
+                case "uri":
+                case "path":
+                    this.context.logger.warn(
+                        `Skipping endpoint '${endpoint.name.originalName}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
+                    );
+                    return;
+                default:
+                    assertNever(endpoint.pagination);
             }
         } else {
             this.generateUnpagedMethod(cls, {
@@ -1167,8 +1181,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     });
                     break;
                 case "custom":
-                case "uri":
-                case "path":
                     this.generateCustomPagerMethodBody({
                         serviceId,
                         endpoint,
@@ -1177,6 +1189,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer
                     });
                     break;
+                case "uri":
+                case "path":
+                    throw new Error(
+                        `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
+                    );
                 default:
                     assertNever(endpoint.pagination);
             }

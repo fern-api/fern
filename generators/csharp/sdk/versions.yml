@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.24.0
+  changelogEntry:
+    - summary: |
+        Upgrade IR SDK from v62 to v65. Adds support for `dateTimeRfc2822` primitive,
+        `validation` on `LongType`, and `uri`/`path` pagination types (currently skipped
+        with a warning as they are not yet fully supported in C#).
+      type: feat
+  createdAt: "2026-03-08"
+  irVersion: 65
+
 - version: 2.23.12
   changelogEntry:
     - summary: |
