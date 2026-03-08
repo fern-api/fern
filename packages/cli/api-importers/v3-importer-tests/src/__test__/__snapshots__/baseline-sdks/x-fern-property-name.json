@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-property-name`",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:BaseUser": {
       "name": {
-        "name": {
-          "originalName": "BaseUser"
-        },
+        "name": "BaseUser",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "renamed_id"
-              },
+              "name": "renamed_id",
               "wireValue": "id"
             },
             "valueType": {
@@ -72,9 +66,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -96,9 +88,7 @@
     "types": {
       "type_:BaseUser": {
         "declaration": {
-          "name": {
-            "originalName": "BaseUser"
-          },
+          "name": "BaseUser",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -107,9 +97,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "renamed_id"
-              },
+              "name": "renamed_id",
               "wireValue": "id"
             },
             "typeReference": {

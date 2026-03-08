@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Tree API",
   "auth": {
     "requirement": "ALL",
@@ -11,9 +9,7 @@
   "headers": [
     {
       "name": {
-        "name": {
-          "originalName": "someHeader"
-        },
+        "name": "someHeader",
         "wireValue": "some-header"
       },
       "valueType": {
@@ -57,9 +53,7 @@
       "endpoints": [
         {
           "id": "endpoint_.get",
-          "name": {
-            "originalName": "get"
-          },
+          "name": "get",
           "displayName": "Simple endpoint",
           "auth": false,
           "idempotent": false,
@@ -74,9 +68,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "some-path-param"
-              },
+              "name": "some-path-param",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -95,9 +87,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "some-path-param"
-              },
+              "name": "some-path-param",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -117,9 +107,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "some-query-param"
-                },
+                "name": "some-query-param",
                 "wireValue": "some-query-param"
               },
               "valueType": {
@@ -139,9 +127,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "some-query-param-ref-examples"
-                },
+                "name": "some-query-param-ref-examples",
                 "wireValue": "some-query-param-ref-examples"
               },
               "valueType": {
@@ -163,19 +149,13 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -207,9 +187,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -230,9 +208,7 @@
     "headers": [
       {
         "name": {
-          "name": {
-            "originalName": "someHeader"
-          },
+          "name": "someHeader",
           "wireValue": "some-header"
         },
         "typeReference": {
@@ -244,9 +220,7 @@
     "endpoints": {
       "endpoint_.get": {
         "declaration": {
-          "name": {
-            "originalName": "get"
-          },
+          "name": "get",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -258,9 +232,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetRequest"
-            },
+            "name": "GetRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -269,9 +241,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "some-path-param"
-                },
+                "name": "some-path-param",
                 "wireValue": "some-path-param"
               },
               "typeReference": {
@@ -283,9 +253,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "some-query-param"
-                },
+                "name": "some-query-param",
                 "wireValue": "some-query-param"
               },
               "typeReference": {
@@ -295,9 +263,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "some-query-param-ref-examples"
-                },
+                "name": "some-query-param-ref-examples",
                 "wireValue": "some-query-param-ref-examples"
               },
               "typeReference": {

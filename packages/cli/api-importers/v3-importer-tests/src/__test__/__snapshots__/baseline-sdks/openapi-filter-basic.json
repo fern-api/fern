@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Filter Test",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:Company": {
       "docs": "This schema is referenced by the included endpoint and should be kept",
       "name": {
-        "name": {
-          "originalName": "Company"
-        },
+        "name": "Company",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -49,9 +43,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -105,9 +97,7 @@
       "endpoints": [
         {
           "id": "endpoint_.createCompany",
-          "name": {
-            "originalName": "createCompany"
-          },
+          "name": "createCompany",
           "displayName": "Create a company",
           "auth": false,
           "idempotent": false,
@@ -126,9 +116,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "Company"
-              },
+              "name": "Company",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -143,9 +131,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "Company"
-                  },
+                  "name": "Company",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -157,18 +143,14 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Created",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Company"
-                  },
+                  "name": "Company",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -193,9 +175,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -219,9 +199,7 @@
     "types": {
       "type_:Company": {
         "declaration": {
-          "name": {
-            "originalName": "Company"
-          },
+          "name": "Company",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -230,9 +208,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -242,9 +218,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -261,9 +235,7 @@
     "endpoints": {
       "endpoint_.createCompany": {
         "declaration": {
-          "name": {
-            "originalName": "createCompany"
-          },
+          "name": "createCompany",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test API",
   "auth": {
     "requirement": "ALL",
@@ -35,9 +33,7 @@
       "endpoints": [
         {
           "id": "endpoint_.list",
-          "name": {
-            "originalName": "list"
-          },
+          "name": "list",
           "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
@@ -84,9 +80,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -96,29 +90,21 @@
       "baseUrls": [
         {
           "id": "Base",
-          "name": {
-            "originalName": "Base"
-          }
+          "name": "Base"
         },
         {
           "id": "websocket",
-          "name": {
-            "originalName": "websocket"
-          }
+          "name": "websocket"
         },
         {
           "id": "websocket2",
-          "name": {
-            "originalName": "websocket2"
-          }
+          "name": "websocket2"
         }
       ],
       "environments": [
         {
           "id": "Prod",
-          "name": {
-            "originalName": "Prod"
-          },
+          "name": "Prod",
           "urls": {
             "Base": "http://prod.api.com",
             "websocket": "wss://api.async.com",
@@ -127,9 +113,7 @@
         },
         {
           "id": "Dev",
-          "name": {
-            "originalName": "Dev"
-          },
+          "name": "Dev",
           "urls": {
             "Base": "http://dev.api.com",
             "websocket": "wss://api.async.com",
@@ -158,9 +142,7 @@
       },
       "baseUrl": "websocket",
       "auth": false,
-      "name": {
-        "originalName": "testChannel"
-      },
+      "name": "testChannel",
       "headers": [],
       "pathParameters": [],
       "queryParameters": [],
@@ -220,9 +202,7 @@
       },
       "baseUrl": "websocket2",
       "auth": false,
-      "name": {
-        "originalName": "testChannel2"
-      },
+      "name": "testChannel2",
       "headers": [],
       "pathParameters": [],
       "queryParameters": [],
@@ -283,9 +263,7 @@
     "endpoints": {
       "endpoint_.list": {
         "declaration": {
-          "name": {
-            "originalName": "list"
-          },
+          "name": "list",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -312,29 +290,21 @@
         "baseUrls": [
           {
             "id": "Base",
-            "name": {
-              "originalName": "Base"
-            }
+            "name": "Base"
           },
           {
             "id": "websocket",
-            "name": {
-              "originalName": "websocket"
-            }
+            "name": "websocket"
           },
           {
             "id": "websocket2",
-            "name": {
-              "originalName": "websocket2"
-            }
+            "name": "websocket2"
           }
         ],
         "environments": [
           {
             "id": "Prod",
-            "name": {
-              "originalName": "Prod"
-            },
+            "name": "Prod",
             "urls": {
               "Base": "http://prod.api.com",
               "websocket": "wss://api.async.com",
@@ -343,9 +313,7 @@
           },
           {
             "id": "Dev",
-            "name": {
-              "originalName": "Dev"
-            },
+            "name": "Dev",
             "urls": {
               "Base": "http://dev.api.com",
               "websocket": "wss://api.async.com",
@@ -363,18 +331,12 @@
     "subpackage_testChannel": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "testChannel"
-          }
+          "testChannel"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "testChannel"
-        }
+        "file": "testChannel"
       },
-      "name": {
-        "originalName": "testChannel"
-      },
+      "name": "testChannel",
       "types": [],
       "errors": [],
       "subpackages": [],
@@ -384,18 +346,12 @@
     "subpackage_testChannel2": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "testChannel2"
-          }
+          "testChannel2"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "testChannel2"
-        }
+        "file": "testChannel2"
       },
-      "name": {
-        "originalName": "testChannel2"
-      },
+      "name": "testChannel2",
       "types": [],
       "errors": [],
       "subpackages": [],

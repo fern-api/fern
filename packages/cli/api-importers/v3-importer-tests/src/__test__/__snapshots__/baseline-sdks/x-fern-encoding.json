@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-encoding` for schemas",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:Metadata": {
       "name": {
-        "name": {
-          "originalName": "Metadata"
-        },
+        "name": "Metadata",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -37,9 +33,7 @@
             "valueType": {
               "container": {
                 "nullable": {
-                  "name": {
-                    "originalName": "MetadataValue"
-                  },
+                  "name": "MetadataValue",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -69,9 +63,7 @@
             "valueType": {
               "container": {
                 "nullable": {
-                  "name": {
-                    "originalName": "MetadataValue"
-                  },
+                  "name": "MetadataValue",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -107,9 +99,7 @@
     },
     "type_:MetadataValue": {
       "name": {
-        "name": {
-          "originalName": "MetadataValue"
-        },
+        "name": "MetadataValue",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -186,9 +176,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -211,9 +199,7 @@
     "types": {
       "type_:Metadata": {
         "declaration": {
-          "name": {
-            "originalName": "Metadata"
-          },
+          "name": "Metadata",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -237,9 +223,7 @@
       },
       "type_:MetadataValue": {
         "declaration": {
-          "name": {
-            "originalName": "MetadataValue"
-          },
+          "name": "MetadataValue",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

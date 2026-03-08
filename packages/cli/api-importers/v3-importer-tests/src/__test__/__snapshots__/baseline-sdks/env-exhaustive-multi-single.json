@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test API",
   "auth": {
     "requirement": "ALL",
@@ -35,9 +33,7 @@
       "endpoints": [
         {
           "id": "endpoint_.list",
-          "name": {
-            "originalName": "list"
-          },
+          "name": "list",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -83,9 +79,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -95,16 +89,12 @@
       "environments": [
         {
           "id": "Prod",
-          "name": {
-            "originalName": "Prod"
-          },
+          "name": "Prod",
           "url": "http://prod2.api.com"
         },
         {
           "id": "Dev",
-          "name": {
-            "originalName": "Dev"
-          },
+          "name": "Dev",
           "url": "http://dev2.api.com"
         }
       ],
@@ -129,9 +119,7 @@
     "endpoints": {
       "endpoint_.list": {
         "declaration": {
-          "name": {
-            "originalName": "list"
-          },
+          "name": "list",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -158,16 +146,12 @@
         "environments": [
           {
             "id": "Prod",
-            "name": {
-              "originalName": "Prod"
-            },
+            "name": "Prod",
             "url": "http://prod2.api.com"
           },
           {
             "id": "Dev",
-            "name": {
-              "originalName": "Dev"
-            },
+            "name": "Dev",
             "url": "http://dev2.api.com"
           }
         ],

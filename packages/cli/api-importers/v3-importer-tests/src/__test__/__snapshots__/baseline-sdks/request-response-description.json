@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Sample API",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:Schema1": {
       "docs": "Schema 1 description",
       "name": {
-        "name": {
-          "originalName": "Schema1"
-        },
+        "name": "Schema1",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -55,9 +49,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -117,9 +109,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getExample",
-          "name": {
-            "originalName": "getExample"
-          },
+          "name": "getExample",
           "displayName": "Get Example",
           "auth": false,
           "idempotent": false,
@@ -141,9 +131,7 @@
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Schema1"
-                  },
+                  "name": "Schema1",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -168,9 +156,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -194,9 +180,7 @@
     "types": {
       "type_:Schema1": {
         "declaration": {
-          "name": {
-            "originalName": "Schema1"
-          },
+          "name": "Schema1",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -205,9 +189,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -220,9 +202,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -242,9 +222,7 @@
     "endpoints": {
       "endpoint_.getExample": {
         "declaration": {
-          "name": {
-            "originalName": "getExample"
-          },
+          "name": "getExample",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

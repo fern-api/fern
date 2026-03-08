@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Schema Pruning Test",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:ItemResponse": {
       "name": {
-        "name": {
-          "originalName": "ItemResponse"
-        },
+        "name": "ItemResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,17 +23,13 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "items"
-              },
+              "name": "items",
               "wireValue": "items"
             },
             "valueType": {
               "container": {
                 "list": {
-                  "name": {
-                    "originalName": "Item"
-                  },
+                  "name": "Item",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -68,9 +60,7 @@
     },
     "type_:Item": {
       "name": {
-        "name": {
-          "originalName": "Item"
-        },
+        "name": "Item",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -82,9 +72,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -103,15 +91,11 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "details"
-              },
+              "name": "details",
               "wireValue": "details"
             },
             "valueType": {
-              "name": {
-                "originalName": "ItemDetails"
-              },
+              "name": "ItemDetails",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -138,9 +122,7 @@
     },
     "type_:ItemDetails": {
       "name": {
-        "name": {
-          "originalName": "ItemDetails"
-        },
+        "name": "ItemDetails",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -152,9 +134,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -179,9 +159,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "description"
-              },
+              "name": "description",
               "wireValue": "description"
             },
             "valueType": {
@@ -241,9 +219,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getItems",
-          "name": {
-            "originalName": "getItems"
-          },
+          "name": "getItems",
           "displayName": "Get items",
           "auth": false,
           "idempotent": false,
@@ -265,9 +241,7 @@
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "ItemResponse"
-                  },
+                  "name": "ItemResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -292,9 +266,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -320,9 +292,7 @@
     "types": {
       "type_:ItemResponse": {
         "declaration": {
-          "name": {
-            "originalName": "ItemResponse"
-          },
+          "name": "ItemResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -331,9 +301,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "items"
-              },
+              "name": "items",
               "wireValue": "items"
             },
             "typeReference": {
@@ -350,9 +318,7 @@
       },
       "type_:Item": {
         "declaration": {
-          "name": {
-            "originalName": "Item"
-          },
+          "name": "Item",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -361,9 +327,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -373,9 +337,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "details"
-              },
+              "name": "details",
               "wireValue": "details"
             },
             "typeReference": {
@@ -389,9 +351,7 @@
       },
       "type_:ItemDetails": {
         "declaration": {
-          "name": {
-            "originalName": "ItemDetails"
-          },
+          "name": "ItemDetails",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -400,9 +360,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -415,9 +373,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "description"
-              },
+              "name": "description",
               "wireValue": "description"
             },
             "typeReference": {
@@ -437,9 +393,7 @@
     "endpoints": {
       "endpoint_.getItems": {
         "declaration": {
-          "name": {
-            "originalName": "getItems"
-          },
+          "name": "getItems",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

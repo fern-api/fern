@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Security Explicit None Test",
   "auth": {
     "requirement": "ALL",
@@ -10,9 +8,7 @@
       {
         "key": "ApiKeyAuth",
         "name": {
-          "name": {
-            "originalName": "apiKey"
-          },
+          "name": "apiKey",
           "wireValue": "x-api-key"
         },
         "valueType": {
@@ -33,9 +29,7 @@
   "types": {
     "type_:GetPlantByIdResponse": {
       "name": {
-        "name": {
-          "originalName": "GetPlantByIdResponse"
-        },
+        "name": "GetPlantByIdResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -47,9 +41,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -74,9 +66,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -136,9 +126,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getPlantById",
-          "name": {
-            "originalName": "getPlantById"
-          },
+          "name": "getPlantById",
           "displayName": "Get plant by ID (no auth required)",
           "auth": false,
           "idempotent": false,
@@ -163,9 +151,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "plantId"
-              },
+              "name": "plantId",
               "valueType": {
                 "primitive": {
                   "v1": "INTEGER",
@@ -184,9 +170,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "plantId"
-              },
+              "name": "plantId",
               "valueType": {
                 "primitive": {
                   "v1": "INTEGER",
@@ -207,28 +191,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetPlantByIdRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetPlantByIdRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Plant details",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetPlantByIdResponse"
-                  },
+                  "name": "GetPlantByIdResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -253,9 +229,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -265,9 +239,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://api.example.com/v1"
         }
       ],
@@ -294,9 +266,7 @@
     "types": {
       "type_:GetPlantByIdResponse": {
         "declaration": {
-          "name": {
-            "originalName": "GetPlantByIdResponse"
-          },
+          "name": "GetPlantByIdResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -305,9 +275,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -320,9 +288,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -344,9 +310,7 @@
         "auth": {
           "header": {
             "name": {
-              "name": {
-                "originalName": "apiKey"
-              },
+              "name": "apiKey",
               "wireValue": "x-api-key"
             },
             "typeReference": {
@@ -357,9 +321,7 @@
           "type": "header"
         },
         "declaration": {
-          "name": {
-            "originalName": "getPlantById"
-          },
+          "name": "getPlantById",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -371,9 +333,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetPlantByIdRequest"
-            },
+            "name": "GetPlantByIdRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -382,9 +342,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "plantId"
-                },
+                "name": "plantId",
                 "wireValue": "plantId"
               },
               "typeReference": {
@@ -414,9 +372,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://api.example.com/v1"
           }
         ],

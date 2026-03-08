@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-audiences`",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:BaseUser": {
       "name": {
-        "name": {
-          "originalName": "BaseUser"
-        },
+        "name": "BaseUser",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -92,9 +86,7 @@
       "endpoints": [
         {
           "id": "endpoint_.postV1Users",
-          "name": {
-            "originalName": "postV1Users"
-          },
+          "name": "postV1Users",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -111,17 +103,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PostV1UsersRequest"
-            },
+            "name": "PostV1UsersRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "public_property"
-                  },
+                  "name": "public_property",
                   "wireValue": "public_property"
                 },
                 "valueType": {
@@ -146,9 +134,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "private_property"
-                  },
+                  "name": "private_property",
                   "wireValue": "private_property"
                 },
                 "valueType": {
@@ -178,19 +164,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PostV1UsersRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "PostV1UsersRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {},
           "errors": [],
@@ -203,9 +183,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -215,9 +193,7 @@
       "environments": [
         {
           "id": "production",
-          "name": {
-            "originalName": "production"
-          },
+          "name": "production",
           "url": "https://api.com",
           "audiences": [
             "public"
@@ -225,9 +201,7 @@
         },
         {
           "id": "sandbox",
-          "name": {
-            "originalName": "sandbox"
-          },
+          "name": "sandbox",
           "url": "https://private.api.com",
           "audiences": [
             "private"
@@ -255,9 +229,7 @@
     "types": {
       "type_:BaseUser": {
         "declaration": {
-          "name": {
-            "originalName": "BaseUser"
-          },
+          "name": "BaseUser",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -266,9 +238,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -288,9 +258,7 @@
     "endpoints": {
       "endpoint_.postV1Users": {
         "declaration": {
-          "name": {
-            "originalName": "postV1Users"
-          },
+          "name": "postV1Users",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -302,9 +270,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "PostV1UsersRequest"
-            },
+            "name": "PostV1UsersRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -317,9 +283,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "public_property"
-                  },
+                  "name": "public_property",
                   "wireValue": "public_property"
                 },
                 "typeReference": {
@@ -332,9 +296,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "private_property"
-                  },
+                  "name": "private_property",
                   "wireValue": "private_property"
                 },
                 "typeReference": {
@@ -367,9 +329,7 @@
         "environments": [
           {
             "id": "production",
-            "name": {
-              "originalName": "production"
-            },
+            "name": "production",
             "url": "https://api.com",
             "audiences": [
               "public"
@@ -377,9 +337,7 @@
           },
           {
             "id": "sandbox",
-            "name": {
-              "originalName": "sandbox"
-            },
+            "name": "sandbox",
             "url": "https://private.api.com",
             "audiences": [
               "private"

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test content-type parsing.",
   "auth": {
     "requirement": "ALL",
@@ -36,9 +34,7 @@
         {
           "docs": "Test multipart request with different content types.",
           "id": "endpoint_.testUpload",
-          "name": {
-            "originalName": "testUpload"
-          },
+          "name": "testUpload",
           "displayName": "Test upload",
           "auth": false,
           "idempotent": false,
@@ -54,9 +50,7 @@
           "pathParameters": [
             {
               "docs": "The unique key",
-              "name": {
-                "originalName": "corpus_key"
-              },
+              "name": "corpus_key",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -76,9 +70,7 @@
           "allPathParameters": [
             {
               "docs": "The unique key",
-              "name": {
-                "originalName": "corpus_key"
-              },
+              "name": "corpus_key",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -99,16 +91,12 @@
           "headers": [],
           "requestBody": {
             "contentType": "multipart/form-data",
-            "name": {
-              "originalName": "PostTestRequest"
-            },
+            "name": "PostTestRequest",
             "properties": [
               {
                 "docs": "Arbitrary object that will be attached as document metadata to the extracted document.",
                 "name": {
-                  "name": {
-                    "originalName": "metadata"
-                  },
+                  "name": "metadata",
                   "wireValue": "metadata"
                 },
                 "valueType": {
@@ -143,9 +131,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "chunking_strategy"
-                  },
+                  "name": "chunking_strategy",
                   "wireValue": "chunking_strategy"
                 },
                 "valueType": {
@@ -166,9 +152,7 @@
               {
                 "docs": "Optional multipart section to override the filename.",
                 "name": {
-                  "name": {
-                    "originalName": "filename"
-                  },
+                  "name": "filename",
                   "wireValue": "filename"
                 },
                 "valueType": {
@@ -195,9 +179,7 @@
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "file"
-                    },
+                    "name": "file",
                     "wireValue": "file"
                   },
                   "isOptional": false,
@@ -212,19 +194,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PostTestRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "PostTestRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -254,9 +230,7 @@
         {
           "docs": "Test request with dual content types.",
           "id": "endpoint_.testWithDualContentTypeRequestTypes",
-          "name": {
-            "originalName": "testWithDualContentTypeRequestTypes"
-          },
+          "name": "testWithDualContentTypeRequestTypes",
           "displayName": "Test with dual Content-Type request types",
           "auth": false,
           "idempotent": false,
@@ -272,9 +246,7 @@
           "pathParameters": [
             {
               "docs": "The unique key",
-              "name": {
-                "originalName": "corpus_key"
-              },
+              "name": "corpus_key",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -294,9 +266,7 @@
           "allPathParameters": [
             {
               "docs": "The unique key",
-              "name": {
-                "originalName": "corpus_key"
-              },
+              "name": "corpus_key",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -316,18 +286,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PostExampleRequest"
-            },
+            "name": "PostExampleRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "Arbitrary object that will be attached as document metadata to the extracted document.",
                 "name": {
-                  "name": {
-                    "originalName": "metadata"
-                  },
+                  "name": "metadata",
                   "wireValue": "metadata"
                 },
                 "valueType": {
@@ -366,19 +332,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PostExampleRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "PostExampleRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -410,9 +370,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -434,9 +392,7 @@
     "endpoints": {
       "endpoint_.testUpload": {
         "declaration": {
-          "name": {
-            "originalName": "testUpload"
-          },
+          "name": "testUpload",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -448,9 +404,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "PostTestRequest"
-            },
+            "name": "PostTestRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -459,9 +413,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "corpus_key"
-                },
+                "name": "corpus_key",
                 "wireValue": "corpus_key"
               },
               "typeReference": {
@@ -476,9 +428,7 @@
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "metadata"
-                  },
+                  "name": "metadata",
                   "wireValue": "metadata"
                 },
                 "typeReference": {
@@ -498,9 +448,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "chunking_strategy"
-                  },
+                  "name": "chunking_strategy",
                   "wireValue": "chunking_strategy"
                 },
                 "typeReference": {
@@ -513,9 +461,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "filename"
-                  },
+                  "name": "filename",
                   "wireValue": "filename"
                 },
                 "typeReference": {
@@ -528,9 +474,7 @@
                 "type": "bodyProperty"
               },
               {
-                "name": {
-                  "originalName": "file"
-                },
+                "name": "file",
                 "wireValue": "file",
                 "type": "file"
               }
@@ -550,9 +494,7 @@
       },
       "endpoint_.testWithDualContentTypeRequestTypes": {
         "declaration": {
-          "name": {
-            "originalName": "testWithDualContentTypeRequestTypes"
-          },
+          "name": "testWithDualContentTypeRequestTypes",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -564,9 +506,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "PostExampleRequest"
-            },
+            "name": "PostExampleRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -575,9 +515,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "corpus_key"
-                },
+                "name": "corpus_key",
                 "wireValue": "corpus_key"
               },
               "typeReference": {
@@ -592,9 +530,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "metadata"
-                  },
+                  "name": "metadata",
                   "wireValue": "metadata"
                 },
                 "typeReference": {

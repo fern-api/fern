@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test spec for anyOf [number, string] with string examples",
   "auth": {
     "requirement": "ALL",
@@ -15,9 +13,7 @@
       "docs": "The payment amount. Can be a number or string.\nWhen examples are provided as strings, the string variant should be preferred.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PaymentRequestAmount"
-        },
+        "name": "PaymentRequestAmount",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -62,9 +58,7 @@
       "docs": "The payment amount echoed back",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PaymentResponseAmount"
-        },
+        "name": "PaymentResponseAmount",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -107,9 +101,7 @@
     },
     "type_:PaymentResponse": {
       "name": {
-        "name": {
-          "originalName": "PaymentResponse"
-        },
+        "name": "PaymentResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -121,9 +113,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -149,17 +139,13 @@
           {
             "docs": "The payment amount echoed back",
             "name": {
-              "name": {
-                "originalName": "amount"
-              },
+              "name": "amount",
               "wireValue": "amount"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "PaymentResponseAmount"
-                  },
+                  "name": "PaymentResponseAmount",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -178,9 +164,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "valueType": {
@@ -240,9 +224,7 @@
       "endpoints": [
         {
           "id": "endpoint_.createPayment",
-          "name": {
-            "originalName": "createPayment"
-          },
+          "name": "createPayment",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -259,24 +241,18 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PaymentRequest"
-            },
+            "name": "PaymentRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "The payment amount. Can be a number or string.\nWhen examples are provided as strings, the string variant should be preferred.",
                 "name": {
-                  "name": {
-                    "originalName": "amount"
-                  },
+                  "name": "amount",
                   "wireValue": "amount"
                 },
                 "valueType": {
-                  "name": {
-                    "originalName": "PaymentRequestAmount"
-                  },
+                  "name": "PaymentRequestAmount",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -291,9 +267,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "currency"
-                  },
+                  "name": "currency",
                   "wireValue": "currency"
                 },
                 "valueType": {
@@ -323,28 +297,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PaymentRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "PaymentRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Payment created successfully",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "PaymentResponse"
-                  },
+                  "name": "PaymentResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -369,9 +335,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -397,9 +361,7 @@
     "types": {
       "type_:PaymentRequestAmount": {
         "declaration": {
-          "name": {
-            "originalName": "PaymentRequestAmount"
-          },
+          "name": "PaymentRequestAmount",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -419,9 +381,7 @@
       },
       "type_:PaymentResponseAmount": {
         "declaration": {
-          "name": {
-            "originalName": "PaymentResponseAmount"
-          },
+          "name": "PaymentResponseAmount",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -441,9 +401,7 @@
       },
       "type_:PaymentResponse": {
         "declaration": {
-          "name": {
-            "originalName": "PaymentResponse"
-          },
+          "name": "PaymentResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -452,9 +410,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -467,9 +423,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "amount"
-              },
+              "name": "amount",
               "wireValue": "amount"
             },
             "typeReference": {
@@ -482,9 +436,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "typeReference": {
@@ -504,9 +456,7 @@
     "endpoints": {
       "endpoint_.createPayment": {
         "declaration": {
-          "name": {
-            "originalName": "createPayment"
-          },
+          "name": "createPayment",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -518,9 +468,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "PaymentRequest"
-            },
+            "name": "PaymentRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -533,9 +481,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "amount"
-                  },
+                  "name": "amount",
                   "wireValue": "amount"
                 },
                 "typeReference": {
@@ -545,9 +491,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "currency"
-                  },
+                  "name": "currency",
                   "wireValue": "currency"
                 },
                 "typeReference": {

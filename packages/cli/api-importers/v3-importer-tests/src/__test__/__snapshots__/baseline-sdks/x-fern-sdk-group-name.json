@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-sdk-group-name` for schemas",
   "auth": {
     "requirement": "ALL",
@@ -14,19 +12,13 @@
     "type_user:User": {
       "docs": "This user object should be in user.yml",
       "name": {
-        "name": {
-          "originalName": "User"
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "user"
-            }
+            "user"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "user"
-          }
+          "file": "user"
         },
         "typeId": "type_user:User"
       },
@@ -35,9 +27,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -65,9 +55,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "associatedPersons"
-              },
+              "name": "associatedPersons",
               "wireValue": "associatedPersons"
             },
             "valueType": {
@@ -75,9 +63,7 @@
                 "optional": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "Person"
-                      },
+                      "name": "Person",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -112,26 +98,16 @@
     },
     "type_ids/user:UserId": {
       "name": {
-        "name": {
-          "originalName": "UserId"
-        },
+        "name": "UserId",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "ids"
-            },
-            {
-              "originalName": "user"
-            }
+            "ids",
+            "user"
           ],
           "packagePath": [
-            {
-              "originalName": "ids"
-            }
+            "ids"
           ],
-          "file": {
-            "originalName": "user"
-          }
+          "file": "user"
         },
         "typeId": "type_ids/user:UserId"
       },
@@ -165,26 +141,16 @@
     },
     "type_ids/person:PersonId": {
       "name": {
-        "name": {
-          "originalName": "PersonId"
-        },
+        "name": "PersonId",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "ids"
-            },
-            {
-              "originalName": "person"
-            }
+            "ids",
+            "person"
           ],
           "packagePath": [
-            {
-              "originalName": "ids"
-            }
+            "ids"
           ],
-          "file": {
-            "originalName": "person"
-          }
+          "file": "person"
         },
         "typeId": "type_ids/person:PersonId"
       },
@@ -218,9 +184,7 @@
     },
     "type_:Person": {
       "name": {
-        "name": {
-          "originalName": "Person"
-        },
+        "name": "Person",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -232,9 +196,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -279,21 +241,13 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "auth"
-            },
-            {
-              "originalName": "user"
-            }
+            "auth",
+            "user"
           ],
           "packagePath": [
-            {
-              "originalName": "auth"
-            }
+            "auth"
           ],
-          "file": {
-            "originalName": "user"
-          }
+          "file": "user"
         }
       },
       "basePath": {
@@ -312,9 +266,7 @@
         {
           "docs": "This endpoint should be in `auth/user.yml`",
           "id": "endpoint_auth/user.get",
-          "name": {
-            "originalName": "get"
-          },
+          "name": "get",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -335,19 +287,13 @@
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "User"
-                  },
+                  "name": "User",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "user"
-                      }
+                      "user"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "user"
-                    }
+                    "file": "user"
                   },
                   "typeId": "type_user:User",
                   "type": "named"
@@ -369,9 +315,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -399,27 +343,19 @@
     "types": {
       "type_user:User": {
         "declaration": {
-          "name": {
-            "originalName": "User"
-          },
+          "name": "User",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "user"
-              }
+              "user"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "user"
-            }
+            "file": "user"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -432,9 +368,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "associatedPersons"
-              },
+              "name": "associatedPersons",
               "wireValue": "associatedPersons"
             },
             "typeReference": {
@@ -454,26 +388,16 @@
       },
       "type_ids/user:UserId": {
         "declaration": {
-          "name": {
-            "originalName": "UserId"
-          },
+          "name": "UserId",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "ids"
-              },
-              {
-                "originalName": "user"
-              }
+              "ids",
+              "user"
             ],
             "packagePath": [
-              {
-                "originalName": "ids"
-              }
+              "ids"
             ],
-            "file": {
-              "originalName": "user"
-            }
+            "file": "user"
           }
         },
         "typeReference": {
@@ -484,26 +408,16 @@
       },
       "type_ids/person:PersonId": {
         "declaration": {
-          "name": {
-            "originalName": "PersonId"
-          },
+          "name": "PersonId",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "ids"
-              },
-              {
-                "originalName": "person"
-              }
+              "ids",
+              "person"
             ],
             "packagePath": [
-              {
-                "originalName": "ids"
-              }
+              "ids"
             ],
-            "file": {
-              "originalName": "person"
-            }
+            "file": "person"
           }
         },
         "typeReference": {
@@ -514,9 +428,7 @@
       },
       "type_:Person": {
         "declaration": {
-          "name": {
-            "originalName": "Person"
-          },
+          "name": "Person",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -525,9 +437,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -547,26 +457,16 @@
     "endpoints": {
       "endpoint_auth/user.get": {
         "declaration": {
-          "name": {
-            "originalName": "get"
-          },
+          "name": "get",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "auth"
-              },
-              {
-                "originalName": "user"
-              }
+              "auth",
+              "user"
             ],
             "packagePath": [
-              {
-                "originalName": "auth"
-              }
+              "auth"
             ],
-            "file": {
-              "originalName": "user"
-            }
+            "file": "user"
           }
         },
         "location": {
@@ -591,18 +491,12 @@
     "subpackage_user": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "user"
-          }
+          "user"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "user"
-        }
+        "file": "user"
       },
-      "name": {
-        "originalName": "user"
-      },
+      "name": "user",
       "types": [
         "type_user:User"
       ],
@@ -613,19 +507,13 @@
     "subpackage_auth": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "auth"
-          }
+          "auth"
         ],
         "packagePath": [
-          {
-            "originalName": "auth"
-          }
+          "auth"
         ]
       },
-      "name": {
-        "originalName": "auth"
-      },
+      "name": "auth",
       "types": [],
       "errors": [],
       "subpackages": [
@@ -636,25 +524,15 @@
     "subpackage_auth/user": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "auth"
-          },
-          {
-            "originalName": "user"
-          }
+          "auth",
+          "user"
         ],
         "packagePath": [
-          {
-            "originalName": "auth"
-          }
+          "auth"
         ],
-        "file": {
-          "originalName": "user"
-        }
+        "file": "user"
       },
-      "name": {
-        "originalName": "user"
-      },
+      "name": "user",
       "service": "service_auth/user",
       "types": [],
       "errors": [],
@@ -664,19 +542,13 @@
     "subpackage_ids": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "ids"
-          }
+          "ids"
         ],
         "packagePath": [
-          {
-            "originalName": "ids"
-          }
+          "ids"
         ]
       },
-      "name": {
-        "originalName": "ids"
-      },
+      "name": "ids",
       "types": [],
       "errors": [],
       "subpackages": [
@@ -688,25 +560,15 @@
     "subpackage_ids/user": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "ids"
-          },
-          {
-            "originalName": "user"
-          }
+          "ids",
+          "user"
         ],
         "packagePath": [
-          {
-            "originalName": "ids"
-          }
+          "ids"
         ],
-        "file": {
-          "originalName": "user"
-        }
+        "file": "user"
       },
-      "name": {
-        "originalName": "user"
-      },
+      "name": "user",
       "types": [
         "type_ids/user:UserId"
       ],
@@ -717,25 +579,15 @@
     "subpackage_ids/person": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "ids"
-          },
-          {
-            "originalName": "person"
-          }
+          "ids",
+          "person"
         ],
         "packagePath": [
-          {
-            "originalName": "ids"
-          }
+          "ids"
         ],
-        "file": {
-          "originalName": "person"
-        }
+        "file": "person"
       },
-      "name": {
-        "originalName": "person"
-      },
+      "name": "person",
       "types": [
         "type_ids/person:PersonId"
       ],

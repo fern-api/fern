@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Multiple 2xx Responses API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:GetStatusResponse": {
       "name": {
-        "name": {
-          "originalName": "GetStatusResponse"
-        },
+        "name": "GetStatusResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "valueType": {
@@ -89,9 +83,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getStatus",
-          "name": {
-            "originalName": "getStatus"
-          },
+          "name": "getStatus",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -112,9 +104,7 @@
               "value": {
                 "docs": "OK response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetStatusResponse"
-                  },
+                  "name": "GetStatusResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -139,9 +129,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -165,9 +153,7 @@
     "types": {
       "type_:GetStatusResponse": {
         "declaration": {
-          "name": {
-            "originalName": "GetStatusResponse"
-          },
+          "name": "GetStatusResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -176,9 +162,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "typeReference": {
@@ -198,9 +182,7 @@
     "endpoints": {
       "endpoint_.getStatus": {
         "declaration": {
-          "name": {
-            "originalName": "getStatus"
-          },
+          "name": "getStatus",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

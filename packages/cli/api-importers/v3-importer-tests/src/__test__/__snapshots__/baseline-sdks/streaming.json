@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Streaming API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:UserV3StreamResponse": {
       "name": {
-        "name": {
-          "originalName": "UserV3StreamResponse"
-        },
+        "name": "UserV3StreamResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -57,9 +51,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "inline"
-              },
+              "name": "inline",
               "wireValue": "inline"
             },
             "valueType": {
@@ -84,9 +76,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "streamed"
-              },
+              "name": "streamed",
               "wireValue": "streamed"
             },
             "valueType": {
@@ -123,9 +113,7 @@
     },
     "type_:UserV3Response": {
       "name": {
-        "name": {
-          "originalName": "UserV3Response"
-        },
+        "name": "UserV3Response",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -137,9 +125,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -167,9 +153,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "inline"
-              },
+              "name": "inline",
               "wireValue": "inline"
             },
             "valueType": {
@@ -206,9 +190,7 @@
     },
     "type_:User": {
       "name": {
-        "name": {
-          "originalName": "User"
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -220,9 +202,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -262,9 +242,7 @@
     },
     "type_:StreamUser": {
       "name": {
-        "name": {
-          "originalName": "StreamUser"
-        },
+        "name": "StreamUser",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -276,9 +254,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -318,9 +294,7 @@
     },
     "type_:User2": {
       "name": {
-        "name": {
-          "originalName": "User2"
-        },
+        "name": "User2",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -332,9 +306,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -362,9 +334,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -389,9 +359,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "streamed"
-              },
+              "name": "streamed",
               "wireValue": "streamed"
             },
             "valueType": {
@@ -429,9 +397,7 @@
     },
     "type_:StreamUser2": {
       "name": {
-        "name": {
-          "originalName": "StreamUser2"
-        },
+        "name": "StreamUser2",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -443,9 +409,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -473,9 +437,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -500,9 +462,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "streamed"
-              },
+              "name": "streamed",
               "wireValue": "streamed"
             },
             "valueType": {
@@ -563,9 +523,7 @@
       "endpoints": [
         {
           "id": "endpoint_.user_stream",
-          "name": {
-            "originalName": "user_stream"
-          },
+          "name": "user_stream",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -582,18 +540,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "UserStreamRequest"
-            },
+            "name": "UserStreamRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "",
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "valueType": {
@@ -618,9 +572,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "valueType": {
@@ -645,28 +597,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UserStreamRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "UserStreamRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "payload": {
-                  "name": {
-                    "originalName": "StreamUser"
-                  },
+                  "name": "StreamUser",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -686,9 +630,7 @@
         },
         {
           "id": "endpoint_.user",
-          "name": {
-            "originalName": "user"
-          },
+          "name": "user",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -705,18 +647,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "UserRequest"
-            },
+            "name": "UserRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "",
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "valueType": {
@@ -741,9 +679,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "valueType": {
@@ -768,28 +704,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UserRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "UserRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "User"
-                  },
+                  "name": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -811,9 +739,7 @@
         },
         {
           "id": "endpoint_.user_v2_stream",
-          "name": {
-            "originalName": "user_v2_stream"
-          },
+          "name": "user_v2_stream",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -830,18 +756,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "UserV2StreamRequest"
-            },
+            "name": "UserV2StreamRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "",
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "valueType": {
@@ -866,9 +788,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "valueType": {
@@ -893,28 +813,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UserV2StreamRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "UserV2StreamRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "payload": {
-                  "name": {
-                    "originalName": "StreamUser2"
-                  },
+                  "name": "StreamUser2",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -934,9 +846,7 @@
         },
         {
           "id": "endpoint_.user_v2",
-          "name": {
-            "originalName": "user_v2"
-          },
+          "name": "user_v2",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -953,18 +863,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "UserV2Request"
-            },
+            "name": "UserV2Request",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "",
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "valueType": {
@@ -989,9 +895,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "valueType": {
@@ -1016,28 +920,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UserV2Request"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "UserV2Request",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "User2"
-                  },
+                  "name": "User2",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1059,9 +955,7 @@
         },
         {
           "id": "endpoint_.user_v3_stream",
-          "name": {
-            "originalName": "user_v3_stream"
-          },
+          "name": "user_v3_stream",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -1078,18 +972,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "UserV3StreamRequest"
-            },
+            "name": "UserV3StreamRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "",
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "valueType": {
@@ -1114,9 +1004,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "valueType": {
@@ -1141,28 +1029,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UserV3StreamRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "UserV3StreamRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "payload": {
-                  "name": {
-                    "originalName": "UserV3StreamResponse"
-                  },
+                  "name": "UserV3StreamResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1182,9 +1062,7 @@
         },
         {
           "id": "endpoint_.user_v3",
-          "name": {
-            "originalName": "user_v3"
-          },
+          "name": "user_v3",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -1201,18 +1079,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "UserV3Request"
-            },
+            "name": "UserV3Request",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "",
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "valueType": {
@@ -1237,9 +1111,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "valueType": {
@@ -1264,28 +1136,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UserV3Request"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "UserV3Request",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "UserV3Response"
-                  },
+                  "name": "UserV3Response",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1310,9 +1174,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -1341,9 +1203,7 @@
     "types": {
       "type_:UserV3StreamResponse": {
         "declaration": {
-          "name": {
-            "originalName": "UserV3StreamResponse"
-          },
+          "name": "UserV3StreamResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1352,9 +1212,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1367,9 +1225,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "inline"
-              },
+              "name": "inline",
               "wireValue": "inline"
             },
             "typeReference": {
@@ -1382,9 +1238,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "streamed"
-              },
+              "name": "streamed",
               "wireValue": "streamed"
             },
             "typeReference": {
@@ -1401,9 +1255,7 @@
       },
       "type_:UserV3Response": {
         "declaration": {
-          "name": {
-            "originalName": "UserV3Response"
-          },
+          "name": "UserV3Response",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1412,9 +1264,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1427,9 +1277,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "inline"
-              },
+              "name": "inline",
               "wireValue": "inline"
             },
             "typeReference": {
@@ -1446,9 +1294,7 @@
       },
       "type_:User": {
         "declaration": {
-          "name": {
-            "originalName": "User"
-          },
+          "name": "User",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1457,9 +1303,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1476,9 +1320,7 @@
       },
       "type_:StreamUser": {
         "declaration": {
-          "name": {
-            "originalName": "StreamUser"
-          },
+          "name": "StreamUser",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1487,9 +1329,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1506,9 +1346,7 @@
       },
       "type_:User2": {
         "declaration": {
-          "name": {
-            "originalName": "User2"
-          },
+          "name": "User2",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1517,9 +1355,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1532,9 +1368,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -1547,9 +1381,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "streamed"
-              },
+              "name": "streamed",
               "wireValue": "streamed"
             },
             "typeReference": {
@@ -1569,9 +1401,7 @@
       },
       "type_:StreamUser2": {
         "declaration": {
-          "name": {
-            "originalName": "StreamUser2"
-          },
+          "name": "StreamUser2",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1580,9 +1410,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1595,9 +1423,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -1610,9 +1436,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "streamed"
-              },
+              "name": "streamed",
               "wireValue": "streamed"
             },
             "typeReference": {
@@ -1635,9 +1459,7 @@
     "endpoints": {
       "endpoint_.user_stream": {
         "declaration": {
-          "name": {
-            "originalName": "user_stream"
-          },
+          "name": "user_stream",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1649,9 +1471,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "UserStreamRequest"
-            },
+            "name": "UserStreamRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1664,9 +1484,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "typeReference": {
@@ -1679,9 +1497,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "typeReference": {
@@ -1708,9 +1524,7 @@
       },
       "endpoint_.user": {
         "declaration": {
-          "name": {
-            "originalName": "user"
-          },
+          "name": "user",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1722,9 +1536,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "UserRequest"
-            },
+            "name": "UserRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1737,9 +1549,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "typeReference": {
@@ -1752,9 +1562,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "typeReference": {
@@ -1781,9 +1589,7 @@
       },
       "endpoint_.user_v2_stream": {
         "declaration": {
-          "name": {
-            "originalName": "user_v2_stream"
-          },
+          "name": "user_v2_stream",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1795,9 +1601,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "UserV2StreamRequest"
-            },
+            "name": "UserV2StreamRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1810,9 +1614,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "typeReference": {
@@ -1825,9 +1627,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "typeReference": {
@@ -1854,9 +1654,7 @@
       },
       "endpoint_.user_v2": {
         "declaration": {
-          "name": {
-            "originalName": "user_v2"
-          },
+          "name": "user_v2",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1868,9 +1666,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "UserV2Request"
-            },
+            "name": "UserV2Request",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1883,9 +1679,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "typeReference": {
@@ -1898,9 +1692,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "typeReference": {
@@ -1927,9 +1719,7 @@
       },
       "endpoint_.user_v3_stream": {
         "declaration": {
-          "name": {
-            "originalName": "user_v3_stream"
-          },
+          "name": "user_v3_stream",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1941,9 +1731,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "UserV3StreamRequest"
-            },
+            "name": "UserV3StreamRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1956,9 +1744,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "typeReference": {
@@ -1971,9 +1757,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "typeReference": {
@@ -2000,9 +1784,7 @@
       },
       "endpoint_.user_v3": {
         "declaration": {
-          "name": {
-            "originalName": "user_v3"
-          },
+          "name": "user_v3",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -2014,9 +1796,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "UserV3Request"
-            },
+            "name": "UserV3Request",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -2029,9 +1809,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "typeReference": {
@@ -2044,9 +1822,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "typeReference": {

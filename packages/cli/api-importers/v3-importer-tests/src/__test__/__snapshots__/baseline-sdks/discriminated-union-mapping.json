@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test spec for `description` settings defined in anyOf.",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:RequestOne": {
       "docs": "A generic request type used throughout the API.",
       "name": {
-        "name": {
-          "originalName": "RequestOne"
-        },
+        "name": "RequestOne",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "foo"
-              },
+              "name": "foo",
               "wireValue": "foo"
             },
             "valueType": {
@@ -68,9 +62,7 @@
     "type_:RequestTwo": {
       "docs": "A generic response type used throughout the API.",
       "name": {
-        "name": {
-          "originalName": "RequestTwo"
-        },
+        "name": "RequestTwo",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -82,9 +74,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "bar"
-              },
+              "name": "bar",
               "wireValue": "bar"
             },
             "valueType": {
@@ -121,9 +111,7 @@
     },
     "type_:SampleUnion": {
       "name": {
-        "name": {
-          "originalName": "SampleUnion"
-        },
+        "name": "SampleUnion",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -132,9 +120,7 @@
       },
       "shape": {
         "discriminant": {
-          "name": {
-            "originalName": "variant"
-          },
+          "name": "variant",
           "wireValue": "variant"
         },
         "extends": [],
@@ -142,15 +128,11 @@
         "types": [
           {
             "discriminantValue": {
-              "name": {
-                "originalName": "request"
-              },
+              "name": "request",
               "wireValue": "request"
             },
             "shape": {
-              "name": {
-                "originalName": "RequestOne"
-              },
+              "name": "RequestOne",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -162,15 +144,11 @@
           },
           {
             "discriminantValue": {
-              "name": {
-                "originalName": "response"
-              },
+              "name": "response",
               "wireValue": "response"
             },
             "shape": {
-              "name": {
-                "originalName": "RequestTwo"
-              },
+              "name": "RequestTwo",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -216,9 +194,7 @@
       "endpoints": [
         {
           "id": "endpoint_.Get",
-          "name": {
-            "originalName": "Get"
-          },
+          "name": "Get",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -261,9 +237,7 @@
         },
         {
           "id": "endpoint_.Post",
-          "name": {
-            "originalName": "Post"
-          },
+          "name": "Post",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -281,9 +255,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "SampleUnion"
-              },
+              "name": "SampleUnion",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -298,9 +270,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "SampleUnion"
-                  },
+                  "name": "SampleUnion",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -312,9 +282,7 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -346,9 +314,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -374,9 +340,7 @@
     "types": {
       "type_:RequestOne": {
         "declaration": {
-          "name": {
-            "originalName": "RequestOne"
-          },
+          "name": "RequestOne",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -385,9 +349,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "foo"
-              },
+              "name": "foo",
               "wireValue": "foo"
             },
             "typeReference": {
@@ -404,9 +366,7 @@
       },
       "type_:RequestTwo": {
         "declaration": {
-          "name": {
-            "originalName": "RequestTwo"
-          },
+          "name": "RequestTwo",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -415,9 +375,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "bar"
-              },
+              "name": "bar",
               "wireValue": "bar"
             },
             "typeReference": {
@@ -434,27 +392,21 @@
       },
       "type_:SampleUnion": {
         "declaration": {
-          "name": {
-            "originalName": "SampleUnion"
-          },
+          "name": "SampleUnion",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
           }
         },
         "discriminant": {
-          "name": {
-            "originalName": "variant"
-          },
+          "name": "variant",
           "wireValue": "variant"
         },
         "types": {
           "request": {
             "typeId": "type_:RequestOne",
             "discriminantValue": {
-              "name": {
-                "originalName": "request"
-              },
+              "name": "request",
               "wireValue": "request"
             },
             "properties": [],
@@ -463,9 +415,7 @@
           "response": {
             "typeId": "type_:RequestTwo",
             "discriminantValue": {
-              "name": {
-                "originalName": "response"
-              },
+              "name": "response",
               "wireValue": "response"
             },
             "properties": [],
@@ -479,9 +429,7 @@
     "endpoints": {
       "endpoint_.Get": {
         "declaration": {
-          "name": {
-            "originalName": "Get"
-          },
+          "name": "Get",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -502,9 +450,7 @@
       },
       "endpoint_.Post": {
         "declaration": {
-          "name": {
-            "originalName": "Post"
-          },
+          "name": "Post",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

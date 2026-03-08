@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:PostTestRequest": {
       "name": {
-        "name": {
-          "originalName": "PostTestRequest"
-        },
+        "name": "PostTestRequest",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -26,9 +22,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "Circle"
-              },
+              "name": "Circle",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -40,9 +34,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "Square"
-              },
+              "name": "Square",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -64,9 +56,7 @@
     },
     "type_:PostTestResponse": {
       "name": {
-        "name": {
-          "originalName": "PostTestResponse"
-        },
+        "name": "PostTestResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -77,9 +67,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "Circle"
-              },
+              "name": "Circle",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -91,9 +79,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "Square"
-              },
+              "name": "Square",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -116,9 +102,7 @@
     "type_:CircleType": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "CircleType"
-        },
+        "name": "CircleType",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -129,9 +113,7 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "circle"
-              },
+              "name": "circle",
               "wireValue": "circle"
             }
           }
@@ -147,9 +129,7 @@
     },
     "type_:Circle": {
       "name": {
-        "name": {
-          "originalName": "Circle"
-        },
+        "name": "Circle",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -161,15 +141,11 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "type"
-              },
+              "name": "type",
               "wireValue": "type"
             },
             "valueType": {
-              "name": {
-                "originalName": "CircleType"
-              },
+              "name": "CircleType",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -184,9 +160,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "radius"
-              },
+              "name": "radius",
               "wireValue": "radius"
             },
             "valueType": {
@@ -218,9 +192,7 @@
     "type_:SquareType": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "SquareType"
-        },
+        "name": "SquareType",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -231,9 +203,7 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "square"
-              },
+              "name": "square",
               "wireValue": "square"
             }
           }
@@ -249,9 +219,7 @@
     },
     "type_:Square": {
       "name": {
-        "name": {
-          "originalName": "Square"
-        },
+        "name": "Square",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -263,15 +231,11 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "type"
-              },
+              "name": "type",
               "wireValue": "type"
             },
             "valueType": {
-              "name": {
-                "originalName": "SquareType"
-              },
+              "name": "SquareType",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -286,9 +250,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "sideLength"
-              },
+              "name": "sideLength",
               "wireValue": "sideLength"
             },
             "valueType": {
@@ -342,9 +304,7 @@
       "endpoints": [
         {
           "id": "endpoint_.testEndpoint",
-          "name": {
-            "originalName": "testEndpoint"
-          },
+          "name": "testEndpoint",
           "displayName": "Test endpoint",
           "auth": false,
           "idempotent": false,
@@ -363,9 +323,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "PostTestRequest"
-              },
+              "name": "PostTestRequest",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -380,9 +338,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "PostTestRequest"
-                  },
+                  "name": "PostTestRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -394,18 +350,14 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "PostTestResponse"
-                  },
+                  "name": "PostTestResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -430,9 +382,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -461,9 +411,7 @@
     "types": {
       "type_:PostTestRequest": {
         "declaration": {
-          "name": {
-            "originalName": "PostTestRequest"
-          },
+          "name": "PostTestRequest",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -483,9 +431,7 @@
       },
       "type_:PostTestResponse": {
         "declaration": {
-          "name": {
-            "originalName": "PostTestResponse"
-          },
+          "name": "PostTestResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -505,9 +451,7 @@
       },
       "type_:CircleType": {
         "declaration": {
-          "name": {
-            "originalName": "CircleType"
-          },
+          "name": "CircleType",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -515,9 +459,7 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "circle"
-            },
+            "name": "circle",
             "wireValue": "circle"
           }
         ],
@@ -525,9 +467,7 @@
       },
       "type_:Circle": {
         "declaration": {
-          "name": {
-            "originalName": "Circle"
-          },
+          "name": "Circle",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -536,9 +476,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "type"
-              },
+              "name": "type",
               "wireValue": "type"
             },
             "typeReference": {
@@ -548,9 +486,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "radius"
-              },
+              "name": "radius",
               "wireValue": "radius"
             },
             "typeReference": {
@@ -564,9 +500,7 @@
       },
       "type_:SquareType": {
         "declaration": {
-          "name": {
-            "originalName": "SquareType"
-          },
+          "name": "SquareType",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -574,9 +508,7 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "square"
-            },
+            "name": "square",
             "wireValue": "square"
           }
         ],
@@ -584,9 +516,7 @@
       },
       "type_:Square": {
         "declaration": {
-          "name": {
-            "originalName": "Square"
-          },
+          "name": "Square",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -595,9 +525,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "type"
-              },
+              "name": "type",
               "wireValue": "type"
             },
             "typeReference": {
@@ -607,9 +535,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "sideLength"
-              },
+              "name": "sideLength",
               "wireValue": "sideLength"
             },
             "typeReference": {
@@ -626,9 +552,7 @@
     "endpoints": {
       "endpoint_.testEndpoint": {
         "declaration": {
-          "name": {
-            "originalName": "testEndpoint"
-          },
+          "name": "testEndpoint",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

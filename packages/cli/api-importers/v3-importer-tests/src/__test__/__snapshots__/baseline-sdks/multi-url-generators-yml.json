@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "User and Token API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:User": {
       "name": {
-        "name": {
-          "originalName": "User"
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -54,9 +48,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "username"
-              },
+              "name": "username",
               "wireValue": "username"
             },
             "valueType": {
@@ -81,9 +73,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
@@ -108,9 +98,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "createdAt"
-              },
+              "name": "createdAt",
               "wireValue": "createdAt"
             },
             "valueType": {
@@ -144,9 +132,7 @@
     },
     "type_:Token": {
       "name": {
-        "name": {
-          "originalName": "Token"
-        },
+        "name": "Token",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -158,9 +144,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "accessToken"
-              },
+              "name": "accessToken",
               "wireValue": "accessToken"
             },
             "valueType": {
@@ -185,9 +169,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "tokenType"
-              },
+              "name": "tokenType",
               "wireValue": "tokenType"
             },
             "valueType": {
@@ -212,9 +194,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "expiresIn"
-              },
+              "name": "expiresIn",
               "wireValue": "expiresIn"
             },
             "valueType": {
@@ -253,9 +233,7 @@
   "errors": {
     "error_:UnauthorizedError": {
       "name": {
-        "name": {
-          "originalName": "UnauthorizedError"
-        },
+        "name": "UnauthorizedError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -263,9 +241,7 @@
         "errorId": "error_:UnauthorizedError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "UnauthorizedError"
-        },
+        "name": "UnauthorizedError",
         "wireValue": "UnauthorizedError"
       },
       "docs": "Unauthorized",
@@ -278,9 +254,7 @@
     },
     "error_:NotFoundError": {
       "name": {
-        "name": {
-          "originalName": "NotFoundError"
-        },
+        "name": "NotFoundError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -288,9 +262,7 @@
         "errorId": "error_:NotFoundError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "NotFoundError"
-        },
+        "name": "NotFoundError",
         "wireValue": "NotFoundError"
       },
       "docs": "User not found",
@@ -326,9 +298,7 @@
         {
           "docs": "List information about all users",
           "id": "endpoint_.listUsers",
-          "name": {
-            "originalName": "listUsers"
-          },
+          "name": "listUsers",
           "displayName": "List Users",
           "auth": false,
           "idempotent": false,
@@ -350,9 +320,7 @@
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "User"
-                  },
+                  "name": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -370,9 +338,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "UnauthorizedError"
-                },
+                "name": "UnauthorizedError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -382,9 +348,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "NotFoundError"
-                },
+                "name": "NotFoundError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -400,9 +364,7 @@
         {
           "docs": "Retrieve detailed information about a specific user",
           "id": "endpoint_.getUserInformation",
-          "name": {
-            "originalName": "getUserInformation"
-          },
+          "name": "getUserInformation",
           "displayName": "Get user information",
           "auth": false,
           "idempotent": false,
@@ -427,9 +389,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "userId"
-              },
+              "name": "userId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -448,9 +408,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "userId"
-              },
+              "name": "userId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -471,28 +429,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetUsersUserIdRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetUsersUserIdRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "User"
-                  },
+                  "name": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -510,9 +460,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "UnauthorizedError"
-                },
+                "name": "UnauthorizedError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -522,9 +470,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "NotFoundError"
-                },
+                "name": "NotFoundError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -540,9 +486,7 @@
         {
           "docs": "Retrieve an authentication token for the API",
           "id": "endpoint_.getAuthenticationToken",
-          "name": {
-            "originalName": "getAuthenticationToken"
-          },
+          "name": "getAuthenticationToken",
           "displayName": "Get authentication token",
           "auth": false,
           "idempotent": false,
@@ -564,9 +508,7 @@
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Token"
-                  },
+                  "name": "Token",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -584,9 +526,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "UnauthorizedError"
-                },
+                "name": "UnauthorizedError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -604,9 +544,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -616,9 +554,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://a.com"
         }
       ],
@@ -646,9 +582,7 @@
     "types": {
       "type_:User": {
         "declaration": {
-          "name": {
-            "originalName": "User"
-          },
+          "name": "User",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -657,9 +591,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -672,9 +604,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "username"
-              },
+              "name": "username",
               "wireValue": "username"
             },
             "typeReference": {
@@ -687,9 +617,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "typeReference": {
@@ -702,9 +630,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "createdAt"
-              },
+              "name": "createdAt",
               "wireValue": "createdAt"
             },
             "typeReference": {
@@ -721,9 +647,7 @@
       },
       "type_:Token": {
         "declaration": {
-          "name": {
-            "originalName": "Token"
-          },
+          "name": "Token",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -732,9 +656,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "accessToken"
-              },
+              "name": "accessToken",
               "wireValue": "accessToken"
             },
             "typeReference": {
@@ -747,9 +669,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "tokenType"
-              },
+              "name": "tokenType",
               "wireValue": "tokenType"
             },
             "typeReference": {
@@ -762,9 +682,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "expiresIn"
-              },
+              "name": "expiresIn",
               "wireValue": "expiresIn"
             },
             "typeReference": {
@@ -784,9 +702,7 @@
     "endpoints": {
       "endpoint_.listUsers": {
         "declaration": {
-          "name": {
-            "originalName": "listUsers"
-          },
+          "name": "listUsers",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -807,9 +723,7 @@
       },
       "endpoint_.getUserInformation": {
         "declaration": {
-          "name": {
-            "originalName": "getUserInformation"
-          },
+          "name": "getUserInformation",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -821,9 +735,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetUsersUserIdRequest"
-            },
+            "name": "GetUsersUserIdRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -832,9 +744,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "userId"
-                },
+                "name": "userId",
                 "wireValue": "userId"
               },
               "typeReference": {
@@ -858,9 +768,7 @@
       },
       "endpoint_.getAuthenticationToken": {
         "declaration": {
-          "name": {
-            "originalName": "getAuthenticationToken"
-          },
+          "name": "getAuthenticationToken",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -887,9 +795,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://a.com"
           }
         ],

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Parameter Reference Test",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:SearchFilter": {
       "docs": "This schema is referenced by a parameter and should be kept",
       "name": {
-        "name": {
-          "originalName": "SearchFilter"
-        },
+        "name": "SearchFilter",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "query"
-              },
+              "name": "query",
               "wireValue": "query"
             },
             "valueType": {
@@ -55,9 +49,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "limit"
-              },
+              "name": "limit",
               "wireValue": "limit"
             },
             "valueType": {
@@ -117,9 +109,7 @@
       "endpoints": [
         {
           "id": "endpoint_.search",
-          "name": {
-            "originalName": "search"
-          },
+          "name": "search",
           "displayName": "Search with filter",
           "auth": false,
           "idempotent": false,
@@ -137,15 +127,11 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "filter"
-                },
+                "name": "filter",
                 "wireValue": "filter"
               },
               "valueType": {
-                "name": {
-                  "originalName": "SearchFilter"
-                },
+                "name": "SearchFilter",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -163,19 +149,13 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "SearchRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "SearchRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -213,9 +193,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -239,9 +217,7 @@
     "types": {
       "type_:SearchFilter": {
         "declaration": {
-          "name": {
-            "originalName": "SearchFilter"
-          },
+          "name": "SearchFilter",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -250,9 +226,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "query"
-              },
+              "name": "query",
               "wireValue": "query"
             },
             "typeReference": {
@@ -265,9 +239,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "limit"
-              },
+              "name": "limit",
               "wireValue": "limit"
             },
             "typeReference": {
@@ -287,9 +259,7 @@
     "endpoints": {
       "endpoint_.search": {
         "declaration": {
-          "name": {
-            "originalName": "search"
-          },
+          "name": "search",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -301,9 +271,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "SearchRequest"
-            },
+            "name": "SearchRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -313,9 +281,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "filter"
-                },
+                "name": "filter",
                 "wireValue": "filter"
               },
               "typeReference": {

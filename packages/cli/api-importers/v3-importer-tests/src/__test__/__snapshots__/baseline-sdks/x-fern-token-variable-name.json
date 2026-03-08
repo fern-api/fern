@@ -1,17 +1,13 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-token-variable-name`.",
   "auth": {
     "requirement": "ALL",
     "schemes": [
       {
         "key": "api_key",
-        "token": {
-          "originalName": "apiKey"
-        },
+        "token": "apiKey",
         "type": "bearer"
       }
     ]
@@ -19,9 +15,7 @@
   "headers": [
     {
       "name": {
-        "name": {
-          "originalName": "apiKey"
-        },
+        "name": "apiKey",
         "wireValue": "X-API-Key"
       },
       "valueType": {
@@ -43,9 +37,7 @@
   "types": {
     "type_:Completion": {
       "name": {
-        "name": {
-          "originalName": "Completion"
-        },
+        "name": "Completion",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -57,9 +49,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "text"
-              },
+              "name": "text",
               "wireValue": "text"
             },
             "valueType": {
@@ -96,9 +86,7 @@
     },
     "type_:CompletionChunk": {
       "name": {
-        "name": {
-          "originalName": "CompletionChunk"
-        },
+        "name": "CompletionChunk",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -110,9 +98,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "text"
-              },
+              "name": "text",
               "wireValue": "text"
             },
             "valueType": {
@@ -154,14 +140,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "chatCompletions"
-            }
+            "chatCompletions"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "chatCompletions"
-          }
+          "file": "chatCompletions"
         }
       },
       "basePath": {
@@ -179,9 +161,7 @@
       "endpoints": [
         {
           "id": "endpoint_chatCompletions.create",
-          "name": {
-            "originalName": "create"
-          },
+          "name": "create",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -198,17 +178,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "CreateCompletionRequest"
-            },
+            "name": "CreateCompletionRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "valueType": {
@@ -233,9 +209,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "prompt"
-                  },
+                  "name": "prompt",
                   "wireValue": "prompt"
                 },
                 "valueType": {
@@ -259,19 +233,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "CreateCompletionRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "CreateCompletionRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -303,9 +271,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -328,9 +294,7 @@
     "types": {
       "type_:Completion": {
         "declaration": {
-          "name": {
-            "originalName": "Completion"
-          },
+          "name": "Completion",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -339,9 +303,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "text"
-              },
+              "name": "text",
               "wireValue": "text"
             },
             "typeReference": {
@@ -358,9 +320,7 @@
       },
       "type_:CompletionChunk": {
         "declaration": {
-          "name": {
-            "originalName": "CompletionChunk"
-          },
+          "name": "CompletionChunk",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -369,9 +329,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "text"
-              },
+              "name": "text",
               "wireValue": "text"
             },
             "typeReference": {
@@ -390,9 +348,7 @@
     "headers": [
       {
         "name": {
-          "name": {
-            "originalName": "apiKey"
-          },
+          "name": "apiKey",
           "wireValue": "X-API-Key"
         },
         "typeReference": {
@@ -405,25 +361,17 @@
       "endpoint_chatCompletions.create": {
         "auth": {
           "key": "api_key",
-          "token": {
-            "originalName": "apiKey"
-          },
+          "token": "apiKey",
           "type": "bearer"
         },
         "declaration": {
-          "name": {
-            "originalName": "create"
-          },
+          "name": "create",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "chatCompletions"
-              }
+              "chatCompletions"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "chatCompletions"
-            }
+            "file": "chatCompletions"
           }
         },
         "location": {
@@ -432,19 +380,13 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "CreateCompletionRequest"
-            },
+            "name": "CreateCompletionRequest",
             "fernFilepath": {
               "allParts": [
-                {
-                  "originalName": "chatCompletions"
-                }
+                "chatCompletions"
               ],
               "packagePath": [],
-              "file": {
-                "originalName": "chatCompletions"
-              }
+              "file": "chatCompletions"
             }
           },
           "pathParameters": [],
@@ -454,9 +396,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream"
-                  },
+                  "name": "stream",
                   "wireValue": "stream"
                 },
                 "typeReference": {
@@ -469,9 +409,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "prompt"
-                  },
+                  "name": "prompt",
                   "wireValue": "prompt"
                 },
                 "typeReference": {
@@ -502,18 +440,12 @@
     "subpackage_chatCompletions": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "chatCompletions"
-          }
+          "chatCompletions"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "chatCompletions"
-        }
+        "file": "chatCompletions"
       },
-      "name": {
-        "originalName": "chatCompletions"
-      },
+      "name": "chatCompletions",
       "service": "service_chatCompletions",
       "types": [],
       "errors": [],

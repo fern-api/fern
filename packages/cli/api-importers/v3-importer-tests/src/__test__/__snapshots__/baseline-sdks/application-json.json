@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test vnd.fern.user+json;version=1 and /application-json",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:Data": {
       "name": {
-        "name": {
-          "originalName": "Data"
-        },
+        "name": "Data",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "foo"
-              },
+              "name": "foo",
               "wireValue": "foo"
             },
             "valueType": {
@@ -54,9 +48,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "bar"
-              },
+              "name": "bar",
               "wireValue": "bar"
             },
             "valueType": {
@@ -116,9 +108,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getVndFernUserJsonVersion1",
-          "name": {
-            "originalName": "getVndFernUserJsonVersion1"
-          },
+          "name": "getVndFernUserJsonVersion1",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -139,9 +129,7 @@
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Data"
-                  },
+                  "name": "Data",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -163,9 +151,7 @@
         },
         {
           "id": "endpoint_.getApplicationJson",
-          "name": {
-            "originalName": "getApplicationJson"
-          },
+          "name": "getApplicationJson",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -186,9 +172,7 @@
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Data"
-                  },
+                  "name": "Data",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -213,9 +197,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -239,9 +221,7 @@
     "types": {
       "type_:Data": {
         "declaration": {
-          "name": {
-            "originalName": "Data"
-          },
+          "name": "Data",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -250,9 +230,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "foo"
-              },
+              "name": "foo",
               "wireValue": "foo"
             },
             "typeReference": {
@@ -265,9 +243,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "bar"
-              },
+              "name": "bar",
               "wireValue": "bar"
             },
             "typeReference": {
@@ -287,9 +263,7 @@
     "endpoints": {
       "endpoint_.getVndFernUserJsonVersion1": {
         "declaration": {
-          "name": {
-            "originalName": "getVndFernUserJsonVersion1"
-          },
+          "name": "getVndFernUserJsonVersion1",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -310,9 +284,7 @@
       },
       "endpoint_.getApplicationJson": {
         "declaration": {
-          "name": {
-            "originalName": "getApplicationJson"
-          },
+          "name": "getApplicationJson",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

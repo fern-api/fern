@@ -3,9 +3,7 @@
   "apiVersion": {
     "header": {
       "name": {
-        "name": {
-          "originalName": "X-API-Version"
-        },
+        "name": "X-API-Version",
         "wireValue": "X-API-Version"
       },
       "valueType": {
@@ -25,34 +23,26 @@
     "value": {
       "default": {
         "name": {
-          "name": {
-            "originalName": "2.0.0"
-          },
+          "name": "2.0.0",
           "wireValue": "2.0.0"
         }
       },
       "values": [
         {
           "name": {
-            "name": {
-              "originalName": "1.0.0"
-            },
+            "name": "1.0.0",
             "wireValue": "1.0.0"
           }
         },
         {
           "name": {
-            "name": {
-              "originalName": "2.0.0"
-            },
+            "name": "2.0.0",
             "wireValue": "2.0.0"
           }
         },
         {
           "name": {
-            "name": {
-              "originalName": "Latest"
-            },
+            "name": "Latest",
             "wireValue": "Latest"
           }
         }
@@ -60,18 +50,14 @@
     },
     "type": "header"
   },
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-webhook`.",
   "auth": {
     "requirement": "ALL",
     "schemes": [
       {
         "key": "api_key",
-        "token": {
-          "originalName": "token"
-        },
+        "token": "token",
         "type": "bearer"
       }
     ]
@@ -79,9 +65,7 @@
   "headers": [
     {
       "name": {
-        "name": {
-          "originalName": "apiKey"
-        },
+        "name": "apiKey",
         "wireValue": "X-API-Key"
       },
       "valueType": {
@@ -103,19 +87,13 @@
   "types": {
     "type_status:UpdateInlinedStatusPayload": {
       "name": {
-        "name": {
-          "originalName": "UpdateInlinedStatusPayload"
-        },
+        "name": "UpdateInlinedStatusPayload",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "status"
-            }
+            "status"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "status"
-          }
+          "file": "status"
         },
         "typeId": "type_status:UpdateInlinedStatusPayload"
       },
@@ -124,9 +102,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "stream-inlined"
-              },
+              "name": "stream-inlined",
               "wireValue": "stream-inlined"
             },
             "valueType": {
@@ -151,9 +127,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "message-inlined"
-              },
+              "name": "message-inlined",
               "wireValue": "message-inlined"
             },
             "valueType": {
@@ -190,9 +164,7 @@
     },
     "type_:Update": {
       "name": {
-        "name": {
-          "originalName": "Update"
-        },
+        "name": "Update",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -204,9 +176,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "stream"
-              },
+              "name": "stream",
               "wireValue": "stream"
             },
             "valueType": {
@@ -231,9 +201,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "valueType": {
@@ -267,9 +235,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -290,15 +256,11 @@
       {
         "id": "webhooks_status.update",
         "method": "POST",
-        "name": {
-          "originalName": "update"
-        },
+        "name": "update",
         "headers": [],
         "payload": {
           "payloadType": {
-            "name": {
-              "originalName": "Update"
-            },
+            "name": "Update",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -318,17 +280,13 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "Update"
-                  }
+                  "name": "Update"
                 },
                 "shape": {
                   "properties": [
                     {
                       "name": {
-                        "name": {
-                          "originalName": "message"
-                        },
+                        "name": "message",
                         "wireValue": "message"
                       },
                       "value": {
@@ -349,9 +307,7 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Update"
-                        }
+                        "name": "Update"
                       }
                     }
                   ],
@@ -369,25 +325,17 @@
       {
         "id": "webhooks_status.updateInlined",
         "method": "POST",
-        "name": {
-          "originalName": "updateInlined"
-        },
+        "name": "updateInlined",
         "headers": [],
         "payload": {
           "payloadType": {
-            "name": {
-              "originalName": "UpdateInlinedStatusPayload"
-            },
+            "name": "UpdateInlinedStatusPayload",
             "fernFilepath": {
               "allParts": [
-                {
-                  "originalName": "status"
-                }
+                "status"
               ],
               "packagePath": [],
-              "file": {
-                "originalName": "status"
-              }
+              "file": "status"
             },
             "typeId": "type_status:UpdateInlinedStatusPayload",
             "type": "named"
@@ -402,18 +350,12 @@
                   "typeId": "type_status:UpdateInlinedStatusPayload",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "status"
-                      }
+                      "status"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "status"
-                    }
+                    "file": "status"
                   },
-                  "name": {
-                    "originalName": "UpdateInlinedStatusPayload"
-                  }
+                  "name": "UpdateInlinedStatusPayload"
                 },
                 "shape": {
                   "properties": [],
@@ -434,27 +376,19 @@
     "types": {
       "type_status:UpdateInlinedStatusPayload": {
         "declaration": {
-          "name": {
-            "originalName": "UpdateInlinedStatusPayload"
-          },
+          "name": "UpdateInlinedStatusPayload",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "status"
-              }
+              "status"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "status"
-            }
+            "file": "status"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "stream-inlined"
-              },
+              "name": "stream-inlined",
               "wireValue": "stream-inlined"
             },
             "typeReference": {
@@ -467,9 +401,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "message-inlined"
-              },
+              "name": "message-inlined",
               "wireValue": "message-inlined"
             },
             "typeReference": {
@@ -486,9 +418,7 @@
       },
       "type_:Update": {
         "declaration": {
-          "name": {
-            "originalName": "Update"
-          },
+          "name": "Update",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -497,9 +427,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "stream"
-              },
+              "name": "stream",
               "wireValue": "stream"
             },
             "typeReference": {
@@ -512,9 +440,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "typeReference": {
@@ -530,9 +456,7 @@
     "headers": [
       {
         "name": {
-          "name": {
-            "originalName": "apiKey"
-          },
+          "name": "apiKey",
           "wireValue": "X-API-Key"
         },
         "typeReference": {
@@ -550,18 +474,12 @@
     "subpackage_status": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "status"
-          }
+          "status"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "status"
-        }
+        "file": "status"
       },
-      "name": {
-        "originalName": "status"
-      },
+      "name": "status",
       "types": [
         "type_status:UpdateInlinedStatusPayload"
       ],

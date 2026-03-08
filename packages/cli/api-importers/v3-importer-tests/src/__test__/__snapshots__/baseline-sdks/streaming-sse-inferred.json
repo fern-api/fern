@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test inferring SSE streaming from text/event-stream MIME type",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:CompletionRequest": {
       "name": {
-        "name": {
-          "originalName": "CompletionRequest"
-        },
+        "name": "CompletionRequest",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "prompt"
-              },
+              "name": "prompt",
               "wireValue": "prompt"
             },
             "valueType": {
@@ -60,9 +54,7 @@
     },
     "type_:Completion": {
       "name": {
-        "name": {
-          "originalName": "Completion"
-        },
+        "name": "Completion",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -74,9 +66,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "text"
-              },
+              "name": "text",
               "wireValue": "text"
             },
             "valueType": {
@@ -113,9 +103,7 @@
     },
     "type_:CompletionChunk": {
       "name": {
-        "name": {
-          "originalName": "CompletionChunk"
-        },
+        "name": "CompletionChunk",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -127,9 +115,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "delta"
-              },
+              "name": "delta",
               "wireValue": "delta"
             },
             "valueType": {
@@ -171,14 +157,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "completions"
-            }
+            "completions"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "completions"
-          }
+          "file": "completions"
         }
       },
       "basePath": {
@@ -196,9 +178,7 @@
       "endpoints": [
         {
           "id": "endpoint_completions.stream",
-          "name": {
-            "originalName": "stream"
-          },
+          "name": "stream",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -216,9 +196,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "CompletionRequest"
-              },
+              "name": "CompletionRequest",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -233,9 +211,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "CompletionRequest"
-                  },
+                  "name": "CompletionRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -247,18 +223,14 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Streamed completion response",
                 "payload": {
-                  "name": {
-                    "originalName": "CompletionChunk"
-                  },
+                  "name": "CompletionChunk",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -278,9 +250,7 @@
         },
         {
           "id": "endpoint_completions.create",
-          "name": {
-            "originalName": "create"
-          },
+          "name": "create",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -298,9 +268,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "CompletionRequest"
-              },
+              "name": "CompletionRequest",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -315,9 +283,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "CompletionRequest"
-                  },
+                  "name": "CompletionRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -329,18 +295,14 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Non-streaming completion response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Completion"
-                  },
+                  "name": "Completion",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -362,9 +324,7 @@
         },
         {
           "id": "endpoint_completions.createWithStream",
-          "name": {
-            "originalName": "createWithStream"
-          },
+          "name": "createWithStream",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -382,9 +342,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "CompletionRequest"
-              },
+              "name": "CompletionRequest",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -399,9 +357,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "CompletionRequest"
-                  },
+                  "name": "CompletionRequest",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -413,18 +369,14 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Response with both JSON and SSE content types",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Completion"
-                  },
+                  "name": "Completion",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -449,9 +401,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -477,9 +427,7 @@
     "types": {
       "type_:CompletionRequest": {
         "declaration": {
-          "name": {
-            "originalName": "CompletionRequest"
-          },
+          "name": "CompletionRequest",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -488,9 +436,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "prompt"
-              },
+              "name": "prompt",
               "wireValue": "prompt"
             },
             "typeReference": {
@@ -504,9 +450,7 @@
       },
       "type_:Completion": {
         "declaration": {
-          "name": {
-            "originalName": "Completion"
-          },
+          "name": "Completion",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -515,9 +459,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "text"
-              },
+              "name": "text",
               "wireValue": "text"
             },
             "typeReference": {
@@ -534,9 +476,7 @@
       },
       "type_:CompletionChunk": {
         "declaration": {
-          "name": {
-            "originalName": "CompletionChunk"
-          },
+          "name": "CompletionChunk",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -545,9 +485,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "delta"
-              },
+              "name": "delta",
               "wireValue": "delta"
             },
             "typeReference": {
@@ -567,19 +505,13 @@
     "endpoints": {
       "endpoint_completions.stream": {
         "declaration": {
-          "name": {
-            "originalName": "stream"
-          },
+          "name": "stream",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "completions"
-              }
+              "completions"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "completions"
-            }
+            "file": "completions"
           }
         },
         "location": {
@@ -604,19 +536,13 @@
       },
       "endpoint_completions.create": {
         "declaration": {
-          "name": {
-            "originalName": "create"
-          },
+          "name": "create",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "completions"
-              }
+              "completions"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "completions"
-            }
+            "file": "completions"
           }
         },
         "location": {
@@ -641,19 +567,13 @@
       },
       "endpoint_completions.createWithStream": {
         "declaration": {
-          "name": {
-            "originalName": "createWithStream"
-          },
+          "name": "createWithStream",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "completions"
-              }
+              "completions"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "completions"
-            }
+            "file": "completions"
           }
         },
         "location": {
@@ -685,18 +605,12 @@
     "subpackage_completions": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "completions"
-          }
+          "completions"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "completions"
-        }
+        "file": "completions"
       },
-      "name": {
-        "originalName": "completions"
-      },
+      "name": "completions",
       "service": "service_completions",
       "types": [],
       "errors": [],

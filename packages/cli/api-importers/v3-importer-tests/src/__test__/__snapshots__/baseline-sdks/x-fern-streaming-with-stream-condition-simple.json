@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "TEST API v2",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:FullResponse": {
       "name": {
-        "name": {
-          "originalName": "FullResponse"
-        },
+        "name": "FullResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "answer"
-              },
+              "name": "answer",
               "wireValue": "answer"
             },
             "valueType": {
@@ -66,9 +60,7 @@
     },
     "type_:StreamedResponse": {
       "name": {
-        "name": {
-          "originalName": "StreamedResponse"
-        },
+        "name": "StreamedResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -80,9 +72,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "chunk"
-              },
+              "name": "chunk",
               "wireValue": "chunk"
             },
             "valueType": {
@@ -142,9 +132,7 @@
       "endpoints": [
         {
           "id": "endpoint_.create_stream",
-          "name": {
-            "originalName": "create_stream"
-          },
+          "name": "create_stream",
           "displayName": "Create a Test",
           "auth": false,
           "idempotent": false,
@@ -162,17 +150,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "CreateStreamRequest"
-            },
+            "name": "CreateStreamRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "query"
-                  },
+                  "name": "query",
                   "wireValue": "query"
                 },
                 "valueType": {
@@ -197,9 +181,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream_response"
-                  },
+                  "name": "stream_response",
                   "wireValue": "stream_response"
                 },
                 "valueType": {
@@ -224,28 +206,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "CreateStreamRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "CreateStreamRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "payload": {
-                  "name": {
-                    "originalName": "StreamedResponse"
-                  },
+                  "name": "StreamedResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -265,9 +239,7 @@
         },
         {
           "id": "endpoint_.create",
-          "name": {
-            "originalName": "create"
-          },
+          "name": "create",
           "displayName": "Create a Test",
           "auth": false,
           "idempotent": false,
@@ -285,17 +257,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "CreateRequest"
-            },
+            "name": "CreateRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "query"
-                  },
+                  "name": "query",
                   "wireValue": "query"
                 },
                 "valueType": {
@@ -320,9 +288,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream_response"
-                  },
+                  "name": "stream_response",
                   "wireValue": "stream_response"
                 },
                 "valueType": {
@@ -347,28 +313,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "CreateRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "CreateRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "FullResponse"
-                  },
+                  "name": "FullResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -393,9 +351,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -405,9 +361,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://api.test.io"
         }
       ],
@@ -435,9 +389,7 @@
     "types": {
       "type_:FullResponse": {
         "declaration": {
-          "name": {
-            "originalName": "FullResponse"
-          },
+          "name": "FullResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -446,9 +398,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "answer"
-              },
+              "name": "answer",
               "wireValue": "answer"
             },
             "typeReference": {
@@ -465,9 +415,7 @@
       },
       "type_:StreamedResponse": {
         "declaration": {
-          "name": {
-            "originalName": "StreamedResponse"
-          },
+          "name": "StreamedResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -476,9 +424,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "chunk"
-              },
+              "name": "chunk",
               "wireValue": "chunk"
             },
             "typeReference": {
@@ -498,9 +444,7 @@
     "endpoints": {
       "endpoint_.create_stream": {
         "declaration": {
-          "name": {
-            "originalName": "create_stream"
-          },
+          "name": "create_stream",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -512,9 +456,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "CreateStreamRequest"
-            },
+            "name": "CreateStreamRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -527,9 +469,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "query"
-                  },
+                  "name": "query",
                   "wireValue": "query"
                 },
                 "typeReference": {
@@ -542,9 +482,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream_response"
-                  },
+                  "name": "stream_response",
                   "wireValue": "stream_response"
                 },
                 "typeReference": {
@@ -571,9 +509,7 @@
       },
       "endpoint_.create": {
         "declaration": {
-          "name": {
-            "originalName": "create"
-          },
+          "name": "create",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -585,9 +521,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "CreateRequest"
-            },
+            "name": "CreateRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -600,9 +534,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "query"
-                  },
+                  "name": "query",
                   "wireValue": "query"
                 },
                 "typeReference": {
@@ -615,9 +547,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream_response"
-                  },
+                  "name": "stream_response",
                   "wireValue": "stream_response"
                 },
                 "typeReference": {
@@ -650,9 +580,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://api.test.io"
           }
         ],

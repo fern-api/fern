@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:Error": {
       "name": {
-        "name": {
-          "originalName": "Error"
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
           {
             "docs": "Error message",
             "name": {
-              "name": {
-                "originalName": "error"
-              },
+              "name": "error",
               "wireValue": "error"
             },
             "valueType": {
@@ -49,9 +43,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "valueType": {
@@ -91,9 +83,7 @@
   "errors": {
     "error_:BadRequestError": {
       "name": {
-        "name": {
-          "originalName": "BadRequestError"
-        },
+        "name": "BadRequestError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -101,17 +91,13 @@
         "errorId": "error_:BadRequestError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "BadRequestError"
-        },
+        "name": "BadRequestError",
         "wireValue": "BadRequestError"
       },
       "docs": "Bad Request",
       "statusCode": 400,
       "type": {
-        "name": {
-          "originalName": "Error"
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -132,17 +118,13 @@
                   "allParts": [],
                   "packagePath": []
                 },
-                "name": {
-                  "originalName": "Error"
-                }
+                "name": "Error"
               },
               "shape": {
                 "properties": [
                   {
                     "name": {
-                      "name": {
-                        "originalName": "error"
-                      },
+                      "name": "error",
                       "wireValue": "error"
                     },
                     "value": {
@@ -163,9 +145,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Error"
-                      }
+                      "name": "Error"
                     }
                   }
                 ],
@@ -183,9 +163,7 @@
     },
     "error_:UnauthorizedError": {
       "name": {
-        "name": {
-          "originalName": "UnauthorizedError"
-        },
+        "name": "UnauthorizedError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -193,17 +171,13 @@
         "errorId": "error_:UnauthorizedError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "UnauthorizedError"
-        },
+        "name": "UnauthorizedError",
         "wireValue": "UnauthorizedError"
       },
       "docs": "Unauthorized",
       "statusCode": 401,
       "type": {
-        "name": {
-          "originalName": "Error"
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -224,17 +198,13 @@
                   "allParts": [],
                   "packagePath": []
                 },
-                "name": {
-                  "originalName": "Error"
-                }
+                "name": "Error"
               },
               "shape": {
                 "properties": [
                   {
                     "name": {
-                      "name": {
-                        "originalName": "error"
-                      },
+                      "name": "error",
                       "wireValue": "error"
                     },
                     "value": {
@@ -255,9 +225,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Error"
-                      }
+                      "name": "Error"
                     }
                   }
                 ],
@@ -275,9 +243,7 @@
     },
     "error_:NotFoundError": {
       "name": {
-        "name": {
-          "originalName": "NotFoundError"
-        },
+        "name": "NotFoundError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -285,17 +251,13 @@
         "errorId": "error_:NotFoundError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "NotFoundError"
-        },
+        "name": "NotFoundError",
         "wireValue": "NotFoundError"
       },
       "docs": "Not Found",
       "statusCode": 404,
       "type": {
-        "name": {
-          "originalName": "Error"
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -316,17 +278,13 @@
                   "allParts": [],
                   "packagePath": []
                 },
-                "name": {
-                  "originalName": "Error"
-                }
+                "name": "Error"
               },
               "shape": {
                 "properties": [
                   {
                     "name": {
-                      "name": {
-                        "originalName": "error"
-                      },
+                      "name": "error",
                       "wireValue": "error"
                     },
                     "value": {
@@ -347,9 +305,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Error"
-                      }
+                      "name": "Error"
                     }
                   }
                 ],
@@ -367,9 +323,7 @@
     },
     "error_:InternalServerError": {
       "name": {
-        "name": {
-          "originalName": "InternalServerError"
-        },
+        "name": "InternalServerError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -377,17 +331,13 @@
         "errorId": "error_:InternalServerError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "InternalServerError"
-        },
+        "name": "InternalServerError",
         "wireValue": "InternalServerError"
       },
       "docs": "Internal Server Error",
       "statusCode": 500,
       "type": {
-        "name": {
-          "originalName": "Error"
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -408,17 +358,13 @@
                   "allParts": [],
                   "packagePath": []
                 },
-                "name": {
-                  "originalName": "Error"
-                }
+                "name": "Error"
               },
               "shape": {
                 "properties": [
                   {
                     "name": {
-                      "name": {
-                        "originalName": "error"
-                      },
+                      "name": "error",
                       "wireValue": "error"
                     },
                     "value": {
@@ -439,9 +385,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Error"
-                      }
+                      "name": "Error"
                     }
                   }
                 ],
@@ -481,9 +425,7 @@
       "endpoints": [
         {
           "id": "endpoint_.list",
-          "name": {
-            "originalName": "list"
-          },
+          "name": "list",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -522,9 +464,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "BadRequestError"
-                },
+                "name": "BadRequestError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -534,9 +474,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "UnauthorizedError"
-                },
+                "name": "UnauthorizedError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -546,9 +484,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "NotFoundError"
-                },
+                "name": "NotFoundError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -558,9 +494,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "InternalServerError"
-                },
+                "name": "InternalServerError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -578,9 +512,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -590,9 +522,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://api.test.com"
         }
       ],
@@ -617,9 +547,7 @@
     "types": {
       "type_:Error": {
         "declaration": {
-          "name": {
-            "originalName": "Error"
-          },
+          "name": "Error",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -628,9 +556,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "error"
-              },
+              "name": "error",
               "wireValue": "error"
             },
             "typeReference": {
@@ -640,9 +566,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "typeReference": {
@@ -665,9 +589,7 @@
     "endpoints": {
       "endpoint_.list": {
         "declaration": {
-          "name": {
-            "originalName": "list"
-          },
+          "name": "list",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -694,9 +616,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://api.test.com"
           }
         ],

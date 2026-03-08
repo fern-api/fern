@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Vectara REST API v2",
   "auth": {
     "requirement": "ALL",
@@ -12,9 +10,7 @@
     {
       "docs": "The API will make a best effort to complete the request in the specified seconds or time out.",
       "name": {
-        "name": {
-          "originalName": "requestTimeout"
-        },
+        "name": "requestTimeout",
         "wireValue": "Request-Timeout"
       },
       "valueType": {
@@ -40,9 +36,7 @@
     {
       "docs": "The API will make a best effort to complete the request in the specified milliseconds or time out.",
       "name": {
-        "name": {
-          "originalName": "requestTimeoutMillis"
-        },
+        "name": "requestTimeoutMillis",
         "wireValue": "Request-Timeout-Millis"
       },
       "valueType": {
@@ -71,9 +65,7 @@
     "type_:ChatFullResponse": {
       "docs": "Full response to a chat question when the result is not streamed.",
       "name": {
-        "name": {
-          "originalName": "ChatFullResponse"
-        },
+        "name": "ChatFullResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -86,9 +78,7 @@
           {
             "docs": "If the chat response was stored, the ID of the chat.",
             "name": {
-              "name": {
-                "originalName": "chat_id"
-              },
+              "name": "chat_id",
               "wireValue": "chat_id"
             },
             "valueType": {
@@ -114,9 +104,7 @@
           {
             "docs": "If the chat response was stored, the ID of the turn.",
             "name": {
-              "name": {
-                "originalName": "turn_id"
-              },
+              "name": "turn_id",
               "wireValue": "turn_id"
             },
             "valueType": {
@@ -142,9 +130,7 @@
           {
             "docs": "The message from the chat model for the chat message.",
             "name": {
-              "name": {
-                "originalName": "answer"
-              },
+              "name": "answer",
               "wireValue": "answer"
             },
             "valueType": {
@@ -182,9 +168,7 @@
     "type_:ChatStreamedResponse": {
       "docs": "An individual event when the response is streamed.",
       "name": {
-        "name": {
-          "originalName": "ChatStreamedResponse"
-        },
+        "name": "ChatStreamedResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -197,9 +181,7 @@
           {
             "docs": "The chunk of the response.",
             "name": {
-              "name": {
-                "originalName": "chunk"
-              },
+              "name": "chunk",
               "wireValue": "chunk"
             },
             "valueType": {
@@ -260,9 +242,7 @@
         {
           "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
           "id": "endpoint_.chat_stream",
-          "name": {
-            "originalName": "chat_stream"
-          },
+          "name": "chat_stream",
           "displayName": "Start a chat",
           "auth": false,
           "idempotent": false,
@@ -280,18 +260,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "ChatStreamRequest"
-            },
+            "name": "ChatStreamRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "The chat message or question.",
                 "name": {
-                  "name": {
-                    "originalName": "query"
-                  },
+                  "name": "query",
                   "wireValue": "query"
                 },
                 "valueType": {
@@ -311,9 +287,7 @@
               {
                 "docs": "Indicates whether the response should be streamed or not.",
                 "name": {
-                  "name": {
-                    "originalName": "stream_response"
-                  },
+                  "name": "stream_response",
                   "wireValue": "stream_response"
                 },
                 "valueType": {
@@ -338,28 +312,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "ChatStreamRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "ChatStreamRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "payload": {
-                  "name": {
-                    "originalName": "ChatStreamedResponse"
-                  },
+                  "name": "ChatStreamedResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -380,9 +346,7 @@
         {
           "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
           "id": "endpoint_.chat",
-          "name": {
-            "originalName": "chat"
-          },
+          "name": "chat",
           "displayName": "Start a chat",
           "auth": false,
           "idempotent": false,
@@ -400,18 +364,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "ChatRequest"
-            },
+            "name": "ChatRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "The chat message or question.",
                 "name": {
-                  "name": {
-                    "originalName": "query"
-                  },
+                  "name": "query",
                   "wireValue": "query"
                 },
                 "valueType": {
@@ -431,9 +391,7 @@
               {
                 "docs": "Indicates whether the response should be streamed or not.",
                 "name": {
-                  "name": {
-                    "originalName": "stream_response"
-                  },
+                  "name": "stream_response",
                   "wireValue": "stream_response"
                 },
                 "valueType": {
@@ -458,28 +416,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "ChatRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "ChatRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "ChatFullResponse"
-                  },
+                  "name": "ChatFullResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -504,9 +454,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -516,9 +464,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://api.streamingtest.io"
         }
       ],
@@ -546,9 +492,7 @@
     "types": {
       "type_:ChatFullResponse": {
         "declaration": {
-          "name": {
-            "originalName": "ChatFullResponse"
-          },
+          "name": "ChatFullResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -557,9 +501,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "chat_id"
-              },
+              "name": "chat_id",
               "wireValue": "chat_id"
             },
             "typeReference": {
@@ -572,9 +514,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "turn_id"
-              },
+              "name": "turn_id",
               "wireValue": "turn_id"
             },
             "typeReference": {
@@ -587,9 +527,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "answer"
-              },
+              "name": "answer",
               "wireValue": "answer"
             },
             "typeReference": {
@@ -606,9 +544,7 @@
       },
       "type_:ChatStreamedResponse": {
         "declaration": {
-          "name": {
-            "originalName": "ChatStreamedResponse"
-          },
+          "name": "ChatStreamedResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -617,9 +553,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "chunk"
-              },
+              "name": "chunk",
               "wireValue": "chunk"
             },
             "typeReference": {
@@ -638,9 +572,7 @@
     "headers": [
       {
         "name": {
-          "name": {
-            "originalName": "requestTimeout"
-          },
+          "name": "requestTimeout",
           "wireValue": "Request-Timeout"
         },
         "typeReference": {
@@ -653,9 +585,7 @@
       },
       {
         "name": {
-          "name": {
-            "originalName": "requestTimeoutMillis"
-          },
+          "name": "requestTimeoutMillis",
           "wireValue": "Request-Timeout-Millis"
         },
         "typeReference": {
@@ -670,9 +600,7 @@
     "endpoints": {
       "endpoint_.chat_stream": {
         "declaration": {
-          "name": {
-            "originalName": "chat_stream"
-          },
+          "name": "chat_stream",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -684,9 +612,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "ChatStreamRequest"
-            },
+            "name": "ChatStreamRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -699,9 +625,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "query"
-                  },
+                  "name": "query",
                   "wireValue": "query"
                 },
                 "typeReference": {
@@ -711,9 +635,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream_response"
-                  },
+                  "name": "stream_response",
                   "wireValue": "stream_response"
                 },
                 "typeReference": {
@@ -740,9 +662,7 @@
       },
       "endpoint_.chat": {
         "declaration": {
-          "name": {
-            "originalName": "chat"
-          },
+          "name": "chat",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -754,9 +674,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "ChatRequest"
-            },
+            "name": "ChatRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -769,9 +687,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "query"
-                  },
+                  "name": "query",
                   "wireValue": "query"
                 },
                 "typeReference": {
@@ -781,9 +697,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "stream_response"
-                  },
+                  "name": "stream_response",
                   "wireValue": "stream_response"
                 },
                 "typeReference": {
@@ -816,9 +730,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://api.streamingtest.io"
           }
         ],

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "auth": {
     "requirement": "ALL",
     "schemes": []
@@ -12,19 +10,13 @@
   "types": {
     "type_usersUserIdMessages:UsersUserIdMessagesPublish": {
       "name": {
-        "name": {
-          "originalName": "UsersUserIdMessagesPublish"
-        },
+        "name": "UsersUserIdMessagesPublish",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "usersUserIdMessages"
-            }
+            "usersUserIdMessages"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "usersUserIdMessages"
-          }
+          "file": "usersUserIdMessages"
         },
         "typeId": "type_usersUserIdMessages:UsersUserIdMessagesPublish"
       },
@@ -33,9 +25,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "content"
-              },
+              "name": "content",
               "wireValue": "content"
             },
             "valueType": {
@@ -72,19 +62,13 @@
     },
     "type_usersUserIdMessages:UsersUserIdMessagesSubscribe": {
       "name": {
-        "name": {
-          "originalName": "UsersUserIdMessagesSubscribe"
-        },
+        "name": "UsersUserIdMessagesSubscribe",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "usersUserIdMessages"
-            }
+            "usersUserIdMessages"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "usersUserIdMessages"
-          }
+          "file": "usersUserIdMessages"
         },
         "typeId": "type_usersUserIdMessages:UsersUserIdMessagesSubscribe"
       },
@@ -93,9 +77,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "content"
-              },
+              "name": "content",
               "wireValue": "content"
             },
             "valueType": {
@@ -120,9 +102,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "timestamp"
-              },
+              "name": "timestamp",
               "wireValue": "timestamp"
             },
             "valueType": {
@@ -162,9 +142,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -174,9 +152,7 @@
       "environments": [
         {
           "id": "production",
-          "name": {
-            "originalName": "production"
-          },
+          "name": "production",
           "url": "wss://api.example.com"
         }
       ],
@@ -209,16 +185,12 @@
       },
       "baseUrl": "production",
       "auth": false,
-      "name": {
-        "originalName": "usersUserIdMessages"
-      },
+      "name": "usersUserIdMessages",
       "headers": [],
       "pathParameters": [
         {
           "docs": "The user ID",
-          "name": {
-            "originalName": "id"
-          },
+          "name": "id",
           "valueType": {
             "primitive": {
               "v1": "STRING",
@@ -242,19 +214,13 @@
           "origin": "client",
           "body": {
             "bodyType": {
-              "name": {
-                "originalName": "UsersUserIdMessagesPublish"
-              },
+              "name": "UsersUserIdMessagesPublish",
               "fernFilepath": {
                 "allParts": [
-                  {
-                    "originalName": "usersUserIdMessages"
-                  }
+                  "usersUserIdMessages"
                 ],
                 "packagePath": [],
-                "file": {
-                  "originalName": "usersUserIdMessages"
-                }
+                "file": "usersUserIdMessages"
               },
               "typeId": "type_usersUserIdMessages:UsersUserIdMessagesPublish",
               "type": "named"
@@ -267,19 +233,13 @@
           "origin": "server",
           "body": {
             "bodyType": {
-              "name": {
-                "originalName": "UsersUserIdMessagesSubscribe"
-              },
+              "name": "UsersUserIdMessagesSubscribe",
               "fernFilepath": {
                 "allParts": [
-                  {
-                    "originalName": "usersUserIdMessages"
-                  }
+                  "usersUserIdMessages"
                 ],
                 "packagePath": [],
-                "file": {
-                  "originalName": "usersUserIdMessages"
-                }
+                "file": "usersUserIdMessages"
               },
               "typeId": "type_usersUserIdMessages:UsersUserIdMessagesSubscribe",
               "type": "named"
@@ -303,18 +263,12 @@
                     "typeId": "type_usersUserIdMessages:UsersUserIdMessagesPublish",
                     "fernFilepath": {
                       "allParts": [
-                        {
-                          "originalName": "usersUserIdMessages"
-                        }
+                        "usersUserIdMessages"
                       ],
                       "packagePath": [],
-                      "file": {
-                        "originalName": "usersUserIdMessages"
-                      }
+                      "file": "usersUserIdMessages"
                     },
-                    "name": {
-                      "originalName": "UsersUserIdMessagesPublish"
-                    }
+                    "name": "UsersUserIdMessagesPublish"
                   },
                   "shape": {
                     "properties": [],
@@ -334,18 +288,12 @@
                     "typeId": "type_usersUserIdMessages:UsersUserIdMessagesSubscribe",
                     "fernFilepath": {
                       "allParts": [
-                        {
-                          "originalName": "usersUserIdMessages"
-                        }
+                        "usersUserIdMessages"
                       ],
                       "packagePath": [],
-                      "file": {
-                        "originalName": "usersUserIdMessages"
-                      }
+                      "file": "usersUserIdMessages"
                     },
-                    "name": {
-                      "originalName": "UsersUserIdMessagesSubscribe"
-                    }
+                    "name": "UsersUserIdMessagesSubscribe"
                   },
                   "shape": {
                     "properties": [],
@@ -371,27 +319,19 @@
     "types": {
       "type_usersUserIdMessages:UsersUserIdMessagesPublish": {
         "declaration": {
-          "name": {
-            "originalName": "UsersUserIdMessagesPublish"
-          },
+          "name": "UsersUserIdMessagesPublish",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "usersUserIdMessages"
-              }
+              "usersUserIdMessages"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "usersUserIdMessages"
-            }
+            "file": "usersUserIdMessages"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "content"
-              },
+              "name": "content",
               "wireValue": "content"
             },
             "typeReference": {
@@ -408,27 +348,19 @@
       },
       "type_usersUserIdMessages:UsersUserIdMessagesSubscribe": {
         "declaration": {
-          "name": {
-            "originalName": "UsersUserIdMessagesSubscribe"
-          },
+          "name": "UsersUserIdMessagesSubscribe",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "usersUserIdMessages"
-              }
+              "usersUserIdMessages"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "usersUserIdMessages"
-            }
+            "file": "usersUserIdMessages"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "content"
-              },
+              "name": "content",
               "wireValue": "content"
             },
             "typeReference": {
@@ -441,9 +373,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "timestamp"
-              },
+              "name": "timestamp",
               "wireValue": "timestamp"
             },
             "typeReference": {
@@ -468,9 +398,7 @@
         "environments": [
           {
             "id": "production",
-            "name": {
-              "originalName": "production"
-            },
+            "name": "production",
             "url": "wss://api.example.com"
           }
         ],
@@ -484,18 +412,12 @@
     "subpackage_usersUserIdMessages": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "usersUserIdMessages"
-          }
+          "usersUserIdMessages"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "usersUserIdMessages"
-        }
+        "file": "usersUserIdMessages"
       },
-      "name": {
-        "originalName": "usersUserIdMessages"
-      },
+      "name": "usersUserIdMessages",
       "types": [
         "type_usersUserIdMessages:UsersUserIdMessagesPublish",
         "type_usersUserIdMessages:UsersUserIdMessagesSubscribe"

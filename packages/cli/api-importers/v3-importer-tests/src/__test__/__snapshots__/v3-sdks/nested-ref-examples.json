@@ -12,49 +12,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "responses.GetMarkets",
-          "camelCase": {
-            "unsafeName": "responsesGetMarkets",
-            "safeName": "responsesGetMarkets"
-          },
-          "snakeCase": {
-            "unsafeName": "responses_get_markets",
-            "safeName": "responses_get_markets"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RESPONSES_GET_MARKETS",
-            "safeName": "RESPONSES_GET_MARKETS"
-          },
-          "pascalCase": {
-            "unsafeName": "ResponsesGetMarkets",
-            "safeName": "ResponsesGetMarkets"
-          }
-        }
+        "name": "responses.GetMarkets"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results",
-                "camelCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "snakeCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RESULTS",
-                  "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
-                }
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "valueType": {
@@ -66,25 +30,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "responses.MarketResp",
-                        "camelCase": {
-                          "unsafeName": "responsesMarketResp",
-                          "safeName": "responsesMarketResp"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "responses_market_resp",
-                          "safeName": "responses_market_resp"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "RESPONSES_MARKET_RESP",
-                          "safeName": "RESPONSES_MARKET_RESP"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ResponsesMarketResp",
-                          "safeName": "ResponsesMarketResp"
-                        }
-                      },
+                      "name": "responses.MarketResp",
                       "typeId": "responses.MarketResp",
                       "inline": false,
                       "type": "named"
@@ -130,49 +76,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "responses.MarketResp",
-          "camelCase": {
-            "unsafeName": "responsesMarketResp",
-            "safeName": "responsesMarketResp"
-          },
-          "snakeCase": {
-            "unsafeName": "responses_market_resp",
-            "safeName": "responses_market_resp"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RESPONSES_MARKET_RESP",
-            "safeName": "RESPONSES_MARKET_RESP"
-          },
-          "pascalCase": {
-            "unsafeName": "ResponsesMarketResp",
-            "safeName": "ResponsesMarketResp"
-          }
-        }
+        "name": "responses.MarketResp"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "asset_kind",
-                "camelCase": {
-                  "unsafeName": "assetKind",
-                  "safeName": "assetKind"
-                },
-                "snakeCase": {
-                  "unsafeName": "asset_kind",
-                  "safeName": "asset_kind"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ASSET_KIND",
-                  "safeName": "ASSET_KIND"
-                },
-                "pascalCase": {
-                  "unsafeName": "AssetKind",
-                  "safeName": "AssetKind"
-                }
-              },
+              "name": "asset_kind",
               "wireValue": "asset_kind"
             },
             "valueType": {
@@ -200,25 +110,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "base_currency",
-                "camelCase": {
-                  "unsafeName": "baseCurrency",
-                  "safeName": "baseCurrency"
-                },
-                "snakeCase": {
-                  "unsafeName": "base_currency",
-                  "safeName": "base_currency"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BASE_CURRENCY",
-                  "safeName": "BASE_CURRENCY"
-                },
-                "pascalCase": {
-                  "unsafeName": "BaseCurrency",
-                  "safeName": "BaseCurrency"
-                }
-              },
+              "name": "base_currency",
               "wireValue": "base_currency"
             },
             "valueType": {
@@ -246,25 +138,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "option_cross_margin_params",
-                "camelCase": {
-                  "unsafeName": "optionCrossMarginParams",
-                  "safeName": "optionCrossMarginParams"
-                },
-                "snakeCase": {
-                  "unsafeName": "option_cross_margin_params",
-                  "safeName": "option_cross_margin_params"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "OPTION_CROSS_MARGIN_PARAMS",
-                  "safeName": "OPTION_CROSS_MARGIN_PARAMS"
-                },
-                "pascalCase": {
-                  "unsafeName": "OptionCrossMarginParams",
-                  "safeName": "OptionCrossMarginParams"
-                }
-              },
+              "name": "option_cross_margin_params",
               "wireValue": "option_cross_margin_params"
             },
             "valueType": {
@@ -274,25 +148,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "responses.PerpetualOptionCrossMarginParams",
-                    "camelCase": {
-                      "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-                      "safeName": "responsesPerpetualOptionCrossMarginParams"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "responses_perpetual_option_cross_margin_params",
-                      "safeName": "responses_perpetual_option_cross_margin_params"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-                      "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-                      "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-                    }
-                  },
+                  "name": "responses.PerpetualOptionCrossMarginParams",
                   "typeId": "responses.PerpetualOptionCrossMarginParams",
                   "inline": false,
                   "type": "named"
@@ -343,49 +199,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "responses.PerpetualOptionCrossMarginParams",
-          "camelCase": {
-            "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-            "safeName": "responsesPerpetualOptionCrossMarginParams"
-          },
-          "snakeCase": {
-            "unsafeName": "responses_perpetual_option_cross_margin_params",
-            "safeName": "responses_perpetual_option_cross_margin_params"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-            "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-          },
-          "pascalCase": {
-            "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-            "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-          }
-        }
+        "name": "responses.PerpetualOptionCrossMarginParams"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "imf",
-                "camelCase": {
-                  "unsafeName": "imf",
-                  "safeName": "imf"
-                },
-                "snakeCase": {
-                  "unsafeName": "imf",
-                  "safeName": "imf"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "IMF",
-                  "safeName": "IMF"
-                },
-                "pascalCase": {
-                  "unsafeName": "Imf",
-                  "safeName": "Imf"
-                }
-              },
+              "name": "imf",
               "wireValue": "imf"
             },
             "valueType": {
@@ -395,25 +215,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "responses.PerpetualOptionMarginParams",
-                    "camelCase": {
-                      "unsafeName": "responsesPerpetualOptionMarginParams",
-                      "safeName": "responsesPerpetualOptionMarginParams"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "responses_perpetual_option_margin_params",
-                      "safeName": "responses_perpetual_option_margin_params"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                      "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                      "safeName": "ResponsesPerpetualOptionMarginParams"
-                    }
-                  },
+                  "name": "responses.PerpetualOptionMarginParams",
                   "typeId": "responses.PerpetualOptionMarginParams",
                   "inline": false,
                   "type": "named"
@@ -435,25 +237,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "mmf",
-                "camelCase": {
-                  "unsafeName": "mmf",
-                  "safeName": "mmf"
-                },
-                "snakeCase": {
-                  "unsafeName": "mmf",
-                  "safeName": "mmf"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MMF",
-                  "safeName": "MMF"
-                },
-                "pascalCase": {
-                  "unsafeName": "Mmf",
-                  "safeName": "Mmf"
-                }
-              },
+              "name": "mmf",
               "wireValue": "mmf"
             },
             "valueType": {
@@ -463,25 +247,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "responses.PerpetualOptionMarginParams",
-                    "camelCase": {
-                      "unsafeName": "responsesPerpetualOptionMarginParams",
-                      "safeName": "responsesPerpetualOptionMarginParams"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "responses_perpetual_option_margin_params",
-                      "safeName": "responses_perpetual_option_margin_params"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                      "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                      "safeName": "ResponsesPerpetualOptionMarginParams"
-                    }
-                  },
+                  "name": "responses.PerpetualOptionMarginParams",
                   "typeId": "responses.PerpetualOptionMarginParams",
                   "inline": false,
                   "type": "named"
@@ -525,49 +291,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "responses.PerpetualOptionMarginParams",
-          "camelCase": {
-            "unsafeName": "responsesPerpetualOptionMarginParams",
-            "safeName": "responsesPerpetualOptionMarginParams"
-          },
-          "snakeCase": {
-            "unsafeName": "responses_perpetual_option_margin_params",
-            "safeName": "responses_perpetual_option_margin_params"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-          },
-          "pascalCase": {
-            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-            "safeName": "ResponsesPerpetualOptionMarginParams"
-          }
-        }
+        "name": "responses.PerpetualOptionMarginParams"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "long_itm",
-                "camelCase": {
-                  "unsafeName": "longItm",
-                  "safeName": "longItm"
-                },
-                "snakeCase": {
-                  "unsafeName": "long_itm",
-                  "safeName": "long_itm"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LONG_ITM",
-                  "safeName": "LONG_ITM"
-                },
-                "pascalCase": {
-                  "unsafeName": "LongItm",
-                  "safeName": "LongItm"
-                }
-              },
+              "name": "long_itm",
               "wireValue": "long_itm"
             },
             "valueType": {
@@ -595,25 +325,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "premium_multiplier",
-                "camelCase": {
-                  "unsafeName": "premiumMultiplier",
-                  "safeName": "premiumMultiplier"
-                },
-                "snakeCase": {
-                  "unsafeName": "premium_multiplier",
-                  "safeName": "premium_multiplier"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PREMIUM_MULTIPLIER",
-                  "safeName": "PREMIUM_MULTIPLIER"
-                },
-                "pascalCase": {
-                  "unsafeName": "PremiumMultiplier",
-                  "safeName": "PremiumMultiplier"
-                }
-              },
+              "name": "premium_multiplier",
               "wireValue": "premium_multiplier"
             },
             "valueType": {
@@ -641,25 +353,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "short_itm",
-                "camelCase": {
-                  "unsafeName": "shortItm",
-                  "safeName": "shortItm"
-                },
-                "snakeCase": {
-                  "unsafeName": "short_itm",
-                  "safeName": "short_itm"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SHORT_ITM",
-                  "safeName": "SHORT_ITM"
-                },
-                "pascalCase": {
-                  "unsafeName": "ShortItm",
-                  "safeName": "ShortItm"
-                }
-              },
+              "name": "short_itm",
               "wireValue": "short_itm"
             },
             "valueType": {
@@ -736,7 +430,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "d3193376",
+                "id": "effbd945",
                 "url": "/markets",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -788,25 +482,7 @@
                           "properties": [
                             {
                               "name": {
-                                "name": {
-                                  "originalName": "results",
-                                  "camelCase": {
-                                    "unsafeName": "results",
-                                    "safeName": "results"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "results",
-                                    "safeName": "results"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "RESULTS",
-                                    "safeName": "RESULTS"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Results",
-                                    "safeName": "Results"
-                                  }
-                                },
+                                "name": "results",
                                 "wireValue": "results"
                               },
                               "originalTypeDeclaration": {
@@ -815,25 +491,7 @@
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": {
-                                  "originalName": "responses.GetMarkets",
-                                  "camelCase": {
-                                    "unsafeName": "responsesGetMarkets",
-                                    "safeName": "responsesGetMarkets"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "responses_get_markets",
-                                    "safeName": "responses_get_markets"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "RESPONSES_GET_MARKETS",
-                                    "safeName": "RESPONSES_GET_MARKETS"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "ResponsesGetMarkets",
-                                    "safeName": "ResponsesGetMarkets"
-                                  }
-                                }
+                                "name": "responses.GetMarkets"
                               },
                               "value": {
                                 "jsonExample": [
@@ -932,25 +590,7 @@
                                                   "properties": [
                                                     {
                                                       "name": {
-                                                        "name": {
-                                                          "originalName": "asset_kind",
-                                                          "camelCase": {
-                                                            "unsafeName": "assetKind",
-                                                            "safeName": "assetKind"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "asset_kind",
-                                                            "safeName": "asset_kind"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "ASSET_KIND",
-                                                            "safeName": "ASSET_KIND"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "AssetKind",
-                                                            "safeName": "AssetKind"
-                                                          }
-                                                        },
+                                                        "name": "asset_kind",
                                                         "wireValue": "asset_kind"
                                                       },
                                                       "originalTypeDeclaration": {
@@ -959,25 +599,7 @@
                                                           "allParts": [],
                                                           "packagePath": []
                                                         },
-                                                        "name": {
-                                                          "originalName": "responses.MarketResp",
-                                                          "camelCase": {
-                                                            "unsafeName": "responsesMarketResp",
-                                                            "safeName": "responsesMarketResp"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "responses_market_resp",
-                                                            "safeName": "responses_market_resp"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "RESPONSES_MARKET_RESP",
-                                                            "safeName": "RESPONSES_MARKET_RESP"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "ResponsesMarketResp",
-                                                            "safeName": "ResponsesMarketResp"
-                                                          }
-                                                        }
+                                                        "name": "responses.MarketResp"
                                                       },
                                                       "value": {
                                                         "jsonExample": "asset_kind",
@@ -1013,25 +635,7 @@
                                                     },
                                                     {
                                                       "name": {
-                                                        "name": {
-                                                          "originalName": "base_currency",
-                                                          "camelCase": {
-                                                            "unsafeName": "baseCurrency",
-                                                            "safeName": "baseCurrency"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "base_currency",
-                                                            "safeName": "base_currency"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "BASE_CURRENCY",
-                                                            "safeName": "BASE_CURRENCY"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "BaseCurrency",
-                                                            "safeName": "BaseCurrency"
-                                                          }
-                                                        },
+                                                        "name": "base_currency",
                                                         "wireValue": "base_currency"
                                                       },
                                                       "originalTypeDeclaration": {
@@ -1040,25 +644,7 @@
                                                           "allParts": [],
                                                           "packagePath": []
                                                         },
-                                                        "name": {
-                                                          "originalName": "responses.MarketResp",
-                                                          "camelCase": {
-                                                            "unsafeName": "responsesMarketResp",
-                                                            "safeName": "responsesMarketResp"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "responses_market_resp",
-                                                            "safeName": "responses_market_resp"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "RESPONSES_MARKET_RESP",
-                                                            "safeName": "RESPONSES_MARKET_RESP"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "ResponsesMarketResp",
-                                                            "safeName": "ResponsesMarketResp"
-                                                          }
-                                                        }
+                                                        "name": "responses.MarketResp"
                                                       },
                                                       "value": {
                                                         "jsonExample": "base_currency",
@@ -1094,25 +680,7 @@
                                                     },
                                                     {
                                                       "name": {
-                                                        "name": {
-                                                          "originalName": "option_cross_margin_params",
-                                                          "camelCase": {
-                                                            "unsafeName": "optionCrossMarginParams",
-                                                            "safeName": "optionCrossMarginParams"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "option_cross_margin_params",
-                                                            "safeName": "option_cross_margin_params"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "OPTION_CROSS_MARGIN_PARAMS",
-                                                            "safeName": "OPTION_CROSS_MARGIN_PARAMS"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "OptionCrossMarginParams",
-                                                            "safeName": "OptionCrossMarginParams"
-                                                          }
-                                                        },
+                                                        "name": "option_cross_margin_params",
                                                         "wireValue": "option_cross_margin_params"
                                                       },
                                                       "originalTypeDeclaration": {
@@ -1121,25 +689,7 @@
                                                           "allParts": [],
                                                           "packagePath": []
                                                         },
-                                                        "name": {
-                                                          "originalName": "responses.MarketResp",
-                                                          "camelCase": {
-                                                            "unsafeName": "responsesMarketResp",
-                                                            "safeName": "responsesMarketResp"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "responses_market_resp",
-                                                            "safeName": "responses_market_resp"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "RESPONSES_MARKET_RESP",
-                                                            "safeName": "RESPONSES_MARKET_RESP"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "ResponsesMarketResp",
-                                                            "safeName": "ResponsesMarketResp"
-                                                          }
-                                                        }
+                                                        "name": "responses.MarketResp"
                                                       },
                                                       "value": {
                                                         "jsonExample": {
@@ -1174,25 +724,7 @@
                                                                   "properties": [
                                                                     {
                                                                       "name": {
-                                                                        "name": {
-                                                                          "originalName": "imf",
-                                                                          "camelCase": {
-                                                                            "unsafeName": "imf",
-                                                                            "safeName": "imf"
-                                                                          },
-                                                                          "snakeCase": {
-                                                                            "unsafeName": "imf",
-                                                                            "safeName": "imf"
-                                                                          },
-                                                                          "screamingSnakeCase": {
-                                                                            "unsafeName": "IMF",
-                                                                            "safeName": "IMF"
-                                                                          },
-                                                                          "pascalCase": {
-                                                                            "unsafeName": "Imf",
-                                                                            "safeName": "Imf"
-                                                                          }
-                                                                        },
+                                                                        "name": "imf",
                                                                         "wireValue": "imf"
                                                                       },
                                                                       "originalTypeDeclaration": {
@@ -1201,25 +733,7 @@
                                                                           "allParts": [],
                                                                           "packagePath": []
                                                                         },
-                                                                        "name": {
-                                                                          "originalName": "responses.PerpetualOptionCrossMarginParams",
-                                                                          "camelCase": {
-                                                                            "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-                                                                            "safeName": "responsesPerpetualOptionCrossMarginParams"
-                                                                          },
-                                                                          "snakeCase": {
-                                                                            "unsafeName": "responses_perpetual_option_cross_margin_params",
-                                                                            "safeName": "responses_perpetual_option_cross_margin_params"
-                                                                          },
-                                                                          "screamingSnakeCase": {
-                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-                                                                          },
-                                                                          "pascalCase": {
-                                                                            "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-                                                                            "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-                                                                          }
-                                                                        }
+                                                                        "name": "responses.PerpetualOptionCrossMarginParams"
                                                                       },
                                                                       "value": {
                                                                         "jsonExample": {
@@ -1240,25 +754,7 @@
                                                                                   "properties": [
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "long_itm",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "longItm",
-                                                                                            "safeName": "longItm"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "long_itm",
-                                                                                            "safeName": "long_itm"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "LONG_ITM",
-                                                                                            "safeName": "LONG_ITM"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "LongItm",
-                                                                                            "safeName": "LongItm"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "long_itm",
                                                                                         "wireValue": "long_itm"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -1267,25 +763,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "long_itm",
@@ -1321,25 +799,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "premium_multiplier",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "premiumMultiplier",
-                                                                                            "safeName": "premiumMultiplier"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "premium_multiplier",
-                                                                                            "safeName": "premium_multiplier"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "PREMIUM_MULTIPLIER",
-                                                                                            "safeName": "PREMIUM_MULTIPLIER"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "PremiumMultiplier",
-                                                                                            "safeName": "PremiumMultiplier"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "premium_multiplier",
                                                                                         "wireValue": "premium_multiplier"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -1348,25 +808,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "premium_multiplier",
@@ -1402,25 +844,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "short_itm",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "shortItm",
-                                                                                            "safeName": "shortItm"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "short_itm",
-                                                                                            "safeName": "short_itm"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "SHORT_ITM",
-                                                                                            "safeName": "SHORT_ITM"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ShortItm",
-                                                                                            "safeName": "ShortItm"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "short_itm",
                                                                                         "wireValue": "short_itm"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -1429,25 +853,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "short_itm",
@@ -1490,25 +896,7 @@
                                                                                     "allParts": [],
                                                                                     "packagePath": []
                                                                                   },
-                                                                                  "name": {
-                                                                                    "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                    "camelCase": {
-                                                                                      "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                      "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                      "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                      "safeName": "responses_perpetual_option_margin_params"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                      "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                      "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                      "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                    }
-                                                                                  }
+                                                                                  "name": "responses.PerpetualOptionMarginParams"
                                                                                 },
                                                                                 "type": "named"
                                                                               }
@@ -1518,25 +906,7 @@
                                                                                 "allParts": [],
                                                                                 "packagePath": []
                                                                               },
-                                                                              "name": {
-                                                                                "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                "camelCase": {
-                                                                                  "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                  "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                  "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                  "safeName": "responses_perpetual_option_margin_params"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                  "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                  "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                  "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                  "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                }
-                                                                              },
+                                                                              "name": "responses.PerpetualOptionMarginParams",
                                                                               "typeId": "responses.PerpetualOptionMarginParams",
                                                                               "inline": false,
                                                                               "type": "named"
@@ -1549,25 +919,7 @@
                                                                     },
                                                                     {
                                                                       "name": {
-                                                                        "name": {
-                                                                          "originalName": "mmf",
-                                                                          "camelCase": {
-                                                                            "unsafeName": "mmf",
-                                                                            "safeName": "mmf"
-                                                                          },
-                                                                          "snakeCase": {
-                                                                            "unsafeName": "mmf",
-                                                                            "safeName": "mmf"
-                                                                          },
-                                                                          "screamingSnakeCase": {
-                                                                            "unsafeName": "MMF",
-                                                                            "safeName": "MMF"
-                                                                          },
-                                                                          "pascalCase": {
-                                                                            "unsafeName": "Mmf",
-                                                                            "safeName": "Mmf"
-                                                                          }
-                                                                        },
+                                                                        "name": "mmf",
                                                                         "wireValue": "mmf"
                                                                       },
                                                                       "originalTypeDeclaration": {
@@ -1576,25 +928,7 @@
                                                                           "allParts": [],
                                                                           "packagePath": []
                                                                         },
-                                                                        "name": {
-                                                                          "originalName": "responses.PerpetualOptionCrossMarginParams",
-                                                                          "camelCase": {
-                                                                            "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-                                                                            "safeName": "responsesPerpetualOptionCrossMarginParams"
-                                                                          },
-                                                                          "snakeCase": {
-                                                                            "unsafeName": "responses_perpetual_option_cross_margin_params",
-                                                                            "safeName": "responses_perpetual_option_cross_margin_params"
-                                                                          },
-                                                                          "screamingSnakeCase": {
-                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-                                                                          },
-                                                                          "pascalCase": {
-                                                                            "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-                                                                            "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-                                                                          }
-                                                                        }
+                                                                        "name": "responses.PerpetualOptionCrossMarginParams"
                                                                       },
                                                                       "value": {
                                                                         "jsonExample": {
@@ -1615,25 +949,7 @@
                                                                                   "properties": [
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "long_itm",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "longItm",
-                                                                                            "safeName": "longItm"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "long_itm",
-                                                                                            "safeName": "long_itm"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "LONG_ITM",
-                                                                                            "safeName": "LONG_ITM"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "LongItm",
-                                                                                            "safeName": "LongItm"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "long_itm",
                                                                                         "wireValue": "long_itm"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -1642,25 +958,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "long_itm",
@@ -1696,25 +994,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "premium_multiplier",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "premiumMultiplier",
-                                                                                            "safeName": "premiumMultiplier"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "premium_multiplier",
-                                                                                            "safeName": "premium_multiplier"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "PREMIUM_MULTIPLIER",
-                                                                                            "safeName": "PREMIUM_MULTIPLIER"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "PremiumMultiplier",
-                                                                                            "safeName": "PremiumMultiplier"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "premium_multiplier",
                                                                                         "wireValue": "premium_multiplier"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -1723,25 +1003,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "premium_multiplier",
@@ -1777,25 +1039,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "short_itm",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "shortItm",
-                                                                                            "safeName": "shortItm"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "short_itm",
-                                                                                            "safeName": "short_itm"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "SHORT_ITM",
-                                                                                            "safeName": "SHORT_ITM"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ShortItm",
-                                                                                            "safeName": "ShortItm"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "short_itm",
                                                                                         "wireValue": "short_itm"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -1804,25 +1048,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "short_itm",
@@ -1865,25 +1091,7 @@
                                                                                     "allParts": [],
                                                                                     "packagePath": []
                                                                                   },
-                                                                                  "name": {
-                                                                                    "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                    "camelCase": {
-                                                                                      "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                      "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                      "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                      "safeName": "responses_perpetual_option_margin_params"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                      "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                      "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                      "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                    }
-                                                                                  }
+                                                                                  "name": "responses.PerpetualOptionMarginParams"
                                                                                 },
                                                                                 "type": "named"
                                                                               }
@@ -1893,25 +1101,7 @@
                                                                                 "allParts": [],
                                                                                 "packagePath": []
                                                                               },
-                                                                              "name": {
-                                                                                "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                "camelCase": {
-                                                                                  "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                  "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                  "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                  "safeName": "responses_perpetual_option_margin_params"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                  "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                  "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                  "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                  "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                }
-                                                                              },
+                                                                              "name": "responses.PerpetualOptionMarginParams",
                                                                               "typeId": "responses.PerpetualOptionMarginParams",
                                                                               "inline": false,
                                                                               "type": "named"
@@ -1931,25 +1121,7 @@
                                                                     "allParts": [],
                                                                     "packagePath": []
                                                                   },
-                                                                  "name": {
-                                                                    "originalName": "responses.PerpetualOptionCrossMarginParams",
-                                                                    "camelCase": {
-                                                                      "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-                                                                      "safeName": "responsesPerpetualOptionCrossMarginParams"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                      "unsafeName": "responses_perpetual_option_cross_margin_params",
-                                                                      "safeName": "responses_perpetual_option_cross_margin_params"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-                                                                      "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                      "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-                                                                      "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-                                                                    }
-                                                                  }
+                                                                  "name": "responses.PerpetualOptionCrossMarginParams"
                                                                 },
                                                                 "type": "named"
                                                               }
@@ -1959,25 +1131,7 @@
                                                                 "allParts": [],
                                                                 "packagePath": []
                                                               },
-                                                              "name": {
-                                                                "originalName": "responses.PerpetualOptionCrossMarginParams",
-                                                                "camelCase": {
-                                                                  "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-                                                                  "safeName": "responsesPerpetualOptionCrossMarginParams"
-                                                                },
-                                                                "snakeCase": {
-                                                                  "unsafeName": "responses_perpetual_option_cross_margin_params",
-                                                                  "safeName": "responses_perpetual_option_cross_margin_params"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-                                                                  "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-                                                                },
-                                                                "pascalCase": {
-                                                                  "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-                                                                  "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-                                                                }
-                                                              },
+                                                              "name": "responses.PerpetualOptionCrossMarginParams",
                                                               "typeId": "responses.PerpetualOptionCrossMarginParams",
                                                               "inline": false,
                                                               "type": "named"
@@ -1997,25 +1151,7 @@
                                                     "allParts": [],
                                                     "packagePath": []
                                                   },
-                                                  "name": {
-                                                    "originalName": "responses.MarketResp",
-                                                    "camelCase": {
-                                                      "unsafeName": "responsesMarketResp",
-                                                      "safeName": "responsesMarketResp"
-                                                    },
-                                                    "snakeCase": {
-                                                      "unsafeName": "responses_market_resp",
-                                                      "safeName": "responses_market_resp"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                      "unsafeName": "RESPONSES_MARKET_RESP",
-                                                      "safeName": "RESPONSES_MARKET_RESP"
-                                                    },
-                                                    "pascalCase": {
-                                                      "unsafeName": "ResponsesMarketResp",
-                                                      "safeName": "ResponsesMarketResp"
-                                                    }
-                                                  }
+                                                  "name": "responses.MarketResp"
                                                 },
                                                 "type": "named"
                                               }
@@ -2042,25 +1178,7 @@
                                                   "properties": [
                                                     {
                                                       "name": {
-                                                        "name": {
-                                                          "originalName": "asset_kind",
-                                                          "camelCase": {
-                                                            "unsafeName": "assetKind",
-                                                            "safeName": "assetKind"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "asset_kind",
-                                                            "safeName": "asset_kind"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "ASSET_KIND",
-                                                            "safeName": "ASSET_KIND"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "AssetKind",
-                                                            "safeName": "AssetKind"
-                                                          }
-                                                        },
+                                                        "name": "asset_kind",
                                                         "wireValue": "asset_kind"
                                                       },
                                                       "originalTypeDeclaration": {
@@ -2069,25 +1187,7 @@
                                                           "allParts": [],
                                                           "packagePath": []
                                                         },
-                                                        "name": {
-                                                          "originalName": "responses.MarketResp",
-                                                          "camelCase": {
-                                                            "unsafeName": "responsesMarketResp",
-                                                            "safeName": "responsesMarketResp"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "responses_market_resp",
-                                                            "safeName": "responses_market_resp"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "RESPONSES_MARKET_RESP",
-                                                            "safeName": "RESPONSES_MARKET_RESP"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "ResponsesMarketResp",
-                                                            "safeName": "ResponsesMarketResp"
-                                                          }
-                                                        }
+                                                        "name": "responses.MarketResp"
                                                       },
                                                       "value": {
                                                         "jsonExample": "asset_kind",
@@ -2123,25 +1223,7 @@
                                                     },
                                                     {
                                                       "name": {
-                                                        "name": {
-                                                          "originalName": "base_currency",
-                                                          "camelCase": {
-                                                            "unsafeName": "baseCurrency",
-                                                            "safeName": "baseCurrency"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "base_currency",
-                                                            "safeName": "base_currency"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "BASE_CURRENCY",
-                                                            "safeName": "BASE_CURRENCY"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "BaseCurrency",
-                                                            "safeName": "BaseCurrency"
-                                                          }
-                                                        },
+                                                        "name": "base_currency",
                                                         "wireValue": "base_currency"
                                                       },
                                                       "originalTypeDeclaration": {
@@ -2150,25 +1232,7 @@
                                                           "allParts": [],
                                                           "packagePath": []
                                                         },
-                                                        "name": {
-                                                          "originalName": "responses.MarketResp",
-                                                          "camelCase": {
-                                                            "unsafeName": "responsesMarketResp",
-                                                            "safeName": "responsesMarketResp"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "responses_market_resp",
-                                                            "safeName": "responses_market_resp"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "RESPONSES_MARKET_RESP",
-                                                            "safeName": "RESPONSES_MARKET_RESP"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "ResponsesMarketResp",
-                                                            "safeName": "ResponsesMarketResp"
-                                                          }
-                                                        }
+                                                        "name": "responses.MarketResp"
                                                       },
                                                       "value": {
                                                         "jsonExample": "base_currency",
@@ -2204,25 +1268,7 @@
                                                     },
                                                     {
                                                       "name": {
-                                                        "name": {
-                                                          "originalName": "option_cross_margin_params",
-                                                          "camelCase": {
-                                                            "unsafeName": "optionCrossMarginParams",
-                                                            "safeName": "optionCrossMarginParams"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "option_cross_margin_params",
-                                                            "safeName": "option_cross_margin_params"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "OPTION_CROSS_MARGIN_PARAMS",
-                                                            "safeName": "OPTION_CROSS_MARGIN_PARAMS"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "OptionCrossMarginParams",
-                                                            "safeName": "OptionCrossMarginParams"
-                                                          }
-                                                        },
+                                                        "name": "option_cross_margin_params",
                                                         "wireValue": "option_cross_margin_params"
                                                       },
                                                       "originalTypeDeclaration": {
@@ -2231,25 +1277,7 @@
                                                           "allParts": [],
                                                           "packagePath": []
                                                         },
-                                                        "name": {
-                                                          "originalName": "responses.MarketResp",
-                                                          "camelCase": {
-                                                            "unsafeName": "responsesMarketResp",
-                                                            "safeName": "responsesMarketResp"
-                                                          },
-                                                          "snakeCase": {
-                                                            "unsafeName": "responses_market_resp",
-                                                            "safeName": "responses_market_resp"
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "unsafeName": "RESPONSES_MARKET_RESP",
-                                                            "safeName": "RESPONSES_MARKET_RESP"
-                                                          },
-                                                          "pascalCase": {
-                                                            "unsafeName": "ResponsesMarketResp",
-                                                            "safeName": "ResponsesMarketResp"
-                                                          }
-                                                        }
+                                                        "name": "responses.MarketResp"
                                                       },
                                                       "value": {
                                                         "jsonExample": {
@@ -2284,25 +1312,7 @@
                                                                   "properties": [
                                                                     {
                                                                       "name": {
-                                                                        "name": {
-                                                                          "originalName": "imf",
-                                                                          "camelCase": {
-                                                                            "unsafeName": "imf",
-                                                                            "safeName": "imf"
-                                                                          },
-                                                                          "snakeCase": {
-                                                                            "unsafeName": "imf",
-                                                                            "safeName": "imf"
-                                                                          },
-                                                                          "screamingSnakeCase": {
-                                                                            "unsafeName": "IMF",
-                                                                            "safeName": "IMF"
-                                                                          },
-                                                                          "pascalCase": {
-                                                                            "unsafeName": "Imf",
-                                                                            "safeName": "Imf"
-                                                                          }
-                                                                        },
+                                                                        "name": "imf",
                                                                         "wireValue": "imf"
                                                                       },
                                                                       "originalTypeDeclaration": {
@@ -2311,25 +1321,7 @@
                                                                           "allParts": [],
                                                                           "packagePath": []
                                                                         },
-                                                                        "name": {
-                                                                          "originalName": "responses.PerpetualOptionCrossMarginParams",
-                                                                          "camelCase": {
-                                                                            "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-                                                                            "safeName": "responsesPerpetualOptionCrossMarginParams"
-                                                                          },
-                                                                          "snakeCase": {
-                                                                            "unsafeName": "responses_perpetual_option_cross_margin_params",
-                                                                            "safeName": "responses_perpetual_option_cross_margin_params"
-                                                                          },
-                                                                          "screamingSnakeCase": {
-                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-                                                                          },
-                                                                          "pascalCase": {
-                                                                            "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-                                                                            "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-                                                                          }
-                                                                        }
+                                                                        "name": "responses.PerpetualOptionCrossMarginParams"
                                                                       },
                                                                       "value": {
                                                                         "jsonExample": {
@@ -2350,25 +1342,7 @@
                                                                                   "properties": [
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "long_itm",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "longItm",
-                                                                                            "safeName": "longItm"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "long_itm",
-                                                                                            "safeName": "long_itm"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "LONG_ITM",
-                                                                                            "safeName": "LONG_ITM"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "LongItm",
-                                                                                            "safeName": "LongItm"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "long_itm",
                                                                                         "wireValue": "long_itm"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -2377,25 +1351,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "long_itm",
@@ -2431,25 +1387,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "premium_multiplier",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "premiumMultiplier",
-                                                                                            "safeName": "premiumMultiplier"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "premium_multiplier",
-                                                                                            "safeName": "premium_multiplier"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "PREMIUM_MULTIPLIER",
-                                                                                            "safeName": "PREMIUM_MULTIPLIER"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "PremiumMultiplier",
-                                                                                            "safeName": "PremiumMultiplier"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "premium_multiplier",
                                                                                         "wireValue": "premium_multiplier"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -2458,25 +1396,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "premium_multiplier",
@@ -2512,25 +1432,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "short_itm",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "shortItm",
-                                                                                            "safeName": "shortItm"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "short_itm",
-                                                                                            "safeName": "short_itm"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "SHORT_ITM",
-                                                                                            "safeName": "SHORT_ITM"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ShortItm",
-                                                                                            "safeName": "ShortItm"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "short_itm",
                                                                                         "wireValue": "short_itm"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -2539,25 +1441,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "short_itm",
@@ -2600,25 +1484,7 @@
                                                                                     "allParts": [],
                                                                                     "packagePath": []
                                                                                   },
-                                                                                  "name": {
-                                                                                    "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                    "camelCase": {
-                                                                                      "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                      "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                      "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                      "safeName": "responses_perpetual_option_margin_params"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                      "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                      "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                      "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                    }
-                                                                                  }
+                                                                                  "name": "responses.PerpetualOptionMarginParams"
                                                                                 },
                                                                                 "type": "named"
                                                                               }
@@ -2628,25 +1494,7 @@
                                                                                 "allParts": [],
                                                                                 "packagePath": []
                                                                               },
-                                                                              "name": {
-                                                                                "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                "camelCase": {
-                                                                                  "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                  "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                  "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                  "safeName": "responses_perpetual_option_margin_params"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                  "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                  "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                  "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                  "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                }
-                                                                              },
+                                                                              "name": "responses.PerpetualOptionMarginParams",
                                                                               "typeId": "responses.PerpetualOptionMarginParams",
                                                                               "inline": false,
                                                                               "type": "named"
@@ -2659,25 +1507,7 @@
                                                                     },
                                                                     {
                                                                       "name": {
-                                                                        "name": {
-                                                                          "originalName": "mmf",
-                                                                          "camelCase": {
-                                                                            "unsafeName": "mmf",
-                                                                            "safeName": "mmf"
-                                                                          },
-                                                                          "snakeCase": {
-                                                                            "unsafeName": "mmf",
-                                                                            "safeName": "mmf"
-                                                                          },
-                                                                          "screamingSnakeCase": {
-                                                                            "unsafeName": "MMF",
-                                                                            "safeName": "MMF"
-                                                                          },
-                                                                          "pascalCase": {
-                                                                            "unsafeName": "Mmf",
-                                                                            "safeName": "Mmf"
-                                                                          }
-                                                                        },
+                                                                        "name": "mmf",
                                                                         "wireValue": "mmf"
                                                                       },
                                                                       "originalTypeDeclaration": {
@@ -2686,25 +1516,7 @@
                                                                           "allParts": [],
                                                                           "packagePath": []
                                                                         },
-                                                                        "name": {
-                                                                          "originalName": "responses.PerpetualOptionCrossMarginParams",
-                                                                          "camelCase": {
-                                                                            "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-                                                                            "safeName": "responsesPerpetualOptionCrossMarginParams"
-                                                                          },
-                                                                          "snakeCase": {
-                                                                            "unsafeName": "responses_perpetual_option_cross_margin_params",
-                                                                            "safeName": "responses_perpetual_option_cross_margin_params"
-                                                                          },
-                                                                          "screamingSnakeCase": {
-                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-                                                                          },
-                                                                          "pascalCase": {
-                                                                            "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-                                                                            "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-                                                                          }
-                                                                        }
+                                                                        "name": "responses.PerpetualOptionCrossMarginParams"
                                                                       },
                                                                       "value": {
                                                                         "jsonExample": {
@@ -2725,25 +1537,7 @@
                                                                                   "properties": [
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "long_itm",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "longItm",
-                                                                                            "safeName": "longItm"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "long_itm",
-                                                                                            "safeName": "long_itm"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "LONG_ITM",
-                                                                                            "safeName": "LONG_ITM"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "LongItm",
-                                                                                            "safeName": "LongItm"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "long_itm",
                                                                                         "wireValue": "long_itm"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -2752,25 +1546,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "long_itm",
@@ -2806,25 +1582,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "premium_multiplier",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "premiumMultiplier",
-                                                                                            "safeName": "premiumMultiplier"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "premium_multiplier",
-                                                                                            "safeName": "premium_multiplier"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "PREMIUM_MULTIPLIER",
-                                                                                            "safeName": "PREMIUM_MULTIPLIER"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "PremiumMultiplier",
-                                                                                            "safeName": "PremiumMultiplier"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "premium_multiplier",
                                                                                         "wireValue": "premium_multiplier"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -2833,25 +1591,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "premium_multiplier",
@@ -2887,25 +1627,7 @@
                                                                                     },
                                                                                     {
                                                                                       "name": {
-                                                                                        "name": {
-                                                                                          "originalName": "short_itm",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "shortItm",
-                                                                                            "safeName": "shortItm"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "short_itm",
-                                                                                            "safeName": "short_itm"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "SHORT_ITM",
-                                                                                            "safeName": "SHORT_ITM"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ShortItm",
-                                                                                            "safeName": "ShortItm"
-                                                                                          }
-                                                                                        },
+                                                                                        "name": "short_itm",
                                                                                         "wireValue": "short_itm"
                                                                                       },
                                                                                       "originalTypeDeclaration": {
@@ -2914,25 +1636,7 @@
                                                                                           "allParts": [],
                                                                                           "packagePath": []
                                                                                         },
-                                                                                        "name": {
-                                                                                          "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                          "camelCase": {
-                                                                                            "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                          },
-                                                                                          "snakeCase": {
-                                                                                            "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                            "safeName": "responses_perpetual_option_margin_params"
-                                                                                          },
-                                                                                          "screamingSnakeCase": {
-                                                                                            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                          },
-                                                                                          "pascalCase": {
-                                                                                            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                            "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                          }
-                                                                                        }
+                                                                                        "name": "responses.PerpetualOptionMarginParams"
                                                                                       },
                                                                                       "value": {
                                                                                         "jsonExample": "short_itm",
@@ -2975,25 +1679,7 @@
                                                                                     "allParts": [],
                                                                                     "packagePath": []
                                                                                   },
-                                                                                  "name": {
-                                                                                    "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                    "camelCase": {
-                                                                                      "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                      "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                      "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                      "safeName": "responses_perpetual_option_margin_params"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                      "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                      "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                      "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                    }
-                                                                                  }
+                                                                                  "name": "responses.PerpetualOptionMarginParams"
                                                                                 },
                                                                                 "type": "named"
                                                                               }
@@ -3003,25 +1689,7 @@
                                                                                 "allParts": [],
                                                                                 "packagePath": []
                                                                               },
-                                                                              "name": {
-                                                                                "originalName": "responses.PerpetualOptionMarginParams",
-                                                                                "camelCase": {
-                                                                                  "unsafeName": "responsesPerpetualOptionMarginParams",
-                                                                                  "safeName": "responsesPerpetualOptionMarginParams"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                  "unsafeName": "responses_perpetual_option_margin_params",
-                                                                                  "safeName": "responses_perpetual_option_margin_params"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                  "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                                                                                  "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                  "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                                                                                  "safeName": "ResponsesPerpetualOptionMarginParams"
-                                                                                }
-                                                                              },
+                                                                              "name": "responses.PerpetualOptionMarginParams",
                                                                               "typeId": "responses.PerpetualOptionMarginParams",
                                                                               "inline": false,
                                                                               "type": "named"
@@ -3041,25 +1709,7 @@
                                                                     "allParts": [],
                                                                     "packagePath": []
                                                                   },
-                                                                  "name": {
-                                                                    "originalName": "responses.PerpetualOptionCrossMarginParams",
-                                                                    "camelCase": {
-                                                                      "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-                                                                      "safeName": "responsesPerpetualOptionCrossMarginParams"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                      "unsafeName": "responses_perpetual_option_cross_margin_params",
-                                                                      "safeName": "responses_perpetual_option_cross_margin_params"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-                                                                      "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                      "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-                                                                      "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-                                                                    }
-                                                                  }
+                                                                  "name": "responses.PerpetualOptionCrossMarginParams"
                                                                 },
                                                                 "type": "named"
                                                               }
@@ -3069,25 +1719,7 @@
                                                                 "allParts": [],
                                                                 "packagePath": []
                                                               },
-                                                              "name": {
-                                                                "originalName": "responses.PerpetualOptionCrossMarginParams",
-                                                                "camelCase": {
-                                                                  "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-                                                                  "safeName": "responsesPerpetualOptionCrossMarginParams"
-                                                                },
-                                                                "snakeCase": {
-                                                                  "unsafeName": "responses_perpetual_option_cross_margin_params",
-                                                                  "safeName": "responses_perpetual_option_cross_margin_params"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                  "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-                                                                  "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-                                                                },
-                                                                "pascalCase": {
-                                                                  "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-                                                                  "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-                                                                }
-                                                              },
+                                                              "name": "responses.PerpetualOptionCrossMarginParams",
                                                               "typeId": "responses.PerpetualOptionCrossMarginParams",
                                                               "inline": false,
                                                               "type": "named"
@@ -3107,25 +1739,7 @@
                                                     "allParts": [],
                                                     "packagePath": []
                                                   },
-                                                  "name": {
-                                                    "originalName": "responses.MarketResp",
-                                                    "camelCase": {
-                                                      "unsafeName": "responsesMarketResp",
-                                                      "safeName": "responsesMarketResp"
-                                                    },
-                                                    "snakeCase": {
-                                                      "unsafeName": "responses_market_resp",
-                                                      "safeName": "responses_market_resp"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                      "unsafeName": "RESPONSES_MARKET_RESP",
-                                                      "safeName": "RESPONSES_MARKET_RESP"
-                                                    },
-                                                    "pascalCase": {
-                                                      "unsafeName": "ResponsesMarketResp",
-                                                      "safeName": "ResponsesMarketResp"
-                                                    }
-                                                  }
+                                                  "name": "responses.MarketResp"
                                                 },
                                                 "type": "named"
                                               }
@@ -3136,25 +1750,7 @@
                                               "allParts": [],
                                               "packagePath": []
                                             },
-                                            "name": {
-                                              "originalName": "responses.MarketResp",
-                                              "camelCase": {
-                                                "unsafeName": "responsesMarketResp",
-                                                "safeName": "responsesMarketResp"
-                                              },
-                                              "snakeCase": {
-                                                "unsafeName": "responses_market_resp",
-                                                "safeName": "responses_market_resp"
-                                              },
-                                              "screamingSnakeCase": {
-                                                "unsafeName": "RESPONSES_MARKET_RESP",
-                                                "safeName": "RESPONSES_MARKET_RESP"
-                                              },
-                                              "pascalCase": {
-                                                "unsafeName": "ResponsesMarketResp",
-                                                "safeName": "ResponsesMarketResp"
-                                              }
-                                            },
+                                            "name": "responses.MarketResp",
                                             "typeId": "responses.MarketResp",
                                             "inline": false,
                                             "type": "named"
@@ -3171,25 +1767,7 @@
                                             "allParts": [],
                                             "packagePath": []
                                           },
-                                          "name": {
-                                            "originalName": "responses.MarketResp",
-                                            "camelCase": {
-                                              "unsafeName": "responsesMarketResp",
-                                              "safeName": "responsesMarketResp"
-                                            },
-                                            "snakeCase": {
-                                              "unsafeName": "responses_market_resp",
-                                              "safeName": "responses_market_resp"
-                                            },
-                                            "screamingSnakeCase": {
-                                              "unsafeName": "RESPONSES_MARKET_RESP",
-                                              "safeName": "RESPONSES_MARKET_RESP"
-                                            },
-                                            "pascalCase": {
-                                              "unsafeName": "ResponsesMarketResp",
-                                              "safeName": "ResponsesMarketResp"
-                                            }
-                                          },
+                                          "name": "responses.MarketResp",
                                           "typeId": "responses.MarketResp",
                                           "inline": false,
                                           "type": "named"
@@ -3213,25 +1791,7 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "responses.GetMarkets",
-                            "camelCase": {
-                              "unsafeName": "responsesGetMarkets",
-                              "safeName": "responsesGetMarkets"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "responses_get_markets",
-                              "safeName": "responses_get_markets"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "RESPONSES_GET_MARKETS",
-                              "safeName": "RESPONSES_GET_MARKETS"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "ResponsesGetMarkets",
-                              "safeName": "ResponsesGetMarkets"
-                            }
-                          }
+                          "name": "responses.GetMarkets"
                         },
                         "type": "named"
                       }
@@ -3254,25 +1814,7 @@
           },
           "audiences": [],
           "id": "endpoint_.getMarkets",
-          "name": {
-            "originalName": "getMarkets",
-            "camelCase": {
-              "unsafeName": "getMarkets",
-              "safeName": "getMarkets"
-            },
-            "snakeCase": {
-              "unsafeName": "get_markets",
-              "safeName": "get_markets"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_MARKETS",
-              "safeName": "GET_MARKETS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetMarkets",
-              "safeName": "GetMarkets"
-            }
-          },
+          "name": "getMarkets",
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -3283,25 +1825,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "responses.GetMarkets",
-                    "camelCase": {
-                      "unsafeName": "responsesGetMarkets",
-                      "safeName": "responsesGetMarkets"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "responses_get_markets",
-                      "safeName": "responses_get_markets"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "RESPONSES_GET_MARKETS",
-                      "safeName": "RESPONSES_GET_MARKETS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ResponsesGetMarkets",
-                      "safeName": "ResponsesGetMarkets"
-                    }
-                  },
+                  "name": "responses.GetMarkets",
                   "typeId": "responses.GetMarkets",
                   "inline": false,
                   "type": "named"
@@ -3393,25 +1917,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "responses.GetMarkets",
-                        "camelCase": {
-                          "unsafeName": "responsesGetMarkets",
-                          "safeName": "responsesGetMarkets"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "responses_get_markets",
-                          "safeName": "responses_get_markets"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "RESPONSES_GET_MARKETS",
-                          "safeName": "RESPONSES_GET_MARKETS"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ResponsesGetMarkets",
-                          "safeName": "ResponsesGetMarkets"
-                        }
-                      },
+                      "name": "responses.GetMarkets",
                       "typeId": "responses.GetMarkets",
                       "inline": false,
                       "type": "named"
@@ -3474,25 +1980,7 @@
       "environments": [
         {
           "id": "https://api.example.com/v1",
-          "name": {
-            "originalName": "https://api.example.com/v1",
-            "camelCase": {
-              "unsafeName": "httpsApiExampleComV1",
-              "safeName": "httpsApiExampleComV1"
-            },
-            "snakeCase": {
-              "unsafeName": "https_api_example_com_v_1",
-              "safeName": "https_api_example_com_v_1"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "HTTPS_API_EXAMPLE_COM_V_1",
-              "safeName": "HTTPS_API_EXAMPLE_COM_V_1"
-            },
-            "pascalCase": {
-              "unsafeName": "HttpsApiExampleComV1",
-              "safeName": "HttpsApiExampleComV1"
-            }
-          },
+          "name": "https://api.example.com/v1",
           "url": "https://api.example.com/v1"
         }
       ],
@@ -3527,46 +2015,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Nested Ref Examples Test",
-    "camelCase": {
-      "unsafeName": "nestedRefExamplesTest",
-      "safeName": "nestedRefExamplesTest"
-    },
-    "snakeCase": {
-      "unsafeName": "nested_ref_examples_test",
-      "safeName": "nested_ref_examples_test"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "NESTED_REF_EXAMPLES_TEST",
-      "safeName": "NESTED_REF_EXAMPLES_TEST"
-    },
-    "pascalCase": {
-      "unsafeName": "NestedRefExamplesTest",
-      "safeName": "NestedRefExamplesTest"
-    }
-  },
+  "apiName": "Nested Ref Examples Test",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

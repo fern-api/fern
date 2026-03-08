@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test HEAD method",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:GetUsersResponse": {
       "name": {
-        "name": {
-          "originalName": "GetUsersResponse"
-        },
+        "name": "GetUsersResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "users"
-              },
+              "name": "users",
               "wireValue": "users"
             },
             "valueType": {
@@ -37,9 +31,7 @@
                 "optional": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "User"
-                      },
+                      "name": "User",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -74,9 +66,7 @@
     },
     "type_:User": {
       "name": {
-        "name": {
-          "originalName": "User"
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -88,9 +78,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -115,9 +103,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -177,9 +163,7 @@
       "endpoints": [
         {
           "id": "endpoint_.listUsers",
-          "name": {
-            "originalName": "listUsers"
-          },
+          "name": "listUsers",
           "displayName": "List users",
           "auth": false,
           "idempotent": false,
@@ -197,9 +181,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "limit"
-                },
+                "name": "limit",
                 "wireValue": "limit"
               },
               "valueType": {
@@ -227,28 +209,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetUsersRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetUsersRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "User retrieved successfully",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetUsersResponse"
-                  },
+                  "name": "GetUsersResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -270,9 +244,7 @@
         },
         {
           "id": "endpoint_.headMethodsShouldNotDefineAResponseBody",
-          "name": {
-            "originalName": "headMethodsShouldNotDefineAResponseBody"
-          },
+          "name": "headMethodsShouldNotDefineAResponseBody",
           "displayName": "HEAD methods should not define a response body.",
           "auth": false,
           "idempotent": false,
@@ -300,9 +272,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -327,9 +297,7 @@
     "types": {
       "type_:GetUsersResponse": {
         "declaration": {
-          "name": {
-            "originalName": "GetUsersResponse"
-          },
+          "name": "GetUsersResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -338,9 +306,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "users"
-              },
+              "name": "users",
               "wireValue": "users"
             },
             "typeReference": {
@@ -360,9 +326,7 @@
       },
       "type_:User": {
         "declaration": {
-          "name": {
-            "originalName": "User"
-          },
+          "name": "User",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -371,9 +335,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -386,9 +348,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -408,9 +368,7 @@
     "endpoints": {
       "endpoint_.listUsers": {
         "declaration": {
-          "name": {
-            "originalName": "listUsers"
-          },
+          "name": "listUsers",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -422,9 +380,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetUsersRequest"
-            },
+            "name": "GetUsersRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -434,9 +390,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "limit"
-                },
+                "name": "limit",
                 "wireValue": "limit"
               },
               "typeReference": {
@@ -462,9 +416,7 @@
       },
       "endpoint_.headMethodsShouldNotDefineAResponseBody": {
         "declaration": {
-          "name": {
-            "originalName": "headMethodsShouldNotDefineAResponseBody"
-          },
+          "name": "headMethodsShouldNotDefineAResponseBody",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

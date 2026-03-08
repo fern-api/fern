@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Primitive Array Complex API",
   "auth": {
     "requirement": "ALL",
@@ -35,9 +33,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getSearchWithArrayUnion",
-          "name": {
-            "originalName": "getSearchWithArrayUnion"
-          },
+          "name": "getSearchWithArrayUnion",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -80,9 +76,7 @@
         },
         {
           "id": "endpoint_.getSearchWithObjectUnion",
-          "name": {
-            "originalName": "getSearchWithObjectUnion"
-          },
+          "name": "getSearchWithObjectUnion",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -128,9 +122,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -152,9 +144,7 @@
     "endpoints": {
       "endpoint_.getSearchWithArrayUnion": {
         "declaration": {
-          "name": {
-            "originalName": "getSearchWithArrayUnion"
-          },
+          "name": "getSearchWithArrayUnion",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -175,9 +165,7 @@
       },
       "endpoint_.getSearchWithObjectUnion": {
         "declaration": {
-          "name": {
-            "originalName": "getSearchWithObjectUnion"
-          },
+          "name": "getSearchWithObjectUnion",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

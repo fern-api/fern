@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Query Parameters API",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:SearchRequestFilterLocationCoordinates": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "SearchRequestFilterLocationCoordinates"
-        },
+        "name": "SearchRequestFilterLocationCoordinates",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "latitude"
-              },
+              "name": "latitude",
               "wireValue": "latitude"
             },
             "valueType": {
@@ -55,9 +49,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "longitude"
-              },
+              "name": "longitude",
               "wireValue": "longitude"
             },
             "valueType": {
@@ -95,9 +87,7 @@
     "type_:SearchRequestFilterLocation": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "SearchRequestFilterLocation"
-        },
+        "name": "SearchRequestFilterLocation",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -109,9 +99,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "city"
-              },
+              "name": "city",
               "wireValue": "city"
             },
             "valueType": {
@@ -136,9 +124,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "country"
-              },
+              "name": "country",
               "wireValue": "country"
             },
             "valueType": {
@@ -163,17 +149,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "coordinates"
-              },
+              "name": "coordinates",
               "wireValue": "coordinates"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "SearchRequestFilterLocationCoordinates"
-                  },
+                  "name": "SearchRequestFilterLocationCoordinates",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -204,9 +186,7 @@
     },
     "type_:SearchRequestFilter": {
       "name": {
-        "name": {
-          "originalName": "SearchRequestFilter"
-        },
+        "name": "SearchRequestFilter",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -218,9 +198,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -245,9 +223,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "age"
-              },
+              "name": "age",
               "wireValue": "age"
             },
             "valueType": {
@@ -272,17 +248,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "location"
-              },
+              "name": "location",
               "wireValue": "location"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "SearchRequestFilterLocation"
-                  },
+                  "name": "SearchRequestFilterLocation",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -313,9 +285,7 @@
     },
     "type_:SearchRequestSort": {
       "name": {
-        "name": {
-          "originalName": "SearchRequestSort"
-        },
+        "name": "SearchRequestSort",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -326,17 +296,13 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "asc"
-              },
+              "name": "asc",
               "wireValue": "asc"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "desc"
-              },
+              "name": "desc",
               "wireValue": "desc"
             }
           }
@@ -352,9 +318,7 @@
     },
     "type_:SearchResponse": {
       "name": {
-        "name": {
-          "originalName": "SearchResponse"
-        },
+        "name": "SearchResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -366,9 +330,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results"
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "valueType": {
@@ -434,9 +396,7 @@
       "endpoints": [
         {
           "id": "endpoint_.search",
-          "name": {
-            "originalName": "search"
-          },
+          "name": "search",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -453,17 +413,13 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "filter"
-                },
+                "name": "filter",
                 "wireValue": "filter"
               },
               "valueType": {
                 "container": {
                   "optional": {
-                    "name": {
-                      "originalName": "SearchRequestFilter"
-                    },
+                    "name": "SearchRequestFilter",
                     "fernFilepath": {
                       "allParts": [],
                       "packagePath": []
@@ -483,17 +439,13 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "sort"
-                },
+                "name": "sort",
                 "wireValue": "sort"
               },
               "valueType": {
                 "container": {
                   "optional": {
-                    "name": {
-                      "originalName": "SearchRequestSort"
-                    },
+                    "name": "SearchRequestSort",
                     "fernFilepath": {
                       "allParts": [],
                       "packagePath": []
@@ -513,9 +465,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "limit"
-                },
+                "name": "limit",
                 "wireValue": "limit"
               },
               "valueType": {
@@ -545,9 +495,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "tags"
-                },
+                "name": "tags",
                 "wireValue": "tags"
               },
               "valueType": {
@@ -575,28 +523,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "SearchRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "SearchRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "SearchResponse"
-                  },
+                  "name": "SearchResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -621,9 +561,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -651,9 +589,7 @@
     "types": {
       "type_:SearchRequestFilterLocationCoordinates": {
         "declaration": {
-          "name": {
-            "originalName": "SearchRequestFilterLocationCoordinates"
-          },
+          "name": "SearchRequestFilterLocationCoordinates",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -662,9 +598,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "latitude"
-              },
+              "name": "latitude",
               "wireValue": "latitude"
             },
             "typeReference": {
@@ -677,9 +611,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "longitude"
-              },
+              "name": "longitude",
               "wireValue": "longitude"
             },
             "typeReference": {
@@ -696,9 +628,7 @@
       },
       "type_:SearchRequestFilterLocation": {
         "declaration": {
-          "name": {
-            "originalName": "SearchRequestFilterLocation"
-          },
+          "name": "SearchRequestFilterLocation",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -707,9 +637,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "city"
-              },
+              "name": "city",
               "wireValue": "city"
             },
             "typeReference": {
@@ -722,9 +650,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "country"
-              },
+              "name": "country",
               "wireValue": "country"
             },
             "typeReference": {
@@ -737,9 +663,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "coordinates"
-              },
+              "name": "coordinates",
               "wireValue": "coordinates"
             },
             "typeReference": {
@@ -756,9 +680,7 @@
       },
       "type_:SearchRequestFilter": {
         "declaration": {
-          "name": {
-            "originalName": "SearchRequestFilter"
-          },
+          "name": "SearchRequestFilter",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -767,9 +689,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -782,9 +702,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "age"
-              },
+              "name": "age",
               "wireValue": "age"
             },
             "typeReference": {
@@ -797,9 +715,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "location"
-              },
+              "name": "location",
               "wireValue": "location"
             },
             "typeReference": {
@@ -816,9 +732,7 @@
       },
       "type_:SearchRequestSort": {
         "declaration": {
-          "name": {
-            "originalName": "SearchRequestSort"
-          },
+          "name": "SearchRequestSort",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -826,15 +740,11 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "asc"
-            },
+            "name": "asc",
             "wireValue": "asc"
           },
           {
-            "name": {
-              "originalName": "desc"
-            },
+            "name": "desc",
             "wireValue": "desc"
           }
         ],
@@ -842,9 +752,7 @@
       },
       "type_:SearchResponse": {
         "declaration": {
-          "name": {
-            "originalName": "SearchResponse"
-          },
+          "name": "SearchResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -853,9 +761,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results"
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "typeReference": {
@@ -878,9 +784,7 @@
     "endpoints": {
       "endpoint_.search": {
         "declaration": {
-          "name": {
-            "originalName": "search"
-          },
+          "name": "search",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -892,9 +796,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "SearchRequest"
-            },
+            "name": "SearchRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -904,9 +806,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "filter"
-                },
+                "name": "filter",
                 "wireValue": "filter"
               },
               "typeReference": {
@@ -919,9 +819,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "sort"
-                },
+                "name": "sort",
                 "wireValue": "sort"
               },
               "typeReference": {
@@ -934,9 +832,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "limit"
-                },
+                "name": "limit",
                 "wireValue": "limit"
               },
               "typeReference": {
@@ -949,9 +845,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "tags"
-                },
+                "name": "tags",
                 "wireValue": "tags"
               },
               "typeReference": {

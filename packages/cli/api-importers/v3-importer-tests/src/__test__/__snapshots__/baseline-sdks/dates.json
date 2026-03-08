@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test spec for `date` and `date-time` types.",
   "auth": {
     "requirement": "ALL",
@@ -11,9 +9,7 @@
   "headers": [
     {
       "name": {
-        "name": {
-          "originalName": "dateHeader"
-        },
+        "name": "dateHeader",
         "wireValue": "date_header"
       },
       "valueType": {
@@ -35,9 +31,7 @@
     },
     {
       "name": {
-        "name": {
-          "originalName": "dateTimeHeader"
-        },
+        "name": "dateTimeHeader",
         "wireValue": "date_time_header"
       },
       "valueType": {
@@ -62,9 +56,7 @@
   "types": {
     "type_:Response": {
       "name": {
-        "name": {
-          "originalName": "Response"
-        },
+        "name": "Response",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -76,9 +68,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "date_only"
-              },
+              "name": "date_only",
               "wireValue": "date_only"
             },
             "valueType": {
@@ -100,9 +90,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "date_time"
-              },
+              "name": "date_time",
               "wireValue": "date_time"
             },
             "valueType": {
@@ -159,9 +147,7 @@
       "endpoints": [
         {
           "id": "endpoint_.Post",
-          "name": {
-            "originalName": "Post"
-          },
+          "name": "Post",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -178,9 +164,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "date_query"
-                },
+                "name": "date_query",
                 "wireValue": "date_query"
               },
               "valueType": {
@@ -203,9 +187,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "date_time_query"
-                },
+                "name": "date_time_query",
                 "wireValue": "date_time_query"
               },
               "valueType": {
@@ -229,17 +211,13 @@
           ],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "Request"
-            },
+            "name": "Request",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "date_only"
-                  },
+                  "name": "date_only",
                   "wireValue": "date_only"
                 },
                 "valueType": {
@@ -261,9 +239,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "date_time"
-                  },
+                  "name": "date_time",
                   "wireValue": "date_time"
                 },
                 "valueType": {
@@ -290,28 +266,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "Request"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "Request",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "A simple API response.",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Response"
-                  },
+                  "name": "Response",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -336,9 +304,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -362,9 +328,7 @@
     "types": {
       "type_:Response": {
         "declaration": {
-          "name": {
-            "originalName": "Response"
-          },
+          "name": "Response",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -373,9 +337,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "date_only"
-              },
+              "name": "date_only",
               "wireValue": "date_only"
             },
             "typeReference": {
@@ -388,9 +350,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "date_time"
-              },
+              "name": "date_time",
               "wireValue": "date_time"
             },
             "typeReference": {
@@ -409,9 +369,7 @@
     "headers": [
       {
         "name": {
-          "name": {
-            "originalName": "dateHeader"
-          },
+          "name": "dateHeader",
           "wireValue": "date_header"
         },
         "typeReference": {
@@ -424,9 +382,7 @@
       },
       {
         "name": {
-          "name": {
-            "originalName": "dateTimeHeader"
-          },
+          "name": "dateTimeHeader",
           "wireValue": "date_time_header"
         },
         "typeReference": {
@@ -441,9 +397,7 @@
     "endpoints": {
       "endpoint_.Post": {
         "declaration": {
-          "name": {
-            "originalName": "Post"
-          },
+          "name": "Post",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -455,9 +409,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "Request"
-            },
+            "name": "Request",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -467,9 +419,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "date_query"
-                },
+                "name": "date_query",
                 "wireValue": "date_query"
               },
               "typeReference": {
@@ -482,9 +432,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "date_time_query"
-                },
+                "name": "date_time_query",
                 "wireValue": "date_time_query"
               },
               "typeReference": {
@@ -501,9 +449,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "date_only"
-                  },
+                  "name": "date_only",
                   "wireValue": "date_only"
                 },
                 "typeReference": {
@@ -516,9 +462,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "date_time"
-                  },
+                  "name": "date_time",
                   "wireValue": "date_time"
                 },
                 "typeReference": {

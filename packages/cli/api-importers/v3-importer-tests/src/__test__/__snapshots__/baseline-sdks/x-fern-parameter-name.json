@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-parameter-name` for parameters.",
   "auth": {
     "requirement": "ALL",
@@ -11,9 +9,7 @@
   "headers": [
     {
       "name": {
-        "name": {
-          "originalName": "version"
-        },
+        "name": "version",
         "wireValue": "X-API-Version"
       },
       "valueType": {
@@ -57,9 +53,7 @@
       "endpoints": [
         {
           "id": "endpoint_.get_user",
-          "name": {
-            "originalName": "get_user"
-          },
+          "name": "get_user",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -83,9 +77,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -104,9 +96,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -126,9 +116,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "bar"
-                },
+                "name": "bar",
                 "wireValue": "foo"
               },
               "valueType": {
@@ -150,19 +138,13 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetUserRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetUserRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -194,9 +176,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -217,9 +197,7 @@
     "headers": [
       {
         "name": {
-          "name": {
-            "originalName": "version"
-          },
+          "name": "version",
           "wireValue": "X-API-Version"
         },
         "typeReference": {
@@ -231,9 +209,7 @@
     "endpoints": {
       "endpoint_.get_user": {
         "declaration": {
-          "name": {
-            "originalName": "get_user"
-          },
+          "name": "get_user",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -245,9 +221,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetUserRequest"
-            },
+            "name": "GetUserRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -256,9 +230,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "id"
-                },
+                "name": "id",
                 "wireValue": "id"
               },
               "typeReference": {
@@ -270,9 +242,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "bar"
-                },
+                "name": "bar",
                 "wireValue": "foo"
               },
               "typeReference": {

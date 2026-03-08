@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Webhooks",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:Pet": {
       "name": {
-        "name": {
-          "originalName": "Pet"
-        },
+        "name": "Pet",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -48,9 +42,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -69,9 +61,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "tag"
-              },
+              "name": "tag",
               "wireValue": "tag"
             },
             "valueType": {
@@ -111,9 +101,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -133,15 +121,11 @@
       {
         "id": "webhooks_.CreatePet",
         "method": "POST",
-        "name": {
-          "originalName": "CreatePet"
-        },
+        "name": "CreatePet",
         "headers": [],
         "payload": {
           "payloadType": {
-            "name": {
-              "originalName": "Pet"
-            },
+            "name": "Pet",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -153,9 +137,7 @@
         },
         "examples": [
           {
-            "name": {
-              "originalName": "Example 1"
-            },
+            "name": "Example 1",
             "payload": {
               "shape": {
                 "typeName": {
@@ -164,17 +146,13 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "Pet"
-                  }
+                  "name": "Pet"
                 },
                 "shape": {
                   "properties": [
                     {
                       "name": {
-                        "name": {
-                          "originalName": "id"
-                        },
+                        "name": "id",
                         "wireValue": "id"
                       },
                       "value": {
@@ -193,16 +171,12 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Pet"
-                        }
+                        "name": "Pet"
                       }
                     },
                     {
                       "name": {
-                        "name": {
-                          "originalName": "name"
-                        },
+                        "name": "name",
                         "wireValue": "name"
                       },
                       "value": {
@@ -223,16 +197,12 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Pet"
-                        }
+                        "name": "Pet"
                       }
                     },
                     {
                       "name": {
-                        "name": {
-                          "originalName": "tag"
-                        },
+                        "name": "tag",
                         "wireValue": "tag"
                       },
                       "value": {
@@ -271,9 +241,7 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Pet"
-                        }
+                        "name": "Pet"
                       }
                     }
                   ],
@@ -293,15 +261,11 @@
       {
         "id": "webhooks_.newPet",
         "method": "POST",
-        "name": {
-          "originalName": "newPet"
-        },
+        "name": "newPet",
         "headers": [],
         "payload": {
           "payloadType": {
-            "name": {
-              "originalName": "Pet"
-            },
+            "name": "Pet",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -321,17 +285,13 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "Pet"
-                  }
+                  "name": "Pet"
                 },
                 "shape": {
                   "properties": [
                     {
                       "name": {
-                        "name": {
-                          "originalName": "id"
-                        },
+                        "name": "id",
                         "wireValue": "id"
                       },
                       "value": {
@@ -350,16 +310,12 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Pet"
-                        }
+                        "name": "Pet"
                       }
                     },
                     {
                       "name": {
-                        "name": {
-                          "originalName": "name"
-                        },
+                        "name": "name",
                         "wireValue": "name"
                       },
                       "value": {
@@ -380,9 +336,7 @@
                           "allParts": [],
                           "packagePath": []
                         },
-                        "name": {
-                          "originalName": "Pet"
-                        }
+                        "name": "Pet"
                       }
                     }
                   ],
@@ -406,9 +360,7 @@
     "types": {
       "type_:Pet": {
         "declaration": {
-          "name": {
-            "originalName": "Pet"
-          },
+          "name": "Pet",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -417,9 +369,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -429,9 +379,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -441,9 +389,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "tag"
-              },
+              "name": "tag",
               "wireValue": "tag"
             },
             "typeReference": {

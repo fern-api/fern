@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-sdk-group-name` for schemas",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:User": {
       "name": {
-        "name": {
-          "originalName": "User"
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -74,14 +68,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "user"
-            }
+            "user"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "user"
-          }
+          "file": "user"
         }
       },
       "basePath": {
@@ -99,9 +89,7 @@
       "endpoints": [
         {
           "id": "endpoint_user.get",
-          "name": {
-            "originalName": "get"
-          },
+          "name": "get",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -122,9 +110,7 @@
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "User"
-                  },
+                  "name": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -146,9 +132,7 @@
         },
         {
           "id": "endpoint_user.get_all",
-          "name": {
-            "originalName": "get_all"
-          },
+          "name": "get_all",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -171,9 +155,7 @@
                 "responseBodyType": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "User"
-                      },
+                      "name": "User",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -202,9 +184,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -228,9 +208,7 @@
     "types": {
       "type_:User": {
         "declaration": {
-          "name": {
-            "originalName": "User"
-          },
+          "name": "User",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -239,9 +217,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -261,19 +237,13 @@
     "endpoints": {
       "endpoint_user.get": {
         "declaration": {
-          "name": {
-            "originalName": "get"
-          },
+          "name": "get",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "user"
-              }
+              "user"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "user"
-            }
+            "file": "user"
           }
         },
         "location": {
@@ -291,19 +261,13 @@
       },
       "endpoint_user.get_all": {
         "declaration": {
-          "name": {
-            "originalName": "get_all"
-          },
+          "name": "get_all",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "user"
-              }
+              "user"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "user"
-            }
+            "file": "user"
           }
         },
         "location": {
@@ -328,18 +292,12 @@
     "subpackage_user": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "user"
-          }
+          "user"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "user"
-        }
+        "file": "user"
       },
-      "name": {
-        "originalName": "user"
-      },
+      "name": "user",
       "service": "service_user",
       "types": [],
       "errors": [],

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Tree API",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:TreeCreateLocation": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "TreeCreateLocation"
-        },
+        "name": "TreeCreateLocation",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "latitude"
-              },
+              "name": "latitude",
               "wireValue": "latitude"
             },
             "valueType": {
@@ -55,9 +49,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "longitude"
-              },
+              "name": "longitude",
               "wireValue": "longitude"
             },
             "valueType": {
@@ -94,9 +86,7 @@
     },
     "type_:TreeBase": {
       "name": {
-        "name": {
-          "originalName": "TreeBase"
-        },
+        "name": "TreeBase",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -108,9 +98,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "species"
-              },
+              "name": "species",
               "wireValue": "species"
             },
             "valueType": {
@@ -135,9 +123,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height"
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "valueType": {
@@ -197,9 +183,7 @@
       "endpoints": [
         {
           "id": "endpoint_.createTree",
-          "name": {
-            "originalName": "createTree"
-          },
+          "name": "createTree",
           "displayName": "Create a new tree",
           "auth": false,
           "idempotent": false,
@@ -217,14 +201,10 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "TreeCreate"
-            },
+            "name": "TreeCreate",
             "extends": [
               {
-                "name": {
-                  "originalName": "TreeBase"
-                },
+                "name": "TreeBase",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -236,9 +216,7 @@
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "age"
-                  },
+                  "name": "age",
                   "wireValue": "age"
                 },
                 "valueType": {
@@ -263,17 +241,13 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "location"
-                  },
+                  "name": "location",
                   "wireValue": "location"
                 },
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "TreeCreateLocation"
-                      },
+                      "name": "TreeCreateLocation",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -295,9 +269,7 @@
             "extendedProperties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "species"
-                  },
+                  "name": "species",
                   "wireValue": "species"
                 },
                 "valueType": {
@@ -322,9 +294,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "height"
-                  },
+                  "name": "height",
                   "wireValue": "height"
                 },
                 "valueType": {
@@ -352,19 +322,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "TreeCreate"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "TreeCreate",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -396,9 +360,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -423,9 +385,7 @@
     "types": {
       "type_:TreeCreateLocation": {
         "declaration": {
-          "name": {
-            "originalName": "TreeCreateLocation"
-          },
+          "name": "TreeCreateLocation",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -434,9 +394,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "latitude"
-              },
+              "name": "latitude",
               "wireValue": "latitude"
             },
             "typeReference": {
@@ -449,9 +407,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "longitude"
-              },
+              "name": "longitude",
               "wireValue": "longitude"
             },
             "typeReference": {
@@ -468,9 +424,7 @@
       },
       "type_:TreeBase": {
         "declaration": {
-          "name": {
-            "originalName": "TreeBase"
-          },
+          "name": "TreeBase",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -479,9 +433,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "species"
-              },
+              "name": "species",
               "wireValue": "species"
             },
             "typeReference": {
@@ -494,9 +446,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height"
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "typeReference": {
@@ -516,9 +466,7 @@
     "endpoints": {
       "endpoint_.createTree": {
         "declaration": {
-          "name": {
-            "originalName": "createTree"
-          },
+          "name": "createTree",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -530,9 +478,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "TreeCreate"
-            },
+            "name": "TreeCreate",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -545,9 +491,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "species"
-                  },
+                  "name": "species",
                   "wireValue": "species"
                 },
                 "typeReference": {
@@ -560,9 +504,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "height"
-                  },
+                  "name": "height",
                   "wireValue": "height"
                 },
                 "typeReference": {
@@ -575,9 +517,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "age"
-                  },
+                  "name": "age",
                   "wireValue": "age"
                 },
                 "typeReference": {
@@ -590,9 +530,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "location"
-                  },
+                  "name": "location",
                   "wireValue": "location"
                 },
                 "typeReference": {

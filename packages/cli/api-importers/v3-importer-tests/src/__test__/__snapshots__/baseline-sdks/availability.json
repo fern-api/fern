@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Deprecated params and fields",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:DeprecatedParam": {
       "name": {
-        "name": {
-          "originalName": "DeprecatedParam"
-        },
+        "name": "DeprecatedParam",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -55,9 +51,7 @@
         "status": "DEPRECATED"
       },
       "name": {
-        "name": {
-          "originalName": "WholeDeprecatedSettings"
-        },
+        "name": "WholeDeprecatedSettings",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -69,9 +63,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "fine_setting"
-              },
+              "name": "fine_setting",
               "wireValue": "fine_setting"
             },
             "valueType": {
@@ -108,9 +100,7 @@
     },
     "type_:NotDeprecatedSettings": {
       "name": {
-        "name": {
-          "originalName": "NotDeprecatedSettings"
-        },
+        "name": "NotDeprecatedSettings",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -122,9 +112,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "not_deprecated_setting"
-              },
+              "name": "not_deprecated_setting",
               "wireValue": "not_deprecated_setting"
             },
             "valueType": {
@@ -184,9 +172,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
-          "name": {
-            "originalName": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam"
-          },
+          "name": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -238,9 +224,7 @@
               "availability": {
                 "status": "DEPRECATED"
               },
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -258,9 +242,7 @@
             },
             {
               "docs": "active header",
-              "name": {
-                "originalName": "active_id"
-              },
+              "name": "active_id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -277,13 +259,9 @@
               }
             },
             {
-              "name": {
-                "originalName": "deprecated_ref_id"
-              },
+              "name": "deprecated_ref_id",
               "valueType": {
-                "name": {
-                  "originalName": "DeprecatedParam"
-                },
+                "name": "DeprecatedParam",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -302,9 +280,7 @@
               "availability": {
                 "status": "PRE_RELEASE"
               },
-              "name": {
-                "originalName": "x-fern-availability_path_param"
-              },
+              "name": "x-fern-availability_path_param",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -327,9 +303,7 @@
               "availability": {
                 "status": "DEPRECATED"
               },
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -347,9 +321,7 @@
             },
             {
               "docs": "active header",
-              "name": {
-                "originalName": "active_id"
-              },
+              "name": "active_id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -366,13 +338,9 @@
               }
             },
             {
-              "name": {
-                "originalName": "deprecated_ref_id"
-              },
+              "name": "deprecated_ref_id",
               "valueType": {
-                "name": {
-                  "originalName": "DeprecatedParam"
-                },
+                "name": "DeprecatedParam",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -391,9 +359,7 @@
               "availability": {
                 "status": "PRE_RELEASE"
               },
-              "name": {
-                "originalName": "x-fern-availability_path_param"
-              },
+              "name": "x-fern-availability_path_param",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -417,9 +383,7 @@
                 "status": "DEPRECATED"
               },
               "name": {
-                "name": {
-                  "originalName": "deprecated_lang"
-                },
+                "name": "deprecated_lang",
                 "wireValue": "deprecated_lang"
               },
               "valueType": {
@@ -446,9 +410,7 @@
             {
               "docs": "language code",
               "name": {
-                "name": {
-                  "originalName": "active_lang"
-                },
+                "name": "active_lang",
                 "wireValue": "active_lang"
               },
               "valueType": {
@@ -474,17 +436,13 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "deprecated_ref_lang"
-                },
+                "name": "deprecated_ref_lang",
                 "wireValue": "deprecated_ref_lang"
               },
               "valueType": {
                 "container": {
                   "optional": {
-                    "name": {
-                      "originalName": "DeprecatedParam"
-                    },
+                    "name": "DeprecatedParam",
                     "fernFilepath": {
                       "allParts": [],
                       "packagePath": []
@@ -508,9 +466,7 @@
                 "status": "PRE_RELEASE"
               },
               "name": {
-                "name": {
-                  "originalName": "x-fern-availability_query_param"
-                },
+                "name": "x-fern-availability_query_param",
                 "wireValue": "x-fern-availability_query_param"
               },
               "valueType": {
@@ -542,9 +498,7 @@
                 "status": "DEPRECATED"
               },
               "name": {
-                "name": {
-                  "originalName": "deprecatedHeader"
-                },
+                "name": "deprecatedHeader",
                 "wireValue": "X-Deprecated-Header"
               },
               "valueType": {
@@ -570,9 +524,7 @@
             {
               "docs": "active header",
               "name": {
-                "name": {
-                  "originalName": "activeHeader"
-                },
+                "name": "activeHeader",
                 "wireValue": "X-Active-Header"
               },
               "valueType": {
@@ -597,17 +549,13 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "deprecatedRefHeader"
-                },
+                "name": "deprecatedRefHeader",
                 "wireValue": "X-Deprecated-Ref-Header"
               },
               "valueType": {
                 "container": {
                   "optional": {
-                    "name": {
-                      "originalName": "DeprecatedParam"
-                    },
+                    "name": "DeprecatedParam",
                     "fernFilepath": {
                       "allParts": [],
                       "packagePath": []
@@ -630,9 +578,7 @@
                 "status": "PRE_RELEASE"
               },
               "name": {
-                "name": {
-                  "originalName": "fernAvailabilityHeader"
-                },
+                "name": "fernAvailabilityHeader",
                 "wireValue": "x-fern-availability_header"
               },
               "valueType": {
@@ -658,28 +604,20 @@
           ],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "OK",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "WholeDeprecatedSettings"
-                  },
+                  "name": "WholeDeprecatedSettings",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -701,9 +639,7 @@
         },
         {
           "id": "endpoint_.postSuccessRef",
-          "name": {
-            "originalName": "postSuccessRef"
-          },
+          "name": "postSuccessRef",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -720,9 +656,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "Settings"
-            },
+            "name": "Settings",
             "extends": [],
             "contentType": "application/json",
             "properties": [
@@ -731,9 +665,7 @@
                   "status": "DEPRECATED"
                 },
                 "name": {
-                  "name": {
-                    "originalName": "deprecated_setting"
-                  },
+                  "name": "deprecated_setting",
                   "wireValue": "deprecated_setting"
                 },
                 "valueType": {
@@ -758,9 +690,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "new_setting"
-                  },
+                  "name": "new_setting",
                   "wireValue": "new_setting"
                 },
                 "valueType": {
@@ -790,28 +720,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "Settings"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "Settings",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "OK",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "NotDeprecatedSettings"
-                  },
+                  "name": "NotDeprecatedSettings",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -833,9 +755,7 @@
         },
         {
           "id": "endpoint_.postSuccessInlinePropertyDeprecation",
-          "name": {
-            "originalName": "postSuccessInlinePropertyDeprecation"
-          },
+          "name": "postSuccessInlinePropertyDeprecation",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -852,9 +772,7 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PostSuccessInlinePropertyDeprecationRequest"
-            },
+            "name": "PostSuccessInlinePropertyDeprecationRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
@@ -863,9 +781,7 @@
                   "status": "DEPRECATED"
                 },
                 "name": {
-                  "name": {
-                    "originalName": "deprecated_setting"
-                  },
+                  "name": "deprecated_setting",
                   "wireValue": "deprecated_setting"
                 },
                 "valueType": {
@@ -890,9 +806,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "new_setting"
-                  },
+                  "name": "new_setting",
                   "wireValue": "new_setting"
                 },
                 "valueType": {
@@ -922,28 +836,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PostSuccessInlinePropertyDeprecationRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "PostSuccessInlinePropertyDeprecationRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "OK",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "NotDeprecatedSettings"
-                  },
+                  "name": "NotDeprecatedSettings",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -968,9 +874,7 @@
             "status": "DEPRECATED"
           },
           "id": "endpoint_.postSuccessInlineObjectDeprecation",
-          "name": {
-            "originalName": "postSuccessInlineObjectDeprecation"
-          },
+          "name": "postSuccessInlineObjectDeprecation",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -987,17 +891,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PostSuccessInlineObjectDeprecationRequest"
-            },
+            "name": "PostSuccessInlineObjectDeprecationRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "fine_setting"
-                  },
+                  "name": "fine_setting",
                   "wireValue": "fine_setting"
                 },
                 "valueType": {
@@ -1027,28 +927,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PostSuccessInlineObjectDeprecationRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "PostSuccessInlineObjectDeprecationRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "OK",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "NotDeprecatedSettings"
-                  },
+                  "name": "NotDeprecatedSettings",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1073,9 +965,7 @@
             "status": "PRE_RELEASE"
           },
           "id": "endpoint_.postSuccessInlineBetaBody",
-          "name": {
-            "originalName": "postSuccessInlineBetaBody"
-          },
+          "name": "postSuccessInlineBetaBody",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -1092,17 +982,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PostSuccessInlineBetaBodyRequest"
-            },
+            "name": "PostSuccessInlineBetaBodyRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "fine_setting"
-                  },
+                  "name": "fine_setting",
                   "wireValue": "fine_setting"
                 },
                 "valueType": {
@@ -1132,28 +1018,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PostSuccessInlineBetaBodyRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "PostSuccessInlineBetaBodyRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "OK",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "NotDeprecatedSettings"
-                  },
+                  "name": "NotDeprecatedSettings",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1178,9 +1056,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -1206,9 +1082,7 @@
     "types": {
       "type_:DeprecatedParam": {
         "declaration": {
-          "name": {
-            "originalName": "DeprecatedParam"
-          },
+          "name": "DeprecatedParam",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1222,9 +1096,7 @@
       },
       "type_:WholeDeprecatedSettings": {
         "declaration": {
-          "name": {
-            "originalName": "WholeDeprecatedSettings"
-          },
+          "name": "WholeDeprecatedSettings",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1233,9 +1105,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "fine_setting"
-              },
+              "name": "fine_setting",
               "wireValue": "fine_setting"
             },
             "typeReference": {
@@ -1252,9 +1122,7 @@
       },
       "type_:NotDeprecatedSettings": {
         "declaration": {
-          "name": {
-            "originalName": "NotDeprecatedSettings"
-          },
+          "name": "NotDeprecatedSettings",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1263,9 +1131,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "not_deprecated_setting"
-              },
+              "name": "not_deprecated_setting",
               "wireValue": "not_deprecated_setting"
             },
             "typeReference": {
@@ -1285,9 +1151,7 @@
     "endpoints": {
       "endpoint_.getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam": {
         "declaration": {
-          "name": {
-            "originalName": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam"
-          },
+          "name": "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1299,9 +1163,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest"
-            },
+            "name": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1310,9 +1172,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "id"
-                },
+                "name": "id",
                 "wireValue": "id"
               },
               "typeReference": {
@@ -1322,9 +1182,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "active_id"
-                },
+                "name": "active_id",
                 "wireValue": "active_id"
               },
               "typeReference": {
@@ -1334,9 +1192,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "deprecated_ref_id"
-                },
+                "name": "deprecated_ref_id",
                 "wireValue": "deprecated_ref_id"
               },
               "typeReference": {
@@ -1346,9 +1202,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "x-fern-availability_path_param"
-                },
+                "name": "x-fern-availability_path_param",
                 "wireValue": "x-fern-availability_path_param"
               },
               "typeReference": {
@@ -1360,9 +1214,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "deprecated_lang"
-                },
+                "name": "deprecated_lang",
                 "wireValue": "deprecated_lang"
               },
               "typeReference": {
@@ -1375,9 +1227,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "active_lang"
-                },
+                "name": "active_lang",
                 "wireValue": "active_lang"
               },
               "typeReference": {
@@ -1390,9 +1240,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "deprecated_ref_lang"
-                },
+                "name": "deprecated_ref_lang",
                 "wireValue": "deprecated_ref_lang"
               },
               "typeReference": {
@@ -1405,9 +1253,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "x-fern-availability_query_param"
-                },
+                "name": "x-fern-availability_query_param",
                 "wireValue": "x-fern-availability_query_param"
               },
               "typeReference": {
@@ -1422,9 +1268,7 @@
           "headers": [
             {
               "name": {
-                "name": {
-                  "originalName": "deprecatedHeader"
-                },
+                "name": "deprecatedHeader",
                 "wireValue": "X-Deprecated-Header"
               },
               "typeReference": {
@@ -1437,9 +1281,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "activeHeader"
-                },
+                "name": "activeHeader",
                 "wireValue": "X-Active-Header"
               },
               "typeReference": {
@@ -1452,9 +1294,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "deprecatedRefHeader"
-                },
+                "name": "deprecatedRefHeader",
                 "wireValue": "X-Deprecated-Ref-Header"
               },
               "typeReference": {
@@ -1467,9 +1307,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "fernAvailabilityHeader"
-                },
+                "name": "fernAvailabilityHeader",
                 "wireValue": "x-fern-availability_header"
               },
               "typeReference": {
@@ -1494,9 +1332,7 @@
       },
       "endpoint_.postSuccessRef": {
         "declaration": {
-          "name": {
-            "originalName": "postSuccessRef"
-          },
+          "name": "postSuccessRef",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1508,9 +1344,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "Settings"
-            },
+            "name": "Settings",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1523,9 +1357,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "deprecated_setting"
-                  },
+                  "name": "deprecated_setting",
                   "wireValue": "deprecated_setting"
                 },
                 "typeReference": {
@@ -1538,9 +1370,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "new_setting"
-                  },
+                  "name": "new_setting",
                   "wireValue": "new_setting"
                 },
                 "typeReference": {
@@ -1567,9 +1397,7 @@
       },
       "endpoint_.postSuccessInlinePropertyDeprecation": {
         "declaration": {
-          "name": {
-            "originalName": "postSuccessInlinePropertyDeprecation"
-          },
+          "name": "postSuccessInlinePropertyDeprecation",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1581,9 +1409,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "PostSuccessInlinePropertyDeprecationRequest"
-            },
+            "name": "PostSuccessInlinePropertyDeprecationRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1596,9 +1422,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "deprecated_setting"
-                  },
+                  "name": "deprecated_setting",
                   "wireValue": "deprecated_setting"
                 },
                 "typeReference": {
@@ -1611,9 +1435,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "new_setting"
-                  },
+                  "name": "new_setting",
                   "wireValue": "new_setting"
                 },
                 "typeReference": {
@@ -1640,9 +1462,7 @@
       },
       "endpoint_.postSuccessInlineObjectDeprecation": {
         "declaration": {
-          "name": {
-            "originalName": "postSuccessInlineObjectDeprecation"
-          },
+          "name": "postSuccessInlineObjectDeprecation",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1654,9 +1474,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "PostSuccessInlineObjectDeprecationRequest"
-            },
+            "name": "PostSuccessInlineObjectDeprecationRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1669,9 +1487,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "fine_setting"
-                  },
+                  "name": "fine_setting",
                   "wireValue": "fine_setting"
                 },
                 "typeReference": {
@@ -1698,9 +1514,7 @@
       },
       "endpoint_.postSuccessInlineBetaBody": {
         "declaration": {
-          "name": {
-            "originalName": "postSuccessInlineBetaBody"
-          },
+          "name": "postSuccessInlineBetaBody",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1712,9 +1526,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "PostSuccessInlineBetaBodyRequest"
-            },
+            "name": "PostSuccessInlineBetaBodyRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1727,9 +1539,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "fine_setting"
-                  },
+                  "name": "fine_setting",
                   "wireValue": "fine_setting"
                 },
                 "typeReference": {

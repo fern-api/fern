@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test inheritance from undiscrimnated union objects",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:PartyAccount": {
       "docs": "PartyAccount with excluded currency in response",
       "name": {
-        "name": {
-          "originalName": "PartyAccount"
-        },
+        "name": "PartyAccount",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "IbanField"
-              },
+              "name": "IbanField",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -41,9 +35,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "OtherField"
-              },
+              "name": "OtherField",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -65,9 +57,7 @@
     },
     "type_:IbanField": {
       "name": {
-        "name": {
-          "originalName": "IbanField"
-        },
+        "name": "IbanField",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -79,9 +69,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "iban"
-              },
+              "name": "iban",
               "wireValue": "iban"
             },
             "valueType": {
@@ -124,9 +112,7 @@
     },
     "type_:OtherField": {
       "name": {
-        "name": {
-          "originalName": "OtherField"
-        },
+        "name": "OtherField",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -138,17 +124,13 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "other"
-              },
+              "name": "other",
               "wireValue": "other"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "Other"
-                  },
+                  "name": "Other",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -179,9 +161,7 @@
     },
     "type_:Other": {
       "name": {
-        "name": {
-          "originalName": "Other"
-        },
+        "name": "Other",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -193,9 +173,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "identification"
-              },
+              "name": "identification",
               "wireValue": "identification"
             },
             "valueType": {
@@ -220,9 +198,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "schemeNameCone"
-              },
+              "name": "schemeNameCone",
               "wireValue": "schemeNameCone"
             },
             "valueType": {
@@ -259,9 +235,7 @@
     },
     "type_:CounterPartyAccount": {
       "name": {
-        "name": {
-          "originalName": "CounterPartyAccount"
-        },
+        "name": "CounterPartyAccount",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -273,9 +247,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "currency"
-              },
+              "name": "currency",
               "wireValue": "currency"
             },
             "valueType": {
@@ -300,9 +272,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "iban"
-              },
+              "name": "iban",
               "wireValue": "iban"
             },
             "valueType": {
@@ -333,17 +303,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "other"
-              },
+              "name": "other",
               "wireValue": "other"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "Other"
-                  },
+                  "name": "Other",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -377,9 +343,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -405,9 +369,7 @@
     "types": {
       "type_:PartyAccount": {
         "declaration": {
-          "name": {
-            "originalName": "PartyAccount"
-          },
+          "name": "PartyAccount",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -427,9 +389,7 @@
       },
       "type_:IbanField": {
         "declaration": {
-          "name": {
-            "originalName": "IbanField"
-          },
+          "name": "IbanField",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -438,9 +398,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "iban"
-              },
+              "name": "iban",
               "wireValue": "iban"
             },
             "typeReference": {
@@ -460,9 +418,7 @@
       },
       "type_:OtherField": {
         "declaration": {
-          "name": {
-            "originalName": "OtherField"
-          },
+          "name": "OtherField",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -471,9 +427,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "other"
-              },
+              "name": "other",
               "wireValue": "other"
             },
             "typeReference": {
@@ -490,9 +444,7 @@
       },
       "type_:Other": {
         "declaration": {
-          "name": {
-            "originalName": "Other"
-          },
+          "name": "Other",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -501,9 +453,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "identification"
-              },
+              "name": "identification",
               "wireValue": "identification"
             },
             "typeReference": {
@@ -516,9 +466,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "schemeNameCone"
-              },
+              "name": "schemeNameCone",
               "wireValue": "schemeNameCone"
             },
             "typeReference": {
@@ -535,9 +483,7 @@
       },
       "type_:CounterPartyAccount": {
         "declaration": {
-          "name": {
-            "originalName": "CounterPartyAccount"
-          },
+          "name": "CounterPartyAccount",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -546,9 +492,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "currency"
-              },
+              "name": "currency",
               "wireValue": "currency"
             },
             "typeReference": {
@@ -561,9 +505,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "iban"
-              },
+              "name": "iban",
               "wireValue": "iban"
             },
             "typeReference": {
@@ -579,9 +521,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "other"
-              },
+              "name": "other",
               "wireValue": "other"
             },
             "typeReference": {

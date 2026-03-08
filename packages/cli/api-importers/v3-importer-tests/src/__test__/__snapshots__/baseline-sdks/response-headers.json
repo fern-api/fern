@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Response Headers Test API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:User": {
       "name": {
-        "name": {
-          "originalName": "User"
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -48,9 +42,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -69,9 +61,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
@@ -108,9 +98,7 @@
     },
     "type_:Error": {
       "name": {
-        "name": {
-          "originalName": "Error"
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -122,9 +110,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "valueType": {
@@ -143,9 +129,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "code"
-              },
+              "name": "code",
               "wireValue": "code"
             },
             "valueType": {
@@ -184,9 +168,7 @@
   "errors": {
     "error_:NotFoundError": {
       "name": {
-        "name": {
-          "originalName": "NotFoundError"
-        },
+        "name": "NotFoundError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -194,17 +176,13 @@
         "errorId": "error_:NotFoundError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "NotFoundError"
-        },
+        "name": "NotFoundError",
         "wireValue": "NotFoundError"
       },
       "docs": "User not found",
       "statusCode": 404,
       "type": {
-        "name": {
-          "originalName": "Error"
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -225,17 +203,13 @@
                   "allParts": [],
                   "packagePath": []
                 },
-                "name": {
-                  "originalName": "Error"
-                }
+                "name": "Error"
               },
               "shape": {
                 "properties": [
                   {
                     "name": {
-                      "name": {
-                        "originalName": "message"
-                      },
+                      "name": "message",
                       "wireValue": "message"
                     },
                     "value": {
@@ -256,9 +230,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Error"
-                      }
+                      "name": "Error"
                     }
                   }
                 ],
@@ -298,9 +270,7 @@
       "endpoints": [
         {
           "id": "endpoint_.listUsers",
-          "name": {
-            "originalName": "listUsers"
-          },
+          "name": "listUsers",
           "displayName": "List all users",
           "auth": false,
           "idempotent": false,
@@ -324,9 +294,7 @@
                 "responseBodyType": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "User"
-                      },
+                      "name": "User",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -352,9 +320,7 @@
         },
         {
           "id": "endpoint_.getUser",
-          "name": {
-            "originalName": "getUser"
-          },
+          "name": "getUser",
           "displayName": "Get a user by ID",
           "auth": false,
           "idempotent": false,
@@ -379,9 +345,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "userId"
-              },
+              "name": "userId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -400,9 +364,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "userId"
-              },
+              "name": "userId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -423,28 +385,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetUserRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetUserRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "A user",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "User"
-                  },
+                  "name": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -462,9 +416,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "NotFoundError"
-                },
+                "name": "NotFoundError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -482,9 +434,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -494,9 +444,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://api.test.com"
         }
       ],
@@ -525,9 +473,7 @@
     "types": {
       "type_:User": {
         "declaration": {
-          "name": {
-            "originalName": "User"
-          },
+          "name": "User",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -536,9 +482,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -548,9 +492,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -560,9 +502,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "typeReference": {
@@ -579,9 +519,7 @@
       },
       "type_:Error": {
         "declaration": {
-          "name": {
-            "originalName": "Error"
-          },
+          "name": "Error",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -590,9 +528,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "typeReference": {
@@ -602,9 +538,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "code"
-              },
+              "name": "code",
               "wireValue": "code"
             },
             "typeReference": {
@@ -624,9 +558,7 @@
     "endpoints": {
       "endpoint_.listUsers": {
         "declaration": {
-          "name": {
-            "originalName": "listUsers"
-          },
+          "name": "listUsers",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -647,9 +579,7 @@
       },
       "endpoint_.getUser": {
         "declaration": {
-          "name": {
-            "originalName": "getUser"
-          },
+          "name": "getUser",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -661,9 +591,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetUserRequest"
-            },
+            "name": "GetUserRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -672,9 +600,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "userId"
-                },
+                "name": "userId",
                 "wireValue": "userId"
               },
               "typeReference": {
@@ -704,9 +630,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://api.test.com"
           }
         ],

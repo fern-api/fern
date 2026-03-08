@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Inlined path parameters",
   "auth": {
     "requirement": "ALL",
@@ -15,19 +13,13 @@
       "docs": "Access level",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "SearchRequestAccess"
-        },
+        "name": "SearchRequestAccess",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "organizations"
-            }
+            "organizations"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "organizations"
-          }
+          "file": "organizations"
         },
         "typeId": "type_organizations:SearchRequestAccess"
       },
@@ -35,17 +27,13 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "private"
-              },
+              "name": "private",
               "wireValue": "private"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "public"
-              },
+              "name": "public",
               "wireValue": "public"
             }
           }
@@ -61,19 +49,13 @@
     },
     "type_organizations:SearchResponse": {
       "name": {
-        "name": {
-          "originalName": "SearchResponse"
-        },
+        "name": "SearchResponse",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "organizations"
-            }
+            "organizations"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "organizations"
-          }
+          "file": "organizations"
         },
         "typeId": "type_organizations:SearchResponse"
       },
@@ -82,9 +64,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results"
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "valueType": {
@@ -127,9 +107,7 @@
     },
     "type_:GetOrganizationUserResponse": {
       "name": {
-        "name": {
-          "originalName": "GetOrganizationUserResponse"
-        },
+        "name": "GetOrganizationUserResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -141,9 +119,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results"
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "valueType": {
@@ -191,14 +167,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "organizations"
-            }
+            "organizations"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "organizations"
-          }
+          "file": "organizations"
         }
       },
       "basePath": {
@@ -217,9 +189,7 @@
         {
           "docs": "",
           "id": "endpoint_organizations.Search",
-          "name": {
-            "originalName": "Search"
-          },
+          "name": "Search",
           "displayName": "Search an organization",
           "auth": false,
           "idempotent": false,
@@ -244,9 +214,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "organization_id"
-              },
+              "name": "organization_id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -263,9 +231,7 @@
               }
             },
             {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -284,9 +250,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "organization_id"
-              },
+              "name": "organization_id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -303,9 +267,7 @@
               }
             },
             {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -325,36 +287,26 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "SearchRequest"
-            },
+            "name": "SearchRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "Access level",
                 "name": {
-                  "name": {
-                    "originalName": "access"
-                  },
+                  "name": "access",
                   "wireValue": "access"
                 },
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "SearchRequestAccess"
-                      },
+                      "name": "SearchRequestAccess",
                       "fernFilepath": {
                         "allParts": [
-                          {
-                            "originalName": "organizations"
-                          }
+                          "organizations"
                         ],
                         "packagePath": [],
-                        "file": {
-                          "originalName": "organizations"
-                        }
+                        "file": "organizations"
                       },
                       "typeId": "type_organizations:SearchRequestAccess",
                       "type": "named"
@@ -375,38 +327,26 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "SearchRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "SearchRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "SearchResponse"
-                  },
+                  "name": "SearchResponse",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "organizations"
-                      }
+                      "organizations"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "organizations"
-                    }
+                    "file": "organizations"
                   },
                   "typeId": "type_organizations:SearchResponse",
                   "type": "named"
@@ -448,9 +388,7 @@
         {
           "docs": "Returns the user with the provided user ID.",
           "id": "endpoint_.GetUser",
-          "name": {
-            "originalName": "GetUser"
-          },
+          "name": "GetUser",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -474,9 +412,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "user_id"
-              },
+              "name": "user_id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -495,9 +431,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "user_id"
-              },
+              "name": "user_id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -518,19 +452,13 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetUserRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetUserRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {},
           "errors": [],
@@ -541,9 +469,7 @@
         {
           "docs": "Returns the user with the provided user ID.",
           "id": "endpoint_.GetOrganizationUser",
-          "name": {
-            "originalName": "GetOrganizationUser"
-          },
+          "name": "GetOrganizationUser",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -575,9 +501,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "organization_id"
-              },
+              "name": "organization_id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -594,9 +518,7 @@
               }
             },
             {
-              "name": {
-                "originalName": "user_id"
-              },
+              "name": "user_id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -615,9 +537,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "organization_id"
-              },
+              "name": "organization_id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -634,9 +554,7 @@
               }
             },
             {
-              "name": {
-                "originalName": "user_id"
-              },
+              "name": "user_id",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -656,9 +574,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "limit"
-                },
+                "name": "limit",
                 "wireValue": "limit"
               },
               "valueType": {
@@ -680,28 +596,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetOrganizationUserRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetOrganizationUserRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetOrganizationUserResponse"
-                  },
+                  "name": "GetOrganizationUserResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -726,9 +634,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -756,32 +662,22 @@
     "types": {
       "type_organizations:SearchRequestAccess": {
         "declaration": {
-          "name": {
-            "originalName": "SearchRequestAccess"
-          },
+          "name": "SearchRequestAccess",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "organizations"
-              }
+              "organizations"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "organizations"
-            }
+            "file": "organizations"
           }
         },
         "values": [
           {
-            "name": {
-              "originalName": "private"
-            },
+            "name": "private",
             "wireValue": "private"
           },
           {
-            "name": {
-              "originalName": "public"
-            },
+            "name": "public",
             "wireValue": "public"
           }
         ],
@@ -789,27 +685,19 @@
       },
       "type_organizations:SearchResponse": {
         "declaration": {
-          "name": {
-            "originalName": "SearchResponse"
-          },
+          "name": "SearchResponse",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "organizations"
-              }
+              "organizations"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "organizations"
-            }
+            "file": "organizations"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results"
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "typeReference": {
@@ -829,9 +717,7 @@
       },
       "type_:GetOrganizationUserResponse": {
         "declaration": {
-          "name": {
-            "originalName": "GetOrganizationUserResponse"
-          },
+          "name": "GetOrganizationUserResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -840,9 +726,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results"
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "typeReference": {
@@ -865,19 +749,13 @@
     "endpoints": {
       "endpoint_organizations.Search": {
         "declaration": {
-          "name": {
-            "originalName": "Search"
-          },
+          "name": "Search",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "organizations"
-              }
+              "organizations"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "organizations"
-            }
+            "file": "organizations"
           }
         },
         "location": {
@@ -886,27 +764,19 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "SearchRequest"
-            },
+            "name": "SearchRequest",
             "fernFilepath": {
               "allParts": [
-                {
-                  "originalName": "organizations"
-                }
+                "organizations"
               ],
               "packagePath": [],
-              "file": {
-                "originalName": "organizations"
-              }
+              "file": "organizations"
             }
           },
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "organization_id"
-                },
+                "name": "organization_id",
                 "wireValue": "organization_id"
               },
               "typeReference": {
@@ -916,9 +786,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "id"
-                },
+                "name": "id",
                 "wireValue": "id"
               },
               "typeReference": {
@@ -933,9 +801,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "access"
-                  },
+                  "name": "access",
                   "wireValue": "access"
                 },
                 "typeReference": {
@@ -962,9 +828,7 @@
       },
       "endpoint_.GetUser": {
         "declaration": {
-          "name": {
-            "originalName": "GetUser"
-          },
+          "name": "GetUser",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -976,9 +840,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetUserRequest"
-            },
+            "name": "GetUserRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -987,9 +849,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "user_id"
-                },
+                "name": "user_id",
                 "wireValue": "user_id"
               },
               "typeReference": {
@@ -1013,9 +873,7 @@
       },
       "endpoint_.GetOrganizationUser": {
         "declaration": {
-          "name": {
-            "originalName": "GetOrganizationUser"
-          },
+          "name": "GetOrganizationUser",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1027,9 +885,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetOrganizationUserRequest"
-            },
+            "name": "GetOrganizationUserRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1038,9 +894,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "organization_id"
-                },
+                "name": "organization_id",
                 "wireValue": "organization_id"
               },
               "typeReference": {
@@ -1050,9 +904,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "user_id"
-                },
+                "name": "user_id",
                 "wireValue": "user_id"
               },
               "typeReference": {
@@ -1064,9 +916,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "limit"
-                },
+                "name": "limit",
                 "wireValue": "limit"
               },
               "typeReference": {
@@ -1096,18 +946,12 @@
     "subpackage_organizations": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "organizations"
-          }
+          "organizations"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "organizations"
-        }
+        "file": "organizations"
       },
-      "name": {
-        "originalName": "organizations"
-      },
+      "name": "organizations",
       "service": "service_organizations",
       "types": [
         "type_organizations:SearchRequestAccess",

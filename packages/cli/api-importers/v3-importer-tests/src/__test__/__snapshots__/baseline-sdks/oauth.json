@@ -1,17 +1,13 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "OAuth Token API",
   "auth": {
     "requirement": "ALL",
     "schemes": [
       {
         "key": "oauth2",
-        "token": {
-          "originalName": "token"
-        },
+        "token": "token",
         "type": "bearer"
       }
     ]
@@ -23,19 +19,13 @@
       "docs": "The type of grant to request",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "GetTokenAuthRequestGrantType"
-        },
+        "name": "GetTokenAuthRequestGrantType",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "auth"
-            }
+            "auth"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "auth"
-          }
+          "file": "auth"
         },
         "typeId": "type_auth:GetTokenAuthRequestGrantType"
       },
@@ -43,25 +33,19 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "password"
-              },
+              "name": "password",
               "wireValue": "password"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "refresh_token"
-              },
+              "name": "refresh_token",
               "wireValue": "refresh_token"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "client_credentials"
-              },
+              "name": "client_credentials",
               "wireValue": "client_credentials"
             }
           }
@@ -77,19 +61,13 @@
     },
     "type_auth:GetTokenAuthResponse": {
       "name": {
-        "name": {
-          "originalName": "GetTokenAuthResponse"
-        },
+        "name": "GetTokenAuthResponse",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "auth"
-            }
+            "auth"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "auth"
-          }
+          "file": "auth"
         },
         "typeId": "type_auth:GetTokenAuthResponse"
       },
@@ -98,9 +76,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "access_token"
-              },
+              "name": "access_token",
               "wireValue": "access_token"
             },
             "valueType": {
@@ -125,9 +101,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "token_type"
-              },
+              "name": "token_type",
               "wireValue": "token_type"
             },
             "valueType": {
@@ -153,9 +127,7 @@
           {
             "docs": "Token expiration time in seconds",
             "name": {
-              "name": {
-                "originalName": "expires_in"
-              },
+              "name": "expires_in",
               "wireValue": "expires_in"
             },
             "valueType": {
@@ -180,9 +152,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "refresh_token"
-              },
+              "name": "refresh_token",
               "wireValue": "refresh_token"
             },
             "valueType": {
@@ -221,9 +191,7 @@
   "errors": {
     "error_:BadRequestError": {
       "name": {
-        "name": {
-          "originalName": "BadRequestError"
-        },
+        "name": "BadRequestError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -231,9 +199,7 @@
         "errorId": "error_:BadRequestError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "BadRequestError"
-        },
+        "name": "BadRequestError",
         "wireValue": "BadRequestError"
       },
       "docs": "Bad request",
@@ -246,9 +212,7 @@
     },
     "error_:UnauthorizedError": {
       "name": {
-        "name": {
-          "originalName": "UnauthorizedError"
-        },
+        "name": "UnauthorizedError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -256,9 +220,7 @@
         "errorId": "error_:UnauthorizedError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "UnauthorizedError"
-        },
+        "name": "UnauthorizedError",
         "wireValue": "UnauthorizedError"
       },
       "docs": "Unauthorized",
@@ -275,14 +237,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "auth"
-            }
+            "auth"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "auth"
-          }
+          "file": "auth"
         }
       },
       "basePath": {
@@ -301,9 +259,7 @@
         {
           "docs": "Exchange credentials or refresh token for an access token",
           "id": "endpoint_auth.get-token",
-          "name": {
-            "originalName": "get-token"
-          },
+          "name": "get-token",
           "displayName": "Request an access token",
           "auth": false,
           "idempotent": false,
@@ -321,34 +277,24 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "GetTokenAuthRequest"
-            },
+            "name": "GetTokenAuthRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "The type of grant to request",
                 "name": {
-                  "name": {
-                    "originalName": "grant_type"
-                  },
+                  "name": "grant_type",
                   "wireValue": "grant_type"
                 },
                 "valueType": {
-                  "name": {
-                    "originalName": "GetTokenAuthRequestGrantType"
-                  },
+                  "name": "GetTokenAuthRequestGrantType",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "auth"
-                      }
+                      "auth"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "auth"
-                    }
+                    "file": "auth"
                   },
                   "typeId": "type_auth:GetTokenAuthRequestGrantType",
                   "type": "named"
@@ -361,9 +307,7 @@
               {
                 "docs": "Required for password grant type",
                 "name": {
-                  "name": {
-                    "originalName": "username"
-                  },
+                  "name": "username",
                   "wireValue": "username"
                 },
                 "valueType": {
@@ -389,9 +333,7 @@
               {
                 "docs": "Required for password grant type",
                 "name": {
-                  "name": {
-                    "originalName": "password"
-                  },
+                  "name": "password",
                   "wireValue": "password"
                 },
                 "valueType": {
@@ -417,9 +359,7 @@
               {
                 "docs": "Required for refresh_token grant type",
                 "name": {
-                  "name": {
-                    "originalName": "refresh_token"
-                  },
+                  "name": "refresh_token",
                   "wireValue": "refresh_token"
                 },
                 "valueType": {
@@ -445,9 +385,7 @@
               {
                 "docs": "The client identifier",
                 "name": {
-                  "name": {
-                    "originalName": "client_id"
-                  },
+                  "name": "client_id",
                   "wireValue": "client_id"
                 },
                 "valueType": {
@@ -467,9 +405,7 @@
               {
                 "docs": "The client secret",
                 "name": {
-                  "name": {
-                    "originalName": "client_secret"
-                  },
+                  "name": "client_secret",
                   "wireValue": "client_secret"
                 },
                 "valueType": {
@@ -493,38 +429,26 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetTokenAuthRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetTokenAuthRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful token response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetTokenAuthResponse"
-                  },
+                  "name": "GetTokenAuthResponse",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "auth"
-                      }
+                      "auth"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "auth"
-                    }
+                    "file": "auth"
                   },
                   "typeId": "type_auth:GetTokenAuthResponse",
                   "type": "named"
@@ -539,9 +463,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "BadRequestError"
-                },
+                "name": "BadRequestError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -551,9 +473,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "UnauthorizedError"
-                },
+                "name": "UnauthorizedError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -571,9 +491,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -583,9 +501,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://api.example.com/v1"
         }
       ],
@@ -613,38 +529,26 @@
     "types": {
       "type_auth:GetTokenAuthRequestGrantType": {
         "declaration": {
-          "name": {
-            "originalName": "GetTokenAuthRequestGrantType"
-          },
+          "name": "GetTokenAuthRequestGrantType",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "auth"
-              }
+              "auth"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "auth"
-            }
+            "file": "auth"
           }
         },
         "values": [
           {
-            "name": {
-              "originalName": "password"
-            },
+            "name": "password",
             "wireValue": "password"
           },
           {
-            "name": {
-              "originalName": "refresh_token"
-            },
+            "name": "refresh_token",
             "wireValue": "refresh_token"
           },
           {
-            "name": {
-              "originalName": "client_credentials"
-            },
+            "name": "client_credentials",
             "wireValue": "client_credentials"
           }
         ],
@@ -652,27 +556,19 @@
       },
       "type_auth:GetTokenAuthResponse": {
         "declaration": {
-          "name": {
-            "originalName": "GetTokenAuthResponse"
-          },
+          "name": "GetTokenAuthResponse",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "auth"
-              }
+              "auth"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "auth"
-            }
+            "file": "auth"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "access_token"
-              },
+              "name": "access_token",
               "wireValue": "access_token"
             },
             "typeReference": {
@@ -685,9 +581,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "token_type"
-              },
+              "name": "token_type",
               "wireValue": "token_type"
             },
             "typeReference": {
@@ -700,9 +594,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "expires_in"
-              },
+              "name": "expires_in",
               "wireValue": "expires_in"
             },
             "typeReference": {
@@ -715,9 +607,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "refresh_token"
-              },
+              "name": "refresh_token",
               "wireValue": "refresh_token"
             },
             "typeReference": {
@@ -738,25 +628,17 @@
       "endpoint_auth.get-token": {
         "auth": {
           "key": "oauth2",
-          "token": {
-            "originalName": "token"
-          },
+          "token": "token",
           "type": "bearer"
         },
         "declaration": {
-          "name": {
-            "originalName": "get-token"
-          },
+          "name": "get-token",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "auth"
-              }
+              "auth"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "auth"
-            }
+            "file": "auth"
           }
         },
         "location": {
@@ -765,19 +647,13 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetTokenAuthRequest"
-            },
+            "name": "GetTokenAuthRequest",
             "fernFilepath": {
               "allParts": [
-                {
-                  "originalName": "auth"
-                }
+                "auth"
               ],
               "packagePath": [],
-              "file": {
-                "originalName": "auth"
-              }
+              "file": "auth"
             }
           },
           "pathParameters": [],
@@ -787,9 +663,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "grant_type"
-                  },
+                  "name": "grant_type",
                   "wireValue": "grant_type"
                 },
                 "typeReference": {
@@ -799,9 +673,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "username"
-                  },
+                  "name": "username",
                   "wireValue": "username"
                 },
                 "typeReference": {
@@ -814,9 +686,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "password"
-                  },
+                  "name": "password",
                   "wireValue": "password"
                 },
                 "typeReference": {
@@ -829,9 +699,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "refresh_token"
-                  },
+                  "name": "refresh_token",
                   "wireValue": "refresh_token"
                 },
                 "typeReference": {
@@ -844,9 +712,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "client_id"
-                  },
+                  "name": "client_id",
                   "wireValue": "client_id"
                 },
                 "typeReference": {
@@ -856,9 +722,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "client_secret"
-                  },
+                  "name": "client_secret",
                   "wireValue": "client_secret"
                 },
                 "typeReference": {
@@ -888,9 +752,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://api.example.com/v1"
           }
         ],
@@ -904,18 +766,12 @@
     "subpackage_auth": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "auth"
-          }
+          "auth"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "auth"
-        }
+        "file": "auth"
       },
-      "name": {
-        "originalName": "auth"
-      },
+      "name": "auth",
       "service": "service_auth",
       "types": [
         "type_auth:GetTokenAuthRequestGrantType",

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "API 1",
   "auth": {
     "requirement": "ALL",
@@ -13,19 +11,13 @@
   "types": {
     "type_other:Comment": {
       "name": {
-        "name": {
-          "originalName": "Comment"
-        },
+        "name": "Comment",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "other"
-            }
+            "other"
           ],
           "packagePath": [
-            {
-              "originalName": "other"
-            }
+            "other"
           ]
         },
         "typeId": "type_other:Comment"
@@ -35,9 +27,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -56,9 +46,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "text"
-              },
+              "name": "text",
               "wireValue": "text"
             },
             "valueType": {
@@ -89,19 +77,13 @@
     },
     "type_shared:User": {
       "name": {
-        "name": {
-          "originalName": "User"
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "shared"
-            }
+            "shared"
           ],
           "packagePath": [
-            {
-              "originalName": "shared"
-            }
+            "shared"
           ]
         },
         "typeId": "type_shared:User"
@@ -111,9 +93,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -132,9 +112,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -165,19 +143,13 @@
     },
     "type_shared:Post": {
       "name": {
-        "name": {
-          "originalName": "Post"
-        },
+        "name": "Post",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "shared"
-            }
+            "shared"
           ],
           "packagePath": [
-            {
-              "originalName": "shared"
-            }
+            "shared"
           ]
         },
         "typeId": "type_shared:Post"
@@ -187,9 +159,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -208,9 +178,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "title"
-              },
+              "name": "title",
               "wireValue": "title"
             },
             "valueType": {
@@ -246,14 +214,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "other"
-            }
+            "other"
           ],
           "packagePath": [
-            {
-              "originalName": "other"
-            }
+            "other"
           ]
         }
       },
@@ -272,9 +236,7 @@
       "endpoints": [
         {
           "id": "endpoint_other.getComments",
-          "name": {
-            "originalName": "getComments"
-          },
+          "name": "getComments",
           "displayName": "Get comments",
           "auth": false,
           "idempotent": false,
@@ -298,19 +260,13 @@
                 "responseBodyType": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "Comment"
-                      },
+                      "name": "Comment",
                       "fernFilepath": {
                         "allParts": [
-                          {
-                            "originalName": "other"
-                          }
+                          "other"
                         ],
                         "packagePath": [
-                          {
-                            "originalName": "other"
-                          }
+                          "other"
                         ]
                       },
                       "typeId": "type_other:Comment",
@@ -338,14 +294,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "shared"
-            }
+            "shared"
           ],
           "packagePath": [
-            {
-              "originalName": "shared"
-            }
+            "shared"
           ]
         }
       },
@@ -364,9 +316,7 @@
       "endpoints": [
         {
           "id": "endpoint_shared.getUsers",
-          "name": {
-            "originalName": "getUsers"
-          },
+          "name": "getUsers",
           "displayName": "Get users",
           "auth": false,
           "idempotent": false,
@@ -390,19 +340,13 @@
                 "responseBodyType": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "User"
-                      },
+                      "name": "User",
                       "fernFilepath": {
                         "allParts": [
-                          {
-                            "originalName": "shared"
-                          }
+                          "shared"
                         ],
                         "packagePath": [
-                          {
-                            "originalName": "shared"
-                          }
+                          "shared"
                         ]
                       },
                       "typeId": "type_shared:User",
@@ -426,9 +370,7 @@
         },
         {
           "id": "endpoint_shared.getPosts",
-          "name": {
-            "originalName": "getPosts"
-          },
+          "name": "getPosts",
           "displayName": "Get posts",
           "auth": false,
           "idempotent": false,
@@ -452,19 +394,13 @@
                 "responseBodyType": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "Post"
-                      },
+                      "name": "Post",
                       "fernFilepath": {
                         "allParts": [
-                          {
-                            "originalName": "shared"
-                          }
+                          "shared"
                         ],
                         "packagePath": [
-                          {
-                            "originalName": "shared"
-                          }
+                          "shared"
                         ]
                       },
                       "typeId": "type_shared:Post",
@@ -491,9 +427,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -521,28 +455,20 @@
     "types": {
       "type_other:Comment": {
         "declaration": {
-          "name": {
-            "originalName": "Comment"
-          },
+          "name": "Comment",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "other"
-              }
+              "other"
             ],
             "packagePath": [
-              {
-                "originalName": "other"
-              }
+              "other"
             ]
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -552,9 +478,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "text"
-              },
+              "name": "text",
               "wireValue": "text"
             },
             "typeReference": {
@@ -568,28 +492,20 @@
       },
       "type_shared:User": {
         "declaration": {
-          "name": {
-            "originalName": "User"
-          },
+          "name": "User",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "shared"
-              }
+              "shared"
             ],
             "packagePath": [
-              {
-                "originalName": "shared"
-              }
+              "shared"
             ]
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -599,9 +515,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -615,28 +529,20 @@
       },
       "type_shared:Post": {
         "declaration": {
-          "name": {
-            "originalName": "Post"
-          },
+          "name": "Post",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "shared"
-              }
+              "shared"
             ],
             "packagePath": [
-              {
-                "originalName": "shared"
-              }
+              "shared"
             ]
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -646,9 +552,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "title"
-              },
+              "name": "title",
               "wireValue": "title"
             },
             "typeReference": {
@@ -665,19 +569,13 @@
     "endpoints": {
       "endpoint_other.getComments": {
         "declaration": {
-          "name": {
-            "originalName": "getComments"
-          },
+          "name": "getComments",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "other"
-              }
+              "other"
             ],
             "packagePath": [
-              {
-                "originalName": "other"
-              }
+              "other"
             ]
           }
         },
@@ -696,19 +594,13 @@
       },
       "endpoint_shared.getUsers": {
         "declaration": {
-          "name": {
-            "originalName": "getUsers"
-          },
+          "name": "getUsers",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "shared"
-              }
+              "shared"
             ],
             "packagePath": [
-              {
-                "originalName": "shared"
-              }
+              "shared"
             ]
           }
         },
@@ -727,19 +619,13 @@
       },
       "endpoint_shared.getPosts": {
         "declaration": {
-          "name": {
-            "originalName": "getPosts"
-          },
+          "name": "getPosts",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "shared"
-              }
+              "shared"
             ],
             "packagePath": [
-              {
-                "originalName": "shared"
-              }
+              "shared"
             ]
           }
         },
@@ -765,19 +651,13 @@
     "subpackage_other": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "other"
-          }
+          "other"
         ],
         "packagePath": [
-          {
-            "originalName": "other"
-          }
+          "other"
         ]
       },
-      "name": {
-        "originalName": "other"
-      },
+      "name": "other",
       "service": "service_other",
       "types": [
         "type_other:Comment"
@@ -789,19 +669,13 @@
     "subpackage_shared": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "shared"
-          }
+          "shared"
         ],
         "packagePath": [
-          {
-            "originalName": "shared"
-          }
+          "shared"
         ]
       },
-      "name": {
-        "originalName": "shared"
-      },
+      "name": "shared",
       "service": "service_shared",
       "types": [
         "type_shared:User",

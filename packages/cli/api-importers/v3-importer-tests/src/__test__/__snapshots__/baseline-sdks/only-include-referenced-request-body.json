@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Request Body Reference Test",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:ItemMetadata": {
       "docs": "This schema is transitively referenced and should be kept",
       "name": {
-        "name": {
-          "originalName": "ItemMetadata"
-        },
+        "name": "ItemMetadata",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "tags"
-              },
+              "name": "tags",
               "wireValue": "tags"
             },
             "valueType": {
@@ -74,9 +68,7 @@
     "type_:Item": {
       "docs": "This schema is referenced by response and should be kept",
       "name": {
-        "name": {
-          "originalName": "Item"
-        },
+        "name": "Item",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -88,9 +80,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -109,9 +99,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -165,9 +153,7 @@
       "endpoints": [
         {
           "id": "endpoint_.createItem",
-          "name": {
-            "originalName": "createItem"
-          },
+          "name": "createItem",
           "displayName": "Create an item",
           "auth": false,
           "idempotent": false,
@@ -185,17 +171,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "CreateItemRequest"
-            },
+            "name": "CreateItemRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "name"
-                  },
+                  "name": "name",
                   "wireValue": "name"
                 },
                 "valueType": {
@@ -214,17 +196,13 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "metadata"
-                  },
+                  "name": "metadata",
                   "wireValue": "metadata"
                 },
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "ItemMetadata"
-                      },
+                      "name": "ItemMetadata",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -248,28 +226,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "CreateItemRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "CreateItemRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Created",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Item"
-                  },
+                  "name": "Item",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -294,9 +264,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -321,9 +289,7 @@
     "types": {
       "type_:ItemMetadata": {
         "declaration": {
-          "name": {
-            "originalName": "ItemMetadata"
-          },
+          "name": "ItemMetadata",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -332,9 +298,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "tags"
-              },
+              "name": "tags",
               "wireValue": "tags"
             },
             "typeReference": {
@@ -354,9 +318,7 @@
       },
       "type_:Item": {
         "declaration": {
-          "name": {
-            "originalName": "Item"
-          },
+          "name": "Item",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -365,9 +327,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -377,9 +337,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -396,9 +354,7 @@
     "endpoints": {
       "endpoint_.createItem": {
         "declaration": {
-          "name": {
-            "originalName": "createItem"
-          },
+          "name": "createItem",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -410,9 +366,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "CreateItemRequest"
-            },
+            "name": "CreateItemRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -425,9 +379,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "name"
-                  },
+                  "name": "name",
                   "wireValue": "name"
                 },
                 "typeReference": {
@@ -437,9 +389,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "metadata"
-                  },
+                  "name": "metadata",
                   "wireValue": "metadata"
                 },
                 "typeReference": {

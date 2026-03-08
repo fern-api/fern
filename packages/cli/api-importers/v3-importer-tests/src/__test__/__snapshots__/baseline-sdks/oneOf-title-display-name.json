@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:PostTestOneOfDisplayNameRequestFieldsItemId": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PostTestOneOfDisplayNameRequestFieldsItemId"
-        },
+        "name": "PostTestOneOfDisplayNameRequestFieldsItemId",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -68,9 +62,7 @@
     "type_:PostTestOneOfDisplayNameRequestFieldsItemName": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PostTestOneOfDisplayNameRequestFieldsItemName"
-        },
+        "name": "PostTestOneOfDisplayNameRequestFieldsItemName",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -82,9 +74,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -122,9 +112,7 @@
     "type_:PostTestOneOfDisplayNameRequestFieldsItem": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PostTestOneOfDisplayNameRequestFieldsItem"
-        },
+        "name": "PostTestOneOfDisplayNameRequestFieldsItem",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -135,9 +123,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "PostTestOneOfDisplayNameRequestFieldsItemId"
-              },
+              "name": "PostTestOneOfDisplayNameRequestFieldsItemId",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -149,9 +135,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "PostTestOneOfDisplayNameRequestFieldsItemName"
-              },
+              "name": "PostTestOneOfDisplayNameRequestFieldsItemName",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -173,9 +157,7 @@
     },
     "type_:PostTestOneOfDisplayNameResponse": {
       "name": {
-        "name": {
-          "originalName": "PostTestOneOfDisplayNameResponse"
-        },
+        "name": "PostTestOneOfDisplayNameResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -187,9 +169,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -243,9 +223,7 @@
       "endpoints": [
         {
           "id": "endpoint_.postTestOneOfDisplayName",
-          "name": {
-            "originalName": "postTestOneOfDisplayName"
-          },
+          "name": "postTestOneOfDisplayName",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -262,17 +240,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PostTestOneOfDisplayNameRequest"
-            },
+            "name": "PostTestOneOfDisplayNameRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "fields"
-                  },
+                  "name": "fields",
                   "wireValue": "fields"
                 },
                 "valueType": {
@@ -280,9 +254,7 @@
                     "optional": {
                       "container": {
                         "list": {
-                          "name": {
-                            "originalName": "PostTestOneOfDisplayNameRequestFieldsItem"
-                          },
+                          "name": "PostTestOneOfDisplayNameRequestFieldsItem",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
@@ -310,27 +282,19 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PostTestOneOfDisplayNameRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "PostTestOneOfDisplayNameRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "PostTestOneOfDisplayNameResponse"
-                  },
+                  "name": "PostTestOneOfDisplayNameResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -354,9 +318,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -383,9 +345,7 @@
     "types": {
       "type_:PostTestOneOfDisplayNameRequestFieldsItemId": {
         "declaration": {
-          "name": {
-            "originalName": "PostTestOneOfDisplayNameRequestFieldsItemId"
-          },
+          "name": "PostTestOneOfDisplayNameRequestFieldsItemId",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -394,9 +354,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -413,9 +371,7 @@
       },
       "type_:PostTestOneOfDisplayNameRequestFieldsItemName": {
         "declaration": {
-          "name": {
-            "originalName": "PostTestOneOfDisplayNameRequestFieldsItemName"
-          },
+          "name": "PostTestOneOfDisplayNameRequestFieldsItemName",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -424,9 +380,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -443,9 +397,7 @@
       },
       "type_:PostTestOneOfDisplayNameRequestFieldsItem": {
         "declaration": {
-          "name": {
-            "originalName": "PostTestOneOfDisplayNameRequestFieldsItem"
-          },
+          "name": "PostTestOneOfDisplayNameRequestFieldsItem",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -465,9 +417,7 @@
       },
       "type_:PostTestOneOfDisplayNameResponse": {
         "declaration": {
-          "name": {
-            "originalName": "PostTestOneOfDisplayNameResponse"
-          },
+          "name": "PostTestOneOfDisplayNameResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -476,9 +426,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -495,9 +443,7 @@
     "endpoints": {
       "endpoint_.postTestOneOfDisplayName": {
         "declaration": {
-          "name": {
-            "originalName": "postTestOneOfDisplayName"
-          },
+          "name": "postTestOneOfDisplayName",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -509,9 +455,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "PostTestOneOfDisplayNameRequest"
-            },
+            "name": "PostTestOneOfDisplayNameRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -524,9 +468,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "fields"
-                  },
+                  "name": "fields",
                   "wireValue": "fields"
                 },
                 "typeReference": {

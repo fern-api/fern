@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Sample API",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:GetExampleResponseMessage": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "GetExampleResponseMessage"
-        },
+        "name": "GetExampleResponseMessage",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "valueType": {
@@ -67,9 +61,7 @@
     },
     "type_:GetExampleResponse": {
       "name": {
-        "name": {
-          "originalName": "GetExampleResponse"
-        },
+        "name": "GetExampleResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -80,9 +72,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "Schema"
-              },
+              "name": "Schema",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -94,9 +84,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "GetExampleResponseMessage"
-              },
+              "name": "GetExampleResponseMessage",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -118,9 +106,7 @@
     },
     "type_:String": {
       "name": {
-        "name": {
-          "originalName": "String"
-        },
+        "name": "String",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -162,9 +148,7 @@
     },
     "type_:Schema": {
       "name": {
-        "name": {
-          "originalName": "Schema"
-        },
+        "name": "Schema",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -177,9 +161,7 @@
           {
             "docs": "The unique ID of the type.",
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -213,9 +195,7 @@
           {
             "docs": "The age of the type.",
             "name": {
-              "name": {
-                "originalName": "age"
-              },
+              "name": "age",
               "wireValue": "age"
             },
             "valueType": {
@@ -247,9 +227,7 @@
           {
             "docs": "The unique name of the type.",
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -281,9 +259,7 @@
           {
             "docs": "The value of the type.",
             "name": {
-              "name": {
-                "originalName": "value"
-              },
+              "name": "value",
               "wireValue": "value"
             },
             "valueType": {
@@ -349,9 +325,7 @@
       "endpoints": [
         {
           "id": "endpoint_.defaultAndValidationRules",
-          "name": {
-            "originalName": "defaultAndValidationRules"
-          },
+          "name": "defaultAndValidationRules",
           "displayName": "Default and validation rules",
           "auth": false,
           "idempotent": false,
@@ -373,9 +347,7 @@
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetExampleResponse"
-                  },
+                  "name": "GetExampleResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -400,9 +372,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -430,9 +400,7 @@
     "types": {
       "type_:GetExampleResponseMessage": {
         "declaration": {
-          "name": {
-            "originalName": "GetExampleResponseMessage"
-          },
+          "name": "GetExampleResponseMessage",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -441,9 +409,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "typeReference": {
@@ -460,9 +426,7 @@
       },
       "type_:GetExampleResponse": {
         "declaration": {
-          "name": {
-            "originalName": "GetExampleResponse"
-          },
+          "name": "GetExampleResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -482,9 +446,7 @@
       },
       "type_:String": {
         "declaration": {
-          "name": {
-            "originalName": "String"
-          },
+          "name": "String",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -498,9 +460,7 @@
       },
       "type_:Schema": {
         "declaration": {
-          "name": {
-            "originalName": "Schema"
-          },
+          "name": "Schema",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -509,9 +469,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -524,9 +482,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "age"
-              },
+              "name": "age",
               "wireValue": "age"
             },
             "typeReference": {
@@ -539,9 +495,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -554,9 +508,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "value"
-              },
+              "name": "value",
               "wireValue": "value"
             },
             "typeReference": {
@@ -576,9 +528,7 @@
     "endpoints": {
       "endpoint_.defaultAndValidationRules": {
         "declaration": {
-          "name": {
-            "originalName": "defaultAndValidationRules"
-          },
+          "name": "defaultAndValidationRules",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

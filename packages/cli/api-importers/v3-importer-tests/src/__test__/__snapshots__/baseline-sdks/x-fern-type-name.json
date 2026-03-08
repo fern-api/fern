@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-type-name`.",
   "auth": {
     "requirement": "ALL",
@@ -15,9 +13,7 @@
       "docs": "An example object type",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "Object Example"
-        },
+        "name": "Object Example",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -29,9 +25,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -56,9 +50,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -97,9 +89,7 @@
       "docs": "An enumerated string type",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "Enum Example"
-        },
+        "name": "Enum Example",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -110,25 +100,19 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "VALUE_1"
-              },
+              "name": "VALUE_1",
               "wireValue": "VALUE_1"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "VALUE_2"
-              },
+              "name": "VALUE_2",
               "wireValue": "VALUE_2"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "VALUE_3"
-              },
+              "name": "VALUE_3",
               "wireValue": "VALUE_3"
             }
           }
@@ -146,9 +130,7 @@
       "docs": "Can be either a string or number",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "AnyOf Example"
-        },
+        "name": "AnyOf Example",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -191,9 +173,7 @@
     },
     "type_:GetTestExtensionXFernTypeNameResponse": {
       "name": {
-        "name": {
-          "originalName": "GetTestExtensionXFernTypeNameResponse"
-        },
+        "name": "GetTestExtensionXFernTypeNameResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -206,9 +186,7 @@
           {
             "docs": "A simple string primitive",
             "name": {
-              "name": {
-                "originalName": "string_primitive"
-              },
+              "name": "string_primitive",
               "wireValue": "string_primitive"
             },
             "valueType": {
@@ -234,9 +212,7 @@
           {
             "docs": "A simple number primitive",
             "name": {
-              "name": {
-                "originalName": "number_primitive"
-              },
+              "name": "number_primitive",
               "wireValue": "number_primitive"
             },
             "valueType": {
@@ -262,9 +238,7 @@
           {
             "docs": "A simple boolean primitive",
             "name": {
-              "name": {
-                "originalName": "boolean_primitive"
-              },
+              "name": "boolean_primitive",
               "wireValue": "boolean_primitive"
             },
             "valueType": {
@@ -290,17 +264,13 @@
           {
             "docs": "An example object type",
             "name": {
-              "name": {
-                "originalName": "object_type"
-              },
+              "name": "object_type",
               "wireValue": "object_type"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "Object Example"
-                  },
+                  "name": "Object Example",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -320,9 +290,7 @@
           {
             "docs": "An array of strings",
             "name": {
-              "name": {
-                "originalName": "array_type"
-              },
+              "name": "array_type",
               "wireValue": "array_type"
             },
             "valueType": {
@@ -354,17 +322,13 @@
           {
             "docs": "An enumerated string type",
             "name": {
-              "name": {
-                "originalName": "enum_type"
-              },
+              "name": "enum_type",
               "wireValue": "enum_type"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "Enum Example"
-                  },
+                  "name": "Enum Example",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -384,17 +348,13 @@
           {
             "docs": "Can be either a string or number",
             "name": {
-              "name": {
-                "originalName": "anyof_type"
-              },
+              "name": "anyof_type",
               "wireValue": "anyof_type"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "AnyOf Example"
-                  },
+                  "name": "AnyOf Example",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -448,9 +408,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getWorkspaceAuditLogs",
-          "name": {
-            "originalName": "getWorkspaceAuditLogs"
-          },
+          "name": "getWorkspaceAuditLogs",
           "displayName": "Get Workspace Audit Logs",
           "auth": false,
           "idempotent": false,
@@ -472,9 +430,7 @@
               "value": {
                 "docs": "A list of workspace audit logs",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetTestExtensionXFernTypeNameResponse"
-                  },
+                  "name": "GetTestExtensionXFernTypeNameResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -499,9 +455,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -528,9 +482,7 @@
     "types": {
       "type_:Object Example": {
         "declaration": {
-          "name": {
-            "originalName": "Object Example"
-          },
+          "name": "Object Example",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -539,9 +491,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -554,9 +504,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -573,9 +521,7 @@
       },
       "type_:Enum Example": {
         "declaration": {
-          "name": {
-            "originalName": "Enum Example"
-          },
+          "name": "Enum Example",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -583,21 +529,15 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "VALUE_1"
-            },
+            "name": "VALUE_1",
             "wireValue": "VALUE_1"
           },
           {
-            "name": {
-              "originalName": "VALUE_2"
-            },
+            "name": "VALUE_2",
             "wireValue": "VALUE_2"
           },
           {
-            "name": {
-              "originalName": "VALUE_3"
-            },
+            "name": "VALUE_3",
             "wireValue": "VALUE_3"
           }
         ],
@@ -605,9 +545,7 @@
       },
       "type_:AnyOf Example": {
         "declaration": {
-          "name": {
-            "originalName": "AnyOf Example"
-          },
+          "name": "AnyOf Example",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -627,9 +565,7 @@
       },
       "type_:GetTestExtensionXFernTypeNameResponse": {
         "declaration": {
-          "name": {
-            "originalName": "GetTestExtensionXFernTypeNameResponse"
-          },
+          "name": "GetTestExtensionXFernTypeNameResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -638,9 +574,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "string_primitive"
-              },
+              "name": "string_primitive",
               "wireValue": "string_primitive"
             },
             "typeReference": {
@@ -653,9 +587,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "number_primitive"
-              },
+              "name": "number_primitive",
               "wireValue": "number_primitive"
             },
             "typeReference": {
@@ -668,9 +600,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "boolean_primitive"
-              },
+              "name": "boolean_primitive",
               "wireValue": "boolean_primitive"
             },
             "typeReference": {
@@ -683,9 +613,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "object_type"
-              },
+              "name": "object_type",
               "wireValue": "object_type"
             },
             "typeReference": {
@@ -698,9 +626,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "array_type"
-              },
+              "name": "array_type",
               "wireValue": "array_type"
             },
             "typeReference": {
@@ -716,9 +642,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "enum_type"
-              },
+              "name": "enum_type",
               "wireValue": "enum_type"
             },
             "typeReference": {
@@ -731,9 +655,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "anyof_type"
-              },
+              "name": "anyof_type",
               "wireValue": "anyof_type"
             },
             "typeReference": {
@@ -753,9 +675,7 @@
     "endpoints": {
       "endpoint_.getWorkspaceAuditLogs": {
         "declaration": {
-          "name": {
-            "originalName": "getWorkspaceAuditLogs"
-          },
+          "name": "getWorkspaceAuditLogs",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Example API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:ExampleResponse": {
       "name": {
-        "name": {
-          "originalName": "ExampleResponse"
-        },
+        "name": "ExampleResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -26,9 +22,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "StatusEnum"
-              },
+              "name": "StatusEnum",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -40,9 +34,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "PriorityEnum"
-              },
+              "name": "PriorityEnum",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -54,9 +46,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "ErrorCodeEnum"
-              },
+              "name": "ErrorCodeEnum",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -79,9 +69,7 @@
     "type_:StatusEnum": {
       "docs": "Status of the resource",
       "name": {
-        "name": {
-          "originalName": "StatusEnum"
-        },
+        "name": "StatusEnum",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -92,25 +80,19 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "ACTIVE"
-              },
+              "name": "ACTIVE",
               "wireValue": "ACTIVE"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "INACTIVE"
-              },
+              "name": "INACTIVE",
               "wireValue": "INACTIVE"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "PENDING"
-              },
+              "name": "PENDING",
               "wireValue": "PENDING"
             }
           }
@@ -127,9 +109,7 @@
     "type_:PriorityEnum": {
       "docs": "Priority level (1=Low, 2=Medium, 3=High)",
       "name": {
-        "name": {
-          "originalName": "PriorityEnum"
-        },
+        "name": "PriorityEnum",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -167,9 +147,7 @@
     "type_:ErrorCodeEnum": {
       "docs": "Error codes",
       "name": {
-        "name": {
-          "originalName": "ErrorCodeEnum"
-        },
+        "name": "ErrorCodeEnum",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -180,25 +158,19 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "NOT_FOUND"
-              },
+              "name": "NOT_FOUND",
               "wireValue": "NOT_FOUND"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "UNAUTHORIZED"
-              },
+              "name": "UNAUTHORIZED",
               "wireValue": "UNAUTHORIZED"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "BAD_REQUEST"
-              },
+              "name": "BAD_REQUEST",
               "wireValue": "BAD_REQUEST"
             }
           }
@@ -237,9 +209,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getExample",
-          "name": {
-            "originalName": "getExample"
-          },
+          "name": "getExample",
           "displayName": "Get Example",
           "auth": false,
           "idempotent": false,
@@ -261,9 +231,7 @@
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "ExampleResponse"
-                  },
+                  "name": "ExampleResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -288,9 +256,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -317,9 +283,7 @@
     "types": {
       "type_:ExampleResponse": {
         "declaration": {
-          "name": {
-            "originalName": "ExampleResponse"
-          },
+          "name": "ExampleResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -343,9 +307,7 @@
       },
       "type_:StatusEnum": {
         "declaration": {
-          "name": {
-            "originalName": "StatusEnum"
-          },
+          "name": "StatusEnum",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -353,21 +315,15 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "ACTIVE"
-            },
+            "name": "ACTIVE",
             "wireValue": "ACTIVE"
           },
           {
-            "name": {
-              "originalName": "INACTIVE"
-            },
+            "name": "INACTIVE",
             "wireValue": "INACTIVE"
           },
           {
-            "name": {
-              "originalName": "PENDING"
-            },
+            "name": "PENDING",
             "wireValue": "PENDING"
           }
         ],
@@ -375,9 +331,7 @@
       },
       "type_:PriorityEnum": {
         "declaration": {
-          "name": {
-            "originalName": "PriorityEnum"
-          },
+          "name": "PriorityEnum",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -391,9 +345,7 @@
       },
       "type_:ErrorCodeEnum": {
         "declaration": {
-          "name": {
-            "originalName": "ErrorCodeEnum"
-          },
+          "name": "ErrorCodeEnum",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -401,21 +353,15 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "NOT_FOUND"
-            },
+            "name": "NOT_FOUND",
             "wireValue": "NOT_FOUND"
           },
           {
-            "name": {
-              "originalName": "UNAUTHORIZED"
-            },
+            "name": "UNAUTHORIZED",
             "wireValue": "UNAUTHORIZED"
           },
           {
-            "name": {
-              "originalName": "BAD_REQUEST"
-            },
+            "name": "BAD_REQUEST",
             "wireValue": "BAD_REQUEST"
           }
         ],
@@ -426,9 +372,7 @@
     "endpoints": {
       "endpoint_.getExample": {
         "declaration": {
-          "name": {
-            "originalName": "getExample"
-          },
+          "name": "getExample",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

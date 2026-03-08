@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test API",
   "auth": {
     "requirement": "ALL",
@@ -35,9 +33,7 @@
       "endpoints": [
         {
           "id": "endpoint_.list",
-          "name": {
-            "originalName": "list"
-          },
+          "name": "list",
           "auth": false,
           "idempotent": false,
           "baseUrl": "Debug",
@@ -84,9 +80,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -96,23 +90,17 @@
       "baseUrls": [
         {
           "id": "Base",
-          "name": {
-            "originalName": "Base"
-          }
+          "name": "Base"
         },
         {
           "id": "Debug",
-          "name": {
-            "originalName": "Debug"
-          }
+          "name": "Debug"
         }
       ],
       "environments": [
         {
           "id": "Prod",
-          "name": {
-            "originalName": "Prod"
-          },
+          "name": "Prod",
           "urls": {
             "Base": "http://prod.api.com",
             "Debug": "http://debug.api.com"
@@ -120,9 +108,7 @@
         },
         {
           "id": "Dev",
-          "name": {
-            "originalName": "Dev"
-          },
+          "name": "Dev",
           "urls": {
             "Base": "http://dev.api.com",
             "Debug": "http://debug.api.com"
@@ -150,9 +136,7 @@
     "endpoints": {
       "endpoint_.list": {
         "declaration": {
-          "name": {
-            "originalName": "list"
-          },
+          "name": "list",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -179,23 +163,17 @@
         "baseUrls": [
           {
             "id": "Base",
-            "name": {
-              "originalName": "Base"
-            }
+            "name": "Base"
           },
           {
             "id": "Debug",
-            "name": {
-              "originalName": "Debug"
-            }
+            "name": "Debug"
           }
         ],
         "environments": [
           {
             "id": "Prod",
-            "name": {
-              "originalName": "Prod"
-            },
+            "name": "Prod",
             "urls": {
               "Base": "http://prod.api.com",
               "Debug": "http://debug.api.com"
@@ -203,9 +181,7 @@
           },
           {
             "id": "Dev",
-            "name": {
-              "originalName": "Dev"
-            },
+            "name": "Dev",
             "urls": {
               "Base": "http://dev.api.com",
               "Debug": "http://debug.api.com"

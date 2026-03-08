@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Enum of separator characters",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:Settings": {
       "name": {
-        "name": {
-          "originalName": "Settings"
-        },
+        "name": "Settings",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,17 +23,13 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "separator"
-              },
+              "name": "separator",
               "wireValue": "separator"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "DocumentIdSeparators"
-                  },
+                  "name": "DocumentIdSeparators",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -68,9 +60,7 @@
     },
     "type_:DocumentIdSeparators": {
       "name": {
-        "name": {
-          "originalName": "DocumentIdSeparators"
-        },
+        "name": "DocumentIdSeparators",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -81,41 +71,31 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "SLASH"
-              },
+              "name": "SLASH",
               "wireValue": "/"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "HYPHEN"
-              },
+              "name": "HYPHEN",
               "wireValue": "-"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "PIPE"
-              },
+              "name": "PIPE",
               "wireValue": "|"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "DOT"
-              },
+              "name": "DOT",
               "wireValue": "."
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "EMPTY"
-              },
+              "name": "EMPTY",
               "wireValue": ""
             }
           }
@@ -154,9 +134,7 @@
       "endpoints": [
         {
           "id": "endpoint_.patchSettings",
-          "name": {
-            "originalName": "patchSettings"
-          },
+          "name": "patchSettings",
           "auth": false,
           "idempotent": false,
           "method": "PATCH",
@@ -174,9 +152,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "Settings"
-              },
+              "name": "Settings",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -191,9 +167,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "Settings"
-                  },
+                  "name": "Settings",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -205,18 +179,14 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "OK",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Settings"
-                  },
+                  "name": "Settings",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -241,9 +211,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -268,9 +236,7 @@
     "types": {
       "type_:Settings": {
         "declaration": {
-          "name": {
-            "originalName": "Settings"
-          },
+          "name": "Settings",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -279,9 +245,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "separator"
-              },
+              "name": "separator",
               "wireValue": "separator"
             },
             "typeReference": {
@@ -298,9 +262,7 @@
       },
       "type_:DocumentIdSeparators": {
         "declaration": {
-          "name": {
-            "originalName": "DocumentIdSeparators"
-          },
+          "name": "DocumentIdSeparators",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -308,33 +270,23 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "SLASH"
-            },
+            "name": "SLASH",
             "wireValue": "/"
           },
           {
-            "name": {
-              "originalName": "HYPHEN"
-            },
+            "name": "HYPHEN",
             "wireValue": "-"
           },
           {
-            "name": {
-              "originalName": "PIPE"
-            },
+            "name": "PIPE",
             "wireValue": "|"
           },
           {
-            "name": {
-              "originalName": "DOT"
-            },
+            "name": "DOT",
             "wireValue": "."
           },
           {
-            "name": {
-              "originalName": "EMPTY"
-            },
+            "name": "EMPTY",
             "wireValue": ""
           }
         ],
@@ -345,9 +297,7 @@
     "endpoints": {
       "endpoint_.patchSettings": {
         "declaration": {
-          "name": {
-            "originalName": "patchSettings"
-          },
+          "name": "patchSettings",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

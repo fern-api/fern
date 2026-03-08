@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Default Content Type",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:GenerateContentResponse": {
       "name": {
-        "name": {
-          "originalName": "GenerateContentResponse"
-        },
+        "name": "GenerateContentResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "bar"
-              },
+              "name": "bar",
               "wireValue": "bar"
             },
             "valueType": {
@@ -71,14 +65,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "generativelanguage"
-            }
+            "generativelanguage"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "generativelanguage"
-          }
+          "file": "generativelanguage"
         }
       },
       "basePath": {
@@ -96,9 +86,7 @@
       "endpoints": [
         {
           "id": "endpoint_generativelanguage.GenerateContent",
-          "name": {
-            "originalName": "GenerateContent"
-          },
+          "name": "GenerateContent",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -112,9 +100,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "model"
-              },
+              "name": "model",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -133,9 +119,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "model"
-              },
+              "name": "model",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -156,28 +140,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GenerateContentRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GenerateContentRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful operation",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GenerateContentResponse"
-                  },
+                  "name": "GenerateContentResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -201,9 +177,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -213,9 +187,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://ai.com"
         }
       ],
@@ -242,9 +214,7 @@
     "types": {
       "type_:GenerateContentResponse": {
         "declaration": {
-          "name": {
-            "originalName": "GenerateContentResponse"
-          },
+          "name": "GenerateContentResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -253,9 +223,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "bar"
-              },
+              "name": "bar",
               "wireValue": "bar"
             },
             "typeReference": {
@@ -275,19 +243,13 @@
     "endpoints": {
       "endpoint_generativelanguage.GenerateContent": {
         "declaration": {
-          "name": {
-            "originalName": "GenerateContent"
-          },
+          "name": "GenerateContent",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "generativelanguage"
-              }
+              "generativelanguage"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "generativelanguage"
-            }
+            "file": "generativelanguage"
           }
         },
         "location": {
@@ -296,27 +258,19 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GenerateContentRequest"
-            },
+            "name": "GenerateContentRequest",
             "fernFilepath": {
               "allParts": [
-                {
-                  "originalName": "generativelanguage"
-                }
+                "generativelanguage"
               ],
               "packagePath": [],
-              "file": {
-                "originalName": "generativelanguage"
-              }
+              "file": "generativelanguage"
             }
           },
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "model"
-                },
+                "name": "model",
                 "wireValue": "model"
               },
               "typeReference": {
@@ -346,9 +300,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://ai.com"
           }
         ],
@@ -362,18 +314,12 @@
     "subpackage_generativelanguage": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "generativelanguage"
-          }
+          "generativelanguage"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "generativelanguage"
-        }
+        "file": "generativelanguage"
       },
-      "name": {
-        "originalName": "generativelanguage"
-      },
+      "name": "generativelanguage",
       "service": "service_generativelanguage",
       "types": [],
       "errors": [],

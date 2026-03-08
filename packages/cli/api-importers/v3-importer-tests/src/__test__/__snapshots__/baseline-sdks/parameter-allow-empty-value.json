@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Parameter Allow Empty Value Test",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:ListItemsRequestSortBy": {
       "name": {
-        "name": {
-          "originalName": "ListItemsRequestSortBy"
-        },
+        "name": "ListItemsRequestSortBy",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -26,25 +22,19 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "createdAt"
-              },
+              "name": "createdAt",
               "wireValue": "createdAt"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "updatedAt"
-              },
+              "name": "updatedAt",
               "wireValue": "updatedAt"
             }
           }
@@ -60,9 +50,7 @@
     },
     "type_:ListItemsRequestSortOrder": {
       "name": {
-        "name": {
-          "originalName": "ListItemsRequestSortOrder"
-        },
+        "name": "ListItemsRequestSortOrder",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -73,17 +61,13 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "asc"
-              },
+              "name": "asc",
               "wireValue": "asc"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "desc"
-              },
+              "name": "desc",
               "wireValue": "desc"
             }
           }
@@ -99,9 +83,7 @@
     },
     "type_:ListItemsResponse": {
       "name": {
-        "name": {
-          "originalName": "ListItemsResponse"
-        },
+        "name": "ListItemsResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -113,9 +95,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "items"
-              },
+              "name": "items",
               "wireValue": "items"
             },
             "valueType": {
@@ -123,9 +103,7 @@
                 "optional": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "Item"
-                      },
+                      "name": "Item",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -160,9 +138,7 @@
     },
     "type_:Item": {
       "name": {
-        "name": {
-          "originalName": "Item"
-        },
+        "name": "Item",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -174,9 +150,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -201,9 +175,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -263,9 +235,7 @@
       "endpoints": [
         {
           "id": "endpoint_.listItems",
-          "name": {
-            "originalName": "listItems"
-          },
+          "name": "listItems",
           "displayName": "List items with optional empty parameters",
           "auth": false,
           "idempotent": false,
@@ -284,17 +254,13 @@
             {
               "docs": "Sort results by the provided value",
               "name": {
-                "name": {
-                  "originalName": "sortBy"
-                },
+                "name": "sortBy",
                 "wireValue": "sortBy"
               },
               "valueType": {
                 "container": {
                   "optional": {
-                    "name": {
-                      "originalName": "ListItemsRequestSortBy"
-                    },
+                    "name": "ListItemsRequestSortBy",
                     "fernFilepath": {
                       "allParts": [],
                       "packagePath": []
@@ -315,17 +281,13 @@
             {
               "docs": "Sort order (asc or desc)",
               "name": {
-                "name": {
-                  "originalName": "sortOrder"
-                },
+                "name": "sortOrder",
                 "wireValue": "sortOrder"
               },
               "valueType": {
                 "container": {
                   "optional": {
-                    "name": {
-                      "originalName": "ListItemsRequestSortOrder"
-                    },
+                    "name": "ListItemsRequestSortOrder",
                     "fernFilepath": {
                       "allParts": [],
                       "packagePath": []
@@ -346,9 +308,7 @@
             {
               "docs": "Filter string",
               "name": {
-                "name": {
-                  "originalName": "filter"
-                },
+                "name": "filter",
                 "wireValue": "filter"
               },
               "valueType": {
@@ -376,28 +336,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "ListItemsRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "ListItemsRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "List of items",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "ListItemsResponse"
-                  },
+                  "name": "ListItemsResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -422,9 +374,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -451,9 +401,7 @@
     "types": {
       "type_:ListItemsRequestSortBy": {
         "declaration": {
-          "name": {
-            "originalName": "ListItemsRequestSortBy"
-          },
+          "name": "ListItemsRequestSortBy",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -461,21 +409,15 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "name"
-            },
+            "name": "name",
             "wireValue": "name"
           },
           {
-            "name": {
-              "originalName": "createdAt"
-            },
+            "name": "createdAt",
             "wireValue": "createdAt"
           },
           {
-            "name": {
-              "originalName": "updatedAt"
-            },
+            "name": "updatedAt",
             "wireValue": "updatedAt"
           }
         ],
@@ -483,9 +425,7 @@
       },
       "type_:ListItemsRequestSortOrder": {
         "declaration": {
-          "name": {
-            "originalName": "ListItemsRequestSortOrder"
-          },
+          "name": "ListItemsRequestSortOrder",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -493,15 +433,11 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "asc"
-            },
+            "name": "asc",
             "wireValue": "asc"
           },
           {
-            "name": {
-              "originalName": "desc"
-            },
+            "name": "desc",
             "wireValue": "desc"
           }
         ],
@@ -509,9 +445,7 @@
       },
       "type_:ListItemsResponse": {
         "declaration": {
-          "name": {
-            "originalName": "ListItemsResponse"
-          },
+          "name": "ListItemsResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -520,9 +454,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "items"
-              },
+              "name": "items",
               "wireValue": "items"
             },
             "typeReference": {
@@ -542,9 +474,7 @@
       },
       "type_:Item": {
         "declaration": {
-          "name": {
-            "originalName": "Item"
-          },
+          "name": "Item",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -553,9 +483,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -568,9 +496,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -590,9 +516,7 @@
     "endpoints": {
       "endpoint_.listItems": {
         "declaration": {
-          "name": {
-            "originalName": "listItems"
-          },
+          "name": "listItems",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -604,9 +528,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "ListItemsRequest"
-            },
+            "name": "ListItemsRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -616,9 +538,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "sortBy"
-                },
+                "name": "sortBy",
                 "wireValue": "sortBy"
               },
               "typeReference": {
@@ -631,9 +551,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "sortOrder"
-                },
+                "name": "sortOrder",
                 "wireValue": "sortOrder"
               },
               "typeReference": {
@@ -646,9 +564,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "filter"
-                },
+                "name": "filter",
                 "wireValue": "filter"
               },
               "typeReference": {

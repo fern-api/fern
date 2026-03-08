@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Hume AI Batch API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:UnionJob": {
       "name": {
-        "name": {
-          "originalName": "UnionJob"
-        },
+        "name": "UnionJob",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -24,9 +20,7 @@
       },
       "shape": {
         "discriminant": {
-          "name": {
-            "originalName": "type"
-          },
+          "name": "type",
           "wireValue": "type"
         },
         "extends": [],
@@ -34,16 +28,12 @@
         "types": [
           {
             "discriminantValue": {
-              "name": {
-                "originalName": "EMBEDDING_GENERATION"
-              },
+              "name": "EMBEDDING_GENERATION",
               "wireValue": "EMBEDDING_GENERATION"
             },
             "shape": {
               "name": {
-                "name": {
-                  "originalName": "value"
-                },
+                "name": "value",
                 "wireValue": "value"
               },
               "type": {
@@ -54,16 +44,12 @@
           },
           {
             "discriminantValue": {
-              "name": {
-                "originalName": "INFERENCE"
-              },
+              "name": "INFERENCE",
               "wireValue": "INFERENCE"
             },
             "shape": {
               "name": {
-                "name": {
-                  "originalName": "value"
-                },
+                "name": "value",
                 "wireValue": "value"
               },
               "type": {
@@ -74,16 +60,12 @@
           },
           {
             "discriminantValue": {
-              "name": {
-                "originalName": "TL_INFERENCE"
-              },
+              "name": "TL_INFERENCE",
               "wireValue": "TL_INFERENCE"
             },
             "shape": {
               "name": {
-                "name": {
-                  "originalName": "value"
-                },
+                "name": "value",
                 "wireValue": "value"
               },
               "type": {
@@ -94,16 +76,12 @@
           },
           {
             "discriminantValue": {
-              "name": {
-                "originalName": "TRAINING"
-              },
+              "name": "TRAINING",
               "wireValue": "TRAINING"
             },
             "shape": {
               "name": {
-                "name": {
-                  "originalName": "value"
-                },
+                "name": "value",
                 "wireValue": "value"
               },
               "type": {
@@ -128,9 +106,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -152,18 +128,14 @@
     "types": {
       "type_:UnionJob": {
         "declaration": {
-          "name": {
-            "originalName": "UnionJob"
-          },
+          "name": "UnionJob",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
           }
         },
         "discriminant": {
-          "name": {
-            "originalName": "type"
-          },
+          "name": "type",
           "wireValue": "type"
         },
         "types": {
@@ -172,9 +144,7 @@
               "type": "unknown"
             },
             "discriminantValue": {
-              "name": {
-                "originalName": "EMBEDDING_GENERATION"
-              },
+              "name": "EMBEDDING_GENERATION",
               "wireValue": "EMBEDDING_GENERATION"
             },
             "type": "singleProperty"
@@ -184,9 +154,7 @@
               "type": "unknown"
             },
             "discriminantValue": {
-              "name": {
-                "originalName": "INFERENCE"
-              },
+              "name": "INFERENCE",
               "wireValue": "INFERENCE"
             },
             "type": "singleProperty"
@@ -196,9 +164,7 @@
               "type": "unknown"
             },
             "discriminantValue": {
-              "name": {
-                "originalName": "TL_INFERENCE"
-              },
+              "name": "TL_INFERENCE",
               "wireValue": "TL_INFERENCE"
             },
             "type": "singleProperty"
@@ -208,9 +174,7 @@
               "type": "unknown"
             },
             "discriminantValue": {
-              "name": {
-                "originalName": "TRAINING"
-              },
+              "name": "TRAINING",
               "wireValue": "TRAINING"
             },
             "type": "singleProperty"

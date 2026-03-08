@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Nested Ref Examples Test",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:ResponsesGetMarkets": {
       "name": {
-        "name": {
-          "originalName": "ResponsesGetMarkets"
-        },
+        "name": "ResponsesGetMarkets",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results"
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "valueType": {
@@ -37,9 +31,7 @@
                 "optional": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "ResponsesMarketResp"
-                      },
+                      "name": "ResponsesMarketResp",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -74,9 +66,7 @@
     },
     "type_:ResponsesMarketResp": {
       "name": {
-        "name": {
-          "originalName": "ResponsesMarketResp"
-        },
+        "name": "ResponsesMarketResp",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -88,9 +78,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "asset_kind"
-              },
+              "name": "asset_kind",
               "wireValue": "asset_kind"
             },
             "valueType": {
@@ -115,9 +103,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "base_currency"
-              },
+              "name": "base_currency",
               "wireValue": "base_currency"
             },
             "valueType": {
@@ -142,17 +128,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "option_cross_margin_params"
-              },
+              "name": "option_cross_margin_params",
               "wireValue": "option_cross_margin_params"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "ResponsesPerpetualOptionCrossMarginParams"
-                  },
+                  "name": "ResponsesPerpetualOptionCrossMarginParams",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -183,9 +165,7 @@
     },
     "type_:ResponsesPerpetualOptionCrossMarginParams": {
       "name": {
-        "name": {
-          "originalName": "ResponsesPerpetualOptionCrossMarginParams"
-        },
+        "name": "ResponsesPerpetualOptionCrossMarginParams",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -197,17 +177,13 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "imf"
-              },
+              "name": "imf",
               "wireValue": "imf"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "ResponsesPerpetualOptionMarginParams"
-                  },
+                  "name": "ResponsesPerpetualOptionMarginParams",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -226,17 +202,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "mmf"
-              },
+              "name": "mmf",
               "wireValue": "mmf"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "ResponsesPerpetualOptionMarginParams"
-                  },
+                  "name": "ResponsesPerpetualOptionMarginParams",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -267,9 +239,7 @@
     },
     "type_:ResponsesPerpetualOptionMarginParams": {
       "name": {
-        "name": {
-          "originalName": "ResponsesPerpetualOptionMarginParams"
-        },
+        "name": "ResponsesPerpetualOptionMarginParams",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -281,9 +251,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "long_itm"
-              },
+              "name": "long_itm",
               "wireValue": "long_itm"
             },
             "valueType": {
@@ -308,9 +276,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "premium_multiplier"
-              },
+              "name": "premium_multiplier",
               "wireValue": "premium_multiplier"
             },
             "valueType": {
@@ -335,9 +301,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "short_itm"
-              },
+              "name": "short_itm",
               "wireValue": "short_itm"
             },
             "valueType": {
@@ -397,9 +361,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getMarkets",
-          "name": {
-            "originalName": "getMarkets"
-          },
+          "name": "getMarkets",
           "displayName": "List available markets",
           "auth": false,
           "idempotent": false,
@@ -421,9 +383,7 @@
               "value": {
                 "docs": "OK",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "ResponsesGetMarkets"
-                  },
+                  "name": "ResponsesGetMarkets",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -448,9 +408,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -460,9 +418,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://api.example.com/v1"
         }
       ],
@@ -492,9 +448,7 @@
     "types": {
       "type_:ResponsesGetMarkets": {
         "declaration": {
-          "name": {
-            "originalName": "ResponsesGetMarkets"
-          },
+          "name": "ResponsesGetMarkets",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -503,9 +457,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results"
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "typeReference": {
@@ -525,9 +477,7 @@
       },
       "type_:ResponsesMarketResp": {
         "declaration": {
-          "name": {
-            "originalName": "ResponsesMarketResp"
-          },
+          "name": "ResponsesMarketResp",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -536,9 +486,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "asset_kind"
-              },
+              "name": "asset_kind",
               "wireValue": "asset_kind"
             },
             "typeReference": {
@@ -551,9 +499,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "base_currency"
-              },
+              "name": "base_currency",
               "wireValue": "base_currency"
             },
             "typeReference": {
@@ -566,9 +512,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "option_cross_margin_params"
-              },
+              "name": "option_cross_margin_params",
               "wireValue": "option_cross_margin_params"
             },
             "typeReference": {
@@ -585,9 +529,7 @@
       },
       "type_:ResponsesPerpetualOptionCrossMarginParams": {
         "declaration": {
-          "name": {
-            "originalName": "ResponsesPerpetualOptionCrossMarginParams"
-          },
+          "name": "ResponsesPerpetualOptionCrossMarginParams",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -596,9 +538,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "imf"
-              },
+              "name": "imf",
               "wireValue": "imf"
             },
             "typeReference": {
@@ -611,9 +551,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "mmf"
-              },
+              "name": "mmf",
               "wireValue": "mmf"
             },
             "typeReference": {
@@ -630,9 +568,7 @@
       },
       "type_:ResponsesPerpetualOptionMarginParams": {
         "declaration": {
-          "name": {
-            "originalName": "ResponsesPerpetualOptionMarginParams"
-          },
+          "name": "ResponsesPerpetualOptionMarginParams",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -641,9 +577,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "long_itm"
-              },
+              "name": "long_itm",
               "wireValue": "long_itm"
             },
             "typeReference": {
@@ -656,9 +590,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "premium_multiplier"
-              },
+              "name": "premium_multiplier",
               "wireValue": "premium_multiplier"
             },
             "typeReference": {
@@ -671,9 +603,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "short_itm"
-              },
+              "name": "short_itm",
               "wireValue": "short_itm"
             },
             "typeReference": {
@@ -693,9 +623,7 @@
     "endpoints": {
       "endpoint_.getMarkets": {
         "declaration": {
-          "name": {
-            "originalName": "getMarkets"
-          },
+          "name": "getMarkets",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -722,9 +650,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://api.example.com/v1"
           }
         ],

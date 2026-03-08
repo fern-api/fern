@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "URL Form Encoded API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:PostSubmitResponse": {
       "name": {
-        "name": {
-          "originalName": "PostSubmitResponse"
-        },
+        "name": "PostSubmitResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "valueType": {
@@ -54,9 +48,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "valueType": {
@@ -116,9 +108,7 @@
       "endpoints": [
         {
           "id": "endpoint_.submitFormData",
-          "name": {
-            "originalName": "submitFormData"
-          },
+          "name": "submitFormData",
           "displayName": "Submit form data",
           "auth": false,
           "idempotent": false,
@@ -136,18 +126,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PostSubmitRequest"
-            },
+            "name": "PostSubmitRequest",
             "extends": [],
             "contentType": "application/x-www-form-urlencoded",
             "properties": [
               {
                 "docs": "The user's username",
                 "name": {
-                  "name": {
-                    "originalName": "username"
-                  },
+                  "name": "username",
                   "wireValue": "username"
                 },
                 "valueType": {
@@ -167,9 +153,7 @@
               {
                 "docs": "The user's email address",
                 "name": {
-                  "name": {
-                    "originalName": "email"
-                  },
+                  "name": "email",
                   "wireValue": "email"
                 },
                 "valueType": {
@@ -196,28 +180,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PostSubmitRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "PostSubmitRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful operation",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "PostSubmitResponse"
-                  },
+                  "name": "PostSubmitResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -242,9 +218,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -268,9 +242,7 @@
     "types": {
       "type_:PostSubmitResponse": {
         "declaration": {
-          "name": {
-            "originalName": "PostSubmitResponse"
-          },
+          "name": "PostSubmitResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -279,9 +251,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "typeReference": {
@@ -294,9 +264,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "typeReference": {
@@ -316,9 +284,7 @@
     "endpoints": {
       "endpoint_.submitFormData": {
         "declaration": {
-          "name": {
-            "originalName": "submitFormData"
-          },
+          "name": "submitFormData",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -330,9 +296,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "PostSubmitRequest"
-            },
+            "name": "PostSubmitRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -345,9 +309,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "username"
-                  },
+                  "name": "username",
                   "wireValue": "username"
                 },
                 "typeReference": {
@@ -357,9 +319,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "email"
-                  },
+                  "name": "email",
                   "wireValue": "email"
                 },
                 "typeReference": {

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-audiences` alongside `x-fern-streaming`.",
   "auth": {
     "requirement": "ALL",
@@ -12,9 +10,7 @@
   "idempotencyHeaders": [
     {
       "name": {
-        "name": {
-          "originalName": "idempotencyKey"
-        },
+        "name": "idempotencyKey",
         "wireValue": "Idempotency-Key"
       },
       "valueType": {
@@ -63,9 +59,7 @@
       "endpoints": [
         {
           "id": "endpoint_.send",
-          "name": {
-            "originalName": "send"
-          },
+          "name": "send",
           "auth": false,
           "idempotent": true,
           "method": "POST",
@@ -82,17 +76,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "SendRequest"
-            },
+            "name": "SendRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "send"
-                  },
+                  "name": "send",
                   "wireValue": "send"
                 },
                 "valueType": {
@@ -122,19 +112,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "SendRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "SendRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -166,9 +150,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -190,9 +172,7 @@
     "endpoints": {
       "endpoint_.send": {
         "declaration": {
-          "name": {
-            "originalName": "send"
-          },
+          "name": "send",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -204,9 +184,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "SendRequest"
-            },
+            "name": "SendRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -219,9 +197,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "send"
-                  },
+                  "name": "send",
                   "wireValue": "send"
                 },
                 "typeReference": {

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Callbacks Test API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:SubscribeResponse": {
       "name": {
-        "name": {
-          "originalName": "SubscribeResponse"
-        },
+        "name": "SubscribeResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "subscriptionId"
-              },
+              "name": "subscriptionId",
               "wireValue": "subscriptionId"
             },
             "valueType": {
@@ -90,9 +84,7 @@
         {
           "docs": "Subscribe to receive webhook notifications",
           "id": "endpoint_.subscribe",
-          "name": {
-            "originalName": "subscribe"
-          },
+          "name": "subscribe",
           "displayName": "Subscribe to notifications",
           "auth": false,
           "idempotent": false,
@@ -110,18 +102,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "SubscribeRequest"
-            },
+            "name": "SubscribeRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "URL to receive webhook notifications",
                 "name": {
-                  "name": {
-                    "originalName": "callbackUrl"
-                  },
+                  "name": "callbackUrl",
                   "wireValue": "callbackUrl"
                 },
                 "valueType": {
@@ -148,28 +136,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "SubscribeRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "SubscribeRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successfully subscribed",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "SubscribeResponse"
-                  },
+                  "name": "SubscribeResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -194,9 +174,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -220,9 +198,7 @@
     "types": {
       "type_:SubscribeResponse": {
         "declaration": {
-          "name": {
-            "originalName": "SubscribeResponse"
-          },
+          "name": "SubscribeResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -231,9 +207,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "subscriptionId"
-              },
+              "name": "subscriptionId",
               "wireValue": "subscriptionId"
             },
             "typeReference": {
@@ -253,9 +227,7 @@
     "endpoints": {
       "endpoint_.subscribe": {
         "declaration": {
-          "name": {
-            "originalName": "subscribe"
-          },
+          "name": "subscribe",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -267,9 +239,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "SubscribeRequest"
-            },
+            "name": "SubscribeRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -282,9 +252,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "callbackUrl"
-                  },
+                  "name": "callbackUrl",
                   "wireValue": "callbackUrl"
                 },
                 "typeReference": {

@@ -1,21 +1,15 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-parameter-name` for parameters.",
   "auth": {
     "requirement": "ALL",
     "schemes": [
       {
         "key": "BasicAuth",
-        "username": {
-          "originalName": "username"
-        },
+        "username": "username",
         "usernameEnvVar": "MY_USERNAME",
-        "password": {
-          "originalName": "password"
-        },
+        "password": "password",
         "passwordEnvVar": "MY_PaSSwoOD",
         "type": "basic"
       }
@@ -26,19 +20,13 @@
   "types": {
     "type_user:GetUserResponse": {
       "name": {
-        "name": {
-          "originalName": "GetUserResponse"
-        },
+        "name": "GetUserResponse",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "user"
-            }
+            "user"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "user"
-          }
+          "file": "user"
         },
         "typeId": "type_user:GetUserResponse"
       },
@@ -47,9 +35,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -89,19 +75,13 @@
     },
     "type_user:GetAllUserResponseItem": {
       "name": {
-        "name": {
-          "originalName": "GetAllUserResponseItem"
-        },
+        "name": "GetAllUserResponseItem",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "user"
-            }
+            "user"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "user"
-          }
+          "file": "user"
         },
         "typeId": "type_user:GetAllUserResponseItem"
       },
@@ -110,9 +90,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -157,14 +135,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "user"
-            }
+            "user"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "user"
-          }
+          "file": "user"
         }
       },
       "basePath": {
@@ -182,9 +156,7 @@
       "endpoints": [
         {
           "id": "endpoint_user.get",
-          "name": {
-            "originalName": "get"
-          },
+          "name": "get",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -205,19 +177,13 @@
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetUserResponse"
-                  },
+                  "name": "GetUserResponse",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "user"
-                      }
+                      "user"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "user"
-                    }
+                    "file": "user"
                   },
                   "typeId": "type_user:GetUserResponse",
                   "type": "named"
@@ -236,9 +202,7 @@
         },
         {
           "id": "endpoint_user.get_all",
-          "name": {
-            "originalName": "get_all"
-          },
+          "name": "get_all",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -261,19 +225,13 @@
                 "responseBodyType": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "GetAllUserResponseItem"
-                      },
+                      "name": "GetAllUserResponseItem",
                       "fernFilepath": {
                         "allParts": [
-                          {
-                            "originalName": "user"
-                          }
+                          "user"
                         ],
                         "packagePath": [],
-                        "file": {
-                          "originalName": "user"
-                        }
+                        "file": "user"
                       },
                       "typeId": "type_user:GetAllUserResponseItem",
                       "type": "named"
@@ -299,9 +257,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -326,27 +282,19 @@
     "types": {
       "type_user:GetUserResponse": {
         "declaration": {
-          "name": {
-            "originalName": "GetUserResponse"
-          },
+          "name": "GetUserResponse",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "user"
-              }
+              "user"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "user"
-            }
+            "file": "user"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -363,27 +311,19 @@
       },
       "type_user:GetAllUserResponseItem": {
         "declaration": {
-          "name": {
-            "originalName": "GetAllUserResponseItem"
-          },
+          "name": "GetAllUserResponseItem",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "user"
-              }
+              "user"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "user"
-            }
+            "file": "user"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -404,30 +344,20 @@
       "endpoint_user.get": {
         "auth": {
           "key": "BasicAuth",
-          "username": {
-            "originalName": "username"
-          },
+          "username": "username",
           "usernameEnvVar": "MY_USERNAME",
-          "password": {
-            "originalName": "password"
-          },
+          "password": "password",
           "passwordEnvVar": "MY_PaSSwoOD",
           "type": "basic"
         },
         "declaration": {
-          "name": {
-            "originalName": "get"
-          },
+          "name": "get",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "user"
-              }
+              "user"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "user"
-            }
+            "file": "user"
           }
         },
         "location": {
@@ -446,30 +376,20 @@
       "endpoint_user.get_all": {
         "auth": {
           "key": "BasicAuth",
-          "username": {
-            "originalName": "username"
-          },
+          "username": "username",
           "usernameEnvVar": "MY_USERNAME",
-          "password": {
-            "originalName": "password"
-          },
+          "password": "password",
           "passwordEnvVar": "MY_PaSSwoOD",
           "type": "basic"
         },
         "declaration": {
-          "name": {
-            "originalName": "get_all"
-          },
+          "name": "get_all",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "user"
-              }
+              "user"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "user"
-            }
+            "file": "user"
           }
         },
         "location": {
@@ -494,18 +414,12 @@
     "subpackage_user": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "user"
-          }
+          "user"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "user"
-        }
+        "file": "user"
       },
-      "name": {
-        "originalName": "user"
-      },
+      "name": "user",
       "service": "service_user",
       "types": [
         "type_user:GetUserResponse",

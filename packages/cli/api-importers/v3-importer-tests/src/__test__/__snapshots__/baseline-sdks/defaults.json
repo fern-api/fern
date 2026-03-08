@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "API with Default Values",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:GetTestResponse": {
       "name": {
-        "name": {
-          "originalName": "GetTestResponse"
-        },
+        "name": "GetTestResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "boolField1"
-              },
+              "name": "boolField1",
               "wireValue": "boolField1"
             },
             "valueType": {
@@ -55,9 +49,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "boolField2"
-              },
+              "name": "boolField2",
               "wireValue": "boolField2"
             },
             "valueType": {
@@ -83,9 +75,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "stringField"
-              },
+              "name": "stringField",
               "wireValue": "stringField"
             },
             "valueType": {
@@ -111,9 +101,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "numberField"
-              },
+              "name": "numberField",
               "wireValue": "numberField"
             },
             "valueType": {
@@ -174,9 +162,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getTest",
-          "name": {
-            "originalName": "getTest"
-          },
+          "name": "getTest",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -193,9 +179,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam1"
-                },
+                "name": "boolParam1",
                 "wireValue": "boolParam1"
               },
               "valueType": {
@@ -222,9 +206,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam2"
-                },
+                "name": "boolParam2",
                 "wireValue": "boolParam2"
               },
               "valueType": {
@@ -251,9 +233,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam3"
-                },
+                "name": "boolParam3",
                 "wireValue": "boolParam3"
               },
               "valueType": {
@@ -280,9 +260,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam4"
-                },
+                "name": "boolParam4",
                 "wireValue": "boolParam4"
               },
               "valueType": {
@@ -309,9 +287,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "stringParam"
-                },
+                "name": "stringParam",
                 "wireValue": "stringParam"
               },
               "valueType": {
@@ -338,9 +314,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "numberParam"
-                },
+                "name": "numberParam",
                 "wireValue": "numberParam"
               },
               "valueType": {
@@ -367,9 +341,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "integerParam"
-                },
+                "name": "integerParam",
                 "wireValue": "integerParam"
               },
               "valueType": {
@@ -398,28 +370,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetTestRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetTestRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetTestResponse"
-                  },
+                  "name": "GetTestResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -444,9 +408,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -470,9 +432,7 @@
     "types": {
       "type_:GetTestResponse": {
         "declaration": {
-          "name": {
-            "originalName": "GetTestResponse"
-          },
+          "name": "GetTestResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -481,9 +441,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "boolField1"
-              },
+              "name": "boolField1",
               "wireValue": "boolField1"
             },
             "typeReference": {
@@ -496,9 +454,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "boolField2"
-              },
+              "name": "boolField2",
               "wireValue": "boolField2"
             },
             "typeReference": {
@@ -511,9 +467,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "stringField"
-              },
+              "name": "stringField",
               "wireValue": "stringField"
             },
             "typeReference": {
@@ -526,9 +480,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "numberField"
-              },
+              "name": "numberField",
               "wireValue": "numberField"
             },
             "typeReference": {
@@ -548,9 +500,7 @@
     "endpoints": {
       "endpoint_.getTest": {
         "declaration": {
-          "name": {
-            "originalName": "getTest"
-          },
+          "name": "getTest",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -562,9 +512,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetTestRequest"
-            },
+            "name": "GetTestRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -574,9 +522,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam1"
-                },
+                "name": "boolParam1",
                 "wireValue": "boolParam1"
               },
               "typeReference": {
@@ -589,9 +535,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam2"
-                },
+                "name": "boolParam2",
                 "wireValue": "boolParam2"
               },
               "typeReference": {
@@ -604,9 +548,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam3"
-                },
+                "name": "boolParam3",
                 "wireValue": "boolParam3"
               },
               "typeReference": {
@@ -619,9 +561,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam4"
-                },
+                "name": "boolParam4",
                 "wireValue": "boolParam4"
               },
               "typeReference": {
@@ -634,9 +574,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "stringParam"
-                },
+                "name": "stringParam",
                 "wireValue": "stringParam"
               },
               "typeReference": {
@@ -649,9 +587,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "numberParam"
-                },
+                "name": "numberParam",
                 "wireValue": "numberParam"
               },
               "typeReference": {
@@ -664,9 +600,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "integerParam"
-                },
+                "name": "integerParam",
                 "wireValue": "integerParam"
               },
               "typeReference": {

@@ -12,49 +12,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "ItemResponse",
-          "camelCase": {
-            "unsafeName": "itemResponse",
-            "safeName": "itemResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "item_response",
-            "safeName": "item_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ITEM_RESPONSE",
-            "safeName": "ITEM_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "ItemResponse",
-            "safeName": "ItemResponse"
-          }
-        }
+        "name": "ItemResponse"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "items",
-                "camelCase": {
-                  "unsafeName": "items",
-                  "safeName": "items"
-                },
-                "snakeCase": {
-                  "unsafeName": "items",
-                  "safeName": "items"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ITEMS",
-                  "safeName": "ITEMS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Items",
-                  "safeName": "Items"
-                }
-              },
+              "name": "items",
               "wireValue": "items"
             },
             "valueType": {
@@ -64,25 +28,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "Item",
-                    "camelCase": {
-                      "unsafeName": "item",
-                      "safeName": "item"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "item",
-                      "safeName": "item"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "ITEM",
-                      "safeName": "ITEM"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Item",
-                      "safeName": "Item"
-                    }
-                  },
+                  "name": "Item",
                   "typeId": "Item",
                   "inline": false,
                   "type": "named"
@@ -134,49 +80,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "Item",
-          "camelCase": {
-            "unsafeName": "item",
-            "safeName": "item"
-          },
-          "snakeCase": {
-            "unsafeName": "item",
-            "safeName": "item"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ITEM",
-            "safeName": "ITEM"
-          },
-          "pascalCase": {
-            "unsafeName": "Item",
-            "safeName": "Item"
-          }
-        }
+        "name": "Item"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "Id",
-                  "safeName": "Id"
-                }
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -198,25 +108,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "details",
-                "camelCase": {
-                  "unsafeName": "details",
-                  "safeName": "details"
-                },
-                "snakeCase": {
-                  "unsafeName": "details",
-                  "safeName": "details"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "DETAILS",
-                  "safeName": "DETAILS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Details",
-                  "safeName": "Details"
-                }
-              },
+              "name": "details",
               "wireValue": "details"
             },
             "valueType": {
@@ -224,25 +116,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "ItemDetails",
-                "camelCase": {
-                  "unsafeName": "itemDetails",
-                  "safeName": "itemDetails"
-                },
-                "snakeCase": {
-                  "unsafeName": "item_details",
-                  "safeName": "item_details"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ITEM_DETAILS",
-                  "safeName": "ITEM_DETAILS"
-                },
-                "pascalCase": {
-                  "unsafeName": "ItemDetails",
-                  "safeName": "ItemDetails"
-                }
-              },
+              "name": "ItemDetails",
               "typeId": "ItemDetails",
               "inline": false,
               "type": "named"
@@ -284,49 +158,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "ItemDetails",
-          "camelCase": {
-            "unsafeName": "itemDetails",
-            "safeName": "itemDetails"
-          },
-          "snakeCase": {
-            "unsafeName": "item_details",
-            "safeName": "item_details"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ITEM_DETAILS",
-            "safeName": "ITEM_DETAILS"
-          },
-          "pascalCase": {
-            "unsafeName": "ItemDetails",
-            "safeName": "ItemDetails"
-          }
-        }
+        "name": "ItemDetails"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -354,25 +192,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "description",
-                "camelCase": {
-                  "unsafeName": "description",
-                  "safeName": "description"
-                },
-                "snakeCase": {
-                  "unsafeName": "description",
-                  "safeName": "description"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "DESCRIPTION",
-                  "safeName": "DESCRIPTION"
-                },
-                "pascalCase": {
-                  "unsafeName": "Description",
-                  "safeName": "Description"
-                }
-              },
+              "name": "description",
               "wireValue": "description"
             },
             "valueType": {
@@ -422,49 +242,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "UnreferencedSchema",
-          "camelCase": {
-            "unsafeName": "unreferencedSchema",
-            "safeName": "unreferencedSchema"
-          },
-          "snakeCase": {
-            "unsafeName": "unreferenced_schema",
-            "safeName": "unreferenced_schema"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UNREFERENCED_SCHEMA",
-            "safeName": "UNREFERENCED_SCHEMA"
-          },
-          "pascalCase": {
-            "unsafeName": "UnreferencedSchema",
-            "safeName": "UnreferencedSchema"
-          }
-        }
+        "name": "UnreferencedSchema"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "unused",
-                "camelCase": {
-                  "unsafeName": "unused",
-                  "safeName": "unused"
-                },
-                "snakeCase": {
-                  "unsafeName": "unused",
-                  "safeName": "unused"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "UNUSED",
-                  "safeName": "UNUSED"
-                },
-                "pascalCase": {
-                  "unsafeName": "Unused",
-                  "safeName": "Unused"
-                }
-              },
+              "name": "unused",
               "wireValue": "unused"
             },
             "valueType": {
@@ -541,7 +325,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "85cd594b",
+                "id": "cf700bbd",
                 "url": "/items",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -575,25 +359,7 @@
                           "properties": [
                             {
                               "name": {
-                                "name": {
-                                  "originalName": "items",
-                                  "camelCase": {
-                                    "unsafeName": "items",
-                                    "safeName": "items"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "items",
-                                    "safeName": "items"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "ITEMS",
-                                    "safeName": "ITEMS"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "Items",
-                                    "safeName": "Items"
-                                  }
-                                },
+                                "name": "items",
                                 "wireValue": "items"
                               },
                               "originalTypeDeclaration": {
@@ -602,25 +368,7 @@
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": {
-                                  "originalName": "ItemResponse",
-                                  "camelCase": {
-                                    "unsafeName": "itemResponse",
-                                    "safeName": "itemResponse"
-                                  },
-                                  "snakeCase": {
-                                    "unsafeName": "item_response",
-                                    "safeName": "item_response"
-                                  },
-                                  "screamingSnakeCase": {
-                                    "unsafeName": "ITEM_RESPONSE",
-                                    "safeName": "ITEM_RESPONSE"
-                                  },
-                                  "pascalCase": {
-                                    "unsafeName": "ItemResponse",
-                                    "safeName": "ItemResponse"
-                                  }
-                                }
+                                "name": "ItemResponse"
                               },
                               "value": {
                                 "jsonExample": [
@@ -655,25 +403,7 @@
                                             "properties": [
                                               {
                                                 "name": {
-                                                  "name": {
-                                                    "originalName": "id",
-                                                    "camelCase": {
-                                                      "unsafeName": "id",
-                                                      "safeName": "id"
-                                                    },
-                                                    "snakeCase": {
-                                                      "unsafeName": "id",
-                                                      "safeName": "id"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                      "unsafeName": "ID",
-                                                      "safeName": "ID"
-                                                    },
-                                                    "pascalCase": {
-                                                      "unsafeName": "Id",
-                                                      "safeName": "Id"
-                                                    }
-                                                  },
+                                                  "name": "id",
                                                   "wireValue": "id"
                                                 },
                                                 "originalTypeDeclaration": {
@@ -682,25 +412,7 @@
                                                     "allParts": [],
                                                     "packagePath": []
                                                   },
-                                                  "name": {
-                                                    "originalName": "Item",
-                                                    "camelCase": {
-                                                      "unsafeName": "item",
-                                                      "safeName": "item"
-                                                    },
-                                                    "snakeCase": {
-                                                      "unsafeName": "item",
-                                                      "safeName": "item"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                      "unsafeName": "ITEM",
-                                                      "safeName": "ITEM"
-                                                    },
-                                                    "pascalCase": {
-                                                      "unsafeName": "Item",
-                                                      "safeName": "Item"
-                                                    }
-                                                  }
+                                                  "name": "Item"
                                                 },
                                                 "value": {
                                                   "jsonExample": 1,
@@ -715,25 +427,7 @@
                                               },
                                               {
                                                 "name": {
-                                                  "name": {
-                                                    "originalName": "details",
-                                                    "camelCase": {
-                                                      "unsafeName": "details",
-                                                      "safeName": "details"
-                                                    },
-                                                    "snakeCase": {
-                                                      "unsafeName": "details",
-                                                      "safeName": "details"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                      "unsafeName": "DETAILS",
-                                                      "safeName": "DETAILS"
-                                                    },
-                                                    "pascalCase": {
-                                                      "unsafeName": "Details",
-                                                      "safeName": "Details"
-                                                    }
-                                                  },
+                                                  "name": "details",
                                                   "wireValue": "details"
                                                 },
                                                 "originalTypeDeclaration": {
@@ -742,25 +436,7 @@
                                                     "allParts": [],
                                                     "packagePath": []
                                                   },
-                                                  "name": {
-                                                    "originalName": "Item",
-                                                    "camelCase": {
-                                                      "unsafeName": "item",
-                                                      "safeName": "item"
-                                                    },
-                                                    "snakeCase": {
-                                                      "unsafeName": "item",
-                                                      "safeName": "item"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                      "unsafeName": "ITEM",
-                                                      "safeName": "ITEM"
-                                                    },
-                                                    "pascalCase": {
-                                                      "unsafeName": "Item",
-                                                      "safeName": "Item"
-                                                    }
-                                                  }
+                                                  "name": "Item"
                                                 },
                                                 "value": {
                                                   "jsonExample": {
@@ -772,25 +448,7 @@
                                                       "properties": [
                                                         {
                                                           "name": {
-                                                            "name": {
-                                                              "originalName": "name",
-                                                              "camelCase": {
-                                                                "unsafeName": "name",
-                                                                "safeName": "name"
-                                                              },
-                                                              "snakeCase": {
-                                                                "unsafeName": "name",
-                                                                "safeName": "name"
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "unsafeName": "NAME",
-                                                                "safeName": "NAME"
-                                                              },
-                                                              "pascalCase": {
-                                                                "unsafeName": "Name",
-                                                                "safeName": "Name"
-                                                              }
-                                                            },
+                                                            "name": "name",
                                                             "wireValue": "name"
                                                           },
                                                           "originalTypeDeclaration": {
@@ -799,25 +457,7 @@
                                                               "allParts": [],
                                                               "packagePath": []
                                                             },
-                                                            "name": {
-                                                              "originalName": "ItemDetails",
-                                                              "camelCase": {
-                                                                "unsafeName": "itemDetails",
-                                                                "safeName": "itemDetails"
-                                                              },
-                                                              "snakeCase": {
-                                                                "unsafeName": "item_details",
-                                                                "safeName": "item_details"
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "unsafeName": "ITEM_DETAILS",
-                                                                "safeName": "ITEM_DETAILS"
-                                                              },
-                                                              "pascalCase": {
-                                                                "unsafeName": "ItemDetails",
-                                                                "safeName": "ItemDetails"
-                                                              }
-                                                            }
+                                                            "name": "ItemDetails"
                                                           },
                                                           "value": {
                                                             "jsonExample": "name",
@@ -853,25 +493,7 @@
                                                         },
                                                         {
                                                           "name": {
-                                                            "name": {
-                                                              "originalName": "description",
-                                                              "camelCase": {
-                                                                "unsafeName": "description",
-                                                                "safeName": "description"
-                                                              },
-                                                              "snakeCase": {
-                                                                "unsafeName": "description",
-                                                                "safeName": "description"
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "unsafeName": "DESCRIPTION",
-                                                                "safeName": "DESCRIPTION"
-                                                              },
-                                                              "pascalCase": {
-                                                                "unsafeName": "Description",
-                                                                "safeName": "Description"
-                                                              }
-                                                            },
+                                                            "name": "description",
                                                             "wireValue": "description"
                                                           },
                                                           "originalTypeDeclaration": {
@@ -880,25 +502,7 @@
                                                               "allParts": [],
                                                               "packagePath": []
                                                             },
-                                                            "name": {
-                                                              "originalName": "ItemDetails",
-                                                              "camelCase": {
-                                                                "unsafeName": "itemDetails",
-                                                                "safeName": "itemDetails"
-                                                              },
-                                                              "snakeCase": {
-                                                                "unsafeName": "item_details",
-                                                                "safeName": "item_details"
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "unsafeName": "ITEM_DETAILS",
-                                                                "safeName": "ITEM_DETAILS"
-                                                              },
-                                                              "pascalCase": {
-                                                                "unsafeName": "ItemDetails",
-                                                                "safeName": "ItemDetails"
-                                                              }
-                                                            }
+                                                            "name": "ItemDetails"
                                                           },
                                                           "value": {
                                                             "jsonExample": "description",
@@ -941,25 +545,7 @@
                                                         "allParts": [],
                                                         "packagePath": []
                                                       },
-                                                      "name": {
-                                                        "originalName": "ItemDetails",
-                                                        "camelCase": {
-                                                          "unsafeName": "itemDetails",
-                                                          "safeName": "itemDetails"
-                                                        },
-                                                        "snakeCase": {
-                                                          "unsafeName": "item_details",
-                                                          "safeName": "item_details"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                          "unsafeName": "ITEM_DETAILS",
-                                                          "safeName": "ITEM_DETAILS"
-                                                        },
-                                                        "pascalCase": {
-                                                          "unsafeName": "ItemDetails",
-                                                          "safeName": "ItemDetails"
-                                                        }
-                                                      }
+                                                      "name": "ItemDetails"
                                                     },
                                                     "type": "named"
                                                   }
@@ -974,25 +560,7 @@
                                               "allParts": [],
                                               "packagePath": []
                                             },
-                                            "name": {
-                                              "originalName": "Item",
-                                              "camelCase": {
-                                                "unsafeName": "item",
-                                                "safeName": "item"
-                                              },
-                                              "snakeCase": {
-                                                "unsafeName": "item",
-                                                "safeName": "item"
-                                              },
-                                              "screamingSnakeCase": {
-                                                "unsafeName": "ITEM",
-                                                "safeName": "ITEM"
-                                              },
-                                              "pascalCase": {
-                                                "unsafeName": "Item",
-                                                "safeName": "Item"
-                                              }
-                                            }
+                                            "name": "Item"
                                           },
                                           "type": "named"
                                         }
@@ -1010,25 +578,7 @@
                                             "properties": [
                                               {
                                                 "name": {
-                                                  "name": {
-                                                    "originalName": "id",
-                                                    "camelCase": {
-                                                      "unsafeName": "id",
-                                                      "safeName": "id"
-                                                    },
-                                                    "snakeCase": {
-                                                      "unsafeName": "id",
-                                                      "safeName": "id"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                      "unsafeName": "ID",
-                                                      "safeName": "ID"
-                                                    },
-                                                    "pascalCase": {
-                                                      "unsafeName": "Id",
-                                                      "safeName": "Id"
-                                                    }
-                                                  },
+                                                  "name": "id",
                                                   "wireValue": "id"
                                                 },
                                                 "originalTypeDeclaration": {
@@ -1037,25 +587,7 @@
                                                     "allParts": [],
                                                     "packagePath": []
                                                   },
-                                                  "name": {
-                                                    "originalName": "Item",
-                                                    "camelCase": {
-                                                      "unsafeName": "item",
-                                                      "safeName": "item"
-                                                    },
-                                                    "snakeCase": {
-                                                      "unsafeName": "item",
-                                                      "safeName": "item"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                      "unsafeName": "ITEM",
-                                                      "safeName": "ITEM"
-                                                    },
-                                                    "pascalCase": {
-                                                      "unsafeName": "Item",
-                                                      "safeName": "Item"
-                                                    }
-                                                  }
+                                                  "name": "Item"
                                                 },
                                                 "value": {
                                                   "jsonExample": 1,
@@ -1070,25 +602,7 @@
                                               },
                                               {
                                                 "name": {
-                                                  "name": {
-                                                    "originalName": "details",
-                                                    "camelCase": {
-                                                      "unsafeName": "details",
-                                                      "safeName": "details"
-                                                    },
-                                                    "snakeCase": {
-                                                      "unsafeName": "details",
-                                                      "safeName": "details"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                      "unsafeName": "DETAILS",
-                                                      "safeName": "DETAILS"
-                                                    },
-                                                    "pascalCase": {
-                                                      "unsafeName": "Details",
-                                                      "safeName": "Details"
-                                                    }
-                                                  },
+                                                  "name": "details",
                                                   "wireValue": "details"
                                                 },
                                                 "originalTypeDeclaration": {
@@ -1097,25 +611,7 @@
                                                     "allParts": [],
                                                     "packagePath": []
                                                   },
-                                                  "name": {
-                                                    "originalName": "Item",
-                                                    "camelCase": {
-                                                      "unsafeName": "item",
-                                                      "safeName": "item"
-                                                    },
-                                                    "snakeCase": {
-                                                      "unsafeName": "item",
-                                                      "safeName": "item"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                      "unsafeName": "ITEM",
-                                                      "safeName": "ITEM"
-                                                    },
-                                                    "pascalCase": {
-                                                      "unsafeName": "Item",
-                                                      "safeName": "Item"
-                                                    }
-                                                  }
+                                                  "name": "Item"
                                                 },
                                                 "value": {
                                                   "jsonExample": {
@@ -1127,25 +623,7 @@
                                                       "properties": [
                                                         {
                                                           "name": {
-                                                            "name": {
-                                                              "originalName": "name",
-                                                              "camelCase": {
-                                                                "unsafeName": "name",
-                                                                "safeName": "name"
-                                                              },
-                                                              "snakeCase": {
-                                                                "unsafeName": "name",
-                                                                "safeName": "name"
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "unsafeName": "NAME",
-                                                                "safeName": "NAME"
-                                                              },
-                                                              "pascalCase": {
-                                                                "unsafeName": "Name",
-                                                                "safeName": "Name"
-                                                              }
-                                                            },
+                                                            "name": "name",
                                                             "wireValue": "name"
                                                           },
                                                           "originalTypeDeclaration": {
@@ -1154,25 +632,7 @@
                                                               "allParts": [],
                                                               "packagePath": []
                                                             },
-                                                            "name": {
-                                                              "originalName": "ItemDetails",
-                                                              "camelCase": {
-                                                                "unsafeName": "itemDetails",
-                                                                "safeName": "itemDetails"
-                                                              },
-                                                              "snakeCase": {
-                                                                "unsafeName": "item_details",
-                                                                "safeName": "item_details"
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "unsafeName": "ITEM_DETAILS",
-                                                                "safeName": "ITEM_DETAILS"
-                                                              },
-                                                              "pascalCase": {
-                                                                "unsafeName": "ItemDetails",
-                                                                "safeName": "ItemDetails"
-                                                              }
-                                                            }
+                                                            "name": "ItemDetails"
                                                           },
                                                           "value": {
                                                             "jsonExample": "name",
@@ -1208,25 +668,7 @@
                                                         },
                                                         {
                                                           "name": {
-                                                            "name": {
-                                                              "originalName": "description",
-                                                              "camelCase": {
-                                                                "unsafeName": "description",
-                                                                "safeName": "description"
-                                                              },
-                                                              "snakeCase": {
-                                                                "unsafeName": "description",
-                                                                "safeName": "description"
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "unsafeName": "DESCRIPTION",
-                                                                "safeName": "DESCRIPTION"
-                                                              },
-                                                              "pascalCase": {
-                                                                "unsafeName": "Description",
-                                                                "safeName": "Description"
-                                                              }
-                                                            },
+                                                            "name": "description",
                                                             "wireValue": "description"
                                                           },
                                                           "originalTypeDeclaration": {
@@ -1235,25 +677,7 @@
                                                               "allParts": [],
                                                               "packagePath": []
                                                             },
-                                                            "name": {
-                                                              "originalName": "ItemDetails",
-                                                              "camelCase": {
-                                                                "unsafeName": "itemDetails",
-                                                                "safeName": "itemDetails"
-                                                              },
-                                                              "snakeCase": {
-                                                                "unsafeName": "item_details",
-                                                                "safeName": "item_details"
-                                                              },
-                                                              "screamingSnakeCase": {
-                                                                "unsafeName": "ITEM_DETAILS",
-                                                                "safeName": "ITEM_DETAILS"
-                                                              },
-                                                              "pascalCase": {
-                                                                "unsafeName": "ItemDetails",
-                                                                "safeName": "ItemDetails"
-                                                              }
-                                                            }
+                                                            "name": "ItemDetails"
                                                           },
                                                           "value": {
                                                             "jsonExample": "description",
@@ -1296,25 +720,7 @@
                                                         "allParts": [],
                                                         "packagePath": []
                                                       },
-                                                      "name": {
-                                                        "originalName": "ItemDetails",
-                                                        "camelCase": {
-                                                          "unsafeName": "itemDetails",
-                                                          "safeName": "itemDetails"
-                                                        },
-                                                        "snakeCase": {
-                                                          "unsafeName": "item_details",
-                                                          "safeName": "item_details"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                          "unsafeName": "ITEM_DETAILS",
-                                                          "safeName": "ITEM_DETAILS"
-                                                        },
-                                                        "pascalCase": {
-                                                          "unsafeName": "ItemDetails",
-                                                          "safeName": "ItemDetails"
-                                                        }
-                                                      }
+                                                      "name": "ItemDetails"
                                                     },
                                                     "type": "named"
                                                   }
@@ -1329,25 +735,7 @@
                                               "allParts": [],
                                               "packagePath": []
                                             },
-                                            "name": {
-                                              "originalName": "Item",
-                                              "camelCase": {
-                                                "unsafeName": "item",
-                                                "safeName": "item"
-                                              },
-                                              "snakeCase": {
-                                                "unsafeName": "item",
-                                                "safeName": "item"
-                                              },
-                                              "screamingSnakeCase": {
-                                                "unsafeName": "ITEM",
-                                                "safeName": "ITEM"
-                                              },
-                                              "pascalCase": {
-                                                "unsafeName": "Item",
-                                                "safeName": "Item"
-                                              }
-                                            }
+                                            "name": "Item"
                                           },
                                           "type": "named"
                                         }
@@ -1358,25 +746,7 @@
                                         "allParts": [],
                                         "packagePath": []
                                       },
-                                      "name": {
-                                        "originalName": "Item",
-                                        "camelCase": {
-                                          "unsafeName": "item",
-                                          "safeName": "item"
-                                        },
-                                        "snakeCase": {
-                                          "unsafeName": "item",
-                                          "safeName": "item"
-                                        },
-                                        "screamingSnakeCase": {
-                                          "unsafeName": "ITEM",
-                                          "safeName": "ITEM"
-                                        },
-                                        "pascalCase": {
-                                          "unsafeName": "Item",
-                                          "safeName": "Item"
-                                        }
-                                      },
+                                      "name": "Item",
                                       "typeId": "Item",
                                       "inline": false,
                                       "type": "named"
@@ -1396,25 +766,7 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "ItemResponse",
-                            "camelCase": {
-                              "unsafeName": "itemResponse",
-                              "safeName": "itemResponse"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "item_response",
-                              "safeName": "item_response"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ITEM_RESPONSE",
-                              "safeName": "ITEM_RESPONSE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "ItemResponse",
-                              "safeName": "ItemResponse"
-                            }
-                          }
+                          "name": "ItemResponse"
                         },
                         "type": "named"
                       }
@@ -1437,25 +789,7 @@
           },
           "audiences": [],
           "id": "endpoint_.getItems",
-          "name": {
-            "originalName": "getItems",
-            "camelCase": {
-              "unsafeName": "getItems",
-              "safeName": "getItems"
-            },
-            "snakeCase": {
-              "unsafeName": "get_items",
-              "safeName": "get_items"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_ITEMS",
-              "safeName": "GET_ITEMS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetItems",
-              "safeName": "GetItems"
-            }
-          },
+          "name": "getItems",
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -1466,25 +800,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "ItemResponse",
-                    "camelCase": {
-                      "unsafeName": "itemResponse",
-                      "safeName": "itemResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "item_response",
-                      "safeName": "item_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "ITEM_RESPONSE",
-                      "safeName": "ITEM_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ItemResponse",
-                      "safeName": "ItemResponse"
-                    }
-                  },
+                  "name": "ItemResponse",
                   "typeId": "ItemResponse",
                   "inline": false,
                   "type": "named"
@@ -1557,25 +873,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "ItemResponse",
-                        "camelCase": {
-                          "unsafeName": "itemResponse",
-                          "safeName": "itemResponse"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "item_response",
-                          "safeName": "item_response"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ITEM_RESPONSE",
-                          "safeName": "ITEM_RESPONSE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ItemResponse",
-                          "safeName": "ItemResponse"
-                        }
-                      },
+                      "name": "ItemResponse",
                       "typeId": "ItemResponse",
                       "inline": false,
                       "type": "named"
@@ -1651,46 +949,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "Schema Pruning Test",
-    "camelCase": {
-      "unsafeName": "schemaPruningTest",
-      "safeName": "schemaPruningTest"
-    },
-    "snakeCase": {
-      "unsafeName": "schema_pruning_test",
-      "safeName": "schema_pruning_test"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "SCHEMA_PRUNING_TEST",
-      "safeName": "SCHEMA_PRUNING_TEST"
-    },
-    "pascalCase": {
-      "unsafeName": "SchemaPruningTest",
-      "safeName": "SchemaPruningTest"
-    }
-  },
+  "apiName": "Schema Pruning Test",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

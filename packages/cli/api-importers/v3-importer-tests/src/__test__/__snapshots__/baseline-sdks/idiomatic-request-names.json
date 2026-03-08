@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Readonly Properties API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:UserCreate": {
       "name": {
-        "name": {
-          "originalName": "UserCreate"
-        },
+        "name": "UserCreate",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -54,9 +48,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
@@ -81,17 +73,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "settings"
-              },
+              "name": "settings",
               "wireValue": "settings"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "UserSettings"
-                  },
+                  "name": "UserSettings",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -122,9 +110,7 @@
     },
     "type_:UserList": {
       "name": {
-        "name": {
-          "originalName": "UserList"
-        },
+        "name": "UserList",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -136,9 +122,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "users"
-              },
+              "name": "users",
               "wireValue": "users"
             },
             "valueType": {
@@ -146,9 +130,7 @@
                 "optional": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "User"
-                      },
+                      "name": "User",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -183,9 +165,7 @@
     },
     "type_:User": {
       "name": {
-        "name": {
-          "originalName": "User"
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -197,9 +177,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -225,9 +203,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -252,9 +228,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
@@ -279,9 +253,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "createdAt"
-              },
+              "name": "createdAt",
               "wireValue": "createdAt"
             },
             "valueType": {
@@ -304,17 +276,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "settings"
-              },
+              "name": "settings",
               "wireValue": "settings"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "UserSettings"
-                  },
+                  "name": "UserSettings",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -333,17 +301,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "stats"
-              },
+              "name": "stats",
               "wireValue": "stats"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "UserStats"
-                  },
+                  "name": "UserStats",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -374,9 +338,7 @@
     },
     "type_:UserSettings": {
       "name": {
-        "name": {
-          "originalName": "UserSettings"
-        },
+        "name": "UserSettings",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -388,9 +350,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "theme"
-              },
+              "name": "theme",
               "wireValue": "theme"
             },
             "valueType": {
@@ -415,9 +375,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "notifications"
-              },
+              "name": "notifications",
               "wireValue": "notifications"
             },
             "valueType": {
@@ -442,9 +400,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "lastModified"
-              },
+              "name": "lastModified",
               "wireValue": "lastModified"
             },
             "valueType": {
@@ -480,9 +436,7 @@
     "type_:UserStatsAccountStatus": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserStatsAccountStatus"
-        },
+        "name": "UserStatsAccountStatus",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -493,25 +447,19 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "active"
-              },
+              "name": "active",
               "wireValue": "active"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "suspended"
-              },
+              "name": "suspended",
               "wireValue": "suspended"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "deleted"
-              },
+              "name": "deleted",
               "wireValue": "deleted"
             }
           }
@@ -527,9 +475,7 @@
     },
     "type_:UserStats": {
       "name": {
-        "name": {
-          "originalName": "UserStats"
-        },
+        "name": "UserStats",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -541,9 +487,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "totalLogins"
-              },
+              "name": "totalLogins",
               "wireValue": "totalLogins"
             },
             "valueType": {
@@ -569,9 +513,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "lastLoginTime"
-              },
+              "name": "lastLoginTime",
               "wireValue": "lastLoginTime"
             },
             "valueType": {
@@ -594,17 +536,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "accountStatus"
-              },
+              "name": "accountStatus",
               "wireValue": "accountStatus"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "UserStatsAccountStatus"
-                  },
+                  "name": "UserStatsAccountStatus",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -640,14 +578,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "organizationUsers"
-            }
+            "organizationUsers"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "organizationUsers"
-          }
+          "file": "organizationUsers"
         }
       },
       "basePath": {
@@ -665,9 +599,7 @@
       "endpoints": [
         {
           "id": "endpoint_organizationUsers.listOrganizationUsers",
-          "name": {
-            "originalName": "listOrganizationUsers"
-          },
+          "name": "listOrganizationUsers",
           "displayName": "List organization users",
           "auth": false,
           "idempotent": false,
@@ -692,9 +624,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "organizationId"
-              },
+              "name": "organizationId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -713,9 +643,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "organizationId"
-              },
+              "name": "organizationId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -735,9 +663,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "page"
-                },
+                "name": "page",
                 "wireValue": "page"
               },
               "valueType": {
@@ -763,9 +689,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "pageSize"
-                },
+                "name": "pageSize",
                 "wireValue": "pageSize"
               },
               "valueType": {
@@ -793,28 +717,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetOrganizationsOrganizationIdUsersRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetOrganizationsOrganizationIdUsersRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "User created successfully",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "UserList"
-                  },
+                  "name": "UserList",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -840,14 +756,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "users"
-            }
+            "users"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "users"
-          }
+          "file": "users"
         }
       },
       "basePath": {
@@ -865,9 +777,7 @@
       "endpoints": [
         {
           "id": "endpoint_users.listUsers",
-          "name": {
-            "originalName": "listUsers"
-          },
+          "name": "listUsers",
           "displayName": "List users",
           "auth": false,
           "idempotent": false,
@@ -885,9 +795,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "page"
-                },
+                "name": "page",
                 "wireValue": "page"
               },
               "valueType": {
@@ -913,9 +821,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "pageSize"
-                },
+                "name": "pageSize",
                 "wireValue": "pageSize"
               },
               "valueType": {
@@ -943,28 +849,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetUsersRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetUsersRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "User created successfully",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "UserList"
-                  },
+                  "name": "UserList",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1008,9 +906,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getAUser",
-          "name": {
-            "originalName": "getAUser"
-          },
+          "name": "getAUser",
           "displayName": "Get a user",
           "auth": false,
           "idempotent": false,
@@ -1035,9 +931,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "userId"
-              },
+              "name": "userId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -1056,9 +950,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "userId"
-              },
+              "name": "userId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -1079,28 +971,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetUsersUserIdRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetUsersUserIdRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "User retrieved successfully",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "User"
-                  },
+                  "name": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1125,9 +1009,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -1154,9 +1036,7 @@
     "types": {
       "type_:UserCreate": {
         "declaration": {
-          "name": {
-            "originalName": "UserCreate"
-          },
+          "name": "UserCreate",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1165,9 +1045,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -1180,9 +1058,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "typeReference": {
@@ -1195,9 +1071,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "settings"
-              },
+              "name": "settings",
               "wireValue": "settings"
             },
             "typeReference": {
@@ -1214,9 +1088,7 @@
       },
       "type_:UserList": {
         "declaration": {
-          "name": {
-            "originalName": "UserList"
-          },
+          "name": "UserList",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1225,9 +1097,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "users"
-              },
+              "name": "users",
               "wireValue": "users"
             },
             "typeReference": {
@@ -1247,9 +1117,7 @@
       },
       "type_:User": {
         "declaration": {
-          "name": {
-            "originalName": "User"
-          },
+          "name": "User",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1258,9 +1126,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1274,9 +1140,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -1289,9 +1153,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "typeReference": {
@@ -1304,9 +1166,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "createdAt"
-              },
+              "name": "createdAt",
               "wireValue": "createdAt"
             },
             "typeReference": {
@@ -1320,9 +1180,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "settings"
-              },
+              "name": "settings",
               "wireValue": "settings"
             },
             "typeReference": {
@@ -1335,9 +1193,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "stats"
-              },
+              "name": "stats",
               "wireValue": "stats"
             },
             "typeReference": {
@@ -1354,9 +1210,7 @@
       },
       "type_:UserSettings": {
         "declaration": {
-          "name": {
-            "originalName": "UserSettings"
-          },
+          "name": "UserSettings",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1365,9 +1219,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "theme"
-              },
+              "name": "theme",
               "wireValue": "theme"
             },
             "typeReference": {
@@ -1380,9 +1232,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "notifications"
-              },
+              "name": "notifications",
               "wireValue": "notifications"
             },
             "typeReference": {
@@ -1395,9 +1245,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "lastModified"
-              },
+              "name": "lastModified",
               "wireValue": "lastModified"
             },
             "typeReference": {
@@ -1415,9 +1263,7 @@
       },
       "type_:UserStatsAccountStatus": {
         "declaration": {
-          "name": {
-            "originalName": "UserStatsAccountStatus"
-          },
+          "name": "UserStatsAccountStatus",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1425,21 +1271,15 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "active"
-            },
+            "name": "active",
             "wireValue": "active"
           },
           {
-            "name": {
-              "originalName": "suspended"
-            },
+            "name": "suspended",
             "wireValue": "suspended"
           },
           {
-            "name": {
-              "originalName": "deleted"
-            },
+            "name": "deleted",
             "wireValue": "deleted"
           }
         ],
@@ -1447,9 +1287,7 @@
       },
       "type_:UserStats": {
         "declaration": {
-          "name": {
-            "originalName": "UserStats"
-          },
+          "name": "UserStats",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1458,9 +1296,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "totalLogins"
-              },
+              "name": "totalLogins",
               "wireValue": "totalLogins"
             },
             "typeReference": {
@@ -1474,9 +1310,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "lastLoginTime"
-              },
+              "name": "lastLoginTime",
               "wireValue": "lastLoginTime"
             },
             "typeReference": {
@@ -1490,9 +1324,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "accountStatus"
-              },
+              "name": "accountStatus",
               "wireValue": "accountStatus"
             },
             "typeReference": {
@@ -1512,19 +1344,13 @@
     "endpoints": {
       "endpoint_organizationUsers.listOrganizationUsers": {
         "declaration": {
-          "name": {
-            "originalName": "listOrganizationUsers"
-          },
+          "name": "listOrganizationUsers",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "organizationUsers"
-              }
+              "organizationUsers"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "organizationUsers"
-            }
+            "file": "organizationUsers"
           }
         },
         "location": {
@@ -1533,27 +1359,19 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetOrganizationsOrganizationIdUsersRequest"
-            },
+            "name": "GetOrganizationsOrganizationIdUsersRequest",
             "fernFilepath": {
               "allParts": [
-                {
-                  "originalName": "organizationUsers"
-                }
+                "organizationUsers"
               ],
               "packagePath": [],
-              "file": {
-                "originalName": "organizationUsers"
-              }
+              "file": "organizationUsers"
             }
           },
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "organizationId"
-                },
+                "name": "organizationId",
                 "wireValue": "organizationId"
               },
               "typeReference": {
@@ -1565,9 +1383,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "page"
-                },
+                "name": "page",
                 "wireValue": "page"
               },
               "typeReference": {
@@ -1580,9 +1396,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "pageSize"
-                },
+                "name": "pageSize",
                 "wireValue": "pageSize"
               },
               "typeReference": {
@@ -1608,19 +1422,13 @@
       },
       "endpoint_users.listUsers": {
         "declaration": {
-          "name": {
-            "originalName": "listUsers"
-          },
+          "name": "listUsers",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "users"
-              }
+              "users"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "users"
-            }
+            "file": "users"
           }
         },
         "location": {
@@ -1629,28 +1437,20 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetUsersRequest"
-            },
+            "name": "GetUsersRequest",
             "fernFilepath": {
               "allParts": [
-                {
-                  "originalName": "users"
-                }
+                "users"
               ],
               "packagePath": [],
-              "file": {
-                "originalName": "users"
-              }
+              "file": "users"
             }
           },
           "pathParameters": [],
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "page"
-                },
+                "name": "page",
                 "wireValue": "page"
               },
               "typeReference": {
@@ -1663,9 +1463,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "pageSize"
-                },
+                "name": "pageSize",
                 "wireValue": "pageSize"
               },
               "typeReference": {
@@ -1691,9 +1489,7 @@
       },
       "endpoint_.getAUser": {
         "declaration": {
-          "name": {
-            "originalName": "getAUser"
-          },
+          "name": "getAUser",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1705,9 +1501,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetUsersUserIdRequest"
-            },
+            "name": "GetUsersUserIdRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1716,9 +1510,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "userId"
-                },
+                "name": "userId",
                 "wireValue": "userId"
               },
               "typeReference": {
@@ -1749,18 +1541,12 @@
     "subpackage_organizationUsers": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "organizationUsers"
-          }
+          "organizationUsers"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "organizationUsers"
-        }
+        "file": "organizationUsers"
       },
-      "name": {
-        "originalName": "organizationUsers"
-      },
+      "name": "organizationUsers",
       "service": "service_organizationUsers",
       "types": [],
       "errors": [],
@@ -1770,18 +1556,12 @@
     "subpackage_users": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "users"
-          }
+          "users"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "users"
-        }
+        "file": "users"
       },
-      "name": {
-        "originalName": "users"
-      },
+      "name": "users",
       "service": "service_users",
       "types": [],
       "errors": [],

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "URL Reference API",
   "auth": {
     "requirement": "ALL",
@@ -14,19 +12,13 @@
     "type_petowners:PetownersSubscribeParamsData": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PetownersSubscribeParamsData"
-        },
+        "name": "PetownersSubscribeParamsData",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "petowners"
-            }
+            "petowners"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "petowners"
-          }
+          "file": "petowners"
         },
         "typeId": "type_petowners:PetownersSubscribeParamsData"
       },
@@ -35,15 +27,11 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "petOwner"
-              },
+              "name": "petOwner",
               "wireValue": "petOwner"
             },
             "valueType": {
-              "name": {
-                "originalName": "PetOwner"
-              },
+              "name": "PetOwner",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -71,19 +59,13 @@
     "type_petowners:PetownersSubscribeParams": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PetownersSubscribeParams"
-        },
+        "name": "PetownersSubscribeParams",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "petowners"
-            }
+            "petowners"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "petowners"
-          }
+          "file": "petowners"
         },
         "typeId": "type_petowners:PetownersSubscribeParams"
       },
@@ -92,9 +74,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "channel"
-              },
+              "name": "channel",
               "wireValue": "channel"
             },
             "valueType": {
@@ -120,27 +100,19 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "data"
-              },
+              "name": "data",
               "wireValue": "data"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "PetownersSubscribeParamsData"
-                  },
+                  "name": "PetownersSubscribeParamsData",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "petowners"
-                      }
+                      "petowners"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "petowners"
-                    }
+                    "file": "petowners"
                   },
                   "typeId": "type_petowners:PetownersSubscribeParamsData",
                   "type": "named"
@@ -168,19 +140,13 @@
     },
     "type_petowners:PetownersSubscribe": {
       "name": {
-        "name": {
-          "originalName": "PetownersSubscribe"
-        },
+        "name": "PetownersSubscribe",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "petowners"
-            }
+            "petowners"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "petowners"
-          }
+          "file": "petowners"
         },
         "typeId": "type_petowners:PetownersSubscribe"
       },
@@ -189,27 +155,19 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "params"
-              },
+              "name": "params",
               "wireValue": "params"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "PetownersSubscribeParams"
-                  },
+                  "name": "PetownersSubscribeParams",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "petowners"
-                      }
+                      "petowners"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "petowners"
-                    }
+                    "file": "petowners"
                   },
                   "typeId": "type_petowners:PetownersSubscribeParams",
                   "type": "named"
@@ -237,9 +195,7 @@
     },
     "type_:Mammal": {
       "name": {
-        "name": {
-          "originalName": "Mammal"
-        },
+        "name": "Mammal",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -250,9 +206,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "Pet"
-              },
+              "name": "Pet",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -264,9 +218,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "User"
-              },
+              "name": "User",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -290,9 +242,7 @@
       "docs": "pet status in the store",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PetStatus"
-        },
+        "name": "PetStatus",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -303,25 +253,19 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "available"
-              },
+              "name": "available",
               "wireValue": "available"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "pending"
-              },
+              "name": "pending",
               "wireValue": "pending"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "sold"
-              },
+              "name": "sold",
               "wireValue": "sold"
             }
           }
@@ -338,9 +282,7 @@
     "type_:Pet": {
       "docs": "A pet for sale in the pet store",
       "name": {
-        "name": {
-          "originalName": "Pet"
-        },
+        "name": "Pet",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -352,9 +294,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -379,17 +319,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "category"
-              },
+              "name": "category",
               "wireValue": "category"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "Category"
-                  },
+                  "name": "Category",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -408,9 +344,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -429,9 +363,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "photoUrls"
-              },
+              "name": "photoUrls",
               "wireValue": "photoUrls"
             },
             "valueType": {
@@ -456,9 +388,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "tags"
-              },
+              "name": "tags",
               "wireValue": "tags"
             },
             "valueType": {
@@ -466,9 +396,7 @@
                 "optional": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "Tag"
-                      },
+                      "name": "Tag",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -492,17 +420,13 @@
           {
             "docs": "pet status in the store",
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "PetStatus"
-                  },
+                  "name": "PetStatus",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -533,9 +457,7 @@
     },
     "type_:PetOwner": {
       "name": {
-        "name": {
-          "originalName": "PetOwner"
-        },
+        "name": "PetOwner",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -562,9 +484,7 @@
       "docs": "Order Status",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "OrderStatus"
-        },
+        "name": "OrderStatus",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -575,25 +495,19 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "placed"
-              },
+              "name": "placed",
               "wireValue": "placed"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "approved"
-              },
+              "name": "approved",
               "wireValue": "approved"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "delivered"
-              },
+              "name": "delivered",
               "wireValue": "delivered"
             }
           }
@@ -610,9 +524,7 @@
     "type_:Order": {
       "docs": "An order for a pets from the pet store",
       "name": {
-        "name": {
-          "originalName": "Order"
-        },
+        "name": "Order",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -624,9 +536,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -651,9 +561,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "petId"
-              },
+              "name": "petId",
               "wireValue": "petId"
             },
             "valueType": {
@@ -678,9 +586,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "quantity"
-              },
+              "name": "quantity",
               "wireValue": "quantity"
             },
             "valueType": {
@@ -705,9 +611,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "shipDate"
-              },
+              "name": "shipDate",
               "wireValue": "shipDate"
             },
             "valueType": {
@@ -730,17 +634,13 @@
           {
             "docs": "Order Status",
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "OrderStatus"
-                  },
+                  "name": "OrderStatus",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -759,9 +659,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "complete"
-              },
+              "name": "complete",
               "wireValue": "complete"
             },
             "valueType": {
@@ -800,9 +698,7 @@
     "type_:Category": {
       "docs": "A category for a pet",
       "name": {
-        "name": {
-          "originalName": "Category"
-        },
+        "name": "Category",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -814,9 +710,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -841,9 +735,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -881,9 +773,7 @@
     "type_:Tag": {
       "docs": "A tag for a pet",
       "name": {
-        "name": {
-          "originalName": "Tag"
-        },
+        "name": "Tag",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -895,9 +785,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -922,9 +810,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -962,9 +848,7 @@
     "type_:User": {
       "docs": "A User who is purchasing from the pet store",
       "name": {
-        "name": {
-          "originalName": "User"
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -976,9 +860,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -1003,9 +885,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "username"
-              },
+              "name": "username",
               "wireValue": "username"
             },
             "valueType": {
@@ -1030,9 +910,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "firstName"
-              },
+              "name": "firstName",
               "wireValue": "firstName"
             },
             "valueType": {
@@ -1057,9 +935,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "lastName"
-              },
+              "name": "lastName",
               "wireValue": "lastName"
             },
             "valueType": {
@@ -1084,9 +960,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
@@ -1111,9 +985,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "password"
-              },
+              "name": "password",
               "wireValue": "password"
             },
             "valueType": {
@@ -1138,9 +1010,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "phone"
-              },
+              "name": "phone",
               "wireValue": "phone"
             },
             "valueType": {
@@ -1166,9 +1036,7 @@
           {
             "docs": "User Status",
             "name": {
-              "name": {
-                "originalName": "userStatus"
-              },
+              "name": "userStatus",
               "wireValue": "userStatus"
             },
             "valueType": {
@@ -1210,14 +1078,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "pet"
-            }
+            "pet"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "pet"
-          }
+          "file": "pet"
         }
       },
       "basePath": {
@@ -1235,9 +1099,7 @@
       "endpoints": [
         {
           "id": "endpoint_pet.updateAnExistingPet",
-          "name": {
-            "originalName": "updateAnExistingPet"
-          },
+          "name": "updateAnExistingPet",
           "displayName": "Update an existing pet",
           "auth": false,
           "idempotent": false,
@@ -1256,9 +1118,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "Pet"
-              },
+              "name": "Pet",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -1273,9 +1133,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "Pet"
-                  },
+                  "name": "Pet",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1287,18 +1145,14 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "A list of pets",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Pet"
-                  },
+                  "name": "Pet",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1324,14 +1178,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "order"
-            }
+            "order"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "order"
-          }
+          "file": "order"
         }
       },
       "basePath": {
@@ -1349,9 +1199,7 @@
       "endpoints": [
         {
           "id": "endpoint_order.getAnOrder",
-          "name": {
-            "originalName": "getAnOrder"
-          },
+          "name": "getAnOrder",
           "displayName": "Get an order",
           "auth": false,
           "idempotent": false,
@@ -1373,9 +1221,7 @@
               "value": {
                 "docs": "An order object",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Order"
-                  },
+                  "name": "Order",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1400,9 +1246,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -1441,9 +1285,7 @@
         "parts": []
       },
       "auth": false,
-      "name": {
-        "originalName": "petowners"
-      },
+      "name": "petowners",
       "headers": [],
       "docs": "Private websocket channel for receiving updates about pet owners and their pets",
       "pathParameters": [],
@@ -1454,19 +1296,13 @@
           "origin": "server",
           "body": {
             "bodyType": {
-              "name": {
-                "originalName": "PetownersSubscribe"
-              },
+              "name": "PetownersSubscribe",
               "fernFilepath": {
                 "allParts": [
-                  {
-                    "originalName": "petowners"
-                  }
+                  "petowners"
                 ],
                 "packagePath": [],
-                "file": {
-                  "originalName": "petowners"
-                }
+                "file": "petowners"
               },
               "typeId": "type_petowners:PetownersSubscribe",
               "type": "named"
@@ -1490,18 +1326,12 @@
                     "typeId": "type_petowners:PetownersSubscribe",
                     "fernFilepath": {
                       "allParts": [
-                        {
-                          "originalName": "petowners"
-                        }
+                        "petowners"
                       ],
                       "packagePath": [],
-                      "file": {
-                        "originalName": "petowners"
-                      }
+                      "file": "petowners"
                     },
-                    "name": {
-                      "originalName": "PetownersSubscribe"
-                    }
+                    "name": "PetownersSubscribe"
                   },
                   "shape": {
                     "properties": [],
@@ -1527,27 +1357,19 @@
     "types": {
       "type_petowners:PetownersSubscribeParamsData": {
         "declaration": {
-          "name": {
-            "originalName": "PetownersSubscribeParamsData"
-          },
+          "name": "PetownersSubscribeParamsData",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "petowners"
-              }
+              "petowners"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "petowners"
-            }
+            "file": "petowners"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "petOwner"
-              },
+              "name": "petOwner",
               "wireValue": "petOwner"
             },
             "typeReference": {
@@ -1561,27 +1383,19 @@
       },
       "type_petowners:PetownersSubscribeParams": {
         "declaration": {
-          "name": {
-            "originalName": "PetownersSubscribeParams"
-          },
+          "name": "PetownersSubscribeParams",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "petowners"
-              }
+              "petowners"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "petowners"
-            }
+            "file": "petowners"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "channel"
-              },
+              "name": "channel",
               "wireValue": "channel"
             },
             "typeReference": {
@@ -1597,9 +1411,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "data"
-              },
+              "name": "data",
               "wireValue": "data"
             },
             "typeReference": {
@@ -1616,27 +1428,19 @@
       },
       "type_petowners:PetownersSubscribe": {
         "declaration": {
-          "name": {
-            "originalName": "PetownersSubscribe"
-          },
+          "name": "PetownersSubscribe",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "petowners"
-              }
+              "petowners"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "petowners"
-            }
+            "file": "petowners"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "params"
-              },
+              "name": "params",
               "wireValue": "params"
             },
             "typeReference": {
@@ -1653,9 +1457,7 @@
       },
       "type_:Mammal": {
         "declaration": {
-          "name": {
-            "originalName": "Mammal"
-          },
+          "name": "Mammal",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1675,9 +1477,7 @@
       },
       "type_:PetStatus": {
         "declaration": {
-          "name": {
-            "originalName": "PetStatus"
-          },
+          "name": "PetStatus",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1685,21 +1485,15 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "available"
-            },
+            "name": "available",
             "wireValue": "available"
           },
           {
-            "name": {
-              "originalName": "pending"
-            },
+            "name": "pending",
             "wireValue": "pending"
           },
           {
-            "name": {
-              "originalName": "sold"
-            },
+            "name": "sold",
             "wireValue": "sold"
           }
         ],
@@ -1707,9 +1501,7 @@
       },
       "type_:Pet": {
         "declaration": {
-          "name": {
-            "originalName": "Pet"
-          },
+          "name": "Pet",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1718,9 +1510,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1733,9 +1523,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "category"
-              },
+              "name": "category",
               "wireValue": "category"
             },
             "typeReference": {
@@ -1748,9 +1536,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -1760,9 +1546,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "photoUrls"
-              },
+              "name": "photoUrls",
               "wireValue": "photoUrls"
             },
             "typeReference": {
@@ -1775,9 +1559,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "tags"
-              },
+              "name": "tags",
               "wireValue": "tags"
             },
             "typeReference": {
@@ -1793,9 +1575,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "typeReference": {
@@ -1812,9 +1592,7 @@
       },
       "type_:PetOwner": {
         "declaration": {
-          "name": {
-            "originalName": "PetOwner"
-          },
+          "name": "PetOwner",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1827,9 +1605,7 @@
       },
       "type_:OrderStatus": {
         "declaration": {
-          "name": {
-            "originalName": "OrderStatus"
-          },
+          "name": "OrderStatus",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1837,21 +1613,15 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "placed"
-            },
+            "name": "placed",
             "wireValue": "placed"
           },
           {
-            "name": {
-              "originalName": "approved"
-            },
+            "name": "approved",
             "wireValue": "approved"
           },
           {
-            "name": {
-              "originalName": "delivered"
-            },
+            "name": "delivered",
             "wireValue": "delivered"
           }
         ],
@@ -1859,9 +1629,7 @@
       },
       "type_:Order": {
         "declaration": {
-          "name": {
-            "originalName": "Order"
-          },
+          "name": "Order",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1870,9 +1638,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1885,9 +1651,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "petId"
-              },
+              "name": "petId",
               "wireValue": "petId"
             },
             "typeReference": {
@@ -1900,9 +1664,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "quantity"
-              },
+              "name": "quantity",
               "wireValue": "quantity"
             },
             "typeReference": {
@@ -1915,9 +1677,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "shipDate"
-              },
+              "name": "shipDate",
               "wireValue": "shipDate"
             },
             "typeReference": {
@@ -1930,9 +1690,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "typeReference": {
@@ -1945,9 +1703,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "complete"
-              },
+              "name": "complete",
               "wireValue": "complete"
             },
             "typeReference": {
@@ -1964,9 +1720,7 @@
       },
       "type_:Category": {
         "declaration": {
-          "name": {
-            "originalName": "Category"
-          },
+          "name": "Category",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1975,9 +1729,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1990,9 +1742,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -2009,9 +1759,7 @@
       },
       "type_:Tag": {
         "declaration": {
-          "name": {
-            "originalName": "Tag"
-          },
+          "name": "Tag",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -2020,9 +1768,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -2035,9 +1781,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -2054,9 +1798,7 @@
       },
       "type_:User": {
         "declaration": {
-          "name": {
-            "originalName": "User"
-          },
+          "name": "User",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -2065,9 +1807,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -2080,9 +1820,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "username"
-              },
+              "name": "username",
               "wireValue": "username"
             },
             "typeReference": {
@@ -2095,9 +1833,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "firstName"
-              },
+              "name": "firstName",
               "wireValue": "firstName"
             },
             "typeReference": {
@@ -2110,9 +1846,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "lastName"
-              },
+              "name": "lastName",
               "wireValue": "lastName"
             },
             "typeReference": {
@@ -2125,9 +1859,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "typeReference": {
@@ -2140,9 +1872,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "password"
-              },
+              "name": "password",
               "wireValue": "password"
             },
             "typeReference": {
@@ -2155,9 +1885,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "phone"
-              },
+              "name": "phone",
               "wireValue": "phone"
             },
             "typeReference": {
@@ -2170,9 +1898,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "userStatus"
-              },
+              "name": "userStatus",
               "wireValue": "userStatus"
             },
             "typeReference": {
@@ -2192,19 +1918,13 @@
     "endpoints": {
       "endpoint_pet.updateAnExistingPet": {
         "declaration": {
-          "name": {
-            "originalName": "updateAnExistingPet"
-          },
+          "name": "updateAnExistingPet",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "pet"
-              }
+              "pet"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "pet"
-            }
+            "file": "pet"
           }
         },
         "location": {
@@ -2229,19 +1949,13 @@
       },
       "endpoint_order.getAnOrder": {
         "declaration": {
-          "name": {
-            "originalName": "getAnOrder"
-          },
+          "name": "getAnOrder",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "order"
-              }
+              "order"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "order"
-            }
+            "file": "order"
           }
         },
         "location": {
@@ -2266,18 +1980,12 @@
     "subpackage_pet": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "pet"
-          }
+          "pet"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "pet"
-        }
+        "file": "pet"
       },
-      "name": {
-        "originalName": "pet"
-      },
+      "name": "pet",
       "service": "service_pet",
       "types": [],
       "errors": [],
@@ -2287,18 +1995,12 @@
     "subpackage_order": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "order"
-          }
+          "order"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "order"
-        }
+        "file": "order"
       },
-      "name": {
-        "originalName": "order"
-      },
+      "name": "order",
       "service": "service_order",
       "types": [],
       "errors": [],
@@ -2308,18 +2010,12 @@
     "subpackage_petowners": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "petowners"
-          }
+          "petowners"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "petowners"
-        }
+        "file": "petowners"
       },
-      "name": {
-        "originalName": "petowners"
-      },
+      "name": "petowners",
       "types": [
         "type_petowners:PetownersSubscribeParamsData",
         "type_petowners:PetownersSubscribeParams",

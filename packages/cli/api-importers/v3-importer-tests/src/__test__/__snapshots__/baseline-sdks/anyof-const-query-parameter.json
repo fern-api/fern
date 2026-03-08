@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test spec for anyOf with const query parameter",
   "auth": {
     "requirement": "ALL",
@@ -13,19 +11,13 @@
   "types": {
     "type_link:BulkTriggerHistoricalPullRequestTeamId": {
       "name": {
-        "name": {
-          "originalName": "BulkTriggerHistoricalPullRequestTeamId"
-        },
+        "name": "BulkTriggerHistoricalPullRequestTeamId",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "link"
-            }
+            "link"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "link"
-          }
+          "file": "link"
         },
         "typeId": "type_link:BulkTriggerHistoricalPullRequestTeamId"
       },
@@ -66,19 +58,13 @@
     },
     "type_link:BulkTriggerHistoricalPullResponse": {
       "name": {
-        "name": {
-          "originalName": "BulkTriggerHistoricalPullResponse"
-        },
+        "name": "BulkTriggerHistoricalPullResponse",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "link"
-            }
+            "link"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "link"
-          }
+          "file": "link"
         },
         "typeId": "type_link:BulkTriggerHistoricalPullResponse"
       },
@@ -87,9 +73,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "success"
-              },
+              "name": "success",
               "wireValue": "success"
             },
             "valueType": {
@@ -131,14 +115,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "link"
-            }
+            "link"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "link"
-          }
+          "file": "link"
         }
       },
       "basePath": {
@@ -156,9 +136,7 @@
       "endpoints": [
         {
           "id": "endpoint_link.bulk_trigger_historical_pull",
-          "name": {
-            "originalName": "bulk_trigger_historical_pull"
-          },
+          "name": "bulk_trigger_historical_pull",
           "displayName": "Bulk Trigger Historical Pull",
           "auth": false,
           "idempotent": false,
@@ -176,25 +154,17 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "team_id"
-                },
+                "name": "team_id",
                 "wireValue": "team_id"
               },
               "valueType": {
-                "name": {
-                  "originalName": "BulkTriggerHistoricalPullRequestTeamId"
-                },
+                "name": "BulkTriggerHistoricalPullRequestTeamId",
                 "fernFilepath": {
                   "allParts": [
-                    {
-                      "originalName": "link"
-                    }
+                    "link"
                   ],
                   "packagePath": [],
-                  "file": {
-                    "originalName": "link"
-                  }
+                  "file": "link"
                 },
                 "typeId": "type_link:BulkTriggerHistoricalPullRequestTeamId",
                 "type": "named"
@@ -208,17 +178,13 @@
           ],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "BulkTriggerHistoricalPullRequest"
-            },
+            "name": "BulkTriggerHistoricalPullRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "ids"
-                  },
+                  "name": "ids",
                   "wireValue": "ids"
                 },
                 "valueType": {
@@ -254,38 +220,26 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "BulkTriggerHistoricalPullRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "BulkTriggerHistoricalPullRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful Response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "BulkTriggerHistoricalPullResponse"
-                  },
+                  "name": "BulkTriggerHistoricalPullResponse",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "link"
-                      }
+                      "link"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "link"
-                    }
+                    "file": "link"
                   },
                   "typeId": "type_link:BulkTriggerHistoricalPullResponse",
                   "type": "named"
@@ -307,9 +261,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -334,19 +286,13 @@
     "types": {
       "type_link:BulkTriggerHistoricalPullRequestTeamId": {
         "declaration": {
-          "name": {
-            "originalName": "BulkTriggerHistoricalPullRequestTeamId"
-          },
+          "name": "BulkTriggerHistoricalPullRequestTeamId",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "link"
-              }
+              "link"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "link"
-            }
+            "file": "link"
           }
         },
         "types": [
@@ -366,27 +312,19 @@
       },
       "type_link:BulkTriggerHistoricalPullResponse": {
         "declaration": {
-          "name": {
-            "originalName": "BulkTriggerHistoricalPullResponse"
-          },
+          "name": "BulkTriggerHistoricalPullResponse",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "link"
-              }
+              "link"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "link"
-            }
+            "file": "link"
           }
         },
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "success"
-              },
+              "name": "success",
               "wireValue": "success"
             },
             "typeReference": {
@@ -406,19 +344,13 @@
     "endpoints": {
       "endpoint_link.bulk_trigger_historical_pull": {
         "declaration": {
-          "name": {
-            "originalName": "bulk_trigger_historical_pull"
-          },
+          "name": "bulk_trigger_historical_pull",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "link"
-              }
+              "link"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "link"
-            }
+            "file": "link"
           }
         },
         "location": {
@@ -427,28 +359,20 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "BulkTriggerHistoricalPullRequest"
-            },
+            "name": "BulkTriggerHistoricalPullRequest",
             "fernFilepath": {
               "allParts": [
-                {
-                  "originalName": "link"
-                }
+                "link"
               ],
               "packagePath": [],
-              "file": {
-                "originalName": "link"
-              }
+              "file": "link"
             }
           },
           "pathParameters": [],
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "team_id"
-                },
+                "name": "team_id",
                 "wireValue": "team_id"
               },
               "typeReference": {
@@ -462,9 +386,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "ids"
-                  },
+                  "name": "ids",
                   "wireValue": "ids"
                 },
                 "typeReference": {
@@ -501,18 +423,12 @@
     "subpackage_link": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "link"
-          }
+          "link"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "link"
-        }
+        "file": "link"
       },
-      "name": {
-        "originalName": "link"
-      },
+      "name": "link",
       "service": "service_link",
       "types": [
         "type_link:BulkTriggerHistoricalPullRequestTeamId",

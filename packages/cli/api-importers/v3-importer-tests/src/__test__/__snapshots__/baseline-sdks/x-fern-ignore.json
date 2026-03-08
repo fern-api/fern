@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-ignore`",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:Meta": {
       "name": {
-        "name": {
-          "originalName": "Meta"
-        },
+        "name": "Meta",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "hasMore"
-              },
+              "name": "hasMore",
               "wireValue": "hasMore"
             },
             "valueType": {
@@ -66,9 +60,7 @@
     },
     "type_:UsersResponse": {
       "name": {
-        "name": {
-          "originalName": "UsersResponse"
-        },
+        "name": "UsersResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -80,17 +72,13 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "meta"
-              },
+              "name": "meta",
               "wireValue": "meta"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "Meta"
-                  },
+                  "name": "Meta",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -109,9 +97,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "users"
-              },
+              "name": "users",
               "wireValue": "users"
             },
             "valueType": {
@@ -119,9 +105,7 @@
                 "optional": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "User"
-                      },
+                      "name": "User",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -156,9 +140,7 @@
     },
     "type_:User": {
       "name": {
-        "name": {
-          "originalName": "User"
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -170,9 +152,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -200,9 +180,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -227,9 +205,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
@@ -254,9 +230,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "age"
-              },
+              "name": "age",
               "wireValue": "age"
             },
             "valueType": {
@@ -317,9 +291,7 @@
         {
           "docs": "",
           "id": "endpoint_.list",
-          "name": {
-            "originalName": "list"
-          },
+          "name": "list",
           "displayName": "List",
           "auth": false,
           "idempotent": false,
@@ -337,9 +309,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "pageNumber"
-                },
+                "name": "pageNumber",
                 "wireValue": "pageNumber"
               },
               "valueType": {
@@ -365,9 +335,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "limit"
-                },
+                "name": "limit",
                 "wireValue": "limit"
               },
               "valueType": {
@@ -395,28 +363,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "ListRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "ListRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "UsersResponse"
-                  },
+                  "name": "UsersResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -441,9 +401,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -469,9 +427,7 @@
     "types": {
       "type_:Meta": {
         "declaration": {
-          "name": {
-            "originalName": "Meta"
-          },
+          "name": "Meta",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -480,9 +436,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "hasMore"
-              },
+              "name": "hasMore",
               "wireValue": "hasMore"
             },
             "typeReference": {
@@ -499,9 +453,7 @@
       },
       "type_:UsersResponse": {
         "declaration": {
-          "name": {
-            "originalName": "UsersResponse"
-          },
+          "name": "UsersResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -510,9 +462,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "meta"
-              },
+              "name": "meta",
               "wireValue": "meta"
             },
             "typeReference": {
@@ -525,9 +475,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "users"
-              },
+              "name": "users",
               "wireValue": "users"
             },
             "typeReference": {
@@ -547,9 +495,7 @@
       },
       "type_:User": {
         "declaration": {
-          "name": {
-            "originalName": "User"
-          },
+          "name": "User",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -558,9 +504,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -573,9 +517,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -588,9 +530,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "typeReference": {
@@ -603,9 +543,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "age"
-              },
+              "name": "age",
               "wireValue": "age"
             },
             "typeReference": {
@@ -625,9 +563,7 @@
     "endpoints": {
       "endpoint_.list": {
         "declaration": {
-          "name": {
-            "originalName": "list"
-          },
+          "name": "list",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -639,9 +575,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "ListRequest"
-            },
+            "name": "ListRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -651,9 +585,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "pageNumber"
-                },
+                "name": "pageNumber",
                 "wireValue": "pageNumber"
               },
               "typeReference": {
@@ -666,9 +598,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "limit"
-                },
+                "name": "limit",
                 "wireValue": "limit"
               },
               "typeReference": {

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Security Global Inheritance Test",
   "auth": {
     "requirement": "ALL",
@@ -10,9 +8,7 @@
       {
         "key": "ApiKeyAuth",
         "name": {
-          "name": {
-            "originalName": "apiKey"
-          },
+          "name": "apiKey",
           "wireValue": "x-api-key"
         },
         "valueType": {
@@ -33,9 +29,7 @@
   "types": {
     "type_:GetPlantsResponseItem": {
       "name": {
-        "name": {
-          "originalName": "GetPlantsResponseItem"
-        },
+        "name": "GetPlantsResponseItem",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -47,9 +41,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -74,9 +66,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -136,9 +126,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getPlants",
-          "name": {
-            "originalName": "getPlants"
-          },
+          "name": "getPlants",
           "displayName": "Get plants (inherits global ApiKeyAuth)",
           "auth": true,
           "security": [
@@ -167,9 +155,7 @@
                 "responseBodyType": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "GetPlantsResponseItem"
-                      },
+                      "name": "GetPlantsResponseItem",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -198,9 +184,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -210,9 +194,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://api.example.com/v1"
         }
       ],
@@ -239,9 +221,7 @@
     "types": {
       "type_:GetPlantsResponseItem": {
         "declaration": {
-          "name": {
-            "originalName": "GetPlantsResponseItem"
-          },
+          "name": "GetPlantsResponseItem",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -250,9 +230,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -265,9 +243,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -289,9 +265,7 @@
         "auth": {
           "header": {
             "name": {
-              "name": {
-                "originalName": "apiKey"
-              },
+              "name": "apiKey",
               "wireValue": "x-api-key"
             },
             "typeReference": {
@@ -302,9 +276,7 @@
           "type": "header"
         },
         "declaration": {
-          "name": {
-            "originalName": "getPlants"
-          },
+          "name": "getPlants",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -331,9 +303,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://api.example.com/v1"
           }
         ],

@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Primitive Array API",
   "auth": {
     "requirement": "ALL",
@@ -35,9 +33,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getObjectWithArrayOfObjects",
-          "name": {
-            "originalName": "getObjectWithArrayOfObjects"
-          },
+          "name": "getObjectWithArrayOfObjects",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -80,9 +76,7 @@
         },
         {
           "id": "endpoint_.getImplicitObjectWithArrayOfObjects",
-          "name": {
-            "originalName": "getImplicitObjectWithArrayOfObjects"
-          },
+          "name": "getImplicitObjectWithArrayOfObjects",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -128,9 +122,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -152,9 +144,7 @@
     "endpoints": {
       "endpoint_.getObjectWithArrayOfObjects": {
         "declaration": {
-          "name": {
-            "originalName": "getObjectWithArrayOfObjects"
-          },
+          "name": "getObjectWithArrayOfObjects",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -175,9 +165,7 @@
       },
       "endpoint_.getImplicitObjectWithArrayOfObjects": {
         "declaration": {
-          "name": {
-            "originalName": "getImplicitObjectWithArrayOfObjects"
-          },
+          "name": "getImplicitObjectWithArrayOfObjects",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []

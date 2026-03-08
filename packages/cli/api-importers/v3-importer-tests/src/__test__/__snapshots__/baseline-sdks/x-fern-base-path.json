@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Acme API",
   "auth": {
     "requirement": "ALL",
@@ -35,9 +33,7 @@
       "endpoints": [
         {
           "id": "endpoint_.exampleEndpoint",
-          "name": {
-            "originalName": "exampleEndpoint"
-          },
+          "name": "exampleEndpoint",
           "displayName": "Example endpoint",
           "auth": false,
           "idempotent": false,
@@ -65,9 +61,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -77,9 +71,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default"
-          },
+          "name": "Default",
           "url": "https://api.acme.com"
         }
       ],
@@ -104,9 +96,7 @@
     "endpoints": {
       "endpoint_.exampleEndpoint": {
         "declaration": {
-          "name": {
-            "originalName": "exampleEndpoint"
-          },
+          "name": "exampleEndpoint",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -133,9 +123,7 @@
         "environments": [
           {
             "id": "Default",
-            "name": {
-              "originalName": "Default"
-            },
+            "name": "Default",
             "url": "https://api.acme.com"
           }
         ],

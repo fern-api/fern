@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Tree API",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:CreateFernResponse": {
       "name": {
-        "name": {
-          "originalName": "CreateFernResponse"
-        },
+        "name": "CreateFernResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,9 +23,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "valueType": {
@@ -54,9 +48,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "code"
-              },
+              "name": "code",
               "wireValue": "code"
             },
             "valueType": {
@@ -94,9 +86,7 @@
     "type_:CreateSucculentsRequestSucculentsItem": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "CreateSucculentsRequestSucculentsItem"
-        },
+        "name": "CreateSucculentsRequestSucculentsItem",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -108,9 +98,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -147,9 +135,7 @@
     },
     "type_:CreateSucculentsResponse": {
       "name": {
-        "name": {
-          "originalName": "CreateSucculentsResponse"
-        },
+        "name": "CreateSucculentsResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -161,9 +147,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "valueType": {
@@ -188,9 +172,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "code"
-              },
+              "name": "code",
               "wireValue": "code"
             },
             "valueType": {
@@ -228,9 +210,7 @@
     "type_:TreeCreateLocation": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "TreeCreateLocation"
-        },
+        "name": "TreeCreateLocation",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -242,9 +222,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "latitude"
-              },
+              "name": "latitude",
               "wireValue": "latitude"
             },
             "valueType": {
@@ -266,9 +244,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "longitude"
-              },
+              "name": "longitude",
               "wireValue": "longitude"
             },
             "valueType": {
@@ -302,9 +278,7 @@
     },
     "type_:TreeCreate": {
       "name": {
-        "name": {
-          "originalName": "TreeCreate"
-        },
+        "name": "TreeCreate",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -316,9 +290,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "species"
-              },
+              "name": "species",
               "wireValue": "species"
             },
             "valueType": {
@@ -337,9 +309,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height"
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "valueType": {
@@ -355,9 +325,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "age"
-              },
+              "name": "age",
               "wireValue": "age"
             },
             "valueType": {
@@ -382,17 +350,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "location"
-              },
+              "name": "location",
               "wireValue": "location"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "TreeCreateLocation"
-                  },
+                  "name": "TreeCreateLocation",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -423,9 +387,7 @@
     },
     "type_:Tree": {
       "name": {
-        "name": {
-          "originalName": "Tree"
-        },
+        "name": "Tree",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -435,9 +397,7 @@
       "shape": {
         "extends": [
           {
-            "name": {
-              "originalName": "TreeCreate"
-            },
+            "name": "TreeCreate",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -448,9 +408,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -472,9 +430,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "plantedDate"
-              },
+              "name": "plantedDate",
               "wireValue": "plantedDate"
             },
             "valueType": {
@@ -499,9 +455,7 @@
         "extendedProperties": [
           {
             "name": {
-              "name": {
-                "originalName": "species"
-              },
+              "name": "species",
               "wireValue": "species"
             },
             "valueType": {
@@ -520,9 +474,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height"
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "valueType": {
@@ -538,9 +490,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "age"
-              },
+              "name": "age",
               "wireValue": "age"
             },
             "valueType": {
@@ -565,17 +515,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "location"
-              },
+              "name": "location",
               "wireValue": "location"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "TreeCreateLocation"
-                  },
+                  "name": "TreeCreateLocation",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -627,9 +573,7 @@
       "endpoints": [
         {
           "id": "endpoint_.listTrees",
-          "name": {
-            "originalName": "listTrees"
-          },
+          "name": "listTrees",
           "displayName": "List all trees",
           "auth": false,
           "idempotent": false,
@@ -653,9 +597,7 @@
                 "responseBodyType": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "Tree"
-                      },
+                      "name": "Tree",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -681,9 +623,7 @@
         },
         {
           "id": "endpoint_.createTree",
-          "name": {
-            "originalName": "createTree"
-          },
+          "name": "createTree",
           "displayName": "Create a new tree",
           "auth": false,
           "idempotent": false,
@@ -702,9 +642,7 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": {
-                "originalName": "TreeCreate"
-              },
+              "name": "TreeCreate",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -719,9 +657,7 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": {
-                    "originalName": "TreeCreate"
-                  },
+                  "name": "TreeCreate",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -733,18 +669,14 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Tree created successfully",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Tree"
-                  },
+                  "name": "Tree",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -766,9 +698,7 @@
         },
         {
           "id": "endpoint_.getTree",
-          "name": {
-            "originalName": "getTree"
-          },
+          "name": "getTree",
           "displayName": "Get a tree by ID",
           "auth": false,
           "idempotent": false,
@@ -793,9 +723,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "treeId"
-              },
+              "name": "treeId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -814,9 +742,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "treeId"
-              },
+              "name": "treeId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -837,28 +763,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetTreeRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetTreeRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Tree details",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Tree"
-                  },
+                  "name": "Tree",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -880,9 +798,7 @@
         },
         {
           "id": "endpoint_.createFern",
-          "name": {
-            "originalName": "createFern"
-          },
+          "name": "createFern",
           "displayName": "Create a new fern",
           "auth": false,
           "idempotent": false,
@@ -900,17 +816,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "CreateFernRequest"
-            },
+            "name": "CreateFernRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "color"
-                  },
+                  "name": "color",
                   "wireValue": "color"
                 },
                 "valueType": {
@@ -935,9 +847,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "name"
-                  },
+                  "name": "name",
                   "wireValue": "name"
                 },
                 "valueType": {
@@ -967,28 +877,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "CreateFernRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "CreateFernRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Fern created successfully",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "CreateFernResponse"
-                  },
+                  "name": "CreateFernResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1010,9 +912,7 @@
         },
         {
           "id": "endpoint_.getFern",
-          "name": {
-            "originalName": "getFern"
-          },
+          "name": "getFern",
           "displayName": "Get a fern by ID",
           "auth": false,
           "idempotent": false,
@@ -1037,9 +937,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "fernId"
-              },
+              "name": "fernId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -1058,9 +956,7 @@
           ],
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "fernId"
-              },
+              "name": "fernId",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -1081,19 +977,13 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetFernRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "GetFernRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -1131,9 +1021,7 @@
         },
         {
           "id": "endpoint_.createGrass",
-          "name": {
-            "originalName": "createGrass"
-          },
+          "name": "createGrass",
           "displayName": "Create a new grass",
           "auth": false,
           "idempotent": false,
@@ -1151,17 +1039,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "CreateGrassRequest"
-            },
+            "name": "CreateGrassRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "annual"
-                  },
+                  "name": "annual",
                   "wireValue": "annual"
                 },
                 "valueType": {
@@ -1186,9 +1070,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "foo"
-                  },
+                  "name": "foo",
                   "wireValue": "foo"
                 },
                 "valueType": {
@@ -1213,9 +1095,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "bar"
-                  },
+                  "name": "bar",
                   "wireValue": "bar"
                 },
                 "valueType": {
@@ -1245,19 +1125,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "CreateGrassRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "CreateGrassRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {},
           "errors": [],
@@ -1267,9 +1141,7 @@
         },
         {
           "id": "endpoint_.createSucculents",
-          "name": {
-            "originalName": "createSucculents"
-          },
+          "name": "createSucculents",
           "displayName": "Create several new succulents",
           "auth": false,
           "idempotent": false,
@@ -1287,25 +1159,19 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "CreateSucculentsRequest"
-            },
+            "name": "CreateSucculentsRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "succulents"
-                  },
+                  "name": "succulents",
                   "wireValue": "succulents"
                 },
                 "valueType": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "CreateSucculentsRequestSucculentsItem"
-                      },
+                      "name": "CreateSucculentsRequestSucculentsItem",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -1329,28 +1195,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "CreateSucculentsRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "CreateSucculentsRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Succulents created successfully",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "CreateSucculentsResponse"
-                  },
+                  "name": "CreateSucculentsResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1375,9 +1233,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -1406,9 +1262,7 @@
     "types": {
       "type_:CreateFernResponse": {
         "declaration": {
-          "name": {
-            "originalName": "CreateFernResponse"
-          },
+          "name": "CreateFernResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1417,9 +1271,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "typeReference": {
@@ -1432,9 +1284,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "code"
-              },
+              "name": "code",
               "wireValue": "code"
             },
             "typeReference": {
@@ -1451,9 +1301,7 @@
       },
       "type_:CreateSucculentsRequestSucculentsItem": {
         "declaration": {
-          "name": {
-            "originalName": "CreateSucculentsRequestSucculentsItem"
-          },
+          "name": "CreateSucculentsRequestSucculentsItem",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1462,9 +1310,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -1481,9 +1327,7 @@
       },
       "type_:CreateSucculentsResponse": {
         "declaration": {
-          "name": {
-            "originalName": "CreateSucculentsResponse"
-          },
+          "name": "CreateSucculentsResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1492,9 +1336,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message"
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "typeReference": {
@@ -1507,9 +1349,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "code"
-              },
+              "name": "code",
               "wireValue": "code"
             },
             "typeReference": {
@@ -1526,9 +1366,7 @@
       },
       "type_:TreeCreateLocation": {
         "declaration": {
-          "name": {
-            "originalName": "TreeCreateLocation"
-          },
+          "name": "TreeCreateLocation",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1537,9 +1375,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "latitude"
-              },
+              "name": "latitude",
               "wireValue": "latitude"
             },
             "typeReference": {
@@ -1552,9 +1388,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "longitude"
-              },
+              "name": "longitude",
               "wireValue": "longitude"
             },
             "typeReference": {
@@ -1571,9 +1405,7 @@
       },
       "type_:TreeCreate": {
         "declaration": {
-          "name": {
-            "originalName": "TreeCreate"
-          },
+          "name": "TreeCreate",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1582,9 +1414,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "species"
-              },
+              "name": "species",
               "wireValue": "species"
             },
             "typeReference": {
@@ -1594,9 +1424,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height"
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "typeReference": {
@@ -1606,9 +1434,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "age"
-              },
+              "name": "age",
               "wireValue": "age"
             },
             "typeReference": {
@@ -1621,9 +1447,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "location"
-              },
+              "name": "location",
               "wireValue": "location"
             },
             "typeReference": {
@@ -1640,9 +1464,7 @@
       },
       "type_:Tree": {
         "declaration": {
-          "name": {
-            "originalName": "Tree"
-          },
+          "name": "Tree",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1651,9 +1473,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "species"
-              },
+              "name": "species",
               "wireValue": "species"
             },
             "typeReference": {
@@ -1663,9 +1483,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height"
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "typeReference": {
@@ -1675,9 +1493,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "age"
-              },
+              "name": "age",
               "wireValue": "age"
             },
             "typeReference": {
@@ -1690,9 +1506,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "location"
-              },
+              "name": "location",
               "wireValue": "location"
             },
             "typeReference": {
@@ -1705,9 +1519,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -1717,9 +1529,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "plantedDate"
-              },
+              "name": "plantedDate",
               "wireValue": "plantedDate"
             },
             "typeReference": {
@@ -1742,9 +1552,7 @@
     "endpoints": {
       "endpoint_.listTrees": {
         "declaration": {
-          "name": {
-            "originalName": "listTrees"
-          },
+          "name": "listTrees",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1765,9 +1573,7 @@
       },
       "endpoint_.createTree": {
         "declaration": {
-          "name": {
-            "originalName": "createTree"
-          },
+          "name": "createTree",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1795,9 +1601,7 @@
       },
       "endpoint_.getTree": {
         "declaration": {
-          "name": {
-            "originalName": "getTree"
-          },
+          "name": "getTree",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1809,9 +1613,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetTreeRequest"
-            },
+            "name": "GetTreeRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1820,9 +1622,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "treeId"
-                },
+                "name": "treeId",
                 "wireValue": "treeId"
               },
               "typeReference": {
@@ -1846,9 +1646,7 @@
       },
       "endpoint_.createFern": {
         "declaration": {
-          "name": {
-            "originalName": "createFern"
-          },
+          "name": "createFern",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1860,9 +1658,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "CreateFernRequest"
-            },
+            "name": "CreateFernRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1875,9 +1671,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "color"
-                  },
+                  "name": "color",
                   "wireValue": "color"
                 },
                 "typeReference": {
@@ -1890,9 +1684,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "name"
-                  },
+                  "name": "name",
                   "wireValue": "name"
                 },
                 "typeReference": {
@@ -1919,9 +1711,7 @@
       },
       "endpoint_.getFern": {
         "declaration": {
-          "name": {
-            "originalName": "getFern"
-          },
+          "name": "getFern",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1933,9 +1723,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "GetFernRequest"
-            },
+            "name": "GetFernRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1944,9 +1732,7 @@
           "pathParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "fernId"
-                },
+                "name": "fernId",
                 "wireValue": "fernId"
               },
               "typeReference": {
@@ -1970,9 +1756,7 @@
       },
       "endpoint_.createGrass": {
         "declaration": {
-          "name": {
-            "originalName": "createGrass"
-          },
+          "name": "createGrass",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1984,9 +1768,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "CreateGrassRequest"
-            },
+            "name": "CreateGrassRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1999,9 +1781,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "annual"
-                  },
+                  "name": "annual",
                   "wireValue": "annual"
                 },
                 "typeReference": {
@@ -2014,9 +1794,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "foo"
-                  },
+                  "name": "foo",
                   "wireValue": "foo"
                 },
                 "typeReference": {
@@ -2029,9 +1807,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "bar"
-                  },
+                  "name": "bar",
                   "wireValue": "bar"
                 },
                 "typeReference": {
@@ -2058,9 +1834,7 @@
       },
       "endpoint_.createSucculents": {
         "declaration": {
-          "name": {
-            "originalName": "createSucculents"
-          },
+          "name": "createSucculents",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -2072,9 +1846,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "CreateSucculentsRequest"
-            },
+            "name": "CreateSucculentsRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -2087,9 +1859,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "succulents"
-                  },
+                  "name": "succulents",
                   "wireValue": "succulents"
                 },
                 "typeReference": {

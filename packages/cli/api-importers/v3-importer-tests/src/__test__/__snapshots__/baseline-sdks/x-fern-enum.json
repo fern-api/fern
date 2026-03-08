@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test extension `x-fern-enum` for enums",
   "auth": {
     "requirement": "ALL",
@@ -14,19 +12,13 @@
     "type_transcripts:SpeechModel": {
       "docs": "The speech model to use for the transcription.",
       "name": {
-        "name": {
-          "originalName": "SpeechModel"
-        },
+        "name": "SpeechModel",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "transcripts"
-            }
+            "transcripts"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "transcripts"
-          }
+          "file": "transcripts"
         },
         "typeId": "type_transcripts:SpeechModel"
       },
@@ -35,9 +27,7 @@
           {
             "docs": "The Nano tier is a lightweight model that is optimized for speed and cost.",
             "name": {
-              "name": {
-                "originalName": "Nano"
-              },
+              "name": "Nano",
               "wireValue": "nano"
             }
           }
@@ -56,9 +46,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -80,26 +68,18 @@
     "types": {
       "type_transcripts:SpeechModel": {
         "declaration": {
-          "name": {
-            "originalName": "SpeechModel"
-          },
+          "name": "SpeechModel",
           "fernFilepath": {
             "allParts": [
-              {
-                "originalName": "transcripts"
-              }
+              "transcripts"
             ],
             "packagePath": [],
-            "file": {
-              "originalName": "transcripts"
-            }
+            "file": "transcripts"
           }
         },
         "values": [
           {
-            "name": {
-              "originalName": "Nano"
-            },
+            "name": "Nano",
             "wireValue": "nano"
           }
         ],
@@ -116,18 +96,12 @@
     "subpackage_transcripts": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "transcripts"
-          }
+          "transcripts"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "transcripts"
-        }
+        "file": "transcripts"
       },
-      "name": {
-        "originalName": "transcripts"
-      },
+      "name": "transcripts",
       "types": [
         "type_transcripts:SpeechModel"
       ],

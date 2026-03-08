@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test setting to disable usage of title param",
   "auth": {
     "requirement": "ALL",
@@ -13,9 +11,7 @@
   "types": {
     "type_:Shape": {
       "name": {
-        "name": {
-          "originalName": "Shape"
-        },
+        "name": "Shape",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -26,9 +22,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "Triangle"
-              },
+              "name": "Triangle",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -40,9 +34,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "Square"
-              },
+              "name": "Square",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -65,9 +57,7 @@
     "type_:TriangleType": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "TriangleType"
-        },
+        "name": "TriangleType",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -78,9 +68,7 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "triangle"
-              },
+              "name": "triangle",
               "wireValue": "triangle"
             }
           }
@@ -96,9 +84,7 @@
     },
     "type_:Triangle": {
       "name": {
-        "name": {
-          "originalName": "Triangle"
-        },
+        "name": "Triangle",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -110,15 +96,11 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "type"
-              },
+              "name": "type",
               "wireValue": "type"
             },
             "valueType": {
-              "name": {
-                "originalName": "TriangleType"
-              },
+              "name": "TriangleType",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -133,9 +115,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "base"
-              },
+              "name": "base",
               "wireValue": "base"
             },
             "valueType": {
@@ -154,9 +134,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height"
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "valueType": {
@@ -188,9 +166,7 @@
     "type_:SquareType": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "SquareType"
-        },
+        "name": "SquareType",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -201,9 +177,7 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "square"
-              },
+              "name": "square",
               "wireValue": "square"
             }
           }
@@ -219,9 +193,7 @@
     },
     "type_:Square": {
       "name": {
-        "name": {
-          "originalName": "Square"
-        },
+        "name": "Square",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -233,15 +205,11 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "type"
-              },
+              "name": "type",
               "wireValue": "type"
             },
             "valueType": {
-              "name": {
-                "originalName": "SquareType"
-              },
+              "name": "SquareType",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -256,9 +224,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "sideLength"
-              },
+              "name": "sideLength",
               "wireValue": "sideLength"
             },
             "valueType": {
@@ -292,9 +258,7 @@
   "services": {},
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -320,9 +284,7 @@
     "types": {
       "type_:Shape": {
         "declaration": {
-          "name": {
-            "originalName": "Shape"
-          },
+          "name": "Shape",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -342,9 +304,7 @@
       },
       "type_:TriangleType": {
         "declaration": {
-          "name": {
-            "originalName": "TriangleType"
-          },
+          "name": "TriangleType",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -352,9 +312,7 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "triangle"
-            },
+            "name": "triangle",
             "wireValue": "triangle"
           }
         ],
@@ -362,9 +320,7 @@
       },
       "type_:Triangle": {
         "declaration": {
-          "name": {
-            "originalName": "Triangle"
-          },
+          "name": "Triangle",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -373,9 +329,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "type"
-              },
+              "name": "type",
               "wireValue": "type"
             },
             "typeReference": {
@@ -385,9 +339,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "base"
-              },
+              "name": "base",
               "wireValue": "base"
             },
             "typeReference": {
@@ -397,9 +349,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height"
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "typeReference": {
@@ -413,9 +363,7 @@
       },
       "type_:SquareType": {
         "declaration": {
-          "name": {
-            "originalName": "SquareType"
-          },
+          "name": "SquareType",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -423,9 +371,7 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "square"
-            },
+            "name": "square",
             "wireValue": "square"
           }
         ],
@@ -433,9 +379,7 @@
       },
       "type_:Square": {
         "declaration": {
-          "name": {
-            "originalName": "Square"
-          },
+          "name": "Square",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -444,9 +388,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "type"
-              },
+              "name": "type",
               "wireValue": "type"
             },
             "typeReference": {
@@ -456,9 +398,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "sideLength"
-              },
+              "name": "sideLength",
               "wireValue": "sideLength"
             },
             "typeReference": {

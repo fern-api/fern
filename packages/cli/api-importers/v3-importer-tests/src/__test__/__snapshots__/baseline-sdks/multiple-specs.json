@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test file upload v1",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:UploadWithContentTypeRequestData": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UploadWithContentTypeRequestData"
-        },
+        "name": "UploadWithContentTypeRequestData",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "datum"
-              },
+              "name": "datum",
               "wireValue": "datum"
             },
             "valueType": {
@@ -90,9 +84,7 @@
       "endpoints": [
         {
           "id": "endpoint_.upload-file",
-          "name": {
-            "originalName": "upload-file"
-          },
+          "name": "upload-file",
           "displayName": "Upload a file",
           "auth": false,
           "idempotent": false,
@@ -111,16 +103,12 @@
           "headers": [],
           "requestBody": {
             "contentType": "multipart/form-data",
-            "name": {
-              "originalName": "UploadFileRequest"
-            },
+            "name": "UploadFileRequest",
             "properties": [
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "file"
-                    },
+                    "name": "file",
                     "wireValue": "file"
                   },
                   "isOptional": false,
@@ -132,9 +120,7 @@
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "maybe_file"
-                    },
+                    "name": "maybe_file",
                     "wireValue": "maybe_file"
                   },
                   "isOptional": true,
@@ -148,19 +134,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UploadFileRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "UploadFileRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {},
           "errors": [],
@@ -170,9 +150,7 @@
         },
         {
           "id": "endpoint_.upload-list",
-          "name": {
-            "originalName": "upload-list"
-          },
+          "name": "upload-list",
           "displayName": "Upload a list of files",
           "auth": false,
           "idempotent": false,
@@ -191,16 +169,12 @@
           "headers": [],
           "requestBody": {
             "contentType": "multipart/form-data",
-            "name": {
-              "originalName": "UploadListRequest"
-            },
+            "name": "UploadListRequest",
             "properties": [
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "list_file"
-                    },
+                    "name": "list_file",
                     "wireValue": "list_file"
                   },
                   "isOptional": false,
@@ -212,9 +186,7 @@
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "maybe_list_file"
-                    },
+                    "name": "maybe_list_file",
                     "wireValue": "maybe_list_file"
                   },
                   "isOptional": true,
@@ -228,19 +200,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UploadListRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "UploadListRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {},
           "errors": [],
@@ -250,9 +216,7 @@
         },
         {
           "id": "endpoint_.upload-with-content-type",
-          "name": {
-            "originalName": "upload-with-content-type"
-          },
+          "name": "upload-with-content-type",
           "displayName": "Upload a file with a content type",
           "auth": false,
           "idempotent": false,
@@ -271,16 +235,12 @@
           "headers": [],
           "requestBody": {
             "contentType": "multipart/form-data",
-            "name": {
-              "originalName": "UploadWithContentTypeRequest"
-            },
+            "name": "UploadWithContentTypeRequest",
             "properties": [
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "file"
-                    },
+                    "name": "file",
                     "wireValue": "file"
                   },
                   "isOptional": false,
@@ -293,9 +253,7 @@
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "maybe_file"
-                    },
+                    "name": "maybe_file",
                     "wireValue": "maybe_file"
                   },
                   "isOptional": true,
@@ -307,9 +265,7 @@
               {
                 "docs": "This is a metadata field",
                 "name": {
-                  "name": {
-                    "originalName": "metadata"
-                  },
+                  "name": "metadata",
                   "wireValue": "metadata"
                 },
                 "valueType": {
@@ -346,17 +302,13 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "data"
-                  },
+                  "name": "data",
                   "wireValue": "data"
                 },
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "UploadWithContentTypeRequestData"
-                      },
+                      "name": "UploadWithContentTypeRequestData",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -380,19 +332,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UploadWithContentTypeRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "UploadWithContentTypeRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {},
           "errors": [],
@@ -405,9 +351,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -431,9 +375,7 @@
     "types": {
       "type_:UploadWithContentTypeRequestData": {
         "declaration": {
-          "name": {
-            "originalName": "UploadWithContentTypeRequestData"
-          },
+          "name": "UploadWithContentTypeRequestData",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -442,9 +384,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "datum"
-              },
+              "name": "datum",
               "wireValue": "datum"
             },
             "typeReference": {
@@ -464,9 +404,7 @@
     "endpoints": {
       "endpoint_.upload-file": {
         "declaration": {
-          "name": {
-            "originalName": "upload-file"
-          },
+          "name": "upload-file",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -478,9 +416,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "UploadFileRequest"
-            },
+            "name": "UploadFileRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -492,16 +428,12 @@
           "body": {
             "properties": [
               {
-                "name": {
-                  "originalName": "file"
-                },
+                "name": "file",
                 "wireValue": "file",
                 "type": "file"
               },
               {
-                "name": {
-                  "originalName": "maybe_file"
-                },
+                "name": "maybe_file",
                 "wireValue": "maybe_file",
                 "type": "file"
               }
@@ -521,9 +453,7 @@
       },
       "endpoint_.upload-list": {
         "declaration": {
-          "name": {
-            "originalName": "upload-list"
-          },
+          "name": "upload-list",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -535,9 +465,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "UploadListRequest"
-            },
+            "name": "UploadListRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -549,16 +477,12 @@
           "body": {
             "properties": [
               {
-                "name": {
-                  "originalName": "list_file"
-                },
+                "name": "list_file",
                 "wireValue": "list_file",
                 "type": "fileArray"
               },
               {
-                "name": {
-                  "originalName": "maybe_list_file"
-                },
+                "name": "maybe_list_file",
                 "wireValue": "maybe_list_file",
                 "type": "fileArray"
               }
@@ -578,9 +502,7 @@
       },
       "endpoint_.upload-with-content-type": {
         "declaration": {
-          "name": {
-            "originalName": "upload-with-content-type"
-          },
+          "name": "upload-with-content-type",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -592,9 +514,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "UploadWithContentTypeRequest"
-            },
+            "name": "UploadWithContentTypeRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -606,24 +526,18 @@
           "body": {
             "properties": [
               {
-                "name": {
-                  "originalName": "file"
-                },
+                "name": "file",
                 "wireValue": "file",
                 "type": "file"
               },
               {
-                "name": {
-                  "originalName": "maybe_file"
-                },
+                "name": "maybe_file",
                 "wireValue": "maybe_file",
                 "type": "file"
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "metadata"
-                  },
+                  "name": "metadata",
                   "wireValue": "metadata"
                 },
                 "typeReference": {
@@ -643,9 +557,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "data"
-                  },
+                  "name": "data",
                   "wireValue": "data"
                 },
                 "typeReference": {

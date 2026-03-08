@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "OneOfService API",
   "auth": {
     "requirement": "ALL",
@@ -15,9 +13,7 @@
       "docs": "The login method to use. No display name should be generated for variants.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestNoSummaryOrTitle"
-        },
+        "name": "UserRequestNoSummaryOrTitle",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -28,9 +24,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "EmailObject"
-              },
+              "name": "EmailObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -42,9 +36,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "PhoneNumberObject"
-              },
+              "name": "PhoneNumberObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -68,9 +60,7 @@
       "docs": "The login method to use. Display name should be generated for variants from the title.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestNoSummaryAndTitle"
-        },
+        "name": "UserRequestNoSummaryAndTitle",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -81,9 +71,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "SquareObject"
-              },
+              "name": "SquareObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -95,9 +83,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "RectangleObject"
-              },
+              "name": "RectangleObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -121,9 +107,7 @@
       "docs": "The verification method to use. Display name should be generated for variants from the summary.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestSummaryAndTitle"
-        },
+        "name": "UserRequestSummaryAndTitle",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -134,9 +118,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "App"
-              },
+              "name": "App",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -148,9 +130,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "Email"
-              },
+              "name": "Email",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -173,9 +153,7 @@
     "type_:UserRequestInlinedOneOfNoNamesEmail": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfNoNamesEmail"
-        },
+        "name": "UserRequestInlinedOneOfNoNamesEmail",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -187,9 +165,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
@@ -221,9 +197,7 @@
     "type_:UserRequestInlinedOneOfNoNamesPhoneNumber": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfNoNamesPhoneNumber"
-        },
+        "name": "UserRequestInlinedOneOfNoNamesPhoneNumber",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -235,9 +209,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "phone_number"
-              },
+              "name": "phone_number",
               "wireValue": "phone_number"
             },
             "valueType": {
@@ -270,9 +242,7 @@
       "docs": "Inlined one of. No display name should be generated for variants.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfNoNames"
-        },
+        "name": "UserRequestInlinedOneOfNoNames",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -283,9 +253,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "UserRequestInlinedOneOfNoNamesEmail"
-              },
+              "name": "UserRequestInlinedOneOfNoNamesEmail",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -297,9 +265,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "UserRequestInlinedOneOfNoNamesPhoneNumber"
-              },
+              "name": "UserRequestInlinedOneOfNoNamesPhoneNumber",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -322,9 +288,7 @@
     "type_:UserRequestInlinedOneOfWithNamesEmail": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfWithNamesEmail"
-        },
+        "name": "UserRequestInlinedOneOfWithNamesEmail",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -336,15 +300,11 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
-              "name": {
-                "originalName": "EmailObject"
-              },
+              "name": "EmailObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -372,9 +332,7 @@
     "type_:UserRequestInlinedOneOfWithNamesPhoneNumber": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfWithNamesPhoneNumber"
-        },
+        "name": "UserRequestInlinedOneOfWithNamesPhoneNumber",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -386,15 +344,11 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "phone_number"
-              },
+              "name": "phone_number",
               "wireValue": "phone_number"
             },
             "valueType": {
-              "name": {
-                "originalName": "PhoneNumberObject"
-              },
+              "name": "PhoneNumberObject",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -423,9 +377,7 @@
       "docs": "Inlined one of. Display name should be generated for variants from the title.",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "UserRequestInlinedOneOfWithNames"
-        },
+        "name": "UserRequestInlinedOneOfWithNames",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -436,9 +388,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "UserRequestInlinedOneOfWithNamesEmail"
-              },
+              "name": "UserRequestInlinedOneOfWithNamesEmail",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -450,9 +400,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "UserRequestInlinedOneOfWithNamesPhoneNumber"
-              },
+              "name": "UserRequestInlinedOneOfWithNamesPhoneNumber",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -474,9 +422,7 @@
     },
     "type_:SquareObject": {
       "name": {
-        "name": {
-          "originalName": "SquareObject"
-        },
+        "name": "SquareObject",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -488,9 +434,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "sideLength"
-              },
+              "name": "sideLength",
               "wireValue": "sideLength"
             },
             "valueType": {
@@ -527,9 +471,7 @@
     },
     "type_:RectangleObject": {
       "name": {
-        "name": {
-          "originalName": "RectangleObject"
-        },
+        "name": "RectangleObject",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -541,9 +483,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "width"
-              },
+              "name": "width",
               "wireValue": "width"
             },
             "valueType": {
@@ -568,9 +508,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height"
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "valueType": {
@@ -607,9 +545,7 @@
     },
     "type_:App": {
       "name": {
-        "name": {
-          "originalName": "App"
-        },
+        "name": "App",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -621,9 +557,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "app"
-              },
+              "name": "app",
               "wireValue": "app"
             },
             "valueType": {
@@ -660,9 +594,7 @@
     },
     "type_:Email": {
       "name": {
-        "name": {
-          "originalName": "Email"
-        },
+        "name": "Email",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -674,9 +606,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
@@ -713,9 +643,7 @@
     },
     "type_:EmailObject": {
       "name": {
-        "name": {
-          "originalName": "EmailObject"
-        },
+        "name": "EmailObject",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -727,9 +655,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
@@ -766,9 +692,7 @@
     },
     "type_:PhoneNumberObject": {
       "name": {
-        "name": {
-          "originalName": "PhoneNumberObject"
-        },
+        "name": "PhoneNumberObject",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -780,9 +704,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "phone_number"
-              },
+              "name": "phone_number",
               "wireValue": "phone_number"
             },
             "valueType": {
@@ -819,9 +741,7 @@
     },
     "type_:EmptyOneOf": {
       "name": {
-        "name": {
-          "originalName": "EmptyOneOf"
-        },
+        "name": "EmptyOneOf",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -833,9 +753,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "anonymous"
-              },
+              "name": "anonymous",
               "wireValue": "anonymous"
             },
             "valueType": {
@@ -898,9 +816,7 @@
       "endpoints": [
         {
           "id": "endpoint_.createUser",
-          "name": {
-            "originalName": "createUser"
-          },
+          "name": "createUser",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -917,26 +833,20 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "UserRequest"
-            },
+            "name": "UserRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "The login method to use. No display name should be generated for variants.",
                 "name": {
-                  "name": {
-                    "originalName": "no-summary-or-title"
-                  },
+                  "name": "no-summary-or-title",
                   "wireValue": "no-summary-or-title"
                 },
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "UserRequestNoSummaryOrTitle"
-                      },
+                      "name": "UserRequestNoSummaryOrTitle",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -956,17 +866,13 @@
               {
                 "docs": "The login method to use. Display name should be generated for variants from the title.",
                 "name": {
-                  "name": {
-                    "originalName": "no-summary-and-title"
-                  },
+                  "name": "no-summary-and-title",
                   "wireValue": "no-summary-and-title"
                 },
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "UserRequestNoSummaryAndTitle"
-                      },
+                      "name": "UserRequestNoSummaryAndTitle",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -986,17 +892,13 @@
               {
                 "docs": "The verification method to use. Display name should be generated for variants from the summary.",
                 "name": {
-                  "name": {
-                    "originalName": "summary-and-title"
-                  },
+                  "name": "summary-and-title",
                   "wireValue": "summary-and-title"
                 },
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "UserRequestSummaryAndTitle"
-                      },
+                      "name": "UserRequestSummaryAndTitle",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -1016,9 +918,7 @@
               {
                 "docs": "This property is useless. But no display name should be generated for variants.",
                 "name": {
-                  "name": {
-                    "originalName": "useless-property"
-                  },
+                  "name": "useless-property",
                   "wireValue": "useless-property"
                 },
                 "valueType": {
@@ -1038,9 +938,7 @@
               {
                 "docs": "Inlined one of. No display name should be generated for variants.",
                 "name": {
-                  "name": {
-                    "originalName": "inlined-one-of-no-names"
-                  },
+                  "name": "inlined-one-of-no-names",
                   "wireValue": "inlined-one-of-no-names"
                 },
                 "valueType": {
@@ -1048,9 +946,7 @@
                     "optional": {
                       "container": {
                         "nullable": {
-                          "name": {
-                            "originalName": "UserRequestInlinedOneOfNoNames"
-                          },
+                          "name": "UserRequestInlinedOneOfNoNames",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
@@ -1074,9 +970,7 @@
               {
                 "docs": "Inlined one of. Display name should be generated for variants from the title.",
                 "name": {
-                  "name": {
-                    "originalName": "inlined-one-of-with-names"
-                  },
+                  "name": "inlined-one-of-with-names",
                   "wireValue": "inlined-one-of-with-names"
                 },
                 "valueType": {
@@ -1084,9 +978,7 @@
                     "optional": {
                       "container": {
                         "nullable": {
-                          "name": {
-                            "originalName": "UserRequestInlinedOneOfWithNames"
-                          },
+                          "name": "UserRequestInlinedOneOfWithNames",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
@@ -1114,19 +1006,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "UserRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "UserRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -1167,9 +1053,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -1209,9 +1093,7 @@
     "types": {
       "type_:UserRequestNoSummaryOrTitle": {
         "declaration": {
-          "name": {
-            "originalName": "UserRequestNoSummaryOrTitle"
-          },
+          "name": "UserRequestNoSummaryOrTitle",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1231,9 +1113,7 @@
       },
       "type_:UserRequestNoSummaryAndTitle": {
         "declaration": {
-          "name": {
-            "originalName": "UserRequestNoSummaryAndTitle"
-          },
+          "name": "UserRequestNoSummaryAndTitle",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1253,9 +1133,7 @@
       },
       "type_:UserRequestSummaryAndTitle": {
         "declaration": {
-          "name": {
-            "originalName": "UserRequestSummaryAndTitle"
-          },
+          "name": "UserRequestSummaryAndTitle",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1275,9 +1153,7 @@
       },
       "type_:UserRequestInlinedOneOfNoNamesEmail": {
         "declaration": {
-          "name": {
-            "originalName": "UserRequestInlinedOneOfNoNamesEmail"
-          },
+          "name": "UserRequestInlinedOneOfNoNamesEmail",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1286,9 +1162,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "typeReference": {
@@ -1302,9 +1176,7 @@
       },
       "type_:UserRequestInlinedOneOfNoNamesPhoneNumber": {
         "declaration": {
-          "name": {
-            "originalName": "UserRequestInlinedOneOfNoNamesPhoneNumber"
-          },
+          "name": "UserRequestInlinedOneOfNoNamesPhoneNumber",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1313,9 +1185,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "phone_number"
-              },
+              "name": "phone_number",
               "wireValue": "phone_number"
             },
             "typeReference": {
@@ -1329,9 +1199,7 @@
       },
       "type_:UserRequestInlinedOneOfNoNames": {
         "declaration": {
-          "name": {
-            "originalName": "UserRequestInlinedOneOfNoNames"
-          },
+          "name": "UserRequestInlinedOneOfNoNames",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1351,9 +1219,7 @@
       },
       "type_:UserRequestInlinedOneOfWithNamesEmail": {
         "declaration": {
-          "name": {
-            "originalName": "UserRequestInlinedOneOfWithNamesEmail"
-          },
+          "name": "UserRequestInlinedOneOfWithNamesEmail",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1362,9 +1228,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "typeReference": {
@@ -1378,9 +1242,7 @@
       },
       "type_:UserRequestInlinedOneOfWithNamesPhoneNumber": {
         "declaration": {
-          "name": {
-            "originalName": "UserRequestInlinedOneOfWithNamesPhoneNumber"
-          },
+          "name": "UserRequestInlinedOneOfWithNamesPhoneNumber",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1389,9 +1251,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "phone_number"
-              },
+              "name": "phone_number",
               "wireValue": "phone_number"
             },
             "typeReference": {
@@ -1405,9 +1265,7 @@
       },
       "type_:UserRequestInlinedOneOfWithNames": {
         "declaration": {
-          "name": {
-            "originalName": "UserRequestInlinedOneOfWithNames"
-          },
+          "name": "UserRequestInlinedOneOfWithNames",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1427,9 +1285,7 @@
       },
       "type_:SquareObject": {
         "declaration": {
-          "name": {
-            "originalName": "SquareObject"
-          },
+          "name": "SquareObject",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1438,9 +1294,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "sideLength"
-              },
+              "name": "sideLength",
               "wireValue": "sideLength"
             },
             "typeReference": {
@@ -1457,9 +1311,7 @@
       },
       "type_:RectangleObject": {
         "declaration": {
-          "name": {
-            "originalName": "RectangleObject"
-          },
+          "name": "RectangleObject",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1468,9 +1320,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "width"
-              },
+              "name": "width",
               "wireValue": "width"
             },
             "typeReference": {
@@ -1483,9 +1333,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height"
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "typeReference": {
@@ -1502,9 +1350,7 @@
       },
       "type_:App": {
         "declaration": {
-          "name": {
-            "originalName": "App"
-          },
+          "name": "App",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1513,9 +1359,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "app"
-              },
+              "name": "app",
               "wireValue": "app"
             },
             "typeReference": {
@@ -1532,9 +1376,7 @@
       },
       "type_:Email": {
         "declaration": {
-          "name": {
-            "originalName": "Email"
-          },
+          "name": "Email",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1543,9 +1385,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "typeReference": {
@@ -1562,9 +1402,7 @@
       },
       "type_:EmailObject": {
         "declaration": {
-          "name": {
-            "originalName": "EmailObject"
-          },
+          "name": "EmailObject",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1573,9 +1411,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "email"
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "typeReference": {
@@ -1592,9 +1428,7 @@
       },
       "type_:PhoneNumberObject": {
         "declaration": {
-          "name": {
-            "originalName": "PhoneNumberObject"
-          },
+          "name": "PhoneNumberObject",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1603,9 +1437,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "phone_number"
-              },
+              "name": "phone_number",
               "wireValue": "phone_number"
             },
             "typeReference": {
@@ -1622,9 +1454,7 @@
       },
       "type_:EmptyOneOf": {
         "declaration": {
-          "name": {
-            "originalName": "EmptyOneOf"
-          },
+          "name": "EmptyOneOf",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1633,9 +1463,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "anonymous"
-              },
+              "name": "anonymous",
               "wireValue": "anonymous"
             },
             "typeReference": {
@@ -1658,9 +1486,7 @@
     "endpoints": {
       "endpoint_.createUser": {
         "declaration": {
-          "name": {
-            "originalName": "createUser"
-          },
+          "name": "createUser",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -1672,9 +1498,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "UserRequest"
-            },
+            "name": "UserRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -1687,9 +1511,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "no-summary-or-title"
-                  },
+                  "name": "no-summary-or-title",
                   "wireValue": "no-summary-or-title"
                 },
                 "typeReference": {
@@ -1702,9 +1524,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "no-summary-and-title"
-                  },
+                  "name": "no-summary-and-title",
                   "wireValue": "no-summary-and-title"
                 },
                 "typeReference": {
@@ -1717,9 +1537,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "summary-and-title"
-                  },
+                  "name": "summary-and-title",
                   "wireValue": "summary-and-title"
                 },
                 "typeReference": {
@@ -1732,9 +1550,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "useless-property"
-                  },
+                  "name": "useless-property",
                   "wireValue": "useless-property"
                 },
                 "typeReference": {
@@ -1746,9 +1562,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "inlined-one-of-no-names"
-                  },
+                  "name": "inlined-one-of-no-names",
                   "wireValue": "inlined-one-of-no-names"
                 },
                 "typeReference": {
@@ -1764,9 +1578,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "inlined-one-of-with-names"
-                  },
+                  "name": "inlined-one-of-with-names",
                   "wireValue": "inlined-one-of-with-names"
                 },
                 "typeReference": {

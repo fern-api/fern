@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Test spec for `description` settings defined in anyOf.",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:Response": {
       "docs": "A generic response type used throughout the API.",
       "name": {
-        "name": {
-          "originalName": "Response"
-        },
+        "name": "Response",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -29,9 +25,7 @@
           {
             "docs": "An optional numerical value.",
             "name": {
-              "name": {
-                "originalName": "value"
-              },
+              "name": "value",
               "wireValue": "value"
             },
             "valueType": {
@@ -97,9 +91,7 @@
       "endpoints": [
         {
           "id": "endpoint_.Post",
-          "name": {
-            "originalName": "Post"
-          },
+          "name": "Post",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -116,18 +108,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "Request"
-            },
+            "name": "Request",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "An optional string value.",
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "valueType": {
@@ -163,28 +151,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "Request"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "Request",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "A simple API response.",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Response"
-                  },
+                  "name": "Response",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -209,9 +189,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -235,9 +213,7 @@
     "types": {
       "type_:Response": {
         "declaration": {
-          "name": {
-            "originalName": "Response"
-          },
+          "name": "Response",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -246,9 +222,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "value"
-              },
+              "name": "value",
               "wireValue": "value"
             },
             "typeReference": {
@@ -271,9 +245,7 @@
     "endpoints": {
       "endpoint_.Post": {
         "declaration": {
-          "name": {
-            "originalName": "Post"
-          },
+          "name": "Post",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -285,9 +257,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "Request"
-            },
+            "name": "Request",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -300,9 +270,7 @@
             "value": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "id"
-                  },
+                  "name": "id",
                   "wireValue": "id"
                 },
                 "typeReference": {

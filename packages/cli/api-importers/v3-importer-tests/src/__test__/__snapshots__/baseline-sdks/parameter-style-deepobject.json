@@ -1,8 +1,6 @@
 {
   "selfHosted": false,
-  "apiName": {
-    "originalName": "api"
-  },
+  "apiName": "api",
   "apiDisplayName": "Parameter Style DeepObject Test",
   "auth": {
     "requirement": "ALL",
@@ -14,9 +12,7 @@
     "type_:ListItemsRequestFilterStatus": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "ListItemsRequestFilterStatus"
-        },
+        "name": "ListItemsRequestFilterStatus",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -27,17 +23,13 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "active"
-              },
+              "name": "active",
               "wireValue": "active"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "inactive"
-              },
+              "name": "inactive",
               "wireValue": "inactive"
             }
           }
@@ -53,9 +45,7 @@
     },
     "type_:ListItemsRequestFilter": {
       "name": {
-        "name": {
-          "originalName": "ListItemsRequestFilter"
-        },
+        "name": "ListItemsRequestFilter",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -67,9 +57,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -94,9 +82,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "createdAfter"
-              },
+              "name": "createdAfter",
               "wireValue": "createdAfter"
             },
             "valueType": {
@@ -118,17 +104,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "ListItemsRequestFilterStatus"
-                  },
+                  "name": "ListItemsRequestFilterStatus",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -159,9 +141,7 @@
     },
     "type_:ListItemsResponse": {
       "name": {
-        "name": {
-          "originalName": "ListItemsResponse"
-        },
+        "name": "ListItemsResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -173,9 +153,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "items"
-              },
+              "name": "items",
               "wireValue": "items"
             },
             "valueType": {
@@ -183,9 +161,7 @@
                 "optional": {
                   "container": {
                     "list": {
-                      "name": {
-                        "originalName": "Item"
-                      },
+                      "name": "Item",
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -220,9 +196,7 @@
     },
     "type_:Item": {
       "name": {
-        "name": {
-          "originalName": "Item"
-        },
+        "name": "Item",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -234,9 +208,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -261,9 +233,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -288,9 +258,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "valueType": {
@@ -350,9 +318,7 @@
       "endpoints": [
         {
           "id": "endpoint_.listItems",
-          "name": {
-            "originalName": "listItems"
-          },
+          "name": "listItems",
           "displayName": "List items with complex filter",
           "auth": false,
           "idempotent": false,
@@ -371,17 +337,13 @@
             {
               "docs": "Complex filter object with nested properties",
               "name": {
-                "name": {
-                  "originalName": "filter"
-                },
+                "name": "filter",
                 "wireValue": "filter"
               },
               "valueType": {
                 "container": {
                   "optional": {
-                    "name": {
-                      "originalName": "ListItemsRequestFilter"
-                    },
+                    "name": "ListItemsRequestFilter",
                     "fernFilepath": {
                       "allParts": [],
                       "packagePath": []
@@ -403,28 +365,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "ListItemsRequest"
-              },
-              "bodyKey": {
-                "originalName": "body"
-              },
+              "wrapperName": "ListItemsRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request"
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "List of items",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "ListItemsResponse"
-                  },
+                  "name": "ListItemsResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -449,9 +403,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId"
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -478,9 +430,7 @@
     "types": {
       "type_:ListItemsRequestFilterStatus": {
         "declaration": {
-          "name": {
-            "originalName": "ListItemsRequestFilterStatus"
-          },
+          "name": "ListItemsRequestFilterStatus",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -488,15 +438,11 @@
         },
         "values": [
           {
-            "name": {
-              "originalName": "active"
-            },
+            "name": "active",
             "wireValue": "active"
           },
           {
-            "name": {
-              "originalName": "inactive"
-            },
+            "name": "inactive",
             "wireValue": "inactive"
           }
         ],
@@ -504,9 +450,7 @@
       },
       "type_:ListItemsRequestFilter": {
         "declaration": {
-          "name": {
-            "originalName": "ListItemsRequestFilter"
-          },
+          "name": "ListItemsRequestFilter",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -515,9 +459,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -530,9 +472,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "createdAfter"
-              },
+              "name": "createdAfter",
               "wireValue": "createdAfter"
             },
             "typeReference": {
@@ -545,9 +485,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "typeReference": {
@@ -564,9 +502,7 @@
       },
       "type_:ListItemsResponse": {
         "declaration": {
-          "name": {
-            "originalName": "ListItemsResponse"
-          },
+          "name": "ListItemsResponse",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -575,9 +511,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "items"
-              },
+              "name": "items",
               "wireValue": "items"
             },
             "typeReference": {
@@ -597,9 +531,7 @@
       },
       "type_:Item": {
         "declaration": {
-          "name": {
-            "originalName": "Item"
-          },
+          "name": "Item",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -608,9 +540,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id"
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "typeReference": {
@@ -623,9 +553,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name"
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "typeReference": {
@@ -638,9 +566,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status"
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "typeReference": {
@@ -660,9 +586,7 @@
     "endpoints": {
       "endpoint_.listItems": {
         "declaration": {
-          "name": {
-            "originalName": "listItems"
-          },
+          "name": "listItems",
           "fernFilepath": {
             "allParts": [],
             "packagePath": []
@@ -674,9 +598,7 @@
         },
         "request": {
           "declaration": {
-            "name": {
-              "originalName": "ListItemsRequest"
-            },
+            "name": "ListItemsRequest",
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -686,9 +608,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "filter"
-                },
+                "name": "filter",
                 "wireValue": "filter"
               },
               "typeReference": {
