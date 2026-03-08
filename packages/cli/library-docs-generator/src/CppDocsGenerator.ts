@@ -274,6 +274,17 @@ function namespacePathToFilesystem(nsParts: string[]): string {
 // ---------------------------------------------------------------------------
 
 /**
+ * Slugify a single path segment using Fern's `nameToSlug()` rules:
+ * lowercase, spaces to hyphens, strip everything except a-z 0-9 and hyphens.
+ */
+function slugifySegment(seg: string): string {
+    return seg
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^a-z0-9-]/g, "");
+}
+
+/**
  * Convert a page key (filesystem path with .mdx extension) to a URL slug path.
  *
  * Mirrors Fern's `nameToSlug()` behavior per-segment:
@@ -286,12 +297,7 @@ function pageKeyToSlugPath(pageKey: string): string {
     return pageKey
         .replace(/\.mdx$/, "")
         .split("/")
-        .map((seg) =>
-            seg
-                .toLowerCase()
-                .replace(/\s+/g, "-")
-                .replace(/[^a-z0-9-]/g, "")
-        )
+        .map(slugifySegment)
         .filter((seg) => seg.length > 0)
         .join("/");
 }
@@ -514,7 +520,7 @@ function generateIndexPages(
         category: cat,
         entries: cat.collectEntries(ns)
     }));
-    const nsLastSegment = nsDir.split("/").pop() ?? ns.name;
+    const nsLastSegment = slugifySegment(nsDir.split("/").pop() || ns.name);
     const indexContent = renderNamespaceIndexPage(
         title,
         categoriesForNsIndex,
@@ -543,8 +549,13 @@ function generateIndexPages(
             const childNsParts =
                 rootNsName != null && childAllNsParts[0] === rootNsName ? childAllNsParts.slice(1) : childAllNsParts;
             const childNsDir = namespacePathToFilesystem(childNsParts);
-            // Relative from parent: strip parentNsDir prefix
-            const linkPath = nsDir === "" ? childNsDir : childNsDir.substring(nsDir.length + 1);
+            // Relative from parent: strip parentNsDir prefix, then slugify each segment
+            const rawLinkPath = nsDir === "" ? childNsDir : childNsDir.substring(nsDir.length + 1);
+            const linkPath = rawLinkPath
+                .split("/")
+                .map(slugifySegment)
+                .filter((seg) => seg.length > 0)
+                .join("/");
             return { displayName: child.path, linkPath };
         });
         const namespacesContent = renderNamespacesIndexPage(ns.path, childEntries, title);
