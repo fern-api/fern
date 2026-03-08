@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.53.6
+  changelogEntry:
+    - summary: |
+        Optimize SdkContextImpl by lazily initializing sub-contexts, external dependencies,
+        core utilities, and GeneratorNotificationService. Previously, every file generation
+        eagerly constructed all 19 sub-context objects plus utility instances regardless of
+        which were actually used. Now each sub-context is created on first access via lazy
+        getters, eliminating ~90% of unnecessary object allocations for large specs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 65
+
 - version: 3.53.5
   changelogEntry:
     - summary: |

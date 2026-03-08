@@ -4,6 +4,8 @@ import { describe, expect, it } from "vitest";
 import {
     calculateRecommendedGroups,
     getAvailableFixturesFromList,
+    getBaseFixtureName,
+    getFixtureWeights,
     splitFixturesIntoGroups
 } from "../commands/list-test-fixtures/getAvailableFixtures";
 import { GeneratorWorkspace } from "../loadGeneratorWorkspaces";
@@ -237,22 +239,22 @@ describe("splitFixturesIntoGroups", () => {
             expect(result[2]?.fixtures).toHaveLength(10);
         });
 
-        it("handles uneven splits with ceiling division", () => {
+        it("handles uneven splits with balanced distribution", () => {
             const fixtures = Array.from({ length: 25 }, (_, i) => `fixture${i}`);
 
             const result = splitFixturesIntoGroups(fixtures, 3);
 
-            // 25 / 3 = 8.33, ceiling = 9
-            // Group 1: 0-8 (9 fixtures)
-            // Group 2: 9-17 (9 fixtures)
-            // Group 3: 18-24 (7 fixtures)
+            // With greedy bin-packing (uniform weights), distribution is balanced:
+            // One group gets 9 fixtures, two groups get 8 fixtures
             expect(result).toHaveLength(3);
-            expect(result[0]?.fixtures).toHaveLength(9);
-            expect(result[1]?.fixtures).toHaveLength(9);
-            expect(result[2]?.fixtures).toHaveLength(7);
+            const sizes = result.map((g) => g.fixtures.length).sort((a, b) => a - b);
+            expect(sizes).toEqual([8, 8, 9]);
+            // All fixtures are present
+            const allFixtures = result.flatMap((g) => g.fixtures).sort();
+            expect(allFixtures).toEqual(fixtures.slice().sort());
         });
 
-        it("preserves fixture order within groups", () => {
+        it("distributes all fixtures across groups", () => {
             const fixtures = [
                 "a",
                 "b",
@@ -280,24 +282,29 @@ describe("splitFixturesIntoGroups", () => {
             const result = splitFixturesIntoGroups(fixtures, 3);
 
             // 21 fixtures / 3 groups = 7 per group
-            expect(result[0]?.fixtures).toEqual(["a", "b", "c", "d", "e", "f", "g"]);
-            expect(result[1]?.fixtures).toEqual(["h", "i", "j", "k", "l", "m", "n"]);
-            expect(result[2]?.fixtures).toEqual(["o", "p", "q", "r", "s", "t", "u"]);
+            expect(result).toHaveLength(3);
+            result.forEach((group) => {
+                expect(group.fixtures).toHaveLength(7);
+            });
+            // All fixtures are present across all groups
+            const allFixtures = result.flatMap((g) => g.fixtures).sort();
+            expect(allFixtures).toEqual(fixtures.slice().sort());
         });
 
-        it("handles more groups than fixtures", () => {
+        it("handles more groups than needed", () => {
             const fixtures = Array.from({ length: 25 }, (_, i) => `fixture${i}`);
 
             const result = splitFixturesIntoGroups(fixtures, 10);
 
-            // 25 / 10 = 2.5, ceiling = 3
-            // Should create groups with 3 fixtures each, some groups may be empty
+            // With greedy bin-packing, all groups should get fixtures
             const totalFixtures = result.reduce((sum, g) => sum + g.fixtures.length, 0);
             expect(totalFixtures).toBe(25);
             // All groups should have fixtures (no empty groups)
             result.forEach((group) => {
                 expect(group.fixtures.length).toBeGreaterThan(0);
             });
+            // All 10 groups should be used
+            expect(result).toHaveLength(10);
         });
 
         it("handles exactly 21 fixtures (just over threshold)", () => {
@@ -390,6 +397,107 @@ describe("splitFixturesIntoGroups", () => {
             expect(result).toHaveLength(15);
         });
     });
+
+    describe("weight-balanced distribution", () => {
+        it("distributes multi-variant fixtures across groups", () => {
+            // Simulate a fixture list with one multi-variant fixture (exhaustive with 6 variants)
+            // and several simple fixtures
+            const fixtures = [
+                "alias",
+                "basic-auth",
+                "exhaustive:v1",
+                "exhaustive:v2",
+                "exhaustive:v3",
+                "exhaustive:v4",
+                "exhaustive:v5",
+                "exhaustive:v6",
+                "file-upload",
+                "enum",
+                "pagination",
+                "validation",
+                "streaming",
+                "websocket",
+                "oauth",
+                "idempotency",
+                "audiences",
+                "trace",
+                "imdb",
+                "response-property",
+                "custom-auth"
+            ];
+
+            const result = splitFixturesIntoGroups(fixtures, 3);
+
+            expect(result).toHaveLength(3);
+
+            // The 6 exhaustive variants (weight=6 each) should be spread across groups,
+            // not all concentrated in one group
+            const exhaustiveCountPerGroup = result.map(
+                (g) => g.fixtures.filter((f) => f.startsWith("exhaustive:")).length
+            );
+            // Each group should get at most 2 exhaustive variants (6 variants / 3 groups = 2)
+            exhaustiveCountPerGroup.forEach((count) => {
+                expect(count).toBeLessThanOrEqual(3);
+                expect(count).toBeGreaterThanOrEqual(1);
+            });
+
+            // All fixtures are present
+            const allFixtures = result.flatMap((g) => g.fixtures).sort();
+            expect(allFixtures).toEqual(fixtures.slice().sort());
+        });
+
+        it("balances groups by weight not just count", () => {
+            // 30 simple fixtures + 10 variants of "heavy" fixture = 40 items
+            // Without weighting: might put all heavy:* variants in same group
+            // With weighting: heavy:* variants (weight=10 each) spread across groups
+            const simpleFixtures = Array.from({ length: 30 }, (_, i) => `simple${i}`);
+            const heavyVariants = Array.from({ length: 10 }, (_, i) => `heavy:variant${i}`);
+            const fixtures = [...simpleFixtures, ...heavyVariants];
+
+            const result = splitFixturesIntoGroups(fixtures, 4);
+
+            expect(result).toHaveLength(4);
+
+            // Heavy variants should be distributed across groups
+            const heavyCountPerGroup = result.map((g) => g.fixtures.filter((f) => f.startsWith("heavy:")).length);
+            // 10 heavy variants / 4 groups → between 2-3 per group
+            heavyCountPerGroup.forEach((count) => {
+                expect(count).toBeGreaterThanOrEqual(1);
+                expect(count).toBeLessThanOrEqual(4);
+            });
+
+            // All fixtures are present
+            const allFixtures = result.flatMap((g) => g.fixtures).sort();
+            expect(allFixtures).toEqual(fixtures.slice().sort());
+        });
+
+        it("handles multiple multi-variant fixture families", () => {
+            // Two multi-variant fixtures: exhaustive (5 variants) and enum (3 variants)
+            // Plus 15 simple fixtures = 23 total
+            const fixtures = [
+                ...Array.from({ length: 15 }, (_, i) => `simple${i}`),
+                ...Array.from({ length: 5 }, (_, i) => `exhaustive:v${i}`),
+                ...Array.from({ length: 3 }, (_, i) => `enum:v${i}`)
+            ];
+
+            const result = splitFixturesIntoGroups(fixtures, 3);
+
+            expect(result).toHaveLength(3);
+
+            // Both multi-variant families should be spread across groups
+            const exhaustivePerGroup = result.map((g) => g.fixtures.filter((f) => f.startsWith("exhaustive:")).length);
+            const enumPerGroup = result.map((g) => g.fixtures.filter((f) => f.startsWith("enum:")).length);
+
+            // Exhaustive (5 variants, weight=5) should be distributed
+            expect(Math.max(...exhaustivePerGroup)).toBeLessThanOrEqual(3);
+            // Enum (3 variants, weight=3) should be distributed
+            expect(Math.max(...enumPerGroup)).toBeLessThanOrEqual(2);
+
+            // All fixtures are present
+            const allFixtures = result.flatMap((g) => g.fixtures).sort();
+            expect(allFixtures).toEqual(fixtures.slice().sort());
+        });
+    });
 });
 
 describe("calculateRecommendedGroups", () => {
@@ -421,5 +529,66 @@ describe("calculateRecommendedGroups", () => {
     it("handles edge case of exactly 21 fixtures", () => {
         // 21 / 10 = 2.1, ceiling = 3
         expect(calculateRecommendedGroups(21)).toBe(3);
+    });
+});
+
+describe("getBaseFixtureName", () => {
+    it("returns the base name for fixture:outputFolder format", () => {
+        expect(getBaseFixtureName("exhaustive:no-custom-config")).toBe("exhaustive");
+        expect(getBaseFixtureName("enum:forward-compatible")).toBe("enum");
+    });
+
+    it("returns the fixture name as-is when no colon is present", () => {
+        expect(getBaseFixtureName("alias")).toBe("alias");
+        expect(getBaseFixtureName("basic-auth")).toBe("basic-auth");
+    });
+
+    it("handles fixture names with multiple colons", () => {
+        expect(getBaseFixtureName("fixture:folder:subfolder")).toBe("fixture");
+    });
+
+    it("handles empty string", () => {
+        expect(getBaseFixtureName("")).toBe("");
+    });
+});
+
+describe("getFixtureWeights", () => {
+    it("assigns weight 1 to simple fixtures with no variants", () => {
+        const fixtures = ["alias", "basic-auth", "file-upload"];
+        const weights = getFixtureWeights(fixtures);
+
+        expect(weights.get("alias")).toBe(1);
+        expect(weights.get("basic-auth")).toBe(1);
+        expect(weights.get("file-upload")).toBe(1);
+    });
+
+    it("assigns higher weight to multi-variant fixtures", () => {
+        const fixtures = ["alias", "exhaustive:v1", "exhaustive:v2", "exhaustive:v3", "basic-auth"];
+        const weights = getFixtureWeights(fixtures);
+
+        // Simple fixtures get weight 1
+        expect(weights.get("alias")).toBe(1);
+        expect(weights.get("basic-auth")).toBe(1);
+        // Exhaustive variants get weight 3 (3 variants share the same base)
+        expect(weights.get("exhaustive:v1")).toBe(3);
+        expect(weights.get("exhaustive:v2")).toBe(3);
+        expect(weights.get("exhaustive:v3")).toBe(3);
+    });
+
+    it("handles multiple multi-variant families", () => {
+        const fixtures = ["exhaustive:v1", "exhaustive:v2", "enum:a", "enum:b", "enum:c", "simple"];
+        const weights = getFixtureWeights(fixtures);
+
+        expect(weights.get("exhaustive:v1")).toBe(2);
+        expect(weights.get("exhaustive:v2")).toBe(2);
+        expect(weights.get("enum:a")).toBe(3);
+        expect(weights.get("enum:b")).toBe(3);
+        expect(weights.get("enum:c")).toBe(3);
+        expect(weights.get("simple")).toBe(1);
+    });
+
+    it("handles empty fixture list", () => {
+        const weights = getFixtureWeights([]);
+        expect(weights.size).toBe(0);
     });
 });
