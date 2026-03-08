@@ -9,7 +9,7 @@ export interface ExtractedDefault {
     value: string;
     /** The C# type name (e.g., 'string', 'int', 'bool') */
     csharpType: string;
-    /** Whether the value can be used as a const (true for primitives except BigInteger) */
+    /** Whether the value can be used as a const (true for primitives) */
     isConst: boolean;
 }
 
@@ -64,9 +64,9 @@ export class DefaultValueExtractor {
                     bigInteger: (t) =>
                         t.default != null
                             ? {
-                                  value: `BigInteger.Parse("${t.default}")`,
-                                  csharpType: "BigInteger",
-                                  isConst: false
+                                  value: `"${t.default}"`,
+                                  csharpType: "string",
+                                  isConst: true
                               }
                             : undefined,
                     // Types not yet supported in IR SDK for defaults
