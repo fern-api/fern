@@ -227,15 +227,11 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         this.context.logger.debug(`[TIMING] createTestProject took ${Date.now() - createTestProjectStartTime}ms`);
 
         const writeSourceFilesStartTime = Date.now();
-        for (const file of this.sourceFiles) {
-            await file.write(absolutePathToProjectDirectory);
-        }
+        await this.writeFilesInBatches(this.sourceFiles, absolutePathToProjectDirectory);
         this.context.logger.debug(`[TIMING] writeSourceFiles took ${Date.now() - writeSourceFilesStartTime}ms`);
 
         const writeTestFilesStartTime = Date.now();
-        for (const file of this.testFiles) {
-            await file.write(absolutePathToTestProjectDirectory);
-        }
+        await this.writeFilesInBatches(this.testFiles, absolutePathToTestProjectDirectory);
         this.context.logger.debug(`[TIMING] writeTestFiles took ${Date.now() - writeTestFilesStartTime}ms`);
 
         await this.createRawFiles();
@@ -497,9 +493,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToCoreDirectory}`);
         await mkdir(absolutePathToCoreDirectory, { recursive: true });
 
-        for (const file of this.coreFiles) {
-            await file.write(absolutePathToCoreDirectory);
-        }
+        await this.writeFilesInBatches(this.coreFiles, absolutePathToCoreDirectory);
 
         return absolutePathToCoreDirectory;
     }
@@ -516,9 +510,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToCoreTestDirectory}`);
         await mkdir(absolutePathToCoreTestDirectory, { recursive: true });
 
-        for (const file of this.coreTestFiles) {
-            await file.write(absolutePathToCoreTestDirectory);
-        }
+        await this.writeFilesInBatches(this.coreTestFiles, absolutePathToCoreTestDirectory);
 
         return absolutePathToCoreTestDirectory;
     }
@@ -539,9 +531,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToPublicCoreTestDirectory}`);
         await mkdir(absolutePathToPublicCoreTestDirectory, { recursive: true });
 
-        for (const file of this.publicCoreTestFiles) {
-            await file.write(absolutePathToPublicCoreTestDirectory);
-        }
+        await this.writeFilesInBatches(this.publicCoreTestFiles, absolutePathToPublicCoreTestDirectory);
 
         return absolutePathToPublicCoreTestDirectory;
     }
@@ -558,9 +548,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToTestUtilsDirectory}`);
         await mkdir(absolutePathToTestUtilsDirectory, { recursive: true });
 
-        for (const file of this.testUtilFiles) {
-            await file.write(absolutePathToTestUtilsDirectory);
-        }
+        await this.writeFilesInBatches(this.testUtilFiles, absolutePathToTestUtilsDirectory);
 
         return absolutePathToTestUtilsDirectory;
     }
@@ -578,9 +566,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToPublicCoreDirectory}`);
         await mkdir(absolutePathToPublicCoreDirectory, { recursive: true });
 
-        for (const file of this.publicCoreFiles) {
-            await file.write(absolutePathToPublicCoreDirectory);
-        }
+        await this.writeFilesInBatches(this.publicCoreFiles, absolutePathToPublicCoreDirectory);
 
         return absolutePathToPublicCoreDirectory;
     }
@@ -691,6 +677,19 @@ dotnet_diagnostic.IDE0005.severity = error
                 }
             })
         );
+    }
+
+    private static readonly FILE_WRITE_BATCH_SIZE = 100;
+
+    /**
+     * Writes files in batches with bounded concurrency to avoid exhausting file descriptors
+     * while still being significantly faster than sequential writes.
+     */
+    private async writeFilesInBatches(files: File[], directoryPrefix: AbsoluteFilePath): Promise<void> {
+        for (let i = 0; i < files.length; i += CsharpProject.FILE_WRITE_BATCH_SIZE) {
+            const batch = files.slice(i, i + CsharpProject.FILE_WRITE_BATCH_SIZE);
+            await Promise.all(batch.map((file) => file.write(directoryPrefix)));
+        }
     }
 
     private async createRawFiles(): Promise<void> {

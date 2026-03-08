@@ -125,10 +125,19 @@ jobs:
           FORCE_COLOR: "2"
           GH_TOKEN: ${{ github.token }}
         run: |
-          # Determine base ref for affected detection
+          # Determine base ref for affected detection.
+          # The checkout is shallow (depth=1), so we must deepen to make
+          # the base commit reachable — otherwise turbo marks ALL packages
+          # as affected.
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            BASE_REF="${{ github.event.pull_request.base.sha }}"
-            echo "Using PR base SHA: $BASE_REF"
+            # The checkout creates a merge commit (PR head into base branch tip).
+            # Deepen by 1 to fetch its parents, then use the first parent
+            # (the actual base branch tip) as the base ref.  This is more
+            # reliable than the event payload's base.sha, which can drift
+            # when new commits land on main between PR open and CI run.
+            git fetch --no-tags --deepen=1 origin 2>/dev/null || true
+            BASE_REF=$(git rev-parse HEAD^1 2>/dev/null || echo "${{ github.event.pull_request.base.sha }}")
+            echo "Using PR merge-base: $BASE_REF"
           else
             # For push/dispatch/workflow_call: use last successful run SHA
             LAST_SUCCESS_SHA=$(gh api \
@@ -137,6 +146,8 @@ jobs:
             if [[ -n "$LAST_SUCCESS_SHA" ]]; then
               BASE_REF="$LAST_SUCCESS_SHA"
               echo "Using last successful run SHA: $BASE_REF"
+              # Deepen to reach the last successful run (typically a few commits back)
+              git fetch --no-tags --deepen=50 origin 2>/dev/null || true
             else
               BASE_REF="origin/main"
               echo "No successful run found, using origin/main"
