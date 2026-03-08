@@ -39,10 +39,11 @@ from seed import SeedExtends
 client = SeedExtends(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.extended_inline_request_body(
-    unique="unique",
     name="name",
     docs="docs",
+    unique="unique",
 )
 ```
 
@@ -62,9 +63,9 @@ client = AsyncSeedExtends(
 
 async def main() -> None:
     await client.extended_inline_request_body(
-        unique="unique",
         name="name",
         docs="docs",
+        unique="unique",
     )
 
 
@@ -80,7 +81,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.extended_inline_request_body()
+    client.extended_inline_request_body(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -96,10 +97,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedExtends
 
-client = SeedExtends(
-    ...,
-)
-response = client.with_raw_response.extended_inline_request_body()
+client = SeedExtends(...)
+response = client.with_raw_response.extended_inline_request_body(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -120,7 +119,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.extended_inline_request_body(request_options={
+client.extended_inline_request_body(..., request_options={
     "max_retries": 1
 })
 ```
@@ -130,17 +129,12 @@ client.extended_inline_request_body(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedExtends
 
-client = SeedExtends(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedExtends(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.extended_inline_request_body(request_options={
+client.extended_inline_request_body(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

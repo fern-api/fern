@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -16,10 +16,12 @@
 from seed import SeedInferredAuthImplicit
 
 client = SeedInferredAuthImplicit(
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.auth.get_token_with_client_credentials(
     client_id="client_id",
     client_secret="client_secret",
@@ -40,23 +42,7 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**client_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `typing.Optional[str]` 
+**request:** `GetTokenRequest` 
     
 </dd>
 </dl>
@@ -76,7 +62,7 @@ client.auth.get_token_with_client_credentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -92,10 +78,12 @@ client.auth.get_token_with_client_credentials(
 from seed import SeedInferredAuthImplicit
 
 client = SeedInferredAuthImplicit(
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.auth.refresh_token(
     client_id="client_id",
     client_secret="client_secret",
@@ -117,31 +105,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**client_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**refresh_token:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**scope:** `typing.Optional[str]` 
+**request:** `RefreshTokenRequest` 
     
 </dd>
 </dl>
@@ -162,7 +126,7 @@ client.auth.refresh_token(
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>client.nested_no_auth.api.<a href="src/seed/nested_no_auth/api/client.py">get_something</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.nested_no_auth.api.<a href="src/seed/nested_no_auth/api/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -178,10 +142,12 @@ client.auth.refresh_token(
 from seed import SeedInferredAuthImplicit
 
 client = SeedInferredAuthImplicit(
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.nested_no_auth.api.get_something()
 
 ```
@@ -211,7 +177,7 @@ client.nested_no_auth.api.get_something()
 </details>
 
 ## Nested Api
-<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -227,10 +193,12 @@ client.nested_no_auth.api.get_something()
 from seed import SeedInferredAuthImplicit
 
 client = SeedInferredAuthImplicit(
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.nested.api.get_something()
 
 ```
@@ -260,7 +228,7 @@ client.nested.api.get_something()
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -276,10 +244,12 @@ client.nested.api.get_something()
 from seed import SeedInferredAuthImplicit
 
 client = SeedInferredAuthImplicit(
+    client_id="client_id",
+    client_secret="client_secret",
+    scope="scope",
     base_url="https://yourhost.com/path/to/api",
-    client_id="YOUR_CLIENT_ID",
-    client_secret="YOUR_CLIENT_SECRET",
 )
+
 client.simple.get_something()
 
 ```

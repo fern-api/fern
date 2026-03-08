@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">post</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">post</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -16,9 +16,12 @@
 from seed import SeedApiWideBasePath
 
 client = SeedApiWideBasePath(
+    path_param="pathParam",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.service.post(
+    path_param="pathParam",
     service_param="serviceParam",
     endpoint_param=1,
     resource_param="resourceParam",

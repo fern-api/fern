@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_custom</a>(...) -&gt; AsyncCustomPager[str, UsernameCursor]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_custom</a>(...) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -16,17 +16,13 @@
 from seed import SeedPagination
 
 client = SeedPagination(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.users.list_usernames_custom(
+
+client.users.list_usernames_custom(
     starting_after="starting_after",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>

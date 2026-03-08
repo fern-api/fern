@@ -37,9 +37,12 @@ Instantiate and use the client with the following:
 from seed import SeedPackageYml
 
 client = SeedPackageYml(
+    id="id-ksfd9c1",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.echo(
+    id="id-ksfd9c1",
     name="Hello world!",
     size=20,
 )
@@ -55,12 +58,14 @@ import asyncio
 from seed import AsyncSeedPackageYml
 
 client = AsyncSeedPackageYml(
+    id="id-ksfd9c1",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
     await client.echo(
+        id="id-ksfd9c1",
         name="Hello world!",
         size=20,
     )
@@ -94,9 +99,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedPackageYml
 
-client = SeedPackageYml(
-    ...,
-)
+client = SeedPackageYml(...)
 response = client.with_raw_response.echo(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -128,14 +131,9 @@ client.echo(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedPackageYml
 
-client = SeedPackageYml(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedPackageYml(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.echo(..., request_options={

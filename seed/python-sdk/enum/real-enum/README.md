@@ -34,15 +34,16 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import Color, Operand, SeedEnum
+from seed import SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.headers.send(
-    operand=Operand.GREATER_THAN,
-    maybe_operand=Operand.GREATER_THAN,
-    operand_or_color=Color.RED,
+    operand=">",
+    maybe_operand=">",
+    operand_or_color="red",
 )
 ```
 
@@ -53,7 +54,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedEnum, Color, Operand
+from seed import AsyncSeedEnum
 
 client = AsyncSeedEnum(
     base_url="https://yourhost.com/path/to/api",
@@ -62,9 +63,9 @@ client = AsyncSeedEnum(
 
 async def main() -> None:
     await client.headers.send(
-        operand=Operand.GREATER_THAN,
-        maybe_operand=Operand.GREATER_THAN,
-        operand_or_color=Color.RED,
+        operand=">",
+        maybe_operand=">",
+        operand_or_color="red",
     )
 
 
@@ -80,7 +81,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.headers.send(...)
+    client.headers.send()
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -96,10 +97,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedEnum
 
-client = SeedEnum(
-    ...,
-)
-response = client.headers.with_raw_response.send(...)
+client = SeedEnum(...)
+response = client.headers.with_raw_response.send()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -120,7 +119,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.headers.send(..., request_options={
+client.headers.send(request_options={
     "max_retries": 1
 })
 ```
@@ -130,17 +129,12 @@ client.headers.send(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedEnum
 
-client = SeedEnum(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedEnum(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.headers.send(..., request_options={
+client.headers.send(request_options={
     "timeout_in_seconds": 1
 })
 ```

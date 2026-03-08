@@ -1,6 +1,6 @@
 # Reference
 ## Optional
-<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_body</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_body</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -18,8 +18,11 @@ from seed import SeedObjectsWithImports
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.optional.send_optional_body(
-    request={"string": {"key": "value"}},
+    request={
+        "string": {"key": "value"}
+    },
 )
 
 ```
@@ -56,7 +59,7 @@ client.optional.send_optional_body(
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_typed_body</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_typed_body</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -75,6 +78,7 @@ from seed.optional import SendOptionalBodyRequest
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.optional.send_optional_typed_body(
     request=SendOptionalBodyRequest(
         message="message",
@@ -115,7 +119,7 @@ client.optional.send_optional_typed_body(
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_nullable_with_all_optional_properties</a>(...) -&gt; AsyncHttpResponse[DeployResponse]</code></summary>
+<details><summary><code>client.optional.<a href="src/seed/optional/client.py">send_optional_nullable_with_all_optional_properties</a>(...) -> DeployResponse</code></summary>
 <dl>
 <dd>
 
@@ -149,6 +153,7 @@ from seed.optional import DeployParams
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.optional.send_optional_nullable_with_all_optional_properties(
     action_id="actionId",
     id="id",
