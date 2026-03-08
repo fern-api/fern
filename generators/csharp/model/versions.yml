@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.0.12
+  changelogEntry:
+    - summary: |
+        Parallelize file writes during project persistence using batched concurrency
+        (100 files per batch via `Promise.all`), significantly reducing generation time
+        for large projects with thousands of files.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
 - version: 0.0.11
   changelogEntry:
     - summary: |
