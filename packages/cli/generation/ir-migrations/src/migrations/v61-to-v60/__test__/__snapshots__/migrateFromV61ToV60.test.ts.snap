@@ -710,7 +710,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "c37aa3d6",
+                "id": "f39945c1",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -804,7 +804,25 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                       {
                         "jsonExample": {
                           "id": "id",
-                          "name": "name",
+                          "name": {
+                            "camelCase": {
+                              "safeName": "name",
+                              "unsafeName": "name",
+                            },
+                            "originalName": "name",
+                            "pascalCase": {
+                              "safeName": "Name",
+                              "unsafeName": "Name",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "NAME",
+                              "unsafeName": "NAME",
+                            },
+                            "snakeCase": {
+                              "safeName": "name",
+                              "unsafeName": "name",
+                            },
+                          },
                         },
                         "shape": {
                           "shape": {
@@ -1440,7 +1458,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "429a64ab",
+                "id": "970cdbd2",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -1533,7 +1551,25 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                     "value": {
                       "jsonExample": {
                         "id": "id",
-                        "name": "name",
+                        "name": {
+                          "camelCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                          "originalName": "name",
+                          "pascalCase": {
+                            "safeName": "Name",
+                            "unsafeName": "Name",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "NAME",
+                            "unsafeName": "NAME",
+                          },
+                          "snakeCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                        },
                       },
                       "shape": {
                         "shape": {
@@ -2159,25 +2195,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
                 "id": "Default",
-                "name": {
-                  "camelCase": {
-                    "safeName": "default",
-                    "unsafeName": "default",
-                  },
-                  "originalName": "Default",
-                  "pascalCase": {
-                    "safeName": "Default",
-                    "unsafeName": "Default",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "DEFAULT",
-                    "unsafeName": "DEFAULT",
-                  },
-                  "snakeCase": {
-                    "safeName": "default",
-                    "unsafeName": "default",
-                  },
-                },
+                "name": "Default",
                 "queryParameters": [],
                 "request": {
                   "extraProperties": undefined,
@@ -2269,7 +2287,25 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                     "value": {
                       "jsonExample": {
                         "id": "id",
-                        "name": "name",
+                        "name": {
+                          "camelCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                          "originalName": "name",
+                          "pascalCase": {
+                            "safeName": "Name",
+                            "unsafeName": "Name",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "NAME",
+                            "unsafeName": "NAME",
+                          },
+                          "snakeCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                        },
                       },
                       "shape": {
                         "shape": {

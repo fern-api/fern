@@ -520,7 +520,7 @@ exports[`migrateFromV58ToV57 > simple 1`] = `
                     },
                   },
                 ],
-                "id": "f6745ed0",
+                "id": "32119069",
                 "name": null,
                 "queryParameters": [
                   {
@@ -570,7 +570,25 @@ exports[`migrateFromV58ToV57 > simple 1`] = `
                     "type": "body",
                     "value": {
                       "jsonExample": {
-                        "name": "name",
+                        "name": {
+                          "camelCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                          "originalName": "name",
+                          "pascalCase": {
+                            "safeName": "Name",
+                            "unsafeName": "Name",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "NAME",
+                            "unsafeName": "NAME",
+                          },
+                          "snakeCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                        },
                       },
                       "shape": {
                         "shape": {

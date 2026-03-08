@@ -8,25 +8,7 @@
                 "type": "header",
                 "header": {
                     "name": {
-                        "name": {
-                            "originalName": "Header Token Auth",
-                            "camelCase": {
-                                "unsafeName": "headerTokenAuth",
-                                "safeName": "headerTokenAuth"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "header_token_auth",
-                                "safeName": "header_token_auth"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "HEADER_TOKEN_AUTH",
-                                "safeName": "HEADER_TOKEN_AUTH"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "HeaderTokenAuth",
-                                "safeName": "HeaderTokenAuth"
-                            }
-                        },
+                        "name": "Header Token Auth",
                         "wireValue": "x-api-key"
                     },
                     "typeReference": {
@@ -38,67 +20,13 @@
                 }
             },
             "declaration": {
-                "name": {
-                    "originalName": "getWithBearerToken",
-                    "camelCase": {
-                        "unsafeName": "getWithBearerToken",
-                        "safeName": "getWithBearerToken"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "get_with_bearer_token",
-                        "safeName": "get_with_bearer_token"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "GET_WITH_BEARER_TOKEN",
-                        "safeName": "GET_WITH_BEARER_TOKEN"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "GetWithBearerToken",
-                        "safeName": "GetWithBearerToken"
-                    }
-                },
+                "name": "getWithBearerToken",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
+                        "service"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": "service"
                 }
             },
             "location": {

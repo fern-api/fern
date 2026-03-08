@@ -4,25 +4,7 @@
         "type_:PaymentInfo": {
             "type": "object",
             "declaration": {
-                "name": {
-                    "originalName": "PaymentInfo",
-                    "camelCase": {
-                        "unsafeName": "paymentInfo",
-                        "safeName": "paymentInfo"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "payment_info",
-                        "safeName": "payment_info"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PAYMENT_INFO",
-                        "safeName": "PAYMENT_INFO"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PaymentInfo",
-                        "safeName": "PaymentInfo"
-                    }
-                },
+                "name": "PaymentInfo",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -32,25 +14,7 @@
             "properties": [
                 {
                     "name": {
-                        "name": {
-                            "originalName": "amount",
-                            "camelCase": {
-                                "unsafeName": "amount",
-                                "safeName": "amount"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "amount",
-                                "safeName": "amount"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "AMOUNT",
-                                "safeName": "AMOUNT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Amount",
-                                "safeName": "Amount"
-                            }
-                        },
+                        "name": "amount",
                         "wireValue": "amount"
                     },
                     "typeReference": {
@@ -62,25 +26,7 @@
                 },
                 {
                     "name": {
-                        "name": {
-                            "originalName": "currency",
-                            "camelCase": {
-                                "unsafeName": "currency",
-                                "safeName": "currency"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "currency",
-                                "safeName": "currency"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CURRENCY",
-                                "safeName": "CURRENCY"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Currency",
-                                "safeName": "Currency"
-                            }
-                        },
+                        "name": "currency",
                         "wireValue": "currency"
                     },
                     "typeReference": {
@@ -92,25 +38,7 @@
                 },
                 {
                     "name": {
-                        "name": {
-                            "originalName": "description",
-                            "camelCase": {
-                                "unsafeName": "description",
-                                "safeName": "description"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "description",
-                                "safeName": "description"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "DESCRIPTION",
-                                "safeName": "DESCRIPTION"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Description",
-                                "safeName": "Description"
-                            }
-                        },
+                        "name": "description",
                         "wireValue": "description"
                     },
                     "typeReference": {

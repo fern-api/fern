@@ -6,67 +6,13 @@
         "endpoint_dataservice.foo": {
             "auth": null,
             "declaration": {
-                "name": {
-                    "originalName": "foo",
-                    "camelCase": {
-                        "unsafeName": "foo",
-                        "safeName": "foo"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "foo",
-                        "safeName": "foo"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "FOO",
-                        "safeName": "FOO"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Foo",
-                        "safeName": "Foo"
-                    }
-                },
+                "name": "foo",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "dataservice",
-                            "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
-                            }
-                        }
+                        "dataservice"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "dataservice",
-                        "camelCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "DATASERVICE",
-                            "safeName": "DATASERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Dataservice",
-                            "safeName": "Dataservice"
-                        }
-                    }
+                    "file": "dataservice"
                 }
             },
             "location": {
@@ -92,25 +38,7 @@
             "environments": [
                 {
                     "id": "Default",
-                    "name": {
-                        "originalName": "Default",
-                        "camelCase": {
-                            "unsafeName": "default",
-                            "safeName": "default"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "default",
-                            "safeName": "default"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "DEFAULT",
-                            "safeName": "DEFAULT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Default",
-                            "safeName": "Default"
-                        }
-                    },
+                    "name": "Default",
                     "url": "https://localhost",
                     "docs": null
                 }

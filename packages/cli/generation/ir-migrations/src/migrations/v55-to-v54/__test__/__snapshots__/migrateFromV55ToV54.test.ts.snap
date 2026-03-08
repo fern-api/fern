@@ -612,13 +612,31 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "d6408ccd",
+                "id": "467ce7c8",
                 "name": null,
                 "queryParameters": [],
                 "request": {
                   "jsonExample": {
                     "email": undefined,
-                    "name": "name",
+                    "name": {
+                      "camelCase": {
+                        "safeName": "name",
+                        "unsafeName": "name",
+                      },
+                      "originalName": "name",
+                      "pascalCase": {
+                        "safeName": "Name",
+                        "unsafeName": "Name",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "NAME",
+                        "unsafeName": "NAME",
+                      },
+                      "snakeCase": {
+                        "safeName": "name",
+                        "unsafeName": "name",
+                      },
+                    },
                   },
                   "properties": [
                     {
@@ -718,7 +736,25 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
                         "metadata": {
                           "key": "value",
                         },
-                        "name": "name",
+                        "name": {
+                          "camelCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                          "originalName": "name",
+                          "pascalCase": {
+                            "safeName": "Name",
+                            "unsafeName": "Name",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "NAME",
+                            "unsafeName": "NAME",
+                          },
+                          "snakeCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                        },
                         "updatedAt": "updatedAt",
                       },
                       "shape": {

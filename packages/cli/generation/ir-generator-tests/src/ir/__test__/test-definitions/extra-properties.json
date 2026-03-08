@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "extra-properties",
-        "camelCase": {
-            "unsafeName": "extraProperties",
-            "safeName": "extraProperties"
-        },
-        "snakeCase": {
-            "unsafeName": "extra_properties",
-            "safeName": "extra_properties"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "EXTRA_PROPERTIES",
-            "safeName": "EXTRA_PROPERTIES"
-        },
-        "pascalCase": {
-            "unsafeName": "ExtraProperties",
-            "safeName": "ExtraProperties"
-        }
-    },
+    "apiName": "extra-properties",
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -34,25 +16,7 @@
         "type_:Failure": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "Failure",
-                    "camelCase": {
-                        "unsafeName": "failure",
-                        "safeName": "failure"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "failure",
-                        "safeName": "failure"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "FAILURE",
-                        "safeName": "FAILURE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Failure",
-                        "safeName": "Failure"
-                    }
-                },
+                "name": "Failure",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -67,25 +31,7 @@
                 "properties": [
                     {
                         "name": {
-                            "name": {
-                                "originalName": "status",
-                                "camelCase": {
-                                    "unsafeName": "status",
-                                    "safeName": "status"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "status",
-                                    "safeName": "status"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "STATUS",
-                                    "safeName": "STATUS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Status",
-                                    "safeName": "Status"
-                                }
-                            },
+                            "name": "status",
                             "wireValue": "status"
                         },
                         "valueType": {
@@ -125,67 +71,13 @@
         "type_user:User": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "User",
-                    "camelCase": {
-                        "unsafeName": "user",
-                        "safeName": "user"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "user",
-                        "safeName": "user"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "USER",
-                        "safeName": "USER"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "User",
-                        "safeName": "User"
-                    }
-                },
+                "name": "User",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        }
+                        "user"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "user",
-                        "camelCase": {
-                            "unsafeName": "user",
-                            "safeName": "user"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user",
-                            "safeName": "user"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER",
-                            "safeName": "USER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "User",
-                            "safeName": "User"
-                        }
-                    }
+                    "file": "user"
                 },
                 "displayName": null,
                 "typeId": "type_user:User"
@@ -196,25 +88,7 @@
                 "properties": [
                     {
                         "name": {
-                            "name": {
-                                "originalName": "name",
-                                "camelCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NAME",
-                                    "safeName": "NAME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Name",
-                                    "safeName": "Name"
-                                }
-                            },
+                            "name": "name",
                             "wireValue": "name"
                         },
                         "valueType": {
@@ -248,49 +122,13 @@
             "source": null,
             "userProvidedExamples": [
                 {
-                    "name": {
-                        "originalName": "BasicUser",
-                        "camelCase": {
-                            "unsafeName": "basicUser",
-                            "safeName": "basicUser"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "basic_user",
-                            "safeName": "basic_user"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "BASIC_USER",
-                            "safeName": "BASIC_USER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "BasicUser",
-                            "safeName": "BasicUser"
-                        }
-                    },
+                    "name": "BasicUser",
                     "shape": {
                         "type": "object",
                         "properties": [
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
+                                    "name": "name",
                                     "wireValue": "name"
                                 },
                                 "value": {
@@ -306,67 +144,13 @@
                                     "jsonExample": "Alice"
                                 },
                                 "originalTypeDeclaration": {
-                                    "name": {
-                                        "originalName": "User",
-                                        "camelCase": {
-                                            "unsafeName": "user",
-                                            "safeName": "user"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "user",
-                                            "safeName": "user"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "USER",
-                                            "safeName": "USER"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "User",
-                                            "safeName": "User"
-                                        }
-                                    },
+                                    "name": "User",
                                     "fernFilepath": {
                                         "allParts": [
-                                            {
-                                                "originalName": "user",
-                                                "camelCase": {
-                                                    "unsafeName": "user",
-                                                    "safeName": "user"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "user",
-                                                    "safeName": "user"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "USER",
-                                                    "safeName": "USER"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "User",
-                                                    "safeName": "User"
-                                                }
-                                            }
+                                            "user"
                                         ],
                                         "packagePath": [],
-                                        "file": {
-                                            "originalName": "user",
-                                            "camelCase": {
-                                                "unsafeName": "user",
-                                                "safeName": "user"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "user",
-                                                "safeName": "user"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "USER",
-                                                "safeName": "USER"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "User",
-                                                "safeName": "User"
-                                            }
-                                        }
+                                        "file": "user"
                                     },
                                     "displayName": null,
                                     "typeId": "type_user:User"
@@ -377,25 +161,7 @@
                         "extraProperties": [
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "age",
-                                        "camelCase": {
-                                            "unsafeName": "age",
-                                            "safeName": "age"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "age",
-                                            "safeName": "age"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "AGE",
-                                            "safeName": "AGE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Age",
-                                            "safeName": "Age"
-                                        }
-                                    },
+                                    "name": "age",
                                     "wireValue": "age"
                                 },
                                 "value": {
@@ -408,25 +174,7 @@
                             },
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "location",
-                                        "camelCase": {
-                                            "unsafeName": "location",
-                                            "safeName": "location"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "location",
-                                            "safeName": "location"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "LOCATION",
-                                            "safeName": "LOCATION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Location",
-                                            "safeName": "Location"
-                                        }
-                                    },
+                                    "name": "location",
                                     "wireValue": "location"
                                 },
                                 "value": {
@@ -460,46 +208,10 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        }
+                        "user"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "user",
-                        "camelCase": {
-                            "unsafeName": "user",
-                            "safeName": "user"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user",
-                            "safeName": "user"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER",
-                            "safeName": "USER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "User",
-                            "safeName": "User"
-                        }
-                    }
+                    "file": "user"
                 }
             },
             "displayName": null,
@@ -519,25 +231,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_user.createUser",
-                    "name": {
-                        "originalName": "createUser",
-                        "camelCase": {
-                            "unsafeName": "createUser",
-                            "safeName": "createUser"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "create_user",
-                            "safeName": "create_user"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CREATE_USER",
-                            "safeName": "CREATE_USER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "CreateUser",
-                            "safeName": "CreateUser"
-                        }
-                    },
+                    "name": "createUser",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -560,48 +254,12 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": {
-                            "originalName": "CreateUserRequest",
-                            "camelCase": {
-                                "unsafeName": "createUserRequest",
-                                "safeName": "createUserRequest"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "create_user_request",
-                                "safeName": "create_user_request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CREATE_USER_REQUEST",
-                                "safeName": "CREATE_USER_REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "CreateUserRequest",
-                                "safeName": "CreateUserRequest"
-                            }
-                        },
+                        "name": "CreateUserRequest",
                         "extends": [],
                         "properties": [
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "_type",
-                                        "camelCase": {
-                                            "unsafeName": "type",
-                                            "safeName": "type"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "type",
-                                            "safeName": "type"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPE",
-                                            "safeName": "TYPE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Type",
-                                            "safeName": "Type"
-                                        }
-                                    },
+                                    "name": "_type",
                                     "wireValue": "_type"
                                 },
                                 "valueType": {
@@ -624,25 +282,7 @@
                             },
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "_version",
-                                        "camelCase": {
-                                            "unsafeName": "version",
-                                            "safeName": "version"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "version",
-                                            "safeName": "version"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "VERSION",
-                                            "safeName": "VERSION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Version",
-                                            "safeName": "Version"
-                                        }
-                                    },
+                                    "name": "_version",
                                     "wireValue": "_version"
                                 },
                                 "valueType": {
@@ -665,25 +305,7 @@
                             },
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
+                                    "name": "name",
                                     "wireValue": "name"
                                 },
                                 "valueType": {
@@ -716,66 +338,12 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": {
-                                "originalName": "CreateUserRequest",
-                                "camelCase": {
-                                    "unsafeName": "createUserRequest",
-                                    "safeName": "createUserRequest"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "create_user_request",
-                                    "safeName": "create_user_request"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "CREATE_USER_REQUEST",
-                                    "safeName": "CREATE_USER_REQUEST"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "CreateUserRequest",
-                                    "safeName": "CreateUserRequest"
-                                }
-                            },
-                            "bodyKey": {
-                                "originalName": "body",
-                                "camelCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BODY",
-                                    "safeName": "BODY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Body",
-                                    "safeName": "Body"
-                                }
-                            },
+                            "wrapperName": "CreateUserRequest",
+                            "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -785,67 +353,13 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "User",
-                                        "camelCase": {
-                                            "unsafeName": "user",
-                                            "safeName": "user"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "user",
-                                            "safeName": "user"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "USER",
-                                            "safeName": "USER"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "User",
-                                            "safeName": "User"
-                                        }
-                                    },
+                                    "name": "User",
                                     "fernFilepath": {
                                         "allParts": [
-                                            {
-                                                "originalName": "user",
-                                                "camelCase": {
-                                                    "unsafeName": "user",
-                                                    "safeName": "user"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "user",
-                                                    "safeName": "user"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "USER",
-                                                    "safeName": "USER"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "User",
-                                                    "safeName": "User"
-                                                }
-                                            }
+                                            "user"
                                         ],
                                         "packagePath": [],
-                                        "file": {
-                                            "originalName": "user",
-                                            "camelCase": {
-                                                "unsafeName": "user",
-                                                "safeName": "user"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "user",
-                                                "safeName": "user"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "USER",
-                                                "safeName": "USER"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "User",
-                                                "safeName": "User"
-                                            }
-                                        }
+                                        "file": "user"
                                     },
                                     "displayName": null,
                                     "typeId": "type_user:User",
@@ -879,25 +393,7 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
+                                                "name": "name",
                                                 "wireValue": "name"
                                             },
                                             "value": {
@@ -916,25 +412,7 @@
                                         },
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "_type",
-                                                    "camelCase": {
-                                                        "unsafeName": "type",
-                                                        "safeName": "type"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "type",
-                                                        "safeName": "type"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "TYPE",
-                                                        "safeName": "TYPE"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Type",
-                                                        "safeName": "Type"
-                                                    }
-                                                },
+                                                "name": "_type",
                                                 "wireValue": "_type"
                                             },
                                             "value": {
@@ -956,25 +434,7 @@
                                         },
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "_version",
-                                                    "camelCase": {
-                                                        "unsafeName": "version",
-                                                        "safeName": "version"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "version",
-                                                        "safeName": "version"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "VERSION",
-                                                        "safeName": "VERSION"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Version",
-                                                        "safeName": "Version"
-                                                    }
-                                                },
+                                                "name": "_version",
                                                 "wireValue": "_version"
                                             },
                                             "value": {
@@ -998,25 +458,7 @@
                                     "extraProperties": [
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "age",
-                                                    "camelCase": {
-                                                        "unsafeName": "age",
-                                                        "safeName": "age"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "age",
-                                                        "safeName": "age"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "AGE",
-                                                        "safeName": "AGE"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Age",
-                                                        "safeName": "Age"
-                                                    }
-                                                },
+                                                "name": "age",
                                                 "wireValue": "age"
                                             },
                                             "value": {
@@ -1029,25 +471,7 @@
                                         },
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "location",
-                                                    "camelCase": {
-                                                        "unsafeName": "location",
-                                                        "safeName": "location"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "location",
-                                                        "safeName": "location"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "LOCATION",
-                                                        "safeName": "LOCATION"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Location",
-                                                        "safeName": "Location"
-                                                    }
-                                                },
+                                                "name": "location",
                                                 "wireValue": "location"
                                             },
                                             "value": {
@@ -1078,66 +502,12 @@
                                                     "typeId": "type_user:User",
                                                     "fernFilepath": {
                                                         "allParts": [
-                                                            {
-                                                                "originalName": "user",
-                                                                "camelCase": {
-                                                                    "unsafeName": "user",
-                                                                    "safeName": "user"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "user",
-                                                                    "safeName": "user"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "USER",
-                                                                    "safeName": "USER"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "User",
-                                                                    "safeName": "User"
-                                                                }
-                                                            }
+                                                            "user"
                                                         ],
                                                         "packagePath": [],
-                                                        "file": {
-                                                            "originalName": "user",
-                                                            "camelCase": {
-                                                                "unsafeName": "user",
-                                                                "safeName": "user"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "user",
-                                                                "safeName": "user"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "USER",
-                                                                "safeName": "USER"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "User",
-                                                                "safeName": "User"
-                                                            }
-                                                        }
+                                                        "file": "user"
                                                     },
-                                                    "name": {
-                                                        "originalName": "User",
-                                                        "camelCase": {
-                                                            "unsafeName": "user",
-                                                            "safeName": "user"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "user",
-                                                            "safeName": "user"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "USER",
-                                                            "safeName": "USER"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "User",
-                                                            "safeName": "User"
-                                                        }
-                                                    },
+                                                    "name": "User",
                                                     "displayName": null
                                                 },
                                                 "shape": {
@@ -1145,25 +515,7 @@
                                                     "properties": [
                                                         {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "name",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "name",
-                                                                        "safeName": "name"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "name",
-                                                                        "safeName": "name"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NAME",
-                                                                        "safeName": "NAME"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Name",
-                                                                        "safeName": "Name"
-                                                                    }
-                                                                },
+                                                                "name": "name",
                                                                 "wireValue": "name"
                                                             },
                                                             "value": {
@@ -1182,66 +534,12 @@
                                                                 "typeId": "type_user:User",
                                                                 "fernFilepath": {
                                                                     "allParts": [
-                                                                        {
-                                                                            "originalName": "user",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "user",
-                                                                                "safeName": "user"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "user",
-                                                                                "safeName": "user"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "USER",
-                                                                                "safeName": "USER"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "User",
-                                                                                "safeName": "User"
-                                                                            }
-                                                                        }
+                                                                        "user"
                                                                     ],
                                                                     "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "user",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "user",
-                                                                            "safeName": "user"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "user",
-                                                                            "safeName": "user"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "USER",
-                                                                            "safeName": "USER"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "User",
-                                                                            "safeName": "User"
-                                                                        }
-                                                                    }
+                                                                    "file": "user"
                                                                 },
-                                                                "name": {
-                                                                    "originalName": "User",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "user",
-                                                                        "safeName": "user"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "user",
-                                                                        "safeName": "user"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "USER",
-                                                                        "safeName": "USER"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "User",
-                                                                        "safeName": "User"
-                                                                    }
-                                                                },
+                                                                "name": "User",
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
@@ -1250,25 +548,7 @@
                                                     "extraProperties": [
                                                         {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "age",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "age",
-                                                                        "safeName": "age"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "age",
-                                                                        "safeName": "age"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "AGE",
-                                                                        "safeName": "AGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Age",
-                                                                        "safeName": "Age"
-                                                                    }
-                                                                },
+                                                                "name": "age",
                                                                 "wireValue": "age"
                                                             },
                                                             "value": {
@@ -1281,25 +561,7 @@
                                                         },
                                                         {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "location",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "location",
-                                                                        "safeName": "location"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "location",
-                                                                        "safeName": "location"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "LOCATION",
-                                                                        "safeName": "LOCATION"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Location",
-                                                                        "safeName": "Location"
-                                                                    }
-                                                                },
+                                                                "name": "location",
                                                                 "wireValue": "location"
                                                             },
                                                             "value": {
@@ -1329,7 +591,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "210587ce",
+                                "id": "398ea1c0",
                                 "url": "/user",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1343,25 +605,7 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "_type",
-                                                    "camelCase": {
-                                                        "unsafeName": "type",
-                                                        "safeName": "type"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "type",
-                                                        "safeName": "type"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "TYPE",
-                                                        "safeName": "TYPE"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Type",
-                                                        "safeName": "Type"
-                                                    }
-                                                },
+                                                "name": "_type",
                                                 "wireValue": "_type"
                                             },
                                             "originalTypeDeclaration": null,
@@ -1383,25 +627,7 @@
                                         },
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "_version",
-                                                    "camelCase": {
-                                                        "unsafeName": "version",
-                                                        "safeName": "version"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "version",
-                                                        "safeName": "version"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "VERSION",
-                                                        "safeName": "VERSION"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Version",
-                                                        "safeName": "Version"
-                                                    }
-                                                },
+                                                "name": "_version",
                                                 "wireValue": "_version"
                                             },
                                             "originalTypeDeclaration": null,
@@ -1423,25 +649,7 @@
                                         },
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
+                                                "name": "name",
                                                 "wireValue": "name"
                                             },
                                             "originalTypeDeclaration": null,
@@ -1478,89 +686,17 @@
                                                     "properties": [
                                                         {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "name",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "name",
-                                                                        "safeName": "name"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "name",
-                                                                        "safeName": "name"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NAME",
-                                                                        "safeName": "NAME"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Name",
-                                                                        "safeName": "Name"
-                                                                    }
-                                                                },
+                                                                "name": "name",
                                                                 "wireValue": "name"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "User",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "user",
-                                                                        "safeName": "user"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "user",
-                                                                        "safeName": "user"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "USER",
-                                                                        "safeName": "USER"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "User",
-                                                                        "safeName": "User"
-                                                                    }
-                                                                },
+                                                                "name": "User",
                                                                 "fernFilepath": {
                                                                     "allParts": [
-                                                                        {
-                                                                            "originalName": "user",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "user",
-                                                                                "safeName": "user"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "user",
-                                                                                "safeName": "user"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "USER",
-                                                                                "safeName": "USER"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "User",
-                                                                                "safeName": "User"
-                                                                            }
-                                                                        }
+                                                                        "user"
                                                                     ],
                                                                     "packagePath": [],
-                                                                    "file": {
-                                                                        "originalName": "user",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "user",
-                                                                            "safeName": "user"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "user",
-                                                                            "safeName": "user"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "USER",
-                                                                            "safeName": "USER"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "User",
-                                                                            "safeName": "User"
-                                                                        }
-                                                                    }
+                                                                    "file": "user"
                                                                 },
                                                                 "displayName": null,
                                                                 "typeId": "type_user:User"
@@ -1583,67 +719,13 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "User",
-                                                        "camelCase": {
-                                                            "unsafeName": "user",
-                                                            "safeName": "user"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "user",
-                                                            "safeName": "user"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "USER",
-                                                            "safeName": "USER"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "User",
-                                                            "safeName": "User"
-                                                        }
-                                                    },
+                                                    "name": "User",
                                                     "fernFilepath": {
                                                         "allParts": [
-                                                            {
-                                                                "originalName": "user",
-                                                                "camelCase": {
-                                                                    "unsafeName": "user",
-                                                                    "safeName": "user"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "user",
-                                                                    "safeName": "user"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "USER",
-                                                                    "safeName": "USER"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "User",
-                                                                    "safeName": "User"
-                                                                }
-                                                            }
+                                                            "user"
                                                         ],
                                                         "packagePath": [],
-                                                        "file": {
-                                                            "originalName": "user",
-                                                            "camelCase": {
-                                                                "unsafeName": "user",
-                                                                "safeName": "user"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "user",
-                                                                "safeName": "user"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "USER",
-                                                                "safeName": "USER"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "User",
-                                                                "safeName": "User"
-                                                            }
-                                                        }
+                                                        "file": "user"
                                                     },
                                                     "displayName": null,
                                                     "typeId": "type_user:User"
@@ -1676,25 +758,7 @@
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
+            "name": "errorInstanceId",
             "wireValue": "errorInstanceId"
         }
     },
@@ -1726,25 +790,7 @@
             "type_:Failure": {
                 "type": "object",
                 "declaration": {
-                    "name": {
-                        "originalName": "Failure",
-                        "camelCase": {
-                            "unsafeName": "failure",
-                            "safeName": "failure"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "failure",
-                            "safeName": "failure"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "FAILURE",
-                            "safeName": "FAILURE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Failure",
-                            "safeName": "Failure"
-                        }
-                    },
+                    "name": "Failure",
                     "fernFilepath": {
                         "allParts": [],
                         "packagePath": [],
@@ -1754,25 +800,7 @@
                 "properties": [
                     {
                         "name": {
-                            "name": {
-                                "originalName": "status",
-                                "camelCase": {
-                                    "unsafeName": "status",
-                                    "safeName": "status"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "status",
-                                    "safeName": "status"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "STATUS",
-                                    "safeName": "STATUS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Status",
-                                    "safeName": "Status"
-                                }
-                            },
+                            "name": "status",
                             "wireValue": "status"
                         },
                         "typeReference": {
@@ -1792,91 +820,19 @@
             "type_user:User": {
                 "type": "object",
                 "declaration": {
-                    "name": {
-                        "originalName": "User",
-                        "camelCase": {
-                            "unsafeName": "user",
-                            "safeName": "user"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user",
-                            "safeName": "user"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER",
-                            "safeName": "USER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "User",
-                            "safeName": "User"
-                        }
-                    },
+                    "name": "User",
                     "fernFilepath": {
                         "allParts": [
-                            {
-                                "originalName": "user",
-                                "camelCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "USER",
-                                    "safeName": "USER"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "User",
-                                    "safeName": "User"
-                                }
-                            }
+                            "user"
                         ],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        }
+                        "file": "user"
                     }
                 },
                 "properties": [
                     {
                         "name": {
-                            "name": {
-                                "originalName": "name",
-                                "camelCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "name",
-                                    "safeName": "name"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NAME",
-                                    "safeName": "NAME"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Name",
-                                    "safeName": "Name"
-                                }
-                            },
+                            "name": "name",
                             "wireValue": "name"
                         },
                         "typeReference": {
@@ -1896,67 +852,13 @@
             "endpoint_user.createUser": {
                 "auth": null,
                 "declaration": {
-                    "name": {
-                        "originalName": "createUser",
-                        "camelCase": {
-                            "unsafeName": "createUser",
-                            "safeName": "createUser"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "create_user",
-                            "safeName": "create_user"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CREATE_USER",
-                            "safeName": "CREATE_USER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "CreateUser",
-                            "safeName": "CreateUser"
-                        }
-                    },
+                    "name": "createUser",
                     "fernFilepath": {
                         "allParts": [
-                            {
-                                "originalName": "user",
-                                "camelCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "USER",
-                                    "safeName": "USER"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "User",
-                                    "safeName": "User"
-                                }
-                            }
+                            "user"
                         ],
                         "packagePath": [],
-                        "file": {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        }
+                        "file": "user"
                     }
                 },
                 "location": {
@@ -1966,67 +868,13 @@
                 "request": {
                     "type": "inlined",
                     "declaration": {
-                        "name": {
-                            "originalName": "CreateUserRequest",
-                            "camelCase": {
-                                "unsafeName": "createUserRequest",
-                                "safeName": "createUserRequest"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "create_user_request",
-                                "safeName": "create_user_request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CREATE_USER_REQUEST",
-                                "safeName": "CREATE_USER_REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "CreateUserRequest",
-                                "safeName": "CreateUserRequest"
-                            }
-                        },
+                        "name": "CreateUserRequest",
                         "fernFilepath": {
                             "allParts": [
-                                {
-                                    "originalName": "user",
-                                    "camelCase": {
-                                        "unsafeName": "user",
-                                        "safeName": "user"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "user",
-                                        "safeName": "user"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "USER",
-                                        "safeName": "USER"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "User",
-                                        "safeName": "User"
-                                    }
-                                }
+                                "user"
                             ],
                             "packagePath": [],
-                            "file": {
-                                "originalName": "user",
-                                "camelCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "user",
-                                    "safeName": "user"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "USER",
-                                    "safeName": "USER"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "User",
-                                    "safeName": "User"
-                                }
-                            }
+                            "file": "user"
                         }
                     },
                     "pathParameters": [],
@@ -2037,25 +885,7 @@
                         "value": [
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "_type",
-                                        "camelCase": {
-                                            "unsafeName": "type",
-                                            "safeName": "type"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "type",
-                                            "safeName": "type"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPE",
-                                            "safeName": "TYPE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Type",
-                                            "safeName": "Type"
-                                        }
-                                    },
+                                    "name": "_type",
                                     "wireValue": "_type"
                                 },
                                 "typeReference": {
@@ -2070,25 +900,7 @@
                             },
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "_version",
-                                        "camelCase": {
-                                            "unsafeName": "version",
-                                            "safeName": "version"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "version",
-                                            "safeName": "version"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "VERSION",
-                                            "safeName": "VERSION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Version",
-                                            "safeName": "Version"
-                                        }
-                                    },
+                                    "name": "_version",
                                     "wireValue": "_version"
                                 },
                                 "typeReference": {
@@ -2103,25 +915,7 @@
                             },
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
+                                    "name": "name",
                                     "wireValue": "name"
                                 },
                                 "typeReference": {
@@ -2156,68 +950,14 @@
     "generationLanguage": null,
     "subpackages": {
         "subpackage_user": {
-            "name": {
-                "originalName": "user",
-                "camelCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "snakeCase": {
-                    "unsafeName": "user",
-                    "safeName": "user"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "USER",
-                    "safeName": "USER"
-                },
-                "pascalCase": {
-                    "unsafeName": "User",
-                    "safeName": "User"
-                }
-            },
+            "name": "user",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "user",
-                        "camelCase": {
-                            "unsafeName": "user",
-                            "safeName": "user"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "user",
-                            "safeName": "user"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "USER",
-                            "safeName": "USER"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "User",
-                            "safeName": "User"
-                        }
-                    }
+                    "user"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "user",
-                    "camelCase": {
-                        "unsafeName": "user",
-                        "safeName": "user"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "user",
-                        "safeName": "user"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "USER",
-                        "safeName": "USER"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "User",
-                        "safeName": "User"
-                    }
-                }
+                "file": "user"
             },
             "service": "service_user",
             "types": [

@@ -1471,7 +1471,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "c520cd9c",
+                "id": "621d4162",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -2258,7 +2258,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                     },
                   },
                 ],
-                "id": "27cce93e",
+                "id": "e46b86b3",
                 "name": null,
                 "queryParameters": [
                   {
@@ -2363,7 +2363,25 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                     },
                     "value": {
                       "jsonExample": {
-                        "name": "name",
+                        "name": {
+                          "camelCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                          "originalName": "name",
+                          "pascalCase": {
+                            "safeName": "Name",
+                            "unsafeName": "Name",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "NAME",
+                            "unsafeName": "NAME",
+                          },
+                          "snakeCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                        },
                       },
                       "shape": {
                         "shape": {
@@ -2657,7 +2675,25 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                     },
                     "value": {
                       "jsonExample": {
-                        "name": "name",
+                        "name": {
+                          "camelCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                          "originalName": "name",
+                          "pascalCase": {
+                            "safeName": "Name",
+                            "unsafeName": "Name",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "NAME",
+                            "unsafeName": "NAME",
+                          },
+                          "snakeCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                        },
                       },
                       "shape": {
                         "shape": {
@@ -3629,7 +3665,25 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                     },
                     "value": {
                       "jsonExample": {
-                        "name": "username",
+                        "name": {
+                          "camelCase": {
+                            "safeName": "username",
+                            "unsafeName": "username",
+                          },
+                          "originalName": "username",
+                          "pascalCase": {
+                            "safeName": "Username",
+                            "unsafeName": "Username",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "USERNAME",
+                            "unsafeName": "USERNAME",
+                          },
+                          "snakeCase": {
+                            "safeName": "username",
+                            "unsafeName": "username",
+                          },
+                        },
                       },
                       "shape": {
                         "shape": {
@@ -3923,7 +3977,25 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                     },
                     "value": {
                       "jsonExample": {
-                        "name": "multiUsername",
+                        "name": {
+                          "camelCase": {
+                            "safeName": "multiUsername",
+                            "unsafeName": "multiUsername",
+                          },
+                          "originalName": "multiUsername",
+                          "pascalCase": {
+                            "safeName": "MultiUsername",
+                            "unsafeName": "MultiUsername",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "MULTI_USERNAME",
+                            "unsafeName": "MULTI_USERNAME",
+                          },
+                          "snakeCase": {
+                            "safeName": "multi_username",
+                            "unsafeName": "multi_username",
+                          },
+                        },
                       },
                       "shape": {
                         "shape": {
@@ -4166,7 +4238,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "2387e780",
+                "id": "732788cf",
                 "name": null,
                 "queryParameters": [
                   {
@@ -4216,10 +4288,46 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                       "jsonExample": {
                         "users": [
                           {
-                            "name": "name",
+                            "name": {
+                              "camelCase": {
+                                "safeName": "name",
+                                "unsafeName": "name",
+                              },
+                              "originalName": "name",
+                              "pascalCase": {
+                                "safeName": "Name",
+                                "unsafeName": "Name",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "NAME",
+                                "unsafeName": "NAME",
+                              },
+                              "snakeCase": {
+                                "safeName": "name",
+                                "unsafeName": "name",
+                              },
+                            },
                           },
                           {
-                            "name": "name",
+                            "name": {
+                              "camelCase": {
+                                "safeName": "name",
+                                "unsafeName": "name",
+                              },
+                              "originalName": "name",
+                              "pascalCase": {
+                                "safeName": "Name",
+                                "unsafeName": "Name",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "NAME",
+                                "unsafeName": "NAME",
+                              },
+                              "snakeCase": {
+                                "safeName": "name",
+                                "unsafeName": "name",
+                              },
+                            },
                           },
                         ],
                       },
@@ -4317,10 +4425,46 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                               "value": {
                                 "jsonExample": [
                                   {
-                                    "name": "name",
+                                    "name": {
+                                      "camelCase": {
+                                        "safeName": "name",
+                                        "unsafeName": "name",
+                                      },
+                                      "originalName": "name",
+                                      "pascalCase": {
+                                        "safeName": "Name",
+                                        "unsafeName": "Name",
+                                      },
+                                      "screamingSnakeCase": {
+                                        "safeName": "NAME",
+                                        "unsafeName": "NAME",
+                                      },
+                                      "snakeCase": {
+                                        "safeName": "name",
+                                        "unsafeName": "name",
+                                      },
+                                    },
                                   },
                                   {
-                                    "name": "name",
+                                    "name": {
+                                      "camelCase": {
+                                        "safeName": "name",
+                                        "unsafeName": "name",
+                                      },
+                                      "originalName": "name",
+                                      "pascalCase": {
+                                        "safeName": "Name",
+                                        "unsafeName": "Name",
+                                      },
+                                      "screamingSnakeCase": {
+                                        "safeName": "NAME",
+                                        "unsafeName": "NAME",
+                                      },
+                                      "snakeCase": {
+                                        "safeName": "name",
+                                        "unsafeName": "name",
+                                      },
+                                    },
                                   },
                                 ],
                                 "shape": {
@@ -4396,7 +4540,25 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                     "list": [
                                       {
                                         "jsonExample": {
-                                          "name": "name",
+                                          "name": {
+                                            "camelCase": {
+                                              "safeName": "name",
+                                              "unsafeName": "name",
+                                            },
+                                            "originalName": "name",
+                                            "pascalCase": {
+                                              "safeName": "Name",
+                                              "unsafeName": "Name",
+                                            },
+                                            "screamingSnakeCase": {
+                                              "safeName": "NAME",
+                                              "unsafeName": "NAME",
+                                            },
+                                            "snakeCase": {
+                                              "safeName": "name",
+                                              "unsafeName": "name",
+                                            },
+                                          },
                                         },
                                         "shape": {
                                           "shape": {
@@ -4575,7 +4737,25 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                                       },
                                       {
                                         "jsonExample": {
-                                          "name": "name",
+                                          "name": {
+                                            "camelCase": {
+                                              "safeName": "name",
+                                              "unsafeName": "name",
+                                            },
+                                            "originalName": "name",
+                                            "pascalCase": {
+                                              "safeName": "Name",
+                                              "unsafeName": "Name",
+                                            },
+                                            "screamingSnakeCase": {
+                                              "safeName": "NAME",
+                                              "unsafeName": "NAME",
+                                            },
+                                            "snakeCase": {
+                                              "safeName": "name",
+                                              "unsafeName": "name",
+                                            },
+                                          },
                                         },
                                         "shape": {
                                           "shape": {

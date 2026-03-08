@@ -4,25 +4,7 @@
         "type_:SortField": {
             "type": "alias",
             "declaration": {
-                "name": {
-                    "originalName": "SortField",
-                    "camelCase": {
-                        "unsafeName": "sortField",
-                        "safeName": "sortField"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "sort_field",
-                        "safeName": "sort_field"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SORT_FIELD",
-                        "safeName": "SORT_FIELD"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SortField",
-                        "safeName": "SortField"
-                    }
-                },
+                "name": "SortField",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -40,25 +22,7 @@
         "type_:SearchRequest": {
             "type": "object",
             "declaration": {
-                "name": {
-                    "originalName": "SearchRequest",
-                    "camelCase": {
-                        "unsafeName": "searchRequest",
-                        "safeName": "searchRequest"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "search_request",
-                        "safeName": "search_request"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SEARCH_REQUEST",
-                        "safeName": "SEARCH_REQUEST"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SearchRequest",
-                        "safeName": "SearchRequest"
-                    }
-                },
+                "name": "SearchRequest",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -68,25 +32,7 @@
             "properties": [
                 {
                     "name": {
-                        "name": {
-                            "originalName": "sortField",
-                            "camelCase": {
-                                "unsafeName": "sortField",
-                                "safeName": "sortField"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "sort_field",
-                                "safeName": "sort_field"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SORT_FIELD",
-                                "safeName": "SORT_FIELD"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "SortField",
-                                "safeName": "SortField"
-                            }
-                        },
+                        "name": "sortField",
                         "wireValue": "sortField"
                     },
                     "typeReference": {
@@ -101,25 +47,7 @@
                 },
                 {
                     "name": {
-                        "name": {
-                            "originalName": "query",
-                            "camelCase": {
-                                "unsafeName": "query",
-                                "safeName": "query"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "query",
-                                "safeName": "query"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "QUERY",
-                                "safeName": "QUERY"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Query",
-                                "safeName": "Query"
-                            }
-                        },
+                        "name": "query",
                         "wireValue": "query"
                     },
                     "typeReference": {
@@ -136,25 +64,7 @@
         "type_:SearchResponse": {
             "type": "object",
             "declaration": {
-                "name": {
-                    "originalName": "SearchResponse",
-                    "camelCase": {
-                        "unsafeName": "searchResponse",
-                        "safeName": "searchResponse"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "search_response",
-                        "safeName": "search_response"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SEARCH_RESPONSE",
-                        "safeName": "SEARCH_RESPONSE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SearchResponse",
-                        "safeName": "SearchResponse"
-                    }
-                },
+                "name": "SearchResponse",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -164,25 +74,7 @@
             "properties": [
                 {
                     "name": {
-                        "name": {
-                            "originalName": "result",
-                            "camelCase": {
-                                "unsafeName": "result",
-                                "safeName": "result"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "result",
-                                "safeName": "result"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "RESULT",
-                                "safeName": "RESULT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Result",
-                                "safeName": "Result"
-                            }
-                        },
+                        "name": "result",
                         "wireValue": "result"
                     },
                     "typeReference": {
@@ -202,25 +94,7 @@
         "endpoint_.search": {
             "auth": null,
             "declaration": {
-                "name": {
-                    "originalName": "search",
-                    "camelCase": {
-                        "unsafeName": "search",
-                        "safeName": "search"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "search",
-                        "safeName": "search"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SEARCH",
-                        "safeName": "SEARCH"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Search",
-                        "safeName": "Search"
-                    }
-                },
+                "name": "search",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],

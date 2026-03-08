@@ -4,25 +4,7 @@
         "type_:Vendor": {
             "type": "object",
             "declaration": {
-                "name": {
-                    "originalName": "Vendor",
-                    "camelCase": {
-                        "unsafeName": "vendor",
-                        "safeName": "vendor"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "vendor",
-                        "safeName": "vendor"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "VENDOR",
-                        "safeName": "VENDOR"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Vendor",
-                        "safeName": "Vendor"
-                    }
-                },
+                "name": "Vendor",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -32,25 +14,7 @@
             "properties": [
                 {
                     "name": {
-                        "name": {
-                            "originalName": "id",
-                            "camelCase": {
-                                "unsafeName": "id",
-                                "safeName": "id"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "id",
-                                "safeName": "id"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
-                            }
-                        },
+                        "name": "id",
                         "wireValue": "id"
                     },
                     "typeReference": {
@@ -62,25 +26,7 @@
                 },
                 {
                     "name": {
-                        "name": {
-                            "originalName": "name",
-                            "camelCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NAME",
-                                "safeName": "NAME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Name",
-                                "safeName": "Name"
-                            }
-                        },
+                        "name": "name",
                         "wireValue": "name"
                     },
                     "typeReference": {
@@ -92,25 +38,7 @@
                 },
                 {
                     "name": {
-                        "name": {
-                            "originalName": "created_at",
-                            "camelCase": {
-                                "unsafeName": "createdAt",
-                                "safeName": "createdAt"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "created_at",
-                                "safeName": "created_at"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CREATED_AT",
-                                "safeName": "CREATED_AT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "CreatedAt",
-                                "safeName": "CreatedAt"
-                            }
-                        },
+                        "name": "created_at",
                         "wireValue": "created_at"
                     },
                     "typeReference": {
@@ -122,25 +50,7 @@
                 },
                 {
                     "name": {
-                        "name": {
-                            "originalName": "updated_at",
-                            "camelCase": {
-                                "unsafeName": "updatedAt",
-                                "safeName": "updatedAt"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "updated_at",
-                                "safeName": "updated_at"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "UPDATED_AT",
-                                "safeName": "UPDATED_AT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "UpdatedAt",
-                                "safeName": "UpdatedAt"
-                            }
-                        },
+                        "name": "updated_at",
                         "wireValue": "updated_at"
                     },
                     "typeReference": {
@@ -157,25 +67,7 @@
         "type_:CreateVendorRequest": {
             "type": "object",
             "declaration": {
-                "name": {
-                    "originalName": "CreateVendorRequest",
-                    "camelCase": {
-                        "unsafeName": "createVendorRequest",
-                        "safeName": "createVendorRequest"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "create_vendor_request",
-                        "safeName": "create_vendor_request"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CREATE_VENDOR_REQUEST",
-                        "safeName": "CREATE_VENDOR_REQUEST"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CreateVendorRequest",
-                        "safeName": "CreateVendorRequest"
-                    }
-                },
+                "name": "CreateVendorRequest",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -185,25 +77,7 @@
             "properties": [
                 {
                     "name": {
-                        "name": {
-                            "originalName": "vendors",
-                            "camelCase": {
-                                "unsafeName": "vendors",
-                                "safeName": "vendors"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "vendors",
-                                "safeName": "vendors"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "VENDORS",
-                                "safeName": "VENDORS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Vendors",
-                                "safeName": "Vendors"
-                            }
-                        },
+                        "name": "vendors",
                         "wireValue": "vendors"
                     },
                     "typeReference": {
@@ -227,25 +101,7 @@
         "type_:CreateVendorResponse": {
             "type": "object",
             "declaration": {
-                "name": {
-                    "originalName": "CreateVendorResponse",
-                    "camelCase": {
-                        "unsafeName": "createVendorResponse",
-                        "safeName": "createVendorResponse"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "create_vendor_response",
-                        "safeName": "create_vendor_response"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CREATE_VENDOR_RESPONSE",
-                        "safeName": "CREATE_VENDOR_RESPONSE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CreateVendorResponse",
-                        "safeName": "CreateVendorResponse"
-                    }
-                },
+                "name": "CreateVendorResponse",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -255,25 +111,7 @@
             "properties": [
                 {
                     "name": {
-                        "name": {
-                            "originalName": "vendors",
-                            "camelCase": {
-                                "unsafeName": "vendors",
-                                "safeName": "vendors"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "vendors",
-                                "safeName": "vendors"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "VENDORS",
-                                "safeName": "VENDORS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Vendors",
-                                "safeName": "Vendors"
-                            }
-                        },
+                        "name": "vendors",
                         "wireValue": "vendors"
                     },
                     "typeReference": {
@@ -300,25 +138,7 @@
         "endpoint_.batchCreate": {
             "auth": null,
             "declaration": {
-                "name": {
-                    "originalName": "batchCreate",
-                    "camelCase": {
-                        "unsafeName": "batchCreate",
-                        "safeName": "batchCreate"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "batch_create",
-                        "safeName": "batch_create"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "BATCH_CREATE",
-                        "safeName": "BATCH_CREATE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "BatchCreate",
-                        "safeName": "BatchCreate"
-                    }
-                },
+                "name": "batchCreate",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
