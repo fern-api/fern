@@ -683,7 +683,7 @@ function convertObject({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     recursionContext?: RecursionContext;
-}): ExampleTypeShape.Object_ {
+}): ExampleTypeShape.Object {
     if (!isPlainObject(example)) {
         throw new Error(`Example is not an object. Got: ${JSON.stringify(example)}`);
     }

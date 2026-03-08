@@ -49,13 +49,43 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         v66: IrVersions.V66.IntermediateRepresentation,
         _context: IrMigrationContext
     ): IrVersions.V65.ir.IntermediateRepresentation => {
-        // V66 adds smartCasing/generationLanguage metadata and strips Name casings
-        // from the wire format (each Name is { originalName: "..." } only).
-        // To migrate back to V65, we inflate all slim Names to full Names
-        // (computing casings from originalName) and remove the metadata fields.
-        const inflatedIr = inflateIrNames(v66);
-        const { smartCasing: _smartCasing, generationLanguage: _generationLanguage, ...v65Ir } = inflatedIr;
-
-        return v65Ir as unknown as IrVersions.V65.ir.IntermediateRepresentation;
+        // V66 adds smartCasing/generationLanguage metadata fields to the IR root.
+        // When Names arrive as slim objects (only originalName, missing casings),
+        // we inflate them back to full Names using the CasingsGenerator.
+        // Then we construct the V65 IR explicitly, omitting the V66-only fields.
+        const inflated = inflateIrNames(v66);
+        return {
+            fdrApiDefinitionId: inflated.fdrApiDefinitionId,
+            apiVersion: inflated.apiVersion,
+            apiName: inflated.apiName,
+            apiDisplayName: inflated.apiDisplayName,
+            apiDocs: inflated.apiDocs,
+            auth: inflated.auth,
+            headers: inflated.headers,
+            idempotencyHeaders: inflated.idempotencyHeaders,
+            types: inflated.types,
+            services: inflated.services,
+            webhookGroups: inflated.webhookGroups,
+            websocketChannels: inflated.websocketChannels,
+            errors: inflated.errors,
+            subpackages: inflated.subpackages,
+            rootPackage: inflated.rootPackage,
+            constants: inflated.constants,
+            environments: inflated.environments,
+            basePath: inflated.basePath,
+            pathParameters: inflated.pathParameters,
+            errorDiscriminationStrategy: inflated.errorDiscriminationStrategy,
+            sdkConfig: inflated.sdkConfig,
+            variables: inflated.variables,
+            serviceTypeReferenceInfo: inflated.serviceTypeReferenceInfo,
+            readmeConfig: inflated.readmeConfig,
+            sourceConfig: inflated.sourceConfig,
+            publishConfig: inflated.publishConfig,
+            dynamic: inflated.dynamic,
+            selfHosted: inflated.selfHosted,
+            audiences: inflated.audiences,
+            generationMetadata: inflated.generationMetadata,
+            apiPlayground: inflated.apiPlayground
+        };
     }
 };

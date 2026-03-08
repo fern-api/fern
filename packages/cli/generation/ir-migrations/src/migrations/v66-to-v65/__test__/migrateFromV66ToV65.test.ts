@@ -30,6 +30,8 @@ describe("migrateFromV66ToV65", () => {
         overrides?: Partial<IrVersions.V66.IntermediateRepresentation>
     ): IrVersions.V66.IntermediateRepresentation => {
         return {
+            fdrApiDefinitionId: undefined,
+            apiVersion: undefined,
             apiName: createFullName("TestApi"),
             apiDisplayName: undefined,
             apiDocs: undefined,
@@ -93,6 +95,10 @@ describe("migrateFromV66ToV65", () => {
             sourceConfig: undefined,
             publishConfig: undefined,
             dynamic: undefined,
+            selfHosted: undefined,
+            audiences: undefined,
+            generationMetadata: undefined,
+            apiPlayground: undefined,
             smartCasing: false,
             generationLanguage: undefined,
             ...overrides
