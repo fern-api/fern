@@ -13,6 +13,7 @@ import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDocker
 import { workspaceShouldGenerateDynamicSnippetTests } from "../../../workspaceShouldGenerateDynamicSnippetTests.js";
 import { ScriptRunner } from "../index.js";
 import { TaskContextFactory } from "../TaskContextFactory.js";
+import { WorkspaceCache } from "../WorkspaceCache.js";
 
 export declare namespace TestRunner {
     interface Args {
@@ -23,6 +24,7 @@ export declare namespace TestRunner {
         scriptRunner: ScriptRunner | undefined;
         keepContainer: boolean;
         inspect: boolean;
+        workspaceCache?: WorkspaceCache;
     }
 
     interface RunArgs {
@@ -113,14 +115,24 @@ export abstract class TestRunner {
     private readonly skipScripts: boolean;
     private readonly keepContainer: boolean;
     private scriptRunner: ScriptRunner | undefined;
+    private readonly workspaceCache: WorkspaceCache | undefined;
 
-    constructor({ generator, lock, taskContextFactory, skipScripts, keepContainer, scriptRunner }: TestRunner.Args) {
+    constructor({
+        generator,
+        lock,
+        taskContextFactory,
+        skipScripts,
+        keepContainer,
+        scriptRunner,
+        workspaceCache
+    }: TestRunner.Args) {
         this.generator = generator;
         this.lock = lock;
         this.taskContextFactory = taskContextFactory;
         this.skipScripts = skipScripts;
         this.keepContainer = keepContainer;
         this.scriptRunner = scriptRunner;
+        this.workspaceCache = workspaceCache;
     }
 
     public abstract build(): Promise<void>;
@@ -185,20 +197,34 @@ export abstract class TestRunner {
             const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
             const smartCasing = generatorInvocation?.smartCasing;
 
-            const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-                absolutePathToAPIDefinition: absolutePathToApiDefinition,
-                taskContext,
-                fixture
-            });
-            const workspaceSettings =
-                generatorInvocation != null
-                    ? getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                    : undefined;
-            const fernWorkspace = await apiWorkspace?.toFernWorkspace(
-                { context: taskContext },
-                workspaceSettings,
-                generatorInvocation?.apiOverride?.specs
-            );
+            let fernWorkspace: FernWorkspace | undefined;
+            if (this.workspaceCache != null && generatorInvocation == null) {
+                // Use cache when no generatorInvocation overrides are present.
+                // The cache is keyed by absolutePathToAPIDefinition (derived from fixture name),
+                // which is safe because all variants of the same fixture share the same API definition.
+                fernWorkspace = await this.workspaceCache.getOrConvertToFernWorkspace({
+                    fixture,
+                    absolutePathToAPIDefinition: absolutePathToApiDefinition,
+                    taskContext
+                });
+            } else {
+                // Fallback to uncached loading when generatorInvocation may provide
+                // custom workspaceSettings or apiOverride specs.
+                const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
+                    absolutePathToAPIDefinition: absolutePathToApiDefinition,
+                    taskContext,
+                    fixture
+                });
+                const workspaceSettings =
+                    generatorInvocation != null
+                        ? getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                        : undefined;
+                fernWorkspace = await apiWorkspace?.toFernWorkspace(
+                    { context: taskContext },
+                    workspaceSettings,
+                    generatorInvocation?.apiOverride?.specs
+                );
+            }
             if (fernWorkspace == null) {
                 return {
                     type: "failure",
