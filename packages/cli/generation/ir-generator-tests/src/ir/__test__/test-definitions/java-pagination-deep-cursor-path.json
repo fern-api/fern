@@ -7806,6 +7806,8 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "smartCasing": true,
+    "generationLanguage": null,
     "subpackages": {
         "subpackage_deep-cursor-path": {
             "name": {

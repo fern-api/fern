@@ -70,6 +70,8 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     audiences: core.serialization.list(AudienceDefinition).optional(),
     generationMetadata: GenerationMetadata.optional(),
     apiPlayground: core.serialization.boolean().optional(),
+    smartCasing: core.serialization.boolean().optional(),
+    generationLanguage: core.serialization.string().optional(),
 });
 
 export declare namespace IntermediateRepresentation {
@@ -105,5 +107,7 @@ export declare namespace IntermediateRepresentation {
         audiences?: AudienceDefinition.Raw[] | null;
         generationMetadata?: GenerationMetadata.Raw | null;
         apiPlayground?: boolean | null;
+        smartCasing?: boolean | null;
+        generationLanguage?: string | null;
     }
 }

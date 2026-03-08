@@ -2910,6 +2910,8 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "smartCasing": true,
+    "generationLanguage": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

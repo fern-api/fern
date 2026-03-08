@@ -46,4 +46,16 @@ export interface IntermediateRepresentation {
     generationMetadata: FernIr.GenerationMetadata | undefined;
     /** Whether the API playground should be enabled. Defaults to true. */
     apiPlayground: boolean | undefined;
+    /**
+     * Whether smart casing was used when generating this IR.
+     * This is needed to correctly re-compute name casings from originalName
+     * when casings are omitted from Name objects (IR v66+).
+     */
+    smartCasing: boolean | undefined;
+    /**
+     * The target generation language used when generating this IR (e.g. "typescript", "python", "java").
+     * This is needed to correctly re-compute language-specific safe names from originalName
+     * when casings are omitted from Name objects (IR v66+).
+     */
+    generationLanguage: string | undefined;
 }

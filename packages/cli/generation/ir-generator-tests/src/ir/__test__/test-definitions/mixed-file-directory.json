@@ -8861,6 +8861,8 @@
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "smartCasing": true,
+    "generationLanguage": null,
     "subpackages": {
         "subpackage_organization": {
             "name": {
