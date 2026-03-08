@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.23.11
+  changelogEntry:
+    - summary: |
+        Remove unnecessary NuGet package restore from the generator Dockerfile.
+        NuGet packages are not needed at generation time since the generator only
+        writes files and runs csharpier; no dotnet restore occurs during generation.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
 - version: 2.23.10
   changelogEntry:
     - summary: |
