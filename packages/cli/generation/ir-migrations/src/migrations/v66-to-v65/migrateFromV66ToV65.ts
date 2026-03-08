@@ -59,11 +59,7 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         // making the inflated IR structurally compatible with V65 (which requires all casings).
         // TypeScript can't prove this statically since the V66 Name type has optional casings.
         const inflated = inflateIrNames(v66);
-        const {
-            smartCasing: _smartCasing,
-            generationLanguage: _generationLanguage,
-            ...v65Fields
-        } = inflated;
+        const { smartCasing: _smartCasing, generationLanguage: _generationLanguage, ...v65Fields } = inflated;
         return v65Fields as unknown as IrVersions.V65.ir.IntermediateRepresentation;
     }
 };
