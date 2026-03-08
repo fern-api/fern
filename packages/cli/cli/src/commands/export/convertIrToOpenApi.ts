@@ -76,10 +76,7 @@ export function convertIrToOpenApi({
         openAPISpec.servers = ir.environments.environments.environments.map((environment) => {
             return {
                 url: environment.url,
-                description:
-                    environment.docs != null
-                        ? `${environment.name.originalName} (${environment.docs})`
-                        : environment.name.originalName
+                description: environment.docs != null ? `${environment.name} (${environment.docs})` : environment.name
             };
         });
     }
@@ -88,15 +85,9 @@ export function convertIrToOpenApi({
 }
 
 export function getDeclaredTypeNameKey(declaredTypeName: DeclaredTypeName): string {
-    return [
-        ...declaredTypeName.fernFilepath.allParts.map((part) => part.originalName),
-        declaredTypeName.name.originalName
-    ].join("-");
+    return [...declaredTypeName.fernFilepath.allParts.map((part) => part), declaredTypeName.name].join("-");
 }
 
 export function getErrorTypeNameKey(declaredErrorName: DeclaredErrorName): string {
-    return [
-        ...declaredErrorName.fernFilepath.allParts.map((part) => part.originalName),
-        declaredErrorName.name.originalName
-    ].join("-");
+    return [...declaredErrorName.fernFilepath.allParts.map((part) => part), declaredErrorName.name].join("-");
 }

@@ -89,7 +89,7 @@ function getAllPropertiesForRawObjectSchema(
 
     const objectProperties = getObjectPropertiesFromRawObjectSchema(objectSchema, file);
     objectProperties.forEach((objectProperty) => {
-        properties[objectProperty.name.name.originalName] = objectProperty;
+        properties[objectProperty.name.name] = objectProperty;
     });
 
     return properties;

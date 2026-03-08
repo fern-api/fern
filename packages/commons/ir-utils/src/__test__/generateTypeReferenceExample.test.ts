@@ -4,15 +4,8 @@ import { generateTypeReferenceExample } from "../examples/v1/generateTypeReferen
 
 const DUMMY_FILEPATH = { allParts: [], packagePath: [], file: undefined };
 
-function makeName(original: string) {
-    const su = { safeName: original, unsafeName: original };
-    return {
-        originalName: original,
-        camelCase: su,
-        pascalCase: su,
-        snakeCase: su,
-        screamingSnakeCase: su
-    };
+function makeName(original: string): string {
+    return original;
 }
 
 function makeObjectTypeDeclaration(

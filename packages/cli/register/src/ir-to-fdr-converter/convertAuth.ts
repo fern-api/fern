@@ -36,29 +36,29 @@ function convertAuthScheme({
         case "basic":
             return {
                 type: "basicAuth",
-                passwordName: scheme.password.originalName,
-                usernameName: scheme.username.originalName,
+                passwordName: scheme.password,
+                usernameName: scheme.username,
                 description: scheme.docs,
                 passwordAlwaysEmpty: scheme.passwordOmit
             };
         case "bearer":
             return {
                 type: "bearerAuth",
-                tokenName: scheme.token.originalName,
+                tokenName: scheme.token,
                 description: scheme.docs
             };
         case "header":
             return {
                 type: "header",
                 headerWireValue: scheme.name.wireValue,
-                nameOverride: scheme.name.name.originalName,
+                nameOverride: scheme.name.name,
                 prefix: scheme.prefix,
                 description: scheme.docs
             };
         case "oauth": {
             const tokenPath =
                 scheme.configuration.tokenEndpoint.responseProperties.accessToken.propertyPath
-                    ?.map((p) => p.name.originalName)
+                    ?.map((p) => p.name)
                     .join(".") || "$.body.access_token";
 
             return playgroundConfig?.oauth

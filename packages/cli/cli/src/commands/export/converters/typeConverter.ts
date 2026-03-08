@@ -494,10 +494,7 @@ export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeN
 }
 
 export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
-    return [
-        ...declaredTypeName.fernFilepath.packagePath.map((part) => part.originalName),
-        declaredTypeName.name.originalName
-    ].join("");
+    return [...declaredTypeName.fernFilepath.packagePath.map((part) => part), declaredTypeName.name].join("");
 }
 
 function getExampleFromEndpointRequest(

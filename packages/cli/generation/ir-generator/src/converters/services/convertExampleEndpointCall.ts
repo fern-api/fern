@@ -649,10 +649,7 @@ function buildUrl({
             ...pathParams.servicePathParameters,
             ...pathParams.rootPathParameters
         ]) {
-            url = url.replaceAll(
-                `{${parameter.name.originalName}}`,
-                encodeURIComponent(`${parameter.value.jsonExample}`)
-            );
+            url = url.replaceAll(`{${parameter.name}}`, encodeURIComponent(`${parameter.value.jsonExample}`));
         }
     }
     // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42

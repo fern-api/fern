@@ -9,13 +9,7 @@ types:
       file: optional<Name>
 
   # names
-  Name:
-    properties:
-      originalName: string
-      camelCase: optional<SafeAndUnsafeString>
-      pascalCase: optional<SafeAndUnsafeString>
-      snakeCase: optional<SafeAndUnsafeString>
-      screamingSnakeCase: optional<SafeAndUnsafeString>
+  Name: string
   NameAndWireValue:
     properties:
       wireValue: string

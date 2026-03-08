@@ -341,8 +341,8 @@ export class IntermediateRepresentationChangeDetector {
         from: PathParameter[];
         to: PathParameter[];
     }): void {
-        const fromPathParams = Object.fromEntries(from.map((param) => [param.name.originalName, param]));
-        const toPathParams = Object.fromEntries(to.map((param) => [param.name.originalName, param]));
+        const fromPathParams = Object.fromEntries(from.map((param) => [param.name, param]));
+        const toPathParams = Object.fromEntries(to.map((param) => [param.name, param]));
         for (const [paramName, fromParam] of Object.entries(fromPathParams)) {
             const toParam = toPathParams[paramName];
             if (!toParam) {
@@ -1176,7 +1176,7 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private areNamesCompatible({ from, to }: { from: Name; to: Name }): boolean {
-        return from.originalName === to.originalName;
+        return from === to;
     }
 
     private getInlinedRequestBody(
@@ -1209,7 +1209,7 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private getKeyForDeclaration({ name, fernFilepath }: { name: Name; fernFilepath: FernFilepath }): string {
-        const prefix = fernFilepath.allParts.map((part) => part.camelCase?.unsafeName ?? part.originalName).join(".");
-        return `${prefix}.${name.pascalCase?.unsafeName ?? name.originalName}`;
+        const prefix = fernFilepath.allParts.join(".");
+        return `${prefix}.${name}`;
     }
 }

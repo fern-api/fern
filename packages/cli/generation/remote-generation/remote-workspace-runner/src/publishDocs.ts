@@ -396,7 +396,7 @@ export async function publishDocs({
 
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
-                apiId: CjsFdrSdk.ApiId(apiName ?? ir.apiName.originalName),
+                apiId: CjsFdrSdk.ApiId(apiName ?? ir.apiName),
                 definition: apiDefinition,
                 definitionV2: undefined,
                 dynamicIRs: dynamicIRsByLanguage,

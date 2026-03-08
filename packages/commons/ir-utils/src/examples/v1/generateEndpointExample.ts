@@ -434,7 +434,7 @@ function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointC
         (examplePathParameter) => {
             const value = examplePathParameter.value.jsonExample;
             const stringValue = typeof value === "string" ? value : JSON.stringify(value);
-            pathParameters[examplePathParameter.name.originalName] = stringValue;
+            pathParameters[examplePathParameter.name] = stringValue;
         }
     );
     const url =

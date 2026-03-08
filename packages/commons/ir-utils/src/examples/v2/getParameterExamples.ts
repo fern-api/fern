@@ -31,9 +31,9 @@ export function getParameterExamples({
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
         if (userExample !== undefined) {
-            result.pathParameters[parameter.name.originalName] = userExample;
+            result.pathParameters[parameter.name] = userExample;
         } else if (autoExample !== undefined) {
-            result.pathParameters[parameter.name.originalName] = autoExample;
+            result.pathParameters[parameter.name] = autoExample;
         }
     }
 
@@ -41,7 +41,7 @@ export function getParameterExamples({
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
         if (userExample !== undefined) {
-            result.queryParameters[parameter.name.name.originalName] = userExample;
+            result.queryParameters[parameter.name.name] = userExample;
         } else if (autoExample !== undefined) {
             if (
                 skipOptionalRequestProperties &&
@@ -50,7 +50,7 @@ export function getParameterExamples({
                 continue;
             }
 
-            result.queryParameters[parameter.name.name.originalName] = autoExample;
+            result.queryParameters[parameter.name.name] = autoExample;
         }
     }
 

@@ -5,11 +5,11 @@ import { stringifyFernFilepath } from "./stringifyFernFilepath.js";
 export const IdGenerator = {
     generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {
         const joinedFernFilePath = stringifyFernFilepath(typeName.fernFilepath);
-        return `type_${joinedFernFilePath}:${typeName.name.originalName}`;
+        return `type_${joinedFernFilePath}:${typeName.name}`;
     },
     generateErrorId: (errorName: Omit<DeclaredErrorName, "errorId">): FernIr.commons.TypeId => {
         const joinedFernFilePath = stringifyFernFilepath(errorName.fernFilepath);
-        return `error_${joinedFernFilePath}:${errorName.name.originalName}`;
+        return `error_${joinedFernFilePath}:${errorName.name}`;
     },
     generateServiceId: (serviceName: DeclaredServiceName): FernIr.commons.TypeId => {
         const joinedFernFilePath = stringifyFernFilepath(serviceName.fernFilepath);
@@ -28,7 +28,7 @@ export const IdGenerator = {
         httpEndpoint: Omit<FernIr.http.HttpEndpoint, "id">
     ): string => {
         const joinedFernFilePath = stringifyFernFilepath(declaredServiceName.fernFilepath);
-        const endpointId = httpEndpoint.name.originalName;
+        const endpointId = httpEndpoint.name;
         return `endpoint_${joinedFernFilePath}.${endpointId}`;
     },
     generateWebhookGroupId: (fernFilepath: FernFilepath): string => {

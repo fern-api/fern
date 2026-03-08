@@ -1,7 +1,5 @@
-import { Name } from "@fern-api/ir-sdk";
-
 import { constructCasingsGenerator } from "../CasingsGenerator.js";
-import { inflateIrNames, inflateName, SlimName } from "../inflateNames.js";
+import { inflateIrNames, inflateName } from "../inflateNames.js";
 
 describe("inflateName", () => {
     const casingsGenerator = constructCasingsGenerator({
@@ -10,55 +8,24 @@ describe("inflateName", () => {
         smartCasing: false
     });
 
-    it("returns Name as-is when all casings are present", () => {
-        const fullName: Name = {
-            originalName: "MovieId",
-            camelCase: { unsafeName: "movieId", safeName: "movieId" },
-            pascalCase: { unsafeName: "MovieId", safeName: "MovieId" },
-            snakeCase: { unsafeName: "movie_id", safeName: "movie_id" },
-            screamingSnakeCase: { unsafeName: "MOVIE_ID", safeName: "MOVIE_ID" }
-        };
-
-        const result = inflateName(fullName, casingsGenerator);
-
-        // Should return the exact same object reference (no inflation needed)
-        expect(result).toBe(fullName);
-        expect(result.originalName).toBe("MovieId");
-        expect(result.camelCase?.unsafeName).toBe("movieId");
-    });
-
-    it("inflates a slim Name with only originalName", () => {
-        const slimName: SlimName = {
-            originalName: "MovieId"
-        };
-
-        const result = inflateName(slimName, casingsGenerator);
+    it("inflates a string Name into a FullName with all casings", () => {
+        const result = inflateName("MovieId", casingsGenerator);
 
         expect(result.originalName).toBe("MovieId");
-        expect(result.camelCase).toBeDefined();
-        expect(result.camelCase?.unsafeName).toBe("movieId");
-        expect(result.pascalCase).toBeDefined();
-        expect(result.pascalCase?.unsafeName).toBe("MovieId");
-        expect(result.snakeCase).toBeDefined();
-        expect(result.snakeCase?.unsafeName).toBe("movie_id");
-        expect(result.screamingSnakeCase).toBeDefined();
-        expect(result.screamingSnakeCase?.unsafeName).toBe("MOVIE_ID");
+        expect(result.camelCase.unsafeName).toBe("movieId");
+        expect(result.pascalCase.unsafeName).toBe("MovieId");
+        expect(result.snakeCase.unsafeName).toBe("movie_id");
+        expect(result.screamingSnakeCase.unsafeName).toBe("MOVIE_ID");
     });
 
-    it("fills in only missing casings, preserving existing ones", () => {
-        const partialName: SlimName = {
-            originalName: "MovieId",
-            camelCase: { unsafeName: "customCamel", safeName: "customCamel" }
-        };
+    it("handles simple single-word names", () => {
+        const result = inflateName("user", casingsGenerator);
 
-        const result = inflateName(partialName, casingsGenerator);
-
-        // Existing casing should be preserved
-        expect(result.camelCase?.unsafeName).toBe("customCamel");
-        // Missing casings should be generated
-        expect(result.pascalCase).toBeDefined();
-        expect(result.snakeCase).toBeDefined();
-        expect(result.screamingSnakeCase).toBeDefined();
+        expect(result.originalName).toBe("user");
+        expect(result.camelCase.unsafeName).toBe("user");
+        expect(result.pascalCase.unsafeName).toBe("User");
+        expect(result.snakeCase.unsafeName).toBe("user");
+        expect(result.screamingSnakeCase.unsafeName).toBe("USER");
     });
 });
 
@@ -70,11 +37,7 @@ describe("inflateName with smartCasing", () => {
     });
 
     it("applies smart casing rules when inflating", () => {
-        const slimName: SlimName = {
-            originalName: "httpClient"
-        };
-
-        const result = inflateName(slimName, casingsGenerator);
+        const result = inflateName("httpClient", casingsGenerator);
 
         expect(result.originalName).toBe("httpClient");
         expect(result.camelCase).toBeDefined();
@@ -85,28 +48,22 @@ describe("inflateName with smartCasing", () => {
 });
 
 describe("inflateIrNames", () => {
-    it("inflates Name objects nested deep in the IR", () => {
-        // Create a minimal IR-like structure with a slim Name (missing casings)
+    it("inflates Name strings nested deep in the IR", () => {
+        // Create a minimal IR-like structure with string Names (v66 format)
         const slimIr = {
-            apiName: {
-                originalName: "TestApi",
-                camelCase: undefined,
-                pascalCase: undefined,
-                snakeCase: undefined,
-                screamingSnakeCase: undefined
-            },
+            apiName: "TestApi",
             smartCasing: false,
             generationLanguage: undefined,
             // Include nested structures to verify deep traversal
             types: {
                 type1: {
                     name: {
-                        name: {
-                            originalName: "UserType",
-                            camelCase: undefined,
-                            pascalCase: undefined,
-                            snakeCase: undefined,
-                            screamingSnakeCase: undefined
+                        name: "UserType",
+                        typeId: "type1",
+                        fernFilepath: {
+                            allParts: ["users"],
+                            packagePath: ["users"],
+                            file: undefined
                         }
                     }
                 }
@@ -136,13 +93,7 @@ describe("inflateIrNames", () => {
             },
             constants: {
                 errorInstanceIdKey: {
-                    name: {
-                        originalName: "errorInstanceId",
-                        camelCase: undefined,
-                        pascalCase: undefined,
-                        snakeCase: undefined,
-                        screamingSnakeCase: undefined
-                    },
+                    name: "errorInstanceId",
                     wireValue: "errorInstanceId"
                 }
             },
@@ -162,31 +113,86 @@ describe("inflateIrNames", () => {
         // biome-ignore lint/suspicious/noExplicitAny: test helper
         const result = inflateIrNames(slimIr as any);
 
-        // Verify apiName was inflated
-        expect(result.apiName.camelCase).toBeDefined();
-        expect(result.apiName.camelCase?.unsafeName).toBe("testApi");
-        expect(result.apiName.pascalCase).toBeDefined();
-        expect(result.apiName.pascalCase?.unsafeName).toBe("TestApi");
+        // Verify apiName was inflated from string to FullName
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        const apiName = result.apiName as any;
+        expect(apiName.originalName).toBe("TestApi");
+        expect(apiName.camelCase.unsafeName).toBe("testApi");
+        expect(apiName.pascalCase.unsafeName).toBe("TestApi");
 
-        // Verify deeply nested Name was inflated
+        // Verify deeply nested DeclaredTypeName.name was inflated
         // biome-ignore lint/suspicious/noExplicitAny: test helper
         const type1 = (result.types as any).type1;
-        expect(type1.name.name.camelCase).toBeDefined();
+        expect(type1.name.name.originalName).toBe("UserType");
         expect(type1.name.name.camelCase.unsafeName).toBe("userType");
-        expect(type1.name.name.pascalCase.unsafeName).toBe("UserType");
+
+        // Verify FernFilepath allParts were inflated
+        expect(type1.name.fernFilepath.allParts[0].originalName).toBe("users");
+
+        // Verify NameAndWireValue.name was inflated
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        const errorKey = (result.constants as any).errorInstanceIdKey;
+        expect(errorKey.name.originalName).toBe("errorInstanceId");
+        expect(errorKey.wireValue).toBe("errorInstanceId");
     });
 
-    it("does not modify IR when all Names already have casings", () => {
-        const fullCasingName = {
-            originalName: "TestApi",
-            camelCase: { unsafeName: "testApi", safeName: "testApi" },
-            pascalCase: { unsafeName: "TestApi", safeName: "TestApi" },
-            snakeCase: { unsafeName: "test_api", safeName: "test_api" },
-            screamingSnakeCase: { unsafeName: "TEST_API", safeName: "TEST_API" }
+    it("does not inflate non-Name string fields", () => {
+        const ir = {
+            apiName: "TestApi",
+            smartCasing: false,
+            generationLanguage: undefined,
+            types: {},
+            services: {},
+            auth: { docs: "Some documentation", requirement: "ALL", schemes: [] },
+            headers: [],
+            idempotencyHeaders: [],
+            errors: {},
+            webhookGroups: {},
+            subpackages: {},
+            rootPackage: {
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                service: undefined,
+                types: [],
+                errors: [],
+                subpackages: [],
+                docs: undefined,
+                webhooks: undefined,
+                websocket: undefined,
+                hasEndpointsInTree: false,
+                navigationConfig: undefined
+            },
+            constants: {
+                errorInstanceIdKey: { name: "errorInstanceId", wireValue: "errorInstanceId" }
+            },
+            pathParameters: [],
+            errorDiscriminationStrategy: { type: "statusCode" },
+            sdkConfig: {
+                hasFileDownloadEndpoints: false,
+                hasPaginatedEndpoints: false,
+                hasStreamingEndpoints: false,
+                isAuthMandatory: false,
+                platformHeaders: { language: "", sdkName: "", sdkVersion: "", userAgent: undefined }
+            },
+            variables: [],
+            serviceTypeReferenceInfo: { sharedTypes: [], typesReferencedOnlyByService: {} }
         };
 
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        const result = inflateIrNames(ir as any);
+        // docs should remain a plain string, not inflated
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        expect((result.auth as any).docs).toBe("Some documentation");
+        // wireValue should remain a plain string
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        expect((result.constants as any).errorInstanceIdKey.wireValue).toBe("errorInstanceId");
+        // errorDiscriminationStrategy.type should remain a plain string
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        expect((result.errorDiscriminationStrategy as any).type).toBe("statusCode");
+    });
+
+    it("does not inflate name in example endpoint calls", () => {
         const ir = {
-            apiName: fullCasingName,
+            apiName: "TestApi",
             smartCasing: false,
             generationLanguage: undefined,
             types: {},
@@ -210,10 +216,7 @@ describe("inflateIrNames", () => {
                 navigationConfig: undefined
             },
             constants: {
-                errorInstanceIdKey: {
-                    name: fullCasingName,
-                    wireValue: "errorInstanceId"
-                }
+                errorInstanceIdKey: { name: "errorInstanceId", wireValue: "errorInstanceId" }
             },
             pathParameters: [],
             errorDiscriminationStrategy: { type: "statusCode" },
@@ -225,105 +228,30 @@ describe("inflateIrNames", () => {
                 platformHeaders: { language: "", sdkName: "", sdkVersion: "", userAgent: undefined }
             },
             variables: [],
-            serviceTypeReferenceInfo: { sharedTypes: [], typesReferencedOnlyByService: {} }
+            serviceTypeReferenceInfo: { sharedTypes: [], typesReferencedOnlyByService: {} },
+            exampleEndpoints: [
+                {
+                    name: "my-example",
+                    url: "/users",
+                    rootPathParameters: [],
+                    servicePathParameters: [],
+                    endpointPathParameters: []
+                }
+            ]
         };
 
         // biome-ignore lint/suspicious/noExplicitAny: test helper
         const result = inflateIrNames(ir as any);
-
-        // Should return same object since nothing needed inflation
-        expect(result).toBe(ir);
-    });
-
-    it("does not false-positive on non-Name objects with originalName property", () => {
-        // An object with originalName plus other non-casing keys should NOT be treated as a Name
-        const ir = {
-            apiName: {
-                originalName: "TestApi",
-                camelCase: { unsafeName: "testApi", safeName: "testApi" },
-                pascalCase: { unsafeName: "TestApi", safeName: "TestApi" },
-                snakeCase: { unsafeName: "test_api", safeName: "test_api" },
-                screamingSnakeCase: { unsafeName: "TEST_API", safeName: "TEST_API" }
-            },
-            smartCasing: false,
-            generationLanguage: undefined,
-            types: {
-                notAName: {
-                    originalName: "SomeValue",
-                    someOtherField: "data",
-                    anotherField: 42
-                }
-            },
-            services: {},
-            auth: { docs: undefined, requirement: "ALL", schemes: [] },
-            headers: [],
-            idempotencyHeaders: [],
-            errors: {},
-            webhookGroups: {},
-            subpackages: {},
-            rootPackage: {
-                fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                service: undefined,
-                types: [],
-                errors: [],
-                subpackages: [],
-                docs: undefined,
-                webhooks: undefined,
-                websocket: undefined,
-                hasEndpointsInTree: false,
-                navigationConfig: undefined
-            },
-            constants: {
-                errorInstanceIdKey: {
-                    name: {
-                        originalName: "errorInstanceId",
-                        camelCase: { unsafeName: "errorInstanceId", safeName: "errorInstanceId" },
-                        pascalCase: { unsafeName: "ErrorInstanceId", safeName: "ErrorInstanceId" },
-                        snakeCase: { unsafeName: "error_instance_id", safeName: "error_instance_id" },
-                        screamingSnakeCase: {
-                            unsafeName: "ERROR_INSTANCE_ID",
-                            safeName: "ERROR_INSTANCE_ID"
-                        }
-                    },
-                    wireValue: "errorInstanceId"
-                }
-            },
-            pathParameters: [],
-            errorDiscriminationStrategy: { type: "statusCode" },
-            sdkConfig: {
-                hasFileDownloadEndpoints: false,
-                hasPaginatedEndpoints: false,
-                hasStreamingEndpoints: false,
-                isAuthMandatory: false,
-                platformHeaders: { language: "", sdkName: "", sdkVersion: "", userAgent: undefined }
-            },
-            variables: [],
-            serviceTypeReferenceInfo: { sharedTypes: [], typesReferencedOnlyByService: {} }
-        };
-
+        // The example's name should NOT be inflated (it's optional<string>, not Name)
         // biome-ignore lint/suspicious/noExplicitAny: test helper
-        const result = inflateIrNames(ir as any);
-
-        // The non-Name object should NOT have been inflated (no casing keys added)
-        // biome-ignore lint/suspicious/noExplicitAny: test helper
-        const notAName = (result.types as any).notAName;
-        expect(notAName.originalName).toBe("SomeValue");
-        expect(notAName.someOtherField).toBe("data");
-        expect(notAName.camelCase).toBeUndefined();
-        expect(notAName.pascalCase).toBeUndefined();
+        expect((result as any).exampleEndpoints[0].name).toBe("my-example");
     });
 
     it("uses smartCasing from the IR metadata", () => {
         const ir = {
-            apiName: {
-                originalName: "httpApi",
-                camelCase: undefined,
-                pascalCase: undefined,
-                snakeCase: undefined,
-                screamingSnakeCase: undefined
-            },
+            apiName: "httpApi",
             smartCasing: true,
-            generationLanguage: "go",
+            generationLanguage: "go" as const,
             types: {},
             services: {},
             auth: { docs: undefined, requirement: "ALL", schemes: [] },
@@ -345,19 +273,7 @@ describe("inflateIrNames", () => {
                 navigationConfig: undefined
             },
             constants: {
-                errorInstanceIdKey: {
-                    name: {
-                        originalName: "errorInstanceId",
-                        camelCase: { unsafeName: "errorInstanceId", safeName: "errorInstanceId" },
-                        pascalCase: { unsafeName: "ErrorInstanceId", safeName: "ErrorInstanceId" },
-                        snakeCase: { unsafeName: "error_instance_id", safeName: "error_instance_id" },
-                        screamingSnakeCase: {
-                            unsafeName: "ERROR_INSTANCE_ID",
-                            safeName: "ERROR_INSTANCE_ID"
-                        }
-                    },
-                    wireValue: "errorInstanceId"
-                }
+                errorInstanceIdKey: { name: "errorInstanceId", wireValue: "errorInstanceId" }
             },
             pathParameters: [],
             errorDiscriminationStrategy: { type: "statusCode" },
@@ -376,40 +292,24 @@ describe("inflateIrNames", () => {
         const result = inflateIrNames(ir as any);
 
         // With smartCasing + Go, HTTP should be capitalized as an initialism
-        expect(result.apiName.camelCase).toBeDefined();
-        expect(result.apiName.pascalCase).toBeDefined();
-        expect(result.apiName.snakeCase).toBeDefined();
-        expect(result.apiName.screamingSnakeCase).toBeDefined();
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        const apiName = result.apiName as any;
+        expect(apiName.originalName).toBe("httpApi");
+        expect(apiName.camelCase).toBeDefined();
+        expect(apiName.pascalCase).toBeDefined();
+        expect(apiName.snakeCase).toBeDefined();
+        expect(apiName.screamingSnakeCase).toBeDefined();
     });
 
-    it("handles arrays of Name objects", () => {
+    it("handles arrays containing NameAndWireValue objects", () => {
         const ir = {
-            apiName: {
-                originalName: "TestApi",
-                camelCase: { unsafeName: "testApi", safeName: "testApi" },
-                pascalCase: { unsafeName: "TestApi", safeName: "TestApi" },
-                snakeCase: { unsafeName: "test_api", safeName: "test_api" },
-                screamingSnakeCase: { unsafeName: "TEST_API", safeName: "TEST_API" }
-            },
+            apiName: "TestApi",
             smartCasing: false,
             generationLanguage: undefined,
             types: {},
             services: {},
             auth: { docs: undefined, requirement: "ALL", schemes: [] },
-            headers: [
-                {
-                    name: {
-                        name: {
-                            originalName: "Authorization",
-                            camelCase: undefined,
-                            pascalCase: undefined,
-                            snakeCase: undefined,
-                            screamingSnakeCase: undefined
-                        },
-                        wireValue: "Authorization"
-                    }
-                }
-            ],
+            headers: [{ name: { name: "Authorization", wireValue: "Authorization" } }],
             idempotencyHeaders: [],
             errors: {},
             webhookGroups: {},
@@ -427,19 +327,7 @@ describe("inflateIrNames", () => {
                 navigationConfig: undefined
             },
             constants: {
-                errorInstanceIdKey: {
-                    name: {
-                        originalName: "errorInstanceId",
-                        camelCase: { unsafeName: "errorInstanceId", safeName: "errorInstanceId" },
-                        pascalCase: { unsafeName: "ErrorInstanceId", safeName: "ErrorInstanceId" },
-                        snakeCase: { unsafeName: "error_instance_id", safeName: "error_instance_id" },
-                        screamingSnakeCase: {
-                            unsafeName: "ERROR_INSTANCE_ID",
-                            safeName: "ERROR_INSTANCE_ID"
-                        }
-                    },
-                    wireValue: "errorInstanceId"
-                }
+                errorInstanceIdKey: { name: "errorInstanceId", wireValue: "errorInstanceId" }
             },
             pathParameters: [],
             errorDiscriminationStrategy: { type: "statusCode" },
@@ -457,31 +345,31 @@ describe("inflateIrNames", () => {
         // biome-ignore lint/suspicious/noExplicitAny: test helper
         const result = inflateIrNames(ir as any);
 
-        // Verify the header Name was inflated inside the array
+        // Verify the header's NameAndWireValue.name was inflated
         // biome-ignore lint/suspicious/noExplicitAny: test helper
         const headerName = (result.headers as any)[0].name.name;
-        expect(headerName.camelCase).toBeDefined();
+        expect(headerName.originalName).toBe("Authorization");
         expect(headerName.camelCase.unsafeName).toBe("authorization");
     });
 });
 
 describe("inflateName round-trip", () => {
-    it("inflating a slim Name restores all casings", () => {
+    it("inflating a slim Name (string) restores all casings", () => {
         const casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false
         });
 
-        // Slim the Name (only originalName, no casings — as produced by constructSlimCasingsGenerator)
-        const slim = { originalName: "MovieId" } as SlimName;
+        // In v66, a Name is just a string
+        const slim = "MovieId";
 
-        // Inflate back
+        // Inflate back to FullName
         const inflated = inflateName(slim, casingsGenerator);
         expect(inflated.originalName).toBe("MovieId");
-        expect(inflated.camelCase?.unsafeName).toBe("movieId");
-        expect(inflated.pascalCase?.unsafeName).toBe("MovieId");
-        expect(inflated.snakeCase?.unsafeName).toBe("movie_id");
-        expect(inflated.screamingSnakeCase?.unsafeName).toBe("MOVIE_ID");
+        expect(inflated.camelCase.unsafeName).toBe("movieId");
+        expect(inflated.pascalCase.unsafeName).toBe("MovieId");
+        expect(inflated.snakeCase.unsafeName).toBe("movie_id");
+        expect(inflated.screamingSnakeCase.unsafeName).toBe("MOVIE_ID");
     });
 });

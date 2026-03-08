@@ -1,134 +1,195 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { IntermediateRepresentation, Name } from "@fern-api/ir-sdk";
+import { FernFilepath, Name, NameAndWireValue } from "@fern-api/ir-sdk";
 
-import { CasingsGenerator, constructCasingsGenerator } from "./CasingsGenerator.js";
-
-/**
- * A slim Name object — has `originalName` but is missing some or all casings.
- * This is the wire format for Name in IR v66+.
- */
-export type SlimName = Partial<Name> & Pick<Name, "originalName">;
+import { constructCasingsGenerator, FullCasingsGenerator, FullName, FullNameAndWireValue } from "./CasingsGenerator.js";
 
 /**
- * Inflates a single slim Name object (only originalName) into a full Name with all casings.
- * If all casings are already present, returns the Name as-is.
+ * In v66 IR, Name is a plain string (the original name).
+ * This type alias makes the intent clear.
  */
-export function inflateName(name: SlimName, casingsGenerator: CasingsGenerator): Name {
-    if (
-        name.camelCase != null &&
-        name.pascalCase != null &&
-        name.snakeCase != null &&
-        name.screamingSnakeCase != null
-    ) {
-        return name as Name;
-    }
-    const generated = casingsGenerator.generateName(name.originalName);
+export type SlimName = Name; // Name = string in v66
+
+/**
+ * A fully-resolved FernFilepath with FullName objects instead of strings.
+ */
+export interface FullFernFilepath {
+    allParts: FullName[];
+    packagePath: FullName[];
+    file: FullName | undefined;
+}
+
+/**
+ * Inflates a single slim Name (string) into a FullName with all casings computed.
+ * Detection: `typeof name === "string"` — if it's a string, it needs inflation.
+ */
+export function inflateName(name: string, casingsGenerator: FullCasingsGenerator): FullName {
+    return casingsGenerator.generateName(name);
+}
+
+/**
+ * Inflates a NameAndWireValue (where name is a string) into a FullNameAndWireValue.
+ */
+export function inflateNameAndWireValue(
+    nwv: NameAndWireValue,
+    casingsGenerator: FullCasingsGenerator
+): FullNameAndWireValue {
     return {
-        originalName: name.originalName,
-        camelCase: name.camelCase ?? generated.camelCase,
-        pascalCase: name.pascalCase ?? generated.pascalCase,
-        snakeCase: name.snakeCase ?? generated.snakeCase,
-        screamingSnakeCase: name.screamingSnakeCase ?? generated.screamingSnakeCase
+        name: inflateName(nwv.name, casingsGenerator),
+        wireValue: nwv.wireValue
     };
 }
 
 /**
- * Returns true if the given object looks like a slim Name (has originalName but missing casings).
- * A slim Name is identified by:
- *  - Having `originalName: string`
- *  - Either having at least one known casing key with a null/undefined value,
- *    OR being a minimal object with only `originalName` as its sole key.
+ * Inflates a FernFilepath (where names are strings) into a FullFernFilepath.
  */
-function isSlimName(record: Record<string, unknown>): boolean {
-    if (typeof record.originalName !== "string") {
-        return false;
-    }
-    const hasCasingKey =
-        "camelCase" in record || "pascalCase" in record || "snakeCase" in record || "screamingSnakeCase" in record;
-    const isOnlyOriginalName = !hasCasingKey && Object.keys(record).length === 1;
-
-    if (!hasCasingKey && !isOnlyOriginalName) {
-        return false;
-    }
-
-    // If it has casing keys, check if any are missing
-    if (hasCasingKey) {
-        return (
-            record.camelCase == null ||
-            record.pascalCase == null ||
-            record.snakeCase == null ||
-            record.screamingSnakeCase == null
-        );
-    }
-
-    return true;
+export function inflateFernFilepath(fp: FernFilepath, casingsGenerator: FullCasingsGenerator): FullFernFilepath {
+    return {
+        allParts: fp.allParts.map((name) => inflateName(name, casingsGenerator)),
+        packagePath: fp.packagePath.map((name) => inflateName(name, casingsGenerator)),
+        file: fp.file != null ? inflateName(fp.file, casingsGenerator) : undefined
+    };
 }
 
 /**
- * Recursively walks any object/array and inflates all slim Name objects found within.
- * A slim Name is an object with `originalName` but missing casing fields.
+ * Creates a FullCasingsGenerator from the IR's metadata fields.
+ * Used by generators and migration code to inflate slim Names.
  */
-function inflateNamesDeep(obj: unknown, casingsGenerator: CasingsGenerator): unknown {
-    if (obj == null || typeof obj !== "object") {
-        return obj;
-    }
+export function createCasingsGeneratorFromIr(ir: {
+    smartCasing: boolean;
+    generationLanguage: generatorsYml.GenerationLanguage | undefined;
+}): FullCasingsGenerator {
+    return constructCasingsGenerator({
+        generationLanguage: ir.generationLanguage,
+        keywords: undefined,
+        smartCasing: ir.smartCasing
+    });
+}
 
-    if (Array.isArray(obj)) {
+// --- Deep IR inflation ---
+
+/**
+ * Keys that ALWAYS hold Name values when the value is a string.
+ * Derived from the IR YAML schema (commons.yml, http.yml, auth.yml, etc.).
+ */
+const ALWAYS_NAME_KEYS = new Set([
+    "apiName",
+    "requestParameterName",
+    "wrapperName",
+    "bodyKey",
+    "token", // BearerAuthScheme.token: Name
+    "username", // BasicAuthScheme.username: Name
+    "password", // BasicAuthScheme.password: Name
+    "clientId", // OAuthScheme.clientId: Name
+    "clientSecret" // OAuthScheme.clientSecret: Name
+]);
+
+/**
+ * Detects a FernFilepath-shaped object: { allParts, packagePath, file }.
+ * In v66 IR, allParts/packagePath are string[] and file is string | undefined.
+ */
+function isFernFilepathShape(obj: Record<string, unknown>): boolean {
+    return "allParts" in obj && "packagePath" in obj;
+}
+
+/**
+ * Detects objects where the `name` field is optional<string> (NOT a Name).
+ * These are example types that use plain string names for display purposes.
+ */
+function hasNonNameNameField(obj: Record<string, unknown>): boolean {
+    // ExampleEndpointCall: has endpointPathParameters/servicePathParameters/rootPathParameters
+    if ("endpointPathParameters" in obj || "servicePathParameters" in obj || "rootPathParameters" in obj) {
+        return true;
+    }
+    // V2HttpEndpointCodeSample: has language + code
+    if ("language" in obj && "code" in obj) {
+        return true;
+    }
+    // V2WebhookExample: has payload but no wireValue/fernFilepath
+    if ("payload" in obj && !("wireValue" in obj) && !("fernFilepath" in obj)) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Determines if a string value at a given key should be inflated as a Name.
+ */
+function shouldInflateStringField(key: string, parentObj: Record<string, unknown>): boolean {
+    if (ALWAYS_NAME_KEYS.has(key)) {
+        return true;
+    }
+    // FernFilepath.file
+    if (key === "file" && isFernFilepathShape(parentObj)) {
+        return true;
+    }
+    // The `name` key holds a Name in most IR types, EXCEPT example types
+    if (key === "name" && !hasNonNameNameField(parentObj)) {
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Recursively walks a value and inflates all Name strings into FullName objects.
+ * Uses structural heuristics to detect which strings are Names:
+ * - Known Name keys (apiName, token, username, etc.)
+ * - The `name` key in non-example contexts
+ * - FernFilepath arrays (allParts, packagePath) and file field
+ */
+function deepInflateValue(value: unknown, cg: FullCasingsGenerator): unknown {
+    if (value == null || typeof value !== "object") {
+        return value;
+    }
+    if (Array.isArray(value)) {
         let changed = false;
-        const result = obj.map((item) => {
-            const inflated = inflateNamesDeep(item, casingsGenerator);
-            if (inflated !== item) {
+        const result = value.map((v) => {
+            const inflated = deepInflateValue(v, cg);
+            if (inflated !== v) {
                 changed = true;
             }
             return inflated;
         });
-        return changed ? result : obj;
+        return changed ? result : value;
     }
 
-    // Preserve Set/Map/Date instances
-    if (obj instanceof Set || obj instanceof Map || obj instanceof Date) {
-        return obj;
-    }
-
-    const record = obj as Record<string, unknown>;
-
-    // Check if this is a slim Name that needs inflation
-    if (isSlimName(record)) {
-        const name = record as unknown as SlimName;
-        return inflateName(name, casingsGenerator);
-    }
-
-    // Recurse into all properties
+    const obj = value as Record<string, unknown>;
+    const fp = isFernFilepathShape(obj);
     let changed = false;
     const result: Record<string, unknown> = {};
-    for (const [key, value] of Object.entries(record)) {
-        const inflated = inflateNamesDeep(value, casingsGenerator);
-        result[key] = inflated;
-        if (inflated !== value) {
+
+    for (const [key, val] of Object.entries(obj)) {
+        if (typeof val === "string" && shouldInflateStringField(key, obj)) {
+            result[key] = inflateName(val, cg);
             changed = true;
+        } else if (Array.isArray(val) && fp && (key === "allParts" || key === "packagePath")) {
+            // FernFilepath: allParts and packagePath are Name arrays
+            const inflatedArr = val.map((v) => (typeof v === "string" ? inflateName(v, cg) : deepInflateValue(v, cg)));
+            result[key] = inflatedArr;
+            changed = true;
+        } else {
+            const inflated = deepInflateValue(val, cg);
+            if (inflated !== val) {
+                changed = true;
+            }
+            result[key] = inflated;
         }
     }
-    return changed ? result : obj;
+
+    return changed ? result : value;
 }
 
 /**
- * Inflates all slim Name objects in an IntermediateRepresentation.
- * Uses the IR's smartCasing and generationLanguage fields to configure the CasingsGenerator.
- * After inflation, all Name objects have their casings fully populated.
+ * Inflates an entire v66 IR: converts all string Names into FullName objects
+ * with all casings computed. Uses smartCasing and generationLanguage from the
+ * IR metadata to produce correct casings.
  *
- * Accepts `unknown` because the v66 wire format has slim Names that don't match
- * the full Name type. After inflation, the result conforms to IntermediateRepresentation.
+ * Used by:
+ * - The v66→v65 migration (to restore full Names for older generators)
+ * - Generators that adopt v66 IR (to inflate Names at deserialization time)
  */
-export function inflateIrNames(ir: unknown): IntermediateRepresentation {
-    const record = ir as Record<string, unknown>;
-    const generationLanguage = record.generationLanguage as generatorsYml.GenerationLanguage | undefined;
-    const smartCasing = (record.smartCasing as boolean) ?? false;
-
-    const casingsGenerator = constructCasingsGenerator({
-        generationLanguage,
-        keywords: undefined,
-        smartCasing
-    });
-
-    return inflateNamesDeep(ir, casingsGenerator) as IntermediateRepresentation;
+export function inflateIrNames<
+    T extends { smartCasing: boolean; generationLanguage: generatorsYml.GenerationLanguage | undefined }
+>(ir: T): T {
+    const casingsGenerator = createCasingsGeneratorFromIr(ir);
+    return deepInflateValue(ir, casingsGenerator) as T;
 }

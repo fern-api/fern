@@ -5,7 +5,7 @@ import type * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Name } from "../../commons/types/Name.js";
 
-export const EndpointName: core.serialization.ObjectSchema<serializers.EndpointName.Raw, FernIr.EndpointName> = Name;
+export const EndpointName: core.serialization.Schema<serializers.EndpointName.Raw, FernIr.EndpointName> = Name;
 
 export declare namespace EndpointName {
     export type Raw = Name.Raw;

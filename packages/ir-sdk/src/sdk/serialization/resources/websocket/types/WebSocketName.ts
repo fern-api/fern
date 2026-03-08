@@ -5,7 +5,7 @@ import type * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Name } from "../../commons/types/Name.js";
 
-export const WebSocketName: core.serialization.ObjectSchema<serializers.WebSocketName.Raw, FernIr.WebSocketName> = Name;
+export const WebSocketName: core.serialization.Schema<serializers.WebSocketName.Raw, FernIr.WebSocketName> = Name;
 
 export declare namespace WebSocketName {
     export type Raw = Name.Raw;

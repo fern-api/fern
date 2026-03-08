@@ -109,11 +109,11 @@ function getUrlForExample(endpoint: HttpEndpoint): string {
         const value = userExample ?? autoExample;
         let stringValue: string;
         if (value == null) {
-            stringValue = pathParameter.name.originalName;
+            stringValue = pathParameter.name;
         } else {
             stringValue = typeof value === "string" ? value : JSON.stringify(value);
         }
-        pathParameters[pathParameter.name.originalName] = stringValue;
+        pathParameters[pathParameter.name] = stringValue;
     });
     const url =
         endpoint.fullPath.head +

@@ -234,7 +234,7 @@ function createExamplesForResponseStatusCodes({
 
         // Create response example from auto-generated example if no user-specified examples were created
         if (!examplesCreatedForResponse) {
-            const fallbackExampleDisplayName = camelCase(`${endpoint.name.originalName}_example`);
+            const fallbackExampleDisplayName = camelCase(`${endpoint.name}_example`);
             if (firstUserRequestName && firstUserRequestExample) {
                 requestExamplesUsed.add(firstUserRequestName);
             }

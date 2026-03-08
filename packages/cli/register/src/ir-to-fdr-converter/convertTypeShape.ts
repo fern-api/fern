@@ -109,7 +109,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                 type: "undiscriminatedUnion",
                 variants: union.members.map((variant): FdrCjsSdk.api.v1.register.UndiscriminatedUnionVariant => {
                     return {
-                        typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
+                        typeName: variant.type.type === "named" ? variant.type.name : undefined,
                         description: variant.docs ?? undefined,
                         type: convertTypeReference(variant.type),
                         availability: undefined,

@@ -26,7 +26,7 @@ export function convertIrToFdrApi({
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations, graphqlTypes),
-        apiName: apiNameOverride ?? ir.apiName.originalName,
+        apiName: apiNameOverride ?? ir.apiName,
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
         snippetsConfiguration: snippetsConfig,
@@ -44,7 +44,7 @@ export function convertIrToFdrApi({
     for (const [typeId, type] of Object.entries(ir.types)) {
         fdrApi.types[FdrCjsSdk.TypeId(typeId)] = {
             description: type.docs ?? undefined,
-            name: type.name.name.originalName,
+            name: type.name.name,
             shape: convertTypeShape(type.shape),
             availability: convertIrAvailability(type.availability),
             displayName: type.name.displayName
@@ -61,7 +61,7 @@ export function convertIrToFdrApi({
         fdrApi.subpackages[FdrCjsSdk.api.v1.SubpackageId(subpackageId)] = {
             subpackageId: FdrCjsSdk.api.v1.SubpackageId(subpackageId),
             displayName: service?.displayName ?? subpackage.displayName,
-            name: subpackage.name.originalName,
+            name: subpackage.name,
             description: subpackage.docs ?? undefined,
             ...convertPackage(subpackage, ir)
         };

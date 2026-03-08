@@ -350,7 +350,7 @@ export class DynamicSnippetsConverter {
         return pathParameters.map((pathParameter) => ({
             name: {
                 name: pathParameter.name,
-                wireValue: pathParameter.name.originalName
+                wireValue: pathParameter.name
             },
             typeReference: this.convertTypeReference(pathParameter.valueType),
             propertyAccess: undefined,
@@ -936,7 +936,7 @@ export class DynamicSnippetsConverter {
             const variableReferencedParams = new Set<string>();
             [...this.ir.pathParameters, ...endpoint.pathParameters].forEach((param) => {
                 if (param.variable != null) {
-                    variableReferencedParams.add(param.name.originalName);
+                    variableReferencedParams.add(param.name);
                 }
             });
 
@@ -944,11 +944,11 @@ export class DynamicSnippetsConverter {
                 ...(example.example?.rootPathParameters ?? []),
                 ...(example.example?.servicePathParameters ?? []),
                 ...(example.example?.endpointPathParameters ?? [])
-            ].filter((param) => !variableReferencedParams.has(param.name.originalName));
+            ].filter((param) => !variableReferencedParams.has(param.name));
 
             requests.push({
                 id: example?.example?.id ?? uuidv4(),
-                name: example?.example?.name?.originalName,
+                name: example?.example?.name,
                 endpoint: location,
                 baseUrl: undefined,
                 environment: undefined,
@@ -962,7 +962,7 @@ export class DynamicSnippetsConverter {
                 ),
                 pathParameters: Object.fromEntries(
                     pathParameterExamples.map((parameter) => {
-                        return [parameter.name.originalName, parameter.value.jsonExample];
+                        return [parameter.name, parameter.value.jsonExample];
                     })
                 ),
                 queryParameters: Object.fromEntries(

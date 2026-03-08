@@ -65,17 +65,17 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FdrCjsSdk.
         } else {
             webhookExamples.push(
                 ...(webhook.examples?.map((example) => {
-                    return { name: example.name?.originalName, payload: example.payload.jsonExample };
+                    return { name: example.name, payload: example.payload.jsonExample };
                 }) ?? [])
             );
         }
         return {
             description: webhook.docs ?? undefined,
             availability: convertIrAvailability(webhook.availability),
-            id: FdrCjsSdk.WebhookId(webhook.name.originalName),
+            id: FdrCjsSdk.WebhookId(webhook.name),
             path: [],
             method: webhook.method,
-            name: webhook.displayName ?? startCase(webhook.name.originalName),
+            name: webhook.displayName ?? startCase(webhook.name),
             headers: webhook.headers.map(
                 (header): FdrCjsSdk.api.v1.register.Header => ({
                     description: header.docs ?? undefined,
@@ -205,16 +205,16 @@ function convertService(
                 ir.environments != null
                     ? convertIrEnvironments({ environmentsConfig: ir.environments, endpoint: irEndpoint })
                     : undefined,
-            id: FdrCjsSdk.EndpointId(irEndpoint.name.originalName),
+            id: FdrCjsSdk.EndpointId(irEndpoint.name),
             originalEndpointId: irEndpoint.id,
-            name: irEndpoint.displayName ?? startCase(irEndpoint.name.originalName),
+            name: irEndpoint.displayName ?? startCase(irEndpoint.name),
             path:
                 irEndpoint.basePath != null
                     ? {
                           pathParameters: irEndpoint.pathParameters.map(
                               (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
                                   description: pathParameter.docs ?? undefined,
-                                  key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
+                                  key: FdrCjsSdk.PropertyKey(pathParameter.name),
                                   type: convertTypeReference(pathParameter.valueType),
                                   availability: undefined,
                                   explode: pathParameter.explode
@@ -230,7 +230,7 @@ function convertService(
                           ].map(
                               (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
                                   description: pathParameter.docs ?? undefined,
-                                  key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
+                                  key: FdrCjsSdk.PropertyKey(pathParameter.name),
                                   type: convertTypeReference(pathParameter.valueType),
                                   availability: undefined,
                                   explode: pathParameter.explode
@@ -329,13 +329,13 @@ function convertWebSocketChannel(
     } else {
         examples = channel.examples.map(
             (example): FdrCjsSdk.api.v1.register.ExampleWebSocketSession => ({
-                name: example.name?.originalName,
+                name: example.name,
                 description: example.docs,
                 path: example.url,
                 pathParameters: example.pathParameters.reduce<
                     FdrCjsSdk.api.v1.register.ExampleWebSocketSession["pathParameters"]
                 >((pathParameters, irPathParameterExample) => {
-                    pathParameters[FdrCjsSdk.PropertyKey(irPathParameterExample.name.originalName)] =
+                    pathParameters[FdrCjsSdk.PropertyKey(irPathParameterExample.name)] =
                         irPathParameterExample.value.jsonExample;
                     return pathParameters;
                 }, {}),
@@ -373,13 +373,13 @@ function convertWebSocketChannel(
             ir.environments != null
                 ? convertIrWebSocketEnvironments({ environmentsConfig: ir.environments, channel })
                 : [],
-        id: FdrCjsSdk.WebSocketId(channel.name.originalName),
-        name: channel.displayName ?? startCase(channel.name.originalName),
+        id: FdrCjsSdk.WebSocketId(channel.name),
+        name: channel.displayName ?? startCase(channel.name),
         path: {
             pathParameters: channel.pathParameters.map(
                 (pathParameter): FdrCjsSdk.api.v1.register.PathParameter => ({
                     description: pathParameter.docs ?? undefined,
-                    key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
+                    key: FdrCjsSdk.PropertyKey(pathParameter.name),
                     type: convertTypeReference(pathParameter.valueType),
                     availability: undefined,
                     explode: pathParameter.explode
@@ -516,7 +516,7 @@ function convertIrEnvironments({
                 );
             }
             if (endpointBaseUrlId == null) {
-                throw new Error(`Expected endpoint ${endpoint.name.originalName} to have base url.`);
+                throw new Error(`Expected endpoint ${endpoint.name} to have base url.`);
             }
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 const endpointBaseUrl = singleBaseUrlEnvironment.urls[endpointBaseUrlId];
@@ -556,13 +556,13 @@ function convertIrWebSocketEnvironments({
             });
         case "multipleBaseUrls":
             if (channelBaseUrlId == null) {
-                throw new Error(`Expected channel ${channel.name.originalName} to have base url.`);
+                throw new Error(`Expected channel ${channel.name} to have base url.`);
             }
             return environmentsConfigValue.environments.map((singleBaseUrlEnvironment) => {
                 const channelBaseUrl = singleBaseUrlEnvironment.urls[channelBaseUrlId];
                 if (channelBaseUrl == null) {
                     throw new Error(
-                        `Encountered undefined server name ${channelBaseUrl} at channel ${channel.name.originalName} ${channel.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${channelBaseUrlId}`
+                        `Encountered undefined server name ${channelBaseUrl} at channel ${channel.name} ${channel.path.head}. Expected environment ${singleBaseUrlEnvironment.id} to contain url for ${channelBaseUrlId}`
                     );
                 }
                 return {
@@ -655,7 +655,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v
             fileUpload: (fileUpload) => ({
                 type: "fileUpload",
                 value: {
-                    name: fileUpload.name.originalName,
+                    name: fileUpload.name,
                     // TODO: support description and availability
                     description: undefined,
                     availability: undefined,
@@ -820,7 +820,7 @@ function convertResponseErrorsV2(
                     statusCode: errorDeclaration.statusCode,
                     isWildcard: errorDeclaration.isWildcardStatusCode === true ? true : undefined,
                     description: errorDeclaration.docs ?? undefined,
-                    name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
+                    name: errorDeclaration.displayName ?? errorDeclaration.name.name,
                     availability: undefined,
                     examples: getErrorExamplesFromDeclaration(errorDeclaration, ir),
                     headers:
@@ -848,7 +848,7 @@ function convertResponseErrorsV2(
                             type: "literal",
                             value: {
                                 type: "stringLiteral",
-                                value: errorDeclaration.discriminantValue.name.originalName
+                                value: errorDeclaration.discriminantValue.name
                             }
                         },
                         description: errorDeclaration.docs,
@@ -881,10 +881,10 @@ function convertResponseErrorsV2(
                     isWildcard: errorDeclaration.isWildcardStatusCode === true ? true : undefined,
                     description: errorDeclaration.docs ?? undefined,
                     availability: undefined,
-                    name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
+                    name: errorDeclaration.displayName ?? errorDeclaration.name.name,
                     examples: errorDeclaration.examples.map((irExample) => {
                         return {
-                            name: irExample.name?.originalName,
+                            name: irExample.name,
                             responseBody: { type: "json", value: irExample.jsonExample },
                             description: irExample.docs
                         };
@@ -1169,7 +1169,7 @@ function convertHttpEndpointExample({
     }
     const { codeSamples } = userSpecifiedExample ?? { codeSamples: [] };
     return {
-        name: example.name?.originalName,
+        name: example.name,
         description: example.docs,
         path: example.url,
         pathParameters: [
@@ -1178,7 +1178,7 @@ function convertHttpEndpointExample({
             ...example.endpointPathParameters
         ].reduce<FdrCjsSdk.api.v1.register.ExampleEndpointCall["pathParameters"]>(
             (pathParameters, irPathParameterExample) => {
-                pathParameters[FdrCjsSdk.PropertyKey(irPathParameterExample.name.originalName)] =
+                pathParameters[FdrCjsSdk.PropertyKey(irPathParameterExample.name)] =
                     irPathParameterExample.value.jsonExample;
                 return pathParameters;
             },
@@ -1315,7 +1315,7 @@ function convertHttpEndpointExample({
                     language: (value) => ({
                         language: value.language,
                         code: value.code,
-                        name: value.name?.originalName,
+                        name: value.name,
                         description: value.docs ?? undefined,
                         install: value.install
                     }),
@@ -1323,7 +1323,7 @@ function convertHttpEndpointExample({
                         // TODO: switch to storing as SDK
                         language: value.sdk,
                         code: value.code,
-                        name: value.name?.originalName,
+                        name: value.name,
                         description: value.docs ?? undefined,
                         install: undefined
                     }),
@@ -1342,7 +1342,7 @@ function convertWebhookPayloadWithFileUpload(
         return {
             type: {
                 type: "formData",
-                name: fileUploadPayload.name.originalName,
+                name: fileUploadPayload.name,
                 description: fileUploadPayload.docs ?? undefined,
                 availability: undefined,
                 properties: fileUploadPayload.properties
@@ -1482,7 +1482,7 @@ function getErrorExamplesFromDeclaration(
         }));
     } else if (v1Examples.length > 0) {
         return v1Examples.map((irExample) => ({
-            name: irExample.name?.originalName,
+            name: irExample.name,
             responseBody: { type: "json" as const, value: irExample.jsonExample },
             description: irExample.docs
         }));

@@ -5,6 +5,31 @@ import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 
 import { RESERVED_KEYWORDS } from "./reserved.js";
 
+/**
+ * A fully-resolved Name with all casings computed.
+ * This is the runtime representation after inflation.
+ * Generators and CLI code should work with FullName after inflating the IR.
+ */
+export interface FullName {
+    originalName: string;
+    camelCase: SafeAndUnsafeString;
+    pascalCase: SafeAndUnsafeString;
+    snakeCase: SafeAndUnsafeString;
+    screamingSnakeCase: SafeAndUnsafeString;
+}
+
+/**
+ * A fully-resolved NameAndWireValue with a FullName.
+ */
+export interface FullNameAndWireValue {
+    name: FullName;
+    wireValue: string;
+}
+
+/**
+ * Generator that produces slim Names (plain strings) for the v66 IR wire format.
+ * Used by the IR generator — returns Name (= string in v66) and NameAndWireValue.
+ */
 export interface CasingsGenerator {
     generateName(
         name: string,
@@ -17,27 +42,36 @@ export interface CasingsGenerator {
     }): NameAndWireValue;
 }
 
+/**
+ * Generator that produces full Names with all casings computed.
+ * Used by inflation utilities and the v66→v65 migration.
+ */
+export interface FullCasingsGenerator {
+    generateName(
+        name: string,
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean }
+    ): FullName;
+    generateNameAndWireValue(args: {
+        name: string;
+        wireValue: string;
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean };
+    }): FullNameAndWireValue;
+}
+
 const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"];
 
 /**
- * Constructs a CasingsGenerator that produces only slim Names (originalName only, casings undefined).
- * Used by the IR generator for v66+ to avoid computing casings at generation time.
+ * Constructs a CasingsGenerator that produces slim Names (plain strings).
+ * Used by the IR generator for v66+ — Names are just the original name string.
  */
 export function constructSlimCasingsGenerator(): CasingsGenerator {
-    const slimGenerator: CasingsGenerator = {
-        generateName: (inputName) => ({
-            originalName: inputName,
-            camelCase: undefined,
-            pascalCase: undefined,
-            snakeCase: undefined,
-            screamingSnakeCase: undefined
-        }),
+    return {
+        generateName: (inputName) => inputName,
         generateNameAndWireValue: ({ name, wireValue }) => ({
-            name: slimGenerator.generateName(name),
+            name,
             wireValue
         })
     };
-    return slimGenerator;
 }
 
 export function constructCasingsGenerator({
@@ -48,8 +82,8 @@ export function constructCasingsGenerator({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
-}): CasingsGenerator {
-    const casingsGenerator: CasingsGenerator = {
+}): FullCasingsGenerator {
+    const casingsGenerator: FullCasingsGenerator = {
         generateName: (inputName, opts) => {
             const name = preprocessName(inputName);
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({

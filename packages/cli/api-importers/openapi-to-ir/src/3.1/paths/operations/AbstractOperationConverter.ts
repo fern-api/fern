@@ -119,7 +119,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         queryParameters.push(convertedParameter.parameter);
                         break;
                     case "header": {
-                        const headerName = convertedParameter.parameter.name.name.originalName;
+                        const headerName = convertedParameter.parameter.name.name;
                         const headerWireValue = convertedParameter.parameter.name.wireValue;
 
                         let duplicateHeader = false;
@@ -161,9 +161,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
 
     protected checkMissingPathParameters(pathParameters: PathParameter[]): void {
         const pathParams = [...this.path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
-        const missingPathParams = pathParams.filter(
-            (param) => !pathParameters.some((p) => p.name.originalName === param)
-        );
+        const missingPathParams = pathParams.filter((param) => !pathParameters.some((p) => p.name === param));
         for (const param of missingPathParams) {
             if (param == null) {
                 continue;

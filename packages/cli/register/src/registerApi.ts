@@ -78,13 +78,13 @@ export async function registerApi({
             token,
             organization,
             openApiSources.length > 0 ? openApiSources : undefined,
-            ir.apiName.originalName
+            ir.apiName
         );
     }
 
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: FdrCjsSdk.OrgId(organization),
-        apiId: FdrCjsSdk.ApiId(ir.apiName.originalName),
+        apiId: FdrCjsSdk.ApiId(ir.apiName),
         definition: apiDefinition
     });
 

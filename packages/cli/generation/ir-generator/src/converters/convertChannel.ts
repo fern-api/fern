@@ -454,10 +454,7 @@ function buildUrl({
     let url = channel.path;
     if (example["path-parameters"] != null) {
         for (const parameter of [...pathParams.pathParameters]) {
-            url = url.replaceAll(
-                `{${parameter.name.originalName}}`,
-                encodeURIComponent(`${parameter.value.jsonExample}`)
-            );
+            url = url.replaceAll(`{${parameter.name}}`, encodeURIComponent(`${parameter.value.jsonExample}`));
         }
     }
     return url;

@@ -563,7 +563,7 @@ function getTitleForResolvedType(resolvedType: ResolvedType): string {
             }
             break;
         case "named":
-            return resolvedType.name.name.originalName;
+            return resolvedType.name.name;
         case "primitive":
             return resolvedType.primitive.v1;
         case "unknown":
