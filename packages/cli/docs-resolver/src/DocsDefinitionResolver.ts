@@ -1447,7 +1447,18 @@ export class DocsDefinitionResolver {
         }
 
         // Extract GraphQL operations and types scoped to the current API section's workspace.
-        const graphqlWorkspace = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item);
+        // Use the already-resolved openapiWorkspace if available; otherwise try to find the
+        // matching OSS workspace. If no OSS workspace exists (e.g., Fern Definition APIs),
+        // pass undefined so extractGraphQLData returns empty results.
+        let graphqlWorkspace: OSSWorkspace | undefined = openapiWorkspace;
+        if (graphqlWorkspace == null) {
+            try {
+                graphqlWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+            } catch {
+                // No OSS workspace found — this API section uses a Fern Definition.
+                // GraphQL is only relevant for OSS/OpenAPI workspaces, so this is expected.
+            }
+        }
         const graphqlData = await this.extractGraphQLData(graphqlWorkspace);
 
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
