@@ -288,10 +288,14 @@ fixtures:
         use-undiscriminated-unions: true
       outputFolder: with-undiscriminated-unions
   bearer-token-environment-variable:
+    - customConfig: null
+      outputFolder: no-custom-config
     - customConfig:
         generate-di-extensions: true
       outputFolder: generate-di-extensions
   inferred-auth-explicit:
+    - customConfig: null
+      outputFolder: no-custom-config
     - customConfig:
         generate-di-extensions: true
       outputFolder: generate-di-extensions
