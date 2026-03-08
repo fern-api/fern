@@ -616,6 +616,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             uuid: () => this.csharp.codeblock('""'),
             base64: () => this.csharp.codeblock('""'),
             bigInteger: () => this.csharp.codeblock('""'),
+            dateTimeRfc2822: () => this.csharp.codeblock("DateTime.MinValue"),
             _other: () => this.csharp.codeblock("null")
         });
     }

@@ -76,6 +76,7 @@ export class DefaultValueExtractor {
                     // Other primitive types don't support defaults
                     date: () => undefined,
                     dateTime: () => undefined,
+                    dateTimeRfc2822: () => undefined,
                     uuid: () => undefined,
                     base64: () => undefined,
                     _other: () => undefined

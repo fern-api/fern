@@ -78,6 +78,7 @@ function convertExampleLiteralToLiteral(literalContainer: FernIr.ExampleLiteralC
         case "uuid":
         case "base64":
         case "bigInteger":
+        case "datetimeRfc2822":
             throw new Error("Internal error; only boolean and string literals are permitted");
         default:
             assertNever(literalContainer.literal);
@@ -123,6 +124,8 @@ function convertExamplePrimitiveToV1Primitive(
             return FernIr.PrimitiveTypeV1.Base64;
         case "bigInteger":
             return FernIr.PrimitiveTypeV1.BigInteger;
+        case "datetimeRfc2822":
+            return FernIr.PrimitiveTypeV1.DateTimeRfc2822;
         default:
             assertNever(examplePrimitiveType.primitive);
     }
@@ -148,7 +151,8 @@ function convertExamplePrimitiveToV2Primitive(
             });
         case "long":
             return FernIr.PrimitiveTypeV2.long({
-                default: undefined
+                default: undefined,
+                validation: undefined
             });
         case "uint":
             return FernIr.PrimitiveTypeV2.uint({
@@ -193,6 +197,11 @@ function convertExamplePrimitiveToV2Primitive(
         case "bigInteger":
             return FernIr.PrimitiveTypeV2.bigInteger({
                 default: undefined
+            });
+        case "datetimeRfc2822":
+            return FernIr.PrimitiveTypeV2.dateTimeRfc2822({
+                default: undefined,
+                validation: undefined
             });
         default:
             assertNever(examplePrimitiveType.primitive);

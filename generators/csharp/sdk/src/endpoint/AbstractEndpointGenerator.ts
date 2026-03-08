@@ -133,6 +133,9 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                         return endpoint.pagination.results.property.valueType;
                     case "custom":
                         return endpoint.pagination.results.property.valueType;
+                    case "uri":
+                    case "path":
+                        return endpoint.pagination.results.property.valueType;
                     default:
                         assertNever(endpoint.pagination);
                 }

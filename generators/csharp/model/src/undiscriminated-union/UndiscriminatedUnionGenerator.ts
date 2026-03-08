@@ -1196,6 +1196,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                     float: () => ({ discriminator: "float", methodName: "Float", isNull: false }),
                     uint: () => ({ discriminator: "uint", methodName: "UInt", isNull: false }),
                     uint64: () => ({ discriminator: "ulong", methodName: "ULong", isNull: false }),
+                    dateTimeRfc2822: () => ({ discriminator: "dateTime", methodName: "DateTime", isNull: false }),
                     _other: () => ({ discriminator: "unknown", methodName: "Unknown", isNull: false })
                 });
             },
@@ -1373,6 +1374,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                     float: () => "Float",
                     uint: () => "UInt",
                     uint64: () => "ULong",
+                    dateTimeRfc2822: () => "DateTime",
                     _other: () => baseMethodName
                 });
             },
@@ -1411,6 +1413,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                     float: () => "Float",
                     uint: () => "UInt",
                     uint64: () => "ULong",
+                    dateTimeRfc2822: () => "DateTime",
                     _other: () => "Unknown"
                 });
             },
@@ -1566,6 +1569,7 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<CSharpFile, Mod
                     string: () => 4000, // Strings are generic (can parse anything)
                     base64: () => 4000, // Treated as string
                     date: () => 8500, // Specific date format
+                    dateTimeRfc2822: () => 9000, // Same specificity as dateTime
                     _other: () => 0
                 });
             },

@@ -1163,6 +1163,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     });
                     break;
                 case "custom":
+                case "uri":
+                case "path":
                     this.generateCustomPagerMethodBody({
                         serviceId,
                         endpoint,

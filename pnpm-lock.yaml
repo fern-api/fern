@@ -806,8 +806,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^62.3.0
-        version: 62.6.0
+        specifier: ^65.4.0
+        version: 65.4.0
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
@@ -839,8 +839,8 @@ importers:
         specifier: ^64.0.0
         version: 64.0.0
       '@fern-fern/ir-sdk':
-        specifier: ^62.3.0
-        version: 62.6.0
+        specifier: ^65.4.0
+        version: 65.4.0
       domhandler:
         specifier: 'catalog:'
         version: 5.0.3
@@ -949,8 +949,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
       '@fern-fern/ir-sdk':
-        specifier: ^62.3.0
-        version: 62.6.0
+        specifier: ^65.4.0
+        version: 65.4.0
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
@@ -997,8 +997,8 @@ importers:
         specifier: 'catalog:'
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^62.3.0
-        version: 62.6.0
+        specifier: ^65.4.0
+        version: 65.4.0
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
