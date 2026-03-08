@@ -45,7 +45,9 @@ function escapeNameForHeading(name: string): string {
 
 export function methodAnchorId(name: string): string {
     for (const [symbol, safeName] of OPERATOR_SYMBOL_MAP) {
-        if (name === symbol) return safeName;
+        if (name === symbol) {
+            return safeName;
+        }
     }
     const result = name.toLowerCase().replace(/[^a-z0-9-]/g, "");
     return result || "unknown";
