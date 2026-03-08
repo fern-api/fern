@@ -1,5 +1,10 @@
 import { fail } from "node:assert";
-import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import {
+    AbstractFormatter,
+    AbstractGeneratorContext,
+    FernGeneratorExec,
+    GeneratorNotificationService
+} from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -74,6 +79,14 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
             ast.convertReadOnlyPrimitiveTypes(this.settings.readOnlyMemoryTypes)
         );
     }
+
+    /**
+     * Backing field for the lazily-initialized formatter.
+     * Declared here so that sibling subclasses (SdkGeneratorContext,
+     * ModelGeneratorContext) share a single property declaration and
+     * remain structurally compatible in TypeScript.
+     */
+    protected _formatter: AbstractFormatter | undefined;
 
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
