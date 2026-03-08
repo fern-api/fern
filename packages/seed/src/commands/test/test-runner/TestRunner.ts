@@ -153,6 +153,7 @@ export abstract class TestRunner {
         outputDir,
         generatorInvocation
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
+        let lockAcquired = false;
         try {
             if (this.buildInvocation == null) {
                 this.buildInvocation = this.build();
@@ -238,6 +239,7 @@ export abstract class TestRunner {
 
             taskContext.logger.debug("Acquiring lock...");
             await this.lock.acquire();
+            lockAcquired = true;
             taskContext.logger.info("Running generator...");
             try {
                 const generationStopwatch = new Stopwatch();
@@ -294,6 +296,12 @@ export abstract class TestRunner {
                 };
             }
 
+            // Release the semaphore after generation completes but before scripts run.
+            // Scripts use their own separate containers (ContainerScriptRunner),
+            // so holding the generation lock during scripts unnecessarily limits parallelism.
+            this.lock.release();
+            lockAcquired = false;
+
             if (this.skipScripts) {
                 return {
                     type: "success",
@@ -331,7 +339,9 @@ export abstract class TestRunner {
                 metrics
             };
         } finally {
-            this.lock.release();
+            if (lockAcquired) {
+                this.lock.release();
+            }
         }
     }
 
