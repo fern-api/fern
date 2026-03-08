@@ -944,6 +944,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
     "audiences": null,
     "generationMetadata": null,
     "apiPlayground": true,
+    "smartCasing": false,
+    "generationLanguage": null,
     "subpackages": {
         "subpackage_imported": {
             "name": {
@@ -1251,4 +1253,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `5761281`;
+exports[`dependencies > file dependencies 1`] = `5761339`;
