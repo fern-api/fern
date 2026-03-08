@@ -905,7 +905,7 @@ exports[`migrateFromV54ToV53 > simple 1`] = `
         },
         "typeId": "type_service:AudioFormat",
       },
-      "referencedTypes": [],
+      "referencedTypes": {},
       "shape": {
         "_type": "enum",
         "default": null,

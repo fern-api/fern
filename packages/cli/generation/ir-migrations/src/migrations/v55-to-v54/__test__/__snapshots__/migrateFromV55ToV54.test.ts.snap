@@ -1903,7 +1903,7 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
         },
         "typeId": "type_service:User",
       },
-      "referencedTypes": [],
+      "referencedTypes": {},
       "shape": {
         "_type": "object",
         "extendedProperties": [],

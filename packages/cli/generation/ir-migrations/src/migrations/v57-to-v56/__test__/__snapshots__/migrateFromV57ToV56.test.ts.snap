@@ -5497,7 +5497,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
         },
         "typeId": "type_auth:TokenResponse",
       },
-      "referencedTypes": [],
+      "referencedTypes": {},
       "shape": {
         "_type": "object",
         "extendedProperties": [],
@@ -5621,9 +5621,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
         },
         "typeId": "type_service:ListUsersResponse",
       },
-      "referencedTypes": [
-        "type_service:User",
-      ],
+      "referencedTypes": {},
       "shape": {
         "_type": "object",
         "extendedProperties": [],
@@ -5810,7 +5808,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
         },
         "typeId": "type_service:User",
       },
-      "referencedTypes": [],
+      "referencedTypes": {},
       "shape": {
         "_type": "object",
         "extendedProperties": [],

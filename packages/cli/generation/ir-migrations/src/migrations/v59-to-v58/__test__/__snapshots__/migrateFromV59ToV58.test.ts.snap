@@ -4665,7 +4665,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
         },
         "typeId": "type_auth:TokenResponse",
       },
-      "referencedTypes": [],
+      "referencedTypes": {},
       "shape": {
         "_type": "object",
         "extendedProperties": [],
@@ -9482,7 +9482,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
         },
         "typeId": "type_auth:TokenResponse",
       },
-      "referencedTypes": [],
+      "referencedTypes": {},
       "shape": {
         "_type": "object",
         "extendedProperties": [],

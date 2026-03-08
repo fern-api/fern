@@ -5020,7 +5020,7 @@
         },
         "typeId": "type_auth:TokenResponse",
       },
-      "referencedTypes": [],
+      "referencedTypes": {},
       "shape": {
         "_type": "object",
         "extendedProperties": [],
