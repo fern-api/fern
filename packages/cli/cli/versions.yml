@@ -4,7 +4,7 @@
     - summary: |
         Validation on request generation examples now correctly handles arrays on 
         query, header, and globalheader parameters and validates their elements.
-      type: feat
+      type: fix
   createdAt: "2026-03-07"
   irVersion: 65
       
