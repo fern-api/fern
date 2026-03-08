@@ -152,7 +152,9 @@ function convertHttpEndpoint({
         mode === "stoplight"
             ? (httpService.displayName ??
               httpService.name.fernFilepath.allParts.map((name) => name.originalName).join(" "))
-            : httpService.name.fernFilepath.allParts.map((name) => name.pascalCase?.unsafeName ?? name.originalName).join("");
+            : httpService.name.fernFilepath.allParts
+                  .map((name) => name.pascalCase?.unsafeName ?? name.originalName)
+                  .join("");
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,
         operationId: [
