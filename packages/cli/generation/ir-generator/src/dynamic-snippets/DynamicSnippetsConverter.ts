@@ -1,4 +1,4 @@
-import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
+import { CasingsGenerator, constructSlimCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import {
@@ -69,11 +69,7 @@ export class DynamicSnippetsConverter {
     constructor(args: DynamicSnippetsConverter.Args) {
         this.ir = args.ir;
         this.generatorConfig = args.generatorConfig;
-        this.casingsGenerator = constructCasingsGenerator({
-            generationLanguage: args.generationLanguage,
-            smartCasing: args.smartCasing ?? false,
-            keywords: undefined
-        });
+        this.casingsGenerator = constructSlimCasingsGenerator();
         this.auth = this.convertAuth(this.ir.auth);
         this.authValues = this.getAuthValues(this.ir.auth);
         this.extendedTypeIds = this.computeExtendedTypeIds();

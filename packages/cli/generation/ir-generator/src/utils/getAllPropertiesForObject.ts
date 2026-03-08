@@ -1,5 +1,5 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/api-workspace-commons";
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructSlimCasingsGenerator } from "@fern-api/casings-generator";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { getPropertyName } from "../converters/type-declarations/convertObjectTypeDeclaration.js";
@@ -9,11 +9,7 @@ import { TypeResolver } from "../resolvers/TypeResolver.js";
 
 // Note: using this exported variable is NOT recommended, but its included for convenience
 // when the call-site doesn't care about the language nor special casing convention.
-export const CASINGS_GENERATOR = constructCasingsGenerator({
-    generationLanguage: undefined,
-    keywords: undefined,
-    smartCasing: false
-});
+export const CASINGS_GENERATOR = constructSlimCasingsGenerator();
 
 export interface ObjectPropertyWithPath {
     wireKey: string;
@@ -70,14 +66,7 @@ export function getAllPropertiesForObject({
         seenAtFilepath.add(typeName);
     }
 
-    let casingsGenerator = CASINGS_GENERATOR;
-    if (smartCasing) {
-        casingsGenerator = constructCasingsGenerator({
-            generationLanguage: undefined,
-            keywords: undefined,
-            smartCasing
-        });
-    }
+    const casingsGenerator = CASINGS_GENERATOR;
 
     const file = constructFernFileContext({
         relativeFilepath: filepathOfDeclaration,

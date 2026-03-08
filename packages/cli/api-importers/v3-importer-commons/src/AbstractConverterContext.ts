@@ -1,5 +1,5 @@
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
-import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
+import { CasingsGenerator, constructSlimCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
@@ -71,11 +71,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         this.generationLanguage = args.generationLanguage;
         this.smartCasing = args.smartCasing;
         this.namespace = args.namespace;
-        this.casingsGenerator = constructCasingsGenerator({
-            generationLanguage: args.generationLanguage,
-            keywords: undefined,
-            smartCasing: args.smartCasing
-        });
+        this.casingsGenerator = constructSlimCasingsGenerator();
         this.exampleGenerationArgs = args.exampleGenerationArgs;
         this.authOverrides = args.authOverrides;
         this.environmentOverrides = args.environmentOverrides;
