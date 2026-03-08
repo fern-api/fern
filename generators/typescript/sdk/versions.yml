@@ -8,6 +8,13 @@
         Union member interfaces are generated inside a namespace, so they do not
         shadow global TypeScript types like `Date` or `Error`.
       type: fix
+    - summary: |
+        Qualify global type references with `globalThis.` inside union namespaces
+        when a sibling interface would shadow them. For example, if a union has both
+        `Date` and `Datetime` variants, the `Datetime` interface's `value: Date`
+        property now generates `value: globalThis.Date` to correctly reference the
+        built-in Date type instead of the local `Date` interface.
+      type: fix
   createdAt: "2026-03-08"
   irVersion: 65
 
