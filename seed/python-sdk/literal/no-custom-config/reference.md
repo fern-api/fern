@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendResponse]</code></summary>
+<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -18,7 +18,10 @@ from seed import SeedLiteral
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.headers.send(
+    endpoint_version="02-12-2024",
+    async_=True,
     query="What is the weather today",
 )
 
@@ -32,6 +35,22 @@ client.headers.send(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**endpoint_version:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**async:** `typing.Literal` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -57,7 +76,7 @@ client.headers.send(
 </details>
 
 ## Inlined
-<details><summary><code>client.inlined.<a href="src/seed/inlined/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendResponse]</code></summary>
+<details><summary><code>client.inlined.<a href="src/seed/inlined/client.py">send</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -71,17 +90,18 @@ client.headers.send(
 
 ```python
 from seed import SeedLiteral
-from seed.inlined import ANestedLiteral, ATopLevelLiteral
+from seed.inlined import ATopLevelLiteral, ANestedLiteral
 
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.inlined.send(
     temperature=10.1,
-    context="You're super wise",
-    maybe_context="You're super wise",
     object_with_literal=ATopLevelLiteral(
-        nested_literal=ANestedLiteral(),
+        nested_literal=ANestedLiteral(
+            my_literal="How super cool",
+        ),
     ),
     query="What is the weather today",
 )
@@ -100,7 +120,31 @@ client.inlined.send(
 <dl>
 <dd>
 
+**prompt:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aliased_context:** `SomeAliasedLiteral` 
     
 </dd>
 </dl>
@@ -116,7 +160,7 @@ client.inlined.send(
 <dl>
 <dd>
 
-**context:** `typing.Optional[typing.Literal["You're super wise"]]` 
+**context:** `typing.Optional[typing.Literal]` 
     
 </dd>
 </dl>
@@ -153,7 +197,7 @@ client.inlined.send(
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="src/seed/path/client.py">send</a>() -&gt; AsyncHttpResponse[SendResponse]</code></summary>
+<details><summary><code>client.path.<a href="src/seed/path/client.py">send</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -171,6 +215,7 @@ from seed import SeedLiteral
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.path.send()
 
 ```
@@ -183,6 +228,14 @@ client.path.send()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**id:** `typing.Literal` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -200,7 +253,7 @@ client.path.send()
 </details>
 
 ## Query
-<details><summary><code>client.query.<a href="src/seed/query/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendResponse]</code></summary>
+<details><summary><code>client.query.<a href="src/seed/query/client.py">send</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -218,7 +271,16 @@ from seed import SeedLiteral
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.query.send(
+    prompt="You are a helpful assistant",
+    optional_prompt="You are a helpful assistant",
+    alias_prompt="You are a helpful assistant",
+    alias_optional_prompt="You are a helpful assistant",
+    stream=False,
+    optional_stream=False,
+    alias_stream=False,
+    alias_optional_stream=False,
     query="What is the weather today",
 )
 
@@ -236,6 +298,22 @@ client.query.send(
 <dl>
 <dd>
 
+**prompt:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_prompt:** `AliasToPrompt` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **query:** `str` 
     
 </dd>
@@ -244,7 +322,23 @@ client.query.send(
 <dl>
 <dd>
 
-**optional_prompt:** `typing.Optional[typing.Literal["You are a helpful assistant"]]` 
+**stream:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_stream:** `AliasToStream` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_prompt:** `typing.Optional[typing.Literal]` 
     
 </dd>
 </dl>
@@ -260,7 +354,7 @@ client.query.send(
 <dl>
 <dd>
 
-**optional_stream:** `typing.Optional[typing.Literal[False]]` 
+**optional_stream:** `typing.Optional[typing.Literal]` 
     
 </dd>
 </dl>
@@ -289,7 +383,7 @@ client.query.send(
 </details>
 
 ## Reference
-<details><summary><code>client.reference.<a href="src/seed/reference/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendResponse]</code></summary>
+<details><summary><code>client.reference.<a href="src/seed/reference/client.py">send</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -308,11 +402,14 @@ from seed.reference import ContainerObject, NestedObjectWithLiterals
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.reference.send(
     query="What is the weather today",
     container_object=ContainerObject(
         nested_objects=[
             NestedObjectWithLiterals(
+                literal_1="literal1",
+                literal_2="literal2",
                 str_prop="strProp",
             )
         ],
@@ -333,23 +430,7 @@ client.reference.send(
 <dl>
 <dd>
 
-**query:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**container_object:** `ContainerObject` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**maybe_context:** `typing.Optional[SomeLiteral]` 
+**request:** `SendRequest` 
     
 </dd>
 </dl>

@@ -46,6 +46,14 @@ const WireTestsConfigSchema = z.object({
     exclusions: z.array(z.string()).optional()
 });
 
+/**
+ * Schema for custom README sections.
+ */
+const CustomReadmeSectionSchema = z.object({
+    title: z.string(),
+    content: z.string()
+});
+
 export const SdkCustomConfigSchema = z.object({
     /** @deprecated Use `wire_tests.enabled` instead */
     enable_wire_tests: z.boolean().optional(),
@@ -54,7 +62,8 @@ export const SdkCustomConfigSchema = z.object({
     client: ClientConfigSchema.optional(),
     client_class_name: z.string().optional(),
     inline_request_params: z.boolean().optional(),
-    wire_tests: WireTestsConfigSchema.optional()
+    wire_tests: WireTestsConfigSchema.optional(),
+    custom_readme_sections: z.array(CustomReadmeSectionSchema).optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

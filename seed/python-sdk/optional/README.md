@@ -39,8 +39,11 @@ from seed import SeedObjectsWithImports
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.optional.send_optional_body(
-    request={"string": {"key": "value"}},
+    request={
+        "string": {"key": "value"}
+    },
 )
 ```
 
@@ -60,7 +63,9 @@ client = AsyncSeedObjectsWithImports(
 
 async def main() -> None:
     await client.optional.send_optional_body(
-        request={"string": {"key": "value"}},
+        request={
+            "string": {"key": "value"}
+        },
     )
 
 
@@ -92,9 +97,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedObjectsWithImports
 
-client = SeedObjectsWithImports(
-    ...,
-)
+client = SeedObjectsWithImports(...)
 response = client.optional.with_raw_response.send_optional_body(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -126,14 +129,9 @@ client.optional.send_optional_body(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedObjectsWithImports
 
-client = SeedObjectsWithImports(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedObjectsWithImports(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.optional.send_optional_body(..., request_options={

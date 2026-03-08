@@ -1,8 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream</a>(...) -&gt; typing.AsyncIterator[
-    AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]
-]</code></summary>
+<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -20,11 +18,10 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.completions.stream(
+
+client.completions.stream(
     query="foo",
 )
-for chunk in response.data:
-    yield chunk
 
 ```
 </dd>
@@ -60,9 +57,7 @@ for chunk in response.data:
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream_without_terminator</a>(...) -&gt; typing.AsyncIterator[
-    AsyncHttpResponse[typing.AsyncIterator[StreamedCompletion]]
-]</code></summary>
+<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream_without_terminator</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -80,11 +75,10 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.completions.stream_without_terminator(
+
+client.completions.stream_without_terminator(
     query="query",
 )
-for chunk in response.data:
-    yield chunk
 
 ```
 </dd>

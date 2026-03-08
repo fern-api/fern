@@ -3,7 +3,8 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import type { Migration, MigrationModule, MigratorResult } from "@fern-api/migrations-base";
-import { mkdir, readFile } from "fs/promises";
+import { readFileSync, unlinkSync } from "fs";
+import { mkdir, open, readFile, stat, unlink } from "fs/promises";
 import { join } from "path";
 import semver from "semver";
 import { pathToFileURL } from "url";
@@ -50,6 +51,10 @@ export class GeneratorMigrator {
      * npm install.
      */
     private migrationsInstallPromise: Promise<Record<string, MigrationModule> | undefined> | undefined;
+
+    private static readonly LOCK_FILENAME = ".install.lock";
+    private static readonly LOCK_POLL_MS = 200;
+    private static readonly LOCK_STALE_MS = 5 * 60 * 1000; // 5 minutes
 
     constructor(config: GeneratorMigrator.Config) {
         this.logger = config.logger;
@@ -165,10 +170,12 @@ export class GeneratorMigrator {
 
     /**
      * Installs the migration package once and returns the full migrations map.
-     * Uses an isolated npm cache to avoid corruption from the system npm cache.
      *
-     * Subsequent calls reuse the cached result, avoiding redundant npm installs
-     * when migrating multiple generators in the same session.
+     * Within a single instance, concurrent calls reuse the same in-flight promise.
+     * Across processes, a file lock serializes npm installs so only one process
+     * writes to the shared --prefix directory at a time. Processes that acquire
+     * the lock after another process has already installed the package will find
+     * it already present and skip the npm install entirely.
      */
     private async ensureMigrationsInstalled(): Promise<Record<string, MigrationModule> | undefined> {
         if (this.migrationsInstallPromise != null) {
@@ -182,38 +189,48 @@ export class GeneratorMigrator {
             const cacheDir = this.cachePath as string;
             await mkdir(cacheDir, { recursive: true });
 
-            // Use an isolated npm cache inside the migration cache dir to prevent
-            // corrupt system-level npm cache entries from causing repeated failures.
             const npmCacheDir = join(cacheDir, ".npm-cache");
-            await loggingExeca(
-                this.logger,
-                "npm",
-                [
-                    "install",
-                    `${MIGRATION_PACKAGE_NAME}@latest`,
-                    "--prefix",
-                    cacheDir,
-                    "--cache",
-                    npmCacheDir,
-                    "--ignore-scripts",
-                    "--no-audit",
-                    "--no-fund"
-                ],
-                { doNotPipeOutput: true }
-            );
-
             const packageDir = join(cacheDir, "node_modules", MIGRATION_PACKAGE_NAME);
             const packageJsonPath = join(packageDir, "package.json");
-            const packageJsonContent = await readFile(packageJsonPath, "utf-8");
-            const packageJson = JSON.parse(packageJsonContent) as { main?: string };
 
-            if (packageJson.main == null) {
-                throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
+            // Acquire cross-process lock so only one process runs npm install
+            // at a time. We always run `npm install @latest` (npm handles
+            // version freshness); the lock prevents concurrent installs from
+            // corrupting each other's node_modules.
+            const releaseLock = await GeneratorMigrator.acquireLock(this.logger, cacheDir);
+            try {
+                await loggingExeca(
+                    this.logger,
+                    "npm",
+                    [
+                        "install",
+                        `${MIGRATION_PACKAGE_NAME}@latest`,
+                        "--prefix",
+                        cacheDir,
+                        "--cache",
+                        npmCacheDir,
+                        "--ignore-scripts",
+                        "--no-audit",
+                        "--no-fund"
+                    ],
+                    { doNotPipeOutput: true }
+                );
+
+                // Read & import while the lock is held so another process cannot
+                // start a concurrent npm install that overwrites node_modules.
+                const packageJsonContent = await readFile(packageJsonPath, "utf-8");
+                const packageJson = JSON.parse(packageJsonContent) as { main?: string };
+
+                if (packageJson.main == null) {
+                    throw new Error(`No main field found in package.json for ${MIGRATION_PACKAGE_NAME}`);
+                }
+
+                const packageEntryPoint = join(packageDir, packageJson.main);
+                const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
+                return migrations as Record<string, MigrationModule>;
+            } finally {
+                await releaseLock();
             }
-
-            const packageEntryPoint = join(packageDir, packageJson.main);
-            const { migrations } = await import(pathToFileURL(packageEntryPoint).href);
-            return migrations as Record<string, MigrationModule>;
         })();
 
         // Reset the cached promise on failure so the next call can retry.
@@ -222,6 +239,107 @@ export class GeneratorMigrator {
         });
 
         return this.migrationsInstallPromise;
+    }
+
+    /**
+     * Returns true if the given PID belongs to a currently running process.
+     */
+    private static isProcessAlive(pid: number): boolean {
+        try {
+            process.kill(pid, 0);
+            return true;
+        } catch (e: unknown) {
+            // EPERM means the process exists but we lack permission to signal it
+            if ((e as NodeJS.ErrnoException).code === "EPERM") {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    /**
+     * Acquires an exclusive file lock by atomically creating a lock file.
+     * If the lock already exists, polls until it becomes available.
+     * Stale locks (from dead processes or older than LOCK_STALE_MS) are
+     * automatically removed.
+     */
+    private static async acquireLock(logger: Logger, cacheDir: string): Promise<() => Promise<void>> {
+        const lockPath = join(cacheDir, GeneratorMigrator.LOCK_FILENAME);
+        const myPid = String(process.pid);
+
+        // eslint-disable-next-line no-constant-condition, @typescript-eslint/no-unnecessary-condition
+        while (true) {
+            try {
+                const fh = await open(lockPath, "wx");
+                await fh.writeFile(myPid);
+                await fh.close();
+
+                // Register a synchronous exit handler so the lock is cleaned up
+                // even if the process crashes or is killed (SIGTERM/SIGINT).
+                const exitHandler = (): void => {
+                    try {
+                        const content = readFileSync(lockPath, "utf-8");
+                        if (content.trim() === myPid) {
+                            unlinkSync(lockPath);
+                        }
+                    } catch (e: unknown) {
+                        // Lock file already removed or unreadable — best-effort cleanup
+                        void e; // Intentionally suppressed: exit handler cannot log asynchronously
+                    }
+                };
+                process.on("exit", exitHandler);
+
+                return async () => {
+                    process.removeListener("exit", exitHandler);
+                    try {
+                        // Verify we still own the lock before removing it.
+                        const currentContent = await readFile(lockPath, "utf-8");
+                        if (currentContent.trim() === myPid) {
+                            await unlink(lockPath);
+                        } else {
+                            logger.debug(
+                                `Lock file owned by another process (expected pid=${myPid}, found=${currentContent.trim()}); skipping release`
+                            );
+                        }
+                    } catch (err: unknown) {
+                        logger.debug(`Failed to release migration lock: ${err}`);
+                    }
+                };
+            } catch (err: unknown) {
+                const code = (err as NodeJS.ErrnoException).code;
+                if (code !== "EEXIST") {
+                    throw err;
+                }
+
+                // Lock file exists — check if it's stale
+                try {
+                    const lockContent = await readFile(lockPath, "utf-8");
+                    const lockPid = Number(lockContent.trim());
+                    const lockStat = await stat(lockPath);
+                    const lockAge = Date.now() - lockStat.mtimeMs;
+
+                    if (
+                        lockAge > GeneratorMigrator.LOCK_STALE_MS ||
+                        (Number.isFinite(lockPid) && lockPid > 0 && !GeneratorMigrator.isProcessAlive(lockPid))
+                    ) {
+                        logger.debug(`Removing stale migration lock (pid=${lockContent.trim()}, age=${lockAge}ms)`);
+                        try {
+                            await unlink(lockPath);
+                        } catch (unlinkErr: unknown) {
+                            // Another process may have removed it
+                            logger.debug(`Failed to remove stale lock: ${unlinkErr}`);
+                        }
+                        continue;
+                    }
+                } catch (vanishErr: unknown) {
+                    // Lock file vanished — retry immediately
+                    logger.debug(`Lock file vanished during stale check: ${vanishErr}`);
+                    continue;
+                }
+
+                await new Promise((resolve) => setTimeout(resolve, GeneratorMigrator.LOCK_POLL_MS));
+            }
+        }
     }
 
     /**

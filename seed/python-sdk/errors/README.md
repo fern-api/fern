@@ -39,6 +39,7 @@ from seed import SeedErrors
 client = SeedErrors(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.simple.foo_without_endpoint_error(
     bar="bar",
 )
@@ -92,9 +93,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedErrors
 
-client = SeedErrors(
-    ...,
-)
+client = SeedErrors(...)
 response = client.simple.with_raw_response.foo_without_endpoint_error(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -126,14 +125,9 @@ client.simple.foo_without_endpoint_error(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedErrors
 
-client = SeedErrors(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedErrors(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.simple.foo_without_endpoint_error(..., request_options={

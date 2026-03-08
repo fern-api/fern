@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.19.0
+  changelogEntry:
+    - summary: |
+        Add WebSocket connector pattern and README code snippets when `enableWebsockets: true`.
+        WebSocket channels are now accessible through the root client via connector structs
+        (e.g., `client.realtime.connect(...)`) matching Python and Java generator patterns.
+        Generated README includes a Websockets section with connect, send, receive, and close examples.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 62
+
 - version: 0.18.3
   changelogEntry:
     - summary: |
