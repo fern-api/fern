@@ -3,10 +3,6 @@
   changelogEntry:
     - summary: |
         Fix GraphQL operations leaking into all API reference sections in docs.
-        Previously, `extractGraphQLData()` merged GraphQL specs from every workspace
-        and injected them into every API section. Now GraphQL extraction is scoped to
-        the specific workspace matching the current API section's `api-name`, so only
-        the relevant GraphQL operations appear in each section.
       type: fix
   createdAt: "2026-03-08"
   irVersion: 65
