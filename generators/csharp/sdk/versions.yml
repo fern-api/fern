@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Add opt-in dependency injection and configuration integration for .NET Core.
-        When enabled via `generate-di-extensions: true`, the generator produces
+        When enabled via `generate-dependency-injection-extensions: true`, the generator produces
         `IServiceCollection` extension methods and an options class for registering
         the SDK client in a DI container. Supports configuration binding from
         `IConfiguration`, `Action<TOptions>` delegates, and `IConfigurationSection`.
@@ -14,9 +14,29 @@
         generators:
           - name: fernapi/fern-csharp-sdk
             config:
-              generate-di-extensions: true
+              generate-dependency-injection-extensions: true
         ```
       type: feat
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 2.23.12
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 2.23.11
+  changelogEntry:
+    - summary: |
+        Remove unnecessary NuGet package restore from the generator Dockerfile.
+        NuGet packages are not needed at generation time since the generator only
+        writes files and runs csharpier; no dotnet restore occurs during generation.
+      type: chore
   createdAt: "2026-03-07"
   irVersion: 62
 

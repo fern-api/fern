@@ -4,10 +4,8 @@ import { describe, expect, it } from "vitest";
 import {
     type AffectedResult,
     detectAffected,
-    mapTurboPackagesToSeedWorkspaces,
     resolveAffectedFixtures,
-    resolveAffectedGenerators,
-    type TurboPackage
+    resolveAffectedGenerators
 } from "../commands/affected/getAffected";
 import { GeneratorWorkspace } from "../loadGeneratorWorkspaces";
 
@@ -54,14 +52,12 @@ const ALL_GENERATORS: GeneratorWorkspace[] = [
     createGenerator("postman")
 ];
 
-const ALL_GENERATOR_NAMES = ALL_GENERATORS.map((g) => g.workspaceName);
-
 // Standard set of fixtures
 const ALL_FIXTURES = ["imdb", "exhaustive", "alias", "basic-auth", "file-upload", "unions"];
 
 describe("detectAffected", () => {
     describe("fallback behavior", () => {
-        it("runs everything when no changed files and no turbo packages", () => {
+        it("runs everything when no changed files", () => {
             const result = detectAffected([], ALL_GENERATORS);
 
             expect(result.allGeneratorsAffected).toBe(true);
@@ -69,13 +65,6 @@ describe("detectAffected", () => {
             expect(result.affectedGenerators).toEqual([]);
             expect(result.generatorsWithAllFixtures).toEqual([]);
             expect(result.affectedFixtures).toEqual([]);
-        });
-
-        it("runs everything when no changed files and empty turbo packages", () => {
-            const result = detectAffected([], ALL_GENERATORS, []);
-
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
         });
 
         it("runs everything when changed files don't match any known pattern", () => {
@@ -122,33 +111,6 @@ describe("detectAffected", () => {
 
             expect(result.allGeneratorsAffected).toBe(true);
             expect(result.allFixturesAffected).toBe(true);
-        });
-    });
-
-    describe("global infrastructure changes (with turbo)", () => {
-        it("still detects packages/ir-sdk/ via git diff even when turbo is available", () => {
-            // Turbo can't detect ir-sdk changes because generators depend on published npm package
-            const turboPackages: TurboPackage[] = [];
-            const result = detectAffected(["packages/ir-sdk/src/types.ts"], ALL_GENERATORS, turboPackages);
-
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
-        });
-
-        it("does NOT use generators/base/ as a global path when turbo is available", () => {
-            // When turbo is available, generators/base/ is NOT in GLOBAL_AFFECT_PATHS
-            // (turbo handles it via transitive deps). But if the file doesn't match
-            // any other pattern, it falls back to "run everything".
-            const turboPackages: TurboPackage[] = [];
-            const result = detectAffected(["generators/base/src/utils.ts"], ALL_GENERATORS, turboPackages);
-
-            // Even though generators/base/ is not in GLOBAL_AFFECT_PATHS when turbo is available,
-            // the file doesn't match any other pattern either, so the "no recognized changes"
-            // fallback runs everything. This is the safe/correct behavior.
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
-            // Verify it's from the fallback, not from the global path detection
-            expect(result.summary).toContain("No recognized changes detected \u2014 running everything as fallback.");
         });
     });
 
@@ -246,15 +208,6 @@ describe("detectAffected", () => {
             expect(result.affectedGenerators).toEqual(["python-sdk"]);
             expect(result.affectedGenerators).not.toContain("pydantic");
         });
-
-        it("skips git diff generator detection when turbo is available", () => {
-            const turboPackages: TurboPackage[] = [];
-            const result = detectAffected(["generators/python/src/some-file.ts"], ALL_GENERATORS, turboPackages);
-
-            // With empty turbo packages and no global paths hit, no generators detected
-            // (turbo path is used but returned empty, git diff fallback is skipped)
-            expect(result.affectedGenerators).toEqual([]);
-        });
     });
 
     describe("seed.yml detection", () => {
@@ -320,108 +273,6 @@ describe("detectAffected", () => {
             expect(result.allFixturesAffected).toBe(true);
             expect(result.affectedFixtures).toEqual([]);
         });
-    });
-
-    describe("turbo integration", () => {
-        it("detects generator via turbo package path", () => {
-            const turboPackages: TurboPackage[] = [
-                { name: "@fern-api/python-sdk-generator", path: "generators/python/sdk" }
-            ];
-            const result = detectAffected([], ALL_GENERATORS, turboPackages);
-
-            expect(result.affectedGenerators).toContain("python-sdk");
-            expect(result.affectedGenerators).toContain("pydantic");
-            expect(result.affectedGenerators).toContain("fastapi");
-        });
-
-        it("detects global infrastructure via turbo package path", () => {
-            const turboPackages: TurboPackage[] = [{ name: "@fern-api/seed-cli", path: "packages/seed" }];
-            const result = detectAffected([], ALL_GENERATORS, turboPackages);
-
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
-        });
-
-        it("handles turbo packages for multiple generators", () => {
-            const turboPackages: TurboPackage[] = [
-                { name: "@fern-api/python-sdk-generator", path: "generators/python/sdk" },
-                { name: "@fern-api/java-sdk-generator", path: "generators/java/sdk" }
-            ];
-            const result = detectAffected([], ALL_GENERATORS, turboPackages);
-
-            expect(result.affectedGenerators).toContain("python-sdk");
-            expect(result.affectedGenerators).toContain("java-sdk");
-        });
-    });
-});
-
-describe("mapTurboPackagesToSeedWorkspaces", () => {
-    it("maps generator package paths to seed workspace names", () => {
-        const turboPackages: TurboPackage[] = [{ name: "@fern-api/python-generator", path: "generators/python/sdk" }];
-        const result = mapTurboPackagesToSeedWorkspaces(turboPackages, ALL_GENERATOR_NAMES);
-
-        expect(result.affectedGenerators).toContain("python-sdk");
-        expect(result.affectedGenerators).toContain("pydantic");
-        expect(result.affectedGenerators).toContain("fastapi");
-    });
-
-    it("detects global infrastructure packages", () => {
-        const turboPackages: TurboPackage[] = [{ name: "@fern-api/ir-sdk", path: "packages/ir-sdk" }];
-        const result = mapTurboPackagesToSeedWorkspaces(turboPackages, ALL_GENERATOR_NAMES);
-
-        expect(result.allGeneratorsAffected).toBe(true);
-        expect(result.allFixturesAffected).toBe(true);
-    });
-
-    it("does not false-positive match on prefix collisions", () => {
-        // packages/ir-sdk-v2 should NOT match packages/ir-sdk/
-        const turboPackages: TurboPackage[] = [{ name: "@fern-api/ir-sdk-v2", path: "packages/ir-sdk-v2" }];
-        const result = mapTurboPackagesToSeedWorkspaces(turboPackages, ALL_GENERATOR_NAMES);
-
-        expect(result.allGeneratorsAffected).toBe(false);
-        expect(result.allFixturesAffected).toBe(false);
-    });
-
-    it("matches exact global paths without trailing slash", () => {
-        const turboPackages: TurboPackage[] = [{ name: "@fern-api/seed-cli", path: "packages/seed" }];
-        const result = mapTurboPackagesToSeedWorkspaces(turboPackages, ALL_GENERATOR_NAMES);
-
-        expect(result.allGeneratorsAffected).toBe(true);
-        expect(result.allFixturesAffected).toBe(true);
-    });
-
-    it("matches sub-paths under global paths", () => {
-        const turboPackages: TurboPackage[] = [{ name: "@fern-api/seed-utils", path: "packages/seed/utils" }];
-        const result = mapTurboPackagesToSeedWorkspaces(turboPackages, ALL_GENERATOR_NAMES);
-
-        expect(result.allGeneratorsAffected).toBe(true);
-        expect(result.allFixturesAffected).toBe(true);
-    });
-
-    it("ignores unknown generator directories", () => {
-        const turboPackages: TurboPackage[] = [{ name: "@fern-api/unknown-gen", path: "generators/unknown-lang/sdk" }];
-        const result = mapTurboPackagesToSeedWorkspaces(turboPackages, ALL_GENERATOR_NAMES);
-
-        expect(result.affectedGenerators.size).toBe(0);
-        expect(result.allGeneratorsAffected).toBe(false);
-    });
-
-    it("filters generators not in allGeneratorNames", () => {
-        const turboPackages: TurboPackage[] = [{ name: "@fern-api/python-generator", path: "generators/python/sdk" }];
-        const limitedNames = ["python-sdk"];
-        const result = mapTurboPackagesToSeedWorkspaces(turboPackages, limitedNames);
-
-        expect(result.affectedGenerators).toContain("python-sdk");
-        expect(result.affectedGenerators).not.toContain("pydantic");
-        expect(result.affectedGenerators).not.toContain("fastapi");
-    });
-
-    it("handles empty turbo packages", () => {
-        const result = mapTurboPackagesToSeedWorkspaces([], ALL_GENERATOR_NAMES);
-
-        expect(result.affectedGenerators.size).toBe(0);
-        expect(result.allGeneratorsAffected).toBe(false);
-        expect(result.allFixturesAffected).toBe(false);
     });
 });
 
@@ -724,33 +575,5 @@ describe("end-to-end scenario tests", () => {
             const fixtures = resolveAffectedFixtures(affected, ALL_FIXTURES, gen.workspaceName);
             expect(fixtures).toEqual(ALL_FIXTURES);
         }
-    });
-
-    it("scenario: turbo detects python generator affected", () => {
-        const turboPackages: TurboPackage[] = [{ name: "@fern-api/python-generator", path: "generators/python/sdk" }];
-        const affected = detectAffected([], ALL_GENERATORS, turboPackages);
-
-        const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
-        const names = generators.map((g) => g.workspaceName);
-        expect(names).toContain("python-sdk");
-        expect(names).toContain("pydantic");
-        expect(names).toContain("fastapi");
-        expect(names).not.toContain("ts-sdk");
-    });
-
-    it("scenario: turbo + fixture change (precise union)", () => {
-        const turboPackages: TurboPackage[] = [{ name: "@fern-api/python-generator", path: "generators/python/sdk" }];
-        const changedFiles = ["test-definitions/fern/apis/imdb/definition/types.yml"];
-        const affected = detectAffected(changedFiles, ALL_GENERATORS, turboPackages);
-
-        // All generators should run (fixture changed)
-        const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
-        expect(generators).toHaveLength(ALL_GENERATORS.length);
-
-        // Python generators get all fixtures (source changed via turbo)
-        expect(resolveAffectedFixtures(affected, ALL_FIXTURES, "python-sdk")).toEqual(ALL_FIXTURES);
-
-        // Others get only imdb
-        expect(resolveAffectedFixtures(affected, ALL_FIXTURES, "ts-sdk")).toEqual(["imdb"]);
     });
 });
