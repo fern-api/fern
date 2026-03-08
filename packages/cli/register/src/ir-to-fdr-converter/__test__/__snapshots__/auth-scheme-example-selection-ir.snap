@@ -251,6 +251,7 @@
   },
   "errors": {},
   "fdrApiDefinitionId": undefined,
+  "generationLanguage": undefined,
   "generationMetadata": undefined,
   "headers": [],
   "idempotencyHeaders": [],
@@ -640,6 +641,7 @@ Examples should use the first available auth scheme (admin).
       "transport": undefined,
     },
   },
+  "smartCasing": undefined,
   "sourceConfig": undefined,
   "subpackages": {},
   "types": {

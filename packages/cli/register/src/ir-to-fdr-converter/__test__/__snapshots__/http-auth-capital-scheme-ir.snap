@@ -172,6 +172,7 @@
   },
   "errors": {},
   "fdrApiDefinitionId": undefined,
+  "generationLanguage": undefined,
   "generationMetadata": undefined,
   "headers": [],
   "idempotencyHeaders": [],
@@ -659,6 +660,7 @@
       "transport": undefined,
     },
   },
+  "smartCasing": undefined,
   "sourceConfig": undefined,
   "subpackages": {},
   "types": {
