@@ -1447,11 +1447,8 @@ export class DocsDefinitionResolver {
         }
 
         // Extract GraphQL operations and types scoped to the current API section's workspace.
-        // This ensures that only GraphQL specs belonging to this specific API definition are included,
-        // rather than merging all GraphQL operations from all workspaces into every API section.
-        // We use item.apiName to filter rather than openapiWorkspace, because openapiWorkspace
-        // can be undefined when the v3 parser fails or is disabled (falling back to v1 parser).
-        const graphqlData = await this.extractGraphQLData(item.apiName);
+        const graphqlWorkspace = openapiWorkspace ?? this.getOpenApiWorkspaceForApiSection(item);
+        const graphqlData = await this.extractGraphQLData(graphqlWorkspace);
 
         // Use item.apiName (from api-name in docs.yml) if explicitly set,
         // otherwise fall back to the workspace's folder name for FDR registration.
@@ -1572,12 +1569,9 @@ export class DocsDefinitionResolver {
     }
 
     /**
-     * Extract GraphQL operations from a specific workspace identified by apiName,
-     * or all workspaces if no apiName is provided (single-API setups).
-     * When an apiName is specified, only the matching workspace's GraphQL specs are included,
-     * preventing GraphQL operations from leaking into unrelated API reference sections.
+     * Extract GraphQL operations from the provided workspace.
      */
-    private async extractGraphQLData(apiName?: string): Promise<{
+    private async extractGraphQLData(workspace?: OSSWorkspace): Promise<{
         operations: Record<FdrAPI.GraphQlOperationId, FdrAPI.api.v1.register.GraphQlOperation>;
         types: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition>;
         namespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
@@ -1586,66 +1580,37 @@ export class DocsDefinitionResolver {
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
         const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
 
-        // Scope to the workspace matching apiName if provided, otherwise fall back to all workspaces.
-        // We filter by apiName (from docs.yml api-name field) rather than by OSSWorkspace reference,
-        // because the OSSWorkspace may not be resolved when the v3 parser fails or is disabled.
-        let workspacesToProcess: OSSWorkspace[];
-        process.stderr.write("[graphql-scoping-debug] apiName: " + apiName + "\n");
-        process.stderr.write(
-            "[graphql-scoping-debug] ossWorkspaces: " +
-                JSON.stringify(
-                    this.ossWorkspaces.map((ws) => ({
-                        workspaceName: ws.workspaceName,
-                        absoluteFilePath: ws.absoluteFilePath,
-                        type: ws.type
-                    }))
-                ) +
-                "\n"
-        );
-        if (apiName != null) {
-            // Match by workspaceName first (set to folder name during project loading),
-            // then fall back to matching the last segment of absoluteFilePath in case
-            // workspaceName was overridden or not set.
-            const matched = this.ossWorkspaces.find(
-                (ws) => ws.workspaceName === apiName || ws.absoluteFilePath.split("/").pop() === apiName
-            );
-            process.stderr.write("[graphql-scoping-debug] matched: " + (matched?.workspaceName ?? "NONE") + "\n");
-            workspacesToProcess = matched ? [matched] : [];
-        } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
-            workspacesToProcess = [this.ossWorkspaces[0]];
-        } else {
-            workspacesToProcess = this.ossWorkspaces;
+        // If no workspace is provided, return empty results
+        if (workspace == null) {
+            return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
         }
 
-        // Process GraphQL specs directly (not relying on workspace pre-processing)
-        for (const ossWorkspace of workspacesToProcess) {
-            const graphqlSpecs = ossWorkspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
+        // Process GraphQL specs directly from the resolved workspace
+        const graphqlSpecs = workspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
+        for (const spec of graphqlSpecs) {
+            try {
+                const converter = new GraphQLConverter({
+                    context: this.taskContext,
+                    filePath: spec.absoluteFilepath,
+                    namespace: spec.namespace
+                });
+                const graphqlResult = await converter.convert();
 
-            for (const spec of graphqlSpecs) {
-                try {
-                    const converter = new GraphQLConverter({
-                        context: this.taskContext,
-                        filePath: spec.absoluteFilepath,
-                        namespace: spec.namespace
-                    });
-                    const graphqlResult = await converter.convert();
+                // GraphQL converter handles namespacing internally - just merge the results
+                Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
+                Object.assign(graphqlTypes, graphqlResult.types);
 
-                    // GraphQL converter handles namespacing internally - just merge the results
-                    Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
-                    Object.assign(graphqlTypes, graphqlResult.types);
-
-                    // Track namespaces for operations if namespace exists
-                    if (spec.namespace) {
-                        for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
-                            namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
-                        }
+                // Track namespaces for operations if namespace exists
+                if (spec.namespace) {
+                    for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
+                        namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
                     }
-                } catch (error) {
-                    this.taskContext.logger.error(
-                        `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
-                        String(error)
-                    );
                 }
+            } catch (error) {
+                this.taskContext.logger.error(
+                    `Failed to process GraphQL spec ${spec.absoluteFilepath}:`,
+                    String(error)
+                );
             }
         }
 
