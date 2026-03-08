@@ -28,12 +28,13 @@ export function inflateName(name: Name, casingsGenerator: CasingsGenerator): Inf
         return name as InflatedName;
     }
     const generated = casingsGenerator.generateName(name.originalName);
+    // generateName always populates all casings, so non-null assertions are safe here
     return {
         originalName: name.originalName,
-        camelCase: name.camelCase ?? generated.camelCase,
-        pascalCase: name.pascalCase ?? generated.pascalCase,
-        snakeCase: name.snakeCase ?? generated.snakeCase,
-        screamingSnakeCase: name.screamingSnakeCase ?? generated.screamingSnakeCase
+        camelCase: name.camelCase ?? generated.camelCase!,
+        pascalCase: name.pascalCase ?? generated.pascalCase!,
+        snakeCase: name.snakeCase ?? generated.snakeCase!,
+        screamingSnakeCase: name.screamingSnakeCase ?? generated.screamingSnakeCase!
     };
 }
 
@@ -115,4 +116,55 @@ export function inflateIrNames(ir: IntermediateRepresentation): IntermediateRepr
     });
 
     return inflateNamesDeep(ir, casingsGenerator) as IntermediateRepresentation;
+}
+
+/**
+ * Strips casing fields from all Name objects in a serialized JSON tree.
+ * Operates on plain JSON (after jsonOrThrow), so no Set/Map corruption issues.
+ *
+ * A Name object is identified by having an `originalName` string property
+ * plus at least one casing key (camelCase, pascalCase, snakeCase, screamingSnakeCase).
+ *
+ * After stripping, each Name becomes: { originalName: "..." }
+ */
+export function stripNameCasingsFromJson(json: unknown): unknown {
+    if (json == null || typeof json !== "object") {
+        return json;
+    }
+
+    if (Array.isArray(json)) {
+        let changed = false;
+        const result = json.map((item) => {
+            const stripped = stripNameCasingsFromJson(item);
+            if (stripped !== item) {
+                changed = true;
+            }
+            return stripped;
+        });
+        return changed ? result : json;
+    }
+
+    const record = json as Record<string, unknown>;
+
+    // Check if this looks like a Name object
+    if (typeof record.originalName === "string") {
+        const hasCasingKey =
+            "camelCase" in record || "pascalCase" in record || "snakeCase" in record || "screamingSnakeCase" in record;
+        if (hasCasingKey) {
+            // Strip all casing fields, keep only originalName
+            return { originalName: record.originalName };
+        }
+    }
+
+    // Recurse into all properties
+    let changed = false;
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(record)) {
+        const stripped = stripNameCasingsFromJson(value);
+        result[key] = stripped;
+        if (stripped !== value) {
+            changed = true;
+        }
+    }
+    return changed ? result : json;
 }

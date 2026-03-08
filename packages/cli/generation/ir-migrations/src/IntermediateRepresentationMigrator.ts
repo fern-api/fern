@@ -1,3 +1,4 @@
+import { stripNameCasingsFromJson } from "@fern-api/casings-generator";
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { isVersionAhead } from "@fern-api/semver-utils";
@@ -169,12 +170,16 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         if (versionIsLatest) {
             return {
                 ir: intermediateRepresentation as unknown as Migrated,
-                jsonify: () =>
-                    Promise.resolve().then(() =>
-                        IrSerialization.IntermediateRepresentation.jsonOrThrow(intermediateRepresentation, {
-                            unrecognizedObjectKeys: "strip"
-                        })
-                    )
+                jsonify: async () => {
+                    const json = await IrSerialization.IntermediateRepresentation.jsonOrThrow(
+                        intermediateRepresentation,
+                        { unrecognizedObjectKeys: "strip" }
+                    );
+                    // V66+ strips Name casings from the wire format.
+                    // The in-memory IR retains full casings for internal CLI use,
+                    // but the serialized JSON only includes originalName.
+                    return stripNameCasingsFromJson(json);
+                }
             };
         }
 
@@ -210,9 +215,11 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     }): MigratedIntermediateMigration<Migrated> {
         let migrated: unknown = intermediateRepresentation;
         let jsonify: () => Promise<unknown> = async () => {
-            return IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
+            const json = await IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
                 unrecognizedObjectKeys: "strip"
             });
+            // V66+ strips Name casings from the wire format.
+            return stripNameCasingsFromJson(json);
         };
         for (const migration of this.migrations) {
             if (!shouldMigrate(migration)) {

@@ -6060,6 +6060,9 @@ importers:
 
   packages/cli/generation/ir-migrations:
     dependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../../../commons/casings-generator
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../../cli-source-resolver

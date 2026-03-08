@@ -1,4 +1,5 @@
 import { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
+import { stripNameCasingsFromJson } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
@@ -111,9 +112,11 @@ async function getIntermediateRepresentation({
     }
 
     if (version == null) {
-        return IrSerialization.IntermediateRepresentation.jsonOrThrow(intermediateRepresentation, {
+        const json = await IrSerialization.IntermediateRepresentation.jsonOrThrow(intermediateRepresentation, {
             unrecognizedObjectKeys: "strip"
         });
+        // V66+ strips Name casings from the wire format
+        return stripNameCasingsFromJson(json);
     }
 
     return migrateIntermediateRepresentationThroughVersion({

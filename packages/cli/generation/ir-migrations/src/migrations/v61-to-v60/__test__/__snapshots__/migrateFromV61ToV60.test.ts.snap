@@ -2795,7 +2795,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
         },
         "typeId": "type_service:StreamResponse",
       },
-      "referencedTypes": {},
+      "referencedTypes": [],
       "shape": {
         "_type": "object",
         "extendedProperties": [],

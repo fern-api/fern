@@ -1,7 +1,7 @@
 import { Name } from "@fern-api/ir-sdk";
 
 import { constructCasingsGenerator } from "../CasingsGenerator.js";
-import { inflateIrNames, inflateName } from "../inflateNames.js";
+import { inflateIrNames, inflateName, stripNameCasingsFromJson } from "../inflateNames.js";
 
 describe("inflateName", () => {
     const casingsGenerator = constructCasingsGenerator({
@@ -473,5 +473,108 @@ describe("inflateIrNames", () => {
         const headerName = (result.headers as any)[0].name.name;
         expect(headerName.camelCase).toBeDefined();
         expect(headerName.camelCase.unsafeName).toBe("authorization");
+    });
+});
+
+describe("stripNameCasingsFromJson", () => {
+    it("strips casings from a Name object, keeping only originalName", () => {
+        const nameJson = {
+            originalName: "MovieId",
+            camelCase: { unsafeName: "movieId", safeName: "movieId" },
+            pascalCase: { unsafeName: "MovieId", safeName: "MovieId" },
+            snakeCase: { unsafeName: "movie_id", safeName: "movie_id" },
+            screamingSnakeCase: { unsafeName: "MOVIE_ID", safeName: "MOVIE_ID" }
+        };
+
+        const result = stripNameCasingsFromJson(nameJson);
+        expect(result).toEqual({ originalName: "MovieId" });
+    });
+
+    it("strips casings from nested Name objects in plain JSON", () => {
+        const json = {
+            apiName: {
+                originalName: "TestApi",
+                camelCase: { unsafeName: "testApi", safeName: "testApi" },
+                pascalCase: { unsafeName: "TestApi", safeName: "TestApi" },
+                snakeCase: { unsafeName: "test_api", safeName: "test_api" },
+                screamingSnakeCase: { unsafeName: "TEST_API", safeName: "TEST_API" }
+            },
+            someOtherField: "unchanged"
+        };
+
+        const result = stripNameCasingsFromJson(json) as Record<string, unknown>;
+        expect(result.apiName).toEqual({ originalName: "TestApi" });
+        expect(result.someOtherField).toBe("unchanged");
+    });
+
+    it("strips casings from Name objects inside arrays", () => {
+        const json = {
+            headers: [
+                {
+                    name: {
+                        originalName: "Authorization",
+                        camelCase: { unsafeName: "authorization", safeName: "authorization" },
+                        pascalCase: { unsafeName: "Authorization", safeName: "Authorization" },
+                        snakeCase: { unsafeName: "authorization", safeName: "authorization" },
+                        screamingSnakeCase: { unsafeName: "AUTHORIZATION", safeName: "AUTHORIZATION" }
+                    },
+                    wireValue: "Authorization"
+                }
+            ]
+        };
+
+        const result = stripNameCasingsFromJson(json) as Record<string, unknown>;
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        const header = (result.headers as any)[0];
+        expect(header.name).toEqual({ originalName: "Authorization" });
+        expect(header.wireValue).toBe("Authorization");
+    });
+
+    it("does not strip from non-Name objects with originalName but no casing keys", () => {
+        const json = {
+            notAName: {
+                originalName: "SomeValue",
+                someOtherField: "data"
+            }
+        };
+
+        const result = stripNameCasingsFromJson(json);
+        expect(result).toBe(json); // Should return same reference (no changes)
+    });
+
+    it("returns primitives as-is", () => {
+        expect(stripNameCasingsFromJson("hello")).toBe("hello");
+        expect(stripNameCasingsFromJson(42)).toBe(42);
+        expect(stripNameCasingsFromJson(null)).toBe(null);
+        expect(stripNameCasingsFromJson(undefined)).toBe(undefined);
+        expect(stripNameCasingsFromJson(true)).toBe(true);
+    });
+
+    it("round-trips with inflateName: strip then inflate restores casings", () => {
+        const casingsGenerator = constructCasingsGenerator({
+            generationLanguage: undefined,
+            keywords: undefined,
+            smartCasing: false
+        });
+
+        const originalName = {
+            originalName: "MovieId",
+            camelCase: { unsafeName: "movieId", safeName: "movieId" },
+            pascalCase: { unsafeName: "MovieId", safeName: "MovieId" },
+            snakeCase: { unsafeName: "movie_id", safeName: "movie_id" },
+            screamingSnakeCase: { unsafeName: "MOVIE_ID", safeName: "MOVIE_ID" }
+        };
+
+        // Strip casings
+        const stripped = stripNameCasingsFromJson(originalName) as { originalName: string };
+        expect(stripped).toEqual({ originalName: "MovieId" });
+
+        // Inflate back
+        const inflated = inflateName(stripped as Name, casingsGenerator);
+        expect(inflated.originalName).toBe("MovieId");
+        expect(inflated.camelCase.unsafeName).toBe("movieId");
+        expect(inflated.pascalCase.unsafeName).toBe("MovieId");
+        expect(inflated.snakeCase.unsafeName).toBe("movie_id");
+        expect(inflated.screamingSnakeCase.unsafeName).toBe("MOVIE_ID");
     });
 });

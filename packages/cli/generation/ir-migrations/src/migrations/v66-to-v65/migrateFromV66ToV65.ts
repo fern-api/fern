@@ -48,18 +48,14 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         v66: IrVersions.V66.IntermediateRepresentation,
         _context: IrMigrationContext
     ): IrVersions.V65.ir.IntermediateRepresentation => {
-        // V66 adds smartCasing and generationLanguage metadata fields to the IR root.
-        // These fields store the context needed to re-compute Name casings from originalName
-        // when casings are stripped from Names (planned for a future IR version).
+        // V66 strips Name casings from the wire format and adds smartCasing/generationLanguage
+        // metadata fields to the IR root. The in-memory IR retains full casings (populated
+        // during IR generation), so this migration only needs to remove the metadata fields.
         //
-        // For V65 backward compatibility, we simply remove the new metadata fields.
-        // All Name objects still have full casings in V66, so no inflation is needed.
-        //
-        // NOTE: When a future IR version strips casings from Name objects, the migration
-        // for that version will need to inflate Names using the inflateNamesDeep utility
-        // from @fern-api/casings-generator. That logic is NOT included here because
-        // deep-walking the IR with Object.entries() would destroy Set instances
-        // (e.g., referencedTypes) by converting them to plain objects.
+        // Name casings are stripped at serialization time (in the migrator's jsonify function),
+        // not in the in-memory representation. Since the in-memory IR always has full casings,
+        // no inflation is needed here — V65 generators receive full casings via the
+        // jsonifyEarlierVersion serializer which uses the V65 schema.
         const { smartCasing: _smartCasing, generationLanguage: _generationLanguage, ...v65Ir } = v66;
 
         return v65Ir as unknown as IrVersions.V65.ir.IntermediateRepresentation;

@@ -33,6 +33,7 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
