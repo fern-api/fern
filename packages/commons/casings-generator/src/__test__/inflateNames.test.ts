@@ -1,7 +1,7 @@
 import { Name } from "@fern-api/ir-sdk";
 
 import { constructCasingsGenerator } from "../CasingsGenerator.js";
-import { inflateIrNames, inflateName, stripNameCasingsFromJson } from "../inflateNames.js";
+import { inflateIrNames, inflateName, SlimName, slimIrNames } from "../inflateNames.js";
 
 describe("inflateName", () => {
     const casingsGenerator = constructCasingsGenerator({
@@ -28,12 +28,8 @@ describe("inflateName", () => {
     });
 
     it("inflates a slim Name with only originalName", () => {
-        const slimName: Name = {
-            originalName: "MovieId",
-            camelCase: undefined as unknown as Name["camelCase"],
-            pascalCase: undefined as unknown as Name["pascalCase"],
-            snakeCase: undefined as unknown as Name["snakeCase"],
-            screamingSnakeCase: undefined as unknown as Name["screamingSnakeCase"]
+        const slimName: SlimName = {
+            originalName: "MovieId"
         };
 
         const result = inflateName(slimName, casingsGenerator);
@@ -50,12 +46,9 @@ describe("inflateName", () => {
     });
 
     it("fills in only missing casings, preserving existing ones", () => {
-        const partialName: Name = {
+        const partialName: SlimName = {
             originalName: "MovieId",
-            camelCase: { unsafeName: "customCamel", safeName: "customCamel" },
-            pascalCase: undefined as unknown as Name["pascalCase"],
-            snakeCase: undefined as unknown as Name["snakeCase"],
-            screamingSnakeCase: undefined as unknown as Name["screamingSnakeCase"]
+            camelCase: { unsafeName: "customCamel", safeName: "customCamel" }
         };
 
         const result = inflateName(partialName, casingsGenerator);
@@ -77,12 +70,8 @@ describe("inflateName with smartCasing", () => {
     });
 
     it("applies smart casing rules when inflating", () => {
-        const slimName: Name = {
-            originalName: "httpClient",
-            camelCase: undefined as unknown as Name["camelCase"],
-            pascalCase: undefined as unknown as Name["pascalCase"],
-            snakeCase: undefined as unknown as Name["snakeCase"],
-            screamingSnakeCase: undefined as unknown as Name["screamingSnakeCase"]
+        const slimName: SlimName = {
+            originalName: "httpClient"
         };
 
         const result = inflateName(slimName, casingsGenerator);
@@ -476,22 +465,72 @@ describe("inflateIrNames", () => {
     });
 });
 
-describe("stripNameCasingsFromJson", () => {
-    it("strips casings from a Name object, keeping only originalName", () => {
-        const nameJson = {
-            originalName: "MovieId",
-            camelCase: { unsafeName: "movieId", safeName: "movieId" },
-            pascalCase: { unsafeName: "MovieId", safeName: "MovieId" },
-            snakeCase: { unsafeName: "movie_id", safeName: "movie_id" },
-            screamingSnakeCase: { unsafeName: "MOVIE_ID", safeName: "MOVIE_ID" }
+describe("slimIrNames", () => {
+    it("strips casings from Name objects in an IR, keeping only originalName", () => {
+        const fullName: Name = {
+            originalName: "TestApi",
+            camelCase: { unsafeName: "testApi", safeName: "testApi" },
+            pascalCase: { unsafeName: "TestApi", safeName: "TestApi" },
+            snakeCase: { unsafeName: "test_api", safeName: "test_api" },
+            screamingSnakeCase: { unsafeName: "TEST_API", safeName: "TEST_API" }
         };
 
-        const result = stripNameCasingsFromJson(nameJson);
-        expect(result).toEqual({ originalName: "MovieId" });
+        const ir = {
+            apiName: fullName,
+            smartCasing: false,
+            generationLanguage: undefined,
+            types: {},
+            services: {},
+            auth: { docs: undefined, requirement: "ALL", schemes: [] },
+            headers: [],
+            idempotencyHeaders: [],
+            errors: {},
+            webhookGroups: {},
+            subpackages: {},
+            rootPackage: {
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                service: undefined,
+                types: [],
+                errors: [],
+                subpackages: [],
+                docs: undefined,
+                webhooks: undefined,
+                websocket: undefined,
+                hasEndpointsInTree: false,
+                navigationConfig: undefined
+            },
+            constants: {
+                errorInstanceIdKey: {
+                    name: fullName,
+                    wireValue: "errorInstanceId"
+                }
+            },
+            pathParameters: [],
+            errorDiscriminationStrategy: { type: "statusCode" },
+            sdkConfig: {
+                hasFileDownloadEndpoints: false,
+                hasPaginatedEndpoints: false,
+                hasStreamingEndpoints: false,
+                isAuthMandatory: false,
+                platformHeaders: { language: "", sdkName: "", sdkVersion: "", userAgent: undefined }
+            },
+            variables: [],
+            serviceTypeReferenceInfo: { sharedTypes: [], typesReferencedOnlyByService: {} }
+        };
+
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        const result = slimIrNames(ir as any) as any;
+
+        // apiName should be stripped to just originalName
+        expect(result.apiName).toEqual({ originalName: "TestApi" });
+        // constants name should also be stripped
+        expect(result.constants.errorInstanceIdKey.name).toEqual({ originalName: "TestApi" });
+        // non-Name fields preserved
+        expect(result.smartCasing).toBe(false);
     });
 
-    it("strips casings from nested Name objects in plain JSON", () => {
-        const json = {
+    it("does not strip from non-Name objects with originalName but no casing keys", () => {
+        const ir = {
             apiName: {
                 originalName: "TestApi",
                 camelCase: { unsafeName: "testApi", safeName: "testApi" },
@@ -499,65 +538,74 @@ describe("stripNameCasingsFromJson", () => {
                 snakeCase: { unsafeName: "test_api", safeName: "test_api" },
                 screamingSnakeCase: { unsafeName: "TEST_API", safeName: "TEST_API" }
             },
-            someOtherField: "unchanged"
-        };
-
-        const result = stripNameCasingsFromJson(json) as Record<string, unknown>;
-        expect(result.apiName).toEqual({ originalName: "TestApi" });
-        expect(result.someOtherField).toBe("unchanged");
-    });
-
-    it("strips casings from Name objects inside arrays", () => {
-        const json = {
-            headers: [
-                {
-                    name: {
-                        originalName: "Authorization",
-                        camelCase: { unsafeName: "authorization", safeName: "authorization" },
-                        pascalCase: { unsafeName: "Authorization", safeName: "Authorization" },
-                        snakeCase: { unsafeName: "authorization", safeName: "authorization" },
-                        screamingSnakeCase: { unsafeName: "AUTHORIZATION", safeName: "AUTHORIZATION" }
-                    },
-                    wireValue: "Authorization"
+            smartCasing: false,
+            generationLanguage: undefined,
+            types: {
+                notAName: {
+                    originalName: "SomeValue",
+                    someOtherField: "data"
                 }
-            ]
+            },
+            services: {},
+            auth: { docs: undefined, requirement: "ALL", schemes: [] },
+            headers: [],
+            idempotencyHeaders: [],
+            errors: {},
+            webhookGroups: {},
+            subpackages: {},
+            rootPackage: {
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                service: undefined,
+                types: [],
+                errors: [],
+                subpackages: [],
+                docs: undefined,
+                webhooks: undefined,
+                websocket: undefined,
+                hasEndpointsInTree: false,
+                navigationConfig: undefined
+            },
+            constants: {
+                errorInstanceIdKey: {
+                    name: {
+                        originalName: "errorInstanceId",
+                        camelCase: { unsafeName: "errorInstanceId", safeName: "errorInstanceId" },
+                        pascalCase: { unsafeName: "ErrorInstanceId", safeName: "ErrorInstanceId" },
+                        snakeCase: { unsafeName: "error_instance_id", safeName: "error_instance_id" },
+                        screamingSnakeCase: { unsafeName: "ERROR_INSTANCE_ID", safeName: "ERROR_INSTANCE_ID" }
+                    },
+                    wireValue: "errorInstanceId"
+                }
+            },
+            pathParameters: [],
+            errorDiscriminationStrategy: { type: "statusCode" },
+            sdkConfig: {
+                hasFileDownloadEndpoints: false,
+                hasPaginatedEndpoints: false,
+                hasStreamingEndpoints: false,
+                isAuthMandatory: false,
+                platformHeaders: { language: "", sdkName: "", sdkVersion: "", userAgent: undefined }
+            },
+            variables: [],
+            serviceTypeReferenceInfo: { sharedTypes: [], typesReferencedOnlyByService: {} }
         };
 
-        const result = stripNameCasingsFromJson(json) as Record<string, unknown>;
         // biome-ignore lint/suspicious/noExplicitAny: test helper
-        const header = (result.headers as any)[0];
-        expect(header.name).toEqual({ originalName: "Authorization" });
-        expect(header.wireValue).toBe("Authorization");
+        const result = slimIrNames(ir as any) as any;
+
+        // Non-Name object should NOT be stripped
+        expect(result.types.notAName.originalName).toBe("SomeValue");
+        expect(result.types.notAName.someOtherField).toBe("data");
     });
 
-    it("does not strip from non-Name objects with originalName but no casing keys", () => {
-        const json = {
-            notAName: {
-                originalName: "SomeValue",
-                someOtherField: "data"
-            }
-        };
-
-        const result = stripNameCasingsFromJson(json);
-        expect(result).toBe(json); // Should return same reference (no changes)
-    });
-
-    it("returns primitives as-is", () => {
-        expect(stripNameCasingsFromJson("hello")).toBe("hello");
-        expect(stripNameCasingsFromJson(42)).toBe(42);
-        expect(stripNameCasingsFromJson(null)).toBe(null);
-        expect(stripNameCasingsFromJson(undefined)).toBe(undefined);
-        expect(stripNameCasingsFromJson(true)).toBe(true);
-    });
-
-    it("round-trips with inflateName: strip then inflate restores casings", () => {
+    it("round-trips with inflateIrNames: slim then inflate restores casings", () => {
         const casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false
         });
 
-        const originalName = {
+        const fullName: Name = {
             originalName: "MovieId",
             camelCase: { unsafeName: "movieId", safeName: "movieId" },
             pascalCase: { unsafeName: "MovieId", safeName: "MovieId" },
@@ -565,12 +613,11 @@ describe("stripNameCasingsFromJson", () => {
             screamingSnakeCase: { unsafeName: "MOVIE_ID", safeName: "MOVIE_ID" }
         };
 
-        // Strip casings
-        const stripped = stripNameCasingsFromJson(originalName) as { originalName: string };
-        expect(stripped).toEqual({ originalName: "MovieId" });
+        // Slim the Name
+        const slim = { originalName: "MovieId" } as SlimName;
 
         // Inflate back
-        const inflated = inflateName(stripped as Name, casingsGenerator);
+        const inflated = inflateName(slim, casingsGenerator);
         expect(inflated.originalName).toBe("MovieId");
         expect(inflated.camelCase.unsafeName).toBe("movieId");
         expect(inflated.pascalCase.unsafeName).toBe("MovieId");

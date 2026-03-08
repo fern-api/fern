@@ -12,10 +12,10 @@ types:
   Name:
     properties:
       originalName: string
-      camelCase: optional<SafeAndUnsafeString>
-      pascalCase: optional<SafeAndUnsafeString>
-      snakeCase: optional<SafeAndUnsafeString>
-      screamingSnakeCase: optional<SafeAndUnsafeString>
+      camelCase: SafeAndUnsafeString
+      pascalCase: SafeAndUnsafeString
+      snakeCase: SafeAndUnsafeString
+      screamingSnakeCase: SafeAndUnsafeString
   NameAndWireValue:
     properties:
       wireValue: string

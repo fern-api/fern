@@ -1,3 +1,4 @@
+import { inflateIrNames } from "@fern-api/casings-generator";
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { IrMigrationContext } from "../../IrMigrationContext";
 import { IrSerialization } from "../../ir-serialization";
@@ -48,15 +49,12 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         v66: IrVersions.V66.IntermediateRepresentation,
         _context: IrMigrationContext
     ): IrVersions.V65.ir.IntermediateRepresentation => {
-        // V66 strips Name casings from the wire format and adds smartCasing/generationLanguage
-        // metadata fields to the IR root. The in-memory IR retains full casings (populated
-        // during IR generation), so this migration only needs to remove the metadata fields.
-        //
-        // Name casings are stripped at serialization time (in the migrator's jsonify function),
-        // not in the in-memory representation. Since the in-memory IR always has full casings,
-        // no inflation is needed here — V65 generators receive full casings via the
-        // jsonifyEarlierVersion serializer which uses the V65 schema.
-        const { smartCasing: _smartCasing, generationLanguage: _generationLanguage, ...v65Ir } = v66;
+        // V66 adds smartCasing/generationLanguage metadata and strips Name casings
+        // from the wire format (each Name is { originalName: "..." } only).
+        // To migrate back to V65, we inflate all slim Names to full Names
+        // (computing casings from originalName) and remove the metadata fields.
+        const inflatedIr = inflateIrNames(v66);
+        const { smartCasing: _smartCasing, generationLanguage: _generationLanguage, ...v65Ir } = inflatedIr;
 
         return v65Ir as unknown as IrVersions.V65.ir.IntermediateRepresentation;
     }

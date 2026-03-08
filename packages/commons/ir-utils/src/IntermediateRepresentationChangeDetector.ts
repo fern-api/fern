@@ -1209,7 +1209,7 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private getKeyForDeclaration({ name, fernFilepath }: { name: Name; fernFilepath: FernFilepath }): string {
-        const prefix = fernFilepath.allParts.map((part) => part.camelCase?.unsafeName ?? part.originalName).join(".");
-        return `${prefix}.${name.pascalCase?.unsafeName ?? name.originalName}`;
+        const prefix = fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join(".");
+        return `${prefix}.${name.pascalCase.unsafeName}`;
     }
 }
