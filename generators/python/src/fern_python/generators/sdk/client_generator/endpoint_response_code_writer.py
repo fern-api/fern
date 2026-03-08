@@ -745,9 +745,7 @@ class EndpointResponseCodeWriter:
                         ),
                     )
                 writer.write("except ")
-                writer.write_reference(
-                    Pydantic(self._context.custom_config.pydantic_config.version).ValidationError()
-                )
+                writer.write_reference(Pydantic(self._context.custom_config.pydantic_config.version).ValidationError())
                 writer.write_line(" as e:")
                 with writer.indent():
                     writer.write("raise ")
@@ -836,9 +834,7 @@ class EndpointResponseCodeWriter:
             )
             writer.write_newline_if_last_line_not()
         writer.write("except ")
-        writer.write_reference(
-            Pydantic(self._context.custom_config.pydantic_config.version).ValidationError()
-        )
+        writer.write_reference(Pydantic(self._context.custom_config.pydantic_config.version).ValidationError())
         writer.write_line(" as e:")
         with writer.indent():
             writer.write("raise ")
