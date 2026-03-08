@@ -30,6 +30,7 @@ import { runWithCustomFixture } from "./commands/run/runWithCustomFixture.js";
 import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test/index.js";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory.js";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner/index.js";
+import { WorkspaceCache } from "./commands/test/WorkspaceCache.js";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures.js";
 import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local/index.js";
 import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils.js";
@@ -329,7 +330,8 @@ function addTestCommand(cli: Argv) {
                         skipScripts: argv.skipScripts,
                         scriptRunner,
                         keepContainer: false, // not used for local
-                        inspect: argv.inspect
+                        inspect: argv.inspect,
+                        workspaceCache: new WorkspaceCache()
                     });
                 } else {
                     scriptRunner = new ContainerScriptRunner(
@@ -348,7 +350,8 @@ function addTestCommand(cli: Argv) {
                         scriptRunner,
                         inspect: argv.inspect,
                         runner: argv.containerRuntime as "docker" | "podman" | undefined,
-                        parallelism: argv.parallel
+                        parallelism: argv.parallel,
+                        workspaceCache: new WorkspaceCache()
                     });
                 }
 
