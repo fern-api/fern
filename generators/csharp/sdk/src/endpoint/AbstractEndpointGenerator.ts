@@ -116,7 +116,8 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
 
     protected getPagerReturnType(endpoint: HttpEndpoint): ast.Type {
         const itemType = this.getPaginationItemType(endpoint);
-        if (endpoint.pagination?.type === "custom") {
+        const paginationType = endpoint.pagination?.type;
+        if (paginationType === "custom" || paginationType === "uri" || paginationType === "path") {
             return this.Types.CustomPagerClass(itemType);
         }
         return this.Types.Pager(itemType);
