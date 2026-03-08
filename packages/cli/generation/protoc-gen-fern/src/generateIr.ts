@@ -2,7 +2,7 @@ import { DescField, DescMessage } from "@bufbuild/protobuf";
 import { CodeGeneratorRequest } from "@bufbuild/protobuf/wkt";
 import { FileInfo, Printable } from "@bufbuild/protoplugin";
 
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructSlimCasingsGenerator } from "@fern-api/casings-generator";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { mergeIntermediateRepresentation } from "@fern-api/ir-utils";
 import { ErrorCollector } from "@fern-api/v3-importer-commons";
@@ -16,11 +16,7 @@ import { Options } from "./parseOptions.js";
 export function generateIr({ req, options }: { req: CodeGeneratorRequest; options: Options }): FileInfo {
     let mergedIr: IntermediateRepresentation | undefined;
 
-    const casingsGenerator = constructCasingsGenerator({
-        generationLanguage: undefined,
-        keywords: undefined,
-        smartCasing: false
-    });
+    const casingsGenerator = constructSlimCasingsGenerator();
 
     for (const protoFile of req.protoFile) {
         const protoFileConverter = new ProtofileConverter({
