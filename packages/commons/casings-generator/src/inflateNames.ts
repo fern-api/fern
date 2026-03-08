@@ -60,30 +60,32 @@ function inflateNamesDeep(obj: unknown, casingsGenerator: CasingsGenerator): unk
 
     const record = obj as Record<string, unknown>;
 
-    // Check if this is a Name object (has originalName and at least one missing casing)
-    if (
-        typeof record.originalName === "string" &&
-        ("camelCase" in record ||
+    // Check if this looks like a Name object.
+    // A Name must have `originalName: string` and typically has casing keys (camelCase, etc.).
+    // We require at least one known casing key OR that it's a slim Name (only originalName).
+    // To avoid false positives on arbitrary objects with an `originalName` property,
+    // we check that the object looks Name-shaped: either it has at least one casing key,
+    // or it has exactly one key (originalName) making it a slim Name.
+    if (typeof record.originalName === "string") {
+        const hasCasingKey =
+            "camelCase" in record ||
             "pascalCase" in record ||
             "snakeCase" in record ||
-            "screamingSnakeCase" in record ||
-            // Slim name: only has originalName, no casing keys at all
-            (!("camelCase" in record) &&
-                !("pascalCase" in record) &&
-                !("snakeCase" in record) &&
-                !("screamingSnakeCase" in record)))
-    ) {
-        const name = record as unknown as Name;
-        // Only inflate if at least one casing is missing
-        if (
-            name.camelCase == null ||
-            name.pascalCase == null ||
-            name.snakeCase == null ||
-            name.screamingSnakeCase == null
-        ) {
-            const inflated = inflateName(name, casingsGenerator);
-            // Also inflate any nested objects within the Name (shouldn't be any, but be safe)
-            return inflated;
+            "screamingSnakeCase" in record;
+        const isSlimName = !hasCasingKey && Object.keys(record).length === 1;
+
+        if (hasCasingKey || isSlimName) {
+            const name = record as unknown as Name;
+            // Only inflate if at least one casing is missing
+            if (
+                name.camelCase == null ||
+                name.pascalCase == null ||
+                name.snakeCase == null ||
+                name.screamingSnakeCase == null
+            ) {
+                const inflated = inflateName(name, casingsGenerator);
+                return inflated;
+            }
         }
     }
 
