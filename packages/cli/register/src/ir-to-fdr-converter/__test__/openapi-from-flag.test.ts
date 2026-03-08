@@ -697,10 +697,10 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         const specific500 = errorDeclarationsByStatus["500-false"];
         const wildcard500 = errorDeclarationsByStatus["500-true"];
 
-                expect(specific400?.name.name).toContain("BadRequestError");
-                expect(wildcard400?.name.name).toContain("ClientRequestError");
-                expect(specific500?.name.name).toContain("InternalServerError");
-                expect(wildcard500?.name.name).toContain("ServerError");
+        expect(specific400?.name.name).toContain("BadRequestError");
+        expect(wildcard400?.name.name).toContain("ClientRequestError");
+        expect(specific500?.name.name).toContain("InternalServerError");
+        expect(wildcard500?.name.name).toContain("ServerError");
 
         // Validate FDR now contains all 4 errors properly converted
         expect(fdrApiDefinition.rootPackage).toBeDefined();
@@ -2888,8 +2888,8 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         // Verify that x-fern-basic custom names are correctly flowing through to the IR
         // The OpenAPI spec has x-fern-basic with username.name="project_id" and password.name="api_token"
         // Verify custom names from x-fern-basic are used
-                expect(basicAuthScheme.username).toBe("project_id");
-                expect(basicAuthScheme.password).toBe("api_token");
+        expect(basicAuthScheme.username).toBe("project_id");
+        expect(basicAuthScheme.password).toBe("api_token");
 
         // Verify env vars are also passed through
         expect(basicAuthScheme.usernameEnvVar).toBe("PLANT_STORE_PROJECT_ID");
