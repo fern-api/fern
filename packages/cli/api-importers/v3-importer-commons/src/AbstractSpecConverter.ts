@@ -89,7 +89,9 @@ export abstract class AbstractSpecConverter<
             },
             audiences: undefined,
             generationMetadata: undefined,
-            apiPlayground: undefined
+            apiPlayground: undefined,
+            smartCasing: undefined,
+            generationLanguage: undefined
         };
     }
 
