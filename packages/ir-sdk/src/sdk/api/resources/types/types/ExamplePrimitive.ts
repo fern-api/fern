@@ -11,7 +11,7 @@ export type ExamplePrimitive =
     | FernIr.ExamplePrimitive.Double
     | FernIr.ExamplePrimitive.Boolean
     | FernIr.ExamplePrimitive.String
-    | FernIr.ExamplePrimitive.Date_
+    | FernIr.ExamplePrimitive.Date
     | FernIr.ExamplePrimitive.Datetime
     | FernIr.ExamplePrimitive.DatetimeRfc2822
     | FernIr.ExamplePrimitive.Uuid
@@ -59,7 +59,7 @@ export namespace ExamplePrimitive {
         string: FernIr.EscapedString;
     }
 
-    export interface Date_ extends _Utils {
+    export interface Date extends _Utils {
         type: "date";
         date: string;
     }
@@ -215,12 +215,12 @@ export const ExamplePrimitive = {
         };
     },
 
-    date: (value: string): FernIr.ExamplePrimitive.Date_ => {
+    date: (value: string): FernIr.ExamplePrimitive.Date => {
         return {
             date: value,
             type: "date",
             _visit: function <_Result>(
-                this: FernIr.ExamplePrimitive.Date_,
+                this: FernIr.ExamplePrimitive.Date,
                 visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
