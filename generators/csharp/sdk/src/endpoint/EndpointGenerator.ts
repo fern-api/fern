@@ -34,7 +34,7 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
     ): void {
         if (this.hasPagination(endpoint)) {
             this.generatePagerInterfaceSignature(interface_, { serviceId, endpoint });
-            if (endpoint.pagination.type !== "custom") {
+            if (endpoint.pagination.type !== "custom" && endpoint.pagination.type !== "uri" && endpoint.pagination.type !== "path") {
                 this.generateUnpagedInterfaceSignature(interface_, { serviceId, endpoint, isPrivate: true });
             }
         } else {

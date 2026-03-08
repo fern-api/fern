@@ -470,7 +470,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     public override shouldCreateCustomPagination(): boolean {
         if (this.#doesIrHaveCustomPagination === undefined) {
             this.#doesIrHaveCustomPagination = Object.values(this.ir.services).some((service) =>
-                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+                service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom" || endpoint.pagination?.type === "uri" || endpoint.pagination?.type === "path")
             );
         }
         return this.#doesIrHaveCustomPagination;

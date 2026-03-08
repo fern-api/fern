@@ -57,7 +57,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 rawClient
             });
 
-            if (endpoint.pagination.type !== "custom") {
+            if (endpoint.pagination.type !== "custom" && endpoint.pagination.type !== "uri" && endpoint.pagination.type !== "path") {
                 this.generateUnpagedMethod(cls, {
                     serviceId,
                     endpoint,
