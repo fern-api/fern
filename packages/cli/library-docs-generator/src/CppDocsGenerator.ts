@@ -110,7 +110,8 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
         const libraryNs = ir.rootNamespace.namespaces.find((child) => child.name === slugBaseName);
         if (libraryNs) {
             const title = LIBRARY_TITLES[libraryNs.name] ?? `${libraryNs.name} API Reference`;
-            generateIndexPages(libraryNs, title, writer, rootNsName);
+            const outputFolderSlug = slugifySegment(outputDir.split("/").pop() || slug);
+            generateIndexPages(libraryNs, title, writer, rootNsName, outputFolderSlug);
         }
 
         return writer.result();
@@ -488,7 +489,8 @@ function generateIndexPages(
     ns: CppNamespaceIr,
     title: string,
     writer: MdxFileWriter,
-    rootNsName: string | undefined
+    rootNsName: string | undefined,
+    outputFolderSlug: string
 ): void {
     if (!namespaceHasEntities(ns)) {
         return;
@@ -520,7 +522,7 @@ function generateIndexPages(
         category: cat,
         entries: cat.collectEntries(ns)
     }));
-    const nsLastSegment = slugifySegment(nsDir.split("/").pop() || ns.name);
+    const nsLastSegment = nsDir ? slugifySegment(nsDir.split("/").pop() || ns.name) : outputFolderSlug;
     const indexContent = renderNamespaceIndexPage(
         title,
         categoriesForNsIndex,
@@ -564,6 +566,6 @@ function generateIndexPages(
 
     // 4. Recurse into child namespaces
     for (const child of ns.namespaces) {
-        generateIndexPages(child, `Namespace ${child.path}`, writer, rootNsName);
+        generateIndexPages(child, `Namespace ${child.path}`, writer, rootNsName, outputFolderSlug);
     }
 }
