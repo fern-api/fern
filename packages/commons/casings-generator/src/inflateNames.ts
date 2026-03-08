@@ -27,14 +27,14 @@ export function inflateName(name: Name, casingsGenerator: CasingsGenerator): Inf
     ) {
         return name as InflatedName;
     }
-    const generated = casingsGenerator.generateName(name.originalName);
-    // generateName always populates all casings, so non-null assertions are safe here
+    // generateName always populates all casings, so casting to InflatedName is safe
+    const generated = casingsGenerator.generateName(name.originalName) as InflatedName;
     return {
         originalName: name.originalName,
-        camelCase: name.camelCase ?? generated.camelCase!,
-        pascalCase: name.pascalCase ?? generated.pascalCase!,
-        snakeCase: name.snakeCase ?? generated.snakeCase!,
-        screamingSnakeCase: name.screamingSnakeCase ?? generated.screamingSnakeCase!
+        camelCase: name.camelCase ?? generated.camelCase,
+        pascalCase: name.pascalCase ?? generated.pascalCase,
+        snakeCase: name.snakeCase ?? generated.snakeCase,
+        screamingSnakeCase: name.screamingSnakeCase ?? generated.screamingSnakeCase
     };
 }
 
