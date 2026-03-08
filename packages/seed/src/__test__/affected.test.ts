@@ -208,7 +208,6 @@ describe("detectAffected", () => {
             expect(result.affectedGenerators).toEqual(["python-sdk"]);
             expect(result.affectedGenerators).not.toContain("pydantic");
         });
-
     });
 
     describe("seed.yml detection", () => {
