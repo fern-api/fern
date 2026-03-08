@@ -79,7 +79,9 @@ export function mergeIntermediateRepresentation(
         sdkConfig: ir1.sdkConfig ?? ir2.sdkConfig,
         audiences: [...(ir1.audiences ?? []), ...(ir2.audiences ?? [])],
         generationMetadata: ir1.generationMetadata ?? ir2.generationMetadata,
-        apiPlayground: ir1.apiPlayground ?? ir2.apiPlayground
+        apiPlayground: ir1.apiPlayground ?? ir2.apiPlayground,
+        smartCasing: ir1.smartCasing ?? ir2.smartCasing,
+        generationLanguage: ir1.generationLanguage ?? ir2.generationLanguage
     };
 }
 
