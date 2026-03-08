@@ -49,17 +49,22 @@ export class RemoteTaskHandler {
             this.context.failAndThrow("Task is missing on job status");
         }
 
-        const coordinates = remoteTask.packages.map((p) => {
-            return p.coordinate._visit({
-                npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
-                maven: (mavenPackage) => `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
-                pypi: (pypiPackage) => `${pypiPackage.name} ${pypiPackage.version}`,
-                ruby: (rubyGem) => `${rubyGem.name}:${rubyGem.version}`,
-                nuget: (nugetPackage) => `${nugetPackage.name} ${nugetPackage.version}`,
-                crates: (cratesPackage) => `${cratesPackage.name} ${cratesPackage.version}`,
-                _other: () => "<unknown package>"
-            });
-        });
+        const coordinates = [
+            ...new Set(
+                remoteTask.packages.map((p) => {
+                    return p.coordinate._visit({
+                        npm: (npmPackage) => `${npmPackage.name}@${npmPackage.version}`,
+                        maven: (mavenPackage) =>
+                            `${mavenPackage.group}:${mavenPackage.artifact}:${mavenPackage.version}`,
+                        pypi: (pypiPackage) => `${pypiPackage.name} ${pypiPackage.version}`,
+                        ruby: (rubyGem) => `${rubyGem.name}:${rubyGem.version}`,
+                        nuget: (nugetPackage) => `${nugetPackage.name} ${nugetPackage.version}`,
+                        crates: (cratesPackage) => `${cratesPackage.name} ${cratesPackage.version}`,
+                        _other: () => "<unknown package>"
+                    });
+                })
+            )
+        ];
 
         // extract actual version from the first package for dynamic IR upload
         if (remoteTask.packages.length > 0 && this.#actualVersion == null) {
