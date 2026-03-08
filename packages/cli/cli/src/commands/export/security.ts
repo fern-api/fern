@@ -69,7 +69,7 @@ function getNameForAuthScheme(authScheme: AuthScheme): string {
         inferred: () => "InferredAuth",
         basic: () => "BasicAuth",
         oauth: () => "BearerAuth",
-        header: (header) => `${header.name.name.pascalCase.unsafeName}Auth`,
+        header: (header) => `${header.name.name.pascalCase?.unsafeName ?? header.name.name.originalName}Auth`,
         _other: () => {
             throw new Error("Unknown auth scheme: " + authScheme.type);
         }
