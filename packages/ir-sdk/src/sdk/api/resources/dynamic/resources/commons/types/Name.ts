@@ -4,8 +4,8 @@ import type * as FernIr from "../../../../../index.js";
 
 export interface Name {
     originalName: string;
-    camelCase: FernIr.dynamic.SafeAndUnsafeString;
-    pascalCase: FernIr.dynamic.SafeAndUnsafeString;
-    snakeCase: FernIr.dynamic.SafeAndUnsafeString;
-    screamingSnakeCase: FernIr.dynamic.SafeAndUnsafeString;
+    camelCase: FernIr.dynamic.SafeAndUnsafeString | undefined;
+    pascalCase: FernIr.dynamic.SafeAndUnsafeString | undefined;
+    snakeCase: FernIr.dynamic.SafeAndUnsafeString | undefined;
+    screamingSnakeCase: FernIr.dynamic.SafeAndUnsafeString | undefined;
 }
