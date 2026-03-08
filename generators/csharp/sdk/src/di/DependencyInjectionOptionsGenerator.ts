@@ -72,7 +72,7 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
                 if (!seenNames.has(prop.name)) {
                     class_.addField({
                         access: ast.Access.Public,
-                        origin: class_.explicit(prop.pascalName),
+                        name: prop.pascalName,
                         type: this.Primitive.string.asOptional(),
                         get: true,
                         set: true,
@@ -93,7 +93,7 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
             if (!seenNames.has(name)) {
                 class_.addField({
                     access: ast.Access.Public,
-                    origin: class_.explicit(pascalName),
+                    name: pascalName,
                     type: this.Primitive.string.asOptional(),
                     get: true,
                     set: true,
@@ -108,7 +108,7 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
         // BaseUrl property
         class_.addField({
             access: ast.Access.Public,
-            origin: class_.explicit("BaseUrl"),
+            name: "BaseUrl",
             type: this.Primitive.string.asOptional(),
             get: true,
             set: true,
@@ -118,7 +118,7 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
         // MaxRetries property with default value
         class_.addField({
             access: ast.Access.Public,
-            origin: class_.explicit("MaxRetries"),
+            name: "MaxRetries",
             type: this.Primitive.integer,
             get: true,
             set: true,
@@ -129,7 +129,7 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
         // Timeout property with default value
         class_.addField({
             access: ast.Access.Public,
-            origin: class_.explicit("Timeout"),
+            name: "Timeout",
             type: this.csharp.classReference({
                 name: "TimeSpan",
                 namespace: "System"

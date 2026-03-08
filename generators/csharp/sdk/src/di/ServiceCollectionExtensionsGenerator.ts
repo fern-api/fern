@@ -417,7 +417,9 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
             body: this.csharp.codeblock((writer) => {
                 writer.writeLine(`services.AddHttpClient("${this.clientName}");`);
                 writer.writeLine("");
-                writer.writeLine(`services.TryAddScoped(provider =>`);
+                writer.writeLine(
+                    `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped(services, provider =>`
+                );
 
                 writer.writeLine("{");
                 writer.indent();
@@ -428,29 +430,27 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
                     `var httpClientFactory = provider.GetRequiredService<System.Net.Http.IHttpClientFactory>();`
                 );
                 writer.writeLine("");
+                // Use object initializer for all ClientOptions properties to avoid
+                // init-only property assignment errors on NET5_0_OR_GREATER
                 writer.writeLine(`var clientOptions = new ClientOptions`);
                 writer.writeLine("{");
                 writer.indent();
                 writer.writeLine(`HttpClient = httpClientFactory.CreateClient("${this.clientName}"),`);
                 writer.writeLine("MaxRetries = options.MaxRetries,");
                 writer.writeLine("Timeout = options.Timeout,");
+                writer.writeLine(`BaseUrl = !string.IsNullOrEmpty(options.BaseUrl) ? options.BaseUrl! : "",`);
                 writer.dedent();
                 writer.writeLine("};");
-                writer.writeLine("");
-                writer.writeLine(`if (!string.IsNullOrEmpty(options.BaseUrl))`);
-                writer.writeLine("{");
-                writer.indent();
-                writer.writeLine("clientOptions.BaseUrl = options.BaseUrl;");
-                writer.dedent();
-                writer.writeLine("}");
                 writer.writeLine("");
 
                 // Build constructor arguments, matching root client constructor ordering:
                 // required params first, then optional params, then clientOptions
+                // Use null-forgiving operator (!) for required params since the options
+                // class uses nullable strings for IConfiguration binding compatibility
                 const requiredProps = authProperties.filter((p) => !p.isOptional && !p.hasEnvironmentVariable);
                 const optionalProps = authProperties.filter((p) => p.isOptional || p.hasEnvironmentVariable);
                 const constructorArgs = [
-                    ...requiredProps.map((p) => `options.${p.pascalName}`),
+                    ...requiredProps.map((p) => `options.${p.pascalName}!`),
                     ...optionalProps.map((p) => `options.${p.pascalName}`),
                     "clientOptions"
                 ];

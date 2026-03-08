@@ -212,6 +212,9 @@ fixtures:
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
+    - customConfig:
+        generate-di-extensions: true
+      outputFolder: generate-di-extensions
   enum:
     - customConfig: null
       outputFolder: forward-compatible-enums
@@ -284,6 +287,14 @@ fixtures:
     - customConfig:
         use-undiscriminated-unions: true
       outputFolder: with-undiscriminated-unions
+  bearer-token-environment-variable:
+    - customConfig:
+        generate-di-extensions: true
+      outputFolder: generate-di-extensions
+  inferred-auth-explicit:
+    - customConfig:
+        generate-di-extensions: true
+      outputFolder: generate-di-extensions
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
