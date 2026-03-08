@@ -11,7 +11,6 @@ import {
     detectAffected,
     findRepoRoot,
     getChangedFiles,
-    getTurboAffectedPackages,
     resolveAffectedFixtures,
     resolveAffectedGenerators
 } from "./commands/affected/index.js";
@@ -174,9 +173,7 @@ function addTestCommand(cli: Argv) {
             if (isGeneratorAffected || isFixtureAffected) {
                 const repoRoot = findRepoRoot();
                 const changedFiles = getChangedFiles(argv.baseRef, repoRoot);
-                // Try turbo for generator detection (handles transitive deps like generators/base/)
-                const turboPackages = getTurboAffectedPackages(repoRoot, argv.baseRef);
-                affectedResult = detectAffected(changedFiles, generators, turboPackages);
+                affectedResult = detectAffected(changedFiles, generators);
 
                 // Log the detection summary
                 console.log("\n=== Affected Detection ===");
@@ -781,9 +778,7 @@ function addAffectedCommand(cli: Argv) {
             const generators = await loadGeneratorWorkspaces();
             const repoRoot = findRepoRoot();
             const changedFiles = getChangedFiles(argv.baseRef, repoRoot);
-            // Try turbo for generator detection (handles transitive deps like generators/base/)
-            const turboPackages = getTurboAffectedPackages(repoRoot, argv.baseRef);
-            const affected = detectAffected(changedFiles, generators, turboPackages);
+            const affected = detectAffected(changedFiles, generators);
 
             if (argv.json) {
                 const resolvedGenerators = resolveAffectedGenerators(affected, generators);
