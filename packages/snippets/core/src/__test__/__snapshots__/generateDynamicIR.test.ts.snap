@@ -12,23 +12,11 @@ exports[`generateDynamicIR > go 1`] = `
           "packagePath": [],
         },
         "name": {
-          "camelCase": {
-            "safeName": "getTestData",
-            "unsafeName": "getTestData",
-          },
+          "camelCase": undefined,
           "originalName": "getTestData",
-          "pascalCase": {
-            "safeName": "GetTestData",
-            "unsafeName": "GetTestData",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_TEST_DATA",
-            "unsafeName": "GET_TEST_DATA",
-          },
-          "snakeCase": {
-            "safeName": "get_test_data",
-            "unsafeName": "get_test_data",
-          },
+          "pascalCase": undefined,
+          "screamingSnakeCase": undefined,
+          "snakeCase": undefined,
         },
       },
       "examples": [],
@@ -63,23 +51,11 @@ exports[`generateDynamicIR > go 1`] = `
           "packagePath": [],
         },
         "name": {
-          "camelCase": {
-            "safeName": "getTestDataResponse",
-            "unsafeName": "getTestDataResponse",
-          },
+          "camelCase": undefined,
           "originalName": "GetTestDataResponse",
-          "pascalCase": {
-            "safeName": "GetTestDataResponse",
-            "unsafeName": "GetTestDataResponse",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_TEST_DATA_RESPONSE",
-            "unsafeName": "GET_TEST_DATA_RESPONSE",
-          },
-          "snakeCase": {
-            "safeName": "get_test_data_response",
-            "unsafeName": "get_test_data_response",
-          },
+          "pascalCase": undefined,
+          "screamingSnakeCase": undefined,
+          "snakeCase": undefined,
         },
       },
       "extends": undefined,
@@ -87,23 +63,11 @@ exports[`generateDynamicIR > go 1`] = `
         {
           "name": {
             "name": {
-              "camelCase": {
-                "safeName": "message",
-                "unsafeName": "message",
-              },
+              "camelCase": undefined,
               "originalName": "message",
-              "pascalCase": {
-                "safeName": "Message",
-                "unsafeName": "Message",
-              },
-              "screamingSnakeCase": {
-                "safeName": "MESSAGE",
-                "unsafeName": "MESSAGE",
-              },
-              "snakeCase": {
-                "safeName": "message",
-                "unsafeName": "message",
-              },
+              "pascalCase": undefined,
+              "screamingSnakeCase": undefined,
+              "snakeCase": undefined,
             },
             "wireValue": "message",
           },
