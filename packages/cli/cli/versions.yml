@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.15.4
+  changelogEntry:
+    - summary: |
+        Fix cross-reference links in C++ library documentation. Entity pages
+        now use relative links resolved via an entity registry, template
+        specializations link to their dedicated pages on index pages, namespace
+        index links are properly slugified, and operator method anchors use
+        deterministic safe names to avoid collisions.
+      type: fix
+  createdAt: "2026-03-07"
+  irVersion: 65
+
 - version: 4.15.3
   changelogEntry:
     - summary: |

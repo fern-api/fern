@@ -13,11 +13,23 @@ import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsG
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 
 export class SdkGeneratorContext extends GeneratorContext {
-    public readonly formatter: AbstractFormatter;
     public readonly nopFormatter: AbstractFormatter;
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
+
+    /**
+     * Lazily initializes the CsharpFormatter on first access.
+     * The formatter resolves the csharpier tool path and is only needed
+     * during code formatting, not during context construction.
+     */
+    public get formatter(): AbstractFormatter {
+        if (this._formatter === undefined) {
+            this._formatter = new CsharpFormatter();
+        }
+        return this._formatter;
+    }
+
     public constructor(
         ir: FernIr.IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
@@ -42,7 +54,6 @@ export class SdkGeneratorContext extends GeneratorContext {
                     this.getChildNamespaceSegments(fernFilepath)
             })
         );
-        this.formatter = new CsharpFormatter();
         this.nopFormatter = new NopFormatter();
         this.endpointGenerator = new EndpointGenerator({ context: this });
         this.generatorAgent = new CsharpGeneratorAgent({
