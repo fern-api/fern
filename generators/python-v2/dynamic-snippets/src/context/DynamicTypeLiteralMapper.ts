@@ -252,16 +252,18 @@ export class DynamicTypeLiteralMapper {
                 if (named == null) {
                     return undefined;
                 }
-                const converted = this.convertNamed({ named, value: discriminatedUnionTypeInstance.value });
-                if (!converted.isTypedDict()) {
+                if (named.type !== "object") {
                     this.context.errors.add({
                         severity: Severity.Critical,
                         message: "Internal error; expected union value to be an object"
                     });
                     return undefined;
                 }
-                const typedDict = converted.asTypedDictOrThrow();
-                return [...baseFields, ...typedDict.entries];
+                const objectEntries = this.convertObjectEntries({
+                    object_: named,
+                    value: discriminatedUnionTypeInstance.value
+                });
+                return [...baseFields, ...objectEntries];
             }
             case "singleProperty": {
                 try {
@@ -328,6 +330,30 @@ export class DynamicTypeLiteralMapper {
         });
     }
 
+    private convertObjectEntries({
+        object_,
+        value
+    }: {
+        object_: FernIr.dynamic.ObjectType;
+        value: unknown;
+    }): python.NamedValue[] {
+        const properties = this.context.associateByWireValue({
+            parameters: object_.properties,
+            values: this.context.getRecord(value) ?? {}
+        });
+        return properties.map((property) => {
+            this.context.errors.scope(property.name.wireValue);
+            try {
+                return {
+                    name: this.context.getPropertyName(property.name.name),
+                    value: this.convert(property)
+                };
+            } finally {
+                this.context.errors.unscope();
+            }
+        });
+    }
+
     private convertObject({
         object_,
         value
@@ -335,23 +361,21 @@ export class DynamicTypeLiteralMapper {
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
     }): python.TypeInstantiation {
-        const properties = this.context.associateByWireValue({
-            parameters: object_.properties,
-            values: this.context.getRecord(value) ?? {}
-        });
-        return python.TypeInstantiation.typedDict(
-            properties.map((property) => {
-                this.context.errors.scope(property.name.wireValue);
-                try {
-                    return {
-                        name: this.context.getPropertyName(property.name.name),
-                        value: this.convert(property)
-                    };
-                } finally {
-                    this.context.errors.unscope();
-                }
-            }),
-            { multiline: true }
+        const entries = this.convertObjectEntries({ object_, value });
+
+        // biome-ignore lint/correctness/useHookAtTopLevel: not a React hook
+        if (this.context.useTypedDictRequests()) {
+            return python.TypeInstantiation.typedDict(entries, { multiline: true });
+        }
+
+        // Pydantic model style: ClassName(key=value)
+        const classReference = this.context.getTypeClassReference(object_.declaration);
+        return python.TypeInstantiation.reference(
+            python.instantiateClass({
+                classReference,
+                arguments_: entries.map((entry) => python.methodArgument({ name: entry.name, value: entry.value })),
+                multiline: true
+            })
         );
     }
 

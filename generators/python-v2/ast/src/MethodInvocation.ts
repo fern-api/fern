@@ -60,6 +60,8 @@ export class MethodInvocation extends AstNode {
                 } else {
                     writer.write(" ");
                 }
+            } else if (this.multiline) {
+                writer.write(",");
             }
         });
         if (this.multiline) {

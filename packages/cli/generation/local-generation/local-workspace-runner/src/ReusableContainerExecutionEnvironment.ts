@@ -154,22 +154,18 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         const entrypoint = this.entrypoint;
         const logger = context.logger;
 
-        // Clean the entire /fern directory and /tmp/LICENSE to ensure no state leaks between fixtures.
+        // Clean the entire /fern directory and /tmp/LICENSE to ensure no state leaks between fixtures,
+        // then recreate /fern/output in a single exec to reduce round-trips.
         // This is critical — generators may write to any path under /fern (output, generators, sources, etc.)
         // and we need a fresh environment for each fixture.
         await execInContainer({
             logger,
             containerId,
-            command: ["rm", "-rf", CONTAINER_FERN_DIRECTORY, "/tmp/LICENSE"],
-            runner: this.runner,
-            writeLogsToFile: false
-        });
-
-        // Recreate /fern and /fern/output
-        await execInContainer({
-            logger,
-            containerId,
-            command: ["mkdir", "-p", CONTAINER_CODEGEN_OUTPUT_DIRECTORY],
+            command: [
+                "sh",
+                "-c",
+                `rm -rf ${CONTAINER_FERN_DIRECTORY} /tmp/LICENSE && mkdir -p ${CONTAINER_CODEGEN_OUTPUT_DIRECTORY}`
+            ],
             runner: this.runner,
             writeLogsToFile: false
         });

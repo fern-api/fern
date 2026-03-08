@@ -83,11 +83,29 @@ export type Origin = IrNode | Provenance;
  * @example
  * trim("types.User.name.pascalCase") → "types.User"
  */
-function trim(jsonPath: JsonPath): JsonPath {
-    return jsonPath
-        .split(".")
-        .filter((part) => !["name", "camelCase", "snakeCase", "screamingSnakeCase", "pascalCase"].includes(part))
-        .join(".");
+/**
+ * Set of IR path segments that represent name casing variants.
+ * These segments are "transparent" in path construction - they don't contribute
+ * to the canonical path because all case variants of a name resolve to the same
+ * logical entity. Skipping them during path building avoids the expensive
+ * split/filter/join that the old trim() function performed on every node.
+ */
+const TRIMMED_KEYS = new Set(["name", "camelCase", "snakeCase", "screamingSnakeCase", "pascalCase"]);
+
+/**
+ * Builds a canonical JsonPath by appending a key to a parent path,
+ * skipping keys that are in the TRIMMED_KEYS set.
+ *
+ * This replaces the old trim() function which called split/filter/join
+ * on the entire path string for every node in the IR tree. Since parent
+ * paths are already canonical (built incrementally), we only need to
+ * check the current key.
+ */
+function buildPath(parentPath: string | undefined, key: string): string {
+    if (TRIMMED_KEYS.has(key)) {
+        return parentPath ?? "";
+    }
+    return parentPath ? `${parentPath}.${key}` : key;
 }
 
 /**
@@ -166,16 +184,15 @@ export class ModelNavigator {
      * Recursively builds indexes for all nodes in the IR tree.
      *
      * This private method traverses the entire IR object graph and creates provenance entries
-     * for each node. It handles path collisions by using a trimming strategy - when multiple
-     * paths normalize to the same trimmed path (e.g., "types.User.name.pascalCase" and
-     * "types.User.name.camelCase" both trim to "types.User.name"), only the first encounter
-     * is stored in indexByPath, and subsequent encounters are redirected to the parent provenance.
+     * for each node. It handles path collisions by using an incremental path building strategy -
+     * keys in TRIMMED_KEYS (name casing variants like "camelCase", "pascalCase") are skipped
+     * during path construction, causing them to share the parent's canonical path.
      *
-     * The algorithm:
-     * 1. Trims the current path to normalize it
-     * 2. If the path already exists, map this node to the parent provenance (path collision)
-     * 3. Otherwise, create a new provenance and store it in both indexes
-     * 4. Recursively process all child nodes
+     * Performance optimizations:
+     * - Uses incremental path building (buildPath) instead of split/filter/join on every node
+     * - When a trimmed key's children are also trimmed keys (e.g., name.camelCase, name.pascalCase),
+     *   registers them in indexByObject without recursing further since their children are only
+     *   primitive string values (safeName/unsafeName)
      *
      * @param instance - The current IR node being indexed
      * @param key - The property name/key used to access this node (empty string for root)
@@ -183,7 +200,7 @@ export class ModelNavigator {
      * @returns The provenance for this node (may be parent's provenance if path collision occurred)
      */
     private createIndex(instance: IrNode, key = "", parentProvenance?: Provenance) {
-        const jsonPath = trim(parentProvenance?.jsonPath ? `${parentProvenance.jsonPath}.${key}` : key);
+        const jsonPath = buildPath(parentProvenance?.jsonPath, key);
 
         if (this.indexByPath.has(jsonPath)) {
             // if the name was already taken that means that we've trimmed the path so we're not going to store this node
@@ -197,10 +214,21 @@ export class ModelNavigator {
             // if someone looks up this object, dial them back to the parent provenance
             this.indexByObject.set(instance, parentProvenance);
 
-            // but do continue to process the children nodes
-            for (const [key, value] of Object.entries(instance)) {
-                if (typeof value === "object" && value !== null) {
-                    this.createIndex(value, key, parentProvenance);
+            // Process children, but optimize for trimmed-key branches:
+            // Children of trimmed keys (e.g., "name") that are themselves trimmed keys
+            // (e.g., "camelCase", "pascalCase") only contain primitive string values
+            // (safeName/unsafeName), so we can register them without full recursion.
+            const isTrimmedKey = TRIMMED_KEYS.has(key);
+            for (const [childKey, childValue] of Object.entries(instance)) {
+                if (typeof childValue === "object" && childValue !== null) {
+                    if (isTrimmedKey && TRIMMED_KEYS.has(childKey)) {
+                        // This is a name case variant (e.g., camelCase under name).
+                        // Its children are only strings (safeName/unsafeName),
+                        // so just register the object mapping and skip recursion.
+                        this.indexByObject.set(childValue as IrNode, parentProvenance);
+                    } else {
+                        this.createIndex(childValue as IrNode, childKey, parentProvenance);
+                    }
                 }
             }
 
@@ -218,9 +246,9 @@ export class ModelNavigator {
         this.indexByPath.set(jsonPath, provenance);
 
         // process the children nodes
-        for (const [key, value] of Object.entries(instance)) {
-            if (typeof value === "object" && value !== null) {
-                this.createIndex(value, key, provenance);
+        for (const [childKey, childValue] of Object.entries(instance)) {
+            if (typeof childValue === "object" && childValue !== null) {
+                this.createIndex(childValue as IrNode, childKey, provenance);
             }
         }
 
@@ -265,7 +293,9 @@ export class ModelNavigator {
 
         const element = {
             ...parentProvenance,
-            jsonPath: trim(`${parentProvenance.jsonPath}+${member}`),
+            // The '+' separator means member names won't match TRIMMED_KEYS segments,
+            // so we can directly concatenate without needing to trim.
+            jsonPath: `${parentProvenance.jsonPath}+${member}`,
             name: member,
             node: parentProvenance.node,
             parent: parentProvenance,

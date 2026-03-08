@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "./core/AstNode.js";
 import { Writer } from "./core/Writer.js";
-import { Reference } from "./Reference.js";
+import { ModuleImport } from "./ModuleImport.js";
 import { Type } from "./Type.js";
 
 export interface NamedValue {
@@ -194,13 +194,13 @@ export class TypeInstantiation extends AstNode {
 
     public static date(value: string): TypeInstantiation {
         const date = new this({ type: "date", value });
-        date.addReference(new Reference({ name: "date", modulePath: ["datetime"] }));
+        date.addReference(new ModuleImport({ module: "datetime" }));
         return date;
     }
 
     public static datetime(value: string): TypeInstantiation {
         const datetime = new this({ type: "datetime", value });
-        datetime.addReference(new Reference({ name: "datetime", modulePath: ["datetime"] }));
+        datetime.addReference(new ModuleImport({ module: "datetime" }));
         return datetime;
     }
 
@@ -229,7 +229,7 @@ export class TypeInstantiation extends AstNode {
 
     public static uuid(value: string): TypeInstantiation {
         const uuid = new this({ type: "uuid", value });
-        uuid.addReference(new Reference({ name: "UUID", modulePath: ["uuid"] }));
+        uuid.addReference(new ModuleImport({ module: "uuid" }));
         return uuid;
     }
 
@@ -281,13 +281,13 @@ export class TypeInstantiation extends AstNode {
                 }
                 break;
             case "date":
-                writer.write(`date.fromisoformat("${this.internalType.value}")`);
+                writer.write(`datetime.date.fromisoformat("${this.internalType.value}")`);
                 break;
             case "datetime": {
                 // Convert 'Z' suffix to '+00:00' for Python 3.8 compatibility
                 // datetime.fromisoformat() doesn't support 'Z' until Python 3.11
                 const datetimeValue = this.internalType.value.replace(/Z$/, "+00:00");
-                writer.write(`datetime.fromisoformat("${datetimeValue}")`);
+                writer.write(`datetime.datetime.fromisoformat("${datetimeValue}")`);
                 break;
             }
             case "bytes":
@@ -474,7 +474,7 @@ export class TypeInstantiation extends AstNode {
                 this.writeUnknown({ writer, value: this.internalType.value });
                 break;
             case "uuid":
-                writer.write(`UUID("${this.internalType.value}")`);
+                writer.write(`uuid.UUID("${this.internalType.value}")`);
                 break;
             case "nop":
                 break;
@@ -596,13 +596,13 @@ export class TypeInstantiation extends AstNode {
             writer.write("[]");
             return;
         }
-        writer.writeLine("[");
-        writer.indent();
-        for (const element of value) {
+        writer.write("[");
+        value.forEach((element, index) => {
+            if (index > 0) {
+                writer.write(", ");
+            }
             writer.writeNode(TypeInstantiation.unknown(element));
-            writer.writeLine(",");
-        }
-        writer.dedent();
+        });
         writer.write("]");
     }
 
@@ -612,14 +612,14 @@ export class TypeInstantiation extends AstNode {
             writer.write("{}");
             return;
         }
-        writer.writeLine("{");
-        writer.indent();
-        for (const [key, val] of entries) {
+        writer.write("{");
+        entries.forEach(([key, val], index) => {
+            if (index > 0) {
+                writer.write(", ");
+            }
             writer.write(`"${key}": `);
             writer.writeNode(TypeInstantiation.unknown(val));
-            writer.writeLine(",");
-        }
-        writer.dedent();
+        });
         writer.write("}");
     }
 }

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_users</a>() -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get_users</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -13,8 +13,12 @@
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedApi()
+client = SeedApi(
+    environment=SeedApiEnvironment.REGIONAL_API_SERVER,
+)
+
 client.get_users()
 
 ```
@@ -43,7 +47,7 @@ client.get_users()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">get_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -57,8 +61,12 @@ client.get_users()
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedApi()
+client = SeedApi(
+    environment=SeedApiEnvironment.REGIONAL_API_SERVER,
+)
+
 client.get_user(
     user_id="userId",
 )
@@ -97,7 +105,7 @@ client.get_user(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">get_token</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -111,8 +119,12 @@ client.get_user(
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedApi()
+client = SeedApi(
+    environment=SeedApiEnvironment.REGIONAL_API_SERVER,
+)
+
 client.get_token(
     client_id="client_id",
     client_secret="client_secret",
