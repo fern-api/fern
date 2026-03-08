@@ -60,11 +60,7 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         // from @fern-api/casings-generator. That logic is NOT included here because
         // deep-walking the IR with Object.entries() would destroy Set instances
         // (e.g., referencedTypes) by converting them to plain objects.
-        const {
-            smartCasing: _smartCasing,
-            generationLanguage: _generationLanguage,
-            ...v65Ir
-        } = v66;
+        const { smartCasing: _smartCasing, generationLanguage: _generationLanguage, ...v65Ir } = v66;
 
         return v65Ir as unknown as IrVersions.V65.ir.IntermediateRepresentation;
     }
