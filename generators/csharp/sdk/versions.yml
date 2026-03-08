@@ -20,6 +20,16 @@
   createdAt: "2026-03-07"
   irVersion: 62
 
+- version: 2.23.7
+  changelogEntry:
+    - summary: |
+        Parallelize file writes during project persistence using batched concurrency
+        (100 files per batch via `Promise.all`), significantly reducing generation time
+        for large projects with thousands of files.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
 - version: 2.23.6
   changelogEntry:
     - summary: |
