@@ -1,4 +1,4 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructSlimCasingsGenerator } from "@fern-api/casings-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -34,11 +34,7 @@ describe("TypeResolver", () => {
         const fernFileContext = constructFernFileContext({
             relativeFilepath: fooFilepath,
             definitionFile: fooFile.contents,
-            casingsGenerator: constructCasingsGenerator({
-                generationLanguage: undefined,
-                keywords: undefined,
-                smartCasing: false
-            }),
+            casingsGenerator: constructSlimCasingsGenerator(),
             rootApiFile: workspace.definition.rootApiFile.contents
         });
 

@@ -333,7 +333,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         // Check that union type with discriminator was processed (may be discriminated or undiscriminated)
         const eventRequestType = Object.values(intermediateRepresentation.types).find(
-            (type) => type.name.name.originalName === "EventRequest"
+            (type) => type.name.name === "EventRequest"
         );
         expect(eventRequestType).toBeDefined();
         // Note: v3 parser may produce "union" or "undiscriminatedUnion" depending on discriminator processing
@@ -697,10 +697,10 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         const specific500 = errorDeclarationsByStatus["500-false"];
         const wildcard500 = errorDeclarationsByStatus["500-true"];
 
-        expect(specific400?.name.name.originalName).toContain("BadRequestError");
-        expect(wildcard400?.name.name.originalName).toContain("ClientRequestError");
-        expect(specific500?.name.name.originalName).toContain("InternalServerError");
-        expect(wildcard500?.name.name.originalName).toContain("ServerError");
+                expect(specific400?.name.name).toContain("BadRequestError");
+                expect(wildcard400?.name.name).toContain("ClientRequestError");
+                expect(specific500?.name.name).toContain("InternalServerError");
+                expect(wildcard500?.name.name).toContain("ServerError");
 
         // Validate FDR now contains all 4 errors properly converted
         expect(fdrApiDefinition.rootPackage).toBeDefined();
@@ -2072,7 +2072,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         // Check that RateTier type exists and has the expected structure
         const rateTierType = Object.values(intermediateRepresentation.types).find(
-            (type) => type.name.name.originalName === "RateTier"
+            (type) => type.name.name === "RateTier"
         );
         expect(rateTierType).toBeDefined();
 
@@ -2320,8 +2320,8 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         if (service && typeof service === "object" && "endpoints" in service) {
             const serviceWithEndpoints = service as {
                 endpoints?: Array<{
-                    pathParameters?: Array<{ name: { originalName: string }; explode?: boolean }>;
-                    queryParameters?: Array<{ name: { name: { originalName: string } }; explode?: boolean }>;
+                    pathParameters?: Array<{ name: string; explode?: boolean }>;
+                    queryParameters?: Array<{ name: { name: string }; explode?: boolean }>;
                 }>;
             };
             expect(serviceWithEndpoints.endpoints).toBeDefined();
@@ -2888,8 +2888,8 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         // Verify that x-fern-basic custom names are correctly flowing through to the IR
         // The OpenAPI spec has x-fern-basic with username.name="project_id" and password.name="api_token"
         // Verify custom names from x-fern-basic are used
-        expect(basicAuthScheme.username.originalName).toBe("project_id");
-        expect(basicAuthScheme.password.originalName).toBe("api_token");
+                expect(basicAuthScheme.username).toBe("project_id");
+                expect(basicAuthScheme.password).toBe("api_token");
 
         // Verify env vars are also passed through
         expect(basicAuthScheme.usernameEnvVar).toBe("PLANT_STORE_PROJECT_ID");
@@ -2944,7 +2944,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         });
 
         // Verify the IR has the OpenAPI title as apiName
-        expect(intermediateRepresentation.apiName.originalName).toBe("Pet Store API");
+        expect(intermediateRepresentation.apiName).toBe("Pet Store API");
 
         // Test 1: Without apiNameOverride, FDR should use the OpenAPI title
         const fdrWithoutOverride = await convertIrToFdrApi({

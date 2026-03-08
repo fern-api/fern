@@ -1,15 +1,11 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructSlimCasingsGenerator } from "@fern-api/casings-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { constructFernFileContext, convertToFernFilepath, parseInlineType } from "@fern-api/ir-generator";
 import { ContainerType, serialization as IrSerialization, TypeReference } from "@fern-api/ir-sdk";
 
 describe("parse inline types", () => {
     it("nested containers", async () => {
-        const casingsGenerator = constructCasingsGenerator({
-            generationLanguage: undefined,
-            keywords: undefined,
-            smartCasing: false
-        });
+        const casingsGenerator = constructSlimCasingsGenerator();
 
         const dummyTypeName = "Dummy";
         const dummyFilepath = RelativeFilePath.of("a/b/c");
