@@ -3,7 +3,8 @@
   "compilerOptions": {
     "outDir": "lib",
     "rootDir": "src",
-    "noImplicitOverride": true
+    "noImplicitOverride": true,
+    "types": ["node", "vitest/globals"]
   },
   "include": ["./src/**/*"]
 }
