@@ -109,7 +109,9 @@ public static class ServiceCollectionExtensions
                 BaseUrl = !string.IsNullOrEmpty(options.BaseUrl) ? options.BaseUrl! : "",
             };
             
-            return new MyApiClient(options.ApiKey!, clientOptions);
+            var apiKey = options.ApiKey ?? throw new System.ArgumentNullException(nameof(options.ApiKey), "ApiKey is required but was not configured. Provide it via appsettings.json or the options delegate.");
+            
+            return new MyApiClient(apiKey, clientOptions);
         });
         
         Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<IMyApiClient>(services, provider => provider.GetRequiredService<MyApiClient>());

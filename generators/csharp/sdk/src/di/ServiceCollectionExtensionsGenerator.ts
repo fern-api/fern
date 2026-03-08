@@ -175,6 +175,11 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
     /**
      * Gets additional OAuth properties from custom token endpoint properties and scopes.
      * Mirrors the logic in RootClientGenerator.getOAuthAdditionalConstructorParams.
+     *
+     * Note: hasEnvironmentVariable is false for these properties because the IR's
+     * OAuthCustomProperty schema does not include environment variable bindings.
+     * Only the top-level clientId/clientSecret have env var support via
+     * scheme.configuration.clientIdEnvVar / clientSecretEnvVar.
      */
     private getOAuthAdditionalProperties(scheme: OAuthScheme, isOptional: boolean): OptionsProperty[] {
         const properties: OptionsProperty[] = [];
@@ -221,6 +226,12 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
     /**
      * Gets properties from inferred auth credentials.
      * Mirrors the logic in RootClientGenerator.getParameterFromAuthScheme for inferred type.
+     *
+     * Note: hasEnvironmentVariable is false for inferred auth credentials because they
+     * are derived from token endpoint headers and body properties, which don't have
+     * environment variable bindings in the IR (unlike top-level auth scheme headers
+     * which have headerEnvVar/tokenEnvVar). This is consistent with
+     * RootClientGenerator which also does not set environmentVariable for inferred params.
      */
     private getInferredAuthProperties(inferred: FernIr.InferredAuthScheme, isOptional: boolean): OptionsProperty[] {
         const tokenEndpointReference = inferred.tokenEndpoint.endpoint;
@@ -394,7 +405,59 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
         });
     }
 
+    /**
+     * Resolves the default environment URL expression for the BaseUrl fallback.
+     * When the API defines environments with a default, this returns the C# expression
+     * (e.g., "Environments.PRODUCTION") to use as the BaseUrl default instead of "".
+     * Returns undefined if no default environment is configured.
+     */
+    private getDefaultEnvironmentExpression(): string | undefined {
+        const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
+        if (defaultEnvironmentId == null) {
+            return undefined;
+        }
+        const defaultEnvironmentName = this.context.ir.environments?.environments._visit({
+            singleBaseUrl: (value) => {
+                const env = value.environments.find((e) => e.id === defaultEnvironmentId);
+                return this.settings.pascalCaseEnvironments
+                    ? env?.name.pascalCase.safeName
+                    : env?.name.screamingSnakeCase.safeName;
+            },
+            multipleBaseUrls: (value) => {
+                const env = value.environments.find((e) => e.id === defaultEnvironmentId);
+                return this.settings.pascalCaseEnvironments
+                    ? env?.name.pascalCase.safeName
+                    : env?.name.screamingSnakeCase.safeName;
+            },
+            _other: () => undefined
+        });
+        if (defaultEnvironmentName == null) {
+            return undefined;
+        }
+        return `Environments.${defaultEnvironmentName}`;
+    }
+
+    /**
+     * Writes a TryAddScoped registration line for a service type resolved via a factory lambda.
+     * This helper reduces duplication in the subclient registration loop.
+     *
+     * @param writer - The code writer
+     * @param serviceType - The fully-qualified service type to register (e.g., "IServiceClient")
+     * @param factoryBody - The lambda body expression (e.g., "provider.GetRequiredService<MyClient>().Service")
+     */
+    private writeTryAddScoped(
+        writer: { writeLine: (line: string) => void },
+        serviceType: string,
+        factoryBody: string
+    ): void {
+        writer.writeLine(
+            `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<${serviceType}>(services, provider => ${factoryBody});`
+        );
+    }
+
     private addInternalRegistration(class_: ast.Class, authProperties: OptionsProperty[]): void {
+        const defaultEnvExpression = this.getDefaultEnvironmentExpression();
+
         class_.addMethod({
             access: ast.Access.Private,
             isAsync: false,
@@ -418,7 +481,7 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
                 writer.writeLine(`services.AddHttpClient("${this.clientName}");`);
                 writer.writeLine("");
 
-                // Register the root client concrete type
+                // Register the root client concrete type via a scoped factory lambda
                 writer.writeLine(
                     `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped(services, provider =>`
                 );
@@ -432,27 +495,44 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
                     `var httpClientFactory = provider.GetRequiredService<System.Net.Http.IHttpClientFactory>();`
                 );
                 writer.writeLine("");
+
                 // Use object initializer for all ClientOptions properties to avoid
-                // init-only property assignment errors on NET5_0_OR_GREATER
+                // init-only property assignment errors on NET5_0_OR_GREATER.
+                // BaseUrl falls back to the SDK's default environment URL when available,
+                // or empty string when no default environment is configured.
+                const baseUrlFallback = defaultEnvExpression ?? `""`;
                 writer.writeLine(`var clientOptions = new ClientOptions`);
                 writer.writeLine("{");
                 writer.indent();
                 writer.writeLine(`HttpClient = httpClientFactory.CreateClient("${this.clientName}"),`);
                 writer.writeLine("MaxRetries = options.MaxRetries,");
                 writer.writeLine("Timeout = options.Timeout,");
-                writer.writeLine(`BaseUrl = !string.IsNullOrEmpty(options.BaseUrl) ? options.BaseUrl! : "",`);
+                writer.writeLine(
+                    `BaseUrl = !string.IsNullOrEmpty(options.BaseUrl) ? options.BaseUrl! : ${baseUrlFallback},`
+                );
                 writer.dedent();
                 writer.writeLine("};");
                 writer.writeLine("");
 
                 // Build constructor arguments, matching root client constructor ordering:
-                // required params first, then optional params, then clientOptions
-                // Use null-forgiving operator (!) for required params since the options
-                // class uses nullable strings for IConfiguration binding compatibility
+                // required params first, then optional params, then clientOptions.
+                // Required params use explicit null validation with ArgumentNullException
+                // instead of the null-forgiving operator (!) to provide clear runtime errors
+                // when required options are not configured.
                 const requiredProps = authProperties.filter((p) => !p.isOptional && !p.hasEnvironmentVariable);
                 const optionalProps = authProperties.filter((p) => p.isOptional || p.hasEnvironmentVariable);
+
+                for (const prop of requiredProps) {
+                    writer.writeLine(
+                        `var ${prop.name} = options.${prop.pascalName} ?? throw new System.ArgumentNullException(nameof(options.${prop.pascalName}), "${prop.pascalName} is required but was not configured. Provide it via appsettings.json or the options delegate.");`
+                    );
+                }
+                if (requiredProps.length > 0) {
+                    writer.writeLine("");
+                }
+
                 const constructorArgs = [
-                    ...requiredProps.map((p) => `options.${p.pascalName}!`),
+                    ...requiredProps.map((p) => p.name),
                     ...optionalProps.map((p) => `options.${p.pascalName}`),
                     "clientOptions"
                 ];
@@ -464,39 +544,51 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
 
                 // Register the root client interface, resolved via the concrete root client
                 const interfaceName = `I${this.clientName}`;
-                writer.writeLine(
-                    `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<${interfaceName}>(services, provider => provider.GetRequiredService<${this.clientName}>());`
-                );
+                this.writeTryAddScoped(writer, interfaceName, `provider.GetRequiredService<${this.clientName}>()`);
                 writer.writeLine("");
 
                 // Register subclient interfaces and concrete types, resolved via the root client's properties
-                const subpackages = this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
-                for (const subpackage of subpackages) {
-                    if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
-                        const subpackagePropertyName = subpackage.name.pascalCase.safeName;
-                        const subClientClassName = `${subpackage.name.pascalCase.unsafeName}Client`;
-                        const subClientInterfaceName = `I${subClientClassName}`;
-                        const subClientClassRef = this.context.getSubpackageClassReference(subpackage);
-                        const subClientInterfaceRef = this.context.getSubpackageInterfaceReference(subpackage);
-                        const subClientFqn =
-                            subClientClassRef.namespace !== this.namespaces.root
-                                ? `${subClientClassRef.namespace}.${subClientClassName}`
-                                : subClientClassName;
-                        const subClientInterfaceFqn =
-                            subClientInterfaceRef.namespace !== this.namespaces.root
-                                ? `${subClientInterfaceRef.namespace}.${subClientInterfaceName}`
-                                : subClientInterfaceName;
-                        writer.writeLine(
-                            `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<${subClientInterfaceFqn}>(services, provider => provider.GetRequiredService<${this.clientName}>().${subpackagePropertyName});`
-                        );
-                        writer.writeLine(
-                            `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<${subClientFqn}>(services, provider => (${subClientFqn})provider.GetRequiredService<${this.clientName}>().${subpackagePropertyName});`
-                        );
-                    }
-                }
+                this.writeSubclientRegistrations(writer);
                 writer.writeLine("");
                 writer.writeLine("return services;");
             })
         });
+    }
+
+    /**
+     * Writes TryAddScoped registrations for all subclients that have endpoints.
+     * Each subclient gets two registrations:
+     * 1. Interface -> resolved from root client property
+     * 2. Concrete type -> cast from root client property
+     *
+     * Uses fully-qualified names for subclients in different namespaces to avoid
+     * ambiguous type references without requiring additional using statements.
+     */
+    private writeSubclientRegistrations(writer: { writeLine: (line: string) => void }): void {
+        const subpackages = this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
+        for (const subpackage of subpackages) {
+            if (!this.context.subPackageHasEndpointsRecursively(subpackage)) {
+                continue;
+            }
+            const subpackagePropertyName = subpackage.name.pascalCase.safeName;
+            const subClientClassName = `${subpackage.name.pascalCase.unsafeName}Client`;
+            const subClientInterfaceName = `I${subClientClassName}`;
+            const subClientClassRef = this.context.getSubpackageClassReference(subpackage);
+            const subClientInterfaceRef = this.context.getSubpackageInterfaceReference(subpackage);
+
+            // Use fully-qualified names when the subclient lives in a different namespace
+            const subClientFqn =
+                subClientClassRef.namespace !== this.namespaces.root
+                    ? `${subClientClassRef.namespace}.${subClientClassName}`
+                    : subClientClassName;
+            const subClientInterfaceFqn =
+                subClientInterfaceRef.namespace !== this.namespaces.root
+                    ? `${subClientInterfaceRef.namespace}.${subClientInterfaceName}`
+                    : subClientInterfaceName;
+
+            const rootClientProperty = `provider.GetRequiredService<${this.clientName}>().${subpackagePropertyName}`;
+            this.writeTryAddScoped(writer, subClientInterfaceFqn, rootClientProperty);
+            this.writeTryAddScoped(writer, subClientFqn, `(${subClientFqn})${rootClientProperty}`);
+        }
     }
 }

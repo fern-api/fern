@@ -31,10 +31,29 @@ public static class ServiceCollectionExtensions
                     BaseUrl = !string.IsNullOrEmpty(options.BaseUrl) ? options.BaseUrl! : "",
                 };
 
+                var xApiKey =
+                    options.XApiKey
+                    ?? throw new System.ArgumentNullException(
+                        nameof(options.XApiKey),
+                        "XApiKey is required but was not configured. Provide it via appsettings.json or the options delegate."
+                    );
+                var clientId =
+                    options.ClientId
+                    ?? throw new System.ArgumentNullException(
+                        nameof(options.ClientId),
+                        "ClientId is required but was not configured. Provide it via appsettings.json or the options delegate."
+                    );
+                var clientSecret =
+                    options.ClientSecret
+                    ?? throw new System.ArgumentNullException(
+                        nameof(options.ClientSecret),
+                        "ClientSecret is required but was not configured. Provide it via appsettings.json or the options delegate."
+                    );
+
                 return new SeedInferredAuthExplicitClient(
-                    options.XApiKey!,
-                    options.ClientId!,
-                    options.ClientSecret!,
+                    xApiKey,
+                    clientId,
+                    clientSecret,
                     options.Scope,
                     clientOptions
                 );

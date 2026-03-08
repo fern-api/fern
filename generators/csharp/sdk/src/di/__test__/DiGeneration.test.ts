@@ -183,7 +183,11 @@ describe("DI generation patterns", () => {
                     writer.dedent();
                     writer.writeLine("};");
                     writer.writeLine("");
-                    writer.writeLine("return new MyApiClient(options.ApiKey!, clientOptions);");
+                    writer.writeLine(
+                        'var apiKey = options.ApiKey ?? throw new System.ArgumentNullException(nameof(options.ApiKey), "ApiKey is required but was not configured. Provide it via appsettings.json or the options delegate.");'
+                    );
+                    writer.writeLine("");
+                    writer.writeLine("return new MyApiClient(apiKey, clientOptions);");
                     writer.dedent();
                     writer.writeLine("});");
                     writer.writeLine("");

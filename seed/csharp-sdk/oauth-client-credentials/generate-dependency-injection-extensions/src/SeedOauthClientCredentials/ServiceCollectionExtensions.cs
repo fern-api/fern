@@ -31,9 +31,22 @@ public static class ServiceCollectionExtensions
                     BaseUrl = !string.IsNullOrEmpty(options.BaseUrl) ? options.BaseUrl! : "",
                 };
 
+                var clientId =
+                    options.ClientId
+                    ?? throw new System.ArgumentNullException(
+                        nameof(options.ClientId),
+                        "ClientId is required but was not configured. Provide it via appsettings.json or the options delegate."
+                    );
+                var clientSecret =
+                    options.ClientSecret
+                    ?? throw new System.ArgumentNullException(
+                        nameof(options.ClientSecret),
+                        "ClientSecret is required but was not configured. Provide it via appsettings.json or the options delegate."
+                    );
+
                 return new SeedOauthClientCredentialsClient(
-                    options.ClientId!,
-                    options.ClientSecret!,
+                    clientId,
+                    clientSecret,
                     clientOptions
                 );
             }
