@@ -68,10 +68,7 @@ function inflateNamesDeep(obj: unknown, casingsGenerator: CasingsGenerator): unk
     // or it has exactly one key (originalName) making it a slim Name.
     if (typeof record.originalName === "string") {
         const hasCasingKey =
-            "camelCase" in record ||
-            "pascalCase" in record ||
-            "snakeCase" in record ||
-            "screamingSnakeCase" in record;
+            "camelCase" in record || "pascalCase" in record || "snakeCase" in record || "screamingSnakeCase" in record;
         const isSlimName = !hasCasingKey && Object.keys(record).length === 1;
 
         if (hasCasingKey || isSlimName) {

@@ -1,7 +1,7 @@
 import { Name } from "@fern-api/ir-sdk";
 
 import { constructCasingsGenerator } from "../CasingsGenerator.js";
-import { inflateName, inflateIrNames } from "../inflateNames.js";
+import { inflateIrNames, inflateName } from "../inflateNames.js";
 
 describe("inflateName", () => {
     const casingsGenerator = constructCasingsGenerator({
