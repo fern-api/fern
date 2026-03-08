@@ -78,7 +78,10 @@ function extractConceptLinks(concept: CppConceptIr): Record<string, string> {
                     // Ref segments reference other entities
                     const refText = seg.type === "ref" ? seg.text : seg.code;
                     const shortName = refText.split("::").pop() ?? refText;
-                    links[shortName] = buildLinkPath(refText);
+                    const refLinkPath = buildLinkPath(refText);
+                    if (refLinkPath) {
+                        links[shortName] = refLinkPath;
+                    }
                 }
             }
         }
@@ -121,7 +124,10 @@ function extractLinksFromSegments(segments: CppDocSegment[], links: Record<strin
                     qualifiedName = decodedPath + "::" + shortName;
                 }
                 if (!links[shortName]) {
-                    links[shortName] = buildLinkPath(qualifiedName);
+                    const codeRefLinkPath = buildLinkPath(qualifiedName);
+                    if (codeRefLinkPath) {
+                        links[shortName] = codeRefLinkPath;
+                    }
                 }
             }
         } else if (seg.type === "ref" && seg.refid) {
@@ -133,7 +139,10 @@ function extractLinksFromSegments(segments: CppDocSegment[], links: Record<strin
                     qualifiedName = decodedPath + "::" + shortName;
                 }
                 if (!links[shortName]) {
-                    links[shortName] = buildLinkPath(qualifiedName);
+                    const refLinkPath = buildLinkPath(qualifiedName);
+                    if (refLinkPath) {
+                        links[shortName] = refLinkPath;
+                    }
                 }
             }
         }
