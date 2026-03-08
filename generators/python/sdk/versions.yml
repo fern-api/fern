@@ -13,6 +13,7 @@
         inline list/dict formatting for improved code readability.
       type: chore
   createdAt: "2026-03-05"
+  irVersion: 65
 
 - version: 4.61.6
   changelogEntry:
