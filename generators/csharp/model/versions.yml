@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.0.13
+  changelogEntry:
+    - summary: |
+        Sync and cache NuGet dependencies across all C# Dockerfiles. Updates test
+        framework packages to match generated SDK versions and adds NuGet restore
+        caching to the generator Dockerfiles.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
 - version: 0.0.12
   changelogEntry:
     - summary: |
