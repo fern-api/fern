@@ -49,43 +49,21 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         v66: IrVersions.V66.IntermediateRepresentation,
         _context: IrMigrationContext
     ): IrVersions.V65.ir.IntermediateRepresentation => {
-        // V66 adds smartCasing/generationLanguage metadata fields to the IR root.
-        // When Names arrive as slim objects (only originalName, missing casings),
-        // we inflate them back to full Names using the CasingsGenerator.
-        // Then we construct the V65 IR explicitly, omitting the V66-only fields.
+        // V66 adds smartCasing/generationLanguage metadata fields to the IR root,
+        // and Names may arrive as slim objects (only originalName, casings undefined).
+        // inflateIrNames() restores all casings using the CasingsGenerator, so after
+        // inflation every Name has all required casing fields populated at runtime.
+        // We then strip the V66-only fields (smartCasing, generationLanguage) to produce V65.
+        //
+        // The cast is safe because inflateIrNames guarantees all Name casings are populated,
+        // making the inflated IR structurally compatible with V65 (which requires all casings).
+        // TypeScript can't prove this statically since the V66 Name type has optional casings.
         const inflated = inflateIrNames(v66);
-        return {
-            fdrApiDefinitionId: inflated.fdrApiDefinitionId,
-            apiVersion: inflated.apiVersion,
-            apiName: inflated.apiName,
-            apiDisplayName: inflated.apiDisplayName,
-            apiDocs: inflated.apiDocs,
-            auth: inflated.auth,
-            headers: inflated.headers,
-            idempotencyHeaders: inflated.idempotencyHeaders,
-            types: inflated.types,
-            services: inflated.services,
-            webhookGroups: inflated.webhookGroups,
-            websocketChannels: inflated.websocketChannels,
-            errors: inflated.errors,
-            subpackages: inflated.subpackages,
-            rootPackage: inflated.rootPackage,
-            constants: inflated.constants,
-            environments: inflated.environments,
-            basePath: inflated.basePath,
-            pathParameters: inflated.pathParameters,
-            errorDiscriminationStrategy: inflated.errorDiscriminationStrategy,
-            sdkConfig: inflated.sdkConfig,
-            variables: inflated.variables,
-            serviceTypeReferenceInfo: inflated.serviceTypeReferenceInfo,
-            readmeConfig: inflated.readmeConfig,
-            sourceConfig: inflated.sourceConfig,
-            publishConfig: inflated.publishConfig,
-            dynamic: inflated.dynamic,
-            selfHosted: inflated.selfHosted,
-            audiences: inflated.audiences,
-            generationMetadata: inflated.generationMetadata,
-            apiPlayground: inflated.apiPlayground
-        };
+        const {
+            smartCasing: _smartCasing,
+            generationLanguage: _generationLanguage,
+            ...v65Fields
+        } = inflated;
+        return v65Fields as unknown as IrVersions.V65.ir.IntermediateRepresentation;
     }
 };
