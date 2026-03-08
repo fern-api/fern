@@ -1,25 +1,7 @@
 {
   "apiDisplayName": "Simple OpenAPI Test",
   "apiDocs": undefined,
-  "apiName": {
-    "camelCase": {
-      "safeName": "simpleOpenApiTest",
-      "unsafeName": "simpleOpenApiTest",
-    },
-    "originalName": "Simple OpenAPI Test",
-    "pascalCase": {
-      "safeName": "SimpleOpenApiTest",
-      "unsafeName": "SimpleOpenApiTest",
-    },
-    "screamingSnakeCase": {
-      "safeName": "SIMPLE_OPEN_API_TEST",
-      "unsafeName": "SIMPLE_OPEN_API_TEST",
-    },
-    "snakeCase": {
-      "safeName": "simple_open_api_test",
-      "unsafeName": "simple_open_api_test",
-    },
-  },
+  "apiName": "Simple OpenAPI Test",
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -31,25 +13,7 @@
   "basePath": undefined,
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
-        },
-        "originalName": "errorInstanceId",
-        "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
-        },
-        "screamingSnakeCase": {
-          "safeName": "ERROR_INSTANCE_ID",
-          "unsafeName": "ERROR_INSTANCE_ID",
-        },
-        "snakeCase": {
-          "safeName": "error_instance_id",
-          "unsafeName": "error_instance_id",
-        },
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId",
     },
   },
@@ -64,25 +28,7 @@
           "defaultUrl": undefined,
           "docs": "Production server",
           "id": "Production server",
-          "name": {
-            "camelCase": {
-              "safeName": "productionServer",
-              "unsafeName": "productionServer",
-            },
-            "originalName": "Production server",
-            "pascalCase": {
-              "safeName": "ProductionServer",
-              "unsafeName": "ProductionServer",
-            },
-            "screamingSnakeCase": {
-              "safeName": "PRODUCTION_SERVER",
-              "unsafeName": "PRODUCTION_SERVER",
-            },
-            "snakeCase": {
-              "safeName": "production_server",
-              "unsafeName": "production_server",
-            },
-          },
+          "name": "Production server",
           "url": "https://api.example.com/v1",
           "urlTemplate": undefined,
           "urlVariables": undefined,
@@ -98,25 +44,7 @@
   "errors": {
     "CreateUserRequestBadRequestError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "createUserRequestBadRequestError",
-            "unsafeName": "createUserRequestBadRequestError",
-          },
-          "originalName": "CreateUserRequestBadRequestError",
-          "pascalCase": {
-            "safeName": "CreateUserRequestBadRequestError",
-            "unsafeName": "CreateUserRequestBadRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
-            "unsafeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "create_user_request_bad_request_error",
-            "unsafeName": "create_user_request_bad_request_error",
-          },
-        },
+        "name": "CreateUserRequestBadRequestError",
         "wireValue": "CreateUserRequestBadRequestError",
       },
       "displayName": "BadRequestError",
@@ -131,25 +59,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "createUserRequestBadRequestError",
-            "unsafeName": "createUserRequestBadRequestError",
-          },
-          "originalName": "CreateUserRequestBadRequestError",
-          "pascalCase": {
-            "safeName": "CreateUserRequestBadRequestError",
-            "unsafeName": "CreateUserRequestBadRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
-            "unsafeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "create_user_request_bad_request_error",
-            "unsafeName": "create_user_request_bad_request_error",
-          },
-        },
+        "name": "CreateUserRequestBadRequestError",
       },
       "statusCode": 400,
       "type": {
@@ -162,25 +72,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "error",
-            "unsafeName": "error",
-          },
-          "originalName": "Error",
-          "pascalCase": {
-            "safeName": "Error_",
-            "unsafeName": "Error",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ERROR",
-            "unsafeName": "ERROR",
-          },
-          "snakeCase": {
-            "safeName": "error",
-            "unsafeName": "error",
-          },
-        },
+        "name": "Error",
         "type": "named",
         "typeId": "Error",
       },
@@ -191,25 +83,7 @@
     },
     "GetHealthRequestServiceUnavailableError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "getHealthRequestServiceUnavailableError",
-            "unsafeName": "getHealthRequestServiceUnavailableError",
-          },
-          "originalName": "GetHealthRequestServiceUnavailableError",
-          "pascalCase": {
-            "safeName": "GetHealthRequestServiceUnavailableError",
-            "unsafeName": "GetHealthRequestServiceUnavailableError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
-            "unsafeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "get_health_request_service_unavailable_error",
-            "unsafeName": "get_health_request_service_unavailable_error",
-          },
-        },
+        "name": "GetHealthRequestServiceUnavailableError",
         "wireValue": "GetHealthRequestServiceUnavailableError",
       },
       "displayName": "ServiceUnavailableError",
@@ -224,25 +98,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "getHealthRequestServiceUnavailableError",
-            "unsafeName": "getHealthRequestServiceUnavailableError",
-          },
-          "originalName": "GetHealthRequestServiceUnavailableError",
-          "pascalCase": {
-            "safeName": "GetHealthRequestServiceUnavailableError",
-            "unsafeName": "GetHealthRequestServiceUnavailableError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
-            "unsafeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "get_health_request_service_unavailable_error",
-            "unsafeName": "get_health_request_service_unavailable_error",
-          },
-        },
+        "name": "GetHealthRequestServiceUnavailableError",
       },
       "statusCode": 503,
       "type": {
@@ -255,25 +111,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "error",
-            "unsafeName": "error",
-          },
-          "originalName": "Error",
-          "pascalCase": {
-            "safeName": "Error_",
-            "unsafeName": "Error",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ERROR",
-            "unsafeName": "ERROR",
-          },
-          "snakeCase": {
-            "safeName": "error",
-            "unsafeName": "error",
-          },
-        },
+        "name": "Error",
         "type": "named",
         "typeId": "Error",
       },
@@ -284,25 +122,7 @@
     },
     "GetUserRequestNotFoundError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "getUserRequestNotFoundError",
-            "unsafeName": "getUserRequestNotFoundError",
-          },
-          "originalName": "GetUserRequestNotFoundError",
-          "pascalCase": {
-            "safeName": "GetUserRequestNotFoundError",
-            "unsafeName": "GetUserRequestNotFoundError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
-            "unsafeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "get_user_request_not_found_error",
-            "unsafeName": "get_user_request_not_found_error",
-          },
-        },
+        "name": "GetUserRequestNotFoundError",
         "wireValue": "GetUserRequestNotFoundError",
       },
       "displayName": "NotFoundError",
@@ -317,25 +137,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "getUserRequestNotFoundError",
-            "unsafeName": "getUserRequestNotFoundError",
-          },
-          "originalName": "GetUserRequestNotFoundError",
-          "pascalCase": {
-            "safeName": "GetUserRequestNotFoundError",
-            "unsafeName": "GetUserRequestNotFoundError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
-            "unsafeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "get_user_request_not_found_error",
-            "unsafeName": "get_user_request_not_found_error",
-          },
-        },
+        "name": "GetUserRequestNotFoundError",
       },
       "statusCode": 404,
       "type": {
@@ -348,25 +150,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "error",
-            "unsafeName": "error",
-          },
-          "originalName": "Error",
-          "pascalCase": {
-            "safeName": "Error_",
-            "unsafeName": "Error",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ERROR",
-            "unsafeName": "ERROR",
-          },
-          "snakeCase": {
-            "safeName": "error",
-            "unsafeName": "error",
-          },
-        },
+        "name": "Error",
         "type": "named",
         "typeId": "Error",
       },
@@ -454,25 +238,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "getHealthRequestServiceUnavailableError",
-                    "unsafeName": "getHealthRequestServiceUnavailableError",
-                  },
-                  "originalName": "GetHealthRequestServiceUnavailableError",
-                  "pascalCase": {
-                    "safeName": "GetHealthRequestServiceUnavailableError",
-                    "unsafeName": "GetHealthRequestServiceUnavailableError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
-                    "unsafeName": "GET_HEALTH_REQUEST_SERVICE_UNAVAILABLE_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "get_health_request_service_unavailable_error",
-                    "unsafeName": "get_health_request_service_unavailable_error",
-                  },
-                },
+                "name": "GetHealthRequestServiceUnavailableError",
               },
             },
           ],
@@ -484,25 +250,7 @@
           "id": "endpoint_.getHealth",
           "idempotent": false,
           "method": "GET",
-          "name": {
-            "camelCase": {
-              "safeName": "getHealth",
-              "unsafeName": "getHealth",
-            },
-            "originalName": "getHealth",
-            "pascalCase": {
-              "safeName": "GetHealth",
-              "unsafeName": "GetHealth",
-            },
-            "screamingSnakeCase": {
-              "safeName": "GET_HEALTH",
-              "unsafeName": "GET_HEALTH",
-            },
-            "snakeCase": {
-              "safeName": "get_health",
-              "unsafeName": "get_health",
-            },
-          },
+          "name": "getHealth",
           "pagination": undefined,
           "path": {
             "head": "/health",
@@ -528,25 +276,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "healthResponse",
-                      "unsafeName": "healthResponse",
-                    },
-                    "originalName": "HealthResponse",
-                    "pascalCase": {
-                      "safeName": "HealthResponse",
-                      "unsafeName": "HealthResponse",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "HEALTH_RESPONSE",
-                      "unsafeName": "HEALTH_RESPONSE",
-                    },
-                    "snakeCase": {
-                      "safeName": "health_response",
-                      "unsafeName": "health_response",
-                    },
-                  },
+                  "name": "HealthResponse",
                   "type": "named",
                   "typeId": "HealthResponse",
                 },
@@ -636,25 +366,7 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": {
-                        "camelCase": {
-                          "safeName": "healthResponse",
-                          "unsafeName": "healthResponse",
-                        },
-                        "originalName": "HealthResponse",
-                        "pascalCase": {
-                          "safeName": "HealthResponse",
-                          "unsafeName": "HealthResponse",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "HEALTH_RESPONSE",
-                          "unsafeName": "HEALTH_RESPONSE",
-                        },
-                        "snakeCase": {
-                          "safeName": "health_response",
-                          "unsafeName": "health_response",
-                        },
-                      },
+                      "name": "HealthResponse",
                       "type": "named",
                       "typeId": "HealthResponse",
                     },
@@ -684,25 +396,7 @@
               "docs": "The unique identifier of the user",
               "explode": undefined,
               "location": "ENDPOINT",
-              "name": {
-                "camelCase": {
-                  "safeName": "userId",
-                  "unsafeName": "userId",
-                },
-                "originalName": "userId",
-                "pascalCase": {
-                  "safeName": "UserId",
-                  "unsafeName": "UserId",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "USER_ID",
-                  "unsafeName": "USER_ID",
-                },
-                "snakeCase": {
-                  "safeName": "user_id",
-                  "unsafeName": "user_id",
-                },
-              },
+              "name": "userId",
               "v2Examples": {
                 "autogeneratedExamples": {
                   "userId_example": "user123",
@@ -749,25 +443,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "getUserRequestNotFoundError",
-                    "unsafeName": "getUserRequestNotFoundError",
-                  },
-                  "originalName": "GetUserRequestNotFoundError",
-                  "pascalCase": {
-                    "safeName": "GetUserRequestNotFoundError",
-                    "unsafeName": "GetUserRequestNotFoundError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
-                    "unsafeName": "GET_USER_REQUEST_NOT_FOUND_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "get_user_request_not_found_error",
-                    "unsafeName": "get_user_request_not_found_error",
-                  },
-                },
+                "name": "GetUserRequestNotFoundError",
               },
             },
           ],
@@ -784,25 +460,7 @@
           "id": "endpoint_.getUser",
           "idempotent": false,
           "method": "GET",
-          "name": {
-            "camelCase": {
-              "safeName": "getUser",
-              "unsafeName": "getUser",
-            },
-            "originalName": "getUser",
-            "pascalCase": {
-              "safeName": "GetUser",
-              "unsafeName": "GetUser",
-            },
-            "screamingSnakeCase": {
-              "safeName": "GET_USER",
-              "unsafeName": "GET_USER",
-            },
-            "snakeCase": {
-              "safeName": "get_user",
-              "unsafeName": "get_user",
-            },
-          },
+          "name": "getUser",
           "pagination": undefined,
           "path": {
             "head": "/users/",
@@ -818,25 +476,7 @@
               "docs": "The unique identifier of the user",
               "explode": undefined,
               "location": "ENDPOINT",
-              "name": {
-                "camelCase": {
-                  "safeName": "userId",
-                  "unsafeName": "userId",
-                },
-                "originalName": "userId",
-                "pascalCase": {
-                  "safeName": "UserId",
-                  "unsafeName": "UserId",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "USER_ID",
-                  "unsafeName": "USER_ID",
-                },
-                "snakeCase": {
-                  "safeName": "user_id",
-                  "unsafeName": "user_id",
-                },
-              },
+              "name": "userId",
               "v2Examples": {
                 "autogeneratedExamples": {
                   "userId_example": "user123",
@@ -871,25 +511,7 @@
               "docs": "Whether to include user metadata",
               "explode": undefined,
               "name": {
-                "name": {
-                  "camelCase": {
-                    "safeName": "includeMetadata",
-                    "unsafeName": "includeMetadata",
-                  },
-                  "originalName": "includeMetadata",
-                  "pascalCase": {
-                    "safeName": "IncludeMetadata",
-                    "unsafeName": "IncludeMetadata",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "INCLUDE_METADATA",
-                    "unsafeName": "INCLUDE_METADATA",
-                  },
-                  "snakeCase": {
-                    "safeName": "include_metadata",
-                    "unsafeName": "include_metadata",
-                  },
-                },
+                "name": "includeMetadata",
                 "wireValue": "includeMetadata",
               },
               "v2Examples": {
@@ -938,25 +560,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "user",
-                      "unsafeName": "user",
-                    },
-                    "originalName": "User",
-                    "pascalCase": {
-                      "safeName": "User",
-                      "unsafeName": "User",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "USER",
-                      "unsafeName": "USER",
-                    },
-                    "snakeCase": {
-                      "safeName": "user",
-                      "unsafeName": "user",
-                    },
-                  },
+                  "name": "User",
                   "type": "named",
                   "typeId": "User",
                 },
@@ -1054,25 +658,7 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": {
-                        "camelCase": {
-                          "safeName": "user",
-                          "unsafeName": "user",
-                        },
-                        "originalName": "User",
-                        "pascalCase": {
-                          "safeName": "User",
-                          "unsafeName": "User",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "USER",
-                          "unsafeName": "USER",
-                        },
-                        "snakeCase": {
-                          "safeName": "user",
-                          "unsafeName": "user",
-                        },
-                      },
+                      "name": "User",
                       "type": "named",
                       "typeId": "User",
                     },
@@ -1120,25 +706,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "createUserRequestBadRequestError",
-                    "unsafeName": "createUserRequestBadRequestError",
-                  },
-                  "originalName": "CreateUserRequestBadRequestError",
-                  "pascalCase": {
-                    "safeName": "CreateUserRequestBadRequestError",
-                    "unsafeName": "CreateUserRequestBadRequestError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
-                    "unsafeName": "CREATE_USER_REQUEST_BAD_REQUEST_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "create_user_request_bad_request_error",
-                    "unsafeName": "create_user_request_bad_request_error",
-                  },
-                },
+                "name": "CreateUserRequestBadRequestError",
               },
             },
           ],
@@ -1150,25 +718,7 @@
           "id": "endpoint_.createUser",
           "idempotent": false,
           "method": "POST",
-          "name": {
-            "camelCase": {
-              "safeName": "createUser",
-              "unsafeName": "createUser",
-            },
-            "originalName": "createUser",
-            "pascalCase": {
-              "safeName": "CreateUser",
-              "unsafeName": "CreateUser",
-            },
-            "screamingSnakeCase": {
-              "safeName": "CREATE_USER",
-              "unsafeName": "CREATE_USER",
-            },
-            "snakeCase": {
-              "safeName": "create_user",
-              "unsafeName": "create_user",
-            },
-          },
+          "name": "createUser",
           "pagination": undefined,
           "path": {
             "head": "/users",
@@ -1190,25 +740,7 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": {
-                "camelCase": {
-                  "safeName": "createUserRequest",
-                  "unsafeName": "createUserRequest",
-                },
-                "originalName": "CreateUserRequest",
-                "pascalCase": {
-                  "safeName": "CreateUserRequest",
-                  "unsafeName": "CreateUserRequest",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "CREATE_USER_REQUEST",
-                  "unsafeName": "CREATE_USER_REQUEST",
-                },
-                "snakeCase": {
-                  "safeName": "create_user_request",
-                  "unsafeName": "create_user_request",
-                },
-              },
+              "name": "CreateUserRequest",
               "type": "named",
               "typeId": "CreateUserRequest",
             },
@@ -1239,25 +771,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "user",
-                      "unsafeName": "user",
-                    },
-                    "originalName": "User",
-                    "pascalCase": {
-                      "safeName": "User",
-                      "unsafeName": "User",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "USER",
-                      "unsafeName": "USER",
-                    },
-                    "snakeCase": {
-                      "safeName": "user",
-                      "unsafeName": "user",
-                    },
-                  },
+                  "name": "User",
                   "type": "named",
                   "typeId": "User",
                 },
@@ -1349,25 +863,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "createUserRequest",
-                      "unsafeName": "createUserRequest",
-                    },
-                    "originalName": "CreateUserRequest",
-                    "pascalCase": {
-                      "safeName": "CreateUserRequest",
-                      "unsafeName": "CreateUserRequest",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "CREATE_USER_REQUEST",
-                      "unsafeName": "CREATE_USER_REQUEST",
-                    },
-                    "snakeCase": {
-                      "safeName": "create_user_request",
-                      "unsafeName": "create_user_request",
-                    },
-                  },
+                  "name": "CreateUserRequest",
                   "type": "named",
                   "typeId": "CreateUserRequest",
                 },
@@ -1402,25 +898,7 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": {
-                        "camelCase": {
-                          "safeName": "user",
-                          "unsafeName": "user",
-                        },
-                        "originalName": "User",
-                        "pascalCase": {
-                          "safeName": "User",
-                          "unsafeName": "User",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "USER",
-                          "unsafeName": "USER",
-                        },
-                        "snakeCase": {
-                          "safeName": "user",
-                          "unsafeName": "user",
-                        },
-                      },
+                      "name": "User",
                       "type": "named",
                       "typeId": "User",
                     },
@@ -1477,25 +955,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "createUserRequest",
-            "unsafeName": "createUserRequest",
-          },
-          "originalName": "CreateUserRequest",
-          "pascalCase": {
-            "safeName": "CreateUserRequest",
-            "unsafeName": "CreateUserRequest",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CREATE_USER_REQUEST",
-            "unsafeName": "CREATE_USER_REQUEST",
-          },
-          "snakeCase": {
-            "safeName": "create_user_request",
-            "unsafeName": "create_user_request",
-          },
-        },
+        "name": "CreateUserRequest",
         "typeId": "CreateUserRequest",
       },
       "referencedTypes": Set {},
@@ -1509,25 +969,7 @@
             "availability": undefined,
             "docs": "User's email address",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "email",
-                  "unsafeName": "email",
-                },
-                "originalName": "email",
-                "pascalCase": {
-                  "safeName": "Email",
-                  "unsafeName": "Email",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "EMAIL",
-                  "unsafeName": "EMAIL",
-                },
-                "snakeCase": {
-                  "safeName": "email",
-                  "unsafeName": "email",
-                },
-              },
+              "name": "email",
               "wireValue": "email",
             },
             "propertyAccess": undefined,
@@ -1560,25 +1002,7 @@
             "availability": undefined,
             "docs": "User's first name",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "firstName",
-                  "unsafeName": "firstName",
-                },
-                "originalName": "firstName",
-                "pascalCase": {
-                  "safeName": "FirstName",
-                  "unsafeName": "FirstName",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "FIRST_NAME",
-                  "unsafeName": "FIRST_NAME",
-                },
-                "snakeCase": {
-                  "safeName": "first_name",
-                  "unsafeName": "first_name",
-                },
-              },
+              "name": "firstName",
               "wireValue": "firstName",
             },
             "propertyAccess": undefined,
@@ -1619,25 +1043,7 @@
             "availability": undefined,
             "docs": "User's last name",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "lastName",
-                  "unsafeName": "lastName",
-                },
-                "originalName": "lastName",
-                "pascalCase": {
-                  "safeName": "LastName",
-                  "unsafeName": "LastName",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "LAST_NAME",
-                  "unsafeName": "LAST_NAME",
-                },
-                "snakeCase": {
-                  "safeName": "last_name",
-                  "unsafeName": "last_name",
-                },
-              },
+              "name": "lastName",
               "wireValue": "lastName",
             },
             "propertyAccess": undefined,
@@ -1678,25 +1084,7 @@
             "availability": undefined,
             "docs": "Additional user metadata",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "metadata",
-                  "unsafeName": "metadata",
-                },
-                "originalName": "metadata",
-                "pascalCase": {
-                  "safeName": "Metadata",
-                  "unsafeName": "Metadata",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "METADATA",
-                  "unsafeName": "METADATA",
-                },
-                "snakeCase": {
-                  "safeName": "metadata",
-                  "unsafeName": "metadata",
-                },
-              },
+              "name": "metadata",
               "wireValue": "metadata",
             },
             "propertyAccess": undefined,
@@ -1767,25 +1155,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "error",
-            "unsafeName": "error",
-          },
-          "originalName": "Error",
-          "pascalCase": {
-            "safeName": "Error_",
-            "unsafeName": "Error",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ERROR",
-            "unsafeName": "ERROR",
-          },
-          "snakeCase": {
-            "safeName": "error",
-            "unsafeName": "error",
-          },
-        },
+        "name": "Error",
         "typeId": "Error",
       },
       "referencedTypes": Set {},
@@ -1799,25 +1169,7 @@
             "availability": undefined,
             "docs": "Error code",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "code",
-                  "unsafeName": "code",
-                },
-                "originalName": "code",
-                "pascalCase": {
-                  "safeName": "Code",
-                  "unsafeName": "Code",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "CODE",
-                  "unsafeName": "CODE",
-                },
-                "snakeCase": {
-                  "safeName": "code",
-                  "unsafeName": "code",
-                },
-              },
+              "name": "code",
               "wireValue": "code",
             },
             "propertyAccess": undefined,
@@ -1850,25 +1202,7 @@
             "availability": undefined,
             "docs": "Human-readable error message",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "message",
-                  "unsafeName": "message",
-                },
-                "originalName": "message",
-                "pascalCase": {
-                  "safeName": "Message",
-                  "unsafeName": "Message",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "MESSAGE",
-                  "unsafeName": "MESSAGE",
-                },
-                "snakeCase": {
-                  "safeName": "message",
-                  "unsafeName": "message",
-                },
-              },
+              "name": "message",
               "wireValue": "message",
             },
             "propertyAccess": undefined,
@@ -1901,25 +1235,7 @@
             "availability": undefined,
             "docs": "Additional error details",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "details",
-                  "unsafeName": "details",
-                },
-                "originalName": "details",
-                "pascalCase": {
-                  "safeName": "Details",
-                  "unsafeName": "Details",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "DETAILS",
-                  "unsafeName": "DETAILS",
-                },
-                "snakeCase": {
-                  "safeName": "details",
-                  "unsafeName": "details",
-                },
-              },
+              "name": "details",
               "wireValue": "details",
             },
             "propertyAccess": undefined,
@@ -1991,25 +1307,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "healthResponse",
-            "unsafeName": "healthResponse",
-          },
-          "originalName": "HealthResponse",
-          "pascalCase": {
-            "safeName": "HealthResponse",
-            "unsafeName": "HealthResponse",
-          },
-          "screamingSnakeCase": {
-            "safeName": "HEALTH_RESPONSE",
-            "unsafeName": "HEALTH_RESPONSE",
-          },
-          "snakeCase": {
-            "safeName": "health_response",
-            "unsafeName": "health_response",
-          },
-        },
+        "name": "HealthResponse",
         "typeId": "HealthResponse",
       },
       "referencedTypes": Set {
@@ -2025,25 +1323,7 @@
             "availability": undefined,
             "docs": "The current health status",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "status",
-                  "unsafeName": "status",
-                },
-                "originalName": "status",
-                "pascalCase": {
-                  "safeName": "Status",
-                  "unsafeName": "Status",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "STATUS",
-                  "unsafeName": "STATUS",
-                },
-                "snakeCase": {
-                  "safeName": "status",
-                  "unsafeName": "status",
-                },
-              },
+              "name": "status",
               "wireValue": "status",
             },
             "propertyAccess": undefined,
@@ -2063,25 +1343,7 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": {
-                "camelCase": {
-                  "safeName": "healthResponseStatus",
-                  "unsafeName": "healthResponseStatus",
-                },
-                "originalName": "HealthResponseStatus",
-                "pascalCase": {
-                  "safeName": "HealthResponseStatus",
-                  "unsafeName": "HealthResponseStatus",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "HEALTH_RESPONSE_STATUS",
-                  "unsafeName": "HEALTH_RESPONSE_STATUS",
-                },
-                "snakeCase": {
-                  "safeName": "health_response_status",
-                  "unsafeName": "health_response_status",
-                },
-              },
+              "name": "HealthResponseStatus",
               "type": "named",
               "typeId": "HealthResponseStatus",
             },
@@ -2090,25 +1352,7 @@
             "availability": undefined,
             "docs": "When the health check was performed",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "timestamp",
-                  "unsafeName": "timestamp",
-                },
-                "originalName": "timestamp",
-                "pascalCase": {
-                  "safeName": "Timestamp",
-                  "unsafeName": "Timestamp",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "TIMESTAMP",
-                  "unsafeName": "TIMESTAMP",
-                },
-                "snakeCase": {
-                  "safeName": "timestamp",
-                  "unsafeName": "timestamp",
-                },
-              },
+              "name": "timestamp",
               "wireValue": "timestamp",
             },
             "propertyAccess": undefined,
@@ -2134,25 +1378,7 @@
             "availability": undefined,
             "docs": "Service version",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "version",
-                  "unsafeName": "version",
-                },
-                "originalName": "version",
-                "pascalCase": {
-                  "safeName": "Version",
-                  "unsafeName": "Version",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "VERSION",
-                  "unsafeName": "VERSION",
-                },
-                "snakeCase": {
-                  "safeName": "version",
-                  "unsafeName": "version",
-                },
-              },
+              "name": "version",
               "wireValue": "version",
             },
             "propertyAccess": undefined,
@@ -2217,25 +1443,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "healthResponseStatus",
-            "unsafeName": "healthResponseStatus",
-          },
-          "originalName": "HealthResponseStatus",
-          "pascalCase": {
-            "safeName": "HealthResponseStatus",
-            "unsafeName": "HealthResponseStatus",
-          },
-          "screamingSnakeCase": {
-            "safeName": "HEALTH_RESPONSE_STATUS",
-            "unsafeName": "HEALTH_RESPONSE_STATUS",
-          },
-          "snakeCase": {
-            "safeName": "health_response_status",
-            "unsafeName": "health_response_status",
-          },
-        },
+        "name": "HealthResponseStatus",
         "typeId": "HealthResponseStatus",
       },
       "referencedTypes": Set {},
@@ -2249,25 +1457,7 @@
             "casing": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "healthy",
-                  "unsafeName": "healthy",
-                },
-                "originalName": "healthy",
-                "pascalCase": {
-                  "safeName": "Healthy",
-                  "unsafeName": "Healthy",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "HEALTHY",
-                  "unsafeName": "HEALTHY",
-                },
-                "snakeCase": {
-                  "safeName": "healthy",
-                  "unsafeName": "healthy",
-                },
-              },
+              "name": "healthy",
               "wireValue": "healthy",
             },
           },
@@ -2276,25 +1466,7 @@
             "casing": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "degraded",
-                  "unsafeName": "degraded",
-                },
-                "originalName": "degraded",
-                "pascalCase": {
-                  "safeName": "Degraded",
-                  "unsafeName": "Degraded",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "DEGRADED",
-                  "unsafeName": "DEGRADED",
-                },
-                "snakeCase": {
-                  "safeName": "degraded",
-                  "unsafeName": "degraded",
-                },
-              },
+              "name": "degraded",
               "wireValue": "degraded",
             },
           },
@@ -2322,25 +1494,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "user",
-            "unsafeName": "user",
-          },
-          "originalName": "User",
-          "pascalCase": {
-            "safeName": "User",
-            "unsafeName": "User",
-          },
-          "screamingSnakeCase": {
-            "safeName": "USER",
-            "unsafeName": "USER",
-          },
-          "snakeCase": {
-            "safeName": "user",
-            "unsafeName": "user",
-          },
-        },
+        "name": "User",
         "typeId": "User",
       },
       "referencedTypes": Set {},
@@ -2354,25 +1508,7 @@
             "availability": undefined,
             "docs": "Unique user identifier",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-                "originalName": "id",
-                "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ID",
-                  "unsafeName": "ID",
-                },
-                "snakeCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-              },
+              "name": "id",
               "wireValue": "id",
             },
             "propertyAccess": undefined,
@@ -2405,25 +1541,7 @@
             "availability": undefined,
             "docs": "User's email address",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "email",
-                  "unsafeName": "email",
-                },
-                "originalName": "email",
-                "pascalCase": {
-                  "safeName": "Email",
-                  "unsafeName": "Email",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "EMAIL",
-                  "unsafeName": "EMAIL",
-                },
-                "snakeCase": {
-                  "safeName": "email",
-                  "unsafeName": "email",
-                },
-              },
+              "name": "email",
               "wireValue": "email",
             },
             "propertyAccess": undefined,
@@ -2456,25 +1574,7 @@
             "availability": undefined,
             "docs": "User's first name",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "firstName",
-                  "unsafeName": "firstName",
-                },
-                "originalName": "firstName",
-                "pascalCase": {
-                  "safeName": "FirstName",
-                  "unsafeName": "FirstName",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "FIRST_NAME",
-                  "unsafeName": "FIRST_NAME",
-                },
-                "snakeCase": {
-                  "safeName": "first_name",
-                  "unsafeName": "first_name",
-                },
-              },
+              "name": "firstName",
               "wireValue": "firstName",
             },
             "propertyAccess": undefined,
@@ -2515,25 +1615,7 @@
             "availability": undefined,
             "docs": "User's last name",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "lastName",
-                  "unsafeName": "lastName",
-                },
-                "originalName": "lastName",
-                "pascalCase": {
-                  "safeName": "LastName",
-                  "unsafeName": "LastName",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "LAST_NAME",
-                  "unsafeName": "LAST_NAME",
-                },
-                "snakeCase": {
-                  "safeName": "last_name",
-                  "unsafeName": "last_name",
-                },
-              },
+              "name": "lastName",
               "wireValue": "lastName",
             },
             "propertyAccess": undefined,
@@ -2574,25 +1656,7 @@
             "availability": undefined,
             "docs": "When the user was created",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "createdAt",
-                  "unsafeName": "createdAt",
-                },
-                "originalName": "createdAt",
-                "pascalCase": {
-                  "safeName": "CreatedAt",
-                  "unsafeName": "CreatedAt",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "CREATED_AT",
-                  "unsafeName": "CREATED_AT",
-                },
-                "snakeCase": {
-                  "safeName": "created_at",
-                  "unsafeName": "created_at",
-                },
-              },
+              "name": "createdAt",
               "wireValue": "createdAt",
             },
             "propertyAccess": undefined,
@@ -2618,25 +1682,7 @@
             "availability": undefined,
             "docs": "Additional user metadata",
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "metadata",
-                  "unsafeName": "metadata",
-                },
-                "originalName": "metadata",
-                "pascalCase": {
-                  "safeName": "Metadata",
-                  "unsafeName": "Metadata",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "METADATA",
-                  "unsafeName": "METADATA",
-                },
-                "snakeCase": {
-                  "safeName": "metadata",
-                  "unsafeName": "metadata",
-                },
-              },
+              "name": "metadata",
               "wireValue": "metadata",
             },
             "propertyAccess": undefined,

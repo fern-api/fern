@@ -1,25 +1,7 @@
 {
   "apiDisplayName": "Wildcard Status Code Conflict Test",
   "apiDocs": undefined,
-  "apiName": {
-    "camelCase": {
-      "safeName": "wildcardStatusCodeConflictTest",
-      "unsafeName": "wildcardStatusCodeConflictTest",
-    },
-    "originalName": "Wildcard Status Code Conflict Test",
-    "pascalCase": {
-      "safeName": "WildcardStatusCodeConflictTest",
-      "unsafeName": "WildcardStatusCodeConflictTest",
-    },
-    "screamingSnakeCase": {
-      "safeName": "WILDCARD_STATUS_CODE_CONFLICT_TEST",
-      "unsafeName": "WILDCARD_STATUS_CODE_CONFLICT_TEST",
-    },
-    "snakeCase": {
-      "safeName": "wildcard_status_code_conflict_test",
-      "unsafeName": "wildcard_status_code_conflict_test",
-    },
-  },
+  "apiName": "Wildcard Status Code Conflict Test",
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -31,25 +13,7 @@
   "basePath": undefined,
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
-        },
-        "originalName": "errorInstanceId",
-        "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
-        },
-        "screamingSnakeCase": {
-          "safeName": "ERROR_INSTANCE_ID",
-          "unsafeName": "ERROR_INSTANCE_ID",
-        },
-        "snakeCase": {
-          "safeName": "error_instance_id",
-          "unsafeName": "error_instance_id",
-        },
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId",
     },
   },
@@ -62,25 +26,7 @@
   "errors": {
     "TestOperationRequestBadRequestError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestBadRequestError",
-            "unsafeName": "testOperationRequestBadRequestError",
-          },
-          "originalName": "TestOperationRequestBadRequestError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestBadRequestError",
-            "unsafeName": "TestOperationRequestBadRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_BAD_REQUEST_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_BAD_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_bad_request_error",
-            "unsafeName": "test_operation_request_bad_request_error",
-          },
-        },
+        "name": "TestOperationRequestBadRequestError",
         "wireValue": "TestOperationRequestBadRequestError",
       },
       "displayName": "BadRequestError",
@@ -95,25 +41,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestBadRequestError",
-            "unsafeName": "testOperationRequestBadRequestError",
-          },
-          "originalName": "TestOperationRequestBadRequestError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestBadRequestError",
-            "unsafeName": "TestOperationRequestBadRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_BAD_REQUEST_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_BAD_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_bad_request_error",
-            "unsafeName": "test_operation_request_bad_request_error",
-          },
-        },
+        "name": "TestOperationRequestBadRequestError",
       },
       "statusCode": 400,
       "type": {
@@ -126,25 +54,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestBadRequestError",
-            "unsafeName": "testOperationRequestBadRequestError",
-          },
-          "originalName": "TestOperationRequestBadRequestError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestBadRequestError",
-            "unsafeName": "TestOperationRequestBadRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_BAD_REQUEST_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_BAD_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_bad_request_error",
-            "unsafeName": "test_operation_request_bad_request_error",
-          },
-        },
+        "name": "TestOperationRequestBadRequestError",
         "type": "named",
         "typeId": "TestOperationRequestBadRequestError",
       },
@@ -155,25 +65,7 @@
     },
     "TestOperationRequestClientRequestError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestClientRequestError",
-            "unsafeName": "testOperationRequestClientRequestError",
-          },
-          "originalName": "TestOperationRequestClientRequestError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestClientRequestError",
-            "unsafeName": "TestOperationRequestClientRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_CLIENT_REQUEST_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_CLIENT_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_client_request_error",
-            "unsafeName": "test_operation_request_client_request_error",
-          },
-        },
+        "name": "TestOperationRequestClientRequestError",
         "wireValue": "TestOperationRequestClientRequestError",
       },
       "displayName": "ClientRequestError",
@@ -188,25 +80,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestClientRequestError",
-            "unsafeName": "testOperationRequestClientRequestError",
-          },
-          "originalName": "TestOperationRequestClientRequestError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestClientRequestError",
-            "unsafeName": "TestOperationRequestClientRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_CLIENT_REQUEST_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_CLIENT_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_client_request_error",
-            "unsafeName": "test_operation_request_client_request_error",
-          },
-        },
+        "name": "TestOperationRequestClientRequestError",
       },
       "statusCode": 400,
       "type": {
@@ -219,25 +93,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestClientRequestError",
-            "unsafeName": "testOperationRequestClientRequestError",
-          },
-          "originalName": "TestOperationRequestClientRequestError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestClientRequestError",
-            "unsafeName": "TestOperationRequestClientRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_CLIENT_REQUEST_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_CLIENT_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_client_request_error",
-            "unsafeName": "test_operation_request_client_request_error",
-          },
-        },
+        "name": "TestOperationRequestClientRequestError",
         "type": "named",
         "typeId": "TestOperationRequestClientRequestError",
       },
@@ -248,25 +104,7 @@
     },
     "TestOperationRequestInternalServerError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestInternalServerError",
-            "unsafeName": "testOperationRequestInternalServerError",
-          },
-          "originalName": "TestOperationRequestInternalServerError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestInternalServerError",
-            "unsafeName": "TestOperationRequestInternalServerError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_INTERNAL_SERVER_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_INTERNAL_SERVER_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_internal_server_error",
-            "unsafeName": "test_operation_request_internal_server_error",
-          },
-        },
+        "name": "TestOperationRequestInternalServerError",
         "wireValue": "TestOperationRequestInternalServerError",
       },
       "displayName": "InternalServerError",
@@ -281,25 +119,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestInternalServerError",
-            "unsafeName": "testOperationRequestInternalServerError",
-          },
-          "originalName": "TestOperationRequestInternalServerError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestInternalServerError",
-            "unsafeName": "TestOperationRequestInternalServerError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_INTERNAL_SERVER_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_INTERNAL_SERVER_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_internal_server_error",
-            "unsafeName": "test_operation_request_internal_server_error",
-          },
-        },
+        "name": "TestOperationRequestInternalServerError",
       },
       "statusCode": 500,
       "type": {
@@ -312,25 +132,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestInternalServerError",
-            "unsafeName": "testOperationRequestInternalServerError",
-          },
-          "originalName": "TestOperationRequestInternalServerError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestInternalServerError",
-            "unsafeName": "TestOperationRequestInternalServerError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_INTERNAL_SERVER_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_INTERNAL_SERVER_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_internal_server_error",
-            "unsafeName": "test_operation_request_internal_server_error",
-          },
-        },
+        "name": "TestOperationRequestInternalServerError",
         "type": "named",
         "typeId": "TestOperationRequestInternalServerError",
       },
@@ -341,25 +143,7 @@
     },
     "TestOperationRequestServerError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestServerError",
-            "unsafeName": "testOperationRequestServerError",
-          },
-          "originalName": "TestOperationRequestServerError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestServerError",
-            "unsafeName": "TestOperationRequestServerError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_SERVER_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_SERVER_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_server_error",
-            "unsafeName": "test_operation_request_server_error",
-          },
-        },
+        "name": "TestOperationRequestServerError",
         "wireValue": "TestOperationRequestServerError",
       },
       "displayName": "ServerError",
@@ -374,25 +158,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestServerError",
-            "unsafeName": "testOperationRequestServerError",
-          },
-          "originalName": "TestOperationRequestServerError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestServerError",
-            "unsafeName": "TestOperationRequestServerError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_SERVER_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_SERVER_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_server_error",
-            "unsafeName": "test_operation_request_server_error",
-          },
-        },
+        "name": "TestOperationRequestServerError",
       },
       "statusCode": 500,
       "type": {
@@ -405,25 +171,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestServerError",
-            "unsafeName": "testOperationRequestServerError",
-          },
-          "originalName": "TestOperationRequestServerError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestServerError",
-            "unsafeName": "TestOperationRequestServerError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_SERVER_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_SERVER_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_server_error",
-            "unsafeName": "test_operation_request_server_error",
-          },
-        },
+        "name": "TestOperationRequestServerError",
         "type": "named",
         "typeId": "TestOperationRequestServerError",
       },
@@ -506,25 +254,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "testOperationRequestBadRequestError",
-                    "unsafeName": "testOperationRequestBadRequestError",
-                  },
-                  "originalName": "TestOperationRequestBadRequestError",
-                  "pascalCase": {
-                    "safeName": "TestOperationRequestBadRequestError",
-                    "unsafeName": "TestOperationRequestBadRequestError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "TEST_OPERATION_REQUEST_BAD_REQUEST_ERROR",
-                    "unsafeName": "TEST_OPERATION_REQUEST_BAD_REQUEST_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "test_operation_request_bad_request_error",
-                    "unsafeName": "test_operation_request_bad_request_error",
-                  },
-                },
+                "name": "TestOperationRequestBadRequestError",
               },
             },
             {
@@ -536,25 +266,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "testOperationRequestInternalServerError",
-                    "unsafeName": "testOperationRequestInternalServerError",
-                  },
-                  "originalName": "TestOperationRequestInternalServerError",
-                  "pascalCase": {
-                    "safeName": "TestOperationRequestInternalServerError",
-                    "unsafeName": "TestOperationRequestInternalServerError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "TEST_OPERATION_REQUEST_INTERNAL_SERVER_ERROR",
-                    "unsafeName": "TEST_OPERATION_REQUEST_INTERNAL_SERVER_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "test_operation_request_internal_server_error",
-                    "unsafeName": "test_operation_request_internal_server_error",
-                  },
-                },
+                "name": "TestOperationRequestInternalServerError",
               },
             },
             {
@@ -566,25 +278,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "testOperationRequestClientRequestError",
-                    "unsafeName": "testOperationRequestClientRequestError",
-                  },
-                  "originalName": "TestOperationRequestClientRequestError",
-                  "pascalCase": {
-                    "safeName": "TestOperationRequestClientRequestError",
-                    "unsafeName": "TestOperationRequestClientRequestError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "TEST_OPERATION_REQUEST_CLIENT_REQUEST_ERROR",
-                    "unsafeName": "TEST_OPERATION_REQUEST_CLIENT_REQUEST_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "test_operation_request_client_request_error",
-                    "unsafeName": "test_operation_request_client_request_error",
-                  },
-                },
+                "name": "TestOperationRequestClientRequestError",
               },
             },
             {
@@ -596,25 +290,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "testOperationRequestServerError",
-                    "unsafeName": "testOperationRequestServerError",
-                  },
-                  "originalName": "TestOperationRequestServerError",
-                  "pascalCase": {
-                    "safeName": "TestOperationRequestServerError",
-                    "unsafeName": "TestOperationRequestServerError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "TEST_OPERATION_REQUEST_SERVER_ERROR",
-                    "unsafeName": "TEST_OPERATION_REQUEST_SERVER_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "test_operation_request_server_error",
-                    "unsafeName": "test_operation_request_server_error",
-                  },
-                },
+                "name": "TestOperationRequestServerError",
               },
             },
           ],
@@ -626,25 +302,7 @@
           "id": "endpoint_.testOperation",
           "idempotent": false,
           "method": "POST",
-          "name": {
-            "camelCase": {
-              "safeName": "testOperation",
-              "unsafeName": "testOperation",
-            },
-            "originalName": "testOperation",
-            "pascalCase": {
-              "safeName": "TestOperation",
-              "unsafeName": "TestOperation",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TEST_OPERATION",
-              "unsafeName": "TEST_OPERATION",
-            },
-            "snakeCase": {
-              "safeName": "test_operation",
-              "unsafeName": "test_operation",
-            },
-          },
+          "name": "testOperation",
           "pagination": undefined,
           "path": {
             "head": "/test",
@@ -659,49 +317,13 @@
             "extendedProperties": [],
             "extends": [],
             "extraProperties": false,
-            "name": {
-              "camelCase": {
-                "safeName": "testOperationRequest",
-                "unsafeName": "testOperationRequest",
-              },
-              "originalName": "testOperation_Request",
-              "pascalCase": {
-                "safeName": "TestOperationRequest",
-                "unsafeName": "TestOperationRequest",
-              },
-              "screamingSnakeCase": {
-                "safeName": "TEST_OPERATION_REQUEST",
-                "unsafeName": "TEST_OPERATION_REQUEST",
-              },
-              "snakeCase": {
-                "safeName": "test_operation_request",
-                "unsafeName": "test_operation_request",
-              },
-            },
+            "name": "testOperation_Request",
             "properties": [
               {
                 "availability": undefined,
                 "docs": undefined,
                 "name": {
-                  "name": {
-                    "camelCase": {
-                      "safeName": "value",
-                      "unsafeName": "value",
-                    },
-                    "originalName": "value",
-                    "pascalCase": {
-                      "safeName": "Value",
-                      "unsafeName": "Value",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "VALUE",
-                      "unsafeName": "VALUE",
-                    },
-                    "snakeCase": {
-                      "safeName": "value",
-                      "unsafeName": "value",
-                    },
-                  },
+                  "name": "value",
                   "wireValue": "value",
                 },
                 "propertyAccess": undefined,
@@ -758,25 +380,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "testOperationResponse200",
-                      "unsafeName": "testOperationResponse200",
-                    },
-                    "originalName": "testOperation_Response_200",
-                    "pascalCase": {
-                      "safeName": "TestOperationResponse200",
-                      "unsafeName": "TestOperationResponse200",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TEST_OPERATION_RESPONSE_200",
-                      "unsafeName": "TEST_OPERATION_RESPONSE_200",
-                    },
-                    "snakeCase": {
-                      "safeName": "test_operation_response_200",
-                      "unsafeName": "test_operation_response_200",
-                    },
-                  },
+                  "name": "testOperation_Response_200",
                   "type": "named",
                   "typeId": "testOperation_Response_200",
                 },
@@ -851,49 +455,13 @@
                 "extendedProperties": [],
                 "extends": [],
                 "extraProperties": false,
-                "name": {
-                  "camelCase": {
-                    "safeName": "testOperationRequest",
-                    "unsafeName": "testOperationRequest",
-                  },
-                  "originalName": "testOperation_Request",
-                  "pascalCase": {
-                    "safeName": "TestOperationRequest",
-                    "unsafeName": "TestOperationRequest",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "TEST_OPERATION_REQUEST",
-                    "unsafeName": "TEST_OPERATION_REQUEST",
-                  },
-                  "snakeCase": {
-                    "safeName": "test_operation_request",
-                    "unsafeName": "test_operation_request",
-                  },
-                },
+                "name": "testOperation_Request",
                 "properties": [
                   {
                     "availability": undefined,
                     "docs": undefined,
                     "name": {
-                      "name": {
-                        "camelCase": {
-                          "safeName": "value",
-                          "unsafeName": "value",
-                        },
-                        "originalName": "value",
-                        "pascalCase": {
-                          "safeName": "Value",
-                          "unsafeName": "Value",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "VALUE",
-                          "unsafeName": "VALUE",
-                        },
-                        "snakeCase": {
-                          "safeName": "value",
-                          "unsafeName": "value",
-                        },
-                      },
+                      "name": "value",
                       "wireValue": "value",
                     },
                     "propertyAccess": undefined,
@@ -954,25 +522,7 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": {
-                        "camelCase": {
-                          "safeName": "testOperationResponse200",
-                          "unsafeName": "testOperationResponse200",
-                        },
-                        "originalName": "testOperation_Response_200",
-                        "pascalCase": {
-                          "safeName": "TestOperationResponse200",
-                          "unsafeName": "TestOperationResponse200",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "TEST_OPERATION_RESPONSE_200",
-                          "unsafeName": "TEST_OPERATION_RESPONSE_200",
-                        },
-                        "snakeCase": {
-                          "safeName": "test_operation_response_200",
-                          "unsafeName": "test_operation_response_200",
-                        },
-                      },
+                      "name": "testOperation_Response_200",
                       "type": "named",
                       "typeId": "testOperation_Response_200",
                     },
@@ -1024,25 +574,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestBadRequestError",
-            "unsafeName": "testOperationRequestBadRequestError",
-          },
-          "originalName": "TestOperationRequestBadRequestError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestBadRequestError",
-            "unsafeName": "TestOperationRequestBadRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_BAD_REQUEST_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_BAD_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_bad_request_error",
-            "unsafeName": "test_operation_request_bad_request_error",
-          },
-        },
+        "name": "TestOperationRequestBadRequestError",
         "typeId": "TestOperationRequestBadRequestError",
       },
       "referencedTypes": Set {},
@@ -1056,25 +588,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-                "originalName": "error",
-                "pascalCase": {
-                  "safeName": "Error_",
-                  "unsafeName": "Error",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ERROR",
-                  "unsafeName": "ERROR",
-                },
-                "snakeCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-              },
+              "name": "error",
               "wireValue": "error",
             },
             "propertyAccess": undefined,
@@ -1107,25 +621,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "specific",
-                  "unsafeName": "specific",
-                },
-                "originalName": "specific",
-                "pascalCase": {
-                  "safeName": "Specific",
-                  "unsafeName": "Specific",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "SPECIFIC",
-                  "unsafeName": "SPECIFIC",
-                },
-                "snakeCase": {
-                  "safeName": "specific",
-                  "unsafeName": "specific",
-                },
-              },
+              "name": "specific",
               "wireValue": "specific",
             },
             "propertyAccess": undefined,
@@ -1176,25 +672,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestClientRequestError",
-            "unsafeName": "testOperationRequestClientRequestError",
-          },
-          "originalName": "TestOperationRequestClientRequestError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestClientRequestError",
-            "unsafeName": "TestOperationRequestClientRequestError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_CLIENT_REQUEST_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_CLIENT_REQUEST_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_client_request_error",
-            "unsafeName": "test_operation_request_client_request_error",
-          },
-        },
+        "name": "TestOperationRequestClientRequestError",
         "typeId": "TestOperationRequestClientRequestError",
       },
       "referencedTypes": Set {},
@@ -1208,25 +686,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-                "originalName": "error",
-                "pascalCase": {
-                  "safeName": "Error_",
-                  "unsafeName": "Error",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ERROR",
-                  "unsafeName": "ERROR",
-                },
-                "snakeCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-              },
+              "name": "error",
               "wireValue": "error",
             },
             "propertyAccess": undefined,
@@ -1259,25 +719,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "wildcard",
-                  "unsafeName": "wildcard",
-                },
-                "originalName": "wildcard",
-                "pascalCase": {
-                  "safeName": "Wildcard",
-                  "unsafeName": "Wildcard",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "WILDCARD",
-                  "unsafeName": "WILDCARD",
-                },
-                "snakeCase": {
-                  "safeName": "wildcard",
-                  "unsafeName": "wildcard",
-                },
-              },
+              "name": "wildcard",
               "wireValue": "wildcard",
             },
             "propertyAccess": undefined,
@@ -1328,25 +770,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestInternalServerError",
-            "unsafeName": "testOperationRequestInternalServerError",
-          },
-          "originalName": "TestOperationRequestInternalServerError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestInternalServerError",
-            "unsafeName": "TestOperationRequestInternalServerError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_INTERNAL_SERVER_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_INTERNAL_SERVER_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_internal_server_error",
-            "unsafeName": "test_operation_request_internal_server_error",
-          },
-        },
+        "name": "TestOperationRequestInternalServerError",
         "typeId": "TestOperationRequestInternalServerError",
       },
       "referencedTypes": Set {},
@@ -1360,25 +784,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-                "originalName": "error",
-                "pascalCase": {
-                  "safeName": "Error_",
-                  "unsafeName": "Error",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ERROR",
-                  "unsafeName": "ERROR",
-                },
-                "snakeCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-              },
+              "name": "error",
               "wireValue": "error",
             },
             "propertyAccess": undefined,
@@ -1411,25 +817,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "serverSpecific",
-                  "unsafeName": "serverSpecific",
-                },
-                "originalName": "server_specific",
-                "pascalCase": {
-                  "safeName": "ServerSpecific",
-                  "unsafeName": "ServerSpecific",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "SERVER_SPECIFIC",
-                  "unsafeName": "SERVER_SPECIFIC",
-                },
-                "snakeCase": {
-                  "safeName": "server_specific",
-                  "unsafeName": "server_specific",
-                },
-              },
+              "name": "server_specific",
               "wireValue": "server_specific",
             },
             "propertyAccess": undefined,
@@ -1480,25 +868,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationRequestServerError",
-            "unsafeName": "testOperationRequestServerError",
-          },
-          "originalName": "TestOperationRequestServerError",
-          "pascalCase": {
-            "safeName": "TestOperationRequestServerError",
-            "unsafeName": "TestOperationRequestServerError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_REQUEST_SERVER_ERROR",
-            "unsafeName": "TEST_OPERATION_REQUEST_SERVER_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_request_server_error",
-            "unsafeName": "test_operation_request_server_error",
-          },
-        },
+        "name": "TestOperationRequestServerError",
         "typeId": "TestOperationRequestServerError",
       },
       "referencedTypes": Set {},
@@ -1512,25 +882,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-                "originalName": "error",
-                "pascalCase": {
-                  "safeName": "Error_",
-                  "unsafeName": "Error",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ERROR",
-                  "unsafeName": "ERROR",
-                },
-                "snakeCase": {
-                  "safeName": "error",
-                  "unsafeName": "error",
-                },
-              },
+              "name": "error",
               "wireValue": "error",
             },
             "propertyAccess": undefined,
@@ -1563,25 +915,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "serverWildcard",
-                  "unsafeName": "serverWildcard",
-                },
-                "originalName": "server_wildcard",
-                "pascalCase": {
-                  "safeName": "ServerWildcard",
-                  "unsafeName": "ServerWildcard",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "SERVER_WILDCARD",
-                  "unsafeName": "SERVER_WILDCARD",
-                },
-                "snakeCase": {
-                  "safeName": "server_wildcard",
-                  "unsafeName": "server_wildcard",
-                },
-              },
+              "name": "server_wildcard",
               "wireValue": "server_wildcard",
             },
             "propertyAccess": undefined,
@@ -1632,25 +966,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "testOperationResponse200",
-            "unsafeName": "testOperationResponse200",
-          },
-          "originalName": "testOperation_Response_200",
-          "pascalCase": {
-            "safeName": "TestOperationResponse200",
-            "unsafeName": "TestOperationResponse200",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TEST_OPERATION_RESPONSE_200",
-            "unsafeName": "TEST_OPERATION_RESPONSE_200",
-          },
-          "snakeCase": {
-            "safeName": "test_operation_response_200",
-            "unsafeName": "test_operation_response_200",
-          },
-        },
+        "name": "testOperation_Response_200",
         "typeId": "testOperation_Response_200",
       },
       "referencedTypes": Set {},
@@ -1664,25 +980,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "message",
-                  "unsafeName": "message",
-                },
-                "originalName": "message",
-                "pascalCase": {
-                  "safeName": "Message",
-                  "unsafeName": "Message",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "MESSAGE",
-                  "unsafeName": "MESSAGE",
-                },
-                "snakeCase": {
-                  "safeName": "message",
-                  "unsafeName": "message",
-                },
-              },
+              "name": "message",
               "wireValue": "message",
             },
             "propertyAccess": undefined,

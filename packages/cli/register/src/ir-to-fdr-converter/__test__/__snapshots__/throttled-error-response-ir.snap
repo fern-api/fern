@@ -1,25 +1,7 @@
 {
   "apiDisplayName": "Throttled Error Response Test",
   "apiDocs": undefined,
-  "apiName": {
-    "camelCase": {
-      "safeName": "throttledErrorResponseTest",
-      "unsafeName": "throttledErrorResponseTest",
-    },
-    "originalName": "Throttled Error Response Test",
-    "pascalCase": {
-      "safeName": "ThrottledErrorResponseTest",
-      "unsafeName": "ThrottledErrorResponseTest",
-    },
-    "screamingSnakeCase": {
-      "safeName": "THROTTLED_ERROR_RESPONSE_TEST",
-      "unsafeName": "THROTTLED_ERROR_RESPONSE_TEST",
-    },
-    "snakeCase": {
-      "safeName": "throttled_error_response_test",
-      "unsafeName": "throttled_error_response_test",
-    },
-  },
+  "apiName": "Throttled Error Response Test",
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -31,25 +13,7 @@
   "basePath": undefined,
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
-        },
-        "originalName": "errorInstanceId",
-        "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
-        },
-        "screamingSnakeCase": {
-          "safeName": "ERROR_INSTANCE_ID",
-          "unsafeName": "ERROR_INSTANCE_ID",
-        },
-        "snakeCase": {
-          "safeName": "error_instance_id",
-          "unsafeName": "error_instance_id",
-        },
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId",
     },
   },
@@ -62,25 +26,7 @@
   "errors": {
     "GetResourceRequestTooManyRequestsError": {
       "discriminantValue": {
-        "name": {
-          "camelCase": {
-            "safeName": "getResourceRequestTooManyRequestsError",
-            "unsafeName": "getResourceRequestTooManyRequestsError",
-          },
-          "originalName": "GetResourceRequestTooManyRequestsError",
-          "pascalCase": {
-            "safeName": "GetResourceRequestTooManyRequestsError",
-            "unsafeName": "GetResourceRequestTooManyRequestsError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_RESOURCE_REQUEST_TOO_MANY_REQUESTS_ERROR",
-            "unsafeName": "GET_RESOURCE_REQUEST_TOO_MANY_REQUESTS_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "get_resource_request_too_many_requests_error",
-            "unsafeName": "get_resource_request_too_many_requests_error",
-          },
-        },
+        "name": "GetResourceRequestTooManyRequestsError",
         "wireValue": "GetResourceRequestTooManyRequestsError",
       },
       "displayName": "TooManyRequestsError",
@@ -92,25 +38,7 @@
           "docs": "Number of seconds to wait before the next request.",
           "env": undefined,
           "name": {
-            "name": {
-              "camelCase": {
-                "safeName": "retryAfter",
-                "unsafeName": "retryAfter",
-              },
-              "originalName": "Retry-After",
-              "pascalCase": {
-                "safeName": "RetryAfter",
-                "unsafeName": "RetryAfter",
-              },
-              "screamingSnakeCase": {
-                "safeName": "RETRY_AFTER",
-                "unsafeName": "RETRY_AFTER",
-              },
-              "snakeCase": {
-                "safeName": "retry_after",
-                "unsafeName": "retry_after",
-              },
-            },
+            "name": "Retry-After",
             "wireValue": "Retry-After",
           },
           "v2Examples": {
@@ -142,25 +70,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "getResourceRequestTooManyRequestsError",
-            "unsafeName": "getResourceRequestTooManyRequestsError",
-          },
-          "originalName": "GetResourceRequestTooManyRequestsError",
-          "pascalCase": {
-            "safeName": "GetResourceRequestTooManyRequestsError",
-            "unsafeName": "GetResourceRequestTooManyRequestsError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_RESOURCE_REQUEST_TOO_MANY_REQUESTS_ERROR",
-            "unsafeName": "GET_RESOURCE_REQUEST_TOO_MANY_REQUESTS_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "get_resource_request_too_many_requests_error",
-            "unsafeName": "get_resource_request_too_many_requests_error",
-          },
-        },
+        "name": "GetResourceRequestTooManyRequestsError",
       },
       "statusCode": 429,
       "type": {
@@ -173,25 +83,7 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": {
-          "camelCase": {
-            "safeName": "getResourceRequestTooManyRequestsError",
-            "unsafeName": "getResourceRequestTooManyRequestsError",
-          },
-          "originalName": "GetResourceRequestTooManyRequestsError",
-          "pascalCase": {
-            "safeName": "GetResourceRequestTooManyRequestsError",
-            "unsafeName": "GetResourceRequestTooManyRequestsError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_RESOURCE_REQUEST_TOO_MANY_REQUESTS_ERROR",
-            "unsafeName": "GET_RESOURCE_REQUEST_TOO_MANY_REQUESTS_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "get_resource_request_too_many_requests_error",
-            "unsafeName": "get_resource_request_too_many_requests_error",
-          },
-        },
+        "name": "GetResourceRequestTooManyRequestsError",
         "type": "named",
         "typeId": "GetResourceRequestTooManyRequestsError",
       },
@@ -274,25 +166,7 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": {
-                  "camelCase": {
-                    "safeName": "getResourceRequestTooManyRequestsError",
-                    "unsafeName": "getResourceRequestTooManyRequestsError",
-                  },
-                  "originalName": "GetResourceRequestTooManyRequestsError",
-                  "pascalCase": {
-                    "safeName": "GetResourceRequestTooManyRequestsError",
-                    "unsafeName": "GetResourceRequestTooManyRequestsError",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "GET_RESOURCE_REQUEST_TOO_MANY_REQUESTS_ERROR",
-                    "unsafeName": "GET_RESOURCE_REQUEST_TOO_MANY_REQUESTS_ERROR",
-                  },
-                  "snakeCase": {
-                    "safeName": "get_resource_request_too_many_requests_error",
-                    "unsafeName": "get_resource_request_too_many_requests_error",
-                  },
-                },
+                "name": "GetResourceRequestTooManyRequestsError",
               },
             },
           ],
@@ -304,25 +178,7 @@
           "id": "endpoint_.getResource",
           "idempotent": false,
           "method": "GET",
-          "name": {
-            "camelCase": {
-              "safeName": "getResource",
-              "unsafeName": "getResource",
-            },
-            "originalName": "getResource",
-            "pascalCase": {
-              "safeName": "GetResource",
-              "unsafeName": "GetResource",
-            },
-            "screamingSnakeCase": {
-              "safeName": "GET_RESOURCE",
-              "unsafeName": "GET_RESOURCE",
-            },
-            "snakeCase": {
-              "safeName": "get_resource",
-              "unsafeName": "get_resource",
-            },
-          },
+          "name": "getResource",
           "pagination": undefined,
           "path": {
             "head": "/api/resource",
@@ -348,25 +204,7 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "getResourceResponse200",
-                      "unsafeName": "getResourceResponse200",
-                    },
-                    "originalName": "getResource_Response_200",
-                    "pascalCase": {
-                      "safeName": "GetResourceResponse200",
-                      "unsafeName": "GetResourceResponse200",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "GET_RESOURCE_RESPONSE_200",
-                      "unsafeName": "GET_RESOURCE_RESPONSE_200",
-                    },
-                    "snakeCase": {
-                      "safeName": "get_resource_response_200",
-                      "unsafeName": "get_resource_response_200",
-                    },
-                  },
+                  "name": "getResource_Response_200",
                   "type": "named",
                   "typeId": "getResource_Response_200",
                 },
@@ -454,25 +292,7 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": {
-                        "camelCase": {
-                          "safeName": "getResourceResponse200",
-                          "unsafeName": "getResourceResponse200",
-                        },
-                        "originalName": "getResource_Response_200",
-                        "pascalCase": {
-                          "safeName": "GetResourceResponse200",
-                          "unsafeName": "GetResourceResponse200",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "GET_RESOURCE_RESPONSE_200",
-                          "unsafeName": "GET_RESOURCE_RESPONSE_200",
-                        },
-                        "snakeCase": {
-                          "safeName": "get_resource_response_200",
-                          "unsafeName": "get_resource_response_200",
-                        },
-                      },
+                      "name": "getResource_Response_200",
                       "type": "named",
                       "typeId": "getResource_Response_200",
                     },
@@ -525,25 +345,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "getResourceRequestTooManyRequestsError",
-            "unsafeName": "getResourceRequestTooManyRequestsError",
-          },
-          "originalName": "GetResourceRequestTooManyRequestsError",
-          "pascalCase": {
-            "safeName": "GetResourceRequestTooManyRequestsError",
-            "unsafeName": "GetResourceRequestTooManyRequestsError",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_RESOURCE_REQUEST_TOO_MANY_REQUESTS_ERROR",
-            "unsafeName": "GET_RESOURCE_REQUEST_TOO_MANY_REQUESTS_ERROR",
-          },
-          "snakeCase": {
-            "safeName": "get_resource_request_too_many_requests_error",
-            "unsafeName": "get_resource_request_too_many_requests_error",
-          },
-        },
+        "name": "GetResourceRequestTooManyRequestsError",
         "typeId": "GetResourceRequestTooManyRequestsError",
       },
       "referencedTypes": Set {},
@@ -557,25 +359,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "detail",
-                  "unsafeName": "detail",
-                },
-                "originalName": "detail",
-                "pascalCase": {
-                  "safeName": "Detail",
-                  "unsafeName": "Detail",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "DETAIL",
-                  "unsafeName": "DETAIL",
-                },
-                "snakeCase": {
-                  "safeName": "detail",
-                  "unsafeName": "detail",
-                },
-              },
+              "name": "detail",
               "wireValue": "detail",
             },
             "propertyAccess": undefined,
@@ -637,25 +421,7 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "getResourceResponse200",
-            "unsafeName": "getResourceResponse200",
-          },
-          "originalName": "getResource_Response_200",
-          "pascalCase": {
-            "safeName": "GetResourceResponse200",
-            "unsafeName": "GetResourceResponse200",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GET_RESOURCE_RESPONSE_200",
-            "unsafeName": "GET_RESOURCE_RESPONSE_200",
-          },
-          "snakeCase": {
-            "safeName": "get_resource_response_200",
-            "unsafeName": "get_resource_response_200",
-          },
-        },
+        "name": "getResource_Response_200",
         "typeId": "getResource_Response_200",
       },
       "referencedTypes": Set {},
@@ -669,25 +435,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-                "originalName": "id",
-                "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ID",
-                  "unsafeName": "ID",
-                },
-                "snakeCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
-              },
+              "name": "id",
               "wireValue": "id",
             },
             "propertyAccess": undefined,
@@ -720,25 +468,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "name",
-                  "unsafeName": "name",
-                },
-                "originalName": "name",
-                "pascalCase": {
-                  "safeName": "Name",
-                  "unsafeName": "Name",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "NAME",
-                  "unsafeName": "NAME",
-                },
-                "snakeCase": {
-                  "safeName": "name",
-                  "unsafeName": "name",
-                },
-              },
+              "name": "name",
               "wireValue": "name",
             },
             "propertyAccess": undefined,
