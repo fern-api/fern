@@ -1609,9 +1609,7 @@ export class DocsDefinitionResolver {
             const matched = this.ossWorkspaces.find(
                 (ws) => ws.workspaceName === apiName || ws.absoluteFilePath.split("/").pop() === apiName
             );
-            process.stderr.write(
-                "[graphql-scoping-debug] matched: " + (matched?.workspaceName ?? "NONE") + "\n"
-            );
+            process.stderr.write("[graphql-scoping-debug] matched: " + (matched?.workspaceName ?? "NONE") + "\n");
             workspacesToProcess = matched ? [matched] : [];
         } else if (this.ossWorkspaces.length === 1 && this.ossWorkspaces[0] != null) {
             workspacesToProcess = [this.ossWorkspaces[0]];
