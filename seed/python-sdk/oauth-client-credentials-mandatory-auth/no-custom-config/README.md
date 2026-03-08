@@ -38,8 +38,11 @@ Instantiate and use the client with the following:
 from seed import SeedOauthClientCredentialsMandatoryAuth
 
 client = SeedOauthClientCredentialsMandatoryAuth(
-    base_url="YOUR_BASE_URL",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
+
 client.auth.get_token_with_client_credentials(
     client_id="my_oauth_app_123",
     client_secret="sk_live_abcdef123456789",
@@ -57,7 +60,9 @@ import asyncio
 from seed import AsyncSeedOauthClientCredentialsMandatoryAuth
 
 client = AsyncSeedOauthClientCredentialsMandatoryAuth(
-    base_url="YOUR_BASE_URL",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
 
 
@@ -96,14 +101,15 @@ from seed import SeedOauthClientCredentialsMandatoryAuth
 
 # Option 1: Direct bearer token (bypass OAuth flow)
 client = SeedOauthClientCredentialsMandatoryAuth(
-    ..., token="my-pre-generated-bearer-token"
+    ...,
+    token="my-pre-generated-bearer-token",
 )
-
-from seed import SeedOauthClientCredentialsMandatoryAuth
 
 # Option 2: OAuth client credentials flow (automatic token management)
 client = SeedOauthClientCredentialsMandatoryAuth(
-    ..., client_id="your-client-id", client_secret="your-client-secret"
+    ...,
+    client_id="your-client-id",
+    client_secret="your-client-secret",
 )
 ```
 
@@ -117,9 +123,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedOauthClientCredentialsMandatoryAuth
 
-client = SeedOauthClientCredentialsMandatoryAuth(
-    ...,
-)
+client = SeedOauthClientCredentialsMandatoryAuth(...)
 response = client.auth.with_raw_response.get_token_with_client_credentials(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -151,14 +155,9 @@ client.auth.get_token_with_client_credentials(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedOauthClientCredentialsMandatoryAuth
 
-client = SeedOauthClientCredentialsMandatoryAuth(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedOauthClientCredentialsMandatoryAuth(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.auth.get_token_with_client_credentials(..., request_options={

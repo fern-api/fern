@@ -1,10 +1,44 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.15.2
+- version: 4.15.5
   changelogEntry:
     - summary: |
         Validation on request generation examples now correctly handles arrays on 
         query, header, and globalheader parameters and validates their elements.
       type: feat
+  createdAt: "2026-03-07"
+  irVersion: 65
+      
+- version: 4.15.4
+  changelogEntry:
+    - summary: |
+        Fix cross-reference links in C++ library documentation. Entity pages
+        now use relative links resolved via an entity registry, template
+        specializations link to their dedicated pages on index pages, namespace
+        index links are properly slugified, and operator method anchors use
+        deterministic safe names to avoid collisions.
+      type: fix
+  createdAt: "2026-03-07"
+  irVersion: 65
+
+- version: 4.15.3
+  changelogEntry:
+    - summary: |
+        Fix `fern generator upgrade` failing with `ENOENT` on `package.json`
+        when multiple CLI processes run concurrently (e.g., in parallel tests).
+        A cross-process file lock now serializes npm installs to the shared
+        `~/.fern/migration-cache` prefix, preventing concurrent install races.
+      type: fix
+  createdAt: "2026-03-07"
+  irVersion: 65
+
+- version: 4.15.2
+  changelogEntry:
+    - summary: |
+        Fix CLI error logging during local generation. `FernCliError` exceptions
+        are no longer double-logged, `LoggableFernCliError` now surfaces its
+        structured message, and all other errors pass the original error object
+        to `failWithoutThrowing` so the full stack trace is preserved.
+      type: fix
   createdAt: "2026-03-06"
   irVersion: 65
 

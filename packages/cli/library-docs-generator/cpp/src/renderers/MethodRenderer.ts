@@ -16,7 +16,7 @@
 
 import type { CppClassIr, CppDocstringIr, CppFunctionIr } from "../../../src/types/CppLibraryDocsIr.js";
 import type { RenderContext } from "../context.js";
-import { buildLinkPath, getShortName } from "../context.js";
+import { buildLinkPath, getShortName, OPERATOR_SYMBOL_MAP } from "../context.js";
 import { getCommonQualifiers, getOverloadSpecificQualifiers, renderBadges } from "./BadgeRenderer.js";
 import { renderDescriptionBlocksDeduped, renderSeeAlso, renderSegmentsTrimmed } from "./DescriptionRenderer.js";
 import { renderMethodParams, renderMethodTemplateParams } from "./ParamRenderer.js";
@@ -37,6 +37,20 @@ import { isEffectivelyDeleted, renderCallout, trimTrailingBlankLines } from "./s
  */
 function escapeNameForHeading(name: string): string {
     return name.replace(/</g, "&lt;");
+}
+
+// ---------------------------------------------------------------------------
+// Custom anchor ID generation
+// ---------------------------------------------------------------------------
+
+export function methodAnchorId(name: string): string {
+    for (const [symbol, safeName] of OPERATOR_SYMBOL_MAP) {
+        if (name === symbol) {
+            return safeName;
+        }
+    }
+    const result = name.toLowerCase().replace(/[^a-z0-9-]/g, "");
+    return result || "unknown";
 }
 
 // ---------------------------------------------------------------------------
@@ -1115,7 +1129,7 @@ export function renderSingleMethod(
     const lines: string[] = [];
     const displayName = escapeNameForHeading(func.name);
 
-    lines.push(`### ${displayName}`);
+    lines.push(`### ${displayName} [#${methodAnchorId(func.name)}]`);
     lines.push("");
 
     const content = renderMethodContent(func, ownerClass, ctx);
@@ -1278,7 +1292,7 @@ export function renderOverloadedMethod(
     const commonQuals = getCommonQualifiers(funcs);
 
     if (!options.skipHeading) {
-        lines.push(`### ${displayName}`);
+        lines.push(`### ${displayName} [#${methodAnchorId(funcs[0]?.name ?? "")}]`);
         lines.push("");
     }
     lines.push("<Tabs>");
@@ -1344,7 +1358,13 @@ export function renderOverloadedMethod(
         lines.push("");
 
         // Build combined signature CodeBlock
-        const links = ownerClass ? { [getShortName(ownerClass.path)]: buildLinkPath(ownerClass.path) } : {};
+        const links: Record<string, string> = {};
+        if (ownerClass) {
+            const ownerLinkPath = buildLinkPath(ownerClass.path);
+            if (ownerLinkPath) {
+                links[getShortName(ownerClass.path)] = ownerLinkPath;
+            }
+        }
         const signatures = deletedFuncs
             .map((f) => {
                 // Use the raw signature, strip =delete, then add normalized = delete;
@@ -1395,7 +1415,7 @@ export function renderOverloadedMethod(
 export function renderDestructor(func: CppFunctionIr, ownerClass: CppClassIr, ctx: RenderContext): string {
     const lines: string[] = [];
     const className = getShortName(ownerClass.path);
-    lines.push("### Destructor");
+    lines.push("### Destructor [#destructor]");
     lines.push("");
     lines.push(`### ~${className}`);
     lines.push("");

@@ -39,7 +39,10 @@ from seed import SeedLiteral
 client = SeedLiteral(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.headers.send(
+    endpoint_version="02-12-2024",
+    async_=True,
     query="What is the weather today",
 )
 ```
@@ -60,6 +63,8 @@ client = AsyncSeedLiteral(
 
 async def main() -> None:
     await client.headers.send(
+        endpoint_version="02-12-2024",
+        async_=True,
         query="What is the weather today",
     )
 
@@ -92,9 +97,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedLiteral
 
-client = SeedLiteral(
-    ...,
-)
+client = SeedLiteral(...)
 response = client.headers.with_raw_response.send(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -126,14 +129,9 @@ client.headers.send(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedLiteral
 
-client = SeedLiteral(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedLiteral(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.headers.send(..., request_options={

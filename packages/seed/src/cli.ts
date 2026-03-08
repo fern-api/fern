@@ -4,8 +4,16 @@ import { askToLogin } from "@fern-api/login";
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
 import { minimatch } from "minimatch";
+import os from "os";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import {
+    detectAffected,
+    findRepoRoot,
+    getChangedFiles,
+    resolveAffectedFixtures,
+    resolveAffectedGenerators
+} from "./commands/affected/index.js";
 import { cleanOrphanedSeedFolders } from "./commands/clean/index.js";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog.js";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog.js";
@@ -23,6 +31,7 @@ import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./comman
 import { TaskContextFactory } from "./commands/test/TaskContextFactory.js";
 import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner/index.js";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures.js";
+import { WorkspaceCache } from "./commands/test/WorkspaceCache.js";
 import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local/index.js";
 import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils.js";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog.js";
@@ -65,6 +74,7 @@ export async function tryRunCli(): Promise<void> {
     addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
     addListTestFixturesCommand(cli);
+    addAffectedCommand(cli);
     addCleanCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
@@ -90,7 +100,7 @@ function addTestCommand(cli: Argv) {
                 })
                 .option("parallel", {
                     type: "number",
-                    default: 4,
+                    default: Math.max(1, Math.min(os.cpus().length, 16)),
                     alias: "p"
                 })
                 .option("fixture", {
@@ -143,10 +153,75 @@ function addTestCommand(cli: Argv) {
                     choices: ["docker", "podman"],
                     demandOption: false,
                     description: "Explicitly specify which container runtime to use (docker or podman)"
+                })
+                .option("base-ref", {
+                    type: "string",
+                    demandOption: false,
+                    default: "origin/main",
+                    description: 'Git ref to diff against when using "affected" mode (default: origin/main)'
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
-            if (argv.generator != null) {
+
+            // Handle "affected" mode for --generator and --fixture
+            const isGeneratorAffected =
+                argv.generator != null && argv.generator.length === 1 && argv.generator[0] === "affected";
+            const isFixtureAffected =
+                argv.fixture != null && argv.fixture.length === 1 && argv.fixture[0] === "affected";
+
+            let affectedResult = undefined;
+            if (isGeneratorAffected || isFixtureAffected) {
+                const repoRoot = findRepoRoot();
+                const changedFiles = getChangedFiles(argv.baseRef, repoRoot);
+                affectedResult = detectAffected(changedFiles, generators);
+
+                // Log the detection summary
+                console.log("\n=== Affected Detection ===");
+                for (const line of affectedResult.summary) {
+                    console.log(`  ${line}`);
+                }
+
+                if (isGeneratorAffected) {
+                    const affectedGenerators = resolveAffectedGenerators(affectedResult, generators);
+                    if (affectedGenerators.length === 0) {
+                        console.log("No affected generators detected. Nothing to run.");
+                        return;
+                    }
+                    argv.generator = affectedGenerators.map((g) => g.workspaceName);
+                    console.log(`Affected generators: ${argv.generator.join(", ")}`);
+                }
+
+                if (isFixtureAffected) {
+                    if (affectedResult.allFixturesAffected) {
+                        // Let the per-generator fixture resolution handle it (will use all fixtures)
+                        argv.fixture = undefined;
+                        console.log("All fixtures affected.");
+                    } else if (
+                        affectedResult.affectedFixtures.length === 0 &&
+                        affectedResult.generatorsWithAllFixtures.length === 0
+                    ) {
+                        console.log("No affected fixtures detected. Nothing to run.");
+                        return;
+                    } else {
+                        // Keep argv.fixture non-null so the per-generator loop enters
+                        // the affected resolution branch (not the "all fixtures" branch).
+                        // resolveAffectedFixtures handles per-generator logic:
+                        // generators with source changes get all fixtures,
+                        // others get only the changed fixtures.
+                        if (affectedResult.affectedFixtures.length > 0) {
+                            console.log(`Changed fixtures: ${affectedResult.affectedFixtures.join(", ")}`);
+                        }
+                        if (affectedResult.generatorsWithAllFixtures.length > 0) {
+                            console.log(
+                                `Generators needing all fixtures: ${affectedResult.generatorsWithAllFixtures.join(", ")}`
+                            );
+                        }
+                    }
+                }
+                console.log("==========================\n");
+            }
+
+            if (argv.generator != null && !isGeneratorAffected) {
                 throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
             }
 
@@ -154,6 +229,7 @@ function addTestCommand(cli: Argv) {
             const lock = new Semaphore(argv.parallel);
             const tests: Promise<boolean>[] = [];
             const scriptRunners: ScriptRunner[] = [];
+            const testRunners: TestRunner[] = [];
 
             for (const generator of generators) {
                 if (argv.generator != null && !argv.generator.includes(generator.workspaceName)) {
@@ -162,19 +238,33 @@ function addTestCommand(cli: Argv) {
                 let testRunner: TestRunner;
                 let scriptRunner: ScriptRunner;
 
-                // If no fixtures passed in, use all available fixtures (without output folders)
+                // Resolve fixtures per-generator using a local variable to avoid leaking
+                // one generator's fixtures to the next iteration
+                let fixturesForGenerator: string[];
                 if (argv.fixture == null) {
-                    argv.fixture = getAvailableFixtures(generator, false);
+                    fixturesForGenerator = getAvailableFixtures(generator, false);
+                } else if (isFixtureAffected && affectedResult != null && !affectedResult.allFixturesAffected) {
+                    // In affected mode, resolve fixtures per-generator:
+                    // - Generators whose source changed get ALL their fixtures
+                    // - Other generators get only the changed fixtures
+                    const available = getAvailableFixtures(generator, false);
+                    fixturesForGenerator = resolveAffectedFixtures(affectedResult, available, generator.workspaceName);
+                    if (fixturesForGenerator.length === 0) {
+                        console.log(
+                            `No affected fixtures available for generator ${generator.workspaceName}. Skipping.`
+                        );
+                        continue;
+                    }
                 } else {
                     const availableFixturesForGlobbing = getAvailableFixtures(generator, false);
-                    argv.fixture = expandFixtureGlobs(argv.fixture, availableFixturesForGlobbing);
+                    fixturesForGenerator = expandFixtureGlobs(argv.fixture, availableFixturesForGlobbing);
                 }
 
                 // Get both formats of fixtures and check if the fixtures passed in are of one of the two formats allowed
                 const availableFixtures = getAvailableFixtures(generator, false);
                 const availableFixturesWithOutputFolders = getAvailableFixtures(generator, true);
 
-                for (const fixture of argv.fixture) {
+                for (const fixture of fixturesForGenerator) {
                     if (!availableFixtures.includes(fixture) && !availableFixturesWithOutputFolders.includes(fixture)) {
                         throw new Error(
                             `Fixture ${fixture} not found. Please make sure that it is a valid fixture for the generator ${generator.workspaceName}.`
@@ -185,7 +275,8 @@ function addTestCommand(cli: Argv) {
                 // Verify if there are multiple fixtures passed in or a fixture has a colon separated output folder, that
                 // the flag for the output folder is not also used
                 if (
-                    (argv.fixture.length > 1 || argv.fixture.some((fixture) => fixture.includes(":"))) &&
+                    (fixturesForGenerator.length > 1 ||
+                        fixturesForGenerator.some((fixture) => fixture.includes(":"))) &&
                     argv.outputFolder != null
                 ) {
                     throw new Error(
@@ -237,7 +328,8 @@ function addTestCommand(cli: Argv) {
                         skipScripts: argv.skipScripts,
                         scriptRunner,
                         keepContainer: false, // not used for local
-                        inspect: argv.inspect
+                        inspect: argv.inspect,
+                        workspaceCache: new WorkspaceCache()
                     });
                 } else {
                     scriptRunner = new ContainerScriptRunner(
@@ -255,26 +347,37 @@ function addTestCommand(cli: Argv) {
                         keepContainer: argv.keepContainer,
                         scriptRunner,
                         inspect: argv.inspect,
-                        runner: argv.containerRuntime as "docker" | "podman" | undefined
+                        runner: argv.containerRuntime as "docker" | "podman" | undefined,
+                        parallelism: argv.parallel,
+                        workspaceCache: new WorkspaceCache()
                     });
                 }
 
                 scriptRunners.push(scriptRunner);
+                testRunners.push(testRunner);
                 tests.push(
                     testGenerator({
                         generator,
                         runner: testRunner,
-                        fixtures: argv.fixture,
+                        fixtures: fixturesForGenerator,
                         outputFolder: argv.outputFolder,
                         inspect: argv.inspect
                     })
                 );
             }
 
-            const results = await Promise.all(tests);
+            let results: boolean[];
+            try {
+                results = await Promise.all(tests);
+            } finally {
+                // Always clean up containers and script runners, even if tests throw unexpectedly.
+                for (const scriptRunner of scriptRunners) {
+                    await scriptRunner.stop();
+                }
 
-            for (const scriptRunner of scriptRunners) {
-                await scriptRunner.stop();
+                for (const testRunner of testRunners) {
+                    await testRunner.cleanup();
+                }
             }
 
             // If any of the tests failed and allow-unexpected-failures is false, exit with a non-zero status code
@@ -300,7 +403,7 @@ function addTestRemoteLocalCommand(cli: Argv) {
                 })
                 .option("parallel", {
                     type: "number",
-                    default: 4,
+                    default: Math.max(1, Math.min(os.cpus().length, 16)),
                     alias: "p",
                     description: "Number of parallel test cases to run"
                 })
@@ -649,6 +752,73 @@ function addListTestFixturesCommand(cli: Argv) {
 
             // Output JSON to stdout (can be piped or captured directly)
             console.log(JSON.stringify({ generators: result }));
+        }
+    );
+}
+
+function addAffectedCommand(cli: Argv) {
+    cli.command(
+        "affected",
+        "Detect which generators and fixtures are affected by changes in the current branch",
+        (yargs) =>
+            yargs
+                .option("base-ref", {
+                    type: "string",
+                    demandOption: false,
+                    default: "origin/main",
+                    description: "Git ref to diff against (default: origin/main)"
+                })
+                .option("json", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "Output results as JSON"
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            const repoRoot = findRepoRoot();
+            const changedFiles = getChangedFiles(argv.baseRef, repoRoot);
+            const affected = detectAffected(changedFiles, generators);
+
+            if (argv.json) {
+                const resolvedGenerators = resolveAffectedGenerators(affected, generators);
+                console.log(
+                    JSON.stringify(
+                        {
+                            allGeneratorsAffected: affected.allGeneratorsAffected,
+                            allFixturesAffected: affected.allFixturesAffected,
+                            generators: resolvedGenerators.map((g) => g.workspaceName),
+                            generatorsWithAllFixtures: affected.generatorsWithAllFixtures,
+                            fixtures: affected.affectedFixtures,
+                            summary: affected.summary
+                        },
+                        null,
+                        2
+                    )
+                );
+            } else {
+                console.log("\n=== Affected Detection ===");
+                for (const line of affected.summary) {
+                    console.log(`  ${line}`);
+                }
+
+                const resolvedGenerators = resolveAffectedGenerators(affected, generators);
+                console.log(`\nAffected generators (${resolvedGenerators.length}):`);
+                for (const gen of resolvedGenerators) {
+                    const needsAllFixtures = affected.generatorsWithAllFixtures.includes(gen.workspaceName);
+                    console.log(`  - ${gen.workspaceName}${needsAllFixtures ? " (all fixtures)" : ""}`);
+                }
+
+                if (!affected.allFixturesAffected && affected.affectedFixtures.length > 0) {
+                    console.log(`\nChanged fixtures — all generators run these (${affected.affectedFixtures.length}):`);
+                    for (const fixture of affected.affectedFixtures) {
+                        console.log(`  - ${fixture}`);
+                    }
+                } else if (affected.allFixturesAffected) {
+                    console.log("\nAll fixtures affected.");
+                }
+                console.log("==========================\n");
+            }
         }
     );
 }

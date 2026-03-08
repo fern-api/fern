@@ -38,11 +38,15 @@ Instantiate and use the client with the following:
 from seed import SeedExhaustive
 
 client = SeedExhaustive(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.endpoints.container.get_and_return_list_of_primitives(
-    request=["string", "string"],
+    request=[
+        "string",
+        "string"
+    ],
 )
 ```
 
@@ -52,18 +56,22 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+from seed import SeedExhaustive
 
-from seed import AsyncSeedExhaustive
+from seed.matryoshka.doll.structure import AsyncSeedExhaustive
 
 client = AsyncSeedExhaustive(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
     await client.endpoints.container.get_and_return_list_of_primitives(
-        request=["string", "string"],
+        request=[
+            "string",
+            "string"
+        ],
     )
 
 
@@ -76,7 +84,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```python
-from seed.core.api_error import ApiError
+from seed.matryoshka.doll.structure.core.api_error import ApiError
 
 try:
     client.endpoints.container.get_and_return_list_of_primitives(...)
@@ -93,18 +101,14 @@ Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used 
 from seed import SeedExhaustive
 
 client = SeedExhaustive(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.endpoints.pagination.list_items(
+
+client.endpoints.pagination.list_items(
     cursor="cursor",
     limit=1,
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 ```
 
 ```python
@@ -124,25 +128,13 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
-client = SeedExhaustive(
-    ...,
-)
-response = client.endpoints.container.with_raw_response.get_and_return_list_of_primitives(
-    ...
-)
+client = SeedExhaustive(...)
+response = client.endpoints.container.with_raw_response.get_and_return_list_of_primitives(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
-pager = client.endpoints.pagination.list_items(...)
-print(pager.response)  # access the typed response for the first page
-for item in pager:
-    print(item)  # access the underlying object(s)
-for page in pager.iter_pages():
-    print(page.response)  # access the typed response for each page
-    for item in page:
-        print(item)  # access the underlying object(s)
 ```
 
 ### Retries
@@ -170,14 +162,9 @@ client.endpoints.container.get_and_return_list_of_primitives(..., request_option
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
+from seed.matryoshka.doll.structure import SeedExhaustive
 
-from seed import SeedExhaustive
-
-client = SeedExhaustive(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedExhaustive(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.endpoints.container.get_and_return_list_of_primitives(..., request_options={
@@ -192,7 +179,7 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedExhaustive
+from seed.matryoshka.doll.structure import SeedExhaustive
 
 client = SeedExhaustive(
     ...,

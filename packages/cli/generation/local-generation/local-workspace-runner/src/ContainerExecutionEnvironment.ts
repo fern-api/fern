@@ -11,6 +11,7 @@ import {
 import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 
 export class ContainerExecutionEnvironment implements ExecutionEnvironment {
+    public readonly usesContainerPaths = true;
     private readonly containerImage: string;
     private readonly keepContainer: boolean;
     private readonly runner?: ContainerRunner;
