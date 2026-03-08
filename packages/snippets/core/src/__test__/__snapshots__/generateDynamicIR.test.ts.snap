@@ -11,13 +11,7 @@ exports[`generateDynamicIR > go 1`] = `
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": undefined,
-          "originalName": "getTestData",
-          "pascalCase": undefined,
-          "screamingSnakeCase": undefined,
-          "snakeCase": undefined,
-        },
+        "name": "getTestData",
       },
       "examples": [],
       "location": {
@@ -50,25 +44,13 @@ exports[`generateDynamicIR > go 1`] = `
           "file": undefined,
           "packagePath": [],
         },
-        "name": {
-          "camelCase": undefined,
-          "originalName": "GetTestDataResponse",
-          "pascalCase": undefined,
-          "screamingSnakeCase": undefined,
-          "snakeCase": undefined,
-        },
+        "name": "GetTestDataResponse",
       },
       "extends": undefined,
       "properties": [
         {
           "name": {
-            "name": {
-              "camelCase": undefined,
-              "originalName": "message",
-              "pascalCase": undefined,
-              "screamingSnakeCase": undefined,
-              "snakeCase": undefined,
-            },
+            "name": "message",
             "wireValue": "message",
           },
           "propertyAccess": undefined,
