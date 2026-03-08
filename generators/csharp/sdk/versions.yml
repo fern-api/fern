@@ -1,4 +1,37 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.23.10
+  changelogEntry:
+    - summary: |
+        Optimize context construction performance: replace expensive O(n) string
+        split/filter/join in ModelNavigator's tree indexing with O(1) incremental
+        path building, skip recursion into name-casing variant branches that only
+        contain primitive values, and lazily initialize the CsharpFormatter so
+        the csharpier tool path is only resolved when formatting is actually needed.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 2.23.9
+  changelogEntry:
+    - summary: |
+        Sync and cache NuGet dependencies across all C# Dockerfiles. Updates test
+        framework packages to match generated SDK versions and adds NuGet restore
+        caching to the generator Dockerfiles.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+- version: 2.23.8
+  changelogEntry:
+    - summary: |
+        Reduce dotnet CLI process spawns during project setup by generating
+        the `.slnx` solution file and test project reference directly as
+        templates instead of invoking 5 separate `dotnet` CLI commands
+        (`dotnet new sln`, `dotnet sln add` ×2, `dotnet remove reference`,
+        `dotnet add reference`). This eliminates ~5-10s of cold .NET CLI
+        startup overhead per generation run.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
 - version: 2.23.7
   changelogEntry:
     - summary: |
@@ -8,7 +41,6 @@
       type: chore
   createdAt: "2026-03-07"
   irVersion: 62
-
 - version: 2.23.6
   changelogEntry:
     - summary: |
