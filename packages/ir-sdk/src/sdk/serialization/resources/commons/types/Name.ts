@@ -8,18 +8,18 @@ import { SafeAndUnsafeString } from "./SafeAndUnsafeString.js";
 export const Name: core.serialization.ObjectSchema<serializers.Name.Raw, FernIr.Name> =
     core.serialization.objectWithoutOptionalProperties({
         originalName: core.serialization.string(),
-        camelCase: SafeAndUnsafeString.optional(),
-        pascalCase: SafeAndUnsafeString.optional(),
-        snakeCase: SafeAndUnsafeString.optional(),
-        screamingSnakeCase: SafeAndUnsafeString.optional(),
+        camelCase: SafeAndUnsafeString,
+        pascalCase: SafeAndUnsafeString,
+        snakeCase: SafeAndUnsafeString,
+        screamingSnakeCase: SafeAndUnsafeString,
     });
 
 export declare namespace Name {
     export interface Raw {
         originalName: string;
-        camelCase?: SafeAndUnsafeString.Raw | null;
-        pascalCase?: SafeAndUnsafeString.Raw | null;
-        snakeCase?: SafeAndUnsafeString.Raw | null;
-        screamingSnakeCase?: SafeAndUnsafeString.Raw | null;
+        camelCase: SafeAndUnsafeString.Raw;
+        pascalCase: SafeAndUnsafeString.Raw;
+        snakeCase: SafeAndUnsafeString.Raw;
+        screamingSnakeCase: SafeAndUnsafeString.Raw;
     }
 }

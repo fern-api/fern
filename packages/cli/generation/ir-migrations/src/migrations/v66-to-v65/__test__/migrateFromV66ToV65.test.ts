@@ -139,8 +139,8 @@ describe("migrateFromV66ToV65", () => {
 
         // Name casings should pass through unchanged since they're already present
         expect(migratedIR.apiName.originalName).toBe("TestApi");
-        expect(migratedIR.apiName.camelCase.unsafeName).toBe("testApi");
-        expect(migratedIR.apiName.pascalCase.unsafeName).toBe("TestApi");
+        expect(migratedIR.apiName.camelCase!.unsafeName).toBe("testApi");
+        expect(migratedIR.apiName.pascalCase!.unsafeName).toBe("TestApi");
     });
 
     it("handles both smartCasing and generationLanguage being set", () => {
