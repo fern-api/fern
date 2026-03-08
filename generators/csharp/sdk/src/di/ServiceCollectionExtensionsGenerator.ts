@@ -46,7 +46,7 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
     }
 
     protected getFilepath(): RelativeFilePath {
-        return RelativeFilePath.of(`Extensions/ServiceCollectionExtensions.cs`);
+        return RelativeFilePath.of(`ServiceCollectionExtensions.cs`);
     }
 
     /**
@@ -248,7 +248,7 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
         const class_ = this.csharp.class_({
             reference: this.csharp.classReference({
                 name: "ServiceCollectionExtensions",
-                namespace: `${this.namespaces.root}.Extensions`
+                namespace: this.namespaces.root
             }),
             access: ast.Access.Public,
             static_: true
@@ -268,10 +268,10 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
 
         return new CSharpFile({
             clazz: class_,
-            directory: RelativeFilePath.of("Extensions"),
+            directory: RelativeFilePath.of(""),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: `${this.namespaces.root}.Extensions`,
+            namespace: this.namespaces.root,
             generation: this.generation,
             fileHeader: "#if !NETFRAMEWORK",
             fileFooter: "#endif"
@@ -338,7 +338,7 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
                         generics: [
                             this.csharp.classReference({
                                 name: this.optionsClassName,
-                                namespace: `${this.namespaces.root}.Extensions`
+                                namespace: this.namespaces.root
                             })
                         ]
                     })
@@ -417,6 +417,8 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
             body: this.csharp.codeblock((writer) => {
                 writer.writeLine(`services.AddHttpClient("${this.clientName}");`);
                 writer.writeLine("");
+
+                // Register the root client concrete type
                 writer.writeLine(
                     `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped(services, provider =>`
                 );
@@ -458,6 +460,40 @@ export class ServiceCollectionExtensionsGenerator extends FileGenerator<CSharpFi
                 writer.writeLine(`return new ${this.clientName}(${constructorArgs.join(", ")});`);
                 writer.dedent();
                 writer.writeLine("});");
+                writer.writeLine("");
+
+                // Register the root client interface, resolved via the concrete root client
+                const interfaceName = `I${this.clientName}`;
+                writer.writeLine(
+                    `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<${interfaceName}>(services, provider => provider.GetRequiredService<${this.clientName}>());`
+                );
+                writer.writeLine("");
+
+                // Register subclient interfaces and concrete types, resolved via the root client's properties
+                const subpackages = this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
+                for (const subpackage of subpackages) {
+                    if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
+                        const subpackagePropertyName = subpackage.name.pascalCase.safeName;
+                        const subClientClassName = `${subpackage.name.pascalCase.unsafeName}Client`;
+                        const subClientInterfaceName = `I${subClientClassName}`;
+                        const subClientClassRef = this.context.getSubpackageClassReference(subpackage);
+                        const subClientInterfaceRef = this.context.getSubpackageInterfaceReference(subpackage);
+                        const subClientFqn =
+                            subClientClassRef.namespace !== this.namespaces.root
+                                ? `${subClientClassRef.namespace}.${subClientClassName}`
+                                : subClientClassName;
+                        const subClientInterfaceFqn =
+                            subClientInterfaceRef.namespace !== this.namespaces.root
+                                ? `${subClientInterfaceRef.namespace}.${subClientInterfaceName}`
+                                : subClientInterfaceName;
+                        writer.writeLine(
+                            `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<${subClientInterfaceFqn}>(services, provider => provider.GetRequiredService<${this.clientName}>().${subpackagePropertyName});`
+                        );
+                        writer.writeLine(
+                            `Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<${subClientFqn}>(services, provider => (${subClientFqn})provider.GetRequiredService<${this.clientName}>().${subpackagePropertyName});`
+                        );
+                    }
+                }
                 writer.writeLine("");
                 writer.writeLine("return services;");
             })

@@ -213,8 +213,8 @@ fixtures:
         include-exception-handler: true
       outputFolder: include-exception-handler
     - customConfig:
-        generate-di-extensions: true
-      outputFolder: generate-di-extensions
+        generate-dependency-injection-extensions: true
+      outputFolder: generate-dependency-injection-extensions
   enum:
     - customConfig: null
       outputFolder: forward-compatible-enums
@@ -291,14 +291,14 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        generate-di-extensions: true
-      outputFolder: generate-di-extensions
+        generate-dependency-injection-extensions: true
+      outputFolder: generate-dependency-injection-extensions
   inferred-auth-explicit:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        generate-di-extensions: true
-      outputFolder: generate-di-extensions
+        generate-dependency-injection-extensions: true
+      outputFolder: generate-dependency-injection-extensions
   streaming:
     - customConfig: null
       outputFolder: no-custom-config

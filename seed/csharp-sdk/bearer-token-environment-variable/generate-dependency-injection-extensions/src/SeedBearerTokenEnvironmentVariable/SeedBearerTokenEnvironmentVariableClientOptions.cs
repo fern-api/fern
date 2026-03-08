@@ -1,6 +1,6 @@
 #if !NETFRAMEWORK
 
-namespace SeedBearerTokenEnvironmentVariable.Extensions;
+namespace SeedBearerTokenEnvironmentVariable;
 
 /// <summary>
 /// Configuration options for the <see cref="SeedBearerTokenEnvironmentVariableClient"/> when using dependency injection.

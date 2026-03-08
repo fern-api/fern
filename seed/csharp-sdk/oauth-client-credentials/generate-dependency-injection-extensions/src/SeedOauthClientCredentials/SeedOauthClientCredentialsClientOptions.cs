@@ -1,31 +1,21 @@
 #if !NETFRAMEWORK
 
-namespace SeedInferredAuthExplicit.Extensions;
+namespace SeedOauthClientCredentials;
 
 /// <summary>
-/// Configuration options for the <see cref="SeedInferredAuthExplicitClient"/> when using dependency injection.
+/// Configuration options for the <see cref="SeedOauthClientCredentialsClient"/> when using dependency injection.
 /// </summary>
-public class SeedInferredAuthExplicitClientOptions
+public class SeedOauthClientCredentialsClientOptions
 {
     /// <summary>
-    /// The xApiKey for authentication.
-    /// </summary>
-    public string? XApiKey { get; set; }
-
-    /// <summary>
-    /// The clientId for authentication.
+    /// The client ID for OAuth authentication.
     /// </summary>
     public string? ClientId { get; set; }
 
     /// <summary>
-    /// The clientSecret for authentication.
+    /// The client secret for OAuth authentication.
     /// </summary>
     public string? ClientSecret { get; set; }
-
-    /// <summary>
-    /// The scope for authentication.
-    /// </summary>
-    public string? Scope { get; set; }
 
     /// <summary>
     /// The base URL for the API. If not specified, the default environment URL is used.

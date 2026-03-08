@@ -3,7 +3,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 
-namespace SeedBearerTokenEnvironmentVariable.Extensions;
+namespace SeedBearerTokenEnvironmentVariable;
 
 public static class ServiceCollectionExtensions
 {
@@ -35,6 +35,23 @@ public static class ServiceCollectionExtensions
 
                 return new SeedBearerTokenEnvironmentVariableClient(options.ApiKey, clientOptions);
             }
+        );
+
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<ISeedBearerTokenEnvironmentVariableClient>(
+            services,
+            provider => provider.GetRequiredService<SeedBearerTokenEnvironmentVariableClient>()
+        );
+
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<IServiceClient>(
+            services,
+            provider =>
+                provider.GetRequiredService<SeedBearerTokenEnvironmentVariableClient>().Service
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<ServiceClient>(
+            services,
+            provider =>
+                (ServiceClient)
+                    provider.GetRequiredService<SeedBearerTokenEnvironmentVariableClient>().Service
         );
 
         return services;

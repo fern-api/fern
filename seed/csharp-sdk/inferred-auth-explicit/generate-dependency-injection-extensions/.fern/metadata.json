@@ -3,7 +3,7 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "generate-di-extensions": true
+    "generate-dependency-injection-extensions": true
   },
   "sdkVersion": "0.0.1"
 }

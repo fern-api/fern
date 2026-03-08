@@ -33,14 +33,14 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
     }
 
     protected getFilepath(): RelativeFilePath {
-        return RelativeFilePath.of(`Extensions/${this.optionsClassName}.cs`);
+        return RelativeFilePath.of(`${this.optionsClassName}.cs`);
     }
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
             reference: this.csharp.classReference({
                 name: this.optionsClassName,
-                namespace: `${this.namespaces.root}.Extensions`
+                namespace: this.namespaces.root
             }),
             access: ast.Access.Public,
             summary: `Configuration options for the <see cref="${this.clientName}"/> when using dependency injection.`
@@ -54,10 +54,10 @@ export class DependencyInjectionOptionsGenerator extends FileGenerator<CSharpFil
 
         return new CSharpFile({
             clazz: class_,
-            directory: RelativeFilePath.of("Extensions"),
+            directory: RelativeFilePath.of(""),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: `${this.namespaces.root}.Extensions`,
+            namespace: this.namespaces.root,
             generation: this.generation,
             fileHeader: "#if !NETFRAMEWORK",
             fileFooter: "#endif"

@@ -1,0 +1,125 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DI generation patterns > DependencyInjectionOptions class structure > generates options class with auth and config properties 1`] = `
+"namespace MyApi;
+
+/// <summary>
+/// Configuration options for the <see cref="MyApiClient"/> when using dependency injection.
+/// </summary>
+public class MyApiClientOptions
+{
+    /// <summary>
+    /// The apiKey to use for authentication.
+    /// </summary>
+    public string? ApiKey { get; set; }
+
+    /// <summary>
+    /// The base URL for the API. If not specified, the default environment URL is used.
+    /// </summary>
+    public string? BaseUrl { get; set; }
+}
+"
+`;
+
+exports[`DI generation patterns > IConfigurationSection overload > generates IConfigurationSection parameter overload 1`] = `
+"using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+
+namespace MyApi;
+
+public static class ServiceCollectionExtensions
+{
+    /// <summary>
+    /// Registers the <see cref="MyApiClient"/> and related services with configuration from the specified <see cref="IConfigurationSection"/>.
+    /// </summary>
+    public static IServiceCollection AddMyApiClient(this IServiceCollection services, IConfigurationSection configurationSection) {
+        services.AddOptions<MyApiClientOptions>()
+            .Bind(configurationSection);
+        
+        return services.AddMyApiClientInternal();
+    }
+
+}
+"
+`;
+
+exports[`DI generation patterns > ServiceCollectionExtensions class structure > generates Action<Options> overload 1`] = `
+"using Microsoft.Extensions.DependencyInjection;
+using System;
+
+namespace MyApi;
+
+public static class ServiceCollectionExtensions
+{
+    /// <summary>
+    /// Registers the <see cref="MyApiClient"/> and related services with the specified configuration.
+    /// </summary>
+    public static IServiceCollection AddMyApiClient(this IServiceCollection services, Action<MyApiClientOptions> configure) {
+        services.AddOptions<MyApiClientOptions>()
+            .Configure(configure);
+        
+        return services.AddMyApiClientInternal();
+    }
+
+}
+"
+`;
+
+exports[`DI generation patterns > ServiceCollectionExtensions class structure > generates a static class with extension methods 1`] = `
+"using Microsoft.Extensions.DependencyInjection;
+
+namespace MyApi;
+
+public static class ServiceCollectionExtensions
+{
+    /// <summary>
+    /// Registers the <see cref="MyApiClient"/> and related services in the dependency injection container.
+    /// </summary>
+    public static IServiceCollection AddMyApiClient(this IServiceCollection services) {
+        services.AddOptions<MyApiClientOptions>()
+            .BindConfiguration("MyApiClient");
+        
+        return services.AddMyApiClientInternal();
+    }
+
+}
+"
+`;
+
+exports[`DI generation patterns > ServiceCollectionExtensions class structure > generates internal registration with root client and interface 1`] = `
+"using Microsoft.Extensions.DependencyInjection;
+
+namespace MyApi;
+
+public static class ServiceCollectionExtensions
+{
+    private static IServiceCollection AddMyApiClientInternal(this IServiceCollection services) {
+        services.AddHttpClient("MyApiClient");
+        
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped(services, provider =>
+        {
+            var options = provider.GetRequiredService<Microsoft.Extensions.Options.IOptionsSnapshot<MyApiClientOptions>>().Value;
+            var httpClientFactory = provider.GetRequiredService<System.Net.Http.IHttpClientFactory>();
+            
+            var clientOptions = new ClientOptions
+            {
+                HttpClient = httpClientFactory.CreateClient("MyApiClient"),
+                MaxRetries = options.MaxRetries,
+                Timeout = options.Timeout,
+                BaseUrl = !string.IsNullOrEmpty(options.BaseUrl) ? options.BaseUrl! : "",
+            };
+            
+            return new MyApiClient(options.ApiKey!, clientOptions);
+        });
+        
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<IMyApiClient>(services, provider => provider.GetRequiredService<MyApiClient>());
+        
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<IServiceClient>(services, provider => provider.GetRequiredService<MyApiClient>().Service);
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<ServiceClient>(services, provider => (ServiceClient)provider.GetRequiredService<MyApiClient>().Service);
+        
+        return services;
+    }
+
+}
+"
+`;

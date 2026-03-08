@@ -3,7 +3,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 
-namespace SeedInferredAuthExplicit.Extensions;
+namespace SeedInferredAuthExplicit;
 
 public static class ServiceCollectionExtensions
 {
@@ -39,6 +39,50 @@ public static class ServiceCollectionExtensions
                     clientOptions
                 );
             }
+        );
+
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<ISeedInferredAuthExplicitClient>(
+            services,
+            provider => provider.GetRequiredService<SeedInferredAuthExplicitClient>()
+        );
+
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<IAuthClient>(
+            services,
+            provider => provider.GetRequiredService<SeedInferredAuthExplicitClient>().Auth
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<AuthClient>(
+            services,
+            provider =>
+                (AuthClient)provider.GetRequiredService<SeedInferredAuthExplicitClient>().Auth
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<SeedInferredAuthExplicit.NestedNoAuth.INestedNoAuthClient>(
+            services,
+            provider => provider.GetRequiredService<SeedInferredAuthExplicitClient>().NestedNoAuth
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<SeedInferredAuthExplicit.NestedNoAuth.NestedNoAuthClient>(
+            services,
+            provider =>
+                (SeedInferredAuthExplicit.NestedNoAuth.NestedNoAuthClient)
+                    provider.GetRequiredService<SeedInferredAuthExplicitClient>().NestedNoAuth
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<SeedInferredAuthExplicit.Nested.INestedClient>(
+            services,
+            provider => provider.GetRequiredService<SeedInferredAuthExplicitClient>().Nested
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<SeedInferredAuthExplicit.Nested.NestedClient>(
+            services,
+            provider =>
+                (SeedInferredAuthExplicit.Nested.NestedClient)
+                    provider.GetRequiredService<SeedInferredAuthExplicitClient>().Nested
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<ISimpleClient>(
+            services,
+            provider => provider.GetRequiredService<SeedInferredAuthExplicitClient>().Simple
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<SimpleClient>(
+            services,
+            provider =>
+                (SimpleClient)provider.GetRequiredService<SeedInferredAuthExplicitClient>().Simple
         );
 
         return services;

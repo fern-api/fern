@@ -89,7 +89,7 @@ export const CsharpConfigSchema = z.object({
     "enable-forward-compatible-enums": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),
-    "generate-di-extensions": z.boolean().optional(),
+    "generate-dependency-injection-extensions": z.boolean().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
     "enable-wire-tests": z.boolean().optional(),
     "include-exception-handler": z.boolean().optional(),

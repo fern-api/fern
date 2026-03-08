@@ -3,7 +3,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 
-namespace SeedOauthClientCredentials.Extensions;
+namespace SeedOauthClientCredentials;
 
 public static class ServiceCollectionExtensions
 {
@@ -37,6 +37,50 @@ public static class ServiceCollectionExtensions
                     clientOptions
                 );
             }
+        );
+
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<ISeedOauthClientCredentialsClient>(
+            services,
+            provider => provider.GetRequiredService<SeedOauthClientCredentialsClient>()
+        );
+
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<IAuthClient>(
+            services,
+            provider => provider.GetRequiredService<SeedOauthClientCredentialsClient>().Auth
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<AuthClient>(
+            services,
+            provider =>
+                (AuthClient)provider.GetRequiredService<SeedOauthClientCredentialsClient>().Auth
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<SeedOauthClientCredentials.NestedNoAuth.INestedNoAuthClient>(
+            services,
+            provider => provider.GetRequiredService<SeedOauthClientCredentialsClient>().NestedNoAuth
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<SeedOauthClientCredentials.NestedNoAuth.NestedNoAuthClient>(
+            services,
+            provider =>
+                (SeedOauthClientCredentials.NestedNoAuth.NestedNoAuthClient)
+                    provider.GetRequiredService<SeedOauthClientCredentialsClient>().NestedNoAuth
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<SeedOauthClientCredentials.Nested.INestedClient>(
+            services,
+            provider => provider.GetRequiredService<SeedOauthClientCredentialsClient>().Nested
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<SeedOauthClientCredentials.Nested.NestedClient>(
+            services,
+            provider =>
+                (SeedOauthClientCredentials.Nested.NestedClient)
+                    provider.GetRequiredService<SeedOauthClientCredentialsClient>().Nested
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<ISimpleClient>(
+            services,
+            provider => provider.GetRequiredService<SeedOauthClientCredentialsClient>().Simple
+        );
+        Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddScoped<SimpleClient>(
+            services,
+            provider =>
+                (SimpleClient)provider.GetRequiredService<SeedOauthClientCredentialsClient>().Simple
         );
 
         return services;

@@ -45,6 +45,13 @@ RUN dotnet tool install -g csharpier --version "1.2.6" && \
       <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" /> \
       <PackageReference Include="System.Net.ServerSentEvents" Version="9.0.9" /> \
   </ItemGroup> \
+  <ItemGroup Condition="'"'"'$(TargetFramework)'"'"' != '"'"'net462'"'"'"> \
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" /> \
+      <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" /> \
+      <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" /> \
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" /> \
+      <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" /> \
+  </ItemGroup> \
 </Project>' > /dependencies.csproj && \
     dotnet restore /dependencies.csproj && \
     rm /dependencies.csproj
