@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from . import completions
     from .client import AsyncSeedServerSentEvents, SeedServerSentEvents
     from .completions import (
+        BadRequestError,
         CompletionEvent,
         ErrorEvent,
         StreamEvent,
@@ -19,6 +20,7 @@ if typing.TYPE_CHECKING:
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedServerSentEvents": ".client",
+    "BadRequestError": ".completions",
     "CompletionEvent": ".completions",
     "ErrorEvent": ".completions",
     "SeedServerSentEvents": ".client",
@@ -54,6 +56,7 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedServerSentEvents",
+    "BadRequestError",
     "CompletionEvent",
     "ErrorEvent",
     "SeedServerSentEvents",

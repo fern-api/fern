@@ -1,4 +1,3 @@
-import os
 import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
@@ -25,8 +24,6 @@ from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
-from fern_python.generator_cli import README_FILENAME, GeneratorCli
-from fern_python.generator_cli.generator_cli import REFERENCE_FILENAME
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
 from fern_python.generators.sdk import as_is_copier
@@ -283,7 +280,6 @@ class SdkGenerator(AbstractGenerator):
             ],
         )
 
-        write_websocket_snippets = False
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]
             if subpackage.has_endpoints_in_tree or (
@@ -294,8 +290,6 @@ class SdkGenerator(AbstractGenerator):
                     if ir.websocket_channels and subpackage.websocket
                     else None
                 )
-                if channel_websocket is not None and context.custom_config.should_generate_websocket_clients:
-                    write_websocket_snippets = True
                 self._generate_subpackage_client(
                     context=context,
                     generator_exec_wrapper=generator_exec_wrapper,
@@ -321,16 +315,6 @@ class SdkGenerator(AbstractGenerator):
         output_mode = generator_config.output.mode.get_as_union().type
         print(f"Output mode: {output_mode}")
 
-        generator_cli = GeneratorCli(
-            organization=generator_config.organization,
-            project_config=project._project_config,
-            ir=ir,
-            generator_exec_wrapper=generator_exec_wrapper,
-            context=context,
-            endpoint_metadata=endpoint_metadata_collector,
-            skip_install=True,
-        )
-
         snippets = snippet_registry.snippets()
         if snippets is not None and (
             generator_config.output.mode.get_as_union().type != "downloadFiles" or ir.self_hosted
@@ -340,42 +324,6 @@ class SdkGenerator(AbstractGenerator):
                 snippets=snippets,
                 project=project,
             )
-
-            try:
-                self._write_readme(
-                    context=context,
-                    generator_cli=generator_cli,
-                    snippets=snippets,
-                    project=project,
-                    generated_root_client=generated_root_client,
-                    write_websocket_snippets=write_websocket_snippets,
-                )
-            except Exception as e:
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(
-                            level=LogLevel.DEBUG,
-                            message=f"Failed to generate README.md. Email support@buildwithfern.com with the error: \n{e}\n",
-                        )
-                    )
-                )
-
-            try:
-                self._write_reference(
-                    context=context,
-                    generator_cli=generator_cli,
-                    snippets=snippets,
-                    project=project,
-                )
-            except Exception as e:
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(
-                            level=LogLevel.DEBUG,
-                            message=f"Failed to generate reference.md. Email support@buildwithfern.com with the error: \n{e}\n",
-                        ),
-                    )
-                )
 
         context.core_utilities.copy_to_project(project=project)
 
@@ -769,51 +717,6 @@ __version__ = metadata.version("{project._project_config.package_name}")
     ) -> None:
         if context.generator_config.output.snippet_filepath is not None:
             project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
-
-    def _write_readme(
-        self,
-        context: SdkGeneratorContext,
-        generator_cli: GeneratorCli,
-        snippets: Snippets,
-        project: Project,
-        generated_root_client: GeneratedRootClient,
-        write_websocket_snippets: bool,
-    ) -> None:
-        contents = generator_cli.generate_readme(
-            snippets=snippets,
-            github_repo_url=project._github_output_mode.repo_url if project._github_output_mode is not None else None,
-            github_installation_token=(
-                project._github_output_mode.installation_token if project._github_output_mode is not None else None
-            ),
-            pagination_enabled=context.generator_config.generate_paginated_clients,
-            websocket_enabled=write_websocket_snippets,
-            generated_root_client=generated_root_client,
-        )
-        project.add_file(
-            os.path.join(
-                context.generator_config.output.path,
-                README_FILENAME,
-            ),
-            contents,
-        )
-        project.set_generate_readme(False)
-
-    def _write_reference(
-        self,
-        context: SdkGeneratorContext,
-        generator_cli: GeneratorCli,
-        snippets: Snippets,
-        project: Project,
-    ) -> None:
-        contents = generator_cli.generate_reference(snippets=snippets, project=project)
-        if contents is not None:
-            project.add_file(
-                os.path.join(
-                    context.generator_config.output.path,
-                    REFERENCE_FILENAME,
-                ),
-                contents,
-            )
 
     def _write_snippet_tests(
         self,

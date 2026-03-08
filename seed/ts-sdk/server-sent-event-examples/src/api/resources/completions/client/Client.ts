@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedServerSentEvents from "../../../index.js";
+import * as SeedServerSentEvents from "../../../index.js";
 
 export declare namespace CompletionsClient {
     export type Options = BaseClientOptions;
@@ -68,11 +68,19 @@ export class CompletionsClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedServerSentEventsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new SeedServerSentEvents.BadRequestError(
+                        _response.error.body as string,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.SeedServerSentEventsError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/stream");
@@ -126,11 +134,19 @@ export class CompletionsClient {
         }
 
         if (_response.error.reason === "status-code") {
-            throw new errors.SeedServerSentEventsError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new SeedServerSentEvents.BadRequestError(
+                        _response.error.body as string,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.SeedServerSentEventsError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/stream-events");

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">echo</a>(...) -&gt; AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">echo</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -15,9 +15,12 @@
 from seed import SeedPackageYml
 
 client = SeedPackageYml(
+    id="id-ksfd9c1",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.echo(
+    id="id-ksfd9c1",
     name="Hello world!",
     size=20,
 )
@@ -44,15 +47,7 @@ client.echo(
 <dl>
 <dd>
 
-**name:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**size:** `int` 
+**request:** `EchoRequest` 
     
 </dd>
 </dl>
@@ -73,7 +68,7 @@ client.echo(
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">nop</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">nop</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -89,9 +84,12 @@ client.echo(
 from seed import SeedPackageYml
 
 client = SeedPackageYml(
+    id="id-a2ijs82",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.service.nop(
+    id="id-a2ijs82",
     nested_id="id-219xca8",
 )
 

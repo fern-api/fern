@@ -37,9 +37,10 @@ Instantiate and use the client with the following:
 from seed import SeedInferredAuthImplicitApiKey
 
 client = SeedInferredAuthImplicitApiKey(
+    api_key="X-Api-Key",
     base_url="https://yourhost.com/path/to/api",
-    api_key="YOUR_API_KEY",
 )
+
 client.auth.get_token(
     api_key="api_key",
 )
@@ -55,8 +56,8 @@ import asyncio
 from seed import AsyncSeedInferredAuthImplicitApiKey
 
 client = AsyncSeedInferredAuthImplicitApiKey(
+    api_key="X-Api-Key",
     base_url="https://yourhost.com/path/to/api",
-    api_key="YOUR_API_KEY",
 )
 
 
@@ -78,7 +79,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.auth.get_token(...)
+    client.auth.get_token()
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -94,10 +95,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedInferredAuthImplicitApiKey
 
-client = SeedInferredAuthImplicitApiKey(
-    ...,
-)
-response = client.auth.with_raw_response.get_token(...)
+client = SeedInferredAuthImplicitApiKey(...)
+response = client.auth.with_raw_response.get_token()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -118,7 +117,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.auth.get_token(..., request_options={
+client.auth.get_token(request_options={
     "max_retries": 1
 })
 ```
@@ -128,17 +127,12 @@ client.auth.get_token(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedInferredAuthImplicitApiKey
 
-client = SeedInferredAuthImplicitApiKey(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedInferredAuthImplicitApiKey(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.auth.get_token(..., request_options={
+client.auth.get_token(request_options={
     "timeout_in_seconds": 1
 })
 ```

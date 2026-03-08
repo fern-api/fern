@@ -1,6 +1,6 @@
 # Reference
 ## FileUploadExample
-<details><summary><code>client.file_upload_example.<a href="src/seed/file_upload_example/client.py">upload_file</a>(...) -&gt; AsyncHttpResponse[FileId]</code></summary>
+<details><summary><code>client.file_upload_example.<a href="src/seed/file_upload_example/client.py">upload_file</a>(...) -> FileId</code></summary>
 <dl>
 <dd>
 
@@ -32,7 +32,9 @@ from seed import SeedApi
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.file_upload_example.upload_file(
+    file="example_file",
     name="name",
 )
 
@@ -58,9 +60,7 @@ client.file_upload_example.upload_file(
 <dl>
 <dd>
 
-**file:** `from __future__ import annotations
-
-typing.Optional[core.File]` — See core.File for more documentation
+**file:** `typing.Optional[core.File]` — The file to upload.
     
 </dd>
 </dl>
