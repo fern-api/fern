@@ -537,7 +537,7 @@ export class ExampleEndpointFactory {
             });
             if (example != null && !isExamplePrimitive(example) && !isExampleArrayOfPrimitives(example)) {
                 this.logger.debug(
-                    `Expected a primitive example but got ${example.type} for header ${
+                    `Expected a primitive or array example but got ${example.type} for header ${
                         header.name
                     } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
                 );
