@@ -7989,9 +7989,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -8292,9 +8290,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -8541,9 +8537,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -8679,9 +8673,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -8972,9 +8964,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -8994,9 +8984,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -9754,9 +9742,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -9780,9 +9766,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10193,9 +10177,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10455,9 +10437,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -10567,9 +10547,7 @@
                         },
                         "type": "reference"
                       },
-                      "audiences": [],
-                      "readonly": false,
-                      "writeonly": false
+                      "audiences": []
                     },
                     {
                       "conflict": {},
@@ -10665,9 +10643,7 @@
                         },
                         "type": "reference"
                       },
-                      "audiences": [],
-                      "readonly": false,
-                      "writeonly": false
+                      "audiences": []
                     },
                     {
                       "conflict": {},
@@ -11350,9 +11326,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11659,9 +11633,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -11842,9 +11814,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -12004,9 +11974,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12836,9 +12804,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -12979,9 +12945,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -13055,9 +13019,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -13587,9 +13549,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -13958,20 +13918,13 @@
             "schema": {
               "generatedName": "ErrorStatus",
               "value": {
-                "generatedName": "ErrorStatus",
-                "values": [
-                  {
-                    "generatedName": "error",
-                    "value": "error",
-                    "casing": {}
-                  }
-                ],
-                "groupName": [],
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "value": "error",
+                  "type": "string"
                 },
-                "type": "enum"
+                "generatedName": "ErrorStatus",
+                "groupName": [],
+                "type": "literal"
               },
               "groupName": [],
               "type": "optional"
@@ -14005,9 +13958,7 @@
             },
             "audiences": [],
             "conflict": {},
-            "generatedName": "realtimeBaseMessageMessageType",
-            "readonly": false,
-            "writeonly": false
+            "generatedName": "realtimeBaseMessageMessageType"
           }
         ],
         "generatedName": "RealtimeBaseMessage",
@@ -14200,20 +14151,13 @@
             "key": "message_type",
             "schema": {
               "generatedName": "SessionBeginsMessageType",
-              "values": [
-                {
-                  "generatedName": "SessionBegins",
-                  "value": "SessionBegins",
-                  "casing": {}
-                }
-              ],
+              "value": {
+                "value": "SessionBegins",
+                "type": "string"
+              },
               "description": "Describes the type of the message.",
               "groupName": [],
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "enum"
+              "type": "literal"
             },
             "audiences": [],
             "conflict": {
@@ -14281,20 +14225,13 @@
             "key": "message_type",
             "schema": {
               "generatedName": "SessionTerminatedMessageType",
-              "values": [
-                {
-                  "generatedName": "SessionTerminated",
-                  "value": "SessionTerminated",
-                  "casing": {}
-                }
-              ],
+              "value": {
+                "value": "SessionTerminated",
+                "type": "string"
+              },
               "description": "Describes the type of the message.",
               "groupName": [],
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "enum"
+              "type": "literal"
             },
             "audiences": [],
             "conflict": {
@@ -14445,20 +14382,13 @@
             "key": "message_type",
             "schema": {
               "generatedName": "PartialTranscriptMessageType",
-              "values": [
-                {
-                  "generatedName": "PartialTranscript",
-                  "value": "PartialTranscript",
-                  "casing": {}
-                }
-              ],
+              "value": {
+                "value": "PartialTranscript",
+                "type": "string"
+              },
               "description": "Describes the type of message.",
               "groupName": [],
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "enum"
+              "type": "literal"
             },
             "audiences": [],
             "conflict": {},
@@ -14493,20 +14423,13 @@
             "key": "message_type",
             "schema": {
               "generatedName": "FinalTranscriptMessageType",
-              "values": [
-                {
-                  "generatedName": "FinalTranscript",
-                  "value": "FinalTranscript",
-                  "casing": {}
-                }
-              ],
+              "value": {
+                "value": "FinalTranscript",
+                "type": "string"
+              },
               "description": "Describes the type of message.",
               "groupName": [],
-              "source": {
-                "file": "../asyncapi.yml",
-                "type": "openapi"
-              },
-              "type": "enum"
+              "type": "literal"
             },
             "audiences": [],
             "conflict": {},

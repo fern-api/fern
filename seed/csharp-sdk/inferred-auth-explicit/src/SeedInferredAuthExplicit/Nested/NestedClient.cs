@@ -4,7 +4,7 @@ namespace SeedInferredAuthExplicit.Nested;
 
 public partial class NestedClient : INestedClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NestedClient(RawClient client)
     {

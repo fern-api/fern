@@ -120,6 +120,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -583,6 +584,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -934,6 +936,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -968,6 +971,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1455,6 +1459,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1489,6 +1494,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1861,6 +1867,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1907,6 +1914,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1932,6 +1940,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -1957,6 +1966,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3135,9 +3145,7 @@
                     },
                     "audiences": [],
                     "conflict": {},
-                    "generatedName": "sessionsEventsResponseStatusData",
-                    "readonly": false,
-                    "writeonly": false
+                    "generatedName": "sessionsEventsResponseStatusData"
                   },
                   {
                     "key": "id",
@@ -3210,9 +3218,7 @@
                     },
                     "audiences": [],
                     "conflict": {},
-                    "generatedName": "sessionsEventsResponseErrorData",
-                    "readonly": false,
-                    "writeonly": false
+                    "generatedName": "sessionsEventsResponseErrorData"
                   },
                   {
                     "key": "id",
@@ -3506,6 +3512,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3529,6 +3536,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -3553,6 +3561,7 @@
             "groupName": [],
             "type": "optional"
           },
+          "explode": false,
           "source": {
             "file": "../openapi.yml",
             "type": "openapi"
@@ -5038,9 +5047,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5080,9 +5087,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5170,9 +5175,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5238,9 +5241,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -5455,9 +5456,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5561,9 +5560,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5695,9 +5692,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -5737,9 +5732,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6084,9 +6077,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6126,9 +6117,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6292,9 +6281,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6323,9 +6310,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6365,9 +6350,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6466,9 +6449,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -6812,9 +6793,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           }
         ],
         "allOfPropertyConflicts": [],
@@ -6907,9 +6886,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7009,9 +6986,7 @@
               },
               "type": "optional"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7077,9 +7052,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7119,9 +7092,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7176,9 +7147,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7234,9 +7203,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7276,9 +7243,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7581,9 +7546,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},
@@ -7623,9 +7586,7 @@
               },
               "type": "reference"
             },
-            "audiences": [],
-            "readonly": false,
-            "writeonly": false
+            "audiences": []
           },
           {
             "conflict": {},

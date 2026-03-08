@@ -1,4 +1,5 @@
 import { LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
+import chalk from "chalk";
 import type { Task } from "../../ui/Task.js";
 import type { Context } from "../Context.js";
 
@@ -30,7 +31,7 @@ export class TaskContextLogger implements Logger {
 
     public debug(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Debug, message });
+        this.writeLog({ level: LogLevel.Debug, message });
 
         if (this.shouldLogToTask(LogLevel.Debug)) {
             if (this.task.logs == null) {
@@ -42,7 +43,7 @@ export class TaskContextLogger implements Logger {
 
     public info(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Info, message });
+        this.writeLog({ level: LogLevel.Info, message });
 
         if (this.shouldLogToTask(LogLevel.Info)) {
             if (this.task.logs == null) {
@@ -55,7 +56,7 @@ export class TaskContextLogger implements Logger {
 
     public warn(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Warn, message });
+        this.writeLog({ level: LogLevel.Warn, message });
 
         if (this.shouldLogToTask(LogLevel.Warn)) {
             if (this.task.logs == null) {
@@ -67,7 +68,7 @@ export class TaskContextLogger implements Logger {
 
     public error(...args: string[]): void {
         const message = args.join(" ");
-        this.context.logs.write({ taskName: this.task.name, level: LogLevel.Error, message });
+        this.writeLog({ level: LogLevel.Error, message });
 
         if (this.shouldLogToTask(LogLevel.Error)) {
             this.collectedErrors.push(message);
@@ -91,6 +92,33 @@ export class TaskContextLogger implements Logger {
                 break;
             case LogLevel.Error:
                 this.error(...args);
+                break;
+        }
+    }
+
+    /**
+     * Write a log entry to the log file. In CI / non-TTY environments,
+     * also write directly to stderr so logs are visible in CI runner output.
+     */
+    private writeLog({ level, message }: { level: LogLevel; message: string }): void {
+        this.context.logs.write({ taskName: this.task.name, level, message });
+
+        if (this.context.isTTY) {
+            return;
+        }
+        if (!this.enabled) {
+            return;
+        }
+        const prefix = chalk.dim(`[${this.task.name}]`);
+        switch (level) {
+            case LogLevel.Warn:
+                process.stderr.write(`${prefix}: ${chalk.yellow(message)}\n`);
+                break;
+            case LogLevel.Error:
+                process.stderr.write(`${prefix}: ${chalk.red(message)}\n`);
+                break;
+            default:
+                process.stderr.write(`${prefix}: ${message}\n`);
                 break;
         }
     }

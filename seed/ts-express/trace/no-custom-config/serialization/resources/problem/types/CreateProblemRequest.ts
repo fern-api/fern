@@ -10,7 +10,7 @@ export const CreateProblemRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     problemName: core.serialization.string(),
     problemDescription: core.serialization.lazyObject(() => serializers.ProblemDescription),
-    files: core.serialization.record(
+    files: core.serialization.partialRecord(
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.ProblemFiles).optional(),
     ),

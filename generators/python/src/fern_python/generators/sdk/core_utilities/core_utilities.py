@@ -55,7 +55,9 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="datetime_utils"),
             ),
-            exports={"serialize_datetime"} if not self._exclude_types_from_init_exports else set(),
+            exports={"serialize_datetime", "parse_rfc2822_datetime", "Rfc2822DateTime"}
+            if not self._exclude_types_from_init_exports
+            else set(),
         )
         # Only copy enum.py when generating actual enum classes (not string literals)
         if not self._use_str_enums:
@@ -568,6 +570,18 @@ class CoreUtilities:
             )
         )
 
+    def get_rfc2822_datetime_type_hint(self) -> AST.TypeHint:
+        """Return a type hint referencing Rfc2822DateTime from datetime_utils (V1/V2 compatible)."""
+        return AST.TypeHint(
+            AST.ClassReference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "datetime_utils"),
+                    named_import="Rfc2822DateTime",
+                ),
+            )
+        )
+
     def get_reference_to_request_options(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
@@ -675,6 +689,9 @@ class CoreUtilities:
             if self._allow_skipping_validation
             else self.get_universal_base_model()
         )
+
+    def get_construct_or_parse_ref(self) -> AST.Reference:
+        return self.get_construct_type() if self._allow_skipping_validation else self.get_parse_obj_as()
 
     def get_construct_type(self) -> AST.Reference:
         return AST.Reference(

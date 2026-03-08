@@ -13,6 +13,7 @@ if typing.TYPE_CHECKING:
     from .object_with_map_of_map import ObjectWithMapOfMap
     from .object_with_optional_field import ObjectWithOptionalField
     from .object_with_required_field import ObjectWithRequiredField
+    from .object_with_unknown_field import ObjectWithUnknownField
     from .optional_alias import OptionalAlias
 _dynamic_imports: typing.Dict[str, str] = {
     "DoubleOptional": ".double_optional",
@@ -22,6 +23,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ObjectWithMapOfMap": ".object_with_map_of_map",
     "ObjectWithOptionalField": ".object_with_optional_field",
     "ObjectWithRequiredField": ".object_with_required_field",
+    "ObjectWithUnknownField": ".object_with_unknown_field",
     "OptionalAlias": ".optional_alias",
 }
 
@@ -55,5 +57,6 @@ __all__ = [
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithRequiredField",
+    "ObjectWithUnknownField",
     "OptionalAlias",
 ]

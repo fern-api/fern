@@ -113,3 +113,130 @@ impl ApiClientBuilder {
         OauthClientCredentialsEnvironmentVariablesClient::new(self.config)
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_new_sets_base_url() {
+        let builder = ApiClientBuilder::new("https://api.example.com");
+        assert_eq!(builder.config.base_url, "https://api.example.com");
+    }
+
+    #[test]
+    fn test_api_key() {
+        let builder = ApiClientBuilder::new("https://api.example.com").api_key("my-key");
+        assert_eq!(builder.config.api_key, Some("my-key".to_string()));
+    }
+
+    #[test]
+    fn test_token() {
+        let builder = ApiClientBuilder::new("https://api.example.com").token("my-token");
+        assert_eq!(builder.config.token, Some("my-token".to_string()));
+    }
+
+    #[test]
+    fn test_username() {
+        let builder = ApiClientBuilder::new("https://api.example.com").username("user");
+        assert_eq!(builder.config.username, Some("user".to_string()));
+    }
+
+    #[test]
+    fn test_password() {
+        let builder = ApiClientBuilder::new("https://api.example.com").password("pass");
+        assert_eq!(builder.config.password, Some("pass".to_string()));
+    }
+
+    #[test]
+    fn test_client_id() {
+        let builder = ApiClientBuilder::new("https://api.example.com").client_id("cid");
+        assert_eq!(builder.config.client_id, Some("cid".to_string()));
+    }
+
+    #[test]
+    fn test_client_secret() {
+        let builder = ApiClientBuilder::new("https://api.example.com").client_secret("secret");
+        assert_eq!(builder.config.client_secret, Some("secret".to_string()));
+    }
+
+    #[test]
+    fn test_oauth_credentials() {
+        let builder =
+            ApiClientBuilder::new("https://api.example.com").oauth_credentials("cid", "secret");
+        assert_eq!(builder.config.client_id, Some("cid".to_string()));
+        assert_eq!(builder.config.client_secret, Some("secret".to_string()));
+    }
+
+    #[test]
+    fn test_timeout() {
+        let builder =
+            ApiClientBuilder::new("https://api.example.com").timeout(Duration::from_secs(120));
+        assert_eq!(builder.config.timeout, Duration::from_secs(120));
+    }
+
+    #[test]
+    fn test_max_retries() {
+        let builder = ApiClientBuilder::new("https://api.example.com").max_retries(5);
+        assert_eq!(builder.config.max_retries, 5);
+    }
+
+    #[test]
+    fn test_custom_header() {
+        let builder =
+            ApiClientBuilder::new("https://api.example.com").custom_header("X-Custom", "value");
+        assert_eq!(
+            builder.config.custom_headers.get("X-Custom"),
+            Some(&"value".to_string())
+        );
+    }
+
+    #[test]
+    fn test_custom_headers_multiple() {
+        let mut headers = HashMap::new();
+        headers.insert("X-One".to_string(), "1".to_string());
+        headers.insert("X-Two".to_string(), "2".to_string());
+        let builder = ApiClientBuilder::new("https://api.example.com").custom_headers(headers);
+        assert_eq!(
+            builder.config.custom_headers.get("X-One"),
+            Some(&"1".to_string())
+        );
+        assert_eq!(
+            builder.config.custom_headers.get("X-Two"),
+            Some(&"2".to_string())
+        );
+    }
+
+    #[test]
+    fn test_user_agent() {
+        let builder = ApiClientBuilder::new("https://api.example.com").user_agent("my-sdk/1.0");
+        assert_eq!(builder.config.user_agent, "my-sdk/1.0");
+    }
+
+    #[test]
+    fn test_full_builder_chain() {
+        let builder = ApiClientBuilder::new("https://api.example.com")
+            .api_key("key")
+            .token("tok")
+            .username("user")
+            .password("pass")
+            .timeout(Duration::from_secs(60))
+            .max_retries(3)
+            .custom_header("X-Foo", "bar")
+            .user_agent("test/1.0");
+        assert_eq!(builder.config.base_url, "https://api.example.com");
+        assert_eq!(builder.config.api_key, Some("key".to_string()));
+        assert_eq!(builder.config.token, Some("tok".to_string()));
+        assert_eq!(builder.config.username, Some("user".to_string()));
+        assert_eq!(builder.config.password, Some("pass".to_string()));
+        assert_eq!(builder.config.timeout, Duration::from_secs(60));
+        assert_eq!(builder.config.max_retries, 3);
+        assert_eq!(builder.config.user_agent, "test/1.0");
+    }
+
+    #[test]
+    fn test_build_succeeds() {
+        let result = ApiClientBuilder::new("https://api.example.com").build();
+        assert!(result.is_ok());
+    }
+}

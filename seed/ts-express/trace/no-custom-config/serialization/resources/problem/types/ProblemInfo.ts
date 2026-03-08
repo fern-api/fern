@@ -10,7 +10,7 @@ export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInf
         problemDescription: core.serialization.lazyObject(() => serializers.ProblemDescription),
         problemName: core.serialization.string(),
         problemVersion: core.serialization.number(),
-        files: core.serialization.record(
+        files: core.serialization.partialRecord(
             core.serialization.lazy(() => serializers.Language),
             core.serialization.lazyObject(() => serializers.ProblemFiles).optional(),
         ),

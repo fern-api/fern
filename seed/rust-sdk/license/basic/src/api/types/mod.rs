@@ -1,4 +1,3 @@
 pub mod r#type;
 
-pub use r#type::{Type};
-
+pub use r#type::Type;

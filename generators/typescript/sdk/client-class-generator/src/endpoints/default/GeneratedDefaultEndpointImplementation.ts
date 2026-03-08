@@ -1,11 +1,12 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typescript/commons";
+import { deduplicateExamples, Fetcher, GetReferenceOpts, getExampleEndpointCalls } from "@fern-typescript/commons";
 import { EndpointSampleCode, GeneratedEndpointImplementation, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest.js";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
 import { buildUrl } from "../utils/buildUrl.js";
 import { generateEndpointMetadata } from "../utils/generateEndpointMetadata.js";
+import { getAvailabilityDocs } from "../utils/getAvailabilityDocs.js";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
@@ -115,6 +116,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
     public getDocs(context: SdkContext): string | undefined {
         const groups: string[] = [];
+        const availabilityDoc = getAvailabilityDocs(this.endpoint);
+        if (availabilityDoc != null) {
+            groups.push(availabilityDoc);
+        }
         if (this.endpoint.docs) {
             groups.push(this.endpoint.docs);
         }
@@ -151,7 +156,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             groups.push(exceptions.join("\n"));
         }
 
-        const examples: string[] = [];
+        const allExamples: string[] = [];
         for (const example of getExampleEndpointCalls(this.endpoint)) {
             const generatedExample = this.getExample({
                 context,
@@ -164,14 +169,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }
             let exampleStr = "@example\n" + EndpointSampleCode.convertToString(generatedExample);
             exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
-            // Only add if it doesn't already exist
-            if (!examples.includes(exampleStr)) {
-                examples.push(exampleStr);
-            }
+            allExamples.push(exampleStr);
         }
-        if (examples.length > 0) {
+        const uniqueExamples = deduplicateExamples(allExamples);
+        if (uniqueExamples.length > 0) {
             // Each example is its own group.
-            groups.push(...examples);
+            groups.push(...uniqueExamples);
         }
 
         return groups.join("\n\n");

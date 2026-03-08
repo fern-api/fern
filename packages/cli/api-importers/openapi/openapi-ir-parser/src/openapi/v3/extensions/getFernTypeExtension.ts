@@ -246,7 +246,7 @@ export function getSchemaFromFernType({
                             availability,
                             namespace,
                             groupName,
-                            schema: PrimitiveSchemaValueWithExample.datetime({
+                            schema: PrimitiveSchemaValueWithExample.datetimeRfc2822({
                                 example: undefined
                             })
                         });

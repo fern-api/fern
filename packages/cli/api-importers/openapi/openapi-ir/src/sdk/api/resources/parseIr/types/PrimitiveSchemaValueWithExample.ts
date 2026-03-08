@@ -11,6 +11,7 @@ export type PrimitiveSchemaValueWithExample =
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Double
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.String
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Datetime
+    | FernOpenapiIr.PrimitiveSchemaValueWithExample.DatetimeRfc2822
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Date_
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Base64
     | FernOpenapiIr.PrimitiveSchemaValueWithExample.Boolean;
@@ -48,6 +49,10 @@ export namespace PrimitiveSchemaValueWithExample {
         type: "datetime";
     }
 
+    export interface DatetimeRfc2822 extends FernOpenapiIr.DatetimeWithExample, _Utils {
+        type: "datetimeRfc2822";
+    }
+
     export interface Date_ extends FernOpenapiIr.DateWithExample, _Utils {
         type: "date";
     }
@@ -73,6 +78,7 @@ export namespace PrimitiveSchemaValueWithExample {
         double: (value: FernOpenapiIr.DoubleWithExample) => _Result;
         string: (value: FernOpenapiIr.StringSchemaWithExample) => _Result;
         datetime: (value: FernOpenapiIr.DatetimeWithExample) => _Result;
+        datetimeRfc2822: (value: FernOpenapiIr.DatetimeWithExample) => _Result;
         date: (value: FernOpenapiIr.DateWithExample) => _Result;
         base64: (value: FernOpenapiIr.Base64WithExample) => _Result;
         boolean: (value: FernOpenapiIr.BooleanWithExample) => _Result;
@@ -185,6 +191,21 @@ export const PrimitiveSchemaValueWithExample = {
         };
     },
 
+    datetimeRfc2822: (
+        value: FernOpenapiIr.DatetimeWithExample,
+    ): FernOpenapiIr.PrimitiveSchemaValueWithExample.DatetimeRfc2822 => {
+        return {
+            ...value,
+            type: "datetimeRfc2822",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.PrimitiveSchemaValueWithExample.DatetimeRfc2822,
+                visitor: FernOpenapiIr.PrimitiveSchemaValueWithExample._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.PrimitiveSchemaValueWithExample._visit(this, visitor);
+            },
+        };
+    },
+
     date: (value: FernOpenapiIr.DateWithExample): FernOpenapiIr.PrimitiveSchemaValueWithExample.Date_ => {
         return {
             ...value,
@@ -245,6 +266,8 @@ export const PrimitiveSchemaValueWithExample = {
                 return visitor.string(value);
             case "datetime":
                 return visitor.datetime(value);
+            case "datetimeRfc2822":
+                return visitor.datetimeRfc2822(value);
             case "date":
                 return visitor.date(value);
             case "base64":

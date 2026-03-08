@@ -232,7 +232,7 @@ func TestRetryWithRequestBody(t *testing.T) {
 		w.WriteHeader(http.StatusOK)
 		response := &InternalTestResponse{Id: "success"}
 		bytes, _ := json.Marshal(response)
-		w.Write(bytes)
+		_, _ = w.Write(bytes)
 	}))
 	defer server.Close()
 
@@ -316,7 +316,7 @@ func TestRetryDelayTiming(t *testing.T) {
 					w.WriteHeader(http.StatusOK)
 					response := &InternalTestResponse{Id: "success"}
 					bytes, _ := json.Marshal(response)
-					w.Write(bytes)
+					_, _ = w.Write(bytes)
 				}
 			}))
 			defer server.Close()

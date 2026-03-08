@@ -34,6 +34,25 @@
         },
         "type": "json"
       },
+      "response": {
+        "description": "Server-sent events stream",
+        "fullExamples": [],
+        "schema": {
+          "generatedName": "SseStreamResponse",
+          "schema": "SseStreamEvent",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "streamingSse"
+      },
       "errors": {},
       "servers": [],
       "authed": false,
@@ -47,6 +66,34 @@
           "request": {
             "properties": {},
             "type": "object"
+          },
+          "response": {
+            "sse": true,
+            "events": [
+              {
+                "value": {
+                  "value": {
+                    "content": {
+                      "value": {
+                        "value": "content",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "event": {
+                      "value": {
+                        "value": "completion",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            ],
+            "type": "withStreaming"
           },
           "codeSamples": [],
           "type": "full"

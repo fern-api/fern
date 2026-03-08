@@ -12,6 +12,7 @@ import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
 import com.fern.sdk.resources.types.object.types.ObjectWithMapOfMap;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
+import com.fern.sdk.resources.types.object.types.ObjectWithUnknownField;
 import java.lang.String;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -109,6 +110,16 @@ public class AsyncObjectClient {
   public CompletableFuture<NestedObjectWithRequiredField> getAndReturnNestedWithRequiredFieldAsList(
       List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
     return this.rawClient.getAndReturnNestedWithRequiredFieldAsList(request, requestOptions).thenApply(response -> response.body());
+  }
+
+  public CompletableFuture<ObjectWithUnknownField> getAndReturnWithUnknownField(
+      ObjectWithUnknownField request) {
+    return this.rawClient.getAndReturnWithUnknownField(request).thenApply(response -> response.body());
+  }
+
+  public CompletableFuture<ObjectWithUnknownField> getAndReturnWithUnknownField(
+      ObjectWithUnknownField request, RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnWithUnknownField(request, requestOptions).thenApply(response -> response.body());
   }
 
   /**

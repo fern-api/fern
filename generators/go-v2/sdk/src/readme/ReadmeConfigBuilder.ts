@@ -69,6 +69,7 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
     )?.customReadmeSections;
 
     let sections: FernGeneratorCli.CustomSection[] = [];
+
     for (const section of irCustomSections ?? []) {
         if (section.language === "go" && !customConfigSections?.some((s) => s.title === section.title)) {
             sections.push({

@@ -865,4 +865,90 @@ func (o *ObjectWithRequiredField) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+// Tests that unknown/any values containing backslashes in map keys
+// are properly escaped in Go string literals.
+var (
+	objectWithUnknownFieldFieldUnknown = big.NewInt(1 << 0)
+)
+
+type ObjectWithUnknownField struct {
+	Unknown interface{} `json:"unknown" url:"unknown"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithUnknownField) GetUnknown() interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.Unknown
+}
+
+func (o *ObjectWithUnknownField) GetExtraProperties() map[string]interface{} {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithUnknownField) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetUnknown sets the Unknown field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectWithUnknownField) SetUnknown(unknown interface{}) {
+	o.Unknown = unknown
+	o.require(objectWithUnknownFieldFieldUnknown)
+}
+
+func (o *ObjectWithUnknownField) UnmarshalJSON(data []byte) error {
+	type unmarshaler ObjectWithUnknownField
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithUnknownField(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithUnknownField) MarshalJSON() ([]byte, error) {
+	type embed ObjectWithUnknownField
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (o *ObjectWithUnknownField) String() string {
+	if o == nil {
+		return "<nil>"
+	}
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
 type OptionalAlias = *string

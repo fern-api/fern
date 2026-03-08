@@ -5,6 +5,11 @@
  *     {
  *         query: "query"
  *     }
+ *
+ * @example
+ *     {
+ *         query: ""
+ *     }
  */
 export interface StreamEventsRequest {
     query: string;

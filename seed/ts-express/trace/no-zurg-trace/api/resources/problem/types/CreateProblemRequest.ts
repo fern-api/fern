@@ -5,7 +5,7 @@ import type * as SeedTrace from "../../../index";
 export interface CreateProblemRequest {
     problemName: string;
     problemDescription: SeedTrace.ProblemDescription;
-    files: Record<SeedTrace.Language, SeedTrace.ProblemFiles | undefined>;
+    files: Partial<Record<SeedTrace.Language, SeedTrace.ProblemFiles>>;
     inputParams: SeedTrace.VariableTypeAndName[];
     outputType: SeedTrace.VariableType;
     testcases: SeedTrace.TestCaseWithExpectedResult[];

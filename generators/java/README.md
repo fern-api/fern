@@ -129,6 +129,39 @@ custom-dependencies:
 
 The provided string will be used as the client class name.
 
+#### ✨ `custom-plugins`
+
+**Type:** array of strings
+
+Add custom Gradle plugins to the generated build.gradle file. Each plugin can be specified with just the plugin ID, or with a specific version.
+
+**Format:**
+- Plugin ID only: `"plugin-id"`
+- Plugin ID with version: `"plugin-id:version"`
+
+**Example:**
+```yaml
+custom-plugins:
+  - "com.github.johnrengelman.shadow:8.1.1"
+  - "org.jetbrains.kotlin.jvm"
+  - "com.google.protobuf:0.9.4"
+```
+
+This adds the following to your build.gradle plugins block:
+
+```gradle
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'com.diffplug.spotless' version '6.11.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'org.jetbrains.kotlin.jvm'
+    id 'com.google.protobuf' version '0.9.4'
+}
+```
+
+**Note:** Custom plugins are applied after Fern's built-in plugins.
+
 ## Versions
 
 Find the latest version number and changelog for this generator in [this SDK Generators table](https://github.com/fern-api/fern?tab=readme-ov-file#sdk-generators). The changelog shows earlier version numbers, if any. You can directly use these version numbers in your generator configuration files.

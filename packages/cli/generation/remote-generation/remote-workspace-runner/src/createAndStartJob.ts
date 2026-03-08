@@ -10,12 +10,12 @@ import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import urlJoin from "url-join";
+import { retryWithRateLimit, TooManyRequestsError } from "./retryWithRateLimit.js";
 
 export async function createAndStartJob({
     projectConfig,
@@ -30,7 +30,8 @@ export async function createAndStartJob({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
-    fernignorePath
+    fernignorePath,
+    retryRateLimited
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -45,6 +46,7 @@ export async function createAndStartJob({
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     fernignorePath: string | undefined;
+    retryRateLimited: boolean;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     // Read fernignore file contents if path is provided
     let fernignoreContents: string | undefined;
@@ -56,18 +58,27 @@ export async function createAndStartJob({
         }
     }
 
-    const job = await createJob({
-        projectConfig,
-        workspace,
-        organization,
-        generatorInvocation,
-        version,
-        context,
-        shouldLogS3Url,
-        token,
-        whitelabel,
-        absolutePathToPreview,
-        fernignoreContents
+    const job = await retryWithRateLimit({
+        fn: () =>
+            createJob({
+                projectConfig,
+                workspace,
+                organization,
+                generatorInvocation,
+                version,
+                context,
+                shouldLogS3Url,
+                token,
+                whitelabel,
+                absolutePathToPreview,
+                fernignoreContents
+            }),
+        retryRateLimited,
+        logger: context.logger,
+        onRateLimitedWithoutRetry: () =>
+            context.failAndThrow(
+                "Received 429 Too Many Requests. Re-run with --retry-rate-limited to automatically retry."
+            )
     });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
     return job;
@@ -125,7 +136,15 @@ async function createJob({
     });
 
     if (!createResponse.ok) {
-        return convertCreateJobError(createResponse.error as unknown as Fetcher.Error)._visit({
+        // Check for 429 Too Many Requests before processing the error through the visitor.
+        // This allows the retry wrapper to catch and retry on rate limiting.
+        // Note: The fiddle SDK wraps the error inside a `.content` property (see convertCreateJobError below).
+        // biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
+        const rawError = createResponse.error as any;
+        if (rawError?.content?.reason === "status-code" && rawError.content.statusCode === 429) {
+            throw new TooManyRequestsError();
+        }
+        return convertCreateJobError(rawError)._visit({
             illegalApiNameError: () => {
                 return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
             },

@@ -11,6 +11,7 @@ import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
 import com.seed.exhaustive.types.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
+import com.seed.exhaustive.types.types.ObjectWithUnknownField;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -116,6 +117,17 @@ public class AsyncObjectClient {
             List<NestedObjectWithRequiredField> request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnNestedWithRequiredFieldAsList(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ObjectWithUnknownField> getAndReturnWithUnknownField(ObjectWithUnknownField request) {
+        return this.rawClient.getAndReturnWithUnknownField(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ObjectWithUnknownField> getAndReturnWithUnknownField(
+            ObjectWithUnknownField request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithUnknownField(request, requestOptions)
                 .thenApply(response -> response.body());
     }
 

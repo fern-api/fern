@@ -10,6 +10,7 @@ import { mkdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
+import { AutoVersioningCache } from "./AutoVersioningCache.js";
 import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment.js";
 import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,
@@ -26,6 +27,7 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig.js";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
+import { extractLanguageFromGeneratorName } from "./VersionUtils.js";
 
 export interface GeneratorRunResponse {
     ir: IntermediateRepresentation;
@@ -74,7 +76,9 @@ export async function writeFilesToDiskAndRunGenerator({
     runner,
     whiteLabel,
     ir,
-    ai
+    ai,
+    autoVersioningCache,
+    absolutePathToSpecRepo
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -100,11 +104,14 @@ export async function writeFilesToDiskAndRunGenerator({
     whiteLabel?: boolean;
     ir: IntermediateRepresentation;
     ai: generatorsYml.AiServicesSchema | undefined;
+    autoVersioningCache?: AutoVersioningCache;
+    absolutePathToSpecRepo: AbsoluteFilePath | undefined;
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
     shouldCommit: boolean;
     autoVersioningCommitMessage?: string;
+    autoVersioningChangelogEntry?: string;
 }> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
@@ -160,8 +167,7 @@ export async function writeFilesToDiskAndRunGenerator({
             keepContainer: keepDocker
         });
 
-    const isContainer = environment instanceof ContainerExecutionEnvironment;
-    const paths = isContainer
+    const paths = environment.usesContainerPaths
         ? ({
               outputDirectory: AbsoluteFilePath.of(CONTAINER_CODEGEN_OUTPUT_DIRECTORY),
               irPath: AbsoluteFilePath.of(CONTAINER_PATH_TO_IR),
@@ -224,7 +230,10 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false
+        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
+        autoVersioningCache,
+        generatorLanguage: generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name),
+        absolutePathToSpecRepo
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 

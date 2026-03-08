@@ -2086,7 +2086,7 @@ await client.sysprop.setNumWarmInstances("JAVA", 1);
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">getNumWarmInstances</a>() -> core.APIResponse&lt;Record&lt;SeedTrace.Language, number | undefined&gt;, SeedTrace.sysprop.getNumWarmInstances.Error&gt;</code></summary>
+<details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">getNumWarmInstances</a>() -> core.APIResponse&lt;Partial&lt;Record&lt;SeedTrace.Language, number&gt;&gt;, SeedTrace.sysprop.getNumWarmInstances.Error&gt;</code></summary>
 <dl>
 <dd>
 

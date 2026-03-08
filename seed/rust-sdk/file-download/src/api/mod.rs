@@ -9,5 +9,4 @@
 
 pub mod resources;
 
-pub use resources::{ServiceClient, FileDownloadClient};
-
+pub use resources::{FileDownloadClient, ServiceClient};

@@ -15,6 +15,17 @@
               "examples": [
                 {
                   "request": {},
+                  "response": {
+                    "stream": [
+                      {
+                        "data": {
+                          "content": "content",
+                          "event": "completion",
+                        },
+                        "event": "",
+                      },
+                    ],
+                  },
                 },
               ],
               "method": "POST",
@@ -34,6 +45,12 @@
                 "name": "StreamRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
+              },
+              "response-stream": {
+                "docs": "Server-sent events stream",
+                "format": "sse",
+                "terminator": undefined,
+                "type": "SseStreamEvent",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -145,8 +162,18 @@
               type: optional<string>
               docs: The query to process
         content-type: application/json
+      response-stream:
+        docs: Server-sent events stream
+        type: SseStreamEvent
+        format: sse
       examples:
         - request: {}
+          response:
+            stream:
+              - event: ''
+                data:
+                  content: content
+                  event: completion
   source:
     openapi: ../openapi.yml
 types:

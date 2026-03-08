@@ -17,6 +17,7 @@ describe("no-duplicate-overrides", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
+                name: "no-duplicate-overrides",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("openapi/openapi.yml"),
                 nodePath: ["paths", "/a/b", "get"],
@@ -40,6 +41,7 @@ describe("no-duplicate-overrides", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
+                name: "no-duplicate-overrides",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("openapi/openapi.yml"),
                 nodePath: ["paths", "/a/b", "get"],
@@ -63,6 +65,7 @@ describe("no-duplicate-overrides", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
+                name: "no-duplicate-overrides",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("openapi/openapi.yml"),
                 nodePath: ["paths", "/a/b", "get"],
