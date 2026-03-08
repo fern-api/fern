@@ -1,4 +1,4 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructSlimCasingsGenerator } from "@fern-api/casings-generator";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, dirname, doesPathExist, RelativeFilePath } from "@fern-api/fs-utils";
@@ -44,11 +44,7 @@ export async function generateJsonschemaForWorkspaces({
                 });
 
                 const splitTypeLocator = typeLocator.split(".");
-                const casingsGenerator = constructCasingsGenerator({
-                    generationLanguage: undefined,
-                    keywords: undefined,
-                    smartCasing: false
-                });
+                const casingsGenerator = constructSlimCasingsGenerator();
                 const typeName = splitTypeLocator[splitTypeLocator.length - 1] ?? typeLocator;
                 const relativeFilepath =
                     splitTypeLocator.length > 1

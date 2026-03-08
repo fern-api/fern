@@ -10,7 +10,7 @@ import {
     Spec
 } from "@fern-api/api-workspace-commons";
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructSlimCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
@@ -349,11 +349,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     break;
             }
 
-            const casingsGenerator = constructCasingsGenerator({
-                generationLanguage: "typescript",
-                keywords: undefined,
-                smartCasing: false
-            });
+            const casingsGenerator = constructSlimCasingsGenerator();
 
             if (result != null) {
                 mergedIr =
@@ -390,11 +386,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 const converter = new OpenRPCConverter({ context: converterContext, audiences });
                 const result = await converter.convert();
 
-                const casingsGenerator = constructCasingsGenerator({
-                    generationLanguage: "typescript",
-                    keywords: undefined,
-                    smartCasing: false
-                });
+                const casingsGenerator = constructSlimCasingsGenerator();
 
                 if (result != null) {
                     mergedIr =
@@ -415,11 +407,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
                     const result = await readFile(protobufIRFilepath, "utf-8");
 
-                    const casingsGenerator = constructCasingsGenerator({
-                        generationLanguage: "typescript",
-                        keywords: undefined,
-                        smartCasing: false
-                    });
+                    const casingsGenerator = constructSlimCasingsGenerator();
 
                     if (result != null) {
                         let serializedIr: MaybeValid<IntermediateRepresentation>;
