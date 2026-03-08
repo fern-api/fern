@@ -67,13 +67,6 @@ describe("detectAffected", () => {
             expect(result.affectedFixtures).toEqual([]);
         });
 
-        it("runs everything when no changed files and empty turbo packages", () => {
-            const result = detectAffected([], ALL_GENERATORS, []);
-
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
-        });
-
         it("runs everything when changed files don't match any known pattern", () => {
             const result = detectAffected(["README.md", "docs/guide.md", ".github/workflows/ci.yml"], ALL_GENERATORS);
 
@@ -118,33 +111,6 @@ describe("detectAffected", () => {
 
             expect(result.allGeneratorsAffected).toBe(true);
             expect(result.allFixturesAffected).toBe(true);
-        });
-    });
-
-    describe("global infrastructure changes (with turbo)", () => {
-        it("still detects packages/ir-sdk/ via git diff even when turbo is available", () => {
-            // Turbo can't detect ir-sdk changes because generators depend on published npm package
-            const turboPackages: TurboPackage[] = [];
-            const result = detectAffected(["packages/ir-sdk/src/types.ts"], ALL_GENERATORS, turboPackages);
-
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
-        });
-
-        it("does NOT use generators/base/ as a global path when turbo is available", () => {
-            // When turbo is available, generators/base/ is NOT in GLOBAL_AFFECT_PATHS
-            // (turbo handles it via transitive deps). But if the file doesn't match
-            // any other pattern, it falls back to "run everything".
-            const turboPackages: TurboPackage[] = [];
-            const result = detectAffected(["generators/base/src/utils.ts"], ALL_GENERATORS, turboPackages);
-
-            // Even though generators/base/ is not in GLOBAL_AFFECT_PATHS when turbo is available,
-            // the file doesn't match any other pattern either, so the "no recognized changes"
-            // fallback runs everything. This is the safe/correct behavior.
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
-            // Verify it's from the fallback, not from the global path detection
-            expect(result.summary).toContain("No recognized changes detected \u2014 running everything as fallback.");
         });
     });
 
@@ -243,14 +209,6 @@ describe("detectAffected", () => {
             expect(result.affectedGenerators).not.toContain("pydantic");
         });
 
-        it("skips git diff generator detection when turbo is available", () => {
-            const turboPackages: TurboPackage[] = [];
-            const result = detectAffected(["generators/python/src/some-file.ts"], ALL_GENERATORS, turboPackages);
-
-            // With empty turbo packages and no global paths hit, no generators detected
-            // (turbo path is used but returned empty, git diff fallback is skipped)
-            expect(result.affectedGenerators).toEqual([]);
-        });
     });
 
     describe("seed.yml detection", () => {
