@@ -117,7 +117,15 @@ export abstract class TestRunner {
     private scriptRunner: ScriptRunner | undefined;
     private readonly workspaceCache: WorkspaceCache | undefined;
 
-    constructor({ generator, lock, taskContextFactory, skipScripts, keepContainer, scriptRunner, workspaceCache }: TestRunner.Args) {
+    constructor({
+        generator,
+        lock,
+        taskContextFactory,
+        skipScripts,
+        keepContainer,
+        scriptRunner,
+        workspaceCache
+    }: TestRunner.Args) {
         this.generator = generator;
         this.lock = lock;
         this.taskContextFactory = taskContextFactory;
