@@ -1446,17 +1446,14 @@ export class DocsDefinitionResolver {
             );
         }
 
-        // Extract GraphQL operations and types scoped to the current API section's workspace.
-        // Use the already-resolved openapiWorkspace if available; otherwise try to find the
-        // matching OSS workspace. If no OSS workspace exists (e.g., Fern Definition APIs),
-        // pass undefined so extractGraphQLData returns empty results.
+        // Resolve the workspace for GraphQL extraction: prefer the already-resolved
+        // openapiWorkspace, fall back to OSS lookup, or undefined for Fern Definitions.
         let graphqlWorkspace: OSSWorkspace | undefined = openapiWorkspace;
         if (graphqlWorkspace == null) {
             try {
                 graphqlWorkspace = this.getOpenApiWorkspaceForApiSection(item);
             } catch {
-                // No OSS workspace found — this API section uses a Fern Definition.
-                // GraphQL is only relevant for OSS/OpenAPI workspaces, so this is expected.
+                // expected for Fern Definition APIs (no OSS workspace)
             }
         }
         const graphqlData = await this.extractGraphQLData(graphqlWorkspace);
@@ -1591,12 +1588,10 @@ export class DocsDefinitionResolver {
         const graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
         const namespacesByOperationId = new Map<FdrAPI.GraphQlOperationId, string>();
 
-        // If no workspace is provided, return empty results
         if (workspace == null) {
             return { operations: graphqlOperations, types: graphqlTypes, namespacesByOperationId };
         }
 
-        // Process GraphQL specs directly from the resolved workspace
         const graphqlSpecs = workspace.allSpecs.filter((spec): spec is GraphQLSpec => spec.type === "graphql");
         for (const spec of graphqlSpecs) {
             try {
@@ -1607,11 +1602,9 @@ export class DocsDefinitionResolver {
                 });
                 const graphqlResult = await converter.convert();
 
-                // GraphQL converter handles namespacing internally - just merge the results
                 Object.assign(graphqlOperations, graphqlResult.graphqlOperations);
                 Object.assign(graphqlTypes, graphqlResult.types);
 
-                // Track namespaces for operations if namespace exists
                 if (spec.namespace) {
                     for (const operationId of Object.keys(graphqlResult.graphqlOperations)) {
                         namespacesByOperationId.set(FdrAPI.GraphQlOperationId(operationId), spec.namespace);
