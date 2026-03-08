@@ -935,7 +935,8 @@ function qualifyShadowedGlobalTypes(
     for (const globalType of shadowedGlobalTypes) {
         // Replace standalone occurrences of the global type name with globalThis-qualified version.
         // Uses word boundaries to avoid replacing partial matches (e.g., "DateRange" stays unchanged).
-        const pattern = new RegExp(`\\b${globalType}\\b`, "g");
+        // Negative lookbehind `(?<!\.)` prevents matching already-qualified references (e.g., "SeedApi.Date").
+        const pattern = new RegExp(`(?<!\\.)\\b${globalType}\\b`, "g");
         typeText = typeText.replace(pattern, `globalThis.${globalType}`);
     }
 
