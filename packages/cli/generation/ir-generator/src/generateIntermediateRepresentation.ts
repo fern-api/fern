@@ -1,5 +1,5 @@
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructSlimCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
 import { noop, visitObject } from "@fern-api/core-utils";
 import { isGeneric } from "@fern-api/fern-definition-schema";
@@ -102,7 +102,9 @@ export function generateIntermediateRepresentation({
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
     const irSettings = getIrGenerationSettings({ workspace });
 
-    const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
+    // V66: Produce slim Names (only originalName) — casings are computed later
+    // by the v66→v65 migration (for older generators) or by generators themselves (for v66+).
+    const casingsGenerator = constructSlimCasingsGenerator();
 
     const irGraph = new IrGraph(audiences);
 

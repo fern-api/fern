@@ -1,23 +1,7 @@
 {
   "selfHosted": false,
   "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
+    "originalName": "api"
   },
   "apiDisplayName": "Test `json-string` example",
   "auth": {
@@ -30,23 +14,7 @@
     "type_:User": {
       "name": {
         "name": {
-          "originalName": "User",
-          "camelCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "snakeCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER",
-            "safeName": "USER"
-          },
-          "pascalCase": {
-            "unsafeName": "User",
-            "safeName": "User"
-          }
+          "originalName": "User"
         },
         "fernFilepath": {
           "allParts": [],
@@ -60,23 +28,7 @@
           {
             "name": {
               "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
+                "originalName": "id"
               },
               "wireValue": "id"
             },
@@ -106,23 +58,7 @@
           {
             "name": {
               "name": {
-                "originalName": "metadata",
-                "camelCase": {
-                  "unsafeName": "metadata",
-                  "safeName": "metadata"
-                },
-                "snakeCase": {
-                  "unsafeName": "metadata",
-                  "safeName": "metadata"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "METADATA",
-                  "safeName": "METADATA"
-                },
-                "pascalCase": {
-                  "unsafeName": "Metadata",
-                  "safeName": "Metadata"
-                }
+                "originalName": "metadata"
               },
               "wireValue": "metadata"
             },
@@ -158,23 +94,7 @@
   "constants": {
     "errorInstanceIdKey": {
       "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
+        "originalName": "errorInstanceId"
       },
       "wireValue": "errorInstanceId"
     }
@@ -198,23 +118,7 @@
       "type_:User": {
         "declaration": {
           "name": {
-            "originalName": "User",
-            "camelCase": {
-              "unsafeName": "user",
-              "safeName": "user"
-            },
-            "snakeCase": {
-              "unsafeName": "user",
-              "safeName": "user"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "USER",
-              "safeName": "USER"
-            },
-            "pascalCase": {
-              "unsafeName": "User",
-              "safeName": "User"
-            }
+            "originalName": "User"
           },
           "fernFilepath": {
             "allParts": [],
@@ -225,23 +129,7 @@
           {
             "name": {
               "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
+                "originalName": "id"
               },
               "wireValue": "id"
             },
@@ -256,23 +144,7 @@
           {
             "name": {
               "name": {
-                "originalName": "metadata",
-                "camelCase": {
-                  "unsafeName": "metadata",
-                  "safeName": "metadata"
-                },
-                "snakeCase": {
-                  "unsafeName": "metadata",
-                  "safeName": "metadata"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "METADATA",
-                  "safeName": "METADATA"
-                },
-                "pascalCase": {
-                  "unsafeName": "Metadata",
-                  "safeName": "Metadata"
-                }
+                "originalName": "metadata"
               },
               "wireValue": "metadata"
             },

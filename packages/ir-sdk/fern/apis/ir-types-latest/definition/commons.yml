@@ -17,12 +17,17 @@ types:
   # names
 
   Name:
+    docs: |
+      Represents a name with pre-computed casings.
+      In IR v66+, casings may be omitted from the wire format to reduce IR size (~60-75% reduction).
+      When casings are absent, use inflateIrNames() from @fern-api/casings-generator to compute
+      them from originalName using the IR's smartCasing and generationLanguage settings.
     properties:
       originalName: string
-      camelCase: SafeAndUnsafeString
-      pascalCase: SafeAndUnsafeString
-      snakeCase: SafeAndUnsafeString
-      screamingSnakeCase: SafeAndUnsafeString
+      camelCase: optional<SafeAndUnsafeString>
+      pascalCase: optional<SafeAndUnsafeString>
+      snakeCase: optional<SafeAndUnsafeString>
+      screamingSnakeCase: optional<SafeAndUnsafeString>
   DisplayName: string
   NameAndWireValue:
     properties:

@@ -1,7 +1,7 @@
 import { Name } from "@fern-api/ir-sdk";
 
 import { constructCasingsGenerator } from "../CasingsGenerator.js";
-import { inflateIrNames, inflateName, SlimName, slimIrNames } from "../inflateNames.js";
+import { inflateIrNames, inflateName, SlimName } from "../inflateNames.js";
 
 describe("inflateName", () => {
     const casingsGenerator = constructCasingsGenerator({
@@ -24,7 +24,7 @@ describe("inflateName", () => {
         // Should return the exact same object reference (no inflation needed)
         expect(result).toBe(fullName);
         expect(result.originalName).toBe("MovieId");
-        expect(result.camelCase.unsafeName).toBe("movieId");
+        expect(result.camelCase?.unsafeName).toBe("movieId");
     });
 
     it("inflates a slim Name with only originalName", () => {
@@ -36,13 +36,13 @@ describe("inflateName", () => {
 
         expect(result.originalName).toBe("MovieId");
         expect(result.camelCase).toBeDefined();
-        expect(result.camelCase.unsafeName).toBe("movieId");
+        expect(result.camelCase?.unsafeName).toBe("movieId");
         expect(result.pascalCase).toBeDefined();
-        expect(result.pascalCase.unsafeName).toBe("MovieId");
+        expect(result.pascalCase?.unsafeName).toBe("MovieId");
         expect(result.snakeCase).toBeDefined();
-        expect(result.snakeCase.unsafeName).toBe("movie_id");
+        expect(result.snakeCase?.unsafeName).toBe("movie_id");
         expect(result.screamingSnakeCase).toBeDefined();
-        expect(result.screamingSnakeCase.unsafeName).toBe("MOVIE_ID");
+        expect(result.screamingSnakeCase?.unsafeName).toBe("MOVIE_ID");
     });
 
     it("fills in only missing casings, preserving existing ones", () => {
@@ -54,7 +54,7 @@ describe("inflateName", () => {
         const result = inflateName(partialName, casingsGenerator);
 
         // Existing casing should be preserved
-        expect(result.camelCase.unsafeName).toBe("customCamel");
+        expect(result.camelCase?.unsafeName).toBe("customCamel");
         // Missing casings should be generated
         expect(result.pascalCase).toBeDefined();
         expect(result.snakeCase).toBeDefined();
@@ -465,163 +465,23 @@ describe("inflateIrNames", () => {
     });
 });
 
-describe("slimIrNames", () => {
-    it("strips casings from Name objects in an IR, keeping only originalName", () => {
-        const fullName: Name = {
-            originalName: "TestApi",
-            camelCase: { unsafeName: "testApi", safeName: "testApi" },
-            pascalCase: { unsafeName: "TestApi", safeName: "TestApi" },
-            snakeCase: { unsafeName: "test_api", safeName: "test_api" },
-            screamingSnakeCase: { unsafeName: "TEST_API", safeName: "TEST_API" }
-        };
-
-        const ir = {
-            apiName: fullName,
-            smartCasing: false,
-            generationLanguage: undefined,
-            types: {},
-            services: {},
-            auth: { docs: undefined, requirement: "ALL", schemes: [] },
-            headers: [],
-            idempotencyHeaders: [],
-            errors: {},
-            webhookGroups: {},
-            subpackages: {},
-            rootPackage: {
-                fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                service: undefined,
-                types: [],
-                errors: [],
-                subpackages: [],
-                docs: undefined,
-                webhooks: undefined,
-                websocket: undefined,
-                hasEndpointsInTree: false,
-                navigationConfig: undefined
-            },
-            constants: {
-                errorInstanceIdKey: {
-                    name: fullName,
-                    wireValue: "errorInstanceId"
-                }
-            },
-            pathParameters: [],
-            errorDiscriminationStrategy: { type: "statusCode" },
-            sdkConfig: {
-                hasFileDownloadEndpoints: false,
-                hasPaginatedEndpoints: false,
-                hasStreamingEndpoints: false,
-                isAuthMandatory: false,
-                platformHeaders: { language: "", sdkName: "", sdkVersion: "", userAgent: undefined }
-            },
-            variables: [],
-            serviceTypeReferenceInfo: { sharedTypes: [], typesReferencedOnlyByService: {} }
-        };
-
-        // biome-ignore lint/suspicious/noExplicitAny: test helper
-        const result = slimIrNames(ir as any) as any;
-
-        // apiName should be stripped to just originalName
-        expect(result.apiName).toEqual({ originalName: "TestApi" });
-        // constants name should also be stripped
-        expect(result.constants.errorInstanceIdKey.name).toEqual({ originalName: "TestApi" });
-        // non-Name fields preserved
-        expect(result.smartCasing).toBe(false);
-    });
-
-    it("does not strip from non-Name objects with originalName but no casing keys", () => {
-        const ir = {
-            apiName: {
-                originalName: "TestApi",
-                camelCase: { unsafeName: "testApi", safeName: "testApi" },
-                pascalCase: { unsafeName: "TestApi", safeName: "TestApi" },
-                snakeCase: { unsafeName: "test_api", safeName: "test_api" },
-                screamingSnakeCase: { unsafeName: "TEST_API", safeName: "TEST_API" }
-            },
-            smartCasing: false,
-            generationLanguage: undefined,
-            types: {
-                notAName: {
-                    originalName: "SomeValue",
-                    someOtherField: "data"
-                }
-            },
-            services: {},
-            auth: { docs: undefined, requirement: "ALL", schemes: [] },
-            headers: [],
-            idempotencyHeaders: [],
-            errors: {},
-            webhookGroups: {},
-            subpackages: {},
-            rootPackage: {
-                fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                service: undefined,
-                types: [],
-                errors: [],
-                subpackages: [],
-                docs: undefined,
-                webhooks: undefined,
-                websocket: undefined,
-                hasEndpointsInTree: false,
-                navigationConfig: undefined
-            },
-            constants: {
-                errorInstanceIdKey: {
-                    name: {
-                        originalName: "errorInstanceId",
-                        camelCase: { unsafeName: "errorInstanceId", safeName: "errorInstanceId" },
-                        pascalCase: { unsafeName: "ErrorInstanceId", safeName: "ErrorInstanceId" },
-                        snakeCase: { unsafeName: "error_instance_id", safeName: "error_instance_id" },
-                        screamingSnakeCase: { unsafeName: "ERROR_INSTANCE_ID", safeName: "ERROR_INSTANCE_ID" }
-                    },
-                    wireValue: "errorInstanceId"
-                }
-            },
-            pathParameters: [],
-            errorDiscriminationStrategy: { type: "statusCode" },
-            sdkConfig: {
-                hasFileDownloadEndpoints: false,
-                hasPaginatedEndpoints: false,
-                hasStreamingEndpoints: false,
-                isAuthMandatory: false,
-                platformHeaders: { language: "", sdkName: "", sdkVersion: "", userAgent: undefined }
-            },
-            variables: [],
-            serviceTypeReferenceInfo: { sharedTypes: [], typesReferencedOnlyByService: {} }
-        };
-
-        // biome-ignore lint/suspicious/noExplicitAny: test helper
-        const result = slimIrNames(ir as any) as any;
-
-        // Non-Name object should NOT be stripped
-        expect(result.types.notAName.originalName).toBe("SomeValue");
-        expect(result.types.notAName.someOtherField).toBe("data");
-    });
-
-    it("round-trips with inflateIrNames: slim then inflate restores casings", () => {
+describe("inflateName round-trip", () => {
+    it("inflating a slim Name restores all casings", () => {
         const casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
             keywords: undefined,
             smartCasing: false
         });
 
-        const fullName: Name = {
-            originalName: "MovieId",
-            camelCase: { unsafeName: "movieId", safeName: "movieId" },
-            pascalCase: { unsafeName: "MovieId", safeName: "MovieId" },
-            snakeCase: { unsafeName: "movie_id", safeName: "movie_id" },
-            screamingSnakeCase: { unsafeName: "MOVIE_ID", safeName: "MOVIE_ID" }
-        };
-
-        // Slim the Name
+        // Slim the Name (only originalName, no casings — as produced by constructSlimCasingsGenerator)
         const slim = { originalName: "MovieId" } as SlimName;
 
         // Inflate back
         const inflated = inflateName(slim, casingsGenerator);
         expect(inflated.originalName).toBe("MovieId");
-        expect(inflated.camelCase.unsafeName).toBe("movieId");
-        expect(inflated.pascalCase.unsafeName).toBe("MovieId");
-        expect(inflated.snakeCase.unsafeName).toBe("movie_id");
-        expect(inflated.screamingSnakeCase.unsafeName).toBe("MOVIE_ID");
+        expect(inflated.camelCase?.unsafeName).toBe("movieId");
+        expect(inflated.pascalCase?.unsafeName).toBe("MovieId");
+        expect(inflated.snakeCase?.unsafeName).toBe("movie_id");
+        expect(inflated.screamingSnakeCase?.unsafeName).toBe("MOVIE_ID");
     });
 });

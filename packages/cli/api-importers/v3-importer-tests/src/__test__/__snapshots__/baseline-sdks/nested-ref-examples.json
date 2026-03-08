@@ -1,23 +1,7 @@
 {
   "selfHosted": false,
   "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
+    "originalName": "api"
   },
   "apiDisplayName": "Nested Ref Examples Test",
   "auth": {
@@ -30,23 +14,7 @@
     "type_:ResponsesGetMarkets": {
       "name": {
         "name": {
-          "originalName": "ResponsesGetMarkets",
-          "camelCase": {
-            "unsafeName": "responsesGetMarkets",
-            "safeName": "responsesGetMarkets"
-          },
-          "snakeCase": {
-            "unsafeName": "responses_get_markets",
-            "safeName": "responses_get_markets"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RESPONSES_GET_MARKETS",
-            "safeName": "RESPONSES_GET_MARKETS"
-          },
-          "pascalCase": {
-            "unsafeName": "ResponsesGetMarkets",
-            "safeName": "ResponsesGetMarkets"
-          }
+          "originalName": "ResponsesGetMarkets"
         },
         "fernFilepath": {
           "allParts": [],
@@ -60,23 +28,7 @@
           {
             "name": {
               "name": {
-                "originalName": "results",
-                "camelCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "snakeCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RESULTS",
-                  "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
-                }
+                "originalName": "results"
               },
               "wireValue": "results"
             },
@@ -86,23 +38,7 @@
                   "container": {
                     "list": {
                       "name": {
-                        "originalName": "ResponsesMarketResp",
-                        "camelCase": {
-                          "unsafeName": "responsesMarketResp",
-                          "safeName": "responsesMarketResp"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "responses_market_resp",
-                          "safeName": "responses_market_resp"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "RESPONSES_MARKET_RESP",
-                          "safeName": "RESPONSES_MARKET_RESP"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ResponsesMarketResp",
-                          "safeName": "ResponsesMarketResp"
-                        }
+                        "originalName": "ResponsesMarketResp"
                       },
                       "fernFilepath": {
                         "allParts": [],
@@ -139,23 +75,7 @@
     "type_:ResponsesMarketResp": {
       "name": {
         "name": {
-          "originalName": "ResponsesMarketResp",
-          "camelCase": {
-            "unsafeName": "responsesMarketResp",
-            "safeName": "responsesMarketResp"
-          },
-          "snakeCase": {
-            "unsafeName": "responses_market_resp",
-            "safeName": "responses_market_resp"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RESPONSES_MARKET_RESP",
-            "safeName": "RESPONSES_MARKET_RESP"
-          },
-          "pascalCase": {
-            "unsafeName": "ResponsesMarketResp",
-            "safeName": "ResponsesMarketResp"
-          }
+          "originalName": "ResponsesMarketResp"
         },
         "fernFilepath": {
           "allParts": [],
@@ -169,23 +89,7 @@
           {
             "name": {
               "name": {
-                "originalName": "asset_kind",
-                "camelCase": {
-                  "unsafeName": "assetKind",
-                  "safeName": "assetKind"
-                },
-                "snakeCase": {
-                  "unsafeName": "asset_kind",
-                  "safeName": "asset_kind"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ASSET_KIND",
-                  "safeName": "ASSET_KIND"
-                },
-                "pascalCase": {
-                  "unsafeName": "AssetKind",
-                  "safeName": "AssetKind"
-                }
+                "originalName": "asset_kind"
               },
               "wireValue": "asset_kind"
             },
@@ -212,23 +116,7 @@
           {
             "name": {
               "name": {
-                "originalName": "base_currency",
-                "camelCase": {
-                  "unsafeName": "baseCurrency",
-                  "safeName": "baseCurrency"
-                },
-                "snakeCase": {
-                  "unsafeName": "base_currency",
-                  "safeName": "base_currency"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BASE_CURRENCY",
-                  "safeName": "BASE_CURRENCY"
-                },
-                "pascalCase": {
-                  "unsafeName": "BaseCurrency",
-                  "safeName": "BaseCurrency"
-                }
+                "originalName": "base_currency"
               },
               "wireValue": "base_currency"
             },
@@ -255,23 +143,7 @@
           {
             "name": {
               "name": {
-                "originalName": "option_cross_margin_params",
-                "camelCase": {
-                  "unsafeName": "optionCrossMarginParams",
-                  "safeName": "optionCrossMarginParams"
-                },
-                "snakeCase": {
-                  "unsafeName": "option_cross_margin_params",
-                  "safeName": "option_cross_margin_params"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "OPTION_CROSS_MARGIN_PARAMS",
-                  "safeName": "OPTION_CROSS_MARGIN_PARAMS"
-                },
-                "pascalCase": {
-                  "unsafeName": "OptionCrossMarginParams",
-                  "safeName": "OptionCrossMarginParams"
-                }
+                "originalName": "option_cross_margin_params"
               },
               "wireValue": "option_cross_margin_params"
             },
@@ -279,23 +151,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "ResponsesPerpetualOptionCrossMarginParams",
-                    "camelCase": {
-                      "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-                      "safeName": "responsesPerpetualOptionCrossMarginParams"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "responses_perpetual_option_cross_margin_params",
-                      "safeName": "responses_perpetual_option_cross_margin_params"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-                      "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-                      "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-                    }
+                    "originalName": "ResponsesPerpetualOptionCrossMarginParams"
                   },
                   "fernFilepath": {
                     "allParts": [],
@@ -328,23 +184,7 @@
     "type_:ResponsesPerpetualOptionCrossMarginParams": {
       "name": {
         "name": {
-          "originalName": "ResponsesPerpetualOptionCrossMarginParams",
-          "camelCase": {
-            "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-            "safeName": "responsesPerpetualOptionCrossMarginParams"
-          },
-          "snakeCase": {
-            "unsafeName": "responses_perpetual_option_cross_margin_params",
-            "safeName": "responses_perpetual_option_cross_margin_params"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-            "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-          },
-          "pascalCase": {
-            "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-            "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-          }
+          "originalName": "ResponsesPerpetualOptionCrossMarginParams"
         },
         "fernFilepath": {
           "allParts": [],
@@ -358,23 +198,7 @@
           {
             "name": {
               "name": {
-                "originalName": "imf",
-                "camelCase": {
-                  "unsafeName": "imf",
-                  "safeName": "imf"
-                },
-                "snakeCase": {
-                  "unsafeName": "imf",
-                  "safeName": "imf"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "IMF",
-                  "safeName": "IMF"
-                },
-                "pascalCase": {
-                  "unsafeName": "Imf",
-                  "safeName": "Imf"
-                }
+                "originalName": "imf"
               },
               "wireValue": "imf"
             },
@@ -382,23 +206,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "ResponsesPerpetualOptionMarginParams",
-                    "camelCase": {
-                      "unsafeName": "responsesPerpetualOptionMarginParams",
-                      "safeName": "responsesPerpetualOptionMarginParams"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "responses_perpetual_option_margin_params",
-                      "safeName": "responses_perpetual_option_margin_params"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                      "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                      "safeName": "ResponsesPerpetualOptionMarginParams"
-                    }
+                    "originalName": "ResponsesPerpetualOptionMarginParams"
                   },
                   "fernFilepath": {
                     "allParts": [],
@@ -419,23 +227,7 @@
           {
             "name": {
               "name": {
-                "originalName": "mmf",
-                "camelCase": {
-                  "unsafeName": "mmf",
-                  "safeName": "mmf"
-                },
-                "snakeCase": {
-                  "unsafeName": "mmf",
-                  "safeName": "mmf"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MMF",
-                  "safeName": "MMF"
-                },
-                "pascalCase": {
-                  "unsafeName": "Mmf",
-                  "safeName": "Mmf"
-                }
+                "originalName": "mmf"
               },
               "wireValue": "mmf"
             },
@@ -443,23 +235,7 @@
               "container": {
                 "optional": {
                   "name": {
-                    "originalName": "ResponsesPerpetualOptionMarginParams",
-                    "camelCase": {
-                      "unsafeName": "responsesPerpetualOptionMarginParams",
-                      "safeName": "responsesPerpetualOptionMarginParams"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "responses_perpetual_option_margin_params",
-                      "safeName": "responses_perpetual_option_margin_params"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-                      "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ResponsesPerpetualOptionMarginParams",
-                      "safeName": "ResponsesPerpetualOptionMarginParams"
-                    }
+                    "originalName": "ResponsesPerpetualOptionMarginParams"
                   },
                   "fernFilepath": {
                     "allParts": [],
@@ -492,23 +268,7 @@
     "type_:ResponsesPerpetualOptionMarginParams": {
       "name": {
         "name": {
-          "originalName": "ResponsesPerpetualOptionMarginParams",
-          "camelCase": {
-            "unsafeName": "responsesPerpetualOptionMarginParams",
-            "safeName": "responsesPerpetualOptionMarginParams"
-          },
-          "snakeCase": {
-            "unsafeName": "responses_perpetual_option_margin_params",
-            "safeName": "responses_perpetual_option_margin_params"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-            "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-          },
-          "pascalCase": {
-            "unsafeName": "ResponsesPerpetualOptionMarginParams",
-            "safeName": "ResponsesPerpetualOptionMarginParams"
-          }
+          "originalName": "ResponsesPerpetualOptionMarginParams"
         },
         "fernFilepath": {
           "allParts": [],
@@ -522,23 +282,7 @@
           {
             "name": {
               "name": {
-                "originalName": "long_itm",
-                "camelCase": {
-                  "unsafeName": "longItm",
-                  "safeName": "longItm"
-                },
-                "snakeCase": {
-                  "unsafeName": "long_itm",
-                  "safeName": "long_itm"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LONG_ITM",
-                  "safeName": "LONG_ITM"
-                },
-                "pascalCase": {
-                  "unsafeName": "LongItm",
-                  "safeName": "LongItm"
-                }
+                "originalName": "long_itm"
               },
               "wireValue": "long_itm"
             },
@@ -565,23 +309,7 @@
           {
             "name": {
               "name": {
-                "originalName": "premium_multiplier",
-                "camelCase": {
-                  "unsafeName": "premiumMultiplier",
-                  "safeName": "premiumMultiplier"
-                },
-                "snakeCase": {
-                  "unsafeName": "premium_multiplier",
-                  "safeName": "premium_multiplier"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PREMIUM_MULTIPLIER",
-                  "safeName": "PREMIUM_MULTIPLIER"
-                },
-                "pascalCase": {
-                  "unsafeName": "PremiumMultiplier",
-                  "safeName": "PremiumMultiplier"
-                }
+                "originalName": "premium_multiplier"
               },
               "wireValue": "premium_multiplier"
             },
@@ -608,23 +336,7 @@
           {
             "name": {
               "name": {
-                "originalName": "short_itm",
-                "camelCase": {
-                  "unsafeName": "shortItm",
-                  "safeName": "shortItm"
-                },
-                "snakeCase": {
-                  "unsafeName": "short_itm",
-                  "safeName": "short_itm"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SHORT_ITM",
-                  "safeName": "SHORT_ITM"
-                },
-                "pascalCase": {
-                  "unsafeName": "ShortItm",
-                  "safeName": "ShortItm"
-                }
+                "originalName": "short_itm"
               },
               "wireValue": "short_itm"
             },
@@ -686,23 +398,7 @@
         {
           "id": "endpoint_.getMarkets",
           "name": {
-            "originalName": "getMarkets",
-            "camelCase": {
-              "unsafeName": "getMarkets",
-              "safeName": "getMarkets"
-            },
-            "snakeCase": {
-              "unsafeName": "get_markets",
-              "safeName": "get_markets"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_MARKETS",
-              "safeName": "GET_MARKETS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetMarkets",
-              "safeName": "GetMarkets"
-            }
+            "originalName": "getMarkets"
           },
           "displayName": "List available markets",
           "auth": false,
@@ -726,23 +422,7 @@
                 "docs": "OK",
                 "responseBodyType": {
                   "name": {
-                    "originalName": "ResponsesGetMarkets",
-                    "camelCase": {
-                      "unsafeName": "responsesGetMarkets",
-                      "safeName": "responsesGetMarkets"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "responses_get_markets",
-                      "safeName": "responses_get_markets"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "RESPONSES_GET_MARKETS",
-                      "safeName": "RESPONSES_GET_MARKETS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ResponsesGetMarkets",
-                      "safeName": "ResponsesGetMarkets"
-                    }
+                    "originalName": "ResponsesGetMarkets"
                   },
                   "fernFilepath": {
                     "allParts": [],
@@ -769,23 +449,7 @@
   "constants": {
     "errorInstanceIdKey": {
       "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
+        "originalName": "errorInstanceId"
       },
       "wireValue": "errorInstanceId"
     }
@@ -797,23 +461,7 @@
         {
           "id": "Default",
           "name": {
-            "originalName": "Default",
-            "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
-            },
-            "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
-            }
+            "originalName": "Default"
           },
           "url": "https://api.example.com/v1"
         }
@@ -845,23 +493,7 @@
       "type_:ResponsesGetMarkets": {
         "declaration": {
           "name": {
-            "originalName": "ResponsesGetMarkets",
-            "camelCase": {
-              "unsafeName": "responsesGetMarkets",
-              "safeName": "responsesGetMarkets"
-            },
-            "snakeCase": {
-              "unsafeName": "responses_get_markets",
-              "safeName": "responses_get_markets"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "RESPONSES_GET_MARKETS",
-              "safeName": "RESPONSES_GET_MARKETS"
-            },
-            "pascalCase": {
-              "unsafeName": "ResponsesGetMarkets",
-              "safeName": "ResponsesGetMarkets"
-            }
+            "originalName": "ResponsesGetMarkets"
           },
           "fernFilepath": {
             "allParts": [],
@@ -872,23 +504,7 @@
           {
             "name": {
               "name": {
-                "originalName": "results",
-                "camelCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "snakeCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RESULTS",
-                  "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
-                }
+                "originalName": "results"
               },
               "wireValue": "results"
             },
@@ -910,23 +526,7 @@
       "type_:ResponsesMarketResp": {
         "declaration": {
           "name": {
-            "originalName": "ResponsesMarketResp",
-            "camelCase": {
-              "unsafeName": "responsesMarketResp",
-              "safeName": "responsesMarketResp"
-            },
-            "snakeCase": {
-              "unsafeName": "responses_market_resp",
-              "safeName": "responses_market_resp"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "RESPONSES_MARKET_RESP",
-              "safeName": "RESPONSES_MARKET_RESP"
-            },
-            "pascalCase": {
-              "unsafeName": "ResponsesMarketResp",
-              "safeName": "ResponsesMarketResp"
-            }
+            "originalName": "ResponsesMarketResp"
           },
           "fernFilepath": {
             "allParts": [],
@@ -937,23 +537,7 @@
           {
             "name": {
               "name": {
-                "originalName": "asset_kind",
-                "camelCase": {
-                  "unsafeName": "assetKind",
-                  "safeName": "assetKind"
-                },
-                "snakeCase": {
-                  "unsafeName": "asset_kind",
-                  "safeName": "asset_kind"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ASSET_KIND",
-                  "safeName": "ASSET_KIND"
-                },
-                "pascalCase": {
-                  "unsafeName": "AssetKind",
-                  "safeName": "AssetKind"
-                }
+                "originalName": "asset_kind"
               },
               "wireValue": "asset_kind"
             },
@@ -968,23 +552,7 @@
           {
             "name": {
               "name": {
-                "originalName": "base_currency",
-                "camelCase": {
-                  "unsafeName": "baseCurrency",
-                  "safeName": "baseCurrency"
-                },
-                "snakeCase": {
-                  "unsafeName": "base_currency",
-                  "safeName": "base_currency"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BASE_CURRENCY",
-                  "safeName": "BASE_CURRENCY"
-                },
-                "pascalCase": {
-                  "unsafeName": "BaseCurrency",
-                  "safeName": "BaseCurrency"
-                }
+                "originalName": "base_currency"
               },
               "wireValue": "base_currency"
             },
@@ -999,23 +567,7 @@
           {
             "name": {
               "name": {
-                "originalName": "option_cross_margin_params",
-                "camelCase": {
-                  "unsafeName": "optionCrossMarginParams",
-                  "safeName": "optionCrossMarginParams"
-                },
-                "snakeCase": {
-                  "unsafeName": "option_cross_margin_params",
-                  "safeName": "option_cross_margin_params"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "OPTION_CROSS_MARGIN_PARAMS",
-                  "safeName": "OPTION_CROSS_MARGIN_PARAMS"
-                },
-                "pascalCase": {
-                  "unsafeName": "OptionCrossMarginParams",
-                  "safeName": "OptionCrossMarginParams"
-                }
+                "originalName": "option_cross_margin_params"
               },
               "wireValue": "option_cross_margin_params"
             },
@@ -1034,23 +586,7 @@
       "type_:ResponsesPerpetualOptionCrossMarginParams": {
         "declaration": {
           "name": {
-            "originalName": "ResponsesPerpetualOptionCrossMarginParams",
-            "camelCase": {
-              "unsafeName": "responsesPerpetualOptionCrossMarginParams",
-              "safeName": "responsesPerpetualOptionCrossMarginParams"
-            },
-            "snakeCase": {
-              "unsafeName": "responses_perpetual_option_cross_margin_params",
-              "safeName": "responses_perpetual_option_cross_margin_params"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS",
-              "safeName": "RESPONSES_PERPETUAL_OPTION_CROSS_MARGIN_PARAMS"
-            },
-            "pascalCase": {
-              "unsafeName": "ResponsesPerpetualOptionCrossMarginParams",
-              "safeName": "ResponsesPerpetualOptionCrossMarginParams"
-            }
+            "originalName": "ResponsesPerpetualOptionCrossMarginParams"
           },
           "fernFilepath": {
             "allParts": [],
@@ -1061,23 +597,7 @@
           {
             "name": {
               "name": {
-                "originalName": "imf",
-                "camelCase": {
-                  "unsafeName": "imf",
-                  "safeName": "imf"
-                },
-                "snakeCase": {
-                  "unsafeName": "imf",
-                  "safeName": "imf"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "IMF",
-                  "safeName": "IMF"
-                },
-                "pascalCase": {
-                  "unsafeName": "Imf",
-                  "safeName": "Imf"
-                }
+                "originalName": "imf"
               },
               "wireValue": "imf"
             },
@@ -1092,23 +612,7 @@
           {
             "name": {
               "name": {
-                "originalName": "mmf",
-                "camelCase": {
-                  "unsafeName": "mmf",
-                  "safeName": "mmf"
-                },
-                "snakeCase": {
-                  "unsafeName": "mmf",
-                  "safeName": "mmf"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MMF",
-                  "safeName": "MMF"
-                },
-                "pascalCase": {
-                  "unsafeName": "Mmf",
-                  "safeName": "Mmf"
-                }
+                "originalName": "mmf"
               },
               "wireValue": "mmf"
             },
@@ -1127,23 +631,7 @@
       "type_:ResponsesPerpetualOptionMarginParams": {
         "declaration": {
           "name": {
-            "originalName": "ResponsesPerpetualOptionMarginParams",
-            "camelCase": {
-              "unsafeName": "responsesPerpetualOptionMarginParams",
-              "safeName": "responsesPerpetualOptionMarginParams"
-            },
-            "snakeCase": {
-              "unsafeName": "responses_perpetual_option_margin_params",
-              "safeName": "responses_perpetual_option_margin_params"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS",
-              "safeName": "RESPONSES_PERPETUAL_OPTION_MARGIN_PARAMS"
-            },
-            "pascalCase": {
-              "unsafeName": "ResponsesPerpetualOptionMarginParams",
-              "safeName": "ResponsesPerpetualOptionMarginParams"
-            }
+            "originalName": "ResponsesPerpetualOptionMarginParams"
           },
           "fernFilepath": {
             "allParts": [],
@@ -1154,23 +642,7 @@
           {
             "name": {
               "name": {
-                "originalName": "long_itm",
-                "camelCase": {
-                  "unsafeName": "longItm",
-                  "safeName": "longItm"
-                },
-                "snakeCase": {
-                  "unsafeName": "long_itm",
-                  "safeName": "long_itm"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LONG_ITM",
-                  "safeName": "LONG_ITM"
-                },
-                "pascalCase": {
-                  "unsafeName": "LongItm",
-                  "safeName": "LongItm"
-                }
+                "originalName": "long_itm"
               },
               "wireValue": "long_itm"
             },
@@ -1185,23 +657,7 @@
           {
             "name": {
               "name": {
-                "originalName": "premium_multiplier",
-                "camelCase": {
-                  "unsafeName": "premiumMultiplier",
-                  "safeName": "premiumMultiplier"
-                },
-                "snakeCase": {
-                  "unsafeName": "premium_multiplier",
-                  "safeName": "premium_multiplier"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PREMIUM_MULTIPLIER",
-                  "safeName": "PREMIUM_MULTIPLIER"
-                },
-                "pascalCase": {
-                  "unsafeName": "PremiumMultiplier",
-                  "safeName": "PremiumMultiplier"
-                }
+                "originalName": "premium_multiplier"
               },
               "wireValue": "premium_multiplier"
             },
@@ -1216,23 +672,7 @@
           {
             "name": {
               "name": {
-                "originalName": "short_itm",
-                "camelCase": {
-                  "unsafeName": "shortItm",
-                  "safeName": "shortItm"
-                },
-                "snakeCase": {
-                  "unsafeName": "short_itm",
-                  "safeName": "short_itm"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SHORT_ITM",
-                  "safeName": "SHORT_ITM"
-                },
-                "pascalCase": {
-                  "unsafeName": "ShortItm",
-                  "safeName": "ShortItm"
-                }
+                "originalName": "short_itm"
               },
               "wireValue": "short_itm"
             },
@@ -1254,23 +694,7 @@
       "endpoint_.getMarkets": {
         "declaration": {
           "name": {
-            "originalName": "getMarkets",
-            "camelCase": {
-              "unsafeName": "getMarkets",
-              "safeName": "getMarkets"
-            },
-            "snakeCase": {
-              "unsafeName": "get_markets",
-              "safeName": "get_markets"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_MARKETS",
-              "safeName": "GET_MARKETS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetMarkets",
-              "safeName": "GetMarkets"
-            }
+            "originalName": "getMarkets"
           },
           "fernFilepath": {
             "allParts": [],
@@ -1299,23 +723,7 @@
           {
             "id": "Default",
             "name": {
-              "originalName": "Default",
-              "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
-              },
-              "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
-              },
-              "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
-              }
+              "originalName": "Default"
             },
             "url": "https://api.example.com/v1"
           }

@@ -1,23 +1,7 @@
 {
   "selfHosted": false,
   "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
+    "originalName": "api"
   },
   "apiDisplayName": "Default Content Type",
   "auth": {
@@ -30,23 +14,7 @@
     "type_:GenerateContentResponse": {
       "name": {
         "name": {
-          "originalName": "GenerateContentResponse",
-          "camelCase": {
-            "unsafeName": "generateContentResponse",
-            "safeName": "generateContentResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "generate_content_response",
-            "safeName": "generate_content_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GENERATE_CONTENT_RESPONSE",
-            "safeName": "GENERATE_CONTENT_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "GenerateContentResponse",
-            "safeName": "GenerateContentResponse"
-          }
+          "originalName": "GenerateContentResponse"
         },
         "fernFilepath": {
           "allParts": [],
@@ -60,23 +28,7 @@
           {
             "name": {
               "name": {
-                "originalName": "bar",
-                "camelCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "snakeCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BAR",
-                  "safeName": "BAR"
-                },
-                "pascalCase": {
-                  "unsafeName": "Bar",
-                  "safeName": "Bar"
-                }
+                "originalName": "bar"
               },
               "wireValue": "bar"
             },
@@ -120,44 +72,12 @@
         "fernFilepath": {
           "allParts": [
             {
-              "originalName": "generativelanguage",
-              "camelCase": {
-                "unsafeName": "generativelanguage",
-                "safeName": "generativelanguage"
-              },
-              "snakeCase": {
-                "unsafeName": "generativelanguage",
-                "safeName": "generativelanguage"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "GENERATIVELANGUAGE",
-                "safeName": "GENERATIVELANGUAGE"
-              },
-              "pascalCase": {
-                "unsafeName": "Generativelanguage",
-                "safeName": "Generativelanguage"
-              }
+              "originalName": "generativelanguage"
             }
           ],
           "packagePath": [],
           "file": {
-            "originalName": "generativelanguage",
-            "camelCase": {
-              "unsafeName": "generativelanguage",
-              "safeName": "generativelanguage"
-            },
-            "snakeCase": {
-              "unsafeName": "generativelanguage",
-              "safeName": "generativelanguage"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GENERATIVELANGUAGE",
-              "safeName": "GENERATIVELANGUAGE"
-            },
-            "pascalCase": {
-              "unsafeName": "Generativelanguage",
-              "safeName": "Generativelanguage"
-            }
+            "originalName": "generativelanguage"
           }
         }
       },
@@ -177,23 +97,7 @@
         {
           "id": "endpoint_generativelanguage.GenerateContent",
           "name": {
-            "originalName": "GenerateContent",
-            "camelCase": {
-              "unsafeName": "generateContent",
-              "safeName": "generateContent"
-            },
-            "snakeCase": {
-              "unsafeName": "generate_content",
-              "safeName": "generate_content"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GENERATE_CONTENT",
-              "safeName": "GENERATE_CONTENT"
-            },
-            "pascalCase": {
-              "unsafeName": "GenerateContent",
-              "safeName": "GenerateContent"
-            }
+            "originalName": "GenerateContent"
           },
           "auth": false,
           "idempotent": false,
@@ -209,23 +113,7 @@
           "pathParameters": [
             {
               "name": {
-                "originalName": "model",
-                "camelCase": {
-                  "unsafeName": "model",
-                  "safeName": "model"
-                },
-                "snakeCase": {
-                  "unsafeName": "model",
-                  "safeName": "model"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MODEL",
-                  "safeName": "MODEL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Model",
-                  "safeName": "Model"
-                }
+                "originalName": "model"
               },
               "valueType": {
                 "primitive": {
@@ -246,23 +134,7 @@
           "allPathParameters": [
             {
               "name": {
-                "originalName": "model",
-                "camelCase": {
-                  "unsafeName": "model",
-                  "safeName": "model"
-                },
-                "snakeCase": {
-                  "unsafeName": "model",
-                  "safeName": "model"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MODEL",
-                  "safeName": "MODEL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Model",
-                  "safeName": "Model"
-                }
+                "originalName": "model"
               },
               "valueType": {
                 "primitive": {
@@ -285,65 +157,17 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "GenerateContentRequest",
-                "camelCase": {
-                  "unsafeName": "generateContentRequest",
-                  "safeName": "generateContentRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "generate_content_request",
-                  "safeName": "generate_content_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GENERATE_CONTENT_REQUEST",
-                  "safeName": "GENERATE_CONTENT_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "GenerateContentRequest",
-                  "safeName": "GenerateContentRequest"
-                }
+                "originalName": "GenerateContentRequest"
               },
               "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
+                "originalName": "body"
               },
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
             "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
+              "originalName": "request"
             }
           },
           "response": {
@@ -352,23 +176,7 @@
                 "docs": "Successful operation",
                 "responseBodyType": {
                   "name": {
-                    "originalName": "GenerateContentResponse",
-                    "camelCase": {
-                      "unsafeName": "generateContentResponse",
-                      "safeName": "generateContentResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "generate_content_response",
-                      "safeName": "generate_content_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "GENERATE_CONTENT_RESPONSE",
-                      "safeName": "GENERATE_CONTENT_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "GenerateContentResponse",
-                      "safeName": "GenerateContentResponse"
-                    }
+                    "originalName": "GenerateContentResponse"
                   },
                   "fernFilepath": {
                     "allParts": [],
@@ -394,23 +202,7 @@
   "constants": {
     "errorInstanceIdKey": {
       "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
+        "originalName": "errorInstanceId"
       },
       "wireValue": "errorInstanceId"
     }
@@ -422,23 +214,7 @@
         {
           "id": "Default",
           "name": {
-            "originalName": "Default",
-            "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
-            },
-            "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
-            }
+            "originalName": "Default"
           },
           "url": "https://ai.com"
         }
@@ -467,23 +243,7 @@
       "type_:GenerateContentResponse": {
         "declaration": {
           "name": {
-            "originalName": "GenerateContentResponse",
-            "camelCase": {
-              "unsafeName": "generateContentResponse",
-              "safeName": "generateContentResponse"
-            },
-            "snakeCase": {
-              "unsafeName": "generate_content_response",
-              "safeName": "generate_content_response"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GENERATE_CONTENT_RESPONSE",
-              "safeName": "GENERATE_CONTENT_RESPONSE"
-            },
-            "pascalCase": {
-              "unsafeName": "GenerateContentResponse",
-              "safeName": "GenerateContentResponse"
-            }
+            "originalName": "GenerateContentResponse"
           },
           "fernFilepath": {
             "allParts": [],
@@ -494,23 +254,7 @@
           {
             "name": {
               "name": {
-                "originalName": "bar",
-                "camelCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "snakeCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BAR",
-                  "safeName": "BAR"
-                },
-                "pascalCase": {
-                  "unsafeName": "Bar",
-                  "safeName": "Bar"
-                }
+                "originalName": "bar"
               },
               "wireValue": "bar"
             },
@@ -532,65 +276,17 @@
       "endpoint_generativelanguage.GenerateContent": {
         "declaration": {
           "name": {
-            "originalName": "GenerateContent",
-            "camelCase": {
-              "unsafeName": "generateContent",
-              "safeName": "generateContent"
-            },
-            "snakeCase": {
-              "unsafeName": "generate_content",
-              "safeName": "generate_content"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GENERATE_CONTENT",
-              "safeName": "GENERATE_CONTENT"
-            },
-            "pascalCase": {
-              "unsafeName": "GenerateContent",
-              "safeName": "GenerateContent"
-            }
+            "originalName": "GenerateContent"
           },
           "fernFilepath": {
             "allParts": [
               {
-                "originalName": "generativelanguage",
-                "camelCase": {
-                  "unsafeName": "generativelanguage",
-                  "safeName": "generativelanguage"
-                },
-                "snakeCase": {
-                  "unsafeName": "generativelanguage",
-                  "safeName": "generativelanguage"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GENERATIVELANGUAGE",
-                  "safeName": "GENERATIVELANGUAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Generativelanguage",
-                  "safeName": "Generativelanguage"
-                }
+                "originalName": "generativelanguage"
               }
             ],
             "packagePath": [],
             "file": {
-              "originalName": "generativelanguage",
-              "camelCase": {
-                "unsafeName": "generativelanguage",
-                "safeName": "generativelanguage"
-              },
-              "snakeCase": {
-                "unsafeName": "generativelanguage",
-                "safeName": "generativelanguage"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "GENERATIVELANGUAGE",
-                "safeName": "GENERATIVELANGUAGE"
-              },
-              "pascalCase": {
-                "unsafeName": "Generativelanguage",
-                "safeName": "Generativelanguage"
-              }
+              "originalName": "generativelanguage"
             }
           }
         },
@@ -601,65 +297,17 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "GenerateContentRequest",
-              "camelCase": {
-                "unsafeName": "generateContentRequest",
-                "safeName": "generateContentRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "generate_content_request",
-                "safeName": "generate_content_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "GENERATE_CONTENT_REQUEST",
-                "safeName": "GENERATE_CONTENT_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "GenerateContentRequest",
-                "safeName": "GenerateContentRequest"
-              }
+              "originalName": "GenerateContentRequest"
             },
             "fernFilepath": {
               "allParts": [
                 {
-                  "originalName": "generativelanguage",
-                  "camelCase": {
-                    "unsafeName": "generativelanguage",
-                    "safeName": "generativelanguage"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "generativelanguage",
-                    "safeName": "generativelanguage"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GENERATIVELANGUAGE",
-                    "safeName": "GENERATIVELANGUAGE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Generativelanguage",
-                    "safeName": "Generativelanguage"
-                  }
+                  "originalName": "generativelanguage"
                 }
               ],
               "packagePath": [],
               "file": {
-                "originalName": "generativelanguage",
-                "camelCase": {
-                  "unsafeName": "generativelanguage",
-                  "safeName": "generativelanguage"
-                },
-                "snakeCase": {
-                  "unsafeName": "generativelanguage",
-                  "safeName": "generativelanguage"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GENERATIVELANGUAGE",
-                  "safeName": "GENERATIVELANGUAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Generativelanguage",
-                  "safeName": "Generativelanguage"
-                }
+                "originalName": "generativelanguage"
               }
             }
           },
@@ -667,23 +315,7 @@
             {
               "name": {
                 "name": {
-                  "originalName": "model",
-                  "camelCase": {
-                    "unsafeName": "model",
-                    "safeName": "model"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "model",
-                    "safeName": "model"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "MODEL",
-                    "safeName": "MODEL"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Model",
-                    "safeName": "Model"
-                  }
+                  "originalName": "model"
                 },
                 "wireValue": "model"
               },
@@ -715,23 +347,7 @@
           {
             "id": "Default",
             "name": {
-              "originalName": "Default",
-              "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
-              },
-              "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
-              },
-              "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
-              }
+              "originalName": "Default"
             },
             "url": "https://ai.com"
           }
@@ -747,64 +363,16 @@
       "fernFilepath": {
         "allParts": [
           {
-            "originalName": "generativelanguage",
-            "camelCase": {
-              "unsafeName": "generativelanguage",
-              "safeName": "generativelanguage"
-            },
-            "snakeCase": {
-              "unsafeName": "generativelanguage",
-              "safeName": "generativelanguage"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GENERATIVELANGUAGE",
-              "safeName": "GENERATIVELANGUAGE"
-            },
-            "pascalCase": {
-              "unsafeName": "Generativelanguage",
-              "safeName": "Generativelanguage"
-            }
+            "originalName": "generativelanguage"
           }
         ],
         "packagePath": [],
         "file": {
-          "originalName": "generativelanguage",
-          "camelCase": {
-            "unsafeName": "generativelanguage",
-            "safeName": "generativelanguage"
-          },
-          "snakeCase": {
-            "unsafeName": "generativelanguage",
-            "safeName": "generativelanguage"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GENERATIVELANGUAGE",
-            "safeName": "GENERATIVELANGUAGE"
-          },
-          "pascalCase": {
-            "unsafeName": "Generativelanguage",
-            "safeName": "Generativelanguage"
-          }
+          "originalName": "generativelanguage"
         }
       },
       "name": {
-        "originalName": "generativelanguage",
-        "camelCase": {
-          "unsafeName": "generativelanguage",
-          "safeName": "generativelanguage"
-        },
-        "snakeCase": {
-          "unsafeName": "generativelanguage",
-          "safeName": "generativelanguage"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "GENERATIVELANGUAGE",
-          "safeName": "GENERATIVELANGUAGE"
-        },
-        "pascalCase": {
-          "unsafeName": "Generativelanguage",
-          "safeName": "Generativelanguage"
-        }
+        "originalName": "generativelanguage"
       },
       "service": "service_generativelanguage",
       "types": [],

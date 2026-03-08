@@ -19,6 +19,27 @@ export interface CasingsGenerator {
 
 const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"];
 
+/**
+ * Constructs a CasingsGenerator that produces only slim Names (originalName only, casings undefined).
+ * Used by the IR generator for v66+ to avoid computing casings at generation time.
+ */
+export function constructSlimCasingsGenerator(): CasingsGenerator {
+    const slimGenerator: CasingsGenerator = {
+        generateName: (inputName) => ({
+            originalName: inputName,
+            camelCase: undefined,
+            pascalCase: undefined,
+            snakeCase: undefined,
+            screamingSnakeCase: undefined
+        }),
+        generateNameAndWireValue: ({ name, wireValue }) => ({
+            name: slimGenerator.generateName(name),
+            wireValue
+        })
+    };
+    return slimGenerator;
+}
+
 export function constructCasingsGenerator({
     generationLanguage,
     keywords,

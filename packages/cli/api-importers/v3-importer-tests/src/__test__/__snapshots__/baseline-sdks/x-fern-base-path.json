@@ -1,23 +1,7 @@
 {
   "selfHosted": false,
   "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
+    "originalName": "api"
   },
   "apiDisplayName": "Acme API",
   "auth": {
@@ -52,23 +36,7 @@
         {
           "id": "endpoint_.exampleEndpoint",
           "name": {
-            "originalName": "exampleEndpoint",
-            "camelCase": {
-              "unsafeName": "exampleEndpoint",
-              "safeName": "exampleEndpoint"
-            },
-            "snakeCase": {
-              "unsafeName": "example_endpoint",
-              "safeName": "example_endpoint"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "EXAMPLE_ENDPOINT",
-              "safeName": "EXAMPLE_ENDPOINT"
-            },
-            "pascalCase": {
-              "unsafeName": "ExampleEndpoint",
-              "safeName": "ExampleEndpoint"
-            }
+            "originalName": "exampleEndpoint"
           },
           "displayName": "Example endpoint",
           "auth": false,
@@ -98,23 +66,7 @@
   "constants": {
     "errorInstanceIdKey": {
       "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
+        "originalName": "errorInstanceId"
       },
       "wireValue": "errorInstanceId"
     }
@@ -126,23 +78,7 @@
         {
           "id": "Default",
           "name": {
-            "originalName": "Default",
-            "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
-            },
-            "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
-            }
+            "originalName": "Default"
           },
           "url": "https://api.acme.com"
         }
@@ -169,23 +105,7 @@
       "endpoint_.exampleEndpoint": {
         "declaration": {
           "name": {
-            "originalName": "exampleEndpoint",
-            "camelCase": {
-              "unsafeName": "exampleEndpoint",
-              "safeName": "exampleEndpoint"
-            },
-            "snakeCase": {
-              "unsafeName": "example_endpoint",
-              "safeName": "example_endpoint"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "EXAMPLE_ENDPOINT",
-              "safeName": "EXAMPLE_ENDPOINT"
-            },
-            "pascalCase": {
-              "unsafeName": "ExampleEndpoint",
-              "safeName": "ExampleEndpoint"
-            }
+            "originalName": "exampleEndpoint"
           },
           "fernFilepath": {
             "allParts": [],
@@ -214,23 +134,7 @@
           {
             "id": "Default",
             "name": {
-              "originalName": "Default",
-              "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
-              },
-              "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
-              },
-              "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
-              }
+              "originalName": "Default"
             },
             "url": "https://api.acme.com"
           }

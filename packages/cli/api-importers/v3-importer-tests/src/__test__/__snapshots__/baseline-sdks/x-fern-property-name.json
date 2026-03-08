@@ -1,23 +1,7 @@
 {
   "selfHosted": false,
   "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
+    "originalName": "api"
   },
   "apiDisplayName": "Test extension `x-fern-property-name`",
   "auth": {
@@ -30,23 +14,7 @@
     "type_:BaseUser": {
       "name": {
         "name": {
-          "originalName": "BaseUser",
-          "camelCase": {
-            "unsafeName": "baseUser",
-            "safeName": "baseUser"
-          },
-          "snakeCase": {
-            "unsafeName": "base_user",
-            "safeName": "base_user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "BASE_USER",
-            "safeName": "BASE_USER"
-          },
-          "pascalCase": {
-            "unsafeName": "BaseUser",
-            "safeName": "BaseUser"
-          }
+          "originalName": "BaseUser"
         },
         "fernFilepath": {
           "allParts": [],
@@ -60,23 +28,7 @@
           {
             "name": {
               "name": {
-                "originalName": "renamed_id",
-                "camelCase": {
-                  "unsafeName": "renamedID",
-                  "safeName": "renamedID"
-                },
-                "snakeCase": {
-                  "unsafeName": "renamed_id",
-                  "safeName": "renamed_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RENAMED_ID",
-                  "safeName": "RENAMED_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "RenamedID",
-                  "safeName": "RenamedID"
-                }
+                "originalName": "renamed_id"
               },
               "wireValue": "id"
             },
@@ -121,23 +73,7 @@
   "constants": {
     "errorInstanceIdKey": {
       "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
+        "originalName": "errorInstanceId"
       },
       "wireValue": "errorInstanceId"
     }
@@ -161,23 +97,7 @@
       "type_:BaseUser": {
         "declaration": {
           "name": {
-            "originalName": "BaseUser",
-            "camelCase": {
-              "unsafeName": "baseUser",
-              "safeName": "baseUser"
-            },
-            "snakeCase": {
-              "unsafeName": "base_user",
-              "safeName": "base_user"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "BASE_USER",
-              "safeName": "BASE_USER"
-            },
-            "pascalCase": {
-              "unsafeName": "BaseUser",
-              "safeName": "BaseUser"
-            }
+            "originalName": "BaseUser"
           },
           "fernFilepath": {
             "allParts": [],
@@ -188,23 +108,7 @@
           {
             "name": {
               "name": {
-                "originalName": "renamed_id",
-                "camelCase": {
-                  "unsafeName": "renamedID",
-                  "safeName": "renamedID"
-                },
-                "snakeCase": {
-                  "unsafeName": "renamed_id",
-                  "safeName": "renamed_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RENAMED_ID",
-                  "safeName": "RENAMED_ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "RenamedID",
-                  "safeName": "RenamedID"
-                }
+                "originalName": "renamed_id"
               },
               "wireValue": "id"
             },

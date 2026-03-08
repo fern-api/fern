@@ -1,23 +1,7 @@
 {
   "selfHosted": false,
   "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
+    "originalName": "api"
   },
   "apiDisplayName": "Test extension `x-fern-encoding` for schemas",
   "auth": {
@@ -30,23 +14,7 @@
     "type_:Metadata": {
       "name": {
         "name": {
-          "originalName": "Metadata",
-          "camelCase": {
-            "unsafeName": "metadata",
-            "safeName": "metadata"
-          },
-          "snakeCase": {
-            "unsafeName": "metadata",
-            "safeName": "metadata"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "METADATA",
-            "safeName": "METADATA"
-          },
-          "pascalCase": {
-            "unsafeName": "Metadata",
-            "safeName": "Metadata"
-          }
+          "originalName": "Metadata"
         },
         "fernFilepath": {
           "allParts": [],
@@ -70,23 +38,7 @@
               "container": {
                 "nullable": {
                   "name": {
-                    "originalName": "MetadataValue",
-                    "camelCase": {
-                      "unsafeName": "metadataValue",
-                      "safeName": "metadataValue"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "metadata_value",
-                      "safeName": "metadata_value"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "METADATA_VALUE",
-                      "safeName": "METADATA_VALUE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "MetadataValue",
-                      "safeName": "MetadataValue"
-                    }
+                    "originalName": "MetadataValue"
                   },
                   "fernFilepath": {
                     "allParts": [],
@@ -118,23 +70,7 @@
               "container": {
                 "nullable": {
                   "name": {
-                    "originalName": "MetadataValue",
-                    "camelCase": {
-                      "unsafeName": "metadataValue",
-                      "safeName": "metadataValue"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "metadata_value",
-                      "safeName": "metadata_value"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "METADATA_VALUE",
-                      "safeName": "METADATA_VALUE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "MetadataValue",
-                      "safeName": "MetadataValue"
-                    }
+                    "originalName": "MetadataValue"
                   },
                   "fernFilepath": {
                     "allParts": [],
@@ -172,23 +108,7 @@
     "type_:MetadataValue": {
       "name": {
         "name": {
-          "originalName": "MetadataValue",
-          "camelCase": {
-            "unsafeName": "metadataValue",
-            "safeName": "metadataValue"
-          },
-          "snakeCase": {
-            "unsafeName": "metadata_value",
-            "safeName": "metadata_value"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "METADATA_VALUE",
-            "safeName": "METADATA_VALUE"
-          },
-          "pascalCase": {
-            "unsafeName": "MetadataValue",
-            "safeName": "MetadataValue"
-          }
+          "originalName": "MetadataValue"
         },
         "fernFilepath": {
           "allParts": [],
@@ -267,23 +187,7 @@
   "constants": {
     "errorInstanceIdKey": {
       "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
+        "originalName": "errorInstanceId"
       },
       "wireValue": "errorInstanceId"
     }
@@ -308,23 +212,7 @@
       "type_:Metadata": {
         "declaration": {
           "name": {
-            "originalName": "Metadata",
-            "camelCase": {
-              "unsafeName": "metadata",
-              "safeName": "metadata"
-            },
-            "snakeCase": {
-              "unsafeName": "metadata",
-              "safeName": "metadata"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "METADATA",
-              "safeName": "METADATA"
-            },
-            "pascalCase": {
-              "unsafeName": "Metadata",
-              "safeName": "Metadata"
-            }
+            "originalName": "Metadata"
           },
           "fernFilepath": {
             "allParts": [],
@@ -350,23 +238,7 @@
       "type_:MetadataValue": {
         "declaration": {
           "name": {
-            "originalName": "MetadataValue",
-            "camelCase": {
-              "unsafeName": "metadataValue",
-              "safeName": "metadataValue"
-            },
-            "snakeCase": {
-              "unsafeName": "metadata_value",
-              "safeName": "metadata_value"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "METADATA_VALUE",
-              "safeName": "METADATA_VALUE"
-            },
-            "pascalCase": {
-              "unsafeName": "MetadataValue",
-              "safeName": "MetadataValue"
-            }
+            "originalName": "MetadataValue"
           },
           "fernFilepath": {
             "allParts": [],

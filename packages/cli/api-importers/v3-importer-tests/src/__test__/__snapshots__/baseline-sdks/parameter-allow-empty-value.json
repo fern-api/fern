@@ -1,23 +1,7 @@
 {
   "selfHosted": false,
   "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
+    "originalName": "api"
   },
   "apiDisplayName": "Parameter Allow Empty Value Test",
   "auth": {
@@ -30,23 +14,7 @@
     "type_:ListItemsRequestSortBy": {
       "name": {
         "name": {
-          "originalName": "ListItemsRequestSortBy",
-          "camelCase": {
-            "unsafeName": "listItemsRequestSortBy",
-            "safeName": "listItemsRequestSortBy"
-          },
-          "snakeCase": {
-            "unsafeName": "list_items_request_sort_by",
-            "safeName": "list_items_request_sort_by"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_ITEMS_REQUEST_SORT_BY",
-            "safeName": "LIST_ITEMS_REQUEST_SORT_BY"
-          },
-          "pascalCase": {
-            "unsafeName": "ListItemsRequestSortBy",
-            "safeName": "ListItemsRequestSortBy"
-          }
+          "originalName": "ListItemsRequestSortBy"
         },
         "fernFilepath": {
           "allParts": [],
@@ -59,23 +27,7 @@
           {
             "name": {
               "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
+                "originalName": "name"
               },
               "wireValue": "name"
             }
@@ -83,23 +35,7 @@
           {
             "name": {
               "name": {
-                "originalName": "createdAt",
-                "camelCase": {
-                  "unsafeName": "createdAt",
-                  "safeName": "createdAt"
-                },
-                "snakeCase": {
-                  "unsafeName": "created_at",
-                  "safeName": "created_at"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CREATED_AT",
-                  "safeName": "CREATED_AT"
-                },
-                "pascalCase": {
-                  "unsafeName": "CreatedAt",
-                  "safeName": "CreatedAt"
-                }
+                "originalName": "createdAt"
               },
               "wireValue": "createdAt"
             }
@@ -107,23 +43,7 @@
           {
             "name": {
               "name": {
-                "originalName": "updatedAt",
-                "camelCase": {
-                  "unsafeName": "updatedAt",
-                  "safeName": "updatedAt"
-                },
-                "snakeCase": {
-                  "unsafeName": "updated_at",
-                  "safeName": "updated_at"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "UPDATED_AT",
-                  "safeName": "UPDATED_AT"
-                },
-                "pascalCase": {
-                  "unsafeName": "UpdatedAt",
-                  "safeName": "UpdatedAt"
-                }
+                "originalName": "updatedAt"
               },
               "wireValue": "updatedAt"
             }
@@ -141,23 +61,7 @@
     "type_:ListItemsRequestSortOrder": {
       "name": {
         "name": {
-          "originalName": "ListItemsRequestSortOrder",
-          "camelCase": {
-            "unsafeName": "listItemsRequestSortOrder",
-            "safeName": "listItemsRequestSortOrder"
-          },
-          "snakeCase": {
-            "unsafeName": "list_items_request_sort_order",
-            "safeName": "list_items_request_sort_order"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_ITEMS_REQUEST_SORT_ORDER",
-            "safeName": "LIST_ITEMS_REQUEST_SORT_ORDER"
-          },
-          "pascalCase": {
-            "unsafeName": "ListItemsRequestSortOrder",
-            "safeName": "ListItemsRequestSortOrder"
-          }
+          "originalName": "ListItemsRequestSortOrder"
         },
         "fernFilepath": {
           "allParts": [],
@@ -170,23 +74,7 @@
           {
             "name": {
               "name": {
-                "originalName": "asc",
-                "camelCase": {
-                  "unsafeName": "asc",
-                  "safeName": "asc"
-                },
-                "snakeCase": {
-                  "unsafeName": "asc",
-                  "safeName": "asc"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ASC",
-                  "safeName": "ASC"
-                },
-                "pascalCase": {
-                  "unsafeName": "Asc",
-                  "safeName": "Asc"
-                }
+                "originalName": "asc"
               },
               "wireValue": "asc"
             }
@@ -194,23 +82,7 @@
           {
             "name": {
               "name": {
-                "originalName": "desc",
-                "camelCase": {
-                  "unsafeName": "desc",
-                  "safeName": "desc"
-                },
-                "snakeCase": {
-                  "unsafeName": "desc",
-                  "safeName": "desc"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "DESC",
-                  "safeName": "DESC"
-                },
-                "pascalCase": {
-                  "unsafeName": "Desc",
-                  "safeName": "Desc"
-                }
+                "originalName": "desc"
               },
               "wireValue": "desc"
             }
@@ -228,23 +100,7 @@
     "type_:ListItemsResponse": {
       "name": {
         "name": {
-          "originalName": "ListItemsResponse",
-          "camelCase": {
-            "unsafeName": "listItemsResponse",
-            "safeName": "listItemsResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "list_items_response",
-            "safeName": "list_items_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_ITEMS_RESPONSE",
-            "safeName": "LIST_ITEMS_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "ListItemsResponse",
-            "safeName": "ListItemsResponse"
-          }
+          "originalName": "ListItemsResponse"
         },
         "fernFilepath": {
           "allParts": [],
@@ -258,23 +114,7 @@
           {
             "name": {
               "name": {
-                "originalName": "items",
-                "camelCase": {
-                  "unsafeName": "items",
-                  "safeName": "items"
-                },
-                "snakeCase": {
-                  "unsafeName": "items",
-                  "safeName": "items"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ITEMS",
-                  "safeName": "ITEMS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Items",
-                  "safeName": "Items"
-                }
+                "originalName": "items"
               },
               "wireValue": "items"
             },
@@ -284,23 +124,7 @@
                   "container": {
                     "list": {
                       "name": {
-                        "originalName": "Item",
-                        "camelCase": {
-                          "unsafeName": "item",
-                          "safeName": "item"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "item",
-                          "safeName": "item"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ITEM",
-                          "safeName": "ITEM"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Item",
-                          "safeName": "Item"
-                        }
+                        "originalName": "Item"
                       },
                       "fernFilepath": {
                         "allParts": [],
@@ -337,23 +161,7 @@
     "type_:Item": {
       "name": {
         "name": {
-          "originalName": "Item",
-          "camelCase": {
-            "unsafeName": "item",
-            "safeName": "item"
-          },
-          "snakeCase": {
-            "unsafeName": "item",
-            "safeName": "item"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ITEM",
-            "safeName": "ITEM"
-          },
-          "pascalCase": {
-            "unsafeName": "Item",
-            "safeName": "Item"
-          }
+          "originalName": "Item"
         },
         "fernFilepath": {
           "allParts": [],
@@ -367,23 +175,7 @@
           {
             "name": {
               "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
+                "originalName": "id"
               },
               "wireValue": "id"
             },
@@ -410,23 +202,7 @@
           {
             "name": {
               "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
+                "originalName": "name"
               },
               "wireValue": "name"
             },
@@ -488,23 +264,7 @@
         {
           "id": "endpoint_.listItems",
           "name": {
-            "originalName": "listItems",
-            "camelCase": {
-              "unsafeName": "listItems",
-              "safeName": "listItems"
-            },
-            "snakeCase": {
-              "unsafeName": "list_items",
-              "safeName": "list_items"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST_ITEMS",
-              "safeName": "LIST_ITEMS"
-            },
-            "pascalCase": {
-              "unsafeName": "ListItems",
-              "safeName": "ListItems"
-            }
+            "originalName": "listItems"
           },
           "displayName": "List items with optional empty parameters",
           "auth": false,
@@ -525,23 +285,7 @@
               "docs": "Sort results by the provided value",
               "name": {
                 "name": {
-                  "originalName": "sortBy",
-                  "camelCase": {
-                    "unsafeName": "sortBy",
-                    "safeName": "sortBy"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "sort_by",
-                    "safeName": "sort_by"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SORT_BY",
-                    "safeName": "SORT_BY"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SortBy",
-                    "safeName": "SortBy"
-                  }
+                  "originalName": "sortBy"
                 },
                 "wireValue": "sortBy"
               },
@@ -549,23 +293,7 @@
                 "container": {
                   "optional": {
                     "name": {
-                      "originalName": "ListItemsRequestSortBy",
-                      "camelCase": {
-                        "unsafeName": "listItemsRequestSortBy",
-                        "safeName": "listItemsRequestSortBy"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "list_items_request_sort_by",
-                        "safeName": "list_items_request_sort_by"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "LIST_ITEMS_REQUEST_SORT_BY",
-                        "safeName": "LIST_ITEMS_REQUEST_SORT_BY"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "ListItemsRequestSortBy",
-                        "safeName": "ListItemsRequestSortBy"
-                      }
+                      "originalName": "ListItemsRequestSortBy"
                     },
                     "fernFilepath": {
                       "allParts": [],
@@ -588,23 +316,7 @@
               "docs": "Sort order (asc or desc)",
               "name": {
                 "name": {
-                  "originalName": "sortOrder",
-                  "camelCase": {
-                    "unsafeName": "sortOrder",
-                    "safeName": "sortOrder"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "sort_order",
-                    "safeName": "sort_order"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SORT_ORDER",
-                    "safeName": "SORT_ORDER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SortOrder",
-                    "safeName": "SortOrder"
-                  }
+                  "originalName": "sortOrder"
                 },
                 "wireValue": "sortOrder"
               },
@@ -612,23 +324,7 @@
                 "container": {
                   "optional": {
                     "name": {
-                      "originalName": "ListItemsRequestSortOrder",
-                      "camelCase": {
-                        "unsafeName": "listItemsRequestSortOrder",
-                        "safeName": "listItemsRequestSortOrder"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "list_items_request_sort_order",
-                        "safeName": "list_items_request_sort_order"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "LIST_ITEMS_REQUEST_SORT_ORDER",
-                        "safeName": "LIST_ITEMS_REQUEST_SORT_ORDER"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "ListItemsRequestSortOrder",
-                        "safeName": "ListItemsRequestSortOrder"
-                      }
+                      "originalName": "ListItemsRequestSortOrder"
                     },
                     "fernFilepath": {
                       "allParts": [],
@@ -651,23 +347,7 @@
               "docs": "Filter string",
               "name": {
                 "name": {
-                  "originalName": "filter",
-                  "camelCase": {
-                    "unsafeName": "filter",
-                    "safeName": "filter"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "filter",
-                    "safeName": "filter"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "FILTER",
-                    "safeName": "FILTER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Filter",
-                    "safeName": "Filter"
-                  }
+                  "originalName": "filter"
                 },
                 "wireValue": "filter"
               },
@@ -697,65 +377,17 @@
           "sdkRequest": {
             "shape": {
               "wrapperName": {
-                "originalName": "ListItemsRequest",
-                "camelCase": {
-                  "unsafeName": "listItemsRequest",
-                  "safeName": "listItemsRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "list_items_request",
-                  "safeName": "list_items_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LIST_ITEMS_REQUEST",
-                  "safeName": "LIST_ITEMS_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "ListItemsRequest",
-                  "safeName": "ListItemsRequest"
-                }
+                "originalName": "ListItemsRequest"
               },
               "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
+                "originalName": "body"
               },
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
             "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
+              "originalName": "request"
             }
           },
           "response": {
@@ -764,23 +396,7 @@
                 "docs": "List of items",
                 "responseBodyType": {
                   "name": {
-                    "originalName": "ListItemsResponse",
-                    "camelCase": {
-                      "unsafeName": "listItemsResponse",
-                      "safeName": "listItemsResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "list_items_response",
-                      "safeName": "list_items_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "LIST_ITEMS_RESPONSE",
-                      "safeName": "LIST_ITEMS_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "ListItemsResponse",
-                      "safeName": "ListItemsResponse"
-                    }
+                    "originalName": "ListItemsResponse"
                   },
                   "fernFilepath": {
                     "allParts": [],
@@ -807,23 +423,7 @@
   "constants": {
     "errorInstanceIdKey": {
       "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
+        "originalName": "errorInstanceId"
       },
       "wireValue": "errorInstanceId"
     }
@@ -852,23 +452,7 @@
       "type_:ListItemsRequestSortBy": {
         "declaration": {
           "name": {
-            "originalName": "ListItemsRequestSortBy",
-            "camelCase": {
-              "unsafeName": "listItemsRequestSortBy",
-              "safeName": "listItemsRequestSortBy"
-            },
-            "snakeCase": {
-              "unsafeName": "list_items_request_sort_by",
-              "safeName": "list_items_request_sort_by"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST_ITEMS_REQUEST_SORT_BY",
-              "safeName": "LIST_ITEMS_REQUEST_SORT_BY"
-            },
-            "pascalCase": {
-              "unsafeName": "ListItemsRequestSortBy",
-              "safeName": "ListItemsRequestSortBy"
-            }
+            "originalName": "ListItemsRequestSortBy"
           },
           "fernFilepath": {
             "allParts": [],
@@ -878,67 +462,19 @@
         "values": [
           {
             "name": {
-              "originalName": "name",
-              "camelCase": {
-                "unsafeName": "name",
-                "safeName": "name"
-              },
-              "snakeCase": {
-                "unsafeName": "name",
-                "safeName": "name"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "NAME",
-                "safeName": "NAME"
-              },
-              "pascalCase": {
-                "unsafeName": "Name",
-                "safeName": "Name"
-              }
+              "originalName": "name"
             },
             "wireValue": "name"
           },
           {
             "name": {
-              "originalName": "createdAt",
-              "camelCase": {
-                "unsafeName": "createdAt",
-                "safeName": "createdAt"
-              },
-              "snakeCase": {
-                "unsafeName": "created_at",
-                "safeName": "created_at"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "CREATED_AT",
-                "safeName": "CREATED_AT"
-              },
-              "pascalCase": {
-                "unsafeName": "CreatedAt",
-                "safeName": "CreatedAt"
-              }
+              "originalName": "createdAt"
             },
             "wireValue": "createdAt"
           },
           {
             "name": {
-              "originalName": "updatedAt",
-              "camelCase": {
-                "unsafeName": "updatedAt",
-                "safeName": "updatedAt"
-              },
-              "snakeCase": {
-                "unsafeName": "updated_at",
-                "safeName": "updated_at"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "UPDATED_AT",
-                "safeName": "UPDATED_AT"
-              },
-              "pascalCase": {
-                "unsafeName": "UpdatedAt",
-                "safeName": "UpdatedAt"
-              }
+              "originalName": "updatedAt"
             },
             "wireValue": "updatedAt"
           }
@@ -948,23 +484,7 @@
       "type_:ListItemsRequestSortOrder": {
         "declaration": {
           "name": {
-            "originalName": "ListItemsRequestSortOrder",
-            "camelCase": {
-              "unsafeName": "listItemsRequestSortOrder",
-              "safeName": "listItemsRequestSortOrder"
-            },
-            "snakeCase": {
-              "unsafeName": "list_items_request_sort_order",
-              "safeName": "list_items_request_sort_order"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST_ITEMS_REQUEST_SORT_ORDER",
-              "safeName": "LIST_ITEMS_REQUEST_SORT_ORDER"
-            },
-            "pascalCase": {
-              "unsafeName": "ListItemsRequestSortOrder",
-              "safeName": "ListItemsRequestSortOrder"
-            }
+            "originalName": "ListItemsRequestSortOrder"
           },
           "fernFilepath": {
             "allParts": [],
@@ -974,45 +494,13 @@
         "values": [
           {
             "name": {
-              "originalName": "asc",
-              "camelCase": {
-                "unsafeName": "asc",
-                "safeName": "asc"
-              },
-              "snakeCase": {
-                "unsafeName": "asc",
-                "safeName": "asc"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "ASC",
-                "safeName": "ASC"
-              },
-              "pascalCase": {
-                "unsafeName": "Asc",
-                "safeName": "Asc"
-              }
+              "originalName": "asc"
             },
             "wireValue": "asc"
           },
           {
             "name": {
-              "originalName": "desc",
-              "camelCase": {
-                "unsafeName": "desc",
-                "safeName": "desc"
-              },
-              "snakeCase": {
-                "unsafeName": "desc",
-                "safeName": "desc"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "DESC",
-                "safeName": "DESC"
-              },
-              "pascalCase": {
-                "unsafeName": "Desc",
-                "safeName": "Desc"
-              }
+              "originalName": "desc"
             },
             "wireValue": "desc"
           }
@@ -1022,23 +510,7 @@
       "type_:ListItemsResponse": {
         "declaration": {
           "name": {
-            "originalName": "ListItemsResponse",
-            "camelCase": {
-              "unsafeName": "listItemsResponse",
-              "safeName": "listItemsResponse"
-            },
-            "snakeCase": {
-              "unsafeName": "list_items_response",
-              "safeName": "list_items_response"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST_ITEMS_RESPONSE",
-              "safeName": "LIST_ITEMS_RESPONSE"
-            },
-            "pascalCase": {
-              "unsafeName": "ListItemsResponse",
-              "safeName": "ListItemsResponse"
-            }
+            "originalName": "ListItemsResponse"
           },
           "fernFilepath": {
             "allParts": [],
@@ -1049,23 +521,7 @@
           {
             "name": {
               "name": {
-                "originalName": "items",
-                "camelCase": {
-                  "unsafeName": "items",
-                  "safeName": "items"
-                },
-                "snakeCase": {
-                  "unsafeName": "items",
-                  "safeName": "items"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ITEMS",
-                  "safeName": "ITEMS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Items",
-                  "safeName": "Items"
-                }
+                "originalName": "items"
               },
               "wireValue": "items"
             },
@@ -1087,23 +543,7 @@
       "type_:Item": {
         "declaration": {
           "name": {
-            "originalName": "Item",
-            "camelCase": {
-              "unsafeName": "item",
-              "safeName": "item"
-            },
-            "snakeCase": {
-              "unsafeName": "item",
-              "safeName": "item"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "ITEM",
-              "safeName": "ITEM"
-            },
-            "pascalCase": {
-              "unsafeName": "Item",
-              "safeName": "Item"
-            }
+            "originalName": "Item"
           },
           "fernFilepath": {
             "allParts": [],
@@ -1114,23 +554,7 @@
           {
             "name": {
               "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
+                "originalName": "id"
               },
               "wireValue": "id"
             },
@@ -1145,23 +569,7 @@
           {
             "name": {
               "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
+                "originalName": "name"
               },
               "wireValue": "name"
             },
@@ -1183,23 +591,7 @@
       "endpoint_.listItems": {
         "declaration": {
           "name": {
-            "originalName": "listItems",
-            "camelCase": {
-              "unsafeName": "listItems",
-              "safeName": "listItems"
-            },
-            "snakeCase": {
-              "unsafeName": "list_items",
-              "safeName": "list_items"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST_ITEMS",
-              "safeName": "LIST_ITEMS"
-            },
-            "pascalCase": {
-              "unsafeName": "ListItems",
-              "safeName": "ListItems"
-            }
+            "originalName": "listItems"
           },
           "fernFilepath": {
             "allParts": [],
@@ -1213,23 +605,7 @@
         "request": {
           "declaration": {
             "name": {
-              "originalName": "ListItemsRequest",
-              "camelCase": {
-                "unsafeName": "listItemsRequest",
-                "safeName": "listItemsRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "list_items_request",
-                "safeName": "list_items_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "LIST_ITEMS_REQUEST",
-                "safeName": "LIST_ITEMS_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "ListItemsRequest",
-                "safeName": "ListItemsRequest"
-              }
+              "originalName": "ListItemsRequest"
             },
             "fernFilepath": {
               "allParts": [],
@@ -1241,23 +617,7 @@
             {
               "name": {
                 "name": {
-                  "originalName": "sortBy",
-                  "camelCase": {
-                    "unsafeName": "sortBy",
-                    "safeName": "sortBy"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "sort_by",
-                    "safeName": "sort_by"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SORT_BY",
-                    "safeName": "SORT_BY"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SortBy",
-                    "safeName": "SortBy"
-                  }
+                  "originalName": "sortBy"
                 },
                 "wireValue": "sortBy"
               },
@@ -1272,23 +632,7 @@
             {
               "name": {
                 "name": {
-                  "originalName": "sortOrder",
-                  "camelCase": {
-                    "unsafeName": "sortOrder",
-                    "safeName": "sortOrder"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "sort_order",
-                    "safeName": "sort_order"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SORT_ORDER",
-                    "safeName": "SORT_ORDER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SortOrder",
-                    "safeName": "SortOrder"
-                  }
+                  "originalName": "sortOrder"
                 },
                 "wireValue": "sortOrder"
               },
@@ -1303,23 +647,7 @@
             {
               "name": {
                 "name": {
-                  "originalName": "filter",
-                  "camelCase": {
-                    "unsafeName": "filter",
-                    "safeName": "filter"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "filter",
-                    "safeName": "filter"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "FILTER",
-                    "safeName": "FILTER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Filter",
-                    "safeName": "Filter"
-                  }
+                  "originalName": "filter"
                 },
                 "wireValue": "filter"
               },

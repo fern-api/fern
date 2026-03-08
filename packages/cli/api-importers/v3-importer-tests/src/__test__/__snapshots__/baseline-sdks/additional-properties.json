@@ -1,23 +1,7 @@
 {
   "selfHosted": false,
   "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
+    "originalName": "api"
   },
   "apiDisplayName": "Primitive Array API",
   "auth": {
@@ -52,23 +36,7 @@
         {
           "id": "endpoint_.getObjectWithArrayOfObjects",
           "name": {
-            "originalName": "getObjectWithArrayOfObjects",
-            "camelCase": {
-              "unsafeName": "getObjectWithArrayOfObjects",
-              "safeName": "getObjectWithArrayOfObjects"
-            },
-            "snakeCase": {
-              "unsafeName": "get_object_with_array_of_objects",
-              "safeName": "get_object_with_array_of_objects"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_OBJECT_WITH_ARRAY_OF_OBJECTS",
-              "safeName": "GET_OBJECT_WITH_ARRAY_OF_OBJECTS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetObjectWithArrayOfObjects",
-              "safeName": "GetObjectWithArrayOfObjects"
-            }
+            "originalName": "getObjectWithArrayOfObjects"
           },
           "auth": false,
           "idempotent": false,
@@ -113,23 +81,7 @@
         {
           "id": "endpoint_.getImplicitObjectWithArrayOfObjects",
           "name": {
-            "originalName": "getImplicitObjectWithArrayOfObjects",
-            "camelCase": {
-              "unsafeName": "getImplicitObjectWithArrayOfObjects",
-              "safeName": "getImplicitObjectWithArrayOfObjects"
-            },
-            "snakeCase": {
-              "unsafeName": "get_implicit_object_with_array_of_objects",
-              "safeName": "get_implicit_object_with_array_of_objects"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS",
-              "safeName": "GET_IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetImplicitObjectWithArrayOfObjects",
-              "safeName": "GetImplicitObjectWithArrayOfObjects"
-            }
+            "originalName": "getImplicitObjectWithArrayOfObjects"
           },
           "auth": false,
           "idempotent": false,
@@ -177,23 +129,7 @@
   "constants": {
     "errorInstanceIdKey": {
       "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
+        "originalName": "errorInstanceId"
       },
       "wireValue": "errorInstanceId"
     }
@@ -217,23 +153,7 @@
       "endpoint_.getObjectWithArrayOfObjects": {
         "declaration": {
           "name": {
-            "originalName": "getObjectWithArrayOfObjects",
-            "camelCase": {
-              "unsafeName": "getObjectWithArrayOfObjects",
-              "safeName": "getObjectWithArrayOfObjects"
-            },
-            "snakeCase": {
-              "unsafeName": "get_object_with_array_of_objects",
-              "safeName": "get_object_with_array_of_objects"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_OBJECT_WITH_ARRAY_OF_OBJECTS",
-              "safeName": "GET_OBJECT_WITH_ARRAY_OF_OBJECTS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetObjectWithArrayOfObjects",
-              "safeName": "GetObjectWithArrayOfObjects"
-            }
+            "originalName": "getObjectWithArrayOfObjects"
           },
           "fernFilepath": {
             "allParts": [],
@@ -256,23 +176,7 @@
       "endpoint_.getImplicitObjectWithArrayOfObjects": {
         "declaration": {
           "name": {
-            "originalName": "getImplicitObjectWithArrayOfObjects",
-            "camelCase": {
-              "unsafeName": "getImplicitObjectWithArrayOfObjects",
-              "safeName": "getImplicitObjectWithArrayOfObjects"
-            },
-            "snakeCase": {
-              "unsafeName": "get_implicit_object_with_array_of_objects",
-              "safeName": "get_implicit_object_with_array_of_objects"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS",
-              "safeName": "GET_IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetImplicitObjectWithArrayOfObjects",
-              "safeName": "GetImplicitObjectWithArrayOfObjects"
-            }
+            "originalName": "getImplicitObjectWithArrayOfObjects"
           },
           "fernFilepath": {
             "allParts": [],

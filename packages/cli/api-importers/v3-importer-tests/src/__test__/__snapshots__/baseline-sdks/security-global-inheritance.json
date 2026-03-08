@@ -1,23 +1,7 @@
 {
   "selfHosted": false,
   "apiName": {
-    "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
-    "pascalCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    }
+    "originalName": "api"
   },
   "apiDisplayName": "Security Global Inheritance Test",
   "auth": {
@@ -27,23 +11,7 @@
         "key": "ApiKeyAuth",
         "name": {
           "name": {
-            "originalName": "apiKey",
-            "camelCase": {
-              "unsafeName": "apiKey",
-              "safeName": "apiKey"
-            },
-            "snakeCase": {
-              "unsafeName": "api_key",
-              "safeName": "api_key"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "API_KEY",
-              "safeName": "API_KEY"
-            },
-            "pascalCase": {
-              "unsafeName": "APIKey",
-              "safeName": "APIKey"
-            }
+            "originalName": "apiKey"
           },
           "wireValue": "x-api-key"
         },
@@ -66,23 +34,7 @@
     "type_:GetPlantsResponseItem": {
       "name": {
         "name": {
-          "originalName": "GetPlantsResponseItem",
-          "camelCase": {
-            "unsafeName": "getPlantsResponseItem",
-            "safeName": "getPlantsResponseItem"
-          },
-          "snakeCase": {
-            "unsafeName": "get_plants_response_item",
-            "safeName": "get_plants_response_item"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_PLANTS_RESPONSE_ITEM",
-            "safeName": "GET_PLANTS_RESPONSE_ITEM"
-          },
-          "pascalCase": {
-            "unsafeName": "GetPlantsResponseItem",
-            "safeName": "GetPlantsResponseItem"
-          }
+          "originalName": "GetPlantsResponseItem"
         },
         "fernFilepath": {
           "allParts": [],
@@ -96,23 +48,7 @@
           {
             "name": {
               "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
+                "originalName": "id"
               },
               "wireValue": "id"
             },
@@ -139,23 +75,7 @@
           {
             "name": {
               "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
+                "originalName": "name"
               },
               "wireValue": "name"
             },
@@ -217,23 +137,7 @@
         {
           "id": "endpoint_.getPlants",
           "name": {
-            "originalName": "getPlants",
-            "camelCase": {
-              "unsafeName": "getPlants",
-              "safeName": "getPlants"
-            },
-            "snakeCase": {
-              "unsafeName": "get_plants",
-              "safeName": "get_plants"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_PLANTS",
-              "safeName": "GET_PLANTS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetPlants",
-              "safeName": "GetPlants"
-            }
+            "originalName": "getPlants"
           },
           "displayName": "Get plants (inherits global ApiKeyAuth)",
           "auth": true,
@@ -264,23 +168,7 @@
                   "container": {
                     "list": {
                       "name": {
-                        "originalName": "GetPlantsResponseItem",
-                        "camelCase": {
-                          "unsafeName": "getPlantsResponseItem",
-                          "safeName": "getPlantsResponseItem"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "get_plants_response_item",
-                          "safeName": "get_plants_response_item"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "GET_PLANTS_RESPONSE_ITEM",
-                          "safeName": "GET_PLANTS_RESPONSE_ITEM"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "GetPlantsResponseItem",
-                          "safeName": "GetPlantsResponseItem"
-                        }
+                        "originalName": "GetPlantsResponseItem"
                       },
                       "fernFilepath": {
                         "allParts": [],
@@ -311,23 +199,7 @@
   "constants": {
     "errorInstanceIdKey": {
       "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceID",
-          "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceID",
-          "safeName": "ErrorInstanceID"
-        }
+        "originalName": "errorInstanceId"
       },
       "wireValue": "errorInstanceId"
     }
@@ -339,23 +211,7 @@
         {
           "id": "Default",
           "name": {
-            "originalName": "Default",
-            "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
-            },
-            "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
-            }
+            "originalName": "Default"
           },
           "url": "https://api.example.com/v1"
         }
@@ -384,23 +240,7 @@
       "type_:GetPlantsResponseItem": {
         "declaration": {
           "name": {
-            "originalName": "GetPlantsResponseItem",
-            "camelCase": {
-              "unsafeName": "getPlantsResponseItem",
-              "safeName": "getPlantsResponseItem"
-            },
-            "snakeCase": {
-              "unsafeName": "get_plants_response_item",
-              "safeName": "get_plants_response_item"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_PLANTS_RESPONSE_ITEM",
-              "safeName": "GET_PLANTS_RESPONSE_ITEM"
-            },
-            "pascalCase": {
-              "unsafeName": "GetPlantsResponseItem",
-              "safeName": "GetPlantsResponseItem"
-            }
+            "originalName": "GetPlantsResponseItem"
           },
           "fernFilepath": {
             "allParts": [],
@@ -411,23 +251,7 @@
           {
             "name": {
               "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                }
+                "originalName": "id"
               },
               "wireValue": "id"
             },
@@ -442,23 +266,7 @@
           {
             "name": {
               "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
+                "originalName": "name"
               },
               "wireValue": "name"
             },
@@ -482,23 +290,7 @@
           "header": {
             "name": {
               "name": {
-                "originalName": "apiKey",
-                "camelCase": {
-                  "unsafeName": "apiKey",
-                  "safeName": "apiKey"
-                },
-                "snakeCase": {
-                  "unsafeName": "api_key",
-                  "safeName": "api_key"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "API_KEY",
-                  "safeName": "API_KEY"
-                },
-                "pascalCase": {
-                  "unsafeName": "APIKey",
-                  "safeName": "APIKey"
-                }
+                "originalName": "apiKey"
               },
               "wireValue": "x-api-key"
             },
@@ -511,23 +303,7 @@
         },
         "declaration": {
           "name": {
-            "originalName": "getPlants",
-            "camelCase": {
-              "unsafeName": "getPlants",
-              "safeName": "getPlants"
-            },
-            "snakeCase": {
-              "unsafeName": "get_plants",
-              "safeName": "get_plants"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_PLANTS",
-              "safeName": "GET_PLANTS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetPlants",
-              "safeName": "GetPlants"
-            }
+            "originalName": "getPlants"
           },
           "fernFilepath": {
             "allParts": [],
@@ -556,23 +332,7 @@
           {
             "id": "Default",
             "name": {
-              "originalName": "Default",
-              "camelCase": {
-                "unsafeName": "default",
-                "safeName": "default"
-              },
-              "snakeCase": {
-                "unsafeName": "default",
-                "safeName": "default"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "DEFAULT",
-                "safeName": "DEFAULT"
-              },
-              "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
-              }
+              "originalName": "Default"
             },
             "url": "https://api.example.com/v1"
           }

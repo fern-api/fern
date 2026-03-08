@@ -2,10 +2,16 @@
 
 import type * as FernIr from "../../../index.js";
 
+/**
+ * Represents a name with pre-computed casings.
+ * In IR v66+, casings may be omitted from the wire format to reduce IR size (~60-75% reduction).
+ * When casings are absent, use inflateIrNames() from @fern-api/casings-generator to compute
+ * them from originalName using the IR's smartCasing and generationLanguage settings.
+ */
 export interface Name {
     originalName: string;
-    camelCase: FernIr.SafeAndUnsafeString;
-    pascalCase: FernIr.SafeAndUnsafeString;
-    snakeCase: FernIr.SafeAndUnsafeString;
-    screamingSnakeCase: FernIr.SafeAndUnsafeString;
+    camelCase: FernIr.SafeAndUnsafeString | undefined;
+    pascalCase: FernIr.SafeAndUnsafeString | undefined;
+    snakeCase: FernIr.SafeAndUnsafeString | undefined;
+    screamingSnakeCase: FernIr.SafeAndUnsafeString | undefined;
 }
