@@ -55,13 +55,13 @@ export function inflateFernFilepath(fp: FernFilepath, casingsGenerator: FullCasi
  * Used by generators and migration code to inflate slim Names.
  */
 export function createCasingsGeneratorFromIr(ir: {
-    smartCasing: boolean;
-    generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    smartCasing: boolean | undefined;
+    generationLanguage: string | undefined;
 }): FullCasingsGenerator {
     return constructCasingsGenerator({
-        generationLanguage: ir.generationLanguage,
+        generationLanguage: ir.generationLanguage as generatorsYml.GenerationLanguage | undefined,
         keywords: undefined,
-        smartCasing: ir.smartCasing
+        smartCasing: ir.smartCasing ?? false
     });
 }
 
@@ -187,9 +187,9 @@ function deepInflateValue(value: unknown, cg: FullCasingsGenerator): unknown {
  * - The v66→v65 migration (to restore full Names for older generators)
  * - Generators that adopt v66 IR (to inflate Names at deserialization time)
  */
-export function inflateIrNames<
-    T extends { smartCasing: boolean; generationLanguage: generatorsYml.GenerationLanguage | undefined }
->(ir: T): T {
+export function inflateIrNames<T extends { smartCasing: boolean | undefined; generationLanguage: string | undefined }>(
+    ir: T
+): T {
     const casingsGenerator = createCasingsGeneratorFromIr(ir);
     return deepInflateValue(ir, casingsGenerator) as T;
 }

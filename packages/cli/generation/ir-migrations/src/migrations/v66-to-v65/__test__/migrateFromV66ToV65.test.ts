@@ -12,27 +12,13 @@ describe("migrateFromV66ToV65", () => {
         }
     };
 
-    const createFullName = (original: string): IrVersions.V66.Name => ({
-        originalName: original,
-        camelCase: {
-            unsafeName: original.charAt(0).toLowerCase() + original.slice(1),
-            safeName: original.charAt(0).toLowerCase() + original.slice(1)
-        },
-        pascalCase: {
-            unsafeName: original.charAt(0).toUpperCase() + original.slice(1),
-            safeName: original.charAt(0).toUpperCase() + original.slice(1)
-        },
-        snakeCase: { unsafeName: original.toLowerCase(), safeName: original.toLowerCase() },
-        screamingSnakeCase: { unsafeName: original.toUpperCase(), safeName: original.toUpperCase() }
-    });
-
     const createMinimalV66IR = (
         overrides?: Partial<IrVersions.V66.IntermediateRepresentation>
     ): IrVersions.V66.IntermediateRepresentation => {
         return {
             fdrApiDefinitionId: undefined,
             apiVersion: undefined,
-            apiName: createFullName("TestApi"),
+            apiName: "TestApi",
             apiDisplayName: undefined,
             apiDocs: undefined,
             auth: {
@@ -66,7 +52,7 @@ describe("migrateFromV66ToV65", () => {
             },
             constants: {
                 errorInstanceIdKey: {
-                    name: createFullName("errorInstanceId"),
+                    name: "errorInstanceId",
                     wireValue: "errorInstanceId"
                 }
             },
@@ -123,7 +109,7 @@ describe("migrateFromV66ToV65", () => {
         expect((migratedIR as any).generationLanguage).toBeUndefined();
     });
 
-    it("preserves all other IR fields when migrating", () => {
+    it("inflates string Names to full Name objects with casings", () => {
         const v66IR = createMinimalV66IR({
             smartCasing: false,
             generationLanguage: undefined,
@@ -132,6 +118,7 @@ describe("migrateFromV66ToV65", () => {
         const migratedIR = V66_TO_V65_MIGRATION.migrateBackwards(v66IR, mockContext);
 
         expect(migratedIR.apiDocs).toBe("Test API documentation");
+        // After migration, string Names should be inflated to full Name objects
         expect(migratedIR.apiName.originalName).toBe("TestApi");
         expect(migratedIR.apiName.camelCase).toBeDefined();
         expect(migratedIR.apiName.pascalCase).toBeDefined();
@@ -139,11 +126,11 @@ describe("migrateFromV66ToV65", () => {
         expect(migratedIR.apiName.screamingSnakeCase).toBeDefined();
     });
 
-    it("preserves Name casings that are already present", () => {
+    it("inflates apiName string to full Name with correct casings", () => {
         const v66IR = createMinimalV66IR();
         const migratedIR = V66_TO_V65_MIGRATION.migrateBackwards(v66IR, mockContext);
 
-        // Name casings should pass through unchanged since they're already present
+        // String "TestApi" should be inflated to a full Name object
         expect(migratedIR.apiName.originalName).toBe("TestApi");
         expect(migratedIR.apiName.camelCase?.unsafeName).toBe("testApi");
         expect(migratedIR.apiName.pascalCase?.unsafeName).toBe("TestApi");
@@ -162,7 +149,7 @@ describe("migrateFromV66ToV65", () => {
         expect(migratedRecord.smartCasing).toBeUndefined();
         expect(migratedRecord.generationLanguage).toBeUndefined();
 
-        // But the rest of the IR should be intact
+        // But the rest of the IR should be intact with inflated Names
         expect(migratedIR.apiName.originalName).toBe("TestApi");
     });
 
@@ -185,7 +172,7 @@ describe("migrateFromV66ToV65", () => {
             types: {
                 type_test: {
                     name: {
-                        name: createFullName("TestType"),
+                        name: "TestType",
                         fernFilepath: {
                             allParts: [],
                             packagePath: [],
