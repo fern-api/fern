@@ -1386,6 +1386,7 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "smartCasing": true,
   "subpackages": {
     "subpackage_user": {
       "fernFilepath": {

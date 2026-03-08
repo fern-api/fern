@@ -2003,6 +2003,7 @@
     }
   },
   "apiPlayground": true,
+  "smartCasing": true,
   "subpackages": {
     "subpackage_auth": {
       "fernFilepath": {

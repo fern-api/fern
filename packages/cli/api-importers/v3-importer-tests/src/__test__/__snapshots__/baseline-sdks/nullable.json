@@ -2961,6 +2961,7 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "smartCasing": true,
   "subpackages": {},
   "rootPackage": {
     "fernFilepath": {

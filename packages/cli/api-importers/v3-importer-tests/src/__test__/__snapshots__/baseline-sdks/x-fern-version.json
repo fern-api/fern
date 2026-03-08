@@ -1133,6 +1133,7 @@
     "pathParameters": []
   },
   "apiPlayground": true,
+  "smartCasing": true,
   "subpackages": {
     "subpackage_chatCompletions": {
       "fernFilepath": {

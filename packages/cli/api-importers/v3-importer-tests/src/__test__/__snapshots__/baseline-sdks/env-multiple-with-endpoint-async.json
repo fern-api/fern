@@ -662,6 +662,7 @@
     }
   },
   "apiPlayground": true,
+  "smartCasing": true,
   "subpackages": {
     "subpackage_testChannel": {
       "fernFilepath": {
