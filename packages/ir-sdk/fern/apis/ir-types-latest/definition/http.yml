@@ -107,7 +107,7 @@ types:
     properties:
       methodType: optional<proto.ProtobufMethodType>
 
-  EndpointName: commons.Name
+  EndpointName: commons.NameOrString
 
   HttpPath:
     properties:
@@ -139,7 +139,7 @@ types:
   PathParameter:
     extends: commons.WithDocs
     properties:
-      name: commons.Name
+      name: commons.NameOrString
       valueType: types.TypeReference
       location: PathParameterLocation
       variable: optional<variables.VariableId>
@@ -178,7 +178,7 @@ types:
       - examples.WithV2Examples
       - commons.WithContentType
     properties:
-      name: commons.Name
+      name: commons.NameOrString
       extends: list<types.DeclaredTypeName>
       properties: list<InlinedRequestBodyProperty>
       extendedProperties:
@@ -202,7 +202,7 @@ types:
       - examples.WithV2Examples
       - commons.WithContentType
     properties:
-      name: commons.Name
+      name: commons.NameOrString
       properties: list<FileUploadRequestProperty>
 
   BytesRequest:
@@ -269,7 +269,7 @@ types:
         type: optional<RequestProperty>
         docs: |
           The request property that controls whether or not the response is streamed.
-      requestParameterName: commons.Name
+      requestParameterName: commons.NameOrString
       shape: SdkRequestShape
 
   SdkRequestShape:
@@ -279,8 +279,8 @@ types:
 
   SdkRequestWrapper:
     properties:
-      wrapperName: commons.Name
-      bodyKey: commons.Name
+      wrapperName: commons.NameOrString
+      bodyKey: commons.NameOrString
       includePathParameters: optional<boolean>
       onlyPathParameters: optional<boolean>
 
@@ -479,7 +479,7 @@ types:
 
   PropertyPathItem:
     properties:
-      name: commons.Name
+      name: commons.NameOrString
       type: types.TypeReference
 
   RequestProperty:
@@ -524,7 +524,7 @@ types:
     extends: commons.WithDocs
     properties:
       id: optional<string>
-      name: optional<commons.Name>
+      name: optional<commons.NameOrString>
       url: string
       rootPathParameters: list<ExamplePathParameter>
       servicePathParameters: list<ExamplePathParameter>
@@ -547,7 +547,7 @@ types:
     extends: commons.WithDocs
     properties:
       name:
-        type: optional<commons.Name>
+        type: optional<commons.NameOrString>
         docs: Override the example name.
       language: string
       code: string
@@ -563,7 +563,7 @@ types:
     extends: commons.WithDocs
     properties:
       name:
-        type: optional<commons.Name>
+        type: optional<commons.NameOrString>
         docs: Override the example name.
       sdk: SupportedSdkLanguage
       code: string
@@ -585,7 +585,7 @@ types:
 
   ExamplePathParameter:
     properties:
-      name: commons.Name
+      name: commons.NameOrString
       value: types.ExampleTypeReference
 
   ExampleQueryParameter:

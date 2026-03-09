@@ -2,7 +2,4 @@
 
 import type * as FernIr from "../../../../../index.js";
 
-export interface BasicAuth {
-    username: FernIr.dynamic.NameOrString;
-    password: FernIr.dynamic.NameOrString;
-}
+export type NameOrString = string | FernIr.dynamic.Name;

@@ -2,4 +2,4 @@
 
 import type * as FernIr from "../../../index.js";
 
-export type WebhookName = FernIr.Name;
+export type WebhookName = FernIr.NameOrString;

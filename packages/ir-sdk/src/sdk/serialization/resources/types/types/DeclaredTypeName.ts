@@ -5,7 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { DisplayName } from "../../commons/types/DisplayName.js";
 import { FernFilepath } from "../../commons/types/FernFilepath.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { TypeId } from "../../commons/types/TypeId.js";
 
 export const DeclaredTypeName: core.serialization.ObjectSchema<
@@ -14,7 +14,7 @@ export const DeclaredTypeName: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     typeId: TypeId,
     fernFilepath: FernFilepath,
-    name: Name,
+    name: NameOrString,
     displayName: DisplayName.optional(),
 });
 
@@ -22,7 +22,7 @@ export declare namespace DeclaredTypeName {
     export interface Raw {
         typeId: TypeId.Raw;
         fernFilepath: FernFilepath.Raw;
-        name: Name.Raw;
+        name: NameOrString.Raw;
         displayName?: DisplayName.Raw | null;
     }
 }

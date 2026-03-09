@@ -4,5 +4,5 @@ import type * as FernIr from "../../../../../index.js";
 
 export interface Declaration {
     fernFilepath: FernIr.dynamic.FernFilepath;
-    name: FernIr.dynamic.Name;
+    name: FernIr.dynamic.NameOrString;
 }

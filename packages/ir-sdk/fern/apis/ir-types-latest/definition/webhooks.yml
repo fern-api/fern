@@ -31,7 +31,7 @@ types:
       examples: optional<list<ExampleWebhookCall>>
       v2Examples: optional<examples.V2WebhookExamples>
 
-  WebhookName: commons.Name
+  WebhookName: commons.NameOrString
 
   WebhookPayload:
     union:
@@ -45,7 +45,7 @@ types:
 
   InlinedWebhookPayload:
     properties:
-      name: commons.Name
+      name: commons.NameOrString
       extends: list<types.DeclaredTypeName>
       properties: list<InlinedWebhookPayloadProperty>
 
@@ -67,7 +67,7 @@ types:
       (e.g. headers).
     extends: commons.WithDocs
     properties:
-      name: optional<commons.Name>
+      name: optional<commons.NameOrString>
       payload: types.ExampleTypeReference
 
   WebhookSignatureVerification:

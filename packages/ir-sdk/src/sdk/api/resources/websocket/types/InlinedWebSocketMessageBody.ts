@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface InlinedWebSocketMessageBody {
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     extends: FernIr.DeclaredTypeName[];
     properties: FernIr.InlinedWebSocketMessageBodyProperty[];
 }

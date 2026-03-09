@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface PathParameter extends FernIr.WithDocs {
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     valueType: FernIr.TypeReference;
     location: FernIr.PathParameterLocation;
     variable: FernIr.VariableId | undefined;

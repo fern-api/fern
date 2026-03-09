@@ -4,4 +4,4 @@ types:
   Declaration:
     properties:
       fernFilepath: commons.FernFilepath
-      name: commons.Name
+      name: commons.NameOrString

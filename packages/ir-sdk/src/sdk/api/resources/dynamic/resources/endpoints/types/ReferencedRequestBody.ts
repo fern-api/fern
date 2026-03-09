@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../../../index.js";
 
 export interface ReferencedRequestBody {
-    bodyKey: FernIr.dynamic.Name;
+    bodyKey: FernIr.dynamic.NameOrString;
     bodyType: FernIr.dynamic.ReferencedRequestBodyType;
 }

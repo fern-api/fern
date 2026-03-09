@@ -1,7 +1,7 @@
 import { constructCasingsGenerator } from "../CasingsGenerator.js";
-import { inflateIrNames, inflateName } from "../inflateNames.js";
+import { inflateIrNames, inflateNameOrString } from "../inflateNames.js";
 
-describe("inflateName", () => {
+describe("inflateNameOrString", () => {
     const casingsGenerator = constructCasingsGenerator({
         generationLanguage: undefined,
         keywords: undefined,
@@ -9,7 +9,7 @@ describe("inflateName", () => {
     });
 
     it("inflates a string Name into a FullName with all casings", () => {
-        const result = inflateName("MovieId", casingsGenerator);
+        const result = inflateNameOrString("MovieId", casingsGenerator);
 
         expect(result.originalName).toBe("MovieId");
         expect(result.camelCase.unsafeName).toBe("movieId");
@@ -19,7 +19,7 @@ describe("inflateName", () => {
     });
 
     it("handles simple single-word names", () => {
-        const result = inflateName("user", casingsGenerator);
+        const result = inflateNameOrString("user", casingsGenerator);
 
         expect(result.originalName).toBe("user");
         expect(result.camelCase.unsafeName).toBe("user");
@@ -29,7 +29,7 @@ describe("inflateName", () => {
     });
 });
 
-describe("inflateName with smartCasing", () => {
+describe("inflateNameOrString with smartCasing", () => {
     const casingsGenerator = constructCasingsGenerator({
         generationLanguage: "go",
         keywords: undefined,
@@ -37,7 +37,7 @@ describe("inflateName with smartCasing", () => {
     });
 
     it("applies smart casing rules when inflating", () => {
-        const result = inflateName("httpClient", casingsGenerator);
+        const result = inflateNameOrString("httpClient", casingsGenerator);
 
         expect(result.originalName).toBe("httpClient");
         expect(result.camelCase).toBeDefined();
@@ -353,7 +353,7 @@ describe("inflateIrNames", () => {
     });
 });
 
-describe("inflateName round-trip", () => {
+describe("inflateNameOrString round-trip", () => {
     it("inflating a slim Name (string) restores all casings", () => {
         const casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
@@ -365,7 +365,7 @@ describe("inflateName round-trip", () => {
         const slim = "MovieId";
 
         // Inflate back to FullName
-        const inflated = inflateName(slim, casingsGenerator);
+        const inflated = inflateNameOrString(slim, casingsGenerator);
         expect(inflated.originalName).toBe("MovieId");
         expect(inflated.camelCase.unsafeName).toBe("movieId");
         expect(inflated.pascalCase.unsafeName).toBe("MovieId");

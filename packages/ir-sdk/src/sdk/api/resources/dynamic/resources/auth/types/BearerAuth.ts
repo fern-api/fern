@@ -3,5 +3,5 @@
 import type * as FernIr from "../../../../../index.js";
 
 export interface BearerAuth {
-    token: FernIr.dynamic.Name;
+    token: FernIr.dynamic.NameOrString;
 }

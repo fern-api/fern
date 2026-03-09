@@ -10,23 +10,33 @@ types:
       availability: optional<Availability>
   FernFilepath:
     properties:
-      allParts: list<Name>
-      packagePath: list<Name>
-      file: optional<Name>
+      allParts: list<NameOrString>
+      packagePath: list<NameOrString>
+      file: optional<NameOrString>
 
   # names
 
   Name:
+    properties:
+      originalName: string
+      camelCase: SafeAndUnsafeString
+      pascalCase: SafeAndUnsafeString
+      snakeCase: SafeAndUnsafeString
+      screamingSnakeCase: SafeAndUnsafeString
+  NameOrString:
     docs: |
-      In IR v66+, Name is a plain string (the original name).
-      Use inflateIrNames() from @fern-api/casings-generator to compute
-      full casings (FullName) from the string using the IR's smartCasing and generationLanguage settings.
-    type: string
+      In IR v66+, Names may be serialized as plain strings (the original name).
+      Use the inflation utilities from @fern-api/casings-generator to convert
+      string Names back to full Name objects with all casings computed.
+    discriminated: false
+    union:
+      - string
+      - Name
   DisplayName: string
   NameAndWireValue:
     properties:
       wireValue: string
-      name: Name
+      name: NameOrString
   SafeAndUnsafeString:
     properties:
       unsafeName:

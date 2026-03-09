@@ -3,10 +3,23 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
+import { SafeAndUnsafeString } from "./SafeAndUnsafeString.js";
 
-export const Name: core.serialization.Schema<serializers.dynamic.Name.Raw, FernIr.dynamic.Name> =
-    core.serialization.string();
+export const Name: core.serialization.ObjectSchema<serializers.dynamic.Name.Raw, FernIr.dynamic.Name> =
+    core.serialization.objectWithoutOptionalProperties({
+        originalName: core.serialization.string(),
+        camelCase: SafeAndUnsafeString,
+        pascalCase: SafeAndUnsafeString,
+        snakeCase: SafeAndUnsafeString,
+        screamingSnakeCase: SafeAndUnsafeString,
+    });
 
 export declare namespace Name {
-    export type Raw = string;
+    export interface Raw {
+        originalName: string;
+        camelCase: SafeAndUnsafeString.Raw;
+        pascalCase: SafeAndUnsafeString.Raw;
+        snakeCase: SafeAndUnsafeString.Raw;
+        screamingSnakeCase: SafeAndUnsafeString.Raw;
+    }
 }

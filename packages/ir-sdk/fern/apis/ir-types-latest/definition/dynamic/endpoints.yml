@@ -86,7 +86,7 @@ types:
 
   ReferencedRequestBody:
     properties:
-      bodyKey: commons.Name
+      bodyKey: commons.NameOrString
       bodyType: ReferencedRequestBodyType
 
   ReferencedRequestBodyType:

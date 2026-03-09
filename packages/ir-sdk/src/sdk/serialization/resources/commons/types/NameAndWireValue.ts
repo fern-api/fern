@@ -3,19 +3,19 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "./Name.js";
+import { NameOrString } from "./NameOrString.js";
 
 export const NameAndWireValue: core.serialization.ObjectSchema<
     serializers.NameAndWireValue.Raw,
     FernIr.NameAndWireValue
 > = core.serialization.objectWithoutOptionalProperties({
     wireValue: core.serialization.string(),
-    name: Name,
+    name: NameOrString,
 });
 
 export declare namespace NameAndWireValue {
     export interface Raw {
         wireValue: string;
-        name: Name.Raw;
+        name: NameOrString.Raw;
     }
 }

@@ -1,4 +1,5 @@
-import { constructCasingsGenerator, FullName } from "@fern-api/casings-generator";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
+import { Name } from "@fern-api/ir-sdk";
 
 describe("casingsGenerator", () => {
     const casingsGenerator = constructCasingsGenerator({
@@ -7,7 +8,7 @@ describe("casingsGenerator", () => {
         smartCasing: true
     });
     it("simple", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "hello",
             camelCase: {
                 safeName: "hello",
@@ -31,7 +32,7 @@ describe("casingsGenerator", () => {
     });
 
     it("multiple", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "helloWorld",
             camelCase: {
                 safeName: "helloWorld",
@@ -55,7 +56,7 @@ describe("casingsGenerator", () => {
     });
 
     it("single initialism", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "api",
             camelCase: {
                 safeName: "api",
@@ -79,7 +80,7 @@ describe("casingsGenerator", () => {
     });
 
     it("multiple with single initialism", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "userApi",
             camelCase: {
                 safeName: "userAPI",
@@ -103,7 +104,7 @@ describe("casingsGenerator", () => {
     });
 
     it("adjacent initialism", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "apiUrl",
             camelCase: {
                 safeName: "apiUrl",
@@ -127,7 +128,7 @@ describe("casingsGenerator", () => {
     });
 
     it("adjacent plural initialism", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "apiUrls",
             camelCase: {
                 safeName: "apiUrls",
@@ -151,7 +152,7 @@ describe("casingsGenerator", () => {
     });
 
     it("non-adjacent initialism", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "getUrlAsJson",
             camelCase: {
                 safeName: "getURLAsJSON",
@@ -175,7 +176,7 @@ describe("casingsGenerator", () => {
     });
 
     it("plural initialism", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "getUserIds",
             camelCase: {
                 safeName: "getUserIDs",
@@ -199,7 +200,7 @@ describe("casingsGenerator", () => {
     });
 
     it("alphanumeric snake casing", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "application v1",
             camelCase: {
                 safeName: "applicationV1",
@@ -223,7 +224,7 @@ describe("casingsGenerator", () => {
     });
 
     it("saml", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "get_saml_code_request",
             camelCase: {
                 safeName: "getSAMLCodeRequest",
@@ -247,7 +248,7 @@ describe("casingsGenerator", () => {
     });
 
     it("array brackets", () => {
-        const expected: FullName = {
+        const expected: Name = {
             originalName: "string[]",
             camelCase: {
                 safeName: "stringArray",

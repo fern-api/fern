@@ -1,40 +1,22 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
+import { NameAndWireValue, NameOrString, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 
 import { RESERVED_KEYWORDS } from "./reserved.js";
 
 /**
- * A fully-resolved Name with all casings computed.
- * This is the runtime representation after inflation.
- * Generators and CLI code should work with FullName after inflating the IR.
- */
-export interface FullName {
-    originalName: string;
-    camelCase: SafeAndUnsafeString;
-    pascalCase: SafeAndUnsafeString;
-    snakeCase: SafeAndUnsafeString;
-    screamingSnakeCase: SafeAndUnsafeString;
-}
-
-/**
- * A fully-resolved NameAndWireValue with a FullName.
- */
-export interface FullNameAndWireValue {
-    name: FullName;
-    wireValue: string;
-}
-
-/**
- * Generator that produces slim Names (plain strings) for the v66 IR wire format.
- * Used by the IR generator — returns Name (= string in v66) and NameAndWireValue.
+ * Generator that produces NameOrString values.
+ * - constructSlimCasingsGenerator(): returns plain strings (for v66 IR wire format)
+ * - constructCasingsGenerator(): returns full Name objects with all casings
+ *
+ * Both return types are valid NameOrString (= string | Name).
  */
 export interface CasingsGenerator {
     generateName(
         name: string,
         opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean }
-    ): Name;
+    ): NameOrString;
     generateNameAndWireValue(args: {
         name: string;
         wireValue: string;
@@ -42,27 +24,12 @@ export interface CasingsGenerator {
     }): NameAndWireValue;
 }
 
-/**
- * Generator that produces full Names with all casings computed.
- * Used by inflation utilities and the v66→v65 migration.
- */
-export interface FullCasingsGenerator {
-    generateName(
-        name: string,
-        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean }
-    ): FullName;
-    generateNameAndWireValue(args: {
-        name: string;
-        wireValue: string;
-        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean };
-    }): FullNameAndWireValue;
-}
-
 const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"];
 
 /**
  * Constructs a CasingsGenerator that produces slim Names (plain strings).
  * Used by the IR generator for v66+ — Names are just the original name string.
+ * The returned strings are valid NameOrString values.
  */
 export function constructSlimCasingsGenerator(): CasingsGenerator {
     return {
@@ -74,6 +41,10 @@ export function constructSlimCasingsGenerator(): CasingsGenerator {
     };
 }
 
+/**
+ * Constructs a CasingsGenerator that produces full Name objects with all casings.
+ * Used by inflation utilities and the v66→v65 migration.
+ */
 export function constructCasingsGenerator({
     generationLanguage,
     keywords,
@@ -82,8 +53,8 @@ export function constructCasingsGenerator({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
-}): FullCasingsGenerator {
-    const casingsGenerator: FullCasingsGenerator = {
+}): CasingsGenerator {
+    const casingsGenerator: CasingsGenerator = {
         generateName: (inputName, opts) => {
             const name = preprocessName(inputName);
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({

@@ -21,8 +21,8 @@ types:
 
   BasicAuth:
     properties:
-      username: commons.Name
-      password: commons.Name
+      username: commons.NameOrString
+      password: commons.NameOrString
 
   BasicAuthValues:
     properties:
@@ -49,7 +49,7 @@ types:
 
   BearerAuth:
     properties:
-      token: commons.Name
+      token: commons.NameOrString
 
   BearerAuthValues:
     properties:
@@ -65,8 +65,8 @@ types:
 
   OAuth:
     properties:
-      clientId: commons.Name
-      clientSecret: commons.Name
+      clientId: commons.NameOrString
+      clientSecret: commons.NameOrString
 
   OAuthValues:
     properties:

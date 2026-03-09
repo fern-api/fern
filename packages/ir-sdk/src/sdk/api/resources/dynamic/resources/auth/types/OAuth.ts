@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../../../index.js";
 
 export interface OAuth {
-    clientId: FernIr.dynamic.Name;
-    clientSecret: FernIr.dynamic.Name;
+    clientId: FernIr.dynamic.NameOrString;
+    clientSecret: FernIr.dynamic.NameOrString;
 }

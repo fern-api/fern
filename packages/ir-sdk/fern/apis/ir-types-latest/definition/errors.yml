@@ -34,7 +34,7 @@ types:
     properties:
       errorId: commons.ErrorId
       fernFilepath: commons.FernFilepath
-      name: commons.Name
+      name: commons.NameOrString
 
   # examples
 
@@ -43,5 +43,5 @@ types:
       - commons.WithJsonExample
       - commons.WithDocs
     properties:
-      name: optional<commons.Name>
+      name: optional<commons.NameOrString>
       shape: types.ExampleTypeReference

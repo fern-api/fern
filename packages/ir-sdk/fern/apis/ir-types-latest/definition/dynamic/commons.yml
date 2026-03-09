@@ -4,16 +4,27 @@ types:
       docs: optional<string>
   FernFilepath:
     properties:
-      allParts: list<Name>
-      packagePath: list<Name>
-      file: optional<Name>
+      allParts: list<NameOrString>
+      packagePath: list<NameOrString>
+      file: optional<NameOrString>
 
   # names
-  Name: string
+  Name:
+    properties:
+      originalName: string
+      camelCase: SafeAndUnsafeString
+      pascalCase: SafeAndUnsafeString
+      snakeCase: SafeAndUnsafeString
+      screamingSnakeCase: SafeAndUnsafeString
+  NameOrString:
+    discriminated: false
+    union:
+      - string
+      - Name
   NameAndWireValue:
     properties:
       wireValue: string
-      name: Name
+      name: NameOrString
   SafeAndUnsafeString:
     properties:
       unsafeName:

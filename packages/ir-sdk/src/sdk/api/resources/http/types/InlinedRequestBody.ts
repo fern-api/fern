@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface InlinedRequestBody extends FernIr.WithDocs, FernIr.WithV2Examples, FernIr.WithContentType {
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     extends: FernIr.DeclaredTypeName[];
     properties: FernIr.InlinedRequestBodyProperty[];
     /** A list of properties that all the parents of this request have. */

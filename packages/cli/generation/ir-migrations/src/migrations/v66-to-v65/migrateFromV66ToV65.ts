@@ -49,15 +49,14 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         v66: IrVersions.V66.IntermediateRepresentation,
         _context: IrMigrationContext
     ): IrVersions.V65.ir.IntermediateRepresentation => {
-        // V66 adds smartCasing/generationLanguage metadata fields to the IR root,
-        // and Names may arrive as slim objects (only originalName, casings undefined).
-        // inflateIrNames() restores all casings using the CasingsGenerator, so after
-        // inflation every Name has all required casing fields populated at runtime.
-        // We then strip the V66-only fields (smartCasing, generationLanguage) to produce V65.
+        // V66 uses NameOrString (= string | Name) throughout the IR.
+        // Strings are slim Names (just the original name); Name objects have all casings.
+        // inflateIrNames() converts every string NameOrString to a full Name object,
+        // then we strip the V66-only metadata fields (smartCasing, generationLanguage).
         //
-        // The cast is safe because inflateIrNames guarantees all Name casings are populated,
-        // making the inflated IR structurally compatible with V65 (which requires all casings).
-        // TypeScript can't prove this statically since the V66 Name type has optional casings.
+        // The cast is safe because after inflation, every NameOrString is a full Name,
+        // making the inflated IR structurally identical to V65 (which uses Name everywhere).
+        // TypeScript can't prove this statically since V66's NameOrString type is string | Name.
         const inflated = inflateIrNames(v66);
         const { smartCasing: _smartCasing, generationLanguage: _generationLanguage, ...v65Fields } = inflated;
         return v65Fields as unknown as IrVersions.V65.ir.IntermediateRepresentation;

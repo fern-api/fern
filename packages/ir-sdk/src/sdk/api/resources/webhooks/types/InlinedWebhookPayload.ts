@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface InlinedWebhookPayload {
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     extends: FernIr.DeclaredTypeName[];
     properties: FernIr.InlinedWebhookPayloadProperty[];
 }

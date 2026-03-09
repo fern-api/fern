@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../index.js";
 
 export interface ExampleType extends FernIr.WithJsonExample, FernIr.WithDocs {
-    name: FernIr.Name | undefined;
+    name: FernIr.NameOrString | undefined;
     shape: FernIr.ExampleTypeShape;
 }

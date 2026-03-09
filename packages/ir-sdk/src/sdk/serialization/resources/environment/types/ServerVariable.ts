@@ -3,12 +3,12 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 
 export const ServerVariable: core.serialization.ObjectSchema<serializers.ServerVariable.Raw, FernIr.ServerVariable> =
     core.serialization.objectWithoutOptionalProperties({
         id: core.serialization.string(),
-        name: Name,
+        name: NameOrString,
         default: core.serialization.string().optional(),
         values: core.serialization.list(core.serialization.string()).optional(),
     });
@@ -16,7 +16,7 @@ export const ServerVariable: core.serialization.ObjectSchema<serializers.ServerV
 export declare namespace ServerVariable {
     export interface Raw {
         id: string;
-        name: Name.Raw;
+        name: NameOrString.Raw;
         default?: string | null;
         values?: string[] | null;
     }

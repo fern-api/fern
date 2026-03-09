@@ -44,7 +44,7 @@ types:
     properties:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
-      name: commons.Name
+      name: commons.NameOrString
       displayName: optional<commons.DisplayName>
 
   Type:
@@ -201,7 +201,7 @@ types:
     properties:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
-      name: commons.Name
+      name: commons.NameOrString
       displayName: optional<commons.DisplayName>
       default: optional<NamedTypeDefault>
       inline:
@@ -414,7 +414,7 @@ types:
       - commons.WithJsonExample
       - commons.WithDocs
     properties:
-      name: optional<commons.Name>
+      name: optional<commons.NameOrString>
       shape: ExampleTypeShape
 
   ExampleTypeShape:
