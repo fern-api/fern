@@ -168,6 +168,30 @@ describe("detectAffected", () => {
             expect(result.allGeneratorsAffected).toBe(true);
             expect(result.allFixturesAffected).toBe(true);
         });
+
+        it("runs everything when ir-migrations change", () => {
+            const result = detectAffected(
+                ["packages/cli/generation/ir-migrations/src/migrations/v65-to-v64.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when source-resolver changes", () => {
+            const result = detectAffected(["packages/cli/generation/source-resolver/src/resolver.ts"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when protoc-gen-fern changes", () => {
+            const result = detectAffected(["packages/cli/generation/protoc-gen-fern/src/index.ts"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
     });
 
     describe("fixture detection (test definitions)", () => {
