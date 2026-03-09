@@ -1,7 +1,7 @@
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken } from "@fern-api/auth";
-import { FERNIGNORE_FILENAME, fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import {
@@ -12,6 +12,7 @@ import {
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
+import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
@@ -154,30 +155,4 @@ export async function runRemoteGenerationForAPIWorkspace({
     return {
         snippetsProducedBy
     };
-}
-
-/**
- * If the generator is configured with local file system output (absolutePathToLocalOutput),
- * checks whether a .fernignore file exists in that output directory and returns its path.
- * Returns undefined if the generator has no local output path or no .fernignore file exists.
- */
-async function resolveAutoDiscoveredFernignorePath({
-    generatorInvocation,
-    context
-}: {
-    generatorInvocation: generatorsYml.GeneratorInvocation;
-    context: TaskContext;
-}): Promise<string | undefined> {
-    if (generatorInvocation.absolutePathToLocalOutput == null) {
-        return undefined;
-    }
-    const fernignoreFilePath = join(
-        generatorInvocation.absolutePathToLocalOutput,
-        RelativeFilePath.of(FERNIGNORE_FILENAME)
-    );
-    if (await doesPathExist(fernignoreFilePath)) {
-        context.logger.debug(`Auto-discovered ${FERNIGNORE_FILENAME} at ${fernignoreFilePath}`);
-        return fernignoreFilePath;
-    }
-    return undefined;
 }
