@@ -57,6 +57,7 @@ import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
+import { injectLastUpdatedDates } from "./utils/injectLastUpdated.js";
 import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
 import { wrapWithHttps } from "./wrapWithHttps.js";
@@ -502,6 +503,21 @@ export class DocsDefinitionResolver {
         }
         const replaceTime = performance.now() - replaceStart;
         this.taskContext.logger.debug(`Replaced image paths in ${replaceTime.toFixed(0)}ms`);
+
+        // Inject `last-updated` frontmatter from git history for pages that don't already have it.
+        // This runs after image-path replacement (which doesn't touch frontmatter) so that the
+        // injected date is present in both the processed and raw markdown sent to FDR.
+        this.taskContext.logger.debug("Injecting last-updated dates from git history...");
+        const injectStart = performance.now();
+        const pagesWithDates = await injectLastUpdatedDates(
+            this.parsedDocsConfig.pages,
+            this.docsWorkspace.absoluteFilePath
+        );
+        for (const [relativePath, processedMarkdown] of Object.entries(pagesWithDates)) {
+            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = processedMarkdown;
+        }
+        const injectTime = performance.now() - injectStart;
+        this.taskContext.logger.debug(`Injected last-updated dates in ${injectTime.toFixed(0)}ms`);
 
         this.taskContext.logger.debug("Building page content...");
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
