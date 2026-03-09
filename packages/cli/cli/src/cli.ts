@@ -1241,7 +1241,7 @@ function addDowngradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
 function addApiCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("api", "Commands for managing your API specs", (yargs) => {
         addUpdateApiSpecCommand(yargs, cliContext);
-        addMergeCommand(yargs, cliContext);
+        addEnrichCommand(yargs, cliContext);
         return yargs;
     });
 }
@@ -1983,10 +1983,10 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
-function addMergeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "merge <openapi> <overrides>",
-        "Merge an overrides file into an OpenAPI spec",
+        "enrich <openapi> <overrides>",
+        false, // Hidden from --help
         (yargs) =>
             yargs
                 .positional("openapi", {
@@ -2007,7 +2007,7 @@ function addMergeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
-                command: "fern api merge"
+                command: "fern api enrich"
             });
             const openapiPath = resolve(cwd(), argv.openapi as string);
             const overridesPath = resolve(cwd(), argv.overrides as string);
