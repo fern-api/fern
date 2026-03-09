@@ -1191,14 +1191,12 @@ export class DocsDefinitionResolver {
 
             // Temporary coercion to satisfy type checker until new fdr-sdk is integrated
             const childWithCollapsible = child as SectionNodeWithNewCollapsibleConfig;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const childCollapsed = (child as any).collapsed as boolean | "open-by-default" | undefined;
+            const childCollapsed = (child as unknown as { collapsed?: boolean | "open-by-default" }).collapsed;
             const isCollapsible =
                 child.type === "section" &&
                 (childWithCollapsible.collapsible === true ||
                     (childWithCollapsible.collapsible == null &&
-                        (childCollapsed === true ||
-                            childCollapsed === "open-by-default")));
+                        (childCollapsed === true || childCollapsed === "open-by-default")));
 
             if (child.type === "section" && !isCollapsible) {
                 grouped.push(child);
