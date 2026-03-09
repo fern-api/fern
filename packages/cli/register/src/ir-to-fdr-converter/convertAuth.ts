@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
+import { getNameString } from "@fern-api/ir-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 export interface PlaygroundConfig {
@@ -36,22 +37,22 @@ function convertAuthScheme({
         case "basic":
             return {
                 type: "basicAuth",
-                passwordName: scheme.password,
-                usernameName: scheme.username,
+                passwordName: getNameString(scheme.password),
+                usernameName: getNameString(scheme.username),
                 description: scheme.docs,
                 passwordAlwaysEmpty: scheme.passwordOmit
             };
         case "bearer":
             return {
                 type: "bearerAuth",
-                tokenName: scheme.token,
+                tokenName: getNameString(scheme.token),
                 description: scheme.docs
             };
         case "header":
             return {
                 type: "header",
                 headerWireValue: scheme.name.wireValue,
-                nameOverride: scheme.name.name,
+                nameOverride: getNameString(scheme.name.name),
                 prefix: scheme.prefix,
                 description: scheme.docs
             };

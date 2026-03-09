@@ -6,6 +6,7 @@ import { createFdrService } from "@fern-api/core";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getNameString } from "@fern-api/ir-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer/index.js";
@@ -78,13 +79,13 @@ export async function registerApi({
             token,
             organization,
             openApiSources.length > 0 ? openApiSources : undefined,
-            ir.apiName
+            getNameString(ir.apiName)
         );
     }
 
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: FdrCjsSdk.OrgId(organization),
-        apiId: FdrCjsSdk.ApiId(ir.apiName),
+        apiId: FdrCjsSdk.ApiId(getNameString(ir.apiName)),
         definition: apiDefinition
     });
 

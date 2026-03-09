@@ -1,5 +1,6 @@
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getNameString } from "@fern-api/ir-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { convertAllAuthSchemes, convertAuth, PlaygroundConfig } from "./convertAuth.js";
 import { convertIrAvailability, convertPackage } from "./convertPackage.js";
@@ -26,7 +27,7 @@ export function convertIrToFdrApi({
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations, graphqlTypes),
-        apiName: apiNameOverride ?? ir.apiName,
+        apiName: apiNameOverride ?? getNameString(ir.apiName),
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
         snippetsConfiguration: snippetsConfig,
@@ -44,7 +45,7 @@ export function convertIrToFdrApi({
     for (const [typeId, type] of Object.entries(ir.types)) {
         fdrApi.types[FdrCjsSdk.TypeId(typeId)] = {
             description: type.docs ?? undefined,
-            name: type.name.name,
+            name: getNameString(type.name.name),
             shape: convertTypeShape(type.shape),
             availability: convertIrAvailability(type.availability),
             displayName: type.name.displayName
@@ -61,7 +62,7 @@ export function convertIrToFdrApi({
         fdrApi.subpackages[FdrCjsSdk.api.v1.SubpackageId(subpackageId)] = {
             subpackageId: FdrCjsSdk.api.v1.SubpackageId(subpackageId),
             displayName: service?.displayName ?? subpackage.displayName,
-            name: subpackage.name,
+            name: getNameString(subpackage.name),
             description: subpackage.docs ?? undefined,
             ...convertPackage(subpackage, ir)
         };
