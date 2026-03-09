@@ -76,8 +76,8 @@ async function ensureCachedCli({
         }
 
         return entryPoint;
-    } catch {
-        cliContext.logger.debug("Failed to cache CLI, falling back to npx");
+    } catch (error) {
+        cliContext.logger.debug(`Failed to cache CLI, falling back to npx: ${error}`);
         return undefined;
     }
 }
@@ -130,13 +130,19 @@ export async function rerunFernCliAtVersion({
             }
         );
 
-        if (failed) {
-            if (throwOnError) {
-                throw new RerunCliError({ version, stdout, stderr });
-            }
-            cliContext.failWithoutThrowing();
+        if (!failed) {
+            return;
         }
-        return;
+
+        // Cached CLI execution failed — remove corrupted cache and fall through to npx
+        cliContext.logger.debug(
+            `Cached CLI execution failed for version ${version}, removing cache and falling back to npx`
+        );
+        try {
+            fs.rmSync(getCachedCliDir(version), { recursive: true, force: true });
+        } catch {
+            // Best-effort cleanup
+        }
     }
 
     // Fallback to npx
