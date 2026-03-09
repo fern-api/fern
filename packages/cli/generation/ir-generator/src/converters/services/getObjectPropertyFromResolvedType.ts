@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { ObjectProperty } from "@fern-api/ir-sdk";
+import { getNameString } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../../FernFileContext.js";
 import { ResolvedType } from "../../resolvers/ResolvedType.js";
@@ -89,7 +90,7 @@ function getAllPropertiesForRawObjectSchema(
 
     const objectProperties = getObjectPropertiesFromRawObjectSchema(objectSchema, file);
     objectProperties.forEach((objectProperty) => {
-        properties[objectProperty.name.name] = objectProperty;
+        properties[getNameString(objectProperty.name.name)] = objectProperty;
     });
 
     return properties;

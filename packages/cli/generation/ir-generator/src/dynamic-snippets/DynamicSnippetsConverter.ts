@@ -19,9 +19,9 @@ import {
     InferredAuthScheme,
     IntermediateRepresentation,
     Literal,
-    Name,
     NameAndWireValue,
     NamedType,
+    NameOrString,
     ObjectProperty,
     ObjectTypeDeclaration,
     PathParameter,
@@ -37,6 +37,7 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
+import { getNameString } from "@fern-api/ir-utils";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 
@@ -346,7 +347,7 @@ export class DynamicSnippetsConverter {
         return pathParameters.map((pathParameter) => ({
             name: {
                 name: pathParameter.name,
-                wireValue: pathParameter.name
+                wireValue: getNameString(pathParameter.name)
             },
             typeReference: this.convertTypeReference(pathParameter.valueType),
             propertyAccess: undefined,
@@ -858,7 +859,7 @@ export class DynamicSnippetsConverter {
         name,
         fernFilepath
     }: {
-        name: Name;
+        name: NameOrString;
         fernFilepath: FernFilepath;
     }): DynamicSnippets.Declaration {
         return {
@@ -932,7 +933,7 @@ export class DynamicSnippetsConverter {
             const variableReferencedParams = new Set<string>();
             [...this.ir.pathParameters, ...endpoint.pathParameters].forEach((param) => {
                 if (param.variable != null) {
-                    variableReferencedParams.add(param.name);
+                    variableReferencedParams.add(getNameString(param.name));
                 }
             });
 
@@ -940,11 +941,11 @@ export class DynamicSnippetsConverter {
                 ...(example.example?.rootPathParameters ?? []),
                 ...(example.example?.servicePathParameters ?? []),
                 ...(example.example?.endpointPathParameters ?? [])
-            ].filter((param) => !variableReferencedParams.has(param.name));
+            ].filter((param) => !variableReferencedParams.has(getNameString(param.name)));
 
             requests.push({
                 id: example?.example?.id ?? uuidv4(),
-                name: example?.example?.name,
+                name: example?.example?.name != null ? getNameString(example.example.name) : undefined,
                 endpoint: location,
                 baseUrl: undefined,
                 environment: undefined,

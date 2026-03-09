@@ -18,7 +18,7 @@ import {
     ExampleQueryParameterShape,
     ExampleRequestBody,
     ExampleResponse,
-    Name
+    NameOrString
 } from "@fern-api/ir-sdk";
 import { hashJSON } from "@fern-api/ir-utils";
 import urlJoin from "url-join";
@@ -161,7 +161,7 @@ function convertPathParameters({
         pathParameterDeclaration,
         examplePathParameter
     }: {
-        name: Name;
+        name: NameOrString;
         pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
         examplePathParameter: unknown;
     }) => {

@@ -7,6 +7,7 @@ import {
     RequestPropertyValue,
     ResponseProperty
 } from "@fern-api/ir-sdk";
+import { getNameString } from "@fern-api/ir-utils";
 import {
     getNestedObjectPropertyFromObjectSchema,
     getNestedObjectPropertyFromResolvedType,
@@ -563,7 +564,7 @@ function getTitleForResolvedType(resolvedType: ResolvedType): string {
             }
             break;
         case "named":
-            return resolvedType.name.name;
+            return getNameString(resolvedType.name.name);
         case "primitive":
             return resolvedType.primitive.v1;
         case "unknown":
