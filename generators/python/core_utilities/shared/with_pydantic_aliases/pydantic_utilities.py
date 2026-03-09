@@ -102,11 +102,11 @@ if IS_PYDANTIC_V2:
 else:
     from pydantic.datetime_parse import parse_date as parse_date  # type: ignore[no-redef]
     from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore[no-redef]
-    from pydantic.fields import ModelField as ModelField  # type: ignore[attr-defined, no-redef]
+    from pydantic.fields import ModelField as ModelField  # type: ignore[attr-defined, no-redef, assignment]
     from pydantic.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[no-redef]
     from pydantic.typing import get_args as get_args  # type: ignore[no-redef]
     from pydantic.typing import get_origin as get_origin  # type: ignore[no-redef]
-    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore[no-redef]
+    from pydantic.typing import is_literal_type as is_literal_type  # type: ignore[no-redef, assignment]
     from pydantic.typing import is_union as is_union  # type: ignore[no-redef]
 
 from .datetime_utils import serialize_datetime
