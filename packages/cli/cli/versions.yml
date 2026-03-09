@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.20.2
+  changelogEntry:
+    - summary: |
+        Fix `respect-readonly-schemas` handling for request bodies that reference
+        a wrapper schema (a `$ref`-only schema pointing to another schema with
+        `readOnly` properties). The wrapper schema name is now preserved as the
+        request name and the stale type alias to the `Read` variant is no longer
+        emitted.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
 - version: 4.20.1
   changelogEntry:
     - summary: |
@@ -9,7 +21,7 @@
       type: fix
   createdAt: "2026-03-09"
   irVersion: 65
-      
+
 - version: 4.20.0
   changelogEntry:
     - summary: |
