@@ -18,6 +18,7 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
+import { getNameString } from "@fern-api/ir-utils";
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
 
@@ -494,7 +495,7 @@ export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeN
 }
 
 export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
-    return [...declaredTypeName.fernFilepath.packagePath.map((part) => part), declaredTypeName.name].join("");
+    return [...declaredTypeName.fernFilepath.packagePath.map((part) => getNameString(part)), getNameString(declaredTypeName.name)].join("");
 }
 
 function getExampleFromEndpointRequest(
