@@ -335,8 +335,7 @@ export class WireMock {
 
     private exampleToQueryOrHeaderValue({ value }: { value: FernIr.ExampleTypeReference }): string | undefined {
         if (typeof value.jsonExample === "string") {
-            const maybeDatetime = this.getDateTime(value);
-            return maybeDatetime != null ? maybeDatetime.toISOString() : value.jsonExample;
+            return value.jsonExample;
         }
         if (typeof value.jsonExample === "number") {
             return value.jsonExample.toString();
@@ -345,30 +344,6 @@ export class WireMock {
             return value.jsonExample.toString();
         }
         return undefined;
-    }
-
-    private getDateTime(exampleTypeReference: FernIr.ExampleTypeReference): Date | undefined {
-        switch (exampleTypeReference.shape.type) {
-            case "container":
-                if (exampleTypeReference.shape.container.type !== "optional") {
-                    return undefined;
-                }
-                if (exampleTypeReference.shape.container.optional == null) {
-                    return undefined;
-                }
-                return this.getDateTime(exampleTypeReference.shape.container.optional);
-            case "named":
-                if (exampleTypeReference.shape.shape.type !== "alias") {
-                    return undefined;
-                }
-                return this.getDateTime(exampleTypeReference.shape.shape.value);
-            case "primitive":
-                return exampleTypeReference.shape.primitive.type === "datetime"
-                    ? exampleTypeReference.shape.primitive.datetime
-                    : undefined;
-            case "unknown":
-                return undefined;
-        }
     }
 
     private extractExampleValue(
