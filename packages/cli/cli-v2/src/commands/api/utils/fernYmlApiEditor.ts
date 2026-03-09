@@ -2,9 +2,9 @@ import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { type Document, parseDocument } from "yaml";
-import { FileFinder } from "../../../../config/FileFinder.js";
-import { FERN_YML_FILENAME, REF_KEY } from "../../../../config/fern-yml/constants.js";
-import { CliError } from "../../../../errors/CliError.js";
+import { FileFinder } from "../../../config/FileFinder.js";
+import { FERN_YML_FILENAME, REF_KEY } from "../../../config/fern-yml/constants.js";
+import { CliError } from "../../../errors/CliError.js";
 
 /**
  * Converts a YAML Document node (YAMLMap, YAMLSeq, Scalar) to its plain JS value.

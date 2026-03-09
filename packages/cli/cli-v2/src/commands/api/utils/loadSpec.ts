@@ -1,7 +1,7 @@
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import { CliError } from "../../../../errors/CliError.js";
+import { CliError } from "../../../errors/CliError.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
 type Spec = Record<string, any>;

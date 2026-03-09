@@ -1,9 +1,9 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
-import type { AsyncApiSpec } from "../../../../../api/config/AsyncApiSpec.js";
-import type { OpenApiSpec } from "../../../../../api/config/OpenApiSpec.js";
-import type { ProtobufSpec } from "../../../../../api/config/ProtobufSpec.js";
-import type { Workspace } from "../../../../../workspace/Workspace.js";
+import type { AsyncApiSpec } from "../../../../api/config/AsyncApiSpec.js";
+import type { OpenApiSpec } from "../../../../api/config/OpenApiSpec.js";
+import type { ProtobufSpec } from "../../../../api/config/ProtobufSpec.js";
+import type { Workspace } from "../../../../workspace/Workspace.js";
 import { filterSpecs } from "../filterSpecs.js";
 
 function makeWorkspace(apis: Workspace["apis"]): Workspace {

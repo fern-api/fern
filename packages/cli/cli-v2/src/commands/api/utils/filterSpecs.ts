@@ -1,8 +1,8 @@
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
-import type { ApiSpec } from "../../../../api/config/ApiSpec.js";
-import { isAsyncApiSpec } from "../../../../api/config/AsyncApiSpec.js";
-import { isOpenApiSpec } from "../../../../api/config/OpenApiSpec.js";
-import type { Workspace } from "../../../../workspace/Workspace.js";
+import type { ApiSpec } from "../../../api/config/ApiSpec.js";
+import { isAsyncApiSpec } from "../../../api/config/AsyncApiSpec.js";
+import { isOpenApiSpec } from "../../../api/config/OpenApiSpec.js";
+import type { Workspace } from "../../../workspace/Workspace.js";
 
 export interface SpecEntry {
     apiName: string;
