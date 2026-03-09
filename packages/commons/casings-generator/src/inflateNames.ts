@@ -88,7 +88,7 @@ import {
     type WebSocketMessage
 } from "@fern-api/ir-sdk";
 
-import { constructCasingsGenerator, type FullCasingsGenerator } from "./CasingsGenerator.js";
+import { type CasingsGenerator, constructCasingsGenerator, type FullCasingsGenerator } from "./CasingsGenerator.js";
 
 // ---------------------------------------------------------------------------
 // NormalizedIR type utility
@@ -128,7 +128,9 @@ export type NormalizedIR<T> = DeepReplace<T, NameOrString, Name>;
  *
  * Detection: typeof nameOrString === "string" is the marker.
  */
-export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator: FullCasingsGenerator): Name {
+export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator: FullCasingsGenerator): Name;
+export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator: CasingsGenerator): NameOrString;
+export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator: CasingsGenerator): NameOrString {
     if (typeof nameOrString === "string") {
         return casingsGenerator.generateName(nameOrString);
     }
@@ -141,7 +143,15 @@ export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator
 export function inflateOptionalNameOrString(
     nameOrString: NameOrString | undefined,
     casingsGenerator: FullCasingsGenerator
-): Name | undefined {
+): Name | undefined;
+export function inflateOptionalNameOrString(
+    nameOrString: NameOrString | undefined,
+    casingsGenerator: CasingsGenerator
+): NameOrString | undefined;
+export function inflateOptionalNameOrString(
+    nameOrString: NameOrString | undefined,
+    casingsGenerator: CasingsGenerator
+): NameOrString | undefined {
     if (nameOrString == null) {
         return undefined;
     }
@@ -154,7 +164,9 @@ export function inflateOptionalNameOrString(
 export function inflateNameAndWireValue(
     nwv: NameAndWireValue,
     casingsGenerator: FullCasingsGenerator
-): NameAndWireValue & { name: Name } {
+): NameAndWireValue & { name: Name };
+export function inflateNameAndWireValue(nwv: NameAndWireValue, casingsGenerator: CasingsGenerator): NameAndWireValue;
+export function inflateNameAndWireValue(nwv: NameAndWireValue, casingsGenerator: CasingsGenerator): NameAndWireValue {
     return {
         ...nwv,
         name: inflateNameOrString(nwv.name, casingsGenerator)
@@ -167,7 +179,9 @@ export function inflateNameAndWireValue(
 export function inflateFernFilepath(
     fp: FernFilepath,
     casingsGenerator: FullCasingsGenerator
-): FernFilepath & { allParts: Name[]; packagePath: Name[]; file: Name | undefined } {
+): FernFilepath & { allParts: Name[]; packagePath: Name[]; file: Name | undefined };
+export function inflateFernFilepath(fp: FernFilepath, casingsGenerator: CasingsGenerator): FernFilepath;
+export function inflateFernFilepath(fp: FernFilepath, casingsGenerator: CasingsGenerator): FernFilepath {
     return {
         allParts: fp.allParts.map((n) => inflateNameOrString(n, casingsGenerator)),
         packagePath: fp.packagePath.map((n) => inflateNameOrString(n, casingsGenerator)),
