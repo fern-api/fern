@@ -10,6 +10,31 @@
       type: feat
   createdAt: "2026-03-09"
   irVersion: 65
+
+- version: 4.20.3
+  changelogEntry:
+    - summary: |
+        Add support for the `collapsed` property on API reference section
+        configurations. Sections inside an API reference `layout` can now use
+        `collapsed: true` or `collapsed: open-by-default` to control sidebar
+        collapse behavior, matching the existing support on top-level sections
+        and folders.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.2
+  changelogEntry:
+    - summary: |
+        Fix `respect-readonly-schemas` handling for request bodies that reference
+        a wrapper schema (a `$ref`-only schema pointing to another schema with
+        `readOnly` properties). The wrapper schema name is now preserved as the
+        request name and the stale type alias to the `Read` variant is no longer
+        emitted.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
 - version: 4.20.1
   changelogEntry:
     - summary: |
@@ -20,6 +45,7 @@
       type: fix
   createdAt: "2026-03-09"
   irVersion: 65
+
 - version: 4.20.0
   changelogEntry:
     - summary: |

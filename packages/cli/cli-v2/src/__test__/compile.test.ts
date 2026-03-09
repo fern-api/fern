@@ -2,43 +2,14 @@ import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { randomUUID } from "crypto";
 import { readFile, rm } from "fs/promises";
 import { join } from "path";
-import { Writable } from "stream";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { CompileCommand } from "../commands/api/compile/command.js";
-import { Context } from "../context/Context.js";
 import { CliError } from "../errors/CliError.js";
+import { createTestContextWithCapture } from "./utils/createTestContext.js";
 
 const FIXTURES_DIR = AbsoluteFilePath.of(join(__dirname, "fixtures"));
 const SIMPLE_API_DIR = AbsoluteFilePath.of(join(FIXTURES_DIR, "simple-api"));
 const INVALID_API_DIR = AbsoluteFilePath.of(join(FIXTURES_DIR, "invalid-api"));
-
-function createCapturingStream(): { stream: NodeJS.WriteStream; getOutput: () => string } {
-    const chunks: Buffer[] = [];
-    const stream = new Writable({
-        write(chunk, _encoding, callback) {
-            chunks.push(Buffer.from(chunk));
-            callback();
-        }
-    }) as NodeJS.WriteStream;
-    return {
-        stream,
-        getOutput: () => Buffer.concat(chunks as unknown as Uint8Array[]).toString("utf-8")
-    };
-}
-
-function createTestContextWithCapture({ cwd }: { cwd: AbsoluteFilePath }): {
-    context: Context;
-    getStdout: () => string;
-    getStderr: () => string;
-} {
-    const stdout = createCapturingStream();
-    const stderr = createCapturingStream();
-    return {
-        context: new Context({ stdout: stdout.stream, stderr: stderr.stream, cwd }),
-        getStdout: stdout.getOutput,
-        getStderr: stderr.getOutput
-    };
-}
 
 function baseArgs(overrides?: Partial<CompileCommand.Args>): CompileCommand.Args {
     return {
