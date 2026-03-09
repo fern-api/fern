@@ -29,6 +29,7 @@ import { camelCase, kebabCase } from "lodash-es";
 
 // TODO: Remove this when the new fdr-sdk is integrated
 type SectionNodeWithNewCollapsibleConfig = FernNavigation.V1.SectionNode & {
+    collapsed?: boolean | "open-by-default";
     collapsible?: boolean;
     collapsedByDefault?: boolean;
 };
@@ -1193,7 +1194,9 @@ export class DocsDefinitionResolver {
             const isCollapsible =
                 child.type === "section" &&
                 ((child as SectionNodeWithNewCollapsibleConfig).collapsible === true ||
-                    ((child as SectionNodeWithNewCollapsibleConfig).collapsible == null && child.collapsed === true));
+                    ((child as SectionNodeWithNewCollapsibleConfig).collapsible == null &&
+                        (child.collapsed === true ||
+                            (child as SectionNodeWithNewCollapsibleConfig).collapsed === "open-by-default")));
 
             if (child.type === "section" && !isCollapsible) {
                 grouped.push(child);
@@ -1915,9 +1918,11 @@ export class DocsDefinitionResolver {
                     ? (this.markdownFilesToSidebarTitle.get(item.overviewAbsolutePath) ?? item.title)
                     : item.title,
             icon: this.resolveIconFileId(item.icon),
-            collapsed: item.collapsed,
-            collapsible: item.collapsible ?? (item.collapsed === true ? true : undefined),
-            collapsedByDefault: item.collapsedByDefault ?? (item.collapsed === true ? true : undefined),
+            collapsed: item.collapsed as boolean | undefined,
+            collapsible: item.collapsible ?? (item.collapsed != null ? true : undefined),
+            collapsedByDefault:
+                item.collapsedByDefault ??
+                (item.collapsed === true ? true : item.collapsed === "open-by-default" ? false : undefined),
             hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,

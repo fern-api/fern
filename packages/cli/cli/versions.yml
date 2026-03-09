@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.19.0
+  changelogEntry:
+    - summary: |
+        Add support for `open-by-default` value on the `collapsed` property in
+        docs navigation configuration. Sections configured with
+        `collapsed: open-by-default` will start expanded but can be collapsed
+        by the user.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+
 - version: 4.18.0
   changelogEntry:
     - summary: |
