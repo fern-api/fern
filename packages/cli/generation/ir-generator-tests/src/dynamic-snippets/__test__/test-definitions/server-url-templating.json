@@ -47,8 +47,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -331,8 +331,8 @@
                             "name": {
                                 "originalName": "userId",
                                 "camelCase": {
-                                    "unsafeName": "userID",
-                                    "safeName": "userID"
+                                    "unsafeName": "userId",
+                                    "safeName": "userId"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "user_id",
@@ -343,8 +343,8 @@
                                     "safeName": "USER_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "UserID",
-                                    "safeName": "UserID"
+                                    "unsafeName": "UserId",
+                                    "safeName": "UserId"
                                 }
                             },
                             "wireValue": "userId"
@@ -441,8 +441,8 @@
                                 "name": {
                                     "originalName": "client_id",
                                     "camelCase": {
-                                        "unsafeName": "clientID",
-                                        "safeName": "clientID"
+                                        "unsafeName": "clientId",
+                                        "safeName": "clientId"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "client_id",
@@ -453,8 +453,8 @@
                                         "safeName": "CLIENT_ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ClientID",
-                                        "safeName": "ClientID"
+                                        "unsafeName": "ClientId",
+                                        "safeName": "ClientId"
                                     }
                                 },
                                 "wireValue": "client_id"
@@ -566,8 +566,8 @@
                     "name": {
                         "originalName": "Regional API server",
                         "camelCase": {
-                            "unsafeName": "regionalAPIServer",
-                            "safeName": "regionalAPIServer"
+                            "unsafeName": "regionalApiServer",
+                            "safeName": "regionalApiServer"
                         },
                         "snakeCase": {
                             "unsafeName": "regional_api_server",
@@ -578,8 +578,8 @@
                             "safeName": "REGIONAL_API_SERVER"
                         },
                         "pascalCase": {
-                            "unsafeName": "RegionalAPIServer",
-                            "safeName": "RegionalAPIServer"
+                            "unsafeName": "RegionalApiServer",
+                            "safeName": "RegionalApiServer"
                         }
                     },
                     "urls": {

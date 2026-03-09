@@ -4,22 +4,112 @@
         "type_payment:Currency": {
             "type": "enum",
             "declaration": {
-                "name": "Currency",
+                "name": {
+                    "originalName": "Currency",
+                    "camelCase": {
+                        "unsafeName": "currency",
+                        "safeName": "currency"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "currency",
+                        "safeName": "currency"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CURRENCY",
+                        "safeName": "CURRENCY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Currency",
+                        "safeName": "Currency"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
-                        "payment"
+                        {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "payment"
+                    "file": {
+                        "originalName": "payment",
+                        "camelCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PAYMENT",
+                            "safeName": "PAYMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Payment",
+                            "safeName": "Payment"
+                        }
+                    }
                 }
             },
             "values": [
                 {
-                    "name": "USD",
+                    "name": {
+                        "originalName": "USD",
+                        "camelCase": {
+                            "unsafeName": "usd",
+                            "safeName": "usd"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "usd",
+                            "safeName": "usd"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USD",
+                            "safeName": "USD"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Usd",
+                            "safeName": "Usd"
+                        }
+                    },
                     "wireValue": "USD"
                 },
                 {
-                    "name": "YEN",
+                    "name": {
+                        "originalName": "YEN",
+                        "camelCase": {
+                            "unsafeName": "yen",
+                            "safeName": "yen"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "yen",
+                            "safeName": "yen"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "YEN",
+                            "safeName": "YEN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Yen",
+                            "safeName": "Yen"
+                        }
+                    },
                     "wireValue": "YEN"
                 }
             ]
@@ -30,16 +120,88 @@
         "endpoint_payment.create": {
             "auth": {
                 "type": "bearer",
-                "token": "token"
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
             },
             "declaration": {
-                "name": "create",
+                "name": {
+                    "originalName": "create",
+                    "camelCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create",
+                        "safeName": "create"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE",
+                        "safeName": "CREATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Create",
+                        "safeName": "Create"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
-                        "payment"
+                        {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "payment"
+                    "file": {
+                        "originalName": "payment",
+                        "camelCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PAYMENT",
+                            "safeName": "PAYMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Payment",
+                            "safeName": "Payment"
+                        }
+                    }
                 }
             },
             "location": {
@@ -49,13 +211,67 @@
             "request": {
                 "type": "inlined",
                 "declaration": {
-                    "name": "CreatePaymentRequest",
+                    "name": {
+                        "originalName": "CreatePaymentRequest",
+                        "camelCase": {
+                            "unsafeName": "createPaymentRequest",
+                            "safeName": "createPaymentRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "create_payment_request",
+                            "safeName": "create_payment_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CREATE_PAYMENT_REQUEST",
+                            "safeName": "CREATE_PAYMENT_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CreatePaymentRequest",
+                            "safeName": "CreatePaymentRequest"
+                        }
+                    },
                     "fernFilepath": {
                         "allParts": [
-                            "payment"
+                            {
+                                "originalName": "payment",
+                                "camelCase": {
+                                    "unsafeName": "payment",
+                                    "safeName": "payment"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "payment",
+                                    "safeName": "payment"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PAYMENT",
+                                    "safeName": "PAYMENT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Payment",
+                                    "safeName": "Payment"
+                                }
+                            }
                         ],
                         "packagePath": [],
-                        "file": "payment"
+                        "file": {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
                     }
                 },
                 "pathParameters": [],
@@ -66,7 +282,25 @@
                     "value": [
                         {
                             "name": {
-                                "name": "amount",
+                                "name": {
+                                    "originalName": "amount",
+                                    "camelCase": {
+                                        "unsafeName": "amount",
+                                        "safeName": "amount"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "amount",
+                                        "safeName": "amount"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "AMOUNT",
+                                        "safeName": "AMOUNT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Amount",
+                                        "safeName": "Amount"
+                                    }
+                                },
                                 "wireValue": "amount"
                             },
                             "typeReference": {
@@ -78,7 +312,25 @@
                         },
                         {
                             "name": {
-                                "name": "currency",
+                                "name": {
+                                    "originalName": "currency",
+                                    "camelCase": {
+                                        "unsafeName": "currency",
+                                        "safeName": "currency"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "currency",
+                                        "safeName": "currency"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CURRENCY",
+                                        "safeName": "CURRENCY"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Currency",
+                                        "safeName": "Currency"
+                                    }
+                                },
                                 "wireValue": "currency"
                             },
                             "typeReference": {
@@ -103,16 +355,88 @@
         "endpoint_payment.delete": {
             "auth": {
                 "type": "bearer",
-                "token": "token"
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                }
             },
             "declaration": {
-                "name": "delete",
+                "name": {
+                    "originalName": "delete",
+                    "camelCase": {
+                        "unsafeName": "delete",
+                        "safeName": "delete"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "delete",
+                        "safeName": "delete"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DELETE",
+                        "safeName": "DELETE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Delete",
+                        "safeName": "Delete"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
-                        "payment"
+                        {
+                            "originalName": "payment",
+                            "camelCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment",
+                                "safeName": "payment"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT",
+                                "safeName": "PAYMENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Payment",
+                                "safeName": "Payment"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "payment"
+                    "file": {
+                        "originalName": "payment",
+                        "camelCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "payment",
+                            "safeName": "payment"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PAYMENT",
+                            "safeName": "PAYMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Payment",
+                            "safeName": "Payment"
+                        }
+                    }
                 }
             },
             "location": {
@@ -124,7 +448,25 @@
                 "pathParameters": [
                     {
                         "name": {
-                            "name": "paymentId",
+                            "name": {
+                                "originalName": "paymentId",
+                                "camelCase": {
+                                    "unsafeName": "paymentId",
+                                    "safeName": "paymentId"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "payment_id",
+                                    "safeName": "payment_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PAYMENT_ID",
+                                    "safeName": "PAYMENT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PaymentId",
+                                    "safeName": "PaymentId"
+                                }
+                            },
                             "wireValue": "paymentId"
                         },
                         "typeReference": {

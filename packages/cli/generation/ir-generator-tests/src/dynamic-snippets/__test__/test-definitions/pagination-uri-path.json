@@ -115,8 +115,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -138,8 +138,8 @@
                 "name": {
                     "originalName": "ListUsersUriPaginationResponse",
                     "camelCase": {
-                        "unsafeName": "listUsersURIPaginationResponse",
-                        "safeName": "listUsersURIPaginationResponse"
+                        "unsafeName": "listUsersUriPaginationResponse",
+                        "safeName": "listUsersUriPaginationResponse"
                     },
                     "snakeCase": {
                         "unsafeName": "list_users_uri_pagination_response",
@@ -150,8 +150,8 @@
                         "safeName": "LIST_USERS_URI_PAGINATION_RESPONSE"
                     },
                     "pascalCase": {
-                        "unsafeName": "ListUsersURIPaginationResponse",
-                        "safeName": "ListUsersURIPaginationResponse"
+                        "unsafeName": "ListUsersUriPaginationResponse",
+                        "safeName": "ListUsersUriPaginationResponse"
                     }
                 },
                 "fernFilepath": {
@@ -436,8 +436,8 @@
                 "name": {
                     "originalName": "listWithUriPagination",
                     "camelCase": {
-                        "unsafeName": "listWithURIPagination",
-                        "safeName": "listWithURIPagination"
+                        "unsafeName": "listWithUriPagination",
+                        "safeName": "listWithUriPagination"
                     },
                     "snakeCase": {
                         "unsafeName": "list_with_uri_pagination",
@@ -448,8 +448,8 @@
                         "safeName": "LIST_WITH_URI_PAGINATION"
                     },
                     "pascalCase": {
-                        "unsafeName": "ListWithURIPagination",
-                        "safeName": "ListWithURIPagination"
+                        "unsafeName": "ListWithUriPagination",
+                        "safeName": "ListWithUriPagination"
                     }
                 },
                 "fernFilepath": {

@@ -173,8 +173,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -384,8 +384,8 @@
                             "name": {
                                 "originalName": "X-Correlation-Id",
                                 "camelCase": {
-                                    "unsafeName": "xCorrelationID",
-                                    "safeName": "xCorrelationID"
+                                    "unsafeName": "xCorrelationId",
+                                    "safeName": "xCorrelationId"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "x_correlation_id",
@@ -396,8 +396,8 @@
                                     "safeName": "X_CORRELATION_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "XCorrelationID",
-                                    "safeName": "XCorrelationID"
+                                    "unsafeName": "XCorrelationId",
+                                    "safeName": "XCorrelationId"
                                 }
                             },
                             "wireValue": "X-Correlation-Id"
@@ -518,8 +518,8 @@
                             "name": {
                                 "originalName": "userId",
                                 "camelCase": {
-                                    "unsafeName": "userID",
-                                    "safeName": "userID"
+                                    "unsafeName": "userId",
+                                    "safeName": "userId"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "user_id",
@@ -530,8 +530,8 @@
                                     "safeName": "USER_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "UserID",
-                                    "safeName": "UserID"
+                                    "unsafeName": "UserId",
+                                    "safeName": "UserId"
                                 }
                             },
                             "wireValue": "userId"
@@ -721,8 +721,8 @@
                             "name": {
                                 "originalName": "X-Request-Id",
                                 "camelCase": {
-                                    "unsafeName": "xRequestID",
-                                    "safeName": "xRequestID"
+                                    "unsafeName": "xRequestId",
+                                    "safeName": "xRequestId"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "x_request_id",
@@ -733,8 +733,8 @@
                                     "safeName": "X_REQUEST_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "XRequestID",
-                                    "safeName": "XRequestID"
+                                    "unsafeName": "XRequestId",
+                                    "safeName": "XRequestId"
                                 }
                             },
                             "wireValue": "X-Request-Id"
@@ -857,8 +857,8 @@
                             "name": {
                                 "originalName": "X-Api-Key",
                                 "camelCase": {
-                                    "unsafeName": "xAPIKey",
-                                    "safeName": "xAPIKey"
+                                    "unsafeName": "xApiKey",
+                                    "safeName": "xApiKey"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "x_api_key",
@@ -869,8 +869,8 @@
                                     "safeName": "X_API_KEY"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "XAPIKey",
-                                    "safeName": "XAPIKey"
+                                    "unsafeName": "XApiKey",
+                                    "safeName": "XApiKey"
                                 }
                             },
                             "wireValue": "X-Api-Key"
@@ -989,8 +989,8 @@
                             "name": {
                                 "originalName": "tenantId",
                                 "camelCase": {
-                                    "unsafeName": "tenantID",
-                                    "safeName": "tenantID"
+                                    "unsafeName": "tenantId",
+                                    "safeName": "tenantId"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "tenant_id",
@@ -1001,8 +1001,8 @@
                                     "safeName": "TENANT_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "TenantID",
-                                    "safeName": "TenantID"
+                                    "unsafeName": "TenantId",
+                                    "safeName": "TenantId"
                                 }
                             },
                             "wireValue": "tenantId"
@@ -1231,8 +1231,8 @@
                             "name": {
                                 "originalName": "X-Trace-Id",
                                 "camelCase": {
-                                    "unsafeName": "xTraceID",
-                                    "safeName": "xTraceID"
+                                    "unsafeName": "xTraceId",
+                                    "safeName": "xTraceId"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "x_trace_id",
@@ -1243,8 +1243,8 @@
                                     "safeName": "X_TRACE_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "XTraceID",
-                                    "safeName": "XTraceID"
+                                    "unsafeName": "XTraceId",
+                                    "safeName": "XTraceId"
                                 }
                             },
                             "wireValue": "X-Trace-Id"

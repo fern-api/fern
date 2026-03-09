@@ -1,6 +1,6 @@
 import {
-    CasingsGenerator,
-    constructSlimCasingsGenerator,
+    constructCasingsGenerator,
+    type FullCasingsGenerator,
     inflateFernFilepath,
     inflateNameOrString
 } from "@fern-api/casings-generator";
@@ -65,7 +65,7 @@ export declare namespace DynamicSnippetsConverter {
 
 export class DynamicSnippetsConverter {
     private readonly ir: IntermediateRepresentation;
-    private readonly casingsGenerator: CasingsGenerator;
+    private readonly casingsGenerator: FullCasingsGenerator;
     private readonly auth: DynamicSnippets.Auth | undefined;
     private readonly authValues: DynamicSnippets.AuthValues | undefined;
     private readonly generatorConfig: dynamic.GeneratorConfig | undefined;
@@ -75,7 +75,11 @@ export class DynamicSnippetsConverter {
     constructor(args: DynamicSnippetsConverter.Args) {
         this.ir = args.ir;
         this.generatorConfig = args.generatorConfig;
-        this.casingsGenerator = constructSlimCasingsGenerator();
+        this.casingsGenerator = constructCasingsGenerator({
+            generationLanguage: args.generationLanguage,
+            smartCasing: args.smartCasing ?? false,
+            keywords: undefined
+        });
         this.auth = this.convertAuth(this.ir.auth);
         this.authValues = this.getAuthValues(this.ir.auth);
         this.extendedTypeIds = this.computeExtendedTypeIds();

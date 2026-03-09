@@ -1349,12 +1349,12 @@
                                 "safeName": "literal1"
                             },
                             "snakeCase": {
-                                "unsafeName": "literal1",
-                                "safeName": "literal1"
+                                "unsafeName": "literal_1",
+                                "safeName": "literal_1"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "LITERAL1",
-                                "safeName": "LITERAL1"
+                                "unsafeName": "LITERAL_1",
+                                "safeName": "LITERAL_1"
                             },
                             "pascalCase": {
                                 "unsafeName": "Literal1",
@@ -1382,12 +1382,12 @@
                                 "safeName": "literal2"
                             },
                             "snakeCase": {
-                                "unsafeName": "literal2",
-                                "safeName": "literal2"
+                                "unsafeName": "literal_2",
+                                "safeName": "literal_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "LITERAL2",
-                                "safeName": "LITERAL2"
+                                "unsafeName": "LITERAL_2",
+                                "safeName": "LITERAL_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Literal2",
@@ -2337,8 +2337,8 @@
                                     "safeName": "ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
                                 }
                             },
                             "wireValue": "id"

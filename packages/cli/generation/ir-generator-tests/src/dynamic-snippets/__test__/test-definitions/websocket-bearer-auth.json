@@ -737,12 +737,12 @@
                         "safeName": "sendEvent2"
                     },
                     "snakeCase": {
-                        "unsafeName": "send_event2",
-                        "safeName": "send_event2"
+                        "unsafeName": "send_event_2",
+                        "safeName": "send_event_2"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "SEND_EVENT2",
-                        "safeName": "SEND_EVENT2"
+                        "unsafeName": "SEND_EVENT_2",
+                        "safeName": "SEND_EVENT_2"
                     },
                     "pascalCase": {
                         "unsafeName": "SendEvent2",
@@ -803,12 +803,12 @@
                                 "safeName": "sendText2"
                             },
                             "snakeCase": {
-                                "unsafeName": "send_text2",
-                                "safeName": "send_text2"
+                                "unsafeName": "send_text_2",
+                                "safeName": "send_text_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "SEND_TEXT2",
-                                "safeName": "SEND_TEXT2"
+                                "unsafeName": "SEND_TEXT_2",
+                                "safeName": "SEND_TEXT_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "SendText2",
@@ -833,12 +833,12 @@
                                 "safeName": "sendParam2"
                             },
                             "snakeCase": {
-                                "unsafeName": "send_param2",
-                                "safeName": "send_param2"
+                                "unsafeName": "send_param_2",
+                                "safeName": "send_param_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "SEND_PARAM2",
-                                "safeName": "SEND_PARAM2"
+                                "unsafeName": "SEND_PARAM_2",
+                                "safeName": "SEND_PARAM_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "SendParam2",
@@ -868,12 +868,12 @@
                         "safeName": "receiveEvent2"
                     },
                     "snakeCase": {
-                        "unsafeName": "receive_event2",
-                        "safeName": "receive_event2"
+                        "unsafeName": "receive_event_2",
+                        "safeName": "receive_event_2"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "RECEIVE_EVENT2",
-                        "safeName": "RECEIVE_EVENT2"
+                        "unsafeName": "RECEIVE_EVENT_2",
+                        "safeName": "RECEIVE_EVENT_2"
                     },
                     "pascalCase": {
                         "unsafeName": "ReceiveEvent2",
@@ -1029,12 +1029,12 @@
                         "safeName": "receiveEvent3"
                     },
                     "snakeCase": {
-                        "unsafeName": "receive_event3",
-                        "safeName": "receive_event3"
+                        "unsafeName": "receive_event_3",
+                        "safeName": "receive_event_3"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "RECEIVE_EVENT3",
-                        "safeName": "RECEIVE_EVENT3"
+                        "unsafeName": "RECEIVE_EVENT_3",
+                        "safeName": "RECEIVE_EVENT_3"
                     },
                     "pascalCase": {
                         "unsafeName": "ReceiveEvent3",
@@ -1095,12 +1095,12 @@
                                 "safeName": "receiveText3"
                             },
                             "snakeCase": {
-                                "unsafeName": "receive_text3",
-                                "safeName": "receive_text3"
+                                "unsafeName": "receive_text_3",
+                                "safeName": "receive_text_3"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "RECEIVE_TEXT3",
-                                "safeName": "RECEIVE_TEXT3"
+                                "unsafeName": "RECEIVE_TEXT_3",
+                                "safeName": "RECEIVE_TEXT_3"
                             },
                             "pascalCase": {
                                 "unsafeName": "ReceiveText3",

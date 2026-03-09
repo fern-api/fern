@@ -6,13 +6,67 @@
         "endpoint_service.simple": {
             "auth": null,
             "declaration": {
-                "name": "simple",
+                "name": {
+                    "originalName": "simple",
+                    "camelCase": {
+                        "unsafeName": "simple",
+                        "safeName": "simple"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "simple",
+                        "safeName": "simple"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SIMPLE",
+                        "safeName": "SIMPLE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Simple",
+                        "safeName": "Simple"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
-                        "service"
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "service"
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "location": {
@@ -32,13 +86,67 @@
         "endpoint_service.download": {
             "auth": null,
             "declaration": {
-                "name": "download",
+                "name": {
+                    "originalName": "download",
+                    "camelCase": {
+                        "unsafeName": "download",
+                        "safeName": "download"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "download",
+                        "safeName": "download"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DOWNLOAD",
+                        "safeName": "DOWNLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Download",
+                        "safeName": "Download"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
-                        "service"
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "service"
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "location": {
@@ -50,7 +158,25 @@
                 "pathParameters": [
                     {
                         "name": {
-                            "name": "id",
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
+                                }
+                            },
                             "wireValue": "id"
                         },
                         "typeReference": {

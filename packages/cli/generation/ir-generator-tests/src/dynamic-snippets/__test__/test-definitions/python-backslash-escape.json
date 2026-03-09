@@ -85,8 +85,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -319,8 +319,8 @@
                                     "safeName": "ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
                                 }
                             },
                             "wireValue": "id"

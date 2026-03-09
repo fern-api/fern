@@ -47,8 +47,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -280,8 +280,8 @@
                                     "safeName": "ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
                                 }
                             },
                             "wireValue": "id"
@@ -416,8 +416,8 @@
                                     "safeName": "ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
                                 }
                             },
                             "wireValue": "id"
@@ -440,8 +440,8 @@
                                 "name": {
                                     "originalName": "nonNullableObjectId",
                                     "camelCase": {
-                                        "unsafeName": "nonNullableObjectID",
-                                        "safeName": "nonNullableObjectID"
+                                        "unsafeName": "nonNullableObjectId",
+                                        "safeName": "nonNullableObjectId"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "non_nullable_object_id",
@@ -452,8 +452,8 @@
                                         "safeName": "NON_NULLABLE_OBJECT_ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "NonNullableObjectID",
-                                        "safeName": "NonNullableObjectID"
+                                        "unsafeName": "NonNullableObjectId",
+                                        "safeName": "NonNullableObjectId"
                                     }
                                 },
                                 "wireValue": "id"

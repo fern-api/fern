@@ -327,12 +327,12 @@
                         "safeName": "nestedUnionL2"
                     },
                     "snakeCase": {
-                        "unsafeName": "nested_union_l2",
-                        "safeName": "nested_union_l2"
+                        "unsafeName": "nested_union_l_2",
+                        "safeName": "nested_union_l_2"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "NESTED_UNION_L2",
-                        "safeName": "NESTED_UNION_L2"
+                        "unsafeName": "NESTED_UNION_L_2",
+                        "safeName": "NESTED_UNION_L_2"
                     },
                     "pascalCase": {
                         "unsafeName": "NestedUnionL2",
@@ -414,12 +414,12 @@
                         "safeName": "nestedUnionL1"
                     },
                     "snakeCase": {
-                        "unsafeName": "nested_union_l1",
-                        "safeName": "nested_union_l1"
+                        "unsafeName": "nested_union_l_1",
+                        "safeName": "nested_union_l_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "NESTED_UNION_L1",
-                        "safeName": "NESTED_UNION_L1"
+                        "unsafeName": "NESTED_UNION_L_1",
+                        "safeName": "NESTED_UNION_L_1"
                     },
                     "pascalCase": {
                         "unsafeName": "NestedUnionL1",
@@ -1699,8 +1699,8 @@
                         "name": {
                             "originalName": "tokenId",
                             "camelCase": {
-                                "unsafeName": "tokenID",
-                                "safeName": "tokenID"
+                                "unsafeName": "tokenId",
+                                "safeName": "tokenId"
                             },
                             "snakeCase": {
                                 "unsafeName": "token_id",
@@ -1711,8 +1711,8 @@
                                 "safeName": "TOKEN_ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "TokenID",
-                                "safeName": "TokenID"
+                                "unsafeName": "TokenId",
+                                "safeName": "TokenId"
                             }
                         },
                         "wireValue": "tokenId"
@@ -1821,8 +1821,8 @@
                 "name": {
                     "originalName": "UserId",
                     "camelCase": {
-                        "unsafeName": "userID",
-                        "safeName": "userID"
+                        "unsafeName": "userId",
+                        "safeName": "userId"
                     },
                     "snakeCase": {
                         "unsafeName": "user_id",
@@ -1833,8 +1833,8 @@
                         "safeName": "USER_ID"
                     },
                     "pascalCase": {
-                        "unsafeName": "UserID",
-                        "safeName": "UserID"
+                        "unsafeName": "UserId",
+                        "safeName": "UserId"
                     }
                 },
                 "fernFilepath": {

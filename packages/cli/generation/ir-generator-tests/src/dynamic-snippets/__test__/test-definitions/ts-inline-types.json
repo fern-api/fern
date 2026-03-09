@@ -216,12 +216,12 @@
                         "safeName": "requestTypeInlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "request_type_inline_type1",
-                        "safeName": "request_type_inline_type1"
+                        "unsafeName": "request_type_inline_type_1",
+                        "safeName": "request_type_inline_type_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "REQUEST_TYPE_INLINE_TYPE1",
-                        "safeName": "REQUEST_TYPE_INLINE_TYPE1"
+                        "unsafeName": "REQUEST_TYPE_INLINE_TYPE_1",
+                        "safeName": "REQUEST_TYPE_INLINE_TYPE_1"
                     },
                     "pascalCase": {
                         "unsafeName": "RequestTypeInlineType1",
@@ -279,12 +279,12 @@
                         "safeName": "rootType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1",
-                        "safeName": "root_type1"
+                        "unsafeName": "root_type_1",
+                        "safeName": "root_type_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1",
-                        "safeName": "ROOT_TYPE1"
+                        "unsafeName": "ROOT_TYPE_1",
+                        "safeName": "ROOT_TYPE_1"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1",
@@ -505,12 +505,12 @@
                         "safeName": "rootType1FooMapValue"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1foo_map_value",
-                        "safeName": "root_type1foo_map_value"
+                        "unsafeName": "root_type_1_foo_map_value",
+                        "safeName": "root_type_1_foo_map_value"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1FOO_MAP_VALUE",
-                        "safeName": "ROOT_TYPE1FOO_MAP_VALUE"
+                        "unsafeName": "ROOT_TYPE_1_FOO_MAP_VALUE",
+                        "safeName": "ROOT_TYPE_1_FOO_MAP_VALUE"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1FooMapValue",
@@ -598,12 +598,12 @@
                         "safeName": "rootType1FooListItem"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1foo_list_item",
-                        "safeName": "root_type1foo_list_item"
+                        "unsafeName": "root_type_1_foo_list_item",
+                        "safeName": "root_type_1_foo_list_item"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1FOO_LIST_ITEM",
-                        "safeName": "ROOT_TYPE1FOO_LIST_ITEM"
+                        "unsafeName": "ROOT_TYPE_1_FOO_LIST_ITEM",
+                        "safeName": "ROOT_TYPE_1_FOO_LIST_ITEM"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1FooListItem",
@@ -691,12 +691,12 @@
                         "safeName": "rootType1FooSetItem"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1foo_set_item",
-                        "safeName": "root_type1foo_set_item"
+                        "unsafeName": "root_type_1_foo_set_item",
+                        "safeName": "root_type_1_foo_set_item"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1FOO_SET_ITEM",
-                        "safeName": "ROOT_TYPE1FOO_SET_ITEM"
+                        "unsafeName": "ROOT_TYPE_1_FOO_SET_ITEM",
+                        "safeName": "ROOT_TYPE_1_FOO_SET_ITEM"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1FooSetItem",
@@ -784,12 +784,12 @@
                         "safeName": "rootType1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1inline_type1",
-                        "safeName": "root_type1inline_type1"
+                        "unsafeName": "root_type_1_inline_type_1",
+                        "safeName": "root_type_1_inline_type_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1INLINE_TYPE1",
-                        "safeName": "ROOT_TYPE1INLINE_TYPE1"
+                        "unsafeName": "ROOT_TYPE_1_INLINE_TYPE_1",
+                        "safeName": "ROOT_TYPE_1_INLINE_TYPE_1"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1InlineType1",
@@ -907,12 +907,12 @@
                         "safeName": "rootType1InlineType1NestedInlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "root_type1inline_type1nested_inline_type1",
-                        "safeName": "root_type1inline_type1nested_inline_type1"
+                        "unsafeName": "root_type_1_inline_type_1_nested_inline_type_1",
+                        "safeName": "root_type_1_inline_type_1_nested_inline_type_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "ROOT_TYPE1INLINE_TYPE1NESTED_INLINE_TYPE1",
-                        "safeName": "ROOT_TYPE1INLINE_TYPE1NESTED_INLINE_TYPE1"
+                        "unsafeName": "ROOT_TYPE_1_INLINE_TYPE_1_NESTED_INLINE_TYPE_1",
+                        "safeName": "ROOT_TYPE_1_INLINE_TYPE_1_NESTED_INLINE_TYPE_1"
                     },
                     "pascalCase": {
                         "unsafeName": "RootType1InlineType1NestedInlineType1",
@@ -1060,12 +1060,12 @@
                         "safeName": "discriminatedUnion1"
                     },
                     "snakeCase": {
-                        "unsafeName": "discriminated_union1",
-                        "safeName": "discriminated_union1"
+                        "unsafeName": "discriminated_union_1",
+                        "safeName": "discriminated_union_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "DISCRIMINATED_UNION1",
-                        "safeName": "DISCRIMINATED_UNION1"
+                        "unsafeName": "DISCRIMINATED_UNION_1",
+                        "safeName": "DISCRIMINATED_UNION_1"
                     },
                     "pascalCase": {
                         "unsafeName": "DiscriminatedUnion1",
@@ -1112,12 +1112,12 @@
                                 "safeName": "type1"
                             },
                             "snakeCase": {
-                                "unsafeName": "type1",
-                                "safeName": "type1"
+                                "unsafeName": "type_1",
+                                "safeName": "type_1"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "TYPE1",
-                                "safeName": "TYPE1"
+                                "unsafeName": "TYPE_1",
+                                "safeName": "TYPE_1"
                             },
                             "pascalCase": {
                                 "unsafeName": "Type1",
@@ -1139,12 +1139,12 @@
                                 "safeName": "type2"
                             },
                             "snakeCase": {
-                                "unsafeName": "type2",
-                                "safeName": "type2"
+                                "unsafeName": "type_2",
+                                "safeName": "type_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "TYPE2",
-                                "safeName": "TYPE2"
+                                "unsafeName": "TYPE_2",
+                                "safeName": "TYPE_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Type2",
@@ -1194,12 +1194,12 @@
                         "safeName": "discriminatedUnion1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "discriminated_union1inline_type1",
-                        "safeName": "discriminated_union1inline_type1"
+                        "unsafeName": "discriminated_union_1_inline_type_1",
+                        "safeName": "discriminated_union_1_inline_type_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "DISCRIMINATED_UNION1INLINE_TYPE1",
-                        "safeName": "DISCRIMINATED_UNION1INLINE_TYPE1"
+                        "unsafeName": "DISCRIMINATED_UNION_1_INLINE_TYPE_1",
+                        "safeName": "DISCRIMINATED_UNION_1_INLINE_TYPE_1"
                     },
                     "pascalCase": {
                         "unsafeName": "DiscriminatedUnion1InlineType1",
@@ -1317,12 +1317,12 @@
                         "safeName": "discriminatedUnion1InlineType1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "discriminated_union1inline_type1inline_type1",
-                        "safeName": "discriminated_union1inline_type1inline_type1"
+                        "unsafeName": "discriminated_union_1_inline_type_1_inline_type_1",
+                        "safeName": "discriminated_union_1_inline_type_1_inline_type_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "DISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1",
-                        "safeName": "DISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1"
+                        "unsafeName": "DISCRIMINATED_UNION_1_INLINE_TYPE_1_INLINE_TYPE_1",
+                        "safeName": "DISCRIMINATED_UNION_1_INLINE_TYPE_1_INLINE_TYPE_1"
                     },
                     "pascalCase": {
                         "unsafeName": "DiscriminatedUnion1InlineType1InlineType1",
@@ -1410,12 +1410,12 @@
                         "safeName": "discriminatedUnion1InlineType2"
                     },
                     "snakeCase": {
-                        "unsafeName": "discriminated_union1inline_type2",
-                        "safeName": "discriminated_union1inline_type2"
+                        "unsafeName": "discriminated_union_1_inline_type_2",
+                        "safeName": "discriminated_union_1_inline_type_2"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "DISCRIMINATED_UNION1INLINE_TYPE2",
-                        "safeName": "DISCRIMINATED_UNION1INLINE_TYPE2"
+                        "unsafeName": "DISCRIMINATED_UNION_1_INLINE_TYPE_2",
+                        "safeName": "DISCRIMINATED_UNION_1_INLINE_TYPE_2"
                     },
                     "pascalCase": {
                         "unsafeName": "DiscriminatedUnion1InlineType2",
@@ -1503,12 +1503,12 @@
                         "safeName": "undiscriminatedUnion1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1",
-                        "safeName": "undiscriminated_union1"
+                        "unsafeName": "undiscriminated_union_1",
+                        "safeName": "undiscriminated_union_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1",
-                        "safeName": "UNDISCRIMINATED_UNION1"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1",
+                        "safeName": "UNDISCRIMINATED_UNION_1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1",
@@ -1583,12 +1583,12 @@
                         "safeName": "undiscriminatedUnion1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_type1",
-                        "safeName": "undiscriminated_union1inline_type1"
+                        "unsafeName": "undiscriminated_union_1_inline_type_1",
+                        "safeName": "undiscriminated_union_1_inline_type_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_TYPE1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_TYPE1"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_INLINE_TYPE_1",
+                        "safeName": "UNDISCRIMINATED_UNION_1_INLINE_TYPE_1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineType1",
@@ -1706,12 +1706,12 @@
                         "safeName": "undiscriminatedUnion1InlineType1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_type1inline_type1",
-                        "safeName": "undiscriminated_union1inline_type1inline_type1"
+                        "unsafeName": "undiscriminated_union_1_inline_type_1_inline_type_1",
+                        "safeName": "undiscriminated_union_1_inline_type_1_inline_type_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_INLINE_TYPE_1_INLINE_TYPE_1",
+                        "safeName": "UNDISCRIMINATED_UNION_1_INLINE_TYPE_1_INLINE_TYPE_1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineType1InlineType1",
@@ -1799,12 +1799,12 @@
                         "safeName": "undiscriminatedUnion1InlineType2"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_type2",
-                        "safeName": "undiscriminated_union1inline_type2"
+                        "unsafeName": "undiscriminated_union_1_inline_type_2",
+                        "safeName": "undiscriminated_union_1_inline_type_2"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_TYPE2",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_TYPE2"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_INLINE_TYPE_2",
+                        "safeName": "UNDISCRIMINATED_UNION_1_INLINE_TYPE_2"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineType2",
@@ -1892,12 +1892,12 @@
                         "safeName": "inlineEnum1"
                     },
                     "snakeCase": {
-                        "unsafeName": "inline_enum1",
-                        "safeName": "inline_enum1"
+                        "unsafeName": "inline_enum_1",
+                        "safeName": "inline_enum_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "INLINE_ENUM1",
-                        "safeName": "INLINE_ENUM1"
+                        "unsafeName": "INLINE_ENUM_1",
+                        "safeName": "INLINE_ENUM_1"
                     },
                     "pascalCase": {
                         "unsafeName": "InlineEnum1",
@@ -2011,12 +2011,12 @@
                         "safeName": "undiscriminatedUnion1DiscriminatedUnion1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1discriminated_union1",
-                        "safeName": "undiscriminated_union1discriminated_union1"
+                        "unsafeName": "undiscriminated_union_1_discriminated_union_1",
+                        "safeName": "undiscriminated_union_1_discriminated_union_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1",
-                        "safeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_DISCRIMINATED_UNION_1",
+                        "safeName": "UNDISCRIMINATED_UNION_1_DISCRIMINATED_UNION_1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1DiscriminatedUnion1",
@@ -2063,12 +2063,12 @@
                                 "safeName": "type1"
                             },
                             "snakeCase": {
-                                "unsafeName": "type1",
-                                "safeName": "type1"
+                                "unsafeName": "type_1",
+                                "safeName": "type_1"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "TYPE1",
-                                "safeName": "TYPE1"
+                                "unsafeName": "TYPE_1",
+                                "safeName": "TYPE_1"
                             },
                             "pascalCase": {
                                 "unsafeName": "Type1",
@@ -2090,12 +2090,12 @@
                                 "safeName": "type2"
                             },
                             "snakeCase": {
-                                "unsafeName": "type2",
-                                "safeName": "type2"
+                                "unsafeName": "type_2",
+                                "safeName": "type_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "TYPE2",
-                                "safeName": "TYPE2"
+                                "unsafeName": "TYPE_2",
+                                "safeName": "TYPE_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Type2",
@@ -2145,12 +2145,12 @@
                         "safeName": "undiscriminatedUnion1DiscriminatedUnion1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1discriminated_union1inline_type1",
-                        "safeName": "undiscriminated_union1discriminated_union1inline_type1"
+                        "unsafeName": "undiscriminated_union_1_discriminated_union_1_inline_type_1",
+                        "safeName": "undiscriminated_union_1_discriminated_union_1_inline_type_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE1",
-                        "safeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE1"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_DISCRIMINATED_UNION_1_INLINE_TYPE_1",
+                        "safeName": "UNDISCRIMINATED_UNION_1_DISCRIMINATED_UNION_1_INLINE_TYPE_1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1DiscriminatedUnion1InlineType1",
@@ -2268,12 +2268,12 @@
                         "safeName": "undiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1discriminated_union1inline_type1inline_type1",
-                        "safeName": "undiscriminated_union1discriminated_union1inline_type1inline_type1"
+                        "unsafeName": "undiscriminated_union_1_discriminated_union_1_inline_type_1_inline_type_1",
+                        "safeName": "undiscriminated_union_1_discriminated_union_1_inline_type_1_inline_type_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1",
-                        "safeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE1INLINE_TYPE1"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_DISCRIMINATED_UNION_1_INLINE_TYPE_1_INLINE_TYPE_1",
+                        "safeName": "UNDISCRIMINATED_UNION_1_DISCRIMINATED_UNION_1_INLINE_TYPE_1_INLINE_TYPE_1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1DiscriminatedUnion1InlineType1InlineType1",
@@ -2361,12 +2361,12 @@
                         "safeName": "undiscriminatedUnion1DiscriminatedUnion1InlineType2"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1discriminated_union1inline_type2",
-                        "safeName": "undiscriminated_union1discriminated_union1inline_type2"
+                        "unsafeName": "undiscriminated_union_1_discriminated_union_1_inline_type_2",
+                        "safeName": "undiscriminated_union_1_discriminated_union_1_inline_type_2"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE2",
-                        "safeName": "UNDISCRIMINATED_UNION1DISCRIMINATED_UNION1INLINE_TYPE2"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_DISCRIMINATED_UNION_1_INLINE_TYPE_2",
+                        "safeName": "UNDISCRIMINATED_UNION_1_DISCRIMINATED_UNION_1_INLINE_TYPE_2"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1DiscriminatedUnion1InlineType2",
@@ -2454,12 +2454,12 @@
                         "safeName": "undiscriminatedUnion1InlineEnum1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_enum1",
-                        "safeName": "undiscriminated_union1inline_enum1"
+                        "unsafeName": "undiscriminated_union_1_inline_enum_1",
+                        "safeName": "undiscriminated_union_1_inline_enum_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_ENUM1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_ENUM1"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_INLINE_ENUM_1",
+                        "safeName": "UNDISCRIMINATED_UNION_1_INLINE_ENUM_1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineEnum1",
@@ -2569,8 +2569,8 @@
                 "name": {
                     "originalName": "UserId",
                     "camelCase": {
-                        "unsafeName": "userID",
-                        "safeName": "userID"
+                        "unsafeName": "userId",
+                        "safeName": "userId"
                     },
                     "snakeCase": {
                         "unsafeName": "user_id",
@@ -2581,8 +2581,8 @@
                         "safeName": "USER_ID"
                     },
                     "pascalCase": {
-                        "unsafeName": "UserID",
-                        "safeName": "UserID"
+                        "unsafeName": "UserId",
+                        "safeName": "UserId"
                     }
                 },
                 "fernFilepath": {
@@ -2606,12 +2606,12 @@
                         "safeName": "undiscriminatedUnion1InlineListItem1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_list_item1",
-                        "safeName": "undiscriminated_union1inline_list_item1"
+                        "unsafeName": "undiscriminated_union_1_inline_list_item_1",
+                        "safeName": "undiscriminated_union_1_inline_list_item_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_LIST_ITEM1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_LIST_ITEM1"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_INLINE_LIST_ITEM_1",
+                        "safeName": "UNDISCRIMINATED_UNION_1_INLINE_LIST_ITEM_1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineListItem1",
@@ -2699,12 +2699,12 @@
                         "safeName": "undiscriminatedUnion1InlineSetItem1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_set_item1",
-                        "safeName": "undiscriminated_union1inline_set_item1"
+                        "unsafeName": "undiscriminated_union_1_inline_set_item_1",
+                        "safeName": "undiscriminated_union_1_inline_set_item_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_SET_ITEM1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_SET_ITEM1"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_INLINE_SET_ITEM_1",
+                        "safeName": "UNDISCRIMINATED_UNION_1_INLINE_SET_ITEM_1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineSetItem1",
@@ -2792,12 +2792,12 @@
                         "safeName": "undiscriminatedUnion1InlineMapItem1"
                     },
                     "snakeCase": {
-                        "unsafeName": "undiscriminated_union1inline_map_item1",
-                        "safeName": "undiscriminated_union1inline_map_item1"
+                        "unsafeName": "undiscriminated_union_1_inline_map_item_1",
+                        "safeName": "undiscriminated_union_1_inline_map_item_1"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "UNDISCRIMINATED_UNION1INLINE_MAP_ITEM1",
-                        "safeName": "UNDISCRIMINATED_UNION1INLINE_MAP_ITEM1"
+                        "unsafeName": "UNDISCRIMINATED_UNION_1_INLINE_MAP_ITEM_1",
+                        "safeName": "UNDISCRIMINATED_UNION_1_INLINE_MAP_ITEM_1"
                     },
                     "pascalCase": {
                         "unsafeName": "UndiscriminatedUnion1InlineMapItem1",

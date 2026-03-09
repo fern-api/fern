@@ -55,12 +55,12 @@
                                 "safeName": "ec2"
                             },
                             "snakeCase": {
-                                "unsafeName": "ec2",
-                                "safeName": "ec2"
+                                "unsafeName": "ec_2",
+                                "safeName": "ec_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "EC2",
-                                "safeName": "EC2"
+                                "unsafeName": "EC_2",
+                                "safeName": "EC_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Ec2",
@@ -76,12 +76,12 @@
                             "safeName": "ec2"
                         },
                         "snakeCase": {
-                            "unsafeName": "ec2",
-                            "safeName": "ec2"
+                            "unsafeName": "ec_2",
+                            "safeName": "ec_2"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "EC2",
-                            "safeName": "EC2"
+                            "unsafeName": "EC_2",
+                            "safeName": "EC_2"
                         },
                         "pascalCase": {
                             "unsafeName": "Ec2",
@@ -125,12 +125,12 @@
                                     "safeName": "ec2"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "ec2",
-                                    "safeName": "ec2"
+                                    "unsafeName": "ec_2",
+                                    "safeName": "ec_2"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "EC2",
-                                    "safeName": "EC2"
+                                    "unsafeName": "EC_2",
+                                    "safeName": "EC_2"
                                 },
                                 "pascalCase": {
                                     "unsafeName": "Ec2",
@@ -146,12 +146,12 @@
                                 "safeName": "ec2"
                             },
                             "snakeCase": {
-                                "unsafeName": "ec2",
-                                "safeName": "ec2"
+                                "unsafeName": "ec_2",
+                                "safeName": "ec_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "EC2",
-                                "safeName": "EC2"
+                                "unsafeName": "EC_2",
+                                "safeName": "EC_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Ec2",
@@ -235,8 +235,8 @@
                 "name": {
                     "originalName": "getPresignedUrl",
                     "camelCase": {
-                        "unsafeName": "getPresignedURL",
-                        "safeName": "getPresignedURL"
+                        "unsafeName": "getPresignedUrl",
+                        "safeName": "getPresignedUrl"
                     },
                     "snakeCase": {
                         "unsafeName": "get_presigned_url",
@@ -247,8 +247,8 @@
                         "safeName": "GET_PRESIGNED_URL"
                     },
                     "pascalCase": {
-                        "unsafeName": "GetPresignedURL",
-                        "safeName": "GetPresignedURL"
+                        "unsafeName": "GetPresignedUrl",
+                        "safeName": "GetPresignedUrl"
                     }
                 },
                 "fernFilepath": {
@@ -260,12 +260,12 @@
                                 "safeName": "s3"
                             },
                             "snakeCase": {
-                                "unsafeName": "s3",
-                                "safeName": "s3"
+                                "unsafeName": "s_3",
+                                "safeName": "s_3"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "S3",
-                                "safeName": "S3"
+                                "unsafeName": "S_3",
+                                "safeName": "S_3"
                             },
                             "pascalCase": {
                                 "unsafeName": "S3",
@@ -281,12 +281,12 @@
                             "safeName": "s3"
                         },
                         "snakeCase": {
-                            "unsafeName": "s3",
-                            "safeName": "s3"
+                            "unsafeName": "s_3",
+                            "safeName": "s_3"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "S3",
-                            "safeName": "S3"
+                            "unsafeName": "S_3",
+                            "safeName": "S_3"
                         },
                         "pascalCase": {
                             "unsafeName": "S3",
@@ -305,8 +305,8 @@
                     "name": {
                         "originalName": "GetPresignedUrlRequest",
                         "camelCase": {
-                            "unsafeName": "getPresignedURLRequest",
-                            "safeName": "getPresignedURLRequest"
+                            "unsafeName": "getPresignedUrlRequest",
+                            "safeName": "getPresignedUrlRequest"
                         },
                         "snakeCase": {
                             "unsafeName": "get_presigned_url_request",
@@ -317,8 +317,8 @@
                             "safeName": "GET_PRESIGNED_URL_REQUEST"
                         },
                         "pascalCase": {
-                            "unsafeName": "GetPresignedURLRequest",
-                            "safeName": "GetPresignedURLRequest"
+                            "unsafeName": "GetPresignedUrlRequest",
+                            "safeName": "GetPresignedUrlRequest"
                         }
                     },
                     "fernFilepath": {
@@ -330,12 +330,12 @@
                                     "safeName": "s3"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "s3",
-                                    "safeName": "s3"
+                                    "unsafeName": "s_3",
+                                    "safeName": "s_3"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "S3",
-                                    "safeName": "S3"
+                                    "unsafeName": "S_3",
+                                    "safeName": "S_3"
                                 },
                                 "pascalCase": {
                                     "unsafeName": "S3",
@@ -351,12 +351,12 @@
                                 "safeName": "s3"
                             },
                             "snakeCase": {
-                                "unsafeName": "s3",
-                                "safeName": "s3"
+                                "unsafeName": "s_3",
+                                "safeName": "s_3"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "S3",
-                                "safeName": "S3"
+                                "unsafeName": "S_3",
+                                "safeName": "S_3"
                             },
                             "pascalCase": {
                                 "unsafeName": "S3",
@@ -380,12 +380,12 @@
                                         "safeName": "s3Key"
                                     },
                                     "snakeCase": {
-                                        "unsafeName": "s3key",
-                                        "safeName": "s3key"
+                                        "unsafeName": "s_3_key",
+                                        "safeName": "s_3_key"
                                     },
                                     "screamingSnakeCase": {
-                                        "unsafeName": "S3KEY",
-                                        "safeName": "S3KEY"
+                                        "unsafeName": "S_3_KEY",
+                                        "safeName": "S_3_KEY"
                                     },
                                     "pascalCase": {
                                         "unsafeName": "S3Key",
@@ -429,12 +429,12 @@
                             "safeName": "ec2"
                         },
                         "snakeCase": {
-                            "unsafeName": "ec2",
-                            "safeName": "ec2"
+                            "unsafeName": "ec_2",
+                            "safeName": "ec_2"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "EC2",
-                            "safeName": "EC2"
+                            "unsafeName": "EC_2",
+                            "safeName": "EC_2"
                         },
                         "pascalCase": {
                             "unsafeName": "Ec2",
@@ -451,12 +451,12 @@
                             "safeName": "s3"
                         },
                         "snakeCase": {
-                            "unsafeName": "s3",
-                            "safeName": "s3"
+                            "unsafeName": "s_3",
+                            "safeName": "s_3"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "S3",
-                            "safeName": "S3"
+                            "unsafeName": "S_3",
+                            "safeName": "S_3"
                         },
                         "pascalCase": {
                             "unsafeName": "S3",

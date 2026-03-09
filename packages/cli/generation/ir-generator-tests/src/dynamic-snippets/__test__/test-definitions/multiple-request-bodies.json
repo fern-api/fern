@@ -80,8 +80,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -202,8 +202,8 @@
                         "name": {
                             "originalName": "fileId",
                             "camelCase": {
-                                "unsafeName": "fileID",
-                                "safeName": "fileID"
+                                "unsafeName": "fileId",
+                                "safeName": "fileId"
                             },
                             "snakeCase": {
                                 "unsafeName": "file_id",
@@ -214,8 +214,8 @@
                                 "safeName": "FILE_ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "FileID",
-                                "safeName": "FileID"
+                                "unsafeName": "FileId",
+                                "safeName": "FileId"
                             }
                         },
                         "wireValue": "fileId"
@@ -336,8 +336,8 @@
                 "name": {
                     "originalName": "uploadJsonDocument",
                     "camelCase": {
-                        "unsafeName": "uploadJSONDocument",
-                        "safeName": "uploadJSONDocument"
+                        "unsafeName": "uploadJsonDocument",
+                        "safeName": "uploadJsonDocument"
                     },
                     "snakeCase": {
                         "unsafeName": "upload_json_document",
@@ -348,8 +348,8 @@
                         "safeName": "UPLOAD_JSON_DOCUMENT"
                     },
                     "pascalCase": {
-                        "unsafeName": "UploadJSONDocument",
-                        "safeName": "UploadJSONDocument"
+                        "unsafeName": "UploadJsonDocument",
+                        "safeName": "UploadJsonDocument"
                     }
                 },
                 "fernFilepath": {

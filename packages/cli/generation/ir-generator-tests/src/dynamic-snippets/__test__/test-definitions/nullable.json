@@ -81,8 +81,8 @@
                 "name": {
                     "originalName": "UserId",
                     "camelCase": {
-                        "unsafeName": "userID",
-                        "safeName": "userID"
+                        "unsafeName": "userId",
+                        "safeName": "userId"
                     },
                     "snakeCase": {
                         "unsafeName": "user_id",
@@ -93,8 +93,8 @@
                         "safeName": "USER_ID"
                     },
                     "pascalCase": {
-                        "unsafeName": "UserID",
-                        "safeName": "UserID"
+                        "unsafeName": "UserId",
+                        "safeName": "UserId"
                     }
                 },
                 "fernFilepath": {
@@ -354,8 +354,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"

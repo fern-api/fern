@@ -182,8 +182,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -343,8 +343,8 @@
                             "name": {
                                 "originalName": "userId",
                                 "camelCase": {
-                                    "unsafeName": "userID",
-                                    "safeName": "userID"
+                                    "unsafeName": "userId",
+                                    "safeName": "userId"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "user_id",
@@ -355,8 +355,8 @@
                                     "safeName": "USER_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "UserID",
-                                    "safeName": "UserID"
+                                    "unsafeName": "UserId",
+                                    "safeName": "UserId"
                                 }
                             },
                             "wireValue": "userId"

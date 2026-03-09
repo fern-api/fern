@@ -223,8 +223,8 @@
                             "name": {
                                 "originalName": "nestedId",
                                 "camelCase": {
-                                    "unsafeName": "nestedID",
-                                    "safeName": "nestedID"
+                                    "unsafeName": "nestedId",
+                                    "safeName": "nestedId"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "nested_id",
@@ -235,8 +235,8 @@
                                     "safeName": "NESTED_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "NestedID",
-                                    "safeName": "NestedID"
+                                    "unsafeName": "NestedId",
+                                    "safeName": "NestedId"
                                 }
                             },
                             "wireValue": "nestedId"
@@ -275,8 +275,8 @@
                         "safeName": "ID"
                     },
                     "pascalCase": {
-                        "unsafeName": "ID",
-                        "safeName": "ID"
+                        "unsafeName": "Id",
+                        "safeName": "Id"
                     }
                 },
                 "wireValue": "id"

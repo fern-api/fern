@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "api",
-        "camelCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "snakeCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        },
-        "pascalCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        }
-    },
+    "apiName": "api",
     "apiDisplayName": "Streaming Parameter API",
     "apiDocs": null,
     "auth": {
@@ -34,25 +16,7 @@
         "type_:ChatResponse": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "ChatResponse",
-                    "camelCase": {
-                        "unsafeName": "chatResponse",
-                        "safeName": "chatResponse"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "chat_response",
-                        "safeName": "chat_response"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CHAT_RESPONSE",
-                        "safeName": "CHAT_RESPONSE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ChatResponse",
-                        "safeName": "ChatResponse"
-                    }
-                },
+                "name": "ChatResponse",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -67,25 +31,7 @@
                 "properties": [
                     {
                         "name": {
-                            "name": {
-                                "originalName": "message",
-                                "camelCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MESSAGE",
-                                    "safeName": "MESSAGE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Message",
-                                    "safeName": "Message"
-                                }
-                            },
+                            "name": "message",
                             "wireValue": "message"
                         },
                         "valueType": {
@@ -115,25 +61,7 @@
                     },
                     {
                         "name": {
-                            "name": {
-                                "originalName": "finish_reason",
-                                "camelCase": {
-                                    "unsafeName": "finishReason",
-                                    "safeName": "finishReason"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "finish_reason",
-                                    "safeName": "finish_reason"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "FINISH_REASON",
-                                    "safeName": "FINISH_REASON"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "FinishReason",
-                                    "safeName": "FinishReason"
-                                }
-                            },
+                            "name": "finish_reason",
                             "wireValue": "finish_reason"
                         },
                         "valueType": {
@@ -180,25 +108,7 @@
         "type_:ChatStreamEvent": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "ChatStreamEvent",
-                    "camelCase": {
-                        "unsafeName": "chatStreamEvent",
-                        "safeName": "chatStreamEvent"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "chat_stream_event",
-                        "safeName": "chat_stream_event"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CHAT_STREAM_EVENT",
-                        "safeName": "CHAT_STREAM_EVENT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ChatStreamEvent",
-                        "safeName": "ChatStreamEvent"
-                    }
-                },
+                "name": "ChatStreamEvent",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -213,25 +123,7 @@
                 "properties": [
                     {
                         "name": {
-                            "name": {
-                                "originalName": "delta",
-                                "camelCase": {
-                                    "unsafeName": "delta",
-                                    "safeName": "delta"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "delta",
-                                    "safeName": "delta"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DELTA",
-                                    "safeName": "DELTA"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Delta",
-                                    "safeName": "Delta"
-                                }
-                            },
+                            "name": "delta",
                             "wireValue": "delta"
                         },
                         "valueType": {
@@ -261,25 +153,7 @@
                     },
                     {
                         "name": {
-                            "name": {
-                                "originalName": "tokens",
-                                "camelCase": {
-                                    "unsafeName": "tokens",
-                                    "safeName": "tokens"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tokens",
-                                    "safeName": "tokens"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TOKENS",
-                                    "safeName": "TOKENS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Tokens",
-                                    "safeName": "Tokens"
-                                }
-                            },
+                            "name": "tokens",
                             "wireValue": "tokens"
                         },
                         "valueType": {
@@ -352,25 +226,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_.chat_stream",
-                    "name": {
-                        "originalName": "chat_stream",
-                        "camelCase": {
-                            "unsafeName": "chatStream",
-                            "safeName": "chatStream"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "chat_stream",
-                            "safeName": "chat_stream"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CHAT_STREAM",
-                            "safeName": "CHAT_STREAM"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ChatStream",
-                            "safeName": "ChatStream"
-                        }
-                    },
+                    "name": "chat_stream",
                     "displayName": "Chat endpoint with streaming support",
                     "auth": false,
                     "security": null,
@@ -393,48 +249,12 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": {
-                            "originalName": "ChatStreamRequest",
-                            "camelCase": {
-                                "unsafeName": "chatStreamRequest",
-                                "safeName": "chatStreamRequest"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "chat_stream_request",
-                                "safeName": "chat_stream_request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CHAT_STREAM_REQUEST",
-                                "safeName": "CHAT_STREAM_REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "ChatStreamRequest",
-                                "safeName": "ChatStreamRequest"
-                            }
-                        },
+                        "name": "ChatStreamRequest",
                         "extends": [],
                         "properties": [
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "prompt",
-                                        "camelCase": {
-                                            "unsafeName": "prompt",
-                                            "safeName": "prompt"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "prompt",
-                                            "safeName": "prompt"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "PROMPT",
-                                            "safeName": "PROMPT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Prompt",
-                                            "safeName": "Prompt"
-                                        }
-                                    },
+                                    "name": "prompt",
                                     "wireValue": "prompt"
                                 },
                                 "valueType": {
@@ -458,25 +278,7 @@
                             },
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "stream",
-                                        "camelCase": {
-                                            "unsafeName": "stream",
-                                            "safeName": "stream"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "stream",
-                                            "safeName": "stream"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "STREAM",
-                                            "safeName": "STREAM"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Stream",
-                                            "safeName": "Stream"
-                                        }
-                                    },
+                                    "name": "stream",
                                     "wireValue": "stream"
                                 },
                                 "valueType": {
@@ -508,66 +310,12 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": {
-                                "originalName": "ChatStreamRequest",
-                                "camelCase": {
-                                    "unsafeName": "chatStreamRequest",
-                                    "safeName": "chatStreamRequest"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "chat_stream_request",
-                                    "safeName": "chat_stream_request"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "CHAT_STREAM_REQUEST",
-                                    "safeName": "CHAT_STREAM_REQUEST"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ChatStreamRequest",
-                                    "safeName": "ChatStreamRequest"
-                                }
-                            },
-                            "bodyKey": {
-                                "originalName": "body",
-                                "camelCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BODY",
-                                    "safeName": "BODY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Body",
-                                    "safeName": "Body"
-                                }
-                            },
+                            "wrapperName": "ChatStreamRequest",
+                            "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -577,25 +325,7 @@
                                 "type": "sse",
                                 "payload": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "ChatStreamEvent",
-                                        "camelCase": {
-                                            "unsafeName": "chatStreamEvent",
-                                            "safeName": "chatStreamEvent"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "chat_stream_event",
-                                            "safeName": "chat_stream_event"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "CHAT_STREAM_EVENT",
-                                            "safeName": "CHAT_STREAM_EVENT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ChatStreamEvent",
-                                            "safeName": "ChatStreamEvent"
-                                        }
-                                    },
+                                    "name": "ChatStreamEvent",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -634,25 +364,7 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "prompt",
-                                                    "camelCase": {
-                                                        "unsafeName": "prompt",
-                                                        "safeName": "prompt"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "prompt",
-                                                        "safeName": "prompt"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "PROMPT",
-                                                        "safeName": "PROMPT"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Prompt",
-                                                        "safeName": "Prompt"
-                                                    }
-                                                },
+                                                "name": "prompt",
                                                 "wireValue": "prompt"
                                             },
                                             "value": {
@@ -671,25 +383,7 @@
                                         },
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "stream",
-                                                    "camelCase": {
-                                                        "unsafeName": "stream",
-                                                        "safeName": "stream"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "stream",
-                                                        "safeName": "stream"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "STREAM",
-                                                        "safeName": "STREAM"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Stream",
-                                                        "safeName": "Stream"
-                                                    }
-                                                },
+                                                "name": "stream",
                                                 "wireValue": "stream"
                                             },
                                             "value": {
@@ -731,25 +425,7 @@
                                                                 "packagePath": [],
                                                                 "file": null
                                                             },
-                                                            "name": {
-                                                                "originalName": "ChatStreamEvent",
-                                                                "camelCase": {
-                                                                    "unsafeName": "chatStreamEvent",
-                                                                    "safeName": "chatStreamEvent"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "chat_stream_event",
-                                                                    "safeName": "chat_stream_event"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "CHAT_STREAM_EVENT",
-                                                                    "safeName": "CHAT_STREAM_EVENT"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "ChatStreamEvent",
-                                                                    "safeName": "ChatStreamEvent"
-                                                                }
-                                                            },
+                                                            "name": "ChatStreamEvent",
                                                             "displayName": null
                                                         },
                                                         "shape": {
@@ -757,25 +433,7 @@
                                                             "properties": [
                                                                 {
                                                                     "name": {
-                                                                        "name": {
-                                                                            "originalName": "delta",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "delta",
-                                                                                "safeName": "delta"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "delta",
-                                                                                "safeName": "delta"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "DELTA",
-                                                                                "safeName": "DELTA"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Delta",
-                                                                                "safeName": "Delta"
-                                                                            }
-                                                                        },
+                                                                        "name": "delta",
                                                                         "wireValue": "delta"
                                                                     },
                                                                     "value": {
@@ -817,50 +475,14 @@
                                                                             "packagePath": [],
                                                                             "file": null
                                                                         },
-                                                                        "name": {
-                                                                            "originalName": "ChatStreamEvent",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "chatStreamEvent",
-                                                                                "safeName": "chatStreamEvent"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "chat_stream_event",
-                                                                                "safeName": "chat_stream_event"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "CHAT_STREAM_EVENT",
-                                                                                "safeName": "CHAT_STREAM_EVENT"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "ChatStreamEvent",
-                                                                                "safeName": "ChatStreamEvent"
-                                                                            }
-                                                                        },
+                                                                        "name": "ChatStreamEvent",
                                                                         "displayName": null
                                                                     },
                                                                     "propertyAccess": null
                                                                 },
                                                                 {
                                                                     "name": {
-                                                                        "name": {
-                                                                            "originalName": "tokens",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "tokens",
-                                                                                "safeName": "tokens"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "tokens",
-                                                                                "safeName": "tokens"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "TOKENS",
-                                                                                "safeName": "TOKENS"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Tokens",
-                                                                                "safeName": "Tokens"
-                                                                            }
-                                                                        },
+                                                                        "name": "tokens",
                                                                         "wireValue": "tokens"
                                                                     },
                                                                     "value": {
@@ -900,25 +522,7 @@
                                                                             "packagePath": [],
                                                                             "file": null
                                                                         },
-                                                                        "name": {
-                                                                            "originalName": "ChatStreamEvent",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "chatStreamEvent",
-                                                                                "safeName": "chatStreamEvent"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "chat_stream_event",
-                                                                                "safeName": "chat_stream_event"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "CHAT_STREAM_EVENT",
-                                                                                "safeName": "CHAT_STREAM_EVENT"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "ChatStreamEvent",
-                                                                                "safeName": "ChatStreamEvent"
-                                                                            }
-                                                                        },
+                                                                        "name": "ChatStreamEvent",
                                                                         "displayName": null
                                                                     },
                                                                     "propertyAccess": null
@@ -944,7 +548,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "b090d546",
+                                "id": "ee1a5c33",
                                 "url": "/chat",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -958,25 +562,7 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "prompt",
-                                                    "camelCase": {
-                                                        "unsafeName": "prompt",
-                                                        "safeName": "prompt"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "prompt",
-                                                        "safeName": "prompt"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "PROMPT",
-                                                        "safeName": "PROMPT"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Prompt",
-                                                        "safeName": "Prompt"
-                                                    }
-                                                },
+                                                "name": "prompt",
                                                 "wireValue": "prompt"
                                             },
                                             "originalTypeDeclaration": null,
@@ -995,25 +581,7 @@
                                         },
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "stream",
-                                                    "camelCase": {
-                                                        "unsafeName": "stream",
-                                                        "safeName": "stream"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "stream",
-                                                        "safeName": "stream"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "STREAM",
-                                                        "safeName": "STREAM"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Stream",
-                                                        "safeName": "Stream"
-                                                    }
-                                                },
+                                                "name": "stream",
                                                 "wireValue": "stream"
                                             },
                                             "originalTypeDeclaration": null,
@@ -1052,47 +620,11 @@
                                                             "properties": [
                                                                 {
                                                                     "name": {
-                                                                        "name": {
-                                                                            "originalName": "delta",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "delta",
-                                                                                "safeName": "delta"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "delta",
-                                                                                "safeName": "delta"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "DELTA",
-                                                                                "safeName": "DELTA"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Delta",
-                                                                                "safeName": "Delta"
-                                                                            }
-                                                                        },
+                                                                        "name": "delta",
                                                                         "wireValue": "delta"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "name": {
-                                                                            "originalName": "ChatStreamEvent",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "chatStreamEvent",
-                                                                                "safeName": "chatStreamEvent"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "chat_stream_event",
-                                                                                "safeName": "chat_stream_event"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "CHAT_STREAM_EVENT",
-                                                                                "safeName": "CHAT_STREAM_EVENT"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "ChatStreamEvent",
-                                                                                "safeName": "ChatStreamEvent"
-                                                                            }
-                                                                        },
+                                                                        "name": "ChatStreamEvent",
                                                                         "fernFilepath": {
                                                                             "allParts": [],
                                                                             "packagePath": [],
@@ -1137,47 +669,11 @@
                                                                 },
                                                                 {
                                                                     "name": {
-                                                                        "name": {
-                                                                            "originalName": "tokens",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "tokens",
-                                                                                "safeName": "tokens"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "tokens",
-                                                                                "safeName": "tokens"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "TOKENS",
-                                                                                "safeName": "TOKENS"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Tokens",
-                                                                                "safeName": "Tokens"
-                                                                            }
-                                                                        },
+                                                                        "name": "tokens",
                                                                         "wireValue": "tokens"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "name": {
-                                                                            "originalName": "ChatStreamEvent",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "chatStreamEvent",
-                                                                                "safeName": "chatStreamEvent"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "chat_stream_event",
-                                                                                "safeName": "chat_stream_event"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "CHAT_STREAM_EVENT",
-                                                                                "safeName": "CHAT_STREAM_EVENT"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "ChatStreamEvent",
-                                                                                "safeName": "ChatStreamEvent"
-                                                                            }
-                                                                        },
+                                                                        "name": "ChatStreamEvent",
                                                                         "fernFilepath": {
                                                                             "allParts": [],
                                                                             "packagePath": [],
@@ -1222,25 +718,7 @@
                                                             "extraProperties": null
                                                         },
                                                         "typeName": {
-                                                            "name": {
-                                                                "originalName": "ChatStreamEvent",
-                                                                "camelCase": {
-                                                                    "unsafeName": "chatStreamEvent",
-                                                                    "safeName": "chatStreamEvent"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "chat_stream_event",
-                                                                    "safeName": "chat_stream_event"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "CHAT_STREAM_EVENT",
-                                                                    "safeName": "CHAT_STREAM_EVENT"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "ChatStreamEvent",
-                                                                    "safeName": "ChatStreamEvent"
-                                                                }
-                                                            },
+                                                            "name": "ChatStreamEvent",
                                                             "fernFilepath": {
                                                                 "allParts": [],
                                                                 "packagePath": [],
@@ -1277,25 +755,7 @@
                 },
                 {
                     "id": "endpoint_.chat",
-                    "name": {
-                        "originalName": "chat",
-                        "camelCase": {
-                            "unsafeName": "chat",
-                            "safeName": "chat"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "chat",
-                            "safeName": "chat"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CHAT",
-                            "safeName": "CHAT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Chat",
-                            "safeName": "Chat"
-                        }
-                    },
+                    "name": "chat",
                     "displayName": "Chat endpoint with streaming support",
                     "auth": false,
                     "security": null,
@@ -1318,48 +778,12 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": {
-                            "originalName": "ChatRequest",
-                            "camelCase": {
-                                "unsafeName": "chatRequest",
-                                "safeName": "chatRequest"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "chat_request",
-                                "safeName": "chat_request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CHAT_REQUEST",
-                                "safeName": "CHAT_REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "ChatRequest",
-                                "safeName": "ChatRequest"
-                            }
-                        },
+                        "name": "ChatRequest",
                         "extends": [],
                         "properties": [
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "prompt",
-                                        "camelCase": {
-                                            "unsafeName": "prompt",
-                                            "safeName": "prompt"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "prompt",
-                                            "safeName": "prompt"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "PROMPT",
-                                            "safeName": "PROMPT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Prompt",
-                                            "safeName": "Prompt"
-                                        }
-                                    },
+                                    "name": "prompt",
                                     "wireValue": "prompt"
                                 },
                                 "valueType": {
@@ -1383,25 +807,7 @@
                             },
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "stream",
-                                        "camelCase": {
-                                            "unsafeName": "stream",
-                                            "safeName": "stream"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "stream",
-                                            "safeName": "stream"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "STREAM",
-                                            "safeName": "STREAM"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Stream",
-                                            "safeName": "Stream"
-                                        }
-                                    },
+                                    "name": "stream",
                                     "wireValue": "stream"
                                 },
                                 "valueType": {
@@ -1433,66 +839,12 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": {
-                                "originalName": "ChatRequest",
-                                "camelCase": {
-                                    "unsafeName": "chatRequest",
-                                    "safeName": "chatRequest"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "chat_request",
-                                    "safeName": "chat_request"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "CHAT_REQUEST",
-                                    "safeName": "CHAT_REQUEST"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ChatRequest",
-                                    "safeName": "ChatRequest"
-                                }
-                            },
-                            "bodyKey": {
-                                "originalName": "body",
-                                "camelCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BODY",
-                                    "safeName": "BODY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Body",
-                                    "safeName": "Body"
-                                }
-                            },
+                            "wrapperName": "ChatRequest",
+                            "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -1502,25 +854,7 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "ChatResponse",
-                                        "camelCase": {
-                                            "unsafeName": "chatResponse",
-                                            "safeName": "chatResponse"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "chat_response",
-                                            "safeName": "chat_response"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "CHAT_RESPONSE",
-                                            "safeName": "CHAT_RESPONSE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ChatResponse",
-                                            "safeName": "ChatResponse"
-                                        }
-                                    },
+                                    "name": "ChatResponse",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -1545,25 +879,7 @@
                         {
                             "example": {
                                 "id": "default",
-                                "name": {
-                                    "originalName": "default",
-                                    "camelCase": {
-                                        "unsafeName": "default",
-                                        "safeName": "default"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "default",
-                                        "safeName": "default"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "DEFAULT",
-                                        "safeName": "DEFAULT"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Default",
-                                        "safeName": "Default"
-                                    }
-                                },
+                                "name": "default",
                                 "url": "/chat",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -1576,25 +892,7 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "prompt",
-                                                    "camelCase": {
-                                                        "unsafeName": "prompt",
-                                                        "safeName": "prompt"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "prompt",
-                                                        "safeName": "prompt"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "PROMPT",
-                                                        "safeName": "PROMPT"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Prompt",
-                                                        "safeName": "Prompt"
-                                                    }
-                                                },
+                                                "name": "prompt",
                                                 "wireValue": "prompt"
                                             },
                                             "value": {
@@ -1631,25 +929,7 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": {
-                                                        "originalName": "ChatResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "chatResponse",
-                                                            "safeName": "chatResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "chat_response",
-                                                            "safeName": "chat_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "CHAT_RESPONSE",
-                                                            "safeName": "CHAT_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ChatResponse",
-                                                            "safeName": "ChatResponse"
-                                                        }
-                                                    },
+                                                    "name": "ChatResponse",
                                                     "displayName": null
                                                 },
                                                 "shape": {
@@ -1657,25 +937,7 @@
                                                     "properties": [
                                                         {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
+                                                                "name": "message",
                                                                 "wireValue": "message"
                                                             },
                                                             "value": {
@@ -1717,50 +979,14 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": {
-                                                                    "originalName": "ChatResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "chatResponse",
-                                                                        "safeName": "chatResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "chat_response",
-                                                                        "safeName": "chat_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CHAT_RESPONSE",
-                                                                        "safeName": "CHAT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ChatResponse",
-                                                                        "safeName": "ChatResponse"
-                                                                    }
-                                                                },
+                                                                "name": "ChatResponse",
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
                                                         },
                                                         {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "finish_reason",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "finishReason",
-                                                                        "safeName": "finishReason"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "finish_reason",
-                                                                        "safeName": "finish_reason"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "FINISH_REASON",
-                                                                        "safeName": "FINISH_REASON"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "FinishReason",
-                                                                        "safeName": "FinishReason"
-                                                                    }
-                                                                },
+                                                                "name": "finish_reason",
                                                                 "wireValue": "finish_reason"
                                                             },
                                                             "value": {
@@ -1802,25 +1028,7 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": {
-                                                                    "originalName": "ChatResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "chatResponse",
-                                                                        "safeName": "chatResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "chat_response",
-                                                                        "safeName": "chat_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CHAT_RESPONSE",
-                                                                        "safeName": "CHAT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ChatResponse",
-                                                                        "safeName": "ChatResponse"
-                                                                    }
-                                                                },
+                                                                "name": "ChatResponse",
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
@@ -1844,7 +1052,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "8b296d4c",
+                                "id": "426c9067",
                                 "url": "/chat",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1858,25 +1066,7 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "prompt",
-                                                    "camelCase": {
-                                                        "unsafeName": "prompt",
-                                                        "safeName": "prompt"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "prompt",
-                                                        "safeName": "prompt"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "PROMPT",
-                                                        "safeName": "PROMPT"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Prompt",
-                                                        "safeName": "Prompt"
-                                                    }
-                                                },
+                                                "name": "prompt",
                                                 "wireValue": "prompt"
                                             },
                                             "originalTypeDeclaration": null,
@@ -1895,25 +1085,7 @@
                                         },
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "stream",
-                                                    "camelCase": {
-                                                        "unsafeName": "stream",
-                                                        "safeName": "stream"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "stream",
-                                                        "safeName": "stream"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "STREAM",
-                                                        "safeName": "STREAM"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Stream",
-                                                        "safeName": "Stream"
-                                                    }
-                                                },
+                                                "name": "stream",
                                                 "wireValue": "stream"
                                             },
                                             "originalTypeDeclaration": null,
@@ -1950,47 +1122,11 @@
                                                     "properties": [
                                                         {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
+                                                                "name": "message",
                                                                 "wireValue": "message"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "ChatResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "chatResponse",
-                                                                        "safeName": "chatResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "chat_response",
-                                                                        "safeName": "chat_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CHAT_RESPONSE",
-                                                                        "safeName": "CHAT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ChatResponse",
-                                                                        "safeName": "ChatResponse"
-                                                                    }
-                                                                },
+                                                                "name": "ChatResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -2035,47 +1171,11 @@
                                                         },
                                                         {
                                                             "name": {
-                                                                "name": {
-                                                                    "originalName": "finish_reason",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "finishReason",
-                                                                        "safeName": "finishReason"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "finish_reason",
-                                                                        "safeName": "finish_reason"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "FINISH_REASON",
-                                                                        "safeName": "FINISH_REASON"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "FinishReason",
-                                                                        "safeName": "FinishReason"
-                                                                    }
-                                                                },
+                                                                "name": "finish_reason",
                                                                 "wireValue": "finish_reason"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "ChatResponse",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "chatResponse",
-                                                                        "safeName": "chatResponse"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "chat_response",
-                                                                        "safeName": "chat_response"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "CHAT_RESPONSE",
-                                                                        "safeName": "CHAT_RESPONSE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ChatResponse",
-                                                                        "safeName": "ChatResponse"
-                                                                    }
-                                                                },
+                                                                "name": "ChatResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -2122,25 +1222,7 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "ChatResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "chatResponse",
-                                                            "safeName": "chatResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "chat_response",
-                                                            "safeName": "chat_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "CHAT_RESPONSE",
-                                                            "safeName": "CHAT_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ChatResponse",
-                                                            "safeName": "ChatResponse"
-                                                        }
-                                                    },
+                                                    "name": "ChatResponse",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -2178,25 +1260,7 @@
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
+            "name": "errorInstanceId",
             "wireValue": "errorInstanceId"
         }
     },

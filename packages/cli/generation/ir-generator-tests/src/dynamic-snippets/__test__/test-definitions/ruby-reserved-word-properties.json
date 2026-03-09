@@ -85,8 +85,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -193,8 +193,8 @@
                         "name": {
                             "originalName": "object_id",
                             "camelCase": {
-                                "unsafeName": "objectID",
-                                "safeName": "objectID"
+                                "unsafeName": "objectId",
+                                "safeName": "objectId"
                             },
                             "snakeCase": {
                                 "unsafeName": "object_id",
@@ -205,8 +205,8 @@
                                 "safeName": "OBJECT_ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ObjectID",
-                                "safeName": "ObjectID"
+                                "unsafeName": "ObjectId",
+                                "safeName": "ObjectId"
                             }
                         },
                         "wireValue": "object_id"

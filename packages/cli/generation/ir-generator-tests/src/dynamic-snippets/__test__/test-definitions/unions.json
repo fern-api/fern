@@ -133,8 +133,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -254,8 +254,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -375,8 +375,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -496,8 +496,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -617,8 +617,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -738,8 +738,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -859,8 +859,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -980,8 +980,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -1101,8 +1101,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -1222,8 +1222,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -1343,8 +1343,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -1464,8 +1464,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -1585,8 +1585,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -1706,8 +1706,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -1827,8 +1827,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -1948,8 +1948,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -2069,8 +2069,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -2190,8 +2190,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -2311,8 +2311,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -2432,8 +2432,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -2553,8 +2553,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -2674,8 +2674,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -2795,8 +2795,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -2916,8 +2916,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -3037,8 +3037,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -3158,8 +3158,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -3279,8 +3279,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -3400,8 +3400,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -3521,8 +3521,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -7400,12 +7400,12 @@
                                 "safeName": "integer1"
                             },
                             "snakeCase": {
-                                "unsafeName": "integer1",
-                                "safeName": "integer1"
+                                "unsafeName": "integer_1",
+                                "safeName": "integer_1"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "INTEGER1",
-                                "safeName": "INTEGER1"
+                                "unsafeName": "INTEGER_1",
+                                "safeName": "INTEGER_1"
                             },
                             "pascalCase": {
                                 "unsafeName": "Integer1",
@@ -7430,12 +7430,12 @@
                                 "safeName": "integer2"
                             },
                             "snakeCase": {
-                                "unsafeName": "integer2",
-                                "safeName": "integer2"
+                                "unsafeName": "integer_2",
+                                "safeName": "integer_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "INTEGER2",
-                                "safeName": "INTEGER2"
+                                "unsafeName": "INTEGER_2",
+                                "safeName": "INTEGER_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Integer2",
@@ -7460,12 +7460,12 @@
                                 "safeName": "string1"
                             },
                             "snakeCase": {
-                                "unsafeName": "string1",
-                                "safeName": "string1"
+                                "unsafeName": "string_1",
+                                "safeName": "string_1"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "STRING1",
-                                "safeName": "STRING1"
+                                "unsafeName": "STRING_1",
+                                "safeName": "STRING_1"
                             },
                             "pascalCase": {
                                 "unsafeName": "String1",
@@ -7490,12 +7490,12 @@
                                 "safeName": "string2"
                             },
                             "snakeCase": {
-                                "unsafeName": "string2",
-                                "safeName": "string2"
+                                "unsafeName": "string_2",
+                                "safeName": "string_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "STRING2",
-                                "safeName": "STRING2"
+                                "unsafeName": "STRING_2",
+                                "safeName": "STRING_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "String2",
@@ -7923,12 +7923,12 @@
                                 "safeName": "empty1"
                             },
                             "snakeCase": {
-                                "unsafeName": "empty1",
-                                "safeName": "empty1"
+                                "unsafeName": "empty_1",
+                                "safeName": "empty_1"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "EMPTY1",
-                                "safeName": "EMPTY1"
+                                "unsafeName": "EMPTY_1",
+                                "safeName": "EMPTY_1"
                             },
                             "pascalCase": {
                                 "unsafeName": "Empty1",
@@ -7949,12 +7949,12 @@
                                 "safeName": "empty2"
                             },
                             "snakeCase": {
-                                "unsafeName": "empty2",
-                                "safeName": "empty2"
+                                "unsafeName": "empty_2",
+                                "safeName": "empty_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "EMPTY2",
-                                "safeName": "EMPTY2"
+                                "unsafeName": "EMPTY_2",
+                                "safeName": "EMPTY_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Empty2",
@@ -8260,8 +8260,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -8321,8 +8321,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -8379,8 +8379,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -8952,12 +8952,12 @@
                                 "safeName": "foo1"
                             },
                             "snakeCase": {
-                                "unsafeName": "foo1",
-                                "safeName": "foo1"
+                                "unsafeName": "foo_1",
+                                "safeName": "foo_1"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "FOO1",
-                                "safeName": "FOO1"
+                                "unsafeName": "FOO_1",
+                                "safeName": "FOO_1"
                             },
                             "pascalCase": {
                                 "unsafeName": "Foo1",
@@ -8979,12 +8979,12 @@
                                 "safeName": "foo2"
                             },
                             "snakeCase": {
-                                "unsafeName": "foo2",
-                                "safeName": "foo2"
+                                "unsafeName": "foo_2",
+                                "safeName": "foo_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "FOO2",
-                                "safeName": "FOO2"
+                                "unsafeName": "FOO_2",
+                                "safeName": "FOO_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Foo2",
@@ -10342,8 +10342,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -10622,8 +10622,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -10710,8 +10710,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -11022,8 +11022,8 @@
                                     "safeName": "ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
                                 }
                             },
                             "wireValue": "id"
@@ -11308,8 +11308,8 @@
                                     "safeName": "ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
                                 }
                             },
                             "wireValue": "id"

@@ -7,8 +7,8 @@
                 "name": {
                     "originalName": "MovieId",
                     "camelCase": {
-                        "unsafeName": "movieID",
-                        "safeName": "movieID"
+                        "unsafeName": "movieId",
+                        "safeName": "movieId"
                     },
                     "snakeCase": {
                         "unsafeName": "movie_id",
@@ -19,8 +19,8 @@
                         "safeName": "MOVIE_ID"
                     },
                     "pascalCase": {
-                        "unsafeName": "MovieID",
-                        "safeName": "MovieID"
+                        "unsafeName": "MovieId",
+                        "safeName": "MovieId"
                     }
                 },
                 "fernFilepath": {
@@ -156,8 +156,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -416,8 +416,8 @@
                                         "safeName": "ID"
                                     },
                                     "pascalCase": {
-                                        "unsafeName": "ID",
-                                        "safeName": "ID"
+                                        "unsafeName": "Id",
+                                        "safeName": "Id"
                                     }
                                 },
                                 "wireValue": "id"
@@ -600,8 +600,8 @@
                             "name": {
                                 "originalName": "movie_id",
                                 "camelCase": {
-                                    "unsafeName": "movieID",
-                                    "safeName": "movieID"
+                                    "unsafeName": "movieId",
+                                    "safeName": "movieId"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "movie_id",
@@ -612,8 +612,8 @@
                                     "safeName": "MOVIE_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "MovieID",
-                                    "safeName": "MovieID"
+                                    "unsafeName": "MovieId",
+                                    "safeName": "MovieId"
                                 }
                             },
                             "wireValue": "movie_id"

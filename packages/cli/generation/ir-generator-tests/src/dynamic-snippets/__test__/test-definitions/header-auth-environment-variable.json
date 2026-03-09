@@ -8,7 +8,25 @@
                 "type": "header",
                 "header": {
                     "name": {
-                        "name": "Header Token Auth",
+                        "name": {
+                            "originalName": "Header Token Auth",
+                            "camelCase": {
+                                "unsafeName": "headerTokenAuth",
+                                "safeName": "headerTokenAuth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "header_token_auth",
+                                "safeName": "header_token_auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HEADER_TOKEN_AUTH",
+                                "safeName": "HEADER_TOKEN_AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "HeaderTokenAuth",
+                                "safeName": "HeaderTokenAuth"
+                            }
+                        },
                         "wireValue": "x-api-key"
                     },
                     "typeReference": {
@@ -20,13 +38,67 @@
                 }
             },
             "declaration": {
-                "name": "getWithBearerToken",
+                "name": {
+                    "originalName": "getWithBearerToken",
+                    "camelCase": {
+                        "unsafeName": "getWithBearerToken",
+                        "safeName": "getWithBearerToken"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_with_bearer_token",
+                        "safeName": "get_with_bearer_token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_WITH_BEARER_TOKEN",
+                        "safeName": "GET_WITH_BEARER_TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetWithBearerToken",
+                        "safeName": "GetWithBearerToken"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
-                        "service"
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "service"
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "location": {

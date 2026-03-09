@@ -215,12 +215,12 @@
                                 "safeName": "3D"
                             },
                             "snakeCase": {
-                                "unsafeName": "3d",
-                                "safeName": "3d"
+                                "unsafeName": "3_d",
+                                "safeName": "3_d"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "3D",
-                                "safeName": "3D"
+                                "unsafeName": "3_D",
+                                "safeName": "3_D"
                             },
                             "pascalCase": {
                                 "unsafeName": "3D",

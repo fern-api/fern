@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "api",
-        "camelCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "snakeCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        },
-        "pascalCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        }
-    },
+    "apiName": "api",
     "apiDisplayName": "Sample API",
     "apiDocs": null,
     "auth": {
@@ -28,25 +10,7 @@
         "schemes": [
             {
                 "_type": "bearer",
-                "token": {
-                    "originalName": "token",
-                    "camelCase": {
-                        "unsafeName": "token",
-                        "safeName": "token"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "token",
-                        "safeName": "token"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TOKEN",
-                        "safeName": "TOKEN"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Token",
-                        "safeName": "Token"
-                    }
-                },
+                "token": "token",
                 "tokenEnvVar": null,
                 "key": "BearerAuthScheme",
                 "docs": null
@@ -60,25 +24,7 @@
         "type_:DocumentMetadata": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "DocumentMetadata",
-                    "camelCase": {
-                        "unsafeName": "documentMetadata",
-                        "safeName": "documentMetadata"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "document_metadata",
-                        "safeName": "document_metadata"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "DOCUMENT_METADATA",
-                        "safeName": "DOCUMENT_METADATA"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "DocumentMetadata",
-                        "safeName": "DocumentMetadata"
-                    }
-                },
+                "name": "DocumentMetadata",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -93,25 +39,7 @@
                 "properties": [
                     {
                         "name": {
-                            "name": {
-                                "originalName": "author",
-                                "camelCase": {
-                                    "unsafeName": "author",
-                                    "safeName": "author"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "author",
-                                    "safeName": "author"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "AUTHOR",
-                                    "safeName": "AUTHOR"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Author",
-                                    "safeName": "Author"
-                                }
-                            },
+                            "name": "author",
                             "wireValue": "author"
                         },
                         "valueType": {
@@ -141,25 +69,7 @@
                     },
                     {
                         "name": {
-                            "name": {
-                                "originalName": "id",
-                                "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
-                                }
-                            },
+                            "name": "id",
                             "wireValue": "id"
                         },
                         "valueType": {
@@ -189,25 +99,7 @@
                     },
                     {
                         "name": {
-                            "name": {
-                                "originalName": "tags",
-                                "camelCase": {
-                                    "unsafeName": "tags",
-                                    "safeName": "tags"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "tags",
-                                    "safeName": "tags"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TAGS",
-                                    "safeName": "TAGS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Tags",
-                                    "safeName": "Tags"
-                                }
-                            },
+                            "name": "tags",
                             "wireValue": "tags"
                         },
                         "valueType": {
@@ -235,25 +127,7 @@
                     },
                     {
                         "name": {
-                            "name": {
-                                "originalName": "title",
-                                "camelCase": {
-                                    "unsafeName": "title",
-                                    "safeName": "title"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "title",
-                                    "safeName": "title"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TITLE",
-                                    "safeName": "TITLE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Title",
-                                    "safeName": "Title"
-                                }
-                            },
+                            "name": "title",
                             "wireValue": "title"
                         },
                         "valueType": {
@@ -300,25 +174,7 @@
         "type_:DocumentUploadResult": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "DocumentUploadResult",
-                    "camelCase": {
-                        "unsafeName": "documentUploadResult",
-                        "safeName": "documentUploadResult"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "document_upload_result",
-                        "safeName": "document_upload_result"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "DOCUMENT_UPLOAD_RESULT",
-                        "safeName": "DOCUMENT_UPLOAD_RESULT"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "DocumentUploadResult",
-                        "safeName": "DocumentUploadResult"
-                    }
-                },
+                "name": "DocumentUploadResult",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -333,25 +189,7 @@
                 "properties": [
                     {
                         "name": {
-                            "name": {
-                                "originalName": "fileId",
-                                "camelCase": {
-                                    "unsafeName": "fileID",
-                                    "safeName": "fileID"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "file_id",
-                                    "safeName": "file_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "FILE_ID",
-                                    "safeName": "FILE_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "FileID",
-                                    "safeName": "FileID"
-                                }
-                            },
+                            "name": "fileId",
                             "wireValue": "fileId"
                         },
                         "valueType": {
@@ -381,25 +219,7 @@
                     },
                     {
                         "name": {
-                            "name": {
-                                "originalName": "status",
-                                "camelCase": {
-                                    "unsafeName": "status",
-                                    "safeName": "status"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "status",
-                                    "safeName": "status"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "STATUS",
-                                    "safeName": "STATUS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Status",
-                                    "safeName": "Status"
-                                }
-                            },
+                            "name": "status",
                             "wireValue": "status"
                         },
                         "valueType": {
@@ -446,25 +266,7 @@
         "type_:UploadDocumentResponse": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "UploadDocumentResponse",
-                    "camelCase": {
-                        "unsafeName": "uploadDocumentResponse",
-                        "safeName": "uploadDocumentResponse"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "upload_document_response",
-                        "safeName": "upload_document_response"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "UPLOAD_DOCUMENT_RESPONSE",
-                        "safeName": "UPLOAD_DOCUMENT_RESPONSE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "UploadDocumentResponse",
-                        "safeName": "UploadDocumentResponse"
-                    }
-                },
+                "name": "UploadDocumentResponse",
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -479,25 +281,7 @@
                     {
                         "type": {
                             "_type": "named",
-                            "name": {
-                                "originalName": "DocumentMetadata",
-                                "camelCase": {
-                                    "unsafeName": "documentMetadata",
-                                    "safeName": "documentMetadata"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "document_metadata",
-                                    "safeName": "document_metadata"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DOCUMENT_METADATA",
-                                    "safeName": "DOCUMENT_METADATA"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "DocumentMetadata",
-                                    "safeName": "DocumentMetadata"
-                                }
-                            },
+                            "name": "DocumentMetadata",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -513,25 +297,7 @@
                     {
                         "type": {
                             "_type": "named",
-                            "name": {
-                                "originalName": "DocumentUploadResult",
-                                "camelCase": {
-                                    "unsafeName": "documentUploadResult",
-                                    "safeName": "documentUploadResult"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "document_upload_result",
-                                    "safeName": "document_upload_result"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DOCUMENT_UPLOAD_RESULT",
-                                    "safeName": "DOCUMENT_UPLOAD_RESULT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "DocumentUploadResult",
-                                    "safeName": "DocumentUploadResult"
-                                }
-                            },
+                            "name": "DocumentUploadResult",
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -590,25 +356,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_.uploadJsonDocument",
-                    "name": {
-                        "originalName": "uploadJsonDocument",
-                        "camelCase": {
-                            "unsafeName": "uploadJSONDocument",
-                            "safeName": "uploadJSONDocument"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "upload_json_document",
-                            "safeName": "upload_json_document"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "UPLOAD_JSON_DOCUMENT",
-                            "safeName": "UPLOAD_JSON_DOCUMENT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UploadJSONDocument",
-                            "safeName": "UploadJSONDocument"
-                        }
-                    },
+                    "name": "uploadJsonDocument",
                     "displayName": "Upload document metadata (JSON) or document file",
                     "auth": true,
                     "security": [
@@ -635,48 +383,12 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": {
-                            "originalName": "UploadDocumentRequest",
-                            "camelCase": {
-                                "unsafeName": "uploadDocumentRequest",
-                                "safeName": "uploadDocumentRequest"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "upload_document_request",
-                                "safeName": "upload_document_request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "UPLOAD_DOCUMENT_REQUEST",
-                                "safeName": "UPLOAD_DOCUMENT_REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "UploadDocumentRequest",
-                                "safeName": "UploadDocumentRequest"
-                            }
-                        },
+                        "name": "UploadDocumentRequest",
                         "extends": [],
                         "properties": [
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "author",
-                                        "camelCase": {
-                                            "unsafeName": "author",
-                                            "safeName": "author"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "author",
-                                            "safeName": "author"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "AUTHOR",
-                                            "safeName": "AUTHOR"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Author",
-                                            "safeName": "Author"
-                                        }
-                                    },
+                                    "name": "author",
                                     "wireValue": "author"
                                 },
                                 "valueType": {
@@ -706,25 +418,7 @@
                             },
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "tags",
-                                        "camelCase": {
-                                            "unsafeName": "tags",
-                                            "safeName": "tags"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "tags",
-                                            "safeName": "tags"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TAGS",
-                                            "safeName": "TAGS"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Tags",
-                                            "safeName": "Tags"
-                                        }
-                                    },
+                                    "name": "tags",
                                     "wireValue": "tags"
                                 },
                                 "valueType": {
@@ -760,25 +454,7 @@
                             },
                             {
                                 "name": {
-                                    "name": {
-                                        "originalName": "title",
-                                        "camelCase": {
-                                            "unsafeName": "title",
-                                            "safeName": "title"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "title",
-                                            "safeName": "title"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TITLE",
-                                            "safeName": "TITLE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Title",
-                                            "safeName": "Title"
-                                        }
-                                    },
+                                    "name": "title",
                                     "wireValue": "title"
                                 },
                                 "valueType": {
@@ -817,66 +493,12 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": {
-                                "originalName": "UploadDocumentRequest",
-                                "camelCase": {
-                                    "unsafeName": "uploadDocumentRequest",
-                                    "safeName": "uploadDocumentRequest"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "upload_document_request",
-                                    "safeName": "upload_document_request"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "UPLOAD_DOCUMENT_REQUEST",
-                                    "safeName": "UPLOAD_DOCUMENT_REQUEST"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "UploadDocumentRequest",
-                                    "safeName": "UploadDocumentRequest"
-                                }
-                            },
-                            "bodyKey": {
-                                "originalName": "body",
-                                "camelCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "body",
-                                    "safeName": "body"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BODY",
-                                    "safeName": "BODY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Body",
-                                    "safeName": "Body"
-                                }
-                            },
+                            "wrapperName": "UploadDocumentRequest",
+                            "bodyKey": "body",
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -886,25 +508,7 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "UploadDocumentResponse",
-                                        "camelCase": {
-                                            "unsafeName": "uploadDocumentResponse",
-                                            "safeName": "uploadDocumentResponse"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "upload_document_response",
-                                            "safeName": "upload_document_response"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "UPLOAD_DOCUMENT_RESPONSE",
-                                            "safeName": "UPLOAD_DOCUMENT_RESPONSE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "UploadDocumentResponse",
-                                            "safeName": "UploadDocumentResponse"
-                                        }
-                                    },
+                                    "name": "UploadDocumentResponse",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -957,25 +561,7 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": {
-                                                        "originalName": "UploadDocumentResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "uploadDocumentResponse",
-                                                            "safeName": "uploadDocumentResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "upload_document_response",
-                                                            "safeName": "upload_document_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "UPLOAD_DOCUMENT_RESPONSE",
-                                                            "safeName": "UPLOAD_DOCUMENT_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "UploadDocumentResponse",
-                                                            "safeName": "UploadDocumentResponse"
-                                                        }
-                                                    },
+                                                    "name": "UploadDocumentResponse",
                                                     "displayName": null
                                                 },
                                                 "shape": {
@@ -991,25 +577,7 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": {
-                                                                    "originalName": "DocumentMetadata",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "documentMetadata",
-                                                                        "safeName": "documentMetadata"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "document_metadata",
-                                                                        "safeName": "document_metadata"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "DOCUMENT_METADATA",
-                                                                        "safeName": "DOCUMENT_METADATA"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "DocumentMetadata",
-                                                                        "safeName": "DocumentMetadata"
-                                                                    }
-                                                                },
+                                                                "name": "DocumentMetadata",
                                                                 "displayName": null
                                                             },
                                                             "shape": {
@@ -1017,25 +585,7 @@
                                                                 "properties": [
                                                                     {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "author",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "author",
-                                                                                    "safeName": "author"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "author",
-                                                                                    "safeName": "author"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "AUTHOR",
-                                                                                    "safeName": "AUTHOR"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Author",
-                                                                                    "safeName": "Author"
-                                                                                }
-                                                                            },
+                                                                            "name": "author",
                                                                             "wireValue": "author"
                                                                         },
                                                                         "value": {
@@ -1077,50 +627,14 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
+                                                                            "name": "DocumentMetadata",
                                                                             "displayName": null
                                                                         },
                                                                         "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "id",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                }
-                                                                            },
+                                                                            "name": "id",
                                                                             "wireValue": "id"
                                                                         },
                                                                         "value": {
@@ -1160,50 +674,14 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
+                                                                            "name": "DocumentMetadata",
                                                                             "displayName": null
                                                                         },
                                                                         "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "tags",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "tags",
-                                                                                    "safeName": "tags"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "tags",
-                                                                                    "safeName": "tags"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "TAGS",
-                                                                                    "safeName": "TAGS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Tags",
-                                                                                    "safeName": "Tags"
-                                                                                }
-                                                                            },
+                                                                            "name": "tags",
                                                                             "wireValue": "tags"
                                                                         },
                                                                         "value": {
@@ -1264,50 +742,14 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
+                                                                            "name": "DocumentMetadata",
                                                                             "displayName": null
                                                                         },
                                                                         "propertyAccess": null
                                                                     },
                                                                     {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "title",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "title",
-                                                                                    "safeName": "title"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "title",
-                                                                                    "safeName": "title"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "TITLE",
-                                                                                    "safeName": "TITLE"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Title",
-                                                                                    "safeName": "Title"
-                                                                                }
-                                                                            },
+                                                                            "name": "title",
                                                                             "wireValue": "title"
                                                                         },
                                                                         "value": {
@@ -1349,25 +791,7 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
+                                                                            "name": "DocumentMetadata",
                                                                             "displayName": null
                                                                         },
                                                                         "propertyAccess": null
@@ -1410,7 +834,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "d7d7b04f",
+                                "id": "b7f0bbc",
                                 "url": "/documents/upload",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1424,25 +848,7 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "author",
-                                                    "camelCase": {
-                                                        "unsafeName": "author",
-                                                        "safeName": "author"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "author",
-                                                        "safeName": "author"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "AUTHOR",
-                                                        "safeName": "AUTHOR"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Author",
-                                                        "safeName": "Author"
-                                                    }
-                                                },
+                                                "name": "author",
                                                 "wireValue": "author"
                                             },
                                             "originalTypeDeclaration": null,
@@ -1469,25 +875,7 @@
                                         },
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "tags",
-                                                    "camelCase": {
-                                                        "unsafeName": "tags",
-                                                        "safeName": "tags"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "tags",
-                                                        "safeName": "tags"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "TAGS",
-                                                        "safeName": "TAGS"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Tags",
-                                                        "safeName": "Tags"
-                                                    }
-                                                },
+                                                "name": "tags",
                                                 "wireValue": "tags"
                                             },
                                             "originalTypeDeclaration": null,
@@ -1520,25 +908,7 @@
                                         },
                                         {
                                             "name": {
-                                                "name": {
-                                                    "originalName": "title",
-                                                    "camelCase": {
-                                                        "unsafeName": "title",
-                                                        "safeName": "title"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "title",
-                                                        "safeName": "title"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "TITLE",
-                                                        "safeName": "TITLE"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Title",
-                                                        "safeName": "Title"
-                                                    }
-                                                },
+                                                "name": "title",
                                                 "wireValue": "title"
                                             },
                                             "originalTypeDeclaration": null,
@@ -1585,47 +955,11 @@
                                                                 "properties": [
                                                                     {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "author",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "author",
-                                                                                    "safeName": "author"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "author",
-                                                                                    "safeName": "author"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "AUTHOR",
-                                                                                    "safeName": "AUTHOR"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Author",
-                                                                                    "safeName": "Author"
-                                                                                }
-                                                                            },
+                                                                            "name": "author",
                                                                             "wireValue": "author"
                                                                         },
                                                                         "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
+                                                                            "name": "DocumentMetadata",
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -1670,47 +1004,11 @@
                                                                     },
                                                                     {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "id",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "id",
-                                                                                    "safeName": "id"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "ID",
-                                                                                    "safeName": "ID"
-                                                                                }
-                                                                            },
+                                                                            "name": "id",
                                                                             "wireValue": "id"
                                                                         },
                                                                         "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
+                                                                            "name": "DocumentMetadata",
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -1753,47 +1051,11 @@
                                                                     },
                                                                     {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "tags",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "tags",
-                                                                                    "safeName": "tags"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "tags",
-                                                                                    "safeName": "tags"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "TAGS",
-                                                                                    "safeName": "TAGS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Tags",
-                                                                                    "safeName": "Tags"
-                                                                                }
-                                                                            },
+                                                                            "name": "tags",
                                                                             "wireValue": "tags"
                                                                         },
                                                                         "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
+                                                                            "name": "DocumentMetadata",
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -1874,47 +1136,11 @@
                                                                     },
                                                                     {
                                                                         "name": {
-                                                                            "name": {
-                                                                                "originalName": "title",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "title",
-                                                                                    "safeName": "title"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "title",
-                                                                                    "safeName": "title"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "TITLE",
-                                                                                    "safeName": "TITLE"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Title",
-                                                                                    "safeName": "Title"
-                                                                                }
-                                                                            },
+                                                                            "name": "title",
                                                                             "wireValue": "title"
                                                                         },
                                                                         "originalTypeDeclaration": {
-                                                                            "name": {
-                                                                                "originalName": "DocumentMetadata",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "documentMetadata",
-                                                                                    "safeName": "documentMetadata"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "document_metadata",
-                                                                                    "safeName": "document_metadata"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "DOCUMENT_METADATA",
-                                                                                    "safeName": "DOCUMENT_METADATA"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "DocumentMetadata",
-                                                                                    "safeName": "DocumentMetadata"
-                                                                                }
-                                                                            },
+                                                                            "name": "DocumentMetadata",
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -1961,25 +1187,7 @@
                                                                 "extraProperties": null
                                                             },
                                                             "typeName": {
-                                                                "name": {
-                                                                    "originalName": "DocumentMetadata",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "documentMetadata",
-                                                                        "safeName": "documentMetadata"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "document_metadata",
-                                                                        "safeName": "document_metadata"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "DOCUMENT_METADATA",
-                                                                        "safeName": "DOCUMENT_METADATA"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "DocumentMetadata",
-                                                                        "safeName": "DocumentMetadata"
-                                                                    }
-                                                                },
+                                                                "name": "DocumentMetadata",
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -2005,25 +1213,7 @@
                                                     }
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "UploadDocumentResponse",
-                                                        "camelCase": {
-                                                            "unsafeName": "uploadDocumentResponse",
-                                                            "safeName": "uploadDocumentResponse"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "upload_document_response",
-                                                            "safeName": "upload_document_response"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "UPLOAD_DOCUMENT_RESPONSE",
-                                                            "safeName": "UPLOAD_DOCUMENT_RESPONSE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "UploadDocumentResponse",
-                                                            "safeName": "UploadDocumentResponse"
-                                                        }
-                                                    },
+                                                    "name": "UploadDocumentResponse",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -2066,25 +1256,7 @@
                 },
                 {
                     "id": "endpoint_.uploadPdfDocument",
-                    "name": {
-                        "originalName": "uploadPdfDocument",
-                        "camelCase": {
-                            "unsafeName": "uploadPdfDocument",
-                            "safeName": "uploadPdfDocument"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "upload_pdf_document",
-                            "safeName": "upload_pdf_document"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "UPLOAD_PDF_DOCUMENT",
-                            "safeName": "UPLOAD_PDF_DOCUMENT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "UploadPdfDocument",
-                            "safeName": "UploadPdfDocument"
-                        }
-                    },
+                    "name": "uploadPdfDocument",
                     "displayName": "Upload document metadata (JSON) or document file",
                     "auth": true,
                     "security": [
@@ -2128,25 +1300,7 @@
                                 "contentType": null
                             }
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -2156,25 +1310,7 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "UploadDocumentResponse",
-                                        "camelCase": {
-                                            "unsafeName": "uploadDocumentResponse",
-                                            "safeName": "uploadDocumentResponse"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "upload_document_response",
-                                            "safeName": "upload_document_response"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "UPLOAD_DOCUMENT_RESPONSE",
-                                            "safeName": "UPLOAD_DOCUMENT_RESPONSE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "UploadDocumentResponse",
-                                            "safeName": "UploadDocumentResponse"
-                                        }
-                                    },
+                                    "name": "UploadDocumentResponse",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -2214,25 +1350,7 @@
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": {
-                "originalName": "errorInstanceId",
-                "camelCase": {
-                    "unsafeName": "errorInstanceID",
-                    "safeName": "errorInstanceID"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorInstanceID",
-                    "safeName": "ErrorInstanceID"
-                }
-            },
+            "name": "errorInstanceId",
             "wireValue": "errorInstanceId"
         }
     },
@@ -2243,25 +1361,7 @@
             "environments": [
                 {
                     "id": "Default",
-                    "name": {
-                        "originalName": "Default",
-                        "camelCase": {
-                            "unsafeName": "default",
-                            "safeName": "default"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "default",
-                            "safeName": "default"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "DEFAULT",
-                            "safeName": "DEFAULT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Default",
-                            "safeName": "Default"
-                        }
-                    },
+                    "name": "Default",
                     "url": "https://api.example.com/v1",
                     "audiences": null,
                     "defaultUrl": null,

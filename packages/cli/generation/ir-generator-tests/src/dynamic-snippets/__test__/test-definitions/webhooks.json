@@ -35,8 +35,8 @@
                         "name": {
                             "originalName": "userId",
                             "camelCase": {
-                                "unsafeName": "userID",
-                                "safeName": "userID"
+                                "unsafeName": "userId",
+                                "safeName": "userId"
                             },
                             "snakeCase": {
                                 "unsafeName": "user_id",
@@ -47,8 +47,8 @@
                                 "safeName": "USER_ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "UserID",
-                                "safeName": "UserID"
+                                "unsafeName": "UserId",
+                                "safeName": "UserId"
                             }
                         },
                         "wireValue": "userId"
@@ -158,8 +158,8 @@
                         "name": {
                             "originalName": "orderId",
                             "camelCase": {
-                                "unsafeName": "orderID",
-                                "safeName": "orderID"
+                                "unsafeName": "orderId",
+                                "safeName": "orderId"
                             },
                             "snakeCase": {
                                 "unsafeName": "order_id",
@@ -170,8 +170,8 @@
                                 "safeName": "ORDER_ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "OrderID",
-                                "safeName": "OrderID"
+                                "unsafeName": "OrderId",
+                                "safeName": "OrderId"
                             }
                         },
                         "wireValue": "orderId"
@@ -281,8 +281,8 @@
                         "name": {
                             "originalName": "paymentId",
                             "camelCase": {
-                                "unsafeName": "paymentID",
-                                "safeName": "paymentID"
+                                "unsafeName": "paymentId",
+                                "safeName": "paymentId"
                             },
                             "snakeCase": {
                                 "unsafeName": "payment_id",
@@ -293,8 +293,8 @@
                                 "safeName": "PAYMENT_ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "PaymentID",
-                                "safeName": "PaymentID"
+                                "unsafeName": "PaymentId",
+                                "safeName": "PaymentId"
                             }
                         },
                         "wireValue": "paymentId"
@@ -404,8 +404,8 @@
                         "name": {
                             "originalName": "refundId",
                             "camelCase": {
-                                "unsafeName": "refundID",
-                                "safeName": "refundID"
+                                "unsafeName": "refundId",
+                                "safeName": "refundId"
                             },
                             "snakeCase": {
                                 "unsafeName": "refund_id",
@@ -416,8 +416,8 @@
                                 "safeName": "REFUND_ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "RefundID",
-                                "safeName": "RefundID"
+                                "unsafeName": "RefundId",
+                                "safeName": "RefundId"
                             }
                         },
                         "wireValue": "refundId"

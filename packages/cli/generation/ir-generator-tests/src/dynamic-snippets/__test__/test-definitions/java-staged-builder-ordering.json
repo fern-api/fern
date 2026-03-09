@@ -790,8 +790,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
+                                "unsafeName": "Id",
+                                "safeName": "Id"
                             }
                         },
                         "wireValue": "id"
@@ -999,8 +999,8 @@
                         "name": {
                             "originalName": "childId",
                             "camelCase": {
-                                "unsafeName": "childID",
-                                "safeName": "childID"
+                                "unsafeName": "childId",
+                                "safeName": "childId"
                             },
                             "snakeCase": {
                                 "unsafeName": "child_id",
@@ -1011,8 +1011,8 @@
                                 "safeName": "CHILD_ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ChildID",
-                                "safeName": "ChildID"
+                                "unsafeName": "ChildId",
+                                "safeName": "ChildId"
                             }
                         },
                         "wireValue": "childId"
@@ -1130,8 +1130,8 @@
                         "name": {
                             "originalName": "parentId",
                             "camelCase": {
-                                "unsafeName": "parentID",
-                                "safeName": "parentID"
+                                "unsafeName": "parentId",
+                                "safeName": "parentId"
                             },
                             "snakeCase": {
                                 "unsafeName": "parent_id",
@@ -1142,8 +1142,8 @@
                                 "safeName": "PARENT_ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ParentID",
-                                "safeName": "ParentID"
+                                "unsafeName": "ParentId",
+                                "safeName": "ParentId"
                             }
                         },
                         "wireValue": "parentId"

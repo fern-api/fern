@@ -294,12 +294,12 @@
                                 "safeName": "field1"
                             },
                             "snakeCase": {
-                                "unsafeName": "field1",
-                                "safeName": "field1"
+                                "unsafeName": "field_1",
+                                "safeName": "field_1"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "FIELD1",
-                                "safeName": "FIELD1"
+                                "unsafeName": "FIELD_1",
+                                "safeName": "FIELD_1"
                             },
                             "pascalCase": {
                                 "unsafeName": "Field1",
@@ -324,12 +324,12 @@
                                 "safeName": "field2"
                             },
                             "snakeCase": {
-                                "unsafeName": "field2",
-                                "safeName": "field2"
+                                "unsafeName": "field_2",
+                                "safeName": "field_2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "FIELD2",
-                                "safeName": "FIELD2"
+                                "unsafeName": "FIELD_2",
+                                "safeName": "FIELD_2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Field2",
@@ -620,8 +620,8 @@
                                 "safeName": "UUID"
                             },
                             "pascalCase": {
-                                "unsafeName": "UUID",
-                                "safeName": "UUID"
+                                "unsafeName": "Uuid",
+                                "safeName": "Uuid"
                             }
                         },
                         "wireValue": "uuid_"

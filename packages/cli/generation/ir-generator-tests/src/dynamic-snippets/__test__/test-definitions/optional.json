@@ -572,8 +572,8 @@
                             "name": {
                                 "originalName": "actionId",
                                 "camelCase": {
-                                    "unsafeName": "actionID",
-                                    "safeName": "actionID"
+                                    "unsafeName": "actionId",
+                                    "safeName": "actionId"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "action_id",
@@ -584,8 +584,8 @@
                                     "safeName": "ACTION_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ActionID",
-                                    "safeName": "ActionID"
+                                    "unsafeName": "ActionId",
+                                    "safeName": "ActionId"
                                 }
                             },
                             "wireValue": "actionId"
@@ -614,8 +614,8 @@
                                     "safeName": "ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
                                 }
                             },
                             "wireValue": "id"
