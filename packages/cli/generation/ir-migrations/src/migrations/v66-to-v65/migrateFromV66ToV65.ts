@@ -109,9 +109,10 @@ function buildV65Ir(inflated: NormalizedIR<IntermediateRepresentation>): IrVersi
         apiPlayground: inflated.apiPlayground
     };
 
-    // Cross-package cast: after inflation, all Name fields contain full Name objects.
-    // V66's NormalizedIR and V65's IR are structurally identical, but TypeScript can't
-    // verify this across package boundaries (@fern-api/ir-sdk vs @fern-fern/ir-v65-sdk).
-    // This is the standard pattern used by all IR migrations (see v65-to-v63 for precedent).
+    // Cross-package cast: V66 types come from @fern-api/ir-sdk, V65 from @fern-fern/ir-v65-sdk.
+    // Even though the data structures are identical after inflation, the _visit discriminant
+    // functions have incompatible type signatures across packages, so TypeScript cannot prove
+    // structural equivalence. This is the same pattern used by all other IR migrations
+    // (e.g. v65-to-v63 uses 9 such casts). See TS2322 on _visit callback parameter types.
     return v65Ir as unknown as IrVersions.V65.ir.IntermediateRepresentation;
 }
