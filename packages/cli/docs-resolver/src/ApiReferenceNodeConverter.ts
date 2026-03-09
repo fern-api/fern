@@ -460,6 +460,7 @@ export class ApiReferenceNodeConverter {
             icon: this.resolveIconFileId(section.icon),
             hidden: this.hideChildren || section.hidden,
             overviewPageId,
+            collapsed: section.collapsed,
             collapsible: section.collapsible,
             collapsedByDefault: section.collapsedByDefault,
             availability: sectionAvailability,
