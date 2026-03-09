@@ -29,8 +29,7 @@ import { camelCase, kebabCase } from "lodash-es";
 
 // TODO: Remove this when the new fdr-sdk is integrated
 type SectionNodeWithNewCollapsibleConfig = FernNavigation.V1.SectionNode & {
-    collapsible?: boolean;
-    collapsedByDefault?: boolean;
+    collapsed?: boolean | "open-by-default";
 };
 
 /**
@@ -1189,14 +1188,7 @@ export class DocsDefinitionResolver {
                 return;
             }
 
-            // Temporary coercion to satisfy type checker until new fdr-sdk is integrated
-            const childWithCollapsible = child as SectionNodeWithNewCollapsibleConfig;
-            const childCollapsed = (child as unknown as { collapsed?: boolean | "open-by-default" }).collapsed;
-            const isCollapsible =
-                child.type === "section" &&
-                (childWithCollapsible.collapsible === true ||
-                    (childWithCollapsible.collapsible == null &&
-                        (childCollapsed === true || childCollapsed === "open-by-default")));
+            const isCollapsible = child.type === "section" && child.collapsed != null;
 
             if (child.type === "section" && !isCollapsible) {
                 grouped.push(child);
@@ -1918,11 +1910,9 @@ export class DocsDefinitionResolver {
                     ? (this.markdownFilesToSidebarTitle.get(item.overviewAbsolutePath) ?? item.title)
                     : item.title,
             icon: this.resolveIconFileId(item.icon),
-            collapsed: item.collapsed as boolean | undefined,
-            collapsible: item.collapsible ?? (item.collapsed != null ? true : undefined),
-            collapsedByDefault:
-                item.collapsedByDefault ??
-                (item.collapsed === true ? true : item.collapsed === "open-by-default" ? false : undefined),
+            collapsed: item.collapsed,
+            collapsible: item.collapsible,
+            collapsedByDefault: item.collapsedByDefault,
             hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
