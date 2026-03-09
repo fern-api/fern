@@ -10,12 +10,10 @@ import urlJoin from "url-join";
 
 // TODO: Remove these when the new fdr-sdk is integrated
 type ApiReferenceNodeWithCollapsibleConfig = FernNavigation.V1.ApiReferenceNode & {
-    collapsible?: boolean;
-    collapsedByDefault?: boolean;
+    collapsed?: boolean | "open-by-default";
 };
 type ApiPackageNodeWithCollapsibleConfig = FernNavigation.V1.ApiPackageNode & {
-    collapsible?: boolean;
-    collapsedByDefault?: boolean;
+    collapsed?: boolean | "open-by-default";
 };
 
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder.js";
@@ -151,6 +149,7 @@ export class ApiReferenceNodeConverter {
             title: this.apiSection.title,
             apiDefinitionId: this.apiDefinitionId,
             overviewPageId,
+            collapsed: this.apiSection.collapsed,
             collapsible: undefined,
             collapsedByDefault: undefined,
             paginated: this.apiSection.paginated,
