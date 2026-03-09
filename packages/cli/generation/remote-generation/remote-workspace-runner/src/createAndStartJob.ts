@@ -284,12 +284,13 @@ async function startJob({
             context.logger.debug("Wrote IR to disk: " + irFilepath);
         }
     });
-    const compressed = gzipSync(Buffer.from(irAsString, "utf-8"));
+    const irBuffer = new TextEncoder().encode(irAsString);
+    const compressed = gzipSync(irBuffer);
     context.logger.debug(
-        `Compressed IR from ${irAsString.length} bytes to ${compressed.length} bytes ` +
-            `(${((1 - compressed.length / irAsString.length) * 100).toFixed(1)}% reduction)`
+        `Compressed IR from ${irBuffer.byteLength} bytes to ${compressed.byteLength} bytes ` +
+            `(${((1 - compressed.byteLength / irBuffer.byteLength) * 100).toFixed(1)}% reduction)`
     );
-    formData.append("file", compressed, { filename: "ir.json", contentType: "application/octet-stream" });
+    formData.append("file", Buffer.from(compressed), { filename: "ir.json", contentType: "application/octet-stream" });
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {
