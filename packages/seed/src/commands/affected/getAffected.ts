@@ -120,7 +120,7 @@ export function getChangedFiles(baseRef: string, repoRoot: string): string[] {
                 .split("\n")
                 .filter((line) => line.length > 0);
         } catch (innerError) {
-            console.error("Failed to get changed files from git. Falling back to running everything.", innerError);
+            console.error("Failed to get changed files from git.", innerError);
             return [];
         }
     }
@@ -143,10 +143,10 @@ export function detectAffected(changedFiles: string[], allGenerators: GeneratorW
     const allGeneratorNames = allGenerators.map((g) => g.workspaceName);
 
     if (changedFiles.length === 0) {
-        summary.push("No changed files detected — running everything as fallback.");
+        summary.push("No changed files detected — skipping all seed tests.");
         return {
-            allGeneratorsAffected: true,
-            allFixturesAffected: true,
+            allGeneratorsAffected: false,
+            allFixturesAffected: false,
             affectedGenerators: [],
             generatorsWithAllFixtures: [],
             affectedFixtures: [],

@@ -57,11 +57,11 @@ const ALL_FIXTURES = ["imdb", "exhaustive", "alias", "basic-auth", "file-upload"
 
 describe("detectAffected", () => {
     describe("fallback behavior", () => {
-        it("runs everything when no changed files", () => {
+        it("skips all seed tests when no changed files (e.g. git diff failure)", () => {
             const result = detectAffected([], ALL_GENERATORS);
 
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
             expect(result.affectedGenerators).toEqual([]);
             expect(result.generatorsWithAllFixtures).toEqual([]);
             expect(result.affectedFixtures).toEqual([]);
