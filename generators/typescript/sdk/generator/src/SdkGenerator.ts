@@ -669,20 +669,35 @@ export class SdkGenerator {
             try {
                 await this.generateReadme();
             } catch (e) {
-                this.context.logger.warn("Failed to generate README.md, this is OK");
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                const errorStack = e instanceof Error ? e.stack : undefined;
+                this.context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
+                if (errorStack) {
+                    this.context.logger.debug(`README.md generation error stack: ${errorStack}`);
+                }
             }
 
             try {
                 await this.generateReference();
             } catch (e) {
-                this.context.logger.warn("Failed to generate reference.md, this is OK");
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                const errorStack = e instanceof Error ? e.stack : undefined;
+                this.context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
+                if (errorStack) {
+                    this.context.logger.debug(`reference.md generation error stack: ${errorStack}`);
+                }
             }
 
             if (!this.config.whitelabel) {
                 try {
                     await this.generateContributing();
                 } catch (e) {
-                    this.context.logger.warn("Failed to generate CONTRIBUTING.md, this is OK");
+                    const errorMessage = e instanceof Error ? e.message : String(e);
+                    const errorStack = e instanceof Error ? e.stack : undefined;
+                    this.context.logger.warn(`Failed to generate CONTRIBUTING.md: ${errorMessage}`);
+                    if (errorStack) {
+                        this.context.logger.debug(`CONTRIBUTING.md generation error stack: ${errorStack}`);
+                    }
                 }
             }
         }

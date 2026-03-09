@@ -79,18 +79,24 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                     endpointSnippets: snippets
                 });
             } catch (e) {
-                context.logger.warn(
-                    `Failed to generate README.md: ${e instanceof Error ? e.message : "Unknown error"}. This is non-critical and generation will continue.`
-                );
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                const errorStack = e instanceof Error ? e.stack : undefined;
+                context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
+                if (errorStack) {
+                    context.logger.debug(`README.md generation error stack: ${errorStack}`);
+                }
             }
 
             try {
                 await context.snippetGenerator.populateSnippetsCache();
                 await this.generateReference({ context });
             } catch (e) {
-                context.logger.warn(
-                    `Failed to generate reference.md: ${e instanceof Error ? e.message : "Unknown error"}. This is non-critical and generation will continue.`
-                );
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                const errorStack = e instanceof Error ? e.stack : undefined;
+                context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
+                if (errorStack) {
+                    context.logger.debug(`reference.md generation error stack: ${errorStack}`);
+                }
             }
         }
 

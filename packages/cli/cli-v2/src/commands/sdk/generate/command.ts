@@ -33,32 +33,26 @@ export declare namespace GenerateCommand {
         /** Path or URL to an API spec file (enables no-config mode) */
         api?: string;
 
-        /** Organization name (required in no-config mode) */
-        org?: string;
-
-        /** The SDK target to generate */
-        target?: string;
-
-        /** Override the generator version for the target */
-        "target-version"?: string;
-
-        /** Generator group to run (from fern.yml) */
-        group?: string;
-
         /** Filter by audiences */
         audience?: string[];
-
-        /** Whether to run the generator locally in a container */
-        local: boolean;
 
         /** Container engine to use for local generation */
         "container-engine"?: ContainerRunner;
 
+        /** Force generation without prompts */
+        force: boolean;
+
+        /** Generator group to run (from fern.yml) */
+        group?: string;
+
         /** Whether to keep containers after completion */
         "keep-container": boolean;
 
-        /** Preview mode */
-        preview: boolean;
+        /** Whether to run the generator locally in a container */
+        local: boolean;
+
+        /** Organization name (required in no-config mode) */
+        org?: string;
 
         /** Output directory or git URL */
         output?: string;
@@ -66,8 +60,14 @@ export declare namespace GenerateCommand {
         /** Override the version for generated packages */
         "output-version"?: string;
 
-        /** Force generation without prompts */
-        force: boolean;
+        /** The SDK target to generate */
+        target?: string;
+
+        /** Override the generator version for the target */
+        "target-version"?: string;
+
+        /** Preview mode */
+        preview: boolean;
 
         /** Path to .fernignore file */
         fernignore?: string;
@@ -604,45 +604,37 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): 
                     type: "string",
                     description: "Path or URL to an API spec file (enables no-config mode)"
                 })
-                .option("org", {
-                    type: "string",
-                    description: "Organization name (required with --api)"
-                })
-                .option("target", {
-                    type: "string",
-                    description: "The SDK target to generate"
-                })
-                .option("target-version", {
-                    type: "string",
-                    description: "The generator version for the target"
-                })
-                .option("group", {
-                    type: "string",
-                    description: "The SDK group to generate"
-                })
                 .option("audience", {
                     type: "array",
                     string: true,
                     description: "Filter the target API(s) with the given audience(s)"
                 })
-                .option("local", {
-                    type: "boolean",
-                    default: false,
-                    description: "Run the generator locally in a container"
-                })
                 .option("container-engine", {
                     choices: ["docker", "podman"],
                     description: "Choose the container engine to use for local generation"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Ignore prompts to confirm generation"
+                })
+                .option("group", {
+                    type: "string",
+                    description: "The SDK group to generate"
                 })
                 .option("keep-container", {
                     type: "boolean",
                     default: false,
                     description: "Prevent auto-deletion of any containers used for local generation"
                 })
-                .option("preview", {
+                .option("local", {
                     type: "boolean",
                     default: false,
-                    description: "Generate a preview of the generated SDK in a local preview directory"
+                    description: "Run the generator locally in a container"
+                })
+                .option("org", {
+                    type: "string",
+                    description: "Organization name (required with --api)"
                 })
                 .option("output", {
                     type: "string",
@@ -652,10 +644,21 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): 
                     type: "string",
                     description: "The version to use for the generated packages (e.g. 1.0.0)"
                 })
-                .option("force", {
+                .option("target", {
+                    type: "string",
+                    description: "The SDK target to generate"
+                })
+                .option("target-version", {
+                    type: "string",
+                    description: "The generator version for the target"
+                })
+                .option("preview", {
+                    // This flag is still accepted for convenience (i.e. users migrating from the original CLI).
+                    // Users should use `fern sdk preview` instead.
                     type: "boolean",
                     default: false,
-                    description: "Ignore prompts to confirm generation"
+                    description: "Generate a preview of the generated SDK in a local preview directory",
+                    hidden: true
                 })
                 .option("fernignore", {
                     type: "string",
