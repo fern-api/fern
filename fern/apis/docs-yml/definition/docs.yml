@@ -827,6 +827,25 @@ types:
           Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
 
           @default: false
+      code-theme:
+        type: optional<CodeThemeConfig>
+        docs: |
+          Override the syntax highlighting theme used in code blocks.
+          Accepts any Shiki built-in theme name (see https://shiki.style/themes).
+          You can set separate themes for light and dark mode.
+
+  CodeThemeConfig:
+    properties:
+      light:
+        type: optional<string>
+        docs: |
+          The Shiki theme to use for code blocks in light mode.
+          See https://shiki.style/themes for available themes.
+      dark:
+        type: optional<string>
+        docs: |
+          The Shiki theme to use for code blocks in dark mode.
+          See https://shiki.style/themes for available themes.
 
   ThemeConfig:
     properties:

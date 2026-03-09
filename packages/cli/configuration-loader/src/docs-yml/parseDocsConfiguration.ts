@@ -423,7 +423,8 @@ function convertSettingsConfig(
         searchText: settings.searchText ?? undefined,
         useJavascriptAsTypescript: settings.useJavascriptAsTypescript ?? false,
         disableExplorerProxy: settings.disableExplorerProxy ?? false,
-        disableAnalytics: settings.disableAnalytics ?? false
+        disableAnalytics: settings.disableAnalytics ?? false,
+        codeTheme: settings.codeTheme ?? undefined
     };
 }
 

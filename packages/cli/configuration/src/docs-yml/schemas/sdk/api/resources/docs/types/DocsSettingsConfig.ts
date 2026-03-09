@@ -74,4 +74,10 @@ export interface DocsSettingsConfig {
      * @default: false
      */
     substituteEnvVars?: boolean;
+    /**
+     * Override the syntax highlighting theme used in code blocks.
+     * Accepts any Shiki built-in theme name (see https://shiki.style/themes).
+     * You can set separate themes for light and dark mode.
+     */
+    codeTheme?: FernDocsConfig.CodeThemeConfig;
 }

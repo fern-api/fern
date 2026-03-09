@@ -24,6 +24,7 @@ export * from "./ChangelogConfiguration.js";
 export * from "./ChangelogFolderRelativePath.js";
 export * from "./ColorConfig.js";
 export * from "./ColorsConfiguration.js";
+export * from "./CodeThemeConfig.js";
 export * from "./ColorThemedConfig.js";
 export * from "./ContentAlignment.js";
 export * from "./CssConfig.js";
