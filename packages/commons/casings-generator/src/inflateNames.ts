@@ -142,6 +142,14 @@ export function inflateIrNames(
 // ---------------------------------------------------------------------------
 
 /**
+ * Set of top-level IR keys whose subtrees should NOT be traversed for inflation.
+ * The `dynamic` field contains a DynamicSnippetsIntermediateRepresentation
+ * which uses plain strings for fields like `apiName`, `token`, `name`, etc.
+ * Inflating those would break generators that expect strings in the dynamic IR.
+ */
+const SKIP_INFLATION_KEYS = new Set(["dynamic"]);
+
+/**
  * Set of keys that hold NameOrString values (singular) in the IR type schema.
  * Derived from all NameOrString field declarations in the IR YAML definitions.
  */
@@ -243,6 +251,12 @@ function deepInflateValue(value: unknown, cg: CasingsGenerator): unknown {
 
     for (const [key, val] of Object.entries(obj)) {
         if (val == null) {
+            result[key] = val;
+            continue;
+        }
+
+        // Skip subtrees that use their own schema with plain strings (e.g. dynamic IR)
+        if (SKIP_INFLATION_KEYS.has(key)) {
             result[key] = val;
             continue;
         }

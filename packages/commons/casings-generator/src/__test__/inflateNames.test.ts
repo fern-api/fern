@@ -190,7 +190,7 @@ describe("inflateIrNames", () => {
         expect((result.errorDiscriminationStrategy as any).type).toBe("statusCode");
     });
 
-    it("does not inflate name in example endpoint calls", () => {
+    it("inflates name in example endpoint calls (NameOrString field)", () => {
         const ir = {
             apiName: "TestApi",
             smartCasing: false,
@@ -242,9 +242,67 @@ describe("inflateIrNames", () => {
 
         // biome-ignore lint/suspicious/noExplicitAny: test helper
         const result = inflateIrNames(ir as any);
-        // The example's name should NOT be inflated (it's optional<string>, not Name)
+        // ExampleEndpointCall.name is NameOrString, so it SHOULD be inflated
         // biome-ignore lint/suspicious/noExplicitAny: test helper
-        expect((result as any).exampleEndpoints[0].name).toBe("my-example");
+        const exampleName = (result as any).exampleEndpoints[0].name;
+        expect(exampleName.originalName).toBe("my-example");
+        expect(exampleName.camelCase).toBeDefined();
+    });
+
+    it("does not inflate fields inside the dynamic sub-IR", () => {
+        const ir = {
+            apiName: "TestApi",
+            smartCasing: false,
+            generationLanguage: undefined,
+            types: {},
+            services: {},
+            auth: { docs: undefined, requirement: "ALL", schemes: [] },
+            headers: [],
+            idempotencyHeaders: [],
+            errors: {},
+            webhookGroups: {},
+            subpackages: {},
+            rootPackage: {
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                service: undefined,
+                types: [],
+                errors: [],
+                subpackages: [],
+                docs: undefined,
+                webhooks: undefined,
+                websocket: undefined,
+                hasEndpointsInTree: false,
+                navigationConfig: undefined
+            },
+            constants: {
+                errorInstanceIdKey: { name: "errorInstanceId", wireValue: "errorInstanceId" }
+            },
+            pathParameters: [],
+            errorDiscriminationStrategy: { type: "statusCode" },
+            sdkConfig: {
+                hasFileDownloadEndpoints: false,
+                hasPaginatedEndpoints: false,
+                hasStreamingEndpoints: false,
+                isAuthMandatory: false,
+                platformHeaders: { language: "", sdkName: "", sdkVersion: "", userAgent: undefined }
+            },
+            variables: [],
+            serviceTypeReferenceInfo: { sharedTypes: [], typesReferencedOnlyByService: {} },
+            dynamic: {
+                version: "1.0.0",
+                types: {},
+                endpoints: {},
+                generatorConfig: {
+                    apiName: "my-api"
+                }
+            }
+        };
+
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        const result = inflateIrNames(ir as any);
+        // dynamic.generatorConfig.apiName is a plain string, NOT NameOrString — should NOT be inflated
+        // biome-ignore lint/suspicious/noExplicitAny: test helper
+        expect((result as any).dynamic.generatorConfig.apiName).toBe("my-api");
     });
 
     it("uses smartCasing from the IR metadata", () => {
