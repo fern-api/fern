@@ -1978,7 +1978,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addMergeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "merge <openapi> <overrides>",
+        "api merge <openapi> <overrides>",
         "Merge an overrides file into an OpenAPI spec",
         (yargs) =>
             yargs
@@ -2000,7 +2000,7 @@ function addMergeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
         async (argv) => {
             await cliContext.instrumentPostHogEvent({
-                command: "fern merge"
+                command: "fern api merge"
             });
             const openapiPath = resolve(cwd(), argv.openapi as string);
             const overridesPath = resolve(cwd(), argv.overrides as string);

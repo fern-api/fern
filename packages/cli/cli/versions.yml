@@ -2,9 +2,9 @@
 - version: 4.16.0
   changelogEntry:
     - summary: |
-        Add `fern merge` CLI command that decomposes x-fern-examples from an
+        Add `fern api merge` CLI command that decomposes x-fern-examples from an
         overrides file into native OpenAPI example fields per endpoint. Usage:
-        `fern merge openapi.yml overrides.yml -o output.yml`.
+        `fern api merge openapi.yml overrides.yml -o output.yml`.
       type: feat
   createdAt: "2026-03-06"
   irVersion: 65
