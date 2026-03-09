@@ -1,4 +1,9 @@
-import { CasingsGenerator, constructSlimCasingsGenerator, inflateNameOrString, inflateFernFilepath } from "@fern-api/casings-generator";
+import {
+    CasingsGenerator,
+    constructSlimCasingsGenerator,
+    inflateFernFilepath,
+    inflateNameOrString
+} from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import {

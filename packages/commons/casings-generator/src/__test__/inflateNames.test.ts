@@ -249,7 +249,7 @@ describe("inflateIrNames", () => {
         expect(exampleName.camelCase).toBeDefined();
     });
 
-    it("does not inflate fields inside the dynamic sub-IR", () => {
+    it("inflates NameOrString fields inside the dynamic sub-IR", () => {
         const ir = {
             apiName: "TestApi",
             smartCasing: false,
@@ -300,9 +300,13 @@ describe("inflateIrNames", () => {
 
         // biome-ignore lint/suspicious/noExplicitAny: test helper
         const result = inflateIrNames(ir as any);
-        // dynamic.generatorConfig.apiName is a plain string, NOT NameOrString — should NOT be inflated
+        // dynamic.generatorConfig.apiName is NameOrString — it SHOULD be inflated
+        // because the dynamic IR also uses NameOrString fields
         // biome-ignore lint/suspicious/noExplicitAny: test helper
-        expect((result as any).dynamic.generatorConfig.apiName).toBe("my-api");
+        const dynamicApiName = (result as any).dynamic.generatorConfig.apiName;
+        expect(dynamicApiName.originalName).toBe("my-api");
+        expect(dynamicApiName.camelCase).toBeDefined();
+        expect(dynamicApiName.pascalCase).toBeDefined();
     });
 
     it("uses smartCasing from the IR metadata", () => {
