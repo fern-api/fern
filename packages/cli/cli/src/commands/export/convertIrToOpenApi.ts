@@ -41,7 +41,7 @@ export function convertIrToOpenApi({
         errorsByName[getErrorTypeNameKey(errorDeclaration.name)] = errorDeclaration;
     });
 
-    const security = constructEndpointSecurity(ir.auth);
+    const security = constructEndpointSecurity(ir.auth, ir);
 
     const paths = convertServices({
         ir,
@@ -68,7 +68,7 @@ export function convertIrToOpenApi({
         paths,
         components: {
             schemas,
-            securitySchemes: constructSecuritySchemes(ir.auth)
+            securitySchemes: constructSecuritySchemes(ir.auth, ir)
         }
     };
 

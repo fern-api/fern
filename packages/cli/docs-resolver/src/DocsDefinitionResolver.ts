@@ -1,4 +1,5 @@
 import { GraphQLSpec } from "@fern-api/api-workspace-commons";
+import { createCasingsGeneratorForInflation, inflateNameOrString } from "@fern-api/casings-generator";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
@@ -97,7 +98,9 @@ const defaultUploadFiles: UploadFilesFn = (files) => {
 let apiCounter = 0;
 const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     apiCounter++;
-    return `${ir.apiName}-${apiCounter}`;
+    const casingsGenerator = createCasingsGeneratorForInflation(ir);
+    const inflatedApiName = inflateNameOrString(ir.apiName, casingsGenerator);
+    return `${inflatedApiName.snakeCase.unsafeName}-${apiCounter}`;
 };
 
 export interface DocsDefinitionResolverArgs {

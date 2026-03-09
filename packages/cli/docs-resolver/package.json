@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configuration": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",

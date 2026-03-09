@@ -32,6 +32,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { hashJSON } from "./hashJSON.js";
 import { isMarkedUnstable } from "./utils/availabilityUtils.js";
+import { getNameString } from "./utils/getNameString.js";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
@@ -1216,8 +1217,7 @@ export class IntermediateRepresentationChangeDetector {
     }
 
     private getKeyForDeclaration({ name, fernFilepath }: { name: NameOrString; fernFilepath: FernFilepath }): string {
-        const prefix = fernFilepath.allParts.map((p) => (typeof p === "string" ? p : p.originalName)).join(".");
-        const nameStr = typeof name === "string" ? name : name.originalName;
-        return `${prefix}.${nameStr}`;
+        const prefix = fernFilepath.allParts.map((p) => getNameString(p)).join(".");
+        return `${prefix}.${getNameString(name)}`;
     }
 }

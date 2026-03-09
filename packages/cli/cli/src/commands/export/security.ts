@@ -1,14 +1,18 @@
-import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-api/ir-sdk";
+import { createCasingsGeneratorForInflation, inflateNameOrString } from "@fern-api/casings-generator";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
-export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityRequirementObject[] {
+export function constructEndpointSecurity(
+    apiAuth: ApiAuth,
+    ir: IntermediateRepresentation
+): OpenAPIV3.SecurityRequirementObject[] {
     return AuthSchemesRequirement._visit<OpenAPIV3.SecurityRequirementObject[]>(apiAuth.requirement, {
         all: () => {
             return [
                 apiAuth.schemes.reduce<OpenAPIV3.SecurityRequirementObject>(
                     (acc, scheme) => ({
                         ...acc,
-                        [getNameForAuthScheme(scheme)]: []
+                        [getNameForAuthScheme(scheme, ir)]: []
                     }),
                     {}
                 )
@@ -16,7 +20,7 @@ export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityR
         },
         any: () =>
             apiAuth.schemes.map((scheme) => ({
-                [getNameForAuthScheme(scheme)]: []
+                [getNameForAuthScheme(scheme, ir)]: []
             })),
         endpointSecurity: () => {
             // When auth is endpoint-security, security is defined per-endpoint, not globally
@@ -28,7 +32,10 @@ export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityR
     });
 }
 
-export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenAPIV3.SecuritySchemeObject> {
+export function constructSecuritySchemes(
+    apiAuth: ApiAuth,
+    ir: IntermediateRepresentation
+): Record<string, OpenAPIV3.SecuritySchemeObject> {
     const securitySchemes: Record<string, OpenAPIV3.SecuritySchemeObject> = {};
 
     for (const scheme of apiAuth.schemes) {
@@ -56,20 +63,21 @@ export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenA
             }
         });
         if (oasScheme) {
-            securitySchemes[getNameForAuthScheme(scheme)] = oasScheme;
+            securitySchemes[getNameForAuthScheme(scheme, ir)] = oasScheme;
         }
     }
 
     return securitySchemes;
 }
 
-function getNameForAuthScheme(authScheme: AuthScheme): string {
+function getNameForAuthScheme(authScheme: AuthScheme, ir: IntermediateRepresentation): string {
+    const casingsGenerator = createCasingsGeneratorForInflation(ir);
     return AuthScheme._visit(authScheme, {
         bearer: () => "BearerAuth",
         inferred: () => "InferredAuth",
         basic: () => "BasicAuth",
         oauth: () => "BearerAuth",
-        header: (header) => `${header.name.name}Auth`,
+        header: (header) => `${inflateNameOrString(header.name.name, casingsGenerator).pascalCase.unsafeName}Auth`,
         _other: () => {
             throw new Error("Unknown auth scheme: " + authScheme.type);
         }

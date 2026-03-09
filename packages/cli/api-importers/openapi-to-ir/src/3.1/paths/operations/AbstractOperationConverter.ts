@@ -1,5 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
+import { getNameString } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
@@ -146,7 +147,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                             }
                         }
 
-                        if (!HEADERS_TO_SKIP.has(headerName.toLowerCase()) && !duplicateHeader) {
+                        if (!HEADERS_TO_SKIP.has(getNameString(headerName).toLowerCase()) && !duplicateHeader) {
                             headers.push(convertedParameter.parameter);
                         }
                         break;

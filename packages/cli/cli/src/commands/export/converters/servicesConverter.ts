@@ -1,3 +1,4 @@
+import { createCasingsGeneratorForInflation, inflateNameOrString } from "@fern-api/casings-generator";
 import { isNonNullish } from "@fern-api/core-utils";
 import {
     ContainerType,
@@ -148,13 +149,24 @@ function convertHttpEndpoint({
         ...convertedHeaders
     ];
 
+    const casingsGenerator = createCasingsGeneratorForInflation(ir);
     const tag =
         mode === "stoplight"
-            ? (httpService.displayName ?? httpService.name.fernFilepath.allParts.map((name) => name).join(" "))
-            : httpService.name.fernFilepath.allParts.join("");
+            ? (httpService.displayName ??
+              httpService.name.fernFilepath.allParts
+                  .map((name) => inflateNameOrString(name, casingsGenerator).originalName)
+                  .join(" "))
+            : httpService.name.fernFilepath.allParts
+                  .map((name) => inflateNameOrString(name, casingsGenerator).pascalCase.unsafeName)
+                  .join("");
     const operationObject: OpenAPIV3.OperationObject = {
         description: httpEndpoint.docs ?? undefined,
-        operationId: [...httpService.name.fernFilepath.allParts, httpEndpoint.name].join("_"),
+        operationId: [
+            ...httpService.name.fernFilepath.allParts.map(
+                (name) => inflateNameOrString(name, casingsGenerator).camelCase.unsafeName
+            ),
+            inflateNameOrString(httpEndpoint.name, casingsGenerator).camelCase.unsafeName
+        ].join("_"),
         tags: [tag],
         parameters,
         responses: convertResponse({
