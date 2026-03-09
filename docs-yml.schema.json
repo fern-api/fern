@@ -5273,6 +5273,32 @@
         }
       ]
     },
+    "docs.CodeThemeConfig": {
+      "type": "object",
+      "properties": {
+        "light": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dark": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.DocsSettingsConfig": {
       "type": "object",
       "properties": {
@@ -5390,6 +5416,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "code-theme": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CodeThemeConfig"
             },
             {
               "type": "null"
