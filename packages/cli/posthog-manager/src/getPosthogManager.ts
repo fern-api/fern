@@ -18,7 +18,8 @@ async function createPosthogManager(): Promise<PosthogManager> {
     try {
         const posthogApiKey = process.env.POSTHOG_API_KEY;
         const disableTelemetry = process.env.FERN_DISABLE_TELEMETRY === "true";
-        if (posthogApiKey == null || disableTelemetry) {
+        const posthogDisabled = process.env.FERN_POSTHOG === "false";
+        if (posthogApiKey == null || disableTelemetry || posthogDisabled) {
             return new NoopPosthogManager();
         }
         const userToken = await getUserToken();
