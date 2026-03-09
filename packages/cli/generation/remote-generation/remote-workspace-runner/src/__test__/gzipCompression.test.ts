@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { gunzipSync, gzipSync } from "zlib";
+import { promisify } from "util";
+import { gunzip, gunzipSync, gzip, gzipSync } from "zlib";
+
+const gzipAsync = promisify(gzip);
+const gunzipAsync = promisify(gunzip);
 
 describe("gzip compression for IR upload", () => {
     it("should compress JSON string and produce valid gzip output", () => {
@@ -126,5 +130,23 @@ describe("gzip compression for IR upload", () => {
         // Roundtrip works
         const decompressed = gunzipSync(new Uint8Array(compressed));
         expect(decompressed.toString("utf-8")).toBe(text);
+    });
+
+    it("async gzip produces identical output to gzipSync", async () => {
+        const irJson = JSON.stringify({ types: {}, services: {}, apiName: "async-test" });
+        const irBytes = new TextEncoder().encode(irJson);
+
+        const syncResult = gzipSync(irBytes);
+        const asyncResult = await gzipAsync(irBytes);
+
+        // Both should decompress to the same original content
+        const syncDecompressed = gunzipSync(new Uint8Array(syncResult));
+        const asyncDecompressed = await gunzipAsync(new Uint8Array(asyncResult));
+        expect(syncDecompressed.toString("utf-8")).toBe(irJson);
+        expect(asyncDecompressed.toString("utf-8")).toBe(irJson);
+
+        // Both should have gzip magic bytes
+        expect(asyncResult[0]).toBe(0x1f);
+        expect(asyncResult[1]).toBe(0x8b);
     });
 });

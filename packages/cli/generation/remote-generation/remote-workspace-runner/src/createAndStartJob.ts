@@ -15,8 +15,11 @@ import FormData from "form-data";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import urlJoin from "url-join";
-import { gzipSync } from "zlib";
+import { promisify } from "util";
+import { gzip } from "zlib";
 import { retryWithRateLimit, TooManyRequestsError } from "./retryWithRateLimit.js";
+
+const gzipAsync = promisify(gzip);
 
 export async function createAndStartJob({
     projectConfig,
@@ -285,7 +288,7 @@ async function startJob({
         }
     });
     const irBytes = new TextEncoder().encode(irAsString);
-    const compressed = gzipSync(irBytes);
+    const compressed = await gzipAsync(irBytes);
     context.logger.debug(
         `Compressed IR from ${irBytes.byteLength} bytes to ${compressed.length} bytes ` +
             `(${((1 - compressed.length / irBytes.byteLength) * 100).toFixed(1)}% reduction)`
