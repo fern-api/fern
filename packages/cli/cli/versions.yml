@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.20.4
+  changelogEntry:
+    - summary: |
+        Fix JSON schema validation for `collapsed: open-by-default`. The
+        auto-generated JSON schemas now accept `boolean | "open-by-default"`
+        for the `collapsed` property, matching the Zod runtime schema.
+        Previously, `fern check` rejected valid configurations like
+        `collapsed: open-by-default` inside API reference section layouts
+        because the JSON schema only allowed `boolean | null`.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
 - version: 4.20.3
   changelogEntry:
     - summary: |

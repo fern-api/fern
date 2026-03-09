@@ -2,11 +2,16 @@ import { docsYml } from "@fern-api/configuration";
 import { validateAgainstJsonSchema } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext, FernCliError } from "@fern-api/task-context";
+import fs from "fs";
+import path from "path";
 import { describe, expect, it } from "vitest";
 
-// biome-ignore lint/suspicious/noExplicitAny: needed for JSON schema import
-import * as DocsYmlJsonSchema from "../../../../workspace/loader/src/docs-yml.schema.json";
 import { parseDocsConfiguration } from "../parseDocsConfiguration.js";
+
+// Load the JSON schema at runtime to avoid cross-package boundary imports
+const DocsYmlJsonSchema = JSON.parse(
+    fs.readFileSync(path.resolve(__dirname, "../../../../workspace/loader/src/docs-yml.schema.json"), "utf-8")
+);
 
 describe("docs.yml navigation collapsible config", () => {
     it("should throw if collapsed-by-default is set without collapsible: true", async () => {
