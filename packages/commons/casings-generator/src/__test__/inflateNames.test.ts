@@ -412,7 +412,10 @@ describe("inflateIrNames", () => {
             headers: [
                 {
                     name: { name: "Authorization", wireValue: "Authorization" },
-                    valueType: { type: "primitive", primitive: { v1: "STRING", v2: { type: "string", default: undefined, validation: undefined } } },
+                    valueType: {
+                        type: "primitive",
+                        primitive: { v1: "STRING", v2: { type: "string", default: undefined, validation: undefined } }
+                    },
                     env: undefined,
                     v2Examples: undefined,
                     availability: undefined,

@@ -101,8 +101,8 @@ type DeepReplace<T, From, To> =
         ? To
         : IsExact<T, From | undefined> extends true
           ? To | undefined
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          : T extends (...args: any[]) => any
+          : // biome-ignore lint/suspicious/noExplicitAny: necessary for function detection in type utility
+            T extends (...args: any[]) => any // eslint-disable-line @typescript-eslint/no-explicit-any
             ? T
             : T extends Array<infer Item>
               ? Array<DeepReplace<Item, From, To>>
@@ -155,10 +155,7 @@ export function inflateNameAndWireValue(nwv: NameAndWireValue, casingsGenerator:
     };
 }
 
-export function inflateFernFilepath(
-    fp: FernFilepath,
-    casingsGenerator: FullCasingsGenerator
-): FernFilepath;
+export function inflateFernFilepath(fp: FernFilepath, casingsGenerator: FullCasingsGenerator): FernFilepath;
 export function inflateFernFilepath(fp: FernFilepath, casingsGenerator: CasingsGenerator): FernFilepath;
 export function inflateFernFilepath(fp: FernFilepath, casingsGenerator: CasingsGenerator): FernFilepath {
     return {
@@ -302,10 +299,7 @@ function inflateAuthScheme(scheme: AuthScheme, cg: FullCasingsGenerator) {
     }
 }
 
-function inflateOAuthConfiguration(
-    config: OAuthConfiguration,
-    cg: FullCasingsGenerator
-) {
+function inflateOAuthConfiguration(config: OAuthConfiguration, cg: FullCasingsGenerator) {
     if (config.type === "clientCredentials") {
         return {
             ...config,
@@ -317,10 +311,7 @@ function inflateOAuthConfiguration(
     return config;
 }
 
-function inflateOAuthTokenEndpoint(
-    endpoint: OAuthTokenEndpoint,
-    cg: FullCasingsGenerator
-) {
+function inflateOAuthTokenEndpoint(endpoint: OAuthTokenEndpoint, cg: FullCasingsGenerator) {
     return {
         ...endpoint,
         requestProperties: inflateOAuthAccessTokenRequestProperties(endpoint.requestProperties, cg),
@@ -328,10 +319,7 @@ function inflateOAuthTokenEndpoint(
     };
 }
 
-function inflateOAuthRefreshEndpoint(
-    endpoint: OAuthRefreshEndpoint,
-    cg: FullCasingsGenerator
-) {
+function inflateOAuthRefreshEndpoint(endpoint: OAuthRefreshEndpoint, cg: FullCasingsGenerator) {
     return {
         ...endpoint,
         requestProperties: inflateOAuthRefreshTokenRequestProperties(endpoint.requestProperties, cg),
@@ -339,10 +327,7 @@ function inflateOAuthRefreshEndpoint(
     };
 }
 
-function inflateOAuthAccessTokenRequestProperties(
-    props: OAuthAccessTokenRequestProperties,
-    cg: FullCasingsGenerator
-) {
+function inflateOAuthAccessTokenRequestProperties(props: OAuthAccessTokenRequestProperties, cg: FullCasingsGenerator) {
     return {
         ...props,
         clientId: inflateRequestProperty(props.clientId, cg),
@@ -362,10 +347,7 @@ function inflateOAuthRefreshTokenRequestProperties(
     };
 }
 
-function inflateOAuthResponseProperties(
-    props: OAuthAccessTokenResponseProperties,
-    cg: FullCasingsGenerator
-) {
+function inflateOAuthResponseProperties(props: OAuthAccessTokenResponseProperties, cg: FullCasingsGenerator) {
     return {
         ...props,
         accessToken: inflateResponseProperty(props.accessToken, cg),
@@ -437,10 +419,7 @@ function inflateTypeShape(shape: Type, cg: FullCasingsGenerator) {
     }
 }
 
-function inflateAliasTypeDeclaration(
-    alias: AliasTypeDeclaration,
-    cg: FullCasingsGenerator
-) {
+function inflateAliasTypeDeclaration(alias: AliasTypeDeclaration, cg: FullCasingsGenerator) {
     return {
         ...alias,
         aliasOf: inflateTypeReference(alias.aliasOf, cg),
@@ -448,10 +427,7 @@ function inflateAliasTypeDeclaration(
     };
 }
 
-function inflateResolvedTypeReference(
-    resolved: ResolvedTypeReference,
-    cg: FullCasingsGenerator
-) {
+function inflateResolvedTypeReference(resolved: ResolvedTypeReference, cg: FullCasingsGenerator) {
     switch (resolved.type) {
         case "named":
             return { ...resolved, name: inflateDeclaredTypeName(resolved.name, cg) };
@@ -470,7 +446,10 @@ function inflateTypeReference(tr: TypeReference, cg: FullCasingsGenerator): Type
                 ...tr,
                 name: inflateNameOrString(tr.name, cg),
                 fernFilepath: inflateFernFilepath(tr.fernFilepath, cg),
-                default: tr.default != null ? { ...tr.default, name: inflateNameAndWireValue(tr.default.name, cg) } : tr.default
+                default:
+                    tr.default != null
+                        ? { ...tr.default, name: inflateNameAndWireValue(tr.default.name, cg) }
+                        : tr.default
             };
         case "container":
             return { ...tr, container: inflateContainerType(tr.container, cg) };
@@ -501,10 +480,7 @@ function inflateContainerType(ct: ContainerType, cg: FullCasingsGenerator): Cont
     }
 }
 
-function inflateEnumTypeDeclaration(
-    enumDecl: EnumTypeDeclaration,
-    cg: FullCasingsGenerator
-) {
+function inflateEnumTypeDeclaration(enumDecl: EnumTypeDeclaration, cg: FullCasingsGenerator) {
     return {
         ...enumDecl,
         default: enumDecl.default != null ? inflateEnumValue(enumDecl.default, cg) : undefined,
@@ -516,10 +492,7 @@ function inflateEnumValue(ev: EnumValue, cg: FullCasingsGenerator) {
     return { ...ev, name: inflateNameAndWireValue(ev.name, cg) };
 }
 
-function inflateObjectTypeDeclaration(
-    obj: ObjectTypeDeclaration,
-    cg: FullCasingsGenerator
-) {
+function inflateObjectTypeDeclaration(obj: ObjectTypeDeclaration, cg: FullCasingsGenerator) {
     return {
         ...obj,
         extends: (obj.extends ?? []).map((ext) => inflateDeclaredTypeName(ext, cg)),
@@ -536,10 +509,7 @@ function inflateObjectProperty(prop: ObjectProperty, cg: FullCasingsGenerator) {
     };
 }
 
-function inflateUnionTypeDeclaration(
-    union: UnionTypeDeclaration,
-    cg: FullCasingsGenerator
-) {
+function inflateUnionTypeDeclaration(union: UnionTypeDeclaration, cg: FullCasingsGenerator) {
     return {
         ...union,
         discriminant: inflateNameAndWireValue(union.discriminant, cg),
@@ -729,10 +699,7 @@ function inflateHttpRequestBody(body: HttpRequestBody, cg: FullCasingsGenerator)
     }
 }
 
-function inflateInlinedRequestBody(
-    irb: InlinedRequestBody,
-    cg: FullCasingsGenerator
-) {
+function inflateInlinedRequestBody(irb: InlinedRequestBody, cg: FullCasingsGenerator) {
     return {
         ...irb,
         name: inflateNameOrString(irb.name, cg),
@@ -773,8 +740,7 @@ function inflateSdkRequest(sdkReq: SdkRequest, cg: FullCasingsGenerator) {
     const base = {
         ...sdkReq,
         requestParameterName: inflateNameOrString(sdkReq.requestParameterName, cg),
-        streamParameter:
-            sdkReq.streamParameter != null ? inflateRequestProperty(sdkReq.streamParameter, cg) : undefined
+        streamParameter: sdkReq.streamParameter != null ? inflateRequestProperty(sdkReq.streamParameter, cg) : undefined
     };
     if (sdkReq.shape == null) {
         return base;
@@ -801,10 +767,7 @@ function inflateSdkRequest(sdkReq: SdkRequest, cg: FullCasingsGenerator) {
     return base;
 }
 
-function inflateSdkRequestBodyType(
-    bodyType: SdkRequestBodyType,
-    cg: FullCasingsGenerator
-) {
+function inflateSdkRequestBodyType(bodyType: SdkRequestBodyType, cg: FullCasingsGenerator) {
     if (bodyType.type === "typeReference") {
         return { ...bodyType, requestBodyType: inflateTypeReference(bodyType.requestBodyType, cg) };
     }
@@ -835,10 +798,7 @@ function inflateHttpResponseBody(body: HttpResponseBody, cg: FullCasingsGenerato
     }
 }
 
-function inflateNonStreamHttpResponseBody(
-    body: NonStreamHttpResponseBody,
-    cg: FullCasingsGenerator
-) {
+function inflateNonStreamHttpResponseBody(body: NonStreamHttpResponseBody, cg: FullCasingsGenerator) {
     if (body.type === "json") {
         return { ...body, value: inflateJsonResponse(body.value, cg) };
     }
@@ -861,10 +821,7 @@ function inflateJsonResponse(json: JsonResponse, cg: FullCasingsGenerator) {
     }
 }
 
-function inflateStreamingResponse(
-    sr: StreamingResponse,
-    cg: FullCasingsGenerator
-) {
+function inflateStreamingResponse(sr: StreamingResponse, cg: FullCasingsGenerator) {
     if (sr.type === "json" || sr.type === "sse") {
         return { ...sr, payload: inflateTypeReference(sr.payload, cg) };
     }
@@ -890,9 +847,7 @@ function inflatePagination(pagination: Pagination, cg: FullCasingsGenerator) {
                 page: inflateRequestProperty(pagination.page, cg),
                 results: inflateResponseProperty(pagination.results, cg),
                 hasNextPage:
-                    pagination.hasNextPage != null
-                        ? inflateResponseProperty(pagination.hasNextPage, cg)
-                        : undefined,
+                    pagination.hasNextPage != null ? inflateResponseProperty(pagination.hasNextPage, cg) : undefined,
                 step: pagination.step != null ? inflateRequestProperty(pagination.step, cg) : undefined
             };
         case "custom":
@@ -951,10 +906,7 @@ function inflateResponseProperty(rp: ResponseProperty, cg: FullCasingsGenerator)
     };
 }
 
-function inflatePropertyPathItem(
-    item: PropertyPathItem,
-    cg: FullCasingsGenerator
-) {
+function inflatePropertyPathItem(item: PropertyPathItem, cg: FullCasingsGenerator) {
     return {
         ...item,
         name: inflateNameOrString(item.name, cg),
@@ -966,10 +918,7 @@ function inflatePropertyPathItem(
 // Examples
 // ---------------------------------------------------------------------------
 
-function inflateExampleEndpointCall(
-    ex: ExampleEndpointCall,
-    cg: FullCasingsGenerator
-) {
+function inflateExampleEndpointCall(ex: ExampleEndpointCall, cg: FullCasingsGenerator) {
     return {
         ...ex,
         name: ex.name != null ? inflateNameOrString(ex.name, cg) : undefined,
@@ -993,10 +942,7 @@ function inflateExampleEndpointCall(
     };
 }
 
-function inflateExamplePathParameter(
-    pp: ExamplePathParameter,
-    cg: FullCasingsGenerator
-) {
+function inflateExamplePathParameter(pp: ExamplePathParameter, cg: FullCasingsGenerator) {
     return {
         ...pp,
         name: inflateNameOrString(pp.name, cg),
@@ -1004,10 +950,7 @@ function inflateExamplePathParameter(
     };
 }
 
-function inflateExampleRequestBody(
-    body: ExampleRequestBody,
-    cg: FullCasingsGenerator
-) {
+function inflateExampleRequestBody(body: ExampleRequestBody, cg: FullCasingsGenerator) {
     switch (body.type) {
         case "inlinedRequestBody": {
             const inflated = inflateExampleInlinedRequestBody(body, cg);
@@ -1022,10 +965,7 @@ function inflateExampleRequestBody(
     }
 }
 
-function inflateExampleInlinedRequestBody(
-    body: ExampleInlinedRequestBody,
-    cg: FullCasingsGenerator
-) {
+function inflateExampleInlinedRequestBody(body: ExampleInlinedRequestBody, cg: FullCasingsGenerator) {
     return {
         ...body,
         properties: (body.properties ?? []).map((prop) => ({
@@ -1059,10 +999,7 @@ function inflateExampleResponse(resp: ExampleResponse, cg: FullCasingsGenerator)
     return resp;
 }
 
-function inflateExampleEndpointSuccessResponse(
-    resp: ExampleEndpointSuccessResponse,
-    cg: FullCasingsGenerator
-) {
+function inflateExampleEndpointSuccessResponse(resp: ExampleEndpointSuccessResponse, cg: FullCasingsGenerator) {
     switch (resp.type) {
         case "body":
             return {
@@ -1087,10 +1024,7 @@ function inflateExampleEndpointSuccessResponse(
     }
 }
 
-function inflateExampleCodeSample(
-    cs: ExampleCodeSample,
-    cg: FullCasingsGenerator
-) {
+function inflateExampleCodeSample(cs: ExampleCodeSample, cg: FullCasingsGenerator) {
     if (cs.name != null) {
         return { ...cs, name: inflateNameOrString(cs.name, cg) };
     }
@@ -1105,10 +1039,7 @@ function inflateExampleType(ex: ExampleType, cg: FullCasingsGenerator) {
     };
 }
 
-function inflateExampleTypeShape(
-    shape: ExampleTypeShape,
-    cg: FullCasingsGenerator
-): ExampleTypeShape {
+function inflateExampleTypeShape(shape: ExampleTypeShape, cg: FullCasingsGenerator): ExampleTypeShape {
     // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (shape.type) {
         case "alias":
@@ -1136,10 +1067,7 @@ function inflateExampleTypeShape(
                 discriminant: inflateNameAndWireValue(shape.discriminant, cg),
                 singleUnionType: {
                     ...shape.singleUnionType,
-                    wireDiscriminantValue: inflateNameAndWireValue(
-                        shape.singleUnionType.wireDiscriminantValue,
-                        cg
-                    ),
+                    wireDiscriminantValue: inflateNameAndWireValue(shape.singleUnionType.wireDiscriminantValue, cg),
                     shape: inflateExampleSingleUnionTypeProperties(shape.singleUnionType.shape, cg)
                 },
                 extendProperties: (shape.extendProperties ?? []).map((prop) => ({
@@ -1159,10 +1087,7 @@ function inflateExampleTypeShape(
     }
 }
 
-function inflateExampleObjectType(
-    obj: ExampleObjectType,
-    cg: FullCasingsGenerator
-) {
+function inflateExampleObjectType(obj: ExampleObjectType, cg: FullCasingsGenerator) {
     return {
         ...obj,
         properties: (obj.properties ?? []).map((prop) => ({
@@ -1182,10 +1107,7 @@ function inflateExampleObjectType(
     };
 }
 
-function inflateExampleUnionType(
-    union: ExampleUnionType,
-    cg: FullCasingsGenerator
-) {
+function inflateExampleUnionType(union: ExampleUnionType, cg: FullCasingsGenerator) {
     return {
         ...union,
         discriminant: inflateNameAndWireValue(union.discriminant, cg),
@@ -1193,10 +1115,7 @@ function inflateExampleUnionType(
             union.singleUnionType != null
                 ? {
                       ...union.singleUnionType,
-                      wireDiscriminantValue: inflateNameAndWireValue(
-                          union.singleUnionType.wireDiscriminantValue,
-                          cg
-                      ),
+                      wireDiscriminantValue: inflateNameAndWireValue(union.singleUnionType.wireDiscriminantValue, cg),
                       shape: inflateExampleSingleUnionTypeProperties(union.singleUnionType.shape, cg)
                   }
                 : undefined,
@@ -1250,10 +1169,7 @@ function inflateExampleSingleUnionTypeProperties(
     }
 }
 
-function inflateExampleTypeReference(
-    etr: ExampleTypeReference,
-    cg: FullCasingsGenerator
-): ExampleTypeReference {
+function inflateExampleTypeReference(etr: ExampleTypeReference, cg: FullCasingsGenerator): ExampleTypeReference {
     // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (etr.shape.type) {
         case "named":
@@ -1279,10 +1195,7 @@ function inflateExampleTypeReference(
     }
 }
 
-function inflateExampleContainer(
-    container: ExampleContainer,
-    cg: FullCasingsGenerator
-): ExampleContainer {
+function inflateExampleContainer(container: ExampleContainer, cg: FullCasingsGenerator): ExampleContainer {
     // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (container.type) {
         case "list":
@@ -1301,15 +1214,13 @@ function inflateExampleContainer(
             return {
                 ...container,
                 valueType: inflateTypeReference(container.valueType, cg),
-                optional:
-                    container.optional != null ? inflateExampleTypeReference(container.optional, cg) : undefined
+                optional: container.optional != null ? inflateExampleTypeReference(container.optional, cg) : undefined
             };
         case "nullable":
             return {
                 ...container,
                 valueType: inflateTypeReference(container.valueType, cg),
-                nullable:
-                    container.nullable != null ? inflateExampleTypeReference(container.nullable, cg) : undefined
+                nullable: container.nullable != null ? inflateExampleTypeReference(container.nullable, cg) : undefined
             };
         case "map":
             return {
@@ -1331,10 +1242,7 @@ function inflateExampleContainer(
 // Errors
 // ---------------------------------------------------------------------------
 
-function inflateErrorDeclaration(
-    ed: ErrorDeclaration,
-    cg: FullCasingsGenerator
-) {
+function inflateErrorDeclaration(ed: ErrorDeclaration, cg: FullCasingsGenerator) {
     return {
         ...ed,
         name: inflateDeclaredErrorName(ed.name, cg),
@@ -1345,10 +1253,7 @@ function inflateErrorDeclaration(
     };
 }
 
-function inflateDeclaredErrorName(
-    den: DeclaredErrorName,
-    cg: FullCasingsGenerator
-) {
+function inflateDeclaredErrorName(den: DeclaredErrorName, cg: FullCasingsGenerator) {
     return {
         ...den,
         name: inflateNameOrString(den.name, cg),
@@ -1368,10 +1273,7 @@ function inflateExampleError(ex: ExampleError, cg: FullCasingsGenerator) {
 // Environments
 // ---------------------------------------------------------------------------
 
-function inflateEnvironmentsConfig(
-    config: EnvironmentsConfig,
-    cg: FullCasingsGenerator
-) {
+function inflateEnvironmentsConfig(config: EnvironmentsConfig, cg: FullCasingsGenerator) {
     if (config.environments == null) {
         return config;
     }
@@ -1441,10 +1343,7 @@ function inflateConstants(constants: Constants, cg: FullCasingsGenerator) {
 // Variables
 // ---------------------------------------------------------------------------
 
-function inflateVariableDeclaration(
-    v: VariableDeclaration,
-    cg: FullCasingsGenerator
-) {
+function inflateVariableDeclaration(v: VariableDeclaration, cg: FullCasingsGenerator) {
     return {
         ...v,
         name: inflateNameOrString(v.name, cg),
@@ -1477,10 +1376,7 @@ function inflateWebhook(wh: Webhook, cg: FullCasingsGenerator) {
     };
 }
 
-function inflateWebhookPayload(
-    payload: WebhookPayload,
-    cg: FullCasingsGenerator
-) {
+function inflateWebhookPayload(payload: WebhookPayload, cg: FullCasingsGenerator) {
     if (payload.type === "inlinedPayload") {
         return {
             ...payload,
@@ -1499,10 +1395,7 @@ function inflateWebhookPayload(
     return payload;
 }
 
-function inflateWebhookSignatureVerification(
-    sv: WebhookSignatureVerification,
-    cg: FullCasingsGenerator
-) {
+function inflateWebhookSignatureVerification(sv: WebhookSignatureVerification, cg: FullCasingsGenerator) {
     if (sv.type === "hmac") {
         return {
             ...sv,
@@ -1533,10 +1426,7 @@ function inflateWebhookSignatureVerification(
     return sv;
 }
 
-function inflateExampleWebhookCall(
-    ex: ExampleWebhookCall,
-    cg: FullCasingsGenerator
-) {
+function inflateExampleWebhookCall(ex: ExampleWebhookCall, cg: FullCasingsGenerator) {
     return {
         ...ex,
         name: ex.name != null ? inflateNameOrString(ex.name, cg) : undefined,
@@ -1548,10 +1438,7 @@ function inflateExampleWebhookCall(
 // WebSocket Channels
 // ---------------------------------------------------------------------------
 
-function inflateWebSocketChannel(
-    channel: WebSocketChannel,
-    cg: FullCasingsGenerator
-) {
+function inflateWebSocketChannel(channel: WebSocketChannel, cg: FullCasingsGenerator) {
     return {
         ...channel,
         name: inflateNameOrString(channel.name, cg),
@@ -1563,10 +1450,7 @@ function inflateWebSocketChannel(
     };
 }
 
-function inflateWebSocketMessage(
-    msg: WebSocketMessage,
-    cg: FullCasingsGenerator
-) {
+function inflateWebSocketMessage(msg: WebSocketMessage, cg: FullCasingsGenerator) {
     if (msg.body == null) {
         return msg;
     }
@@ -1597,10 +1481,7 @@ function inflateWebSocketMessage(
     return msg;
 }
 
-function inflateExampleWebSocketSession(
-    ex: ExampleWebSocketSession,
-    cg: FullCasingsGenerator
-) {
+function inflateExampleWebSocketSession(ex: ExampleWebSocketSession, cg: FullCasingsGenerator) {
     return {
         ...ex,
         name: ex.name != null ? inflateNameOrString(ex.name, cg) : undefined,
@@ -1620,10 +1501,7 @@ function inflateExampleWebSocketSession(
     };
 }
 
-function inflateExampleWebSocketMessageBody(
-    body: ExampleWebSocketMessageBody,
-    cg: FullCasingsGenerator
-) {
+function inflateExampleWebSocketMessageBody(body: ExampleWebSocketMessageBody, cg: FullCasingsGenerator) {
     switch (body.type) {
         case "inlinedBody": {
             const inflated = inflateExampleInlinedRequestBody(body, cg);
@@ -1642,10 +1520,7 @@ function inflateExampleWebSocketMessageBody(
 // ErrorDiscriminationStrategy
 // ---------------------------------------------------------------------------
 
-function inflateErrorDiscriminationStrategy(
-    strategy: ErrorDiscriminationStrategy,
-    cg: FullCasingsGenerator
-) {
+function inflateErrorDiscriminationStrategy(strategy: ErrorDiscriminationStrategy, cg: FullCasingsGenerator) {
     if (strategy.type === "property") {
         return {
             ...strategy,
@@ -1660,10 +1535,7 @@ function inflateErrorDiscriminationStrategy(
 // ApiVersionScheme
 // ---------------------------------------------------------------------------
 
-function inflateApiVersionScheme(
-    scheme: ApiVersionScheme,
-    cg: FullCasingsGenerator
-) {
+function inflateApiVersionScheme(scheme: ApiVersionScheme, cg: FullCasingsGenerator) {
     if (scheme.type === "header") {
         return {
             ...scheme,
@@ -1696,26 +1568,19 @@ function inflateProtobufType(pt: ProtobufType, cg: FullCasingsGenerator) {
 // Dynamic IR -- constructs new objects (no mutation)
 // ---------------------------------------------------------------------------
 
-function inflateDynamicIr(
-    dynIr: dynamic.DynamicIntermediateRepresentation,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicIr(dynIr: dynamic.DynamicIntermediateRepresentation, cg: FullCasingsGenerator) {
     return {
         ...dynIr,
         types: mapRecord(dynIr.types ?? {}, (nt) => inflateDynamicNamedType(nt, cg)),
         endpoints: mapRecord(dynIr.endpoints ?? {}, (ep) => inflateDynamicEndpoint(ep, cg)),
-        environments:
-            dynIr.environments != null ? inflateDynamicEnvironmentsConfig(dynIr.environments, cg) : undefined,
+        environments: dynIr.environments != null ? inflateDynamicEnvironmentsConfig(dynIr.environments, cg) : undefined,
         headers: (dynIr.headers ?? []).map((h) => inflateDynamicNamedParameter(h, cg)),
         pathParameters: (dynIr.pathParameters ?? []).map((p) => inflateDynamicNamedParameter(p, cg)),
         variables: (dynIr.variables ?? []).map((v) => inflateDynamicVariableDeclaration(v, cg))
     };
 }
 
-function inflateDynamicDeclaration(
-    decl: dynamic.Declaration,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicDeclaration(decl: dynamic.Declaration, cg: FullCasingsGenerator) {
     return {
         ...decl,
         name: inflateNameOrString(decl.name, cg),
@@ -1723,10 +1588,7 @@ function inflateDynamicDeclaration(
     };
 }
 
-function inflateDynamicFernFilepath(
-    fp: dynamic.FernFilepath,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicFernFilepath(fp: dynamic.FernFilepath, cg: FullCasingsGenerator) {
     return {
         allParts: (fp.allParts ?? []).map((n: NameOrString) => inflateNameOrString(n, cg)),
         packagePath: (fp.packagePath ?? []).map((n: NameOrString) => inflateNameOrString(n, cg)),
@@ -1734,24 +1596,15 @@ function inflateDynamicFernFilepath(
     };
 }
 
-function inflateDynamicNameAndWireValue(
-    nwv: dynamic.NameAndWireValue,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicNameAndWireValue(nwv: dynamic.NameAndWireValue, cg: FullCasingsGenerator) {
     return { ...nwv, name: inflateNameOrString(nwv.name, cg) };
 }
 
-function inflateDynamicNamedParameter(
-    param: dynamic.NamedParameter,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicNamedParameter(param: dynamic.NamedParameter, cg: FullCasingsGenerator) {
     return { ...param, name: inflateDynamicNameAndWireValue(param.name, cg) };
 }
 
-function inflateDynamicNamedType(
-    nt: dynamic.NamedType,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicNamedType(nt: dynamic.NamedType, cg: FullCasingsGenerator) {
     switch (nt.type) {
         case "alias":
             return { ...nt, declaration: inflateDynamicDeclaration(nt.declaration, cg) };
@@ -1790,10 +1643,7 @@ function inflateDynamicSingleDiscriminatedUnionType(
     };
 }
 
-function inflateDynamicEndpoint(
-    ep: dynamic.Endpoint,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicEndpoint(ep: dynamic.Endpoint, cg: FullCasingsGenerator) {
     return {
         ...ep,
         auth: ep.auth != null ? inflateDynamicAuth(ep.auth, cg) : undefined,
@@ -1825,10 +1675,7 @@ function inflateDynamicAuth(auth: dynamic.Auth, cg: FullCasingsGenerator) {
     }
 }
 
-function inflateDynamicRequest(
-    request: dynamic.Request,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicRequest(request: dynamic.Request, cg: FullCasingsGenerator) {
     switch (request.type) {
         case "body":
             return {
@@ -1847,10 +1694,7 @@ function inflateDynamicRequest(
     }
 }
 
-function inflateDynamicInlinedRequestBody(
-    body: dynamic.InlinedRequestBody,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicInlinedRequestBody(body: dynamic.InlinedRequestBody, cg: FullCasingsGenerator) {
     switch (body.type) {
         case "properties":
             return {
@@ -1879,17 +1723,11 @@ function inflateDynamicInlinedRequestBody(
     }
 }
 
-function inflateDynamicVariableDeclaration(
-    v: dynamic.VariableDeclaration,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicVariableDeclaration(v: dynamic.VariableDeclaration, cg: FullCasingsGenerator) {
     return { ...v, name: inflateNameOrString(v.name, cg) };
 }
 
-function inflateDynamicEnvironmentsConfig(
-    config: dynamic.EnvironmentsConfig,
-    cg: FullCasingsGenerator
-) {
+function inflateDynamicEnvironmentsConfig(config: dynamic.EnvironmentsConfig, cg: FullCasingsGenerator) {
     if (config.environments == null) {
         return config;
     }
