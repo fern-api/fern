@@ -12,7 +12,7 @@ describe("gzip compression for IR upload", () => {
         expect(compressed[1]).toBe(0x8b);
 
         // Verify output is valid gzip (can be decompressed)
-        const decompressed = gunzipSync(compressed);
+        const decompressed = gunzipSync(new Uint8Array(compressed));
         expect(decompressed.toString("utf-8")).toBe(irJson);
     });
 
@@ -24,7 +24,7 @@ describe("gzip compression for IR upload", () => {
         });
         const irBytes = new TextEncoder().encode(irJson);
         const compressed = gzipSync(irBytes);
-        const decompressed = gunzipSync(compressed);
+        const decompressed = gunzipSync(new Uint8Array(compressed));
 
         expect(decompressed.toString("utf-8")).toBe(irJson);
     });
@@ -78,7 +78,7 @@ describe("gzip compression for IR upload", () => {
         expect(compressed[0]).toBe(0x1f);
         expect(compressed[1]).toBe(0x8b);
 
-        const decompressed = gunzipSync(compressed);
+        const decompressed = gunzipSync(new Uint8Array(compressed));
         expect(decompressed.toString("utf-8")).toBe(irJson);
     });
 
@@ -86,7 +86,7 @@ describe("gzip compression for IR upload", () => {
         const irJson = JSON.stringify({ apiName: "test-api", description: "API für Benutzer — 日本語テスト" });
         const irBytes = new TextEncoder().encode(irJson);
         const compressed = gzipSync(irBytes);
-        const decompressed = gunzipSync(compressed);
+        const decompressed = gunzipSync(new Uint8Array(compressed));
 
         expect(decompressed.toString("utf-8")).toBe(irJson);
     });
@@ -124,7 +124,7 @@ describe("gzip compression for IR upload", () => {
         expect(compressed.length).toBeGreaterThan(0);
 
         // Roundtrip works
-        const decompressed = gunzipSync(compressed);
+        const decompressed = gunzipSync(new Uint8Array(compressed));
         expect(decompressed.toString("utf-8")).toBe(text);
     });
 });
