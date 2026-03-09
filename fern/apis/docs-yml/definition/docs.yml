@@ -1256,6 +1256,18 @@ types:
           The output directory where MDX files will be generated.
           Example: ./static/sdk-docs
 
+  LibraryConfig:
+    docs: |
+      Language-specific configuration for library documentation.
+      Valid fields depend on the `lang` value of the parent LibraryConfiguration.
+    properties:
+      doxyfile:
+        type: optional<string>
+        docs: |
+          Path to a Doxyfile for C++ library documentation, relative to the fern/ directory.
+          When provided, the backend uses this Doxyfile instead of auto-generating one.
+          Only valid when lang is cpp.
+
   LibraryConfiguration:
     docs: |
       Configuration for a library documentation source.
@@ -1270,6 +1282,9 @@ types:
       lang:
         type: LibraryLanguage
         docs: The programming language of the library source code.
+      config:
+        type: optional<LibraryConfig>
+        docs: Language-specific configuration options. Valid fields depend on the lang value.
 
   LibraryReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]

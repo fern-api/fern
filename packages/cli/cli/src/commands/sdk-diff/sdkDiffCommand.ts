@@ -10,6 +10,7 @@ import { ClientRegistry } from "@boundaryml/baml";
 import { AnalyzeCommitDiffResponse, b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { countFilesInDiff, DIFF_SIZE_LIMIT, formatSizeKB } from "@fern-api/local-workspace-runner";
 import { Project } from "@fern-api/project-loader";
 import { FernCliError, TaskContext } from "@fern-api/task-context";
 import { exec } from "child_process";
@@ -90,11 +91,22 @@ export async function sdkDiffCommand({
         context.logger.warn("No differences found between the directories");
         return {
             message: "No changes detected between the directories",
+            changelog_entry: "",
             version_bump: VersionBump.NO_CHANGE
         };
     }
 
-    context.logger.debug(`Generated diff (${gitDiff.length} characters)`);
+    const diffSizeKB = formatSizeKB(gitDiff.length);
+    const fileCount = countFilesInDiff(gitDiff);
+    context.logger.debug(`Generated diff: ${diffSizeKB}KB (${gitDiff.length} chars), ${fileCount} files changed`);
+
+    if (gitDiff.length > DIFF_SIZE_LIMIT) {
+        context.logger.warn(
+            `Diff is too large for AI analysis ` +
+                `(${gitDiff.length.toLocaleString()} chars / ${diffSizeKB}KB, ${fileCount} files). ` +
+                `The AI endpoint limit is 100,000 characters.`
+        );
+    }
 
     // Analyze the diff using LLM with the configured client
     context.logger.info("Analyzing diff with LLM...");
@@ -102,12 +114,18 @@ export async function sdkDiffCommand({
         // Create a BAML client with options if we have a custom registry
         const bamlClient = BamlClient.withOptions({ clientRegistry });
 
-        const analysis = await bamlClient.AnalyzeSdkDiff(gitDiff);
+        const analysis = await bamlClient.AnalyzeSdkDiff(gitDiff, "unknown", "0.0.0", "", "");
         context.logger.debug("Analysis complete");
         return analysis;
     } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
         context.failWithoutThrowing(
-            `Failed to analyze SDK diff: ${error instanceof Error ? error.message : String(error)}`
+            `Failed to analyze SDK diff. ` +
+                `Diff stats: ${gitDiff.length.toLocaleString()} chars, ${diffSizeKB}KB, ${fileCount} files changed. ` +
+                (gitDiff.length > DIFF_SIZE_LIMIT
+                    ? `The diff exceeds the AI endpoint's 100,000 character limit. `
+                    : "") +
+                `Error: ${errorMessage}`
         );
         throw new FernCliError();
     }

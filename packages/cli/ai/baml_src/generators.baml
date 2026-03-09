@@ -3,7 +3,7 @@ generator target {
 
     output_dir "../src/"
 
-    version "0.211.2"
+    version "0.219.0"
 
     default_client_mode async
 }

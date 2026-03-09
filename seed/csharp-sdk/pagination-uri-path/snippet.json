@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPaginationUriPath;\n\nvar client = new SeedPaginationUriPathClient(\"TOKEN\");\nawait client.Users.ListWithUriPaginationAsync();\n"
+                "client": "using SeedPaginationUriPath;\n\nvar client = new SeedPaginationUriPathClient(\"TOKEN\");\nvar items = await client.Users.ListWithUriPaginationAsync();\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedPaginationUriPath;\n\nvar client = new SeedPaginationUriPathClient(\"TOKEN\");\nawait client.Users.ListWithPathPaginationAsync();\n"
+                "client": "using SeedPaginationUriPath;\n\nvar client = new SeedPaginationUriPathClient(\"TOKEN\");\nvar items = await client.Users.ListWithPathPaginationAsync();\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
         }
     ]

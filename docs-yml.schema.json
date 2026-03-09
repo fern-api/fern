@@ -590,6 +590,22 @@
         "cpp"
       ]
     },
+    "docs.LibraryConfig": {
+      "type": "object",
+      "properties": {
+        "doxyfile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.LibraryConfiguration": {
       "type": "object",
       "properties": {
@@ -601,6 +617,16 @@
         },
         "lang": {
           "$ref": "#/definitions/docs.LibraryLanguage"
+        },
+        "config": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LibraryConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

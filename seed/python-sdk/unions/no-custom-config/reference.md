@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">get</a>(...) -&gt; AsyncHttpResponse[BigUnion]</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">get</a>(...) -> BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -18,6 +18,7 @@ from seed import SeedUnions
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.bigunion.get(
     id="id",
 )
@@ -56,7 +57,7 @@ client.bigunion.get(
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -70,15 +71,20 @@ client.bigunion.get(
 
 ```python
 from seed import SeedUnions
-from seed.bigunion import BigUnion_NormalSweet
+import datetime
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.bigunion.update(
-    request=BigUnion_NormalSweet(
-        value="value",
-    ),
+    request={
+        "type": "normalSweet",
+        "id": "id",
+        "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "archived_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        "value": "value"
+    },
 )
 
 ```
@@ -115,7 +121,7 @@ client.bigunion.update(
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update_many</a>(...) -&gt; AsyncHttpResponse[typing.Dict[str, bool]]</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update_many</a>(...) -> typing.Dict[str, bool]</code></summary>
 <dl>
 <dd>
 
@@ -129,19 +135,28 @@ client.bigunion.update(
 
 ```python
 from seed import SeedUnions
-from seed.bigunion import BigUnion_NormalSweet
+import datetime
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.bigunion.update_many(
     request=[
-        BigUnion_NormalSweet(
-            value="value",
-        ),
-        BigUnion_NormalSweet(
-            value="value",
-        ),
+        {
+            "type": "normalSweet",
+            "id": "id",
+            "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "archived_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "value": "value"
+        },
+        {
+            "type": "normalSweet",
+            "id": "id",
+            "created_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "archived_at": datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            "value": "value"
+        }
     ],
 )
 
@@ -159,7 +174,7 @@ client.bigunion.update_many(
 <dl>
 <dd>
 
-**request:** `typing.Sequence[BigUnion]` 
+**request:** `typing.List[BigUnion]` 
     
 </dd>
 </dl>
@@ -180,7 +195,7 @@ client.bigunion.update_many(
 </details>
 
 ## Union
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -&gt; AsyncHttpResponse[Shape]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -> Shape</code></summary>
 <dl>
 <dd>
 
@@ -198,7 +213,8 @@ from seed import SeedUnions
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
-client.union.get(
+
+client.bigunion.get(
     id="id",
 )
 
@@ -236,7 +252,7 @@ client.union.get(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">update</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py">update</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -250,15 +266,17 @@ client.union.get(
 
 ```python
 from seed import SeedUnions
-from seed.union import Shape_Circle
 
 client = SeedUnions(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.union.update(
-    request=Shape_Circle(
-        radius=1.1,
-    ),
+    request={
+        "type": "circle",
+        "id": "id",
+        "radius": 1.1
+    },
 )
 
 ```

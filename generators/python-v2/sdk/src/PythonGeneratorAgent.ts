@@ -4,28 +4,38 @@ import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
 
 export class PythonGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
+    private readmeConfigBuilder: ReadmeConfigBuilder;
     private publishConfig: FernIr.PublishingConfig | undefined;
 
     public constructor({
         logger,
         config,
+        readmeConfigBuilder,
         ir
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
+        readmeConfigBuilder: ReadmeConfigBuilder;
         ir: FernIr.IntermediateRepresentation;
     }) {
         super({ logger, config, selfHosted: ir.selfHosted });
+        this.readmeConfigBuilder = readmeConfigBuilder;
         this.publishConfig = ir.publishConfig;
     }
 
     public getReadmeConfig(
         args: AbstractGeneratorAgent.ReadmeConfigArgs<SdkGeneratorContext>
     ): FernGeneratorCli.ReadmeConfig {
-        throw new Error("Method not implemented.");
+        return this.readmeConfigBuilder.build({
+            context: args.context,
+            remote: args.remote,
+            featureConfig: args.featureConfig,
+            endpointSnippets: args.endpointSnippets
+        });
     }
 
     public getLanguage(): FernGeneratorCli.Language {

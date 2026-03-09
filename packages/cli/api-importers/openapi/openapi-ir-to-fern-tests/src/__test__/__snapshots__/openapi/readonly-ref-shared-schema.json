@@ -1,0 +1,219 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getOrgDetails": {
+              "auth": undefined,
+              "display-name": "Get organization details",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "display_name": "display_name",
+                      "id": "id",
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/orgs/details",
+              "response": {
+                "docs": "Organization details",
+                "status-code": 200,
+                "type": "GetOrgDetailsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "updateOrgDetails": {
+              "auth": undefined,
+              "display-name": "Update organization details",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "display_name": "display_name",
+                      "id": "id",
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "PATCH",
+              "pagination": undefined,
+              "path": "/orgs/details",
+              "request": {
+                "body": {
+                  "properties": {
+                    "display_name": {
+                      "docs": "Friendly name of this organization.",
+                      "type": "optional<string>",
+                    },
+                    "name": {
+                      "docs": "The name of this organization.",
+                      "type": "optional<string>",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "OrgDetails",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Updated organization details",
+                "status-code": 200,
+                "type": "UpdateOrgDetailsResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "GetOrgDetailsResponse": "OrgDetailsRead",
+          "OrgDetailsRead": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "display_name": {
+                "docs": "Friendly name of this organization.",
+                "type": "optional<string>",
+              },
+              "id": {
+                "access": "read-only",
+                "type": "optional<OrgId>",
+              },
+              "name": {
+                "docs": "The name of this organization.",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "OrgId": {
+            "docs": "Organization identifier.",
+            "type": "string",
+            "validation": {
+              "format": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": "^org_[A-Za-z0-9]{16}$",
+            },
+          },
+          "UpdateOrgDetailsRequest": "OrgDetailsRead",
+          "UpdateOrgDetailsResponse": "OrgDetailsRead",
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getOrgDetails:
+      path: /orgs/details
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: Get organization details
+      response:
+        docs: Organization details
+        type: GetOrgDetailsResponse
+        status-code: 200
+      examples:
+        - response:
+            body:
+              id: id
+              name: name
+              display_name: display_name
+    updateOrgDetails:
+      path: /orgs/details
+      method: PATCH
+      source:
+        openapi: ../openapi.yml
+      display-name: Update organization details
+      request:
+        name: OrgDetails
+        body:
+          properties:
+            name:
+              type: optional<string>
+              docs: The name of this organization.
+            display_name:
+              type: optional<string>
+              docs: Friendly name of this organization.
+        content-type: application/json
+      response:
+        docs: Updated organization details
+        type: UpdateOrgDetailsResponse
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              name: name
+              display_name: display_name
+  source:
+    openapi: ../openapi.yml
+types:
+  OrgId:
+    type: string
+    docs: Organization identifier.
+    validation:
+      pattern: ^org_[A-Za-z0-9]{16}$
+  OrgDetailsRead:
+    properties:
+      id:
+        type: optional<OrgId>
+        access: read-only
+      name:
+        type: optional<string>
+        docs: The name of this organization.
+      display_name:
+        type: optional<string>
+        docs: Friendly name of this organization.
+    source:
+      openapi: ../openapi.yml
+  GetOrgDetailsResponse: OrgDetailsRead
+  UpdateOrgDetailsRequest: OrgDetailsRead
+  UpdateOrgDetailsResponse: OrgDetailsRead
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Readonly Ref Shared Schema API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Readonly Ref Shared Schema API
+",
+  },
+}

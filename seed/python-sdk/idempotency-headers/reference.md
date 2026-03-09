@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.<a href="src/seed/payment/client.py">create</a>(...) -&gt; AsyncHttpResponse[uuid.UUID]</code></summary>
+<details><summary><code>client.payment.<a href="src/seed/payment/client.py">create</a>(...) -> uuid.UUID</code></summary>
 <dl>
 <dd>
 
@@ -16,9 +16,10 @@
 from seed import SeedIdempotencyHeaders
 
 client = SeedIdempotencyHeaders(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.payment.create(
     amount=1,
     currency="USD",
@@ -54,22 +55,6 @@ client.payment.create(
 <dl>
 <dd>
 
-**idempotency_key:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**idempotency_expiration:** `int` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -82,7 +67,7 @@ client.payment.create(
 </dl>
 </details>
 
-<details><summary><code>client.payment.<a href="src/seed/payment/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.payment.<a href="src/seed/payment/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -98,9 +83,10 @@ client.payment.create(
 from seed import SeedIdempotencyHeaders
 
 client = SeedIdempotencyHeaders(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.payment.delete(
     payment_id="paymentId",
 )

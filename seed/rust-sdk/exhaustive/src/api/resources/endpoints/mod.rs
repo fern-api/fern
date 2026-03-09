@@ -1,3 +1,4 @@
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod container;
@@ -36,6 +37,7 @@ pub struct EndpointsClient {
     pub union_: UnionClient,
     pub urls: UrlsClient,
 }
+
 impl EndpointsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

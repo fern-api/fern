@@ -42,6 +42,8 @@ export interface GithubStepConfig {
     branch?: string;
     /** Commit message for the generation */
     commitMessage?: string;
+    /** User-facing changelog entry for PR body. When present, used instead of commit message body. */
+    changelogEntry?: string;
     /** Skip push/PR creation, just prepare branches locally */
     previewMode?: boolean;
     /** Generator name for namespaced fern-generation-base tag */

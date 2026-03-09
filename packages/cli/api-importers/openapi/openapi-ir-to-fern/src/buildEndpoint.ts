@@ -516,13 +516,28 @@ function getRequest({
 }): ConvertedRequest {
     if (request.type === "json" || request.type === "formUrlEncoded") {
         const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
-        const resolvedSchema =
+        let resolvedSchema =
             request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
+
+        // When respectReadonlySchemas is enabled and the schema has readOnly properties on a write endpoint,
+        // inline the properties so readOnly ones can be filtered out
+        let shouldInlineForReadonly = false;
+        if (context.options.respectReadonlySchemas && isWriteMethod(endpoint.method)) {
+            let effectiveSchema = resolvedSchema;
+            while (effectiveSchema?.type === "reference") {
+                effectiveSchema = context.getSchema(effectiveSchema.schema, namespace);
+            }
+            if (effectiveSchema?.type === "object" && effectiveSchema.properties.some((p) => p.readonly)) {
+                shouldInlineForReadonly = true;
+                resolvedSchema = effectiveSchema;
+            }
+        }
+
         // the request body is referenced if it is not an object or if other parts of the spec
         // refer to the same type
         if (
             resolvedSchema?.type !== "object" ||
-            (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
+            (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId) && !shouldInlineForReadonly)
         ) {
             const requestTypeReference = buildTypeReference({
                 schema: request.schema,
@@ -765,7 +780,7 @@ function getRequest({
             convertedRequestValue.docs = request.description;
         }
         return {
-            schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
+            schemaIdsToExclude: maybeSchemaId != null && !shouldInlineForReadonly ? [maybeSchemaId] : [],
             value: convertedRequestValue
         };
     } else if (request.type === "octetStream") {
