@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.18.1
+  changelogEntry:
+    - summary: |
+        Fix Go SDK snippet upload failing with "unknown package" warning during
+        docs generation. The `normalizeGoPackageForLookup` helper was applied to
+        the snippet config side but not to the generator's `repoUrl`, causing a
+        `github.com/…` vs `https://github.com/…` mismatch that always failed the
+        comparison.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
 - version: 4.18.0
   changelogEntry:
     - summary: |

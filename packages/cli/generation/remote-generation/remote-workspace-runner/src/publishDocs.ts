@@ -979,7 +979,9 @@ async function generateLanguageSpecificDynamicIRs({
                             packageName = dynamicGeneratorConfig.outputConfig.value.coordinate;
                             break;
                         case "go":
-                            packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
+                            packageName = normalizeGoPackageForLookup(
+                                dynamicGeneratorConfig.outputConfig.value.repoUrl
+                            );
                             break;
                         case "swift":
                             packageName = dynamicGeneratorConfig.outputConfig.value.repoUrl;
