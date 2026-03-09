@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -18,6 +18,7 @@ from seed import SeedVersion
 client = SeedVersion(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.get_user(
     user_id="userId",
 )

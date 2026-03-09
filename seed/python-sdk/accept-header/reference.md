@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">endpoint</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">endpoint</a>()</code></summary>
 <dl>
 <dd>
 
@@ -16,9 +16,10 @@
 from seed import SeedAccept
 
 client = SeedAccept(
-    token="YOUR_TOKEN",
+    token="<token>",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.service.endpoint()
 
 ```

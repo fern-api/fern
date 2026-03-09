@@ -1,5 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.62.0
+  changelogEntry:
+    - summary: |
+        Add `README.md` and `reference.md` generation to the python-v2 SDK generator.
+        The v2 generator now produces README documentation with feature snippets
+        (installation, usage, timeouts, custom client, exception handling, raw responses,
+        websockets, custom sections) and endpoint reference documentation.
+      type: feat
+    - summary: |
+        Format AST output with trailing commas in multiline function calls and
+        inline list/dict formatting for improved code readability.
+      type: chore
+  createdAt: "2026-03-05"
+  irVersion: 65
+
 - version: 4.61.5
   changelogEntry:
     - summary: |

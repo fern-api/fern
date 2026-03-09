@@ -34,62 +34,78 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-import datetime
-import uuid
-
 from seed import SeedQueryParameters
-from seed.user import NestedUser, User
+import uuid
+import datetime
+from seed.user import User, NestedUser
 
 client = SeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.user.get_username(
     limit=1,
-    id=uuid.UUID(
-        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-    ),
-    date=datetime.date.fromisoformat(
-        "2023-01-15",
-    ),
-    deadline=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
+    id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     bytes="SGVsbG8gd29ybGQh",
     user=User(
         name="name",
-        tags=["tags", "tags"],
+        tags=[
+            "tags",
+            "tags"
+        ],
     ),
     user_list=[
         User(
             name="name",
-            tags=["tags", "tags"],
+            tags=[
+                "tags",
+                "tags"
+            ],
         ),
         User(
             name="name",
-            tags=["tags", "tags"],
-        ),
+            tags=[
+                "tags",
+                "tags"
+            ],
+        )
     ],
-    optional_deadline=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    key_value={"keyValue": "keyValue"},
+    optional_deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    key_value={
+        "keyValue": "keyValue"
+    },
     optional_string="optionalString",
     nested_user=NestedUser(
         name="name",
         user=User(
             name="name",
-            tags=["tags", "tags"],
+            tags=[
+                "tags",
+                "tags"
+            ],
         ),
     ),
     optional_user=User(
         name="name",
-        tags=["tags", "tags"],
+        tags=[
+            "tags",
+            "tags"
+        ],
     ),
-    exclude_user=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
-    filter="filter",
+    exclude_user=[
+        User(
+            name="name",
+            tags=[
+                "tags",
+                "tags"
+            ],
+        )
+    ],
+    filter=[
+        "filter"
+    ],
 )
 ```
 
@@ -99,11 +115,11 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
-import datetime
 import uuid
+import datetime
+from seed.user import User, NestedUser
 
 from seed import AsyncSeedQueryParameters
-from seed.user import NestedUser, User
 
 client = AsyncSeedQueryParameters(
     base_url="https://yourhost.com/path/to/api",
@@ -113,51 +129,67 @@ client = AsyncSeedQueryParameters(
 async def main() -> None:
     await client.user.get_username(
         limit=1,
-        id=uuid.UUID(
-            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-        ),
-        date=datetime.date.fromisoformat(
-            "2023-01-15",
-        ),
-        deadline=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
+        id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+        date=datetime.date.fromisoformat("2023-01-15"),
+        deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         bytes="SGVsbG8gd29ybGQh",
         user=User(
             name="name",
-            tags=["tags", "tags"],
+            tags=[
+                "tags",
+                "tags"
+            ],
         ),
         user_list=[
             User(
                 name="name",
-                tags=["tags", "tags"],
+                tags=[
+                    "tags",
+                    "tags"
+                ],
             ),
             User(
                 name="name",
-                tags=["tags", "tags"],
-            ),
+                tags=[
+                    "tags",
+                    "tags"
+                ],
+            )
         ],
-        optional_deadline=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
-        key_value={"keyValue": "keyValue"},
+        optional_deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        key_value={
+            "keyValue": "keyValue"
+        },
         optional_string="optionalString",
         nested_user=NestedUser(
             name="name",
             user=User(
                 name="name",
-                tags=["tags", "tags"],
+                tags=[
+                    "tags",
+                    "tags"
+                ],
             ),
         ),
         optional_user=User(
             name="name",
-            tags=["tags", "tags"],
+            tags=[
+                "tags",
+                "tags"
+            ],
         ),
-        exclude_user=User(
-            name="name",
-            tags=["tags", "tags"],
-        ),
-        filter="filter",
+        exclude_user=[
+            User(
+                name="name",
+                tags=[
+                    "tags",
+                    "tags"
+                ],
+            )
+        ],
+        filter=[
+            "filter"
+        ],
     )
 
 
@@ -173,7 +205,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.user.get_username()
+    client.user.get_username(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -189,10 +221,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedQueryParameters
 
-client = SeedQueryParameters(
-    ...,
-)
-response = client.user.with_raw_response.get_username()
+client = SeedQueryParameters(...)
+response = client.user.with_raw_response.get_username(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -213,7 +243,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.user.get_username(request_options={
+client.user.get_username(..., request_options={
     "max_retries": 1
 })
 ```
@@ -223,17 +253,12 @@ client.user.get_username(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedQueryParameters
 
-client = SeedQueryParameters(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedQueryParameters(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.user.get_username(request_options={
+client.user.get_username(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

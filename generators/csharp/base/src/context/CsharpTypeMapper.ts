@@ -184,6 +184,7 @@ export class CsharpTypeMapper extends WithGeneration {
             // https://learn.microsoft.com/en-us/dotnet/api/system.convert.tobase64string?view=net-8.0
             base64: () => this.Primitive.string,
             bigInteger: () => this.Primitive.string,
+            dateTimeRfc2822: () => this.Value.dateTime,
             _other: () => this.Primitive.object
         });
     }

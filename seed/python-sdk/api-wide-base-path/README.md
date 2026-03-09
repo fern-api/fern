@@ -37,9 +37,12 @@ Instantiate and use the client with the following:
 from seed import SeedApiWideBasePath
 
 client = SeedApiWideBasePath(
+    path_param="pathParam",
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.service.post(
+    path_param="pathParam",
     service_param="serviceParam",
     endpoint_param=1,
     resource_param="resourceParam",
@@ -56,12 +59,14 @@ import asyncio
 from seed import AsyncSeedApiWideBasePath
 
 client = AsyncSeedApiWideBasePath(
+    path_param="pathParam",
     base_url="https://yourhost.com/path/to/api",
 )
 
 
 async def main() -> None:
     await client.service.post(
+        path_param="pathParam",
         service_param="serviceParam",
         endpoint_param=1,
         resource_param="resourceParam",
@@ -80,7 +85,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.service.post()
+    client.service.post(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -96,10 +101,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedApiWideBasePath
 
-client = SeedApiWideBasePath(
-    ...,
-)
-response = client.service.with_raw_response.post()
+client = SeedApiWideBasePath(...)
+response = client.service.with_raw_response.post(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -120,7 +123,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.post(request_options={
+client.service.post(..., request_options={
     "max_retries": 1
 })
 ```
@@ -130,17 +133,12 @@ client.service.post(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedApiWideBasePath
 
-client = SeedApiWideBasePath(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedApiWideBasePath(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.service.post(request_options={
+client.service.post(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

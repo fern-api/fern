@@ -11,6 +11,8 @@ export * from "./GenerationRunner.js";
 export { GenerationRunner } from "./GenerationRunner.js";
 export * from "./NativeExecutionEnvironment.js";
 export { NativeExecutionEnvironment } from "./NativeExecutionEnvironment.js";
+export * from "./ReusableContainerExecutionEnvironment.js";
+export { ReusableContainerExecutionEnvironment } from "./ReusableContainerExecutionEnvironment.js";
 export {
     runContainerizedGenerationForSeed,
     runNativeGenerationForSeed,

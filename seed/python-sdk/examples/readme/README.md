@@ -58,23 +58,22 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedExamples
-from seed.environment import SeedExamplesEnvironment
 
 client = SeedExamples(
-    token="YOUR_TOKEN",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    token="<token>",
 )
+
 client.service.create_movie(
     id="movie-c06a4ad7",
     prequel="movie-cv9b914f",
     title="The Boy and the Heron",
     from_="Hayao Miyazaki",
-    rating=8.0,
+    rating=8,
     tag="tag-wf9as23d",
     metadata={
         "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
         "releaseDate": "2023-12-08",
-        "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+        "ratings": {"rottenTomatoes": 97, "imdb": 7.6}
     },
     revenue=1000000,
 )
@@ -88,11 +87,9 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedExamples
-from seed.environment import SeedExamplesEnvironment
 
 client = AsyncSeedExamples(
-    token="YOUR_TOKEN",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    token="<token>",
 )
 
 
@@ -109,11 +106,9 @@ asyncio.run(main())
 import asyncio
 
 from seed import AsyncSeedExamples
-from seed.environment import SeedExamplesEnvironment
 
 client = AsyncSeedExamples(
-    token="YOUR_TOKEN",
-    environment=SeedExamplesEnvironment.PRODUCTION,
+    token="<token>",
 )
 
 
@@ -123,12 +118,12 @@ async def main() -> None:
         prequel="movie-cv9b914f",
         title="The Boy and the Heron",
         from_="Hayao Miyazaki",
-        rating=8.0,
+        rating=8,
         tag="tag-wf9as23d",
         metadata={
             "actors": ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
             "releaseDate": "2023-12-08",
-            "ratings": {"rottenTomatoes": 97, "imdb": 7.6},
+            "ratings": {"rottenTomatoes": 97, "imdb": 7.6}
         },
         revenue=1000000,
     )
@@ -162,9 +157,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedExamples
 
-client = SeedExamples(
-    ...,
-)
+client = SeedExamples(...)
 response = client.service.with_raw_response.create_movie(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -196,14 +189,9 @@ client.service.create_movie(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedExamples
 
-client = SeedExamples(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedExamples(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.service.create_movie(..., request_options={

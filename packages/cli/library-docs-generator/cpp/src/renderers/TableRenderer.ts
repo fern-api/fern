@@ -164,7 +164,10 @@ export function renderInnerClass(innerClass: CppClassIr, ownerPath: string): str
     // Build links: link back to the owner class
     const ownerShort = ownerPath.split("::").pop() ?? ownerPath;
     const links: Record<string, string> = {};
-    links[ownerShort] = buildLinkPath(ownerPath);
+    const ownerLinkPath = buildLinkPath(ownerPath);
+    if (ownerLinkPath) {
+        links[ownerShort] = ownerLinkPath;
+    }
 
     const linksStr = Object.keys(links).length > 0 ? ` links={${formatLinksJson(links)}}` : "";
 
@@ -207,7 +210,10 @@ export function renderInnerClass(innerClass: CppClassIr, ownerPath: string): str
         const baseLinks = innerClass.baseClasses.map((bc) => {
             const access = bc.access !== "public" ? ` (${bc.access})` : " (public)";
             if (bc.typeInfo?.resolvedPath) {
-                return `[\`${bc.name}\`](${buildLinkPath(bc.typeInfo.resolvedPath)})${access}`;
+                const baseLinkPath = buildLinkPath(bc.typeInfo.resolvedPath);
+                if (baseLinkPath) {
+                    return `[\`${bc.name}\`](${baseLinkPath})${access}`;
+                }
             }
             return `\`${bc.name}\`${access}`;
         });

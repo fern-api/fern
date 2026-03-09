@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { GrpcClientInfo } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -33,9 +34,23 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
         }
     ): void {
         if (this.hasPagination(endpoint)) {
-            this.generatePagerInterfaceSignature(interface_, { serviceId, endpoint });
-            if (endpoint.pagination.type !== "custom") {
-                this.generateUnpagedInterfaceSignature(interface_, { serviceId, endpoint, isPrivate: true });
+            switch (endpoint.pagination.type) {
+                case "offset":
+                case "cursor":
+                    this.generatePagerInterfaceSignature(interface_, { serviceId, endpoint });
+                    this.generateUnpagedInterfaceSignature(interface_, { serviceId, endpoint, isPrivate: true });
+                    break;
+                case "custom":
+                    this.generatePagerInterfaceSignature(interface_, { serviceId, endpoint });
+                    break;
+                case "uri":
+                case "path":
+                    this.context.logger.warn(
+                        `Skipping endpoint '${endpoint.name.originalName}': '${endpoint.pagination.type}' pagination is not yet supported in C#.`
+                    );
+                    return;
+                default:
+                    assertNever(endpoint.pagination);
             }
         } else {
             this.generateUnpagedInterfaceSignature(interface_, { serviceId, endpoint, isPrivate: false });
