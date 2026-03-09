@@ -29,7 +29,6 @@ import { camelCase, kebabCase } from "lodash-es";
 
 // TODO: Remove this when the new fdr-sdk is integrated
 type SectionNodeWithNewCollapsibleConfig = FernNavigation.V1.SectionNode & {
-    collapsed?: boolean | "open-by-default";
     collapsible?: boolean;
     collapsedByDefault?: boolean;
 };
@@ -1191,12 +1190,15 @@ export class DocsDefinitionResolver {
             }
 
             // Temporary coercion to satisfy type checker until new fdr-sdk is integrated
+            const childWithCollapsible = child as SectionNodeWithNewCollapsibleConfig;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const childCollapsed = (child as any).collapsed as boolean | "open-by-default" | undefined;
             const isCollapsible =
                 child.type === "section" &&
-                ((child as SectionNodeWithNewCollapsibleConfig).collapsible === true ||
-                    ((child as SectionNodeWithNewCollapsibleConfig).collapsible == null &&
-                        (child.collapsed === true ||
-                            (child as SectionNodeWithNewCollapsibleConfig).collapsed === "open-by-default")));
+                (childWithCollapsible.collapsible === true ||
+                    (childWithCollapsible.collapsible == null &&
+                        (childCollapsed === true ||
+                            childCollapsed === "open-by-default")));
 
             if (child.type === "section" && !isCollapsible) {
                 grouped.push(child);
