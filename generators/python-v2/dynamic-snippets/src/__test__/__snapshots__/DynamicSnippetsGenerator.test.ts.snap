@@ -511,7 +511,7 @@ exports[`snippets > required-headers > 'GET /plants (simple)' 1`] = `
 
 client = Acme(
     token="<YOUR_API_KEY>",
-    tenant_id="my-tenant-id"
+    tenant_id="my-tenant-id",
 )
 
 client.plantstore.list()
@@ -523,12 +523,12 @@ exports[`snippets > required-headers > 'POST /plants (simple)' 1`] = `
 
 client = Acme(
     token="<YOUR_API_KEY>",
-    tenant_id="my-tenant-id"
+    tenant_id="my-tenant-id",
 )
 
 client.plantstore.create(
     name="Fern",
-    price=12.99
+    price=12.99,
 )
 "
 `;
