@@ -1,5 +1,5 @@
-import type { Overlay, OverlayAction } from "@fern-api/core-utils";
 import { isDeepStrictEqual } from "node:util";
+import type { Overlay, OverlayAction } from "@fern-api/core-utils";
 
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
 type OpenAPISpec = Record<string, any>;
@@ -278,9 +278,7 @@ function collectArrayOverlayActions(
     actions: OverlayAction[]
 ): void {
     // Check if all elements in both arrays are plain objects (for element-wise diffing)
-    const allObjects =
-        original.every((el) => isPlainObject(el)) &&
-        modified.every((el) => isPlainObject(el));
+    const allObjects = original.every((el) => isPlainObject(el)) && modified.every((el) => isPlainObject(el));
 
     if (!allObjects) {
         // Primitive or mixed arrays — full replacement.

@@ -481,7 +481,12 @@ describe("generateOverlay", () => {
 
         // Should NOT produce sparse arrays with empty objects
         const hasEmptyObjectPadding = overlay.actions.some(
-            (a) => Array.isArray(a.update) && (a.update as unknown[]).some((el) => typeof el === "object" && el !== null && Object.keys(el as Record<string, unknown>).length === 0)
+            (a) =>
+                Array.isArray(a.update) &&
+                (a.update as unknown[]).some(
+                    (el) =>
+                        typeof el === "object" && el !== null && Object.keys(el as Record<string, unknown>).length === 0
+                )
         );
         expect(hasEmptyObjectPadding).toBe(false);
 
@@ -577,10 +582,7 @@ describe("generateOverlay", () => {
             ]
         };
         const modified = {
-            servers: [
-                { url: "https://a.example.com" },
-                { url: "https://b.example.com" }
-            ]
+            servers: [{ url: "https://a.example.com" }, { url: "https://b.example.com" }]
         };
 
         const overlay = generateOverlay(original, modified);

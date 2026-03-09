@@ -79,7 +79,10 @@ export class FernYmlApiEditor {
      * Adds an override path to the matching spec entry.
      * Returns the edit location if a mutation was made, or undefined if no change.
      */
-    public addOverride(specFilePath: AbsoluteFilePath, overrideAbsolutePath: AbsoluteFilePath): OverrideEdit | undefined {
+    public addOverride(
+        specFilePath: AbsoluteFilePath,
+        overrideAbsolutePath: AbsoluteFilePath
+    ): OverrideEdit | undefined {
         const fileDir = dirname(this.filePath);
         const relativeOverridePath = `./${path.relative(fileDir, overrideAbsolutePath)}`;
         const index = this.findSpecIndex(specFilePath);

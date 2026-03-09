@@ -11,12 +11,12 @@ import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
-import type { SpecEntry } from "../utils/filterSpecs.js";
 import { FernYmlApiEditor } from "../utils/fernYmlApiEditor.js";
+import type { SpecEntry } from "../utils/filterSpecs.js";
 import { filterSpecs } from "../utils/filterSpecs.js";
 import { loadSpec, parseSpec, serializeSpec } from "../utils/loadSpec.js";
-import { type SplitFormat, deriveOutputPath } from "./deriveOutputPath.js";
-import { type OverlayOutputAction, generateOverlay, generateOverrides, hasChanges } from "./diffSpecs.js";
+import { deriveOutputPath, type SplitFormat } from "./deriveOutputPath.js";
+import { generateOverlay, generateOverrides, hasChanges, type OverlayOutputAction } from "./diffSpecs.js";
 
 const execFileAsync = promisify(execFile);
 
@@ -102,7 +102,9 @@ export class SplitCommand {
         if (existingOverlayPath != null) {
             if (outputArg != null) {
                 context.stderr.info(
-                    chalk.yellow(`  Warning: --output ignored; merging into existing overlay file ${chalk.cyan(existingOverlayPath)}`)
+                    chalk.yellow(
+                        `  Warning: --output ignored; merging into existing overlay file ${chalk.cyan(existingOverlayPath)}`
+                    )
                 );
             }
             outputPath = existingOverlayPath;
@@ -127,7 +129,9 @@ export class SplitCommand {
         const edit = editor.addOverlay(entry.specFilePath, outputPath);
         if (edit != null) {
             const relPath = path.relative(context.cwd, editor.filePath);
-            context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`));
+            context.stderr.info(
+                chalk.dim(`  ${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`)
+            );
         }
     }
 
@@ -151,15 +155,15 @@ export class SplitCommand {
             context.stderr.info(`${Icons.success} Merged diff into existing ${chalk.cyan(outputPath)}`);
         } else {
             await writeFile(outputPath, serializeSpec(overrides, outputPath));
-            context.stderr.info(
-                `${Icons.success} Overrides written ${chalk.dim("→")} ${chalk.cyan(outputPath)}`
-            );
+            context.stderr.info(`${Icons.success} Overrides written ${chalk.dim("→")} ${chalk.cyan(outputPath)}`);
         }
 
         const edit = editor.addOverride(entry.specFilePath, outputPath);
         if (edit != null) {
             const relPath = path.relative(context.cwd, editor.filePath);
-            context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`));
+            context.stderr.info(
+                chalk.dim(`  ${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`)
+            );
         }
     }
 
@@ -265,7 +269,6 @@ export function addSplitCommand(cli: Argv<GlobalArgs>): void {
                     description: "Filter by API name"
                 })
                 .option("output", {
-                    alias: "o",
                     type: "string",
                     description: "Custom output path for the new overlay/override file"
                 })

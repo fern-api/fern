@@ -43,7 +43,9 @@ export class MergeCommand {
             const overridePaths = entry.overrides != null && entry.overrides.length > 0 ? entry.overrides : undefined;
 
             if (overlayPath == null && overridePaths == null) {
-                context.stderr.info(chalk.dim(`  ${entry.specFilePath}: no overrides or overlays configured, skipping.`));
+                context.stderr.info(
+                    chalk.dim(`  ${entry.specFilePath}: no overrides or overlays configured, skipping.`)
+                );
                 continue;
             }
 
@@ -52,7 +54,7 @@ export class MergeCommand {
 
             // Apply overlays first (per user requirement: overlays before overrides)
             if (overlayPath != null) {
-                const overlayContent = await loadSpec(overlayPath) as OverlayDocument;
+                const overlayContent = (await loadSpec(overlayPath)) as OverlayDocument;
                 const overlay = toOverlay(overlayContent);
                 merged = applyOpenAPIOverlay({ data: merged, overlay });
                 context.stderr.info(
@@ -92,7 +94,9 @@ export class MergeCommand {
                     await this.cleanupFiles(context, [overlayPath]);
                     if (edit != null) {
                         const relPath = path.relative(context.cwd, editor.filePath);
-                        context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: removed reference to ${path.basename(overlayPath)}`));
+                        context.stderr.info(
+                            chalk.dim(`  ${relPath}:${edit.line}: removed reference to ${path.basename(overlayPath)}`)
+                        );
                     }
                 }
             }
