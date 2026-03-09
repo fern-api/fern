@@ -700,7 +700,7 @@ export const ApiReferenceSectionConfiguration = WithPermissions.merge(WithFeatur
         icon: z.string().optional(),
         hidden: z.boolean().optional(),
         "skip-slug": z.boolean().optional(),
-        collapsed: z.union([z.boolean(), z.literal("open-by-default")]).optional(),
+        collapsed: z.union([z.boolean(), z.object({ default: z.enum(["closed", "open"]) })]).optional(),
         collapsible: z.boolean().optional(),
         "collapsed-by-default": z.boolean().optional(),
         availability: Availability.optional(),

@@ -1355,9 +1355,9 @@ types:
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       collapsed:
-        type: optional<boolean>
+        type: optional<CollapsedConfig>
         docs: |
-          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead. When set to `true` or `{ default: "closed" }`, the section starts collapsed. When set to `{ default: "open" }`, the section starts expanded but can be collapsed.
         availability: deprecated
       collapsible:
         type: optional<boolean>
