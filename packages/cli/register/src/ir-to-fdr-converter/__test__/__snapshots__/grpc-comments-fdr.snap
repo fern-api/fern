@@ -43,7 +43,7 @@
   "subpackages": {
     "subpackage_commentsService": {
       "description": undefined,
-      "displayName": undefined,
+      "displayName": "CommentsService",
       "endpoints": [
         {
           "auth": true,

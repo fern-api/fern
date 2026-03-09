@@ -177,7 +177,7 @@
         "head": "",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": "CommentsService",
       "encoding": undefined,
       "endpoints": [
         {
@@ -553,7 +553,7 @@
   "sourceConfig": undefined,
   "subpackages": {
     "subpackage_commentsService": {
-      "displayName": undefined,
+      "displayName": "CommentsService",
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
