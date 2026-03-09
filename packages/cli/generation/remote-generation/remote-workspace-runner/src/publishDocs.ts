@@ -13,6 +13,7 @@ type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { AbsoluteFilePath, convertToFernHostRelativeFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToDynamicSnippetsIr, generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { getNameString } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { AIExampleEnhancerConfig, convertIrToFdrApi, enhanceExamplesWithAI } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
@@ -396,7 +397,7 @@ export async function publishDocs({
 
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
-                apiId: CjsFdrSdk.ApiId(apiName ?? ir.apiName),
+                apiId: CjsFdrSdk.ApiId(apiName ?? getNameString(ir.apiName)),
                 definition: apiDefinition,
                 definitionV2: undefined,
                 dynamicIRs: dynamicIRsByLanguage,
