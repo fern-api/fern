@@ -3,23 +3,25 @@ import fs from "fs";
 import { homedir } from "os";
 import path from "path";
 
-const FERN_CACHE_DIR = path.join(homedir(), ".fern");
-
 interface CacheEntry<T> {
     value: T;
     timestamp: number;
 }
 
+function getFernCacheDir(): string {
+    return path.join(homedir(), ".fern");
+}
+
 function ensureCacheDir(): void {
     try {
-        fs.mkdirSync(FERN_CACHE_DIR, { recursive: true });
+        fs.mkdirSync(getFernCacheDir(), { recursive: true });
     } catch {
         // Best-effort: silently ignore permission/filesystem errors
     }
 }
 
 function getCachePath(key: string): string {
-    return path.join(FERN_CACHE_DIR, `${key}.json`);
+    return path.join(getFernCacheDir(), `${key}.json`);
 }
 
 export function readCache<T>(key: string, ttlMs: number): T | undefined {
