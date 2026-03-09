@@ -76,10 +76,11 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         try {
             await this.generateReference({ context, endpointSnippets });
         } catch (error) {
-            context.logger.warn("Failed to generate reference.md, this is OK.");
-            if (error instanceof Error) {
-                context.logger.debug(error.message);
-                context.logger.debug(error.stack ?? "");
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
+            if (errorStack) {
+                context.logger.debug(`reference.md generation error stack: ${errorStack}`);
             }
         }
 
