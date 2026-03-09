@@ -7,44 +7,68 @@ namespace SeedEnum.Test.Unit.MockServer;
 public class SendTest_ : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public void MockServerTest_1() {
+    public void MockServerTest_1()
+    {
+        const string requestJson = """
+            {
+              "operand": ">",
+              "maybeOperand": ">",
+              "operandOrColor": "red",
+              "maybeOperandOrColor": "red"
+            }
+            """;
 
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/inlined")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson)
+            )
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/query").WithParam("operand", ">").WithParam("maybeOperand", ">").WithParam("operandOrColor", "red").WithParam("maybeOperandOrColor", "red").UsingPost())
-
-        .RespondWith(WireMock.ResponseBuilders.Response.Create()
-        .WithStatusCode(200)
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.InlinedRequest.SendAsync(
+                new SendEnumInlinedRequest
+                {
+                    Operand = Operand.GreaterThan,
+                    MaybeOperand = Operand.GreaterThan,
+                    OperandOrColor = Color.Red,
+                    MaybeOperandOrColor = Color.Red,
+                }
+            )
         );
-
-        Assert.DoesNotThrowAsync(async () => await Client.QueryParam.SendAsync(new SendEnumAsQueryParamRequest {
-            Operand = Operand.GreaterThan,
-            MaybeOperand = Operand.GreaterThan,
-            OperandOrColor = Color.Red,
-            MaybeOperandOrColor = Color.Red
-        }));
     }
 
     [NUnit.Framework.Test]
-    public void MockServerTest_2() {
+    public void MockServerTest_2()
+    {
+        const string requestJson = """
+            {
+              "operand": ">",
+              "operandOrColor": "red"
+            }
+            """;
 
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/inlined")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson)
+            )
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/query").WithParam("operand", ">").WithParam("operandOrColor", "red").UsingPost())
-
-        .RespondWith(WireMock.ResponseBuilders.Response.Create()
-        .WithStatusCode(200)
+        Assert.DoesNotThrowAsync(async () =>
+            await Client.InlinedRequest.SendAsync(
+                new SendEnumInlinedRequest
+                {
+                    Operand = Operand.GreaterThan,
+                    OperandOrColor = Color.Red,
+                }
+            )
         );
-
-        Assert.DoesNotThrowAsync(async () => await Client.QueryParam.SendAsync(new SendEnumAsQueryParamRequest {
-            Operand = Operand.GreaterThan,
-            OperandOrColor = Color.Red
-        }));
     }
-
-}
-oesNotThrowAsync(async () => await Client.InlinedRequest.SendAsync(new SendEnumInlinedRequest {
-            Operand = Operand.GreaterThan,
-            OperandOrColor = Color.Red
-        }));
-    }
-
 }
