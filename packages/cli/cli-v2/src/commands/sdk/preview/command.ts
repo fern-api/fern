@@ -74,10 +74,12 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>, parentPath?: string): v
                     type: "string",
                     description: "Organization name (required with --api)"
                 })
+
                 .option("output", {
                     type: "string",
-                    description: "Output path or git URL (required with --api; requires --preview in workspace mode)"
+                    description: "Output path or git URL (required with --api)"
                 })
+
                 .option("output-version", {
                     type: "string",
                     description: "The version to use for the generated packages (e.g. 1.0.0)"
