@@ -1,0 +1,25 @@
+openapi: 3.1.0
+info:
+  title: API 2
+  version: 1.0.0
+paths:
+  /orders:
+    get:
+      summary: Get orders
+      operationId: getOrders
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
