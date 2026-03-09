@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import { promisify } from "util";
+import { describe, expect, it } from "vitest";
 import { gunzip, gunzipSync, gzip, gzipSync } from "zlib";
 
 const gzipAsync = promisify(gzip);
