@@ -1,7 +1,7 @@
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken } from "@fern-api/auth";
-import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { FERNIGNORE_FILENAME, fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import {
@@ -79,6 +79,15 @@ export async function runRemoteGenerationForAPIWorkspace({
                     });
                 }
 
+                // Auto-discover .fernignore from the generator's local output directory
+                // if not explicitly provided via --fernignore
+                const effectiveFernignorePath =
+                    fernignorePath ??
+                    (await resolveAutoDiscoveredFernignorePath({
+                        generatorInvocation,
+                        context: interactiveTaskContext
+                    }));
+
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
                     organization,
@@ -115,7 +124,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     readme: generatorInvocation.readme,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
-                    fernignorePath,
+                    fernignorePath: effectiveFernignorePath,
                     dynamicIrOnly,
                     retryRateLimited
                 });
@@ -145,4 +154,30 @@ export async function runRemoteGenerationForAPIWorkspace({
     return {
         snippetsProducedBy
     };
+}
+
+/**
+ * If the generator is configured with local file system output (absolutePathToLocalOutput),
+ * checks whether a .fernignore file exists in that output directory and returns its path.
+ * Returns undefined if the generator has no local output path or no .fernignore file exists.
+ */
+async function resolveAutoDiscoveredFernignorePath({
+    generatorInvocation,
+    context
+}: {
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    context: TaskContext;
+}): Promise<string | undefined> {
+    if (generatorInvocation.absolutePathToLocalOutput == null) {
+        return undefined;
+    }
+    const fernignoreFilePath = join(
+        generatorInvocation.absolutePathToLocalOutput,
+        RelativeFilePath.of(FERNIGNORE_FILENAME)
+    );
+    if (await doesPathExist(fernignoreFilePath)) {
+        context.logger.debug(`Auto-discovered ${FERNIGNORE_FILENAME} at ${fernignoreFilePath}`);
+        return fernignoreFilePath;
+    }
+    return undefined;
 }
