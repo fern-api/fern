@@ -226,12 +226,13 @@ export function detectAffected(changedFiles: string[], allGenerators: GeneratorW
         summary.push(`Generator source changed — ${[...affectedGeneratorSet].join(", ")} need all fixtures.`);
     }
 
-    // If nothing was detected as affected, fall back to running everything
+    // If nothing was detected as affected, skip all seed tests — the changes
+    // are in code unrelated to generators/fixtures/seed infrastructure.
     if (!allGeneratorsAffected && affectedGeneratorSet.size === 0 && affectedFixtureSet.size === 0) {
-        summary.push("No recognized changes detected — running everything as fallback.");
+        summary.push("No seed-related changes detected — skipping all seed tests.");
         return {
-            allGeneratorsAffected: true,
-            allFixturesAffected: true,
+            allGeneratorsAffected: false,
+            allFixturesAffected: false,
             affectedGenerators: [],
             generatorsWithAllFixtures: [],
             affectedFixtures: [],

@@ -67,11 +67,26 @@ describe("detectAffected", () => {
             expect(result.affectedFixtures).toEqual([]);
         });
 
-        it("runs everything when changed files don't match any known pattern", () => {
+        it("skips all seed tests when changed files don't match any known pattern", () => {
             const result = detectAffected(["README.md", "docs/guide.md", ".github/workflows/ci.yml"], ALL_GENERATORS);
 
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.generatorsWithAllFixtures).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
+        });
+
+        it("skips all seed tests when only CLI code changes", () => {
+            const result = detectAffected(
+                ["packages/cli/cli/src/commands/check.ts", "packages/cli/cli/src/cli.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
         });
     });
 
@@ -218,12 +233,14 @@ describe("detectAffected", () => {
             expect(result.generatorsWithAllFixtures).toContain("python-sdk");
         });
 
-        it("ignores seed.yml for generators not in the list", () => {
+        it("skips seed tests when seed.yml changes for unknown generator", () => {
             const result = detectAffected(["seed/unknown-generator/seed.yml"], ALL_GENERATORS);
 
-            // No recognized generators affected, falls back to everything
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
+            // No recognized generators affected, skip all seed tests
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
         });
 
         it("detects seed.yml change alongside other changes", () => {
@@ -575,5 +592,38 @@ describe("end-to-end scenario tests", () => {
             const fixtures = resolveAffectedFixtures(affected, ALL_FIXTURES, gen.workspaceName);
             expect(fixtures).toEqual(ALL_FIXTURES);
         }
+    });
+
+    it("scenario: unrelated CLI changes skip all seed tests", () => {
+        const changedFiles = [
+            "packages/cli/cli/src/commands/check.ts",
+            "packages/cli/cli/src/commands/apiCheck.ts",
+            "packages/cli/cli/src/cli.ts"
+        ];
+        const affected = detectAffected(changedFiles, ALL_GENERATORS);
+
+        // No generators should run
+        const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
+        expect(generators).toHaveLength(0);
+
+        // No fixtures should be resolved for any generator
+        for (const gen of ALL_GENERATORS) {
+            const fixtures = resolveAffectedFixtures(affected, ALL_FIXTURES, gen.workspaceName);
+            expect(fixtures).toEqual([]);
+        }
+    });
+
+    it("scenario: mixed unrelated and seed-related changes only runs affected", () => {
+        const changedFiles = ["packages/cli/cli/src/commands/check.ts", "generators/python/src/generator.ts"];
+        const affected = detectAffected(changedFiles, ALL_GENERATORS);
+
+        // Only python generators should run (CLI changes are ignored)
+        const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
+        const names = generators.map((g) => g.workspaceName);
+        expect(names).toContain("python-sdk");
+        expect(names).toContain("pydantic");
+        expect(names).toContain("fastapi");
+        expect(names).not.toContain("ts-sdk");
+        expect(names).not.toContain("java-sdk");
     });
 });
