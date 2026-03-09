@@ -547,9 +547,22 @@ export function generateIntermediateRepresentation({
             ? convertReadmeConfig({ readme: resolvedReadme, services: intermediateRepresentation.services })
             : undefined;
 
+    const builtPackages = packageTreeGenerator.build(filteredIr);
+
+    // Propagate service displayName to subpackage displayName so that the original
+    // tag capitalization/formatting is preserved in navigation (e.g., docs left sidebar).
+    for (const [, subpackage] of Object.entries(builtPackages.subpackages)) {
+        if (subpackage.displayName == null && subpackage.service != null) {
+            const service = intermediateRepresentationForAudiences.services[subpackage.service];
+            if (service?.displayName != null) {
+                subpackage.displayName = service.displayName;
+            }
+        }
+    }
+
     const finalIR = formatAllDocs({
         ...intermediateRepresentationForAudiences,
-        ...packageTreeGenerator.build(filteredIr),
+        ...builtPackages,
         sdkConfig,
         readmeConfig
     });

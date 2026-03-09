@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.15.6
+  changelogEntry:
+    - summary: |
+        Respect original tag capitalization and formatting from OpenAPI specs.
+        Previously, tags were auto-capitalized via `titleCase`/`startCase` when
+        displayed in the docs navigation sidebar. Now the original tag name is
+        preserved as the `displayName` on both services and subpackages.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
 - version: 4.15.5
   changelogEntry:
     - summary: |

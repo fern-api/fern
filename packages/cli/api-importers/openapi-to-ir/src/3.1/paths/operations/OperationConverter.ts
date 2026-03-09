@@ -843,8 +843,9 @@ export class OperationConverter extends AbstractOperationConverter {
         }
         const baseGroupName = group?.[group.length - 1];
         if (baseGroupName != null && rawOperationTag != null) {
-            const lowerCaseRawOperationTag = rawOperationTag.toLowerCase().replaceAll(" ", "");
-            return lowerCaseRawOperationTag === baseGroupName ? rawOperationTag : undefined;
+            const normalizedTag = rawOperationTag.toLowerCase().replaceAll(/[^a-z0-9]/g, "");
+            const normalizedGroupName = baseGroupName.toLowerCase().replaceAll(/[^a-z0-9]/g, "");
+            return normalizedTag === normalizedGroupName ? rawOperationTag : undefined;
         }
         return undefined;
     }

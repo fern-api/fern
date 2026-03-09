@@ -327,6 +327,23 @@ export abstract class AbstractSpecConverter<
         }
         this.ir.services[pkg.service]?.endpoints.push(endpoint);
 
+        // Propagate the endpoint group display name to the subpackage so that
+        // the original tag capitalization/formatting is preserved in navigation.
+        if (endpointGroupDisplayName != null) {
+            const groupParts: string[] = [];
+            if (this.context.namespace != null) {
+                groupParts.push(this.context.namespace);
+            }
+            groupParts.push(...(endpointGroup ?? []).map((part) => camelCase(part)));
+            if (groupParts.length > 0) {
+                const subpackageId = `subpackage_${groupParts.join("/")}`;
+                const subpackage = this.ir.subpackages[subpackageId];
+                if (subpackage != null && subpackage.displayName == null) {
+                    subpackage.displayName = endpointGroupDisplayName;
+                }
+            }
+        }
+
         const service = this.ir.services[pkg.service];
         if (service != null) {
             this.irGraph.addEndpoint(service, endpoint);

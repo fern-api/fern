@@ -1257,6 +1257,7 @@
           }
         }
       },
+      "displayName": "Organizations",
       "basePath": {
         "head": "",
         "parts": []
@@ -2180,6 +2181,7 @@
           "safeName": "Organizations"
         }
       },
+      "displayName": "Organizations",
       "fernFilepath": {
         "allParts": [
           {

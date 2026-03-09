@@ -1245,6 +1245,7 @@
           }
         }
       },
+      "displayName": "OrganizationUsers",
       "basePath": {
         "head": "",
         "parts": []
@@ -4396,6 +4397,7 @@
           }
         }
       },
+      "displayName": "Users",
       "basePath": {
         "head": "",
         "parts": []
@@ -8985,6 +8987,7 @@
           "safeName": "OrganizationUsers"
         }
       },
+      "displayName": "OrganizationUsers",
       "fernFilepath": {
         "allParts": [
           {
@@ -9054,6 +9057,7 @@
           "safeName": "Users"
         }
       },
+      "displayName": "Users",
       "fernFilepath": {
         "allParts": [
           {
