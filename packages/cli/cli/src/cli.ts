@@ -1985,7 +1985,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "enrich <openapi> <overrides>",
+        "enrich <openapi>",
         false, // Hidden from --help
         (yargs) =>
             yargs
@@ -1994,15 +1994,16 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Path to the OpenAPI spec",
                     demandOption: true
                 })
-                .positional("overrides", {
+                .option("file", {
                     type: "string",
+                    alias: "f",
                     description: "Path to the overrides file (e.g. ai_examples_overrides.yml)",
                     demandOption: true
                 })
                 .option("output", {
                     type: "string",
                     alias: "o",
-                    description: "Path to write the merged output file",
+                    description: "Path to write the enriched output file",
                     demandOption: true
                 }),
         async (argv) => {
@@ -2010,7 +2011,7 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 command: "fern api enrich"
             });
             const openapiPath = resolve(cwd(), argv.openapi as string);
-            const overridesPath = resolve(cwd(), argv.overrides as string);
+            const overridesPath = resolve(cwd(), argv.file);
             const outputPath = resolve(cwd(), argv.output);
             await mergeOpenAPIWithOverrides({
                 openapiPath: AbsoluteFilePath.of(openapiPath),

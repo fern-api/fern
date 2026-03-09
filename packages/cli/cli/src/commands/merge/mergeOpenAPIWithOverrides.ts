@@ -79,7 +79,7 @@ async function loadYamlOrJson(filepath: AbsoluteFilePath, context: any): Promise
  * into native OpenAPI example fields in the base spec.
  */
 // biome-ignore lint/suspicious/noExplicitAny: context logger
-function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec, context: any): OpenAPISpec {
+export function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec, context: any): OpenAPISpec {
     const merged = structuredClone(spec);
 
     const overridePaths = overrides.paths;
@@ -386,7 +386,7 @@ function getFirstContentType(content: Record<string, unknown>): string | undefin
  * parameter names (e.g. `/customers/customerId`) that correspond to
  * templated spec paths (e.g. `/customers/{customerId}`).
  */
-function findMatchingSpecPath(overridePath: string, specPaths: Record<string, unknown>): string | undefined {
+export function findMatchingSpecPath(overridePath: string, specPaths: Record<string, unknown>): string | undefined {
     // Try exact match first
     if (specPaths[overridePath] != null) {
         return overridePath;
