@@ -1,3 +1,4 @@
+import crypto from "crypto";
 import fs from "fs";
 import { homedir } from "os";
 import path from "path";
@@ -12,8 +13,9 @@ interface CacheEntry<T> {
 function ensureCacheDir(): void {
     try {
         fs.mkdirSync(FERN_CACHE_DIR, { recursive: true });
-    } catch {
-        // ignore errors (e.g. permissions)
+    } catch (error) {
+        // biome-ignore lint/suspicious/noConsole: cache utility has no logger access
+        console.debug("Failed to create fern cache directory", error);
     }
 }
 
@@ -29,8 +31,9 @@ export function readCache<T>(key: string, ttlMs: number): T | undefined {
         if (Date.now() - entry.timestamp < ttlMs) {
             return entry.value;
         }
-    } catch {
-        // cache miss or corrupted
+    } catch (error) {
+        // biome-ignore lint/suspicious/noConsole: cache utility has no logger access
+        console.debug(`Cache miss or corrupted for key "${key}"`, error);
     }
     return undefined;
 }
@@ -42,8 +45,14 @@ export function writeCache<T>(key: string, value: T): void {
             value,
             timestamp: Date.now()
         };
-        fs.writeFileSync(getCachePath(key), JSON.stringify(entry), "utf-8");
-    } catch {
-        // ignore write errors
+        const cachePath = getCachePath(key);
+        const data = JSON.stringify(entry);
+        // Atomic write: write to temp file then rename to avoid partial reads
+        const tmpPath = `${cachePath}.${crypto.randomBytes(4).toString("hex")}.tmp`;
+        fs.writeFileSync(tmpPath, data, "utf-8");
+        fs.renameSync(tmpPath, cachePath);
+    } catch (error) {
+        // biome-ignore lint/suspicious/noConsole: cache utility has no logger access
+        console.debug(`Failed to write cache for key "${key}"`, error);
     }
 }

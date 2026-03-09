@@ -19,6 +19,11 @@ import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli.js"
 const UPGRADE_NUDGE_CACHE_KEY = "upgrade-nudge-message";
 const UPGRADE_NUDGE_CACHE_TTL_MS = 4 * 60 * 60 * 1000; // 4 hours
 
+interface UpgradeNudgeCache {
+    message: string;
+    latestVersion: string;
+}
+
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
 
 export interface FernCliUpgradeInfo {
@@ -145,11 +150,14 @@ export class CliContext {
     }
 
     private async nudgeUpgradeIfAvailable() {
-        // Show cached upgrade message immediately (no network I/O)
-        const cachedMessage = readCache<string>(UPGRADE_NUDGE_CACHE_KEY, UPGRADE_NUDGE_CACHE_TTL_MS);
-        const hadCachedMessage = cachedMessage != null && cachedMessage.length > 0;
-        if (hadCachedMessage) {
-            this.stderr.info(cachedMessage);
+        // Show cached upgrade message immediately if still relevant (no network I/O)
+        const cached = readCache<UpgradeNudgeCache>(UPGRADE_NUDGE_CACHE_KEY, UPGRADE_NUDGE_CACHE_TTL_MS);
+        const cachedIsRelevant =
+            cached != null &&
+            cached.message.length > 0 &&
+            isVersionAhead(cached.latestVersion, this.environment.packageVersion);
+        if (cachedIsRelevant) {
+            this.stderr.info(cached.message);
         }
 
         // Refresh the cache for next run (with 300ms timeout to avoid blocking exit)
@@ -167,14 +175,15 @@ export class CliContext {
                 if (!upgradeMessage.endsWith("\n")) {
                     upgradeMessage += "\n";
                 }
-                writeCache(UPGRADE_NUDGE_CACHE_KEY, upgradeMessage);
-                // If there was no cached message, show the fresh one now
-                if (!hadCachedMessage) {
+                const latestVersion = upgradeInfo.cliUpgradeInfo?.latestVersion ?? "";
+                writeCache<UpgradeNudgeCache>(UPGRADE_NUDGE_CACHE_KEY, { message: upgradeMessage, latestVersion });
+                // If we didn't show a cached message, show the fresh one now
+                if (!cachedIsRelevant) {
                     this.stderr.info(upgradeMessage);
                 }
             } else {
                 // No upgrade available, clear the cache
-                writeCache(UPGRADE_NUDGE_CACHE_KEY, "");
+                writeCache<UpgradeNudgeCache>(UPGRADE_NUDGE_CACHE_KEY, { message: "", latestVersion: "" });
             }
         } catch {
             // swallow error when failing to check for upgrade
