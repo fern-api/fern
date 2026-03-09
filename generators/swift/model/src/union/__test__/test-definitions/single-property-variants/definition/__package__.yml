@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  UnionWithSingleProperty:
+    union:
+      integer: integer
+      string: string
+
+  UnionWithNamedSingleProperty:
+    union:
+      foo:
+        type: Foo
+        key: foo
+      bar:
+        type: Bar
+        key: bar
+
+  UnionWithCustomDiscriminantAndKeys:
+    discriminant:
+      value: shape_type
+      name: shapeType
+    union:
+      triangle:
+        type: Triangle
+        key: triangle
+      square:
+        type: Square
+        key: square
+
+  Foo:
+    properties:
+      name: string
+
+  Bar:
+    properties:
+      value: integer
+
+  Triangle:
+    properties:
+      a: double
+      b: double
+      c: double
+
+  Square:
+    properties:
+      length: double

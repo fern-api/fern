@@ -1,63 +1,63 @@
 public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
-    case abc(Abc)
-    case abcdEfgh(AbcdEfgh)
-    case camelCase(CamelCase)
-    case dataPoint(DataPoint)
-    case kebabCaseValue(KebabCaseValue)
-    case leadingSpaces(LeadingSpaces)
-    case mixed123Values456(Mixed123Values456)
-    case oneAbc(OneAbc)
-    case oneHundredTwentyThreeAbc(OneHundredTwentyThreeAbc)
-    case pascalCase(PascalCase)
-    case sevenAgent(SevenAgent)
-    case snakeCaseValue(SnakeCaseValue)
-    case spacesInTheMiddle(SpacesInTheMiddle)
-    case special(Special)
-    case trailingSpaces(TrailingSpaces)
-    case twelveAbc(TwelveAbc)
-    case uppercase(Uppercase)
-    case userName(UserName)
+    case abc(UnionVariant)
+    case abcdEfgh(UnionVariant)
+    case camelCase(UnionVariant)
+    case dataPoint(UnionVariant)
+    case kebabCaseValue(UnionVariant)
+    case leadingSpaces(UnionVariant)
+    case mixed123Values456(UnionVariant)
+    case oneAbc(UnionVariant)
+    case oneHundredTwentyThreeAbc(UnionVariant)
+    case pascalCase(UnionVariant)
+    case sevenAgent(UnionVariant)
+    case snakeCaseValue(UnionVariant)
+    case spacesInTheMiddle(UnionVariant)
+    case special(UnionVariant)
+    case trailingSpaces(UnionVariant)
+    case twelveAbc(UnionVariant)
+    case uppercase(UnionVariant)
+    case userName(UnionVariant)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "abc":
-            self = .abc(try Abc(from: decoder))
+            self = .abc(try UnionVariant(from: decoder))
         case "abcd-efgh":
-            self = .abcdEfgh(try AbcdEfgh(from: decoder))
+            self = .abcdEfgh(try UnionVariant(from: decoder))
         case "camelCase":
-            self = .camelCase(try CamelCase(from: decoder))
+            self = .camelCase(try UnionVariant(from: decoder))
         case "data@point":
-            self = .dataPoint(try DataPoint(from: decoder))
+            self = .dataPoint(try UnionVariant(from: decoder))
         case "kebab-case-value":
-            self = .kebabCaseValue(try KebabCaseValue(from: decoder))
+            self = .kebabCaseValue(try UnionVariant(from: decoder))
         case "  leading-spaces":
-            self = .leadingSpaces(try LeadingSpaces(from: decoder))
+            self = .leadingSpaces(try UnionVariant(from: decoder))
         case "mixed123Values456":
-            self = .mixed123Values456(try Mixed123Values456(from: decoder))
+            self = .mixed123Values456(try UnionVariant(from: decoder))
         case "1abc":
-            self = .oneAbc(try OneAbc(from: decoder))
+            self = .oneAbc(try UnionVariant(from: decoder))
         case "123abc":
-            self = .oneHundredTwentyThreeAbc(try OneHundredTwentyThreeAbc(from: decoder))
+            self = .oneHundredTwentyThreeAbc(try UnionVariant(from: decoder))
         case "PascalCase":
-            self = .pascalCase(try PascalCase(from: decoder))
+            self = .pascalCase(try UnionVariant(from: decoder))
         case "007agent":
-            self = .sevenAgent(try SevenAgent(from: decoder))
+            self = .sevenAgent(try UnionVariant(from: decoder))
         case "snake_case_value":
-            self = .snakeCaseValue(try SnakeCaseValue(from: decoder))
+            self = .snakeCaseValue(try UnionVariant(from: decoder))
         case "spaces in the middle":
-            self = .spacesInTheMiddle(try SpacesInTheMiddle(from: decoder))
+            self = .spacesInTheMiddle(try UnionVariant(from: decoder))
         case "!@#$%special":
-            self = .special(try Special(from: decoder))
+            self = .special(try UnionVariant(from: decoder))
         case "trailing-spaces ":
-            self = .trailingSpaces(try TrailingSpaces(from: decoder))
+            self = .trailingSpaces(try UnionVariant(from: decoder))
         case "12abc":
-            self = .twelveAbc(try TwelveAbc(from: decoder))
+            self = .twelveAbc(try UnionVariant(from: decoder))
         case "UPPERCASE":
-            self = .uppercase(try Uppercase(from: decoder))
+            self = .uppercase(try UnionVariant(from: decoder))
         case "user#name":
-            self = .userName(try UserName(from: decoder))
+            self = .userName(try UnionVariant(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -69,655 +69,62 @@ public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
         case .abc(let data):
+            try container.encode("abc", forKey: .type)
             try data.encode(to: encoder)
         case .abcdEfgh(let data):
+            try container.encode("abcd-efgh", forKey: .type)
             try data.encode(to: encoder)
         case .camelCase(let data):
+            try container.encode("camelCase", forKey: .type)
             try data.encode(to: encoder)
         case .dataPoint(let data):
+            try container.encode("data@point", forKey: .type)
             try data.encode(to: encoder)
         case .kebabCaseValue(let data):
+            try container.encode("kebab-case-value", forKey: .type)
             try data.encode(to: encoder)
         case .leadingSpaces(let data):
+            try container.encode("  leading-spaces", forKey: .type)
             try data.encode(to: encoder)
         case .mixed123Values456(let data):
+            try container.encode("mixed123Values456", forKey: .type)
             try data.encode(to: encoder)
         case .oneAbc(let data):
+            try container.encode("1abc", forKey: .type)
             try data.encode(to: encoder)
         case .oneHundredTwentyThreeAbc(let data):
+            try container.encode("123abc", forKey: .type)
             try data.encode(to: encoder)
         case .pascalCase(let data):
+            try container.encode("PascalCase", forKey: .type)
             try data.encode(to: encoder)
         case .sevenAgent(let data):
+            try container.encode("007agent", forKey: .type)
             try data.encode(to: encoder)
         case .snakeCaseValue(let data):
+            try container.encode("snake_case_value", forKey: .type)
             try data.encode(to: encoder)
         case .spacesInTheMiddle(let data):
+            try container.encode("spaces in the middle", forKey: .type)
             try data.encode(to: encoder)
         case .special(let data):
+            try container.encode("!@#$%special", forKey: .type)
             try data.encode(to: encoder)
         case .trailingSpaces(let data):
+            try container.encode("trailing-spaces ", forKey: .type)
             try data.encode(to: encoder)
         case .twelveAbc(let data):
+            try container.encode("12abc", forKey: .type)
             try data.encode(to: encoder)
         case .uppercase(let data):
+            try container.encode("UPPERCASE", forKey: .type)
             try data.encode(to: encoder)
         case .userName(let data):
+            try container.encode("user#name", forKey: .type)
             try data.encode(to: encoder)
-        }
-    }
-
-    public struct Abc: Codable, Hashable, Sendable {
-        public let type: String = "abc"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct OneAbc: Codable, Hashable, Sendable {
-        public let type: String = "1abc"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct TwelveAbc: Codable, Hashable, Sendable {
-        public let type: String = "12abc"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct OneHundredTwentyThreeAbc: Codable, Hashable, Sendable {
-        public let type: String = "123abc"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct SevenAgent: Codable, Hashable, Sendable {
-        public let type: String = "007agent"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct AbcdEfgh: Codable, Hashable, Sendable {
-        public let type: String = "abcd-efgh"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct DataPoint: Codable, Hashable, Sendable {
-        public let type: String = "data@point"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct UserName: Codable, Hashable, Sendable {
-        public let type: String = "user#name"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct SnakeCaseValue: Codable, Hashable, Sendable {
-        public let type: String = "snake_case_value"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct KebabCaseValue: Codable, Hashable, Sendable {
-        public let type: String = "kebab-case-value"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct Special: Codable, Hashable, Sendable {
-        public let type: String = "!@#$%special"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct LeadingSpaces: Codable, Hashable, Sendable {
-        public let type: String = "  leading-spaces"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct TrailingSpaces: Codable, Hashable, Sendable {
-        public let type: String = "trailing-spaces "
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct SpacesInTheMiddle: Codable, Hashable, Sendable {
-        public let type: String = "spaces in the middle"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct Uppercase: Codable, Hashable, Sendable {
-        public let type: String = "UPPERCASE"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct CamelCase: Codable, Hashable, Sendable {
-        public let type: String = "camelCase"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct PascalCase: Codable, Hashable, Sendable {
-        public let type: String = "PascalCase"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
-        }
-    }
-
-    public struct Mixed123Values456: Codable, Hashable, Sendable {
-        public let type: String = "mixed123Values456"
-        public let someValue: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            someValue: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.someValue = someValue
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.someValue = try container.decode(String.self, forKey: .someValue)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.someValue, forKey: .someValue)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case someValue = "some_value"
         }
     }
 

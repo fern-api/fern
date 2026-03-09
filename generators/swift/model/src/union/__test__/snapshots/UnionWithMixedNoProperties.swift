@@ -1,18 +1,15 @@
-public enum UnionWithDuplicateVariantDiscriminant: Codable, Hashable, Sendable {
-    case variantA(VariantA)
-    case variantB(VariantB)
-    case variantC(VariantC)
+public enum UnionWithMixedNoProperties: Codable, Hashable, Sendable {
+    case empty
+    case foo(Foo)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "variantA":
-            self = .variantA(try VariantA(from: decoder))
-        case "variantB":
-            self = .variantB(try VariantB(from: decoder))
-        case "variantC":
-            self = .variantC(try VariantC(from: decoder))
+        case "empty":
+            self = .empty
+        case "foo":
+            self = .foo(try Foo(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -26,14 +23,10 @@ public enum UnionWithDuplicateVariantDiscriminant: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .variantA(let data):
-            try container.encode("variantA", forKey: .type)
-            try data.encode(to: encoder)
-        case .variantB(let data):
-            try container.encode("variantB", forKey: .type)
-            try data.encode(to: encoder)
-        case .variantC(let data):
-            try container.encode("variantC", forKey: .type)
+        case .empty:
+            try container.encode("empty", forKey: .type)
+        case .foo(let data):
+            try container.encode("foo", forKey: .type)
             try data.encode(to: encoder)
         }
     }
