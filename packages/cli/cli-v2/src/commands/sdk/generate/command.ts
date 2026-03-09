@@ -68,6 +68,9 @@ export declare namespace GenerateCommand {
 
         /** Force generation without prompts */
         force: boolean;
+
+        /** Path to .fernignore file */
+        fernignore?: string;
     }
 }
 
@@ -319,7 +322,8 @@ export class GenerateCommand {
                     preview: args.preview,
                     outputPath: args.output != null ? resolve(context.cwd, args.output) : undefined,
                     token,
-                    version: args["output-version"]
+                    version: args["output-version"],
+                    fernignorePath: args.fernignore
                 });
                 if (!pipelineResult.success) {
                     task.stage.generator.fail(pipelineResult.error);
@@ -652,6 +656,11 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): 
                     type: "boolean",
                     default: false,
                     description: "Ignore prompts to confirm generation"
+                })
+                .option("fernignore", {
+                    type: "string",
+                    description: "Path to .fernignore file",
+                    hidden: true
                 }),
         parentPath
     );

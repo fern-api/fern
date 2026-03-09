@@ -10,6 +10,18 @@
   createdAt: "2026-03-09"
   irVersion: 65
 
+- version: 4.18.0
+  changelogEntry:
+    - summary: |
+        Gzip-compress IR before uploading to Fiddle for remote generation. This
+        reduces upload size by ~85-90% on typical IR payloads, improving upload
+        speed and reducing bandwidth usage. The Fiddle receiver transparently
+        detects and decompresses gzip content, maintaining backward compatibility
+        with older CLI versions.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+
 - version: 4.17.0
   changelogEntry:
     - summary: |
@@ -21,7 +33,6 @@
       type: feat
   createdAt: "2026-03-09"
   irVersion: 65
-
 - version: 4.16.0
   changelogEntry:
     - summary: |

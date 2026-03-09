@@ -57,21 +57,36 @@ const ALL_FIXTURES = ["imdb", "exhaustive", "alias", "basic-auth", "file-upload"
 
 describe("detectAffected", () => {
     describe("fallback behavior", () => {
-        it("runs everything when no changed files", () => {
+        it("skips all seed tests when no changed files (e.g. git diff failure)", () => {
             const result = detectAffected([], ALL_GENERATORS);
 
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
             expect(result.affectedGenerators).toEqual([]);
             expect(result.generatorsWithAllFixtures).toEqual([]);
             expect(result.affectedFixtures).toEqual([]);
         });
 
-        it("runs everything when changed files don't match any known pattern", () => {
+        it("skips all seed tests when changed files don't match any known pattern", () => {
             const result = detectAffected(["README.md", "docs/guide.md", ".github/workflows/ci.yml"], ALL_GENERATORS);
 
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.generatorsWithAllFixtures).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
+        });
+
+        it("skips all seed tests when only CLI code changes", () => {
+            const result = detectAffected(
+                ["packages/cli/cli/src/commands/check.ts", "packages/cli/cli/src/cli.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
         });
     });
 
@@ -108,6 +123,71 @@ describe("detectAffected", () => {
 
         it("runs everything when generators/browser-compatible-base/ changes (fallback mode)", () => {
             const result = detectAffected(["generators/browser-compatible-base/src/index.ts"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when workspace loader changes", () => {
+            const result = detectAffected(["packages/cli/workspace/loader/src/loadWorkspace.ts"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when api-importers change", () => {
+            const result = detectAffected(
+                ["packages/cli/api-importers/openapi-to-ir/src/converter.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when fern-definition parsing changes", () => {
+            const result = detectAffected(["packages/cli/fern-definition/schema/src/schemas.ts"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when configuration package changes", () => {
+            const result = detectAffected(["packages/cli/configuration/src/generators-yml.ts"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when local-generation changes", () => {
+            const result = detectAffected(
+                ["packages/cli/generation/local-generation/local-workspace-runner/src/runner.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when ir-migrations change", () => {
+            const result = detectAffected(
+                ["packages/cli/generation/ir-migrations/src/migrations/v65-to-v64.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when source-resolver changes", () => {
+            const result = detectAffected(["packages/cli/generation/source-resolver/src/resolver.ts"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when protoc-gen-fern changes", () => {
+            const result = detectAffected(["packages/cli/generation/protoc-gen-fern/src/index.ts"], ALL_GENERATORS);
 
             expect(result.allGeneratorsAffected).toBe(true);
             expect(result.allFixturesAffected).toBe(true);
@@ -218,12 +298,14 @@ describe("detectAffected", () => {
             expect(result.generatorsWithAllFixtures).toContain("python-sdk");
         });
 
-        it("ignores seed.yml for generators not in the list", () => {
+        it("skips seed tests when seed.yml changes for unknown generator", () => {
             const result = detectAffected(["seed/unknown-generator/seed.yml"], ALL_GENERATORS);
 
-            // No recognized generators affected, falls back to everything
-            expect(result.allGeneratorsAffected).toBe(true);
-            expect(result.allFixturesAffected).toBe(true);
+            // No recognized generators affected, skip all seed tests
+            expect(result.allGeneratorsAffected).toBe(false);
+            expect(result.allFixturesAffected).toBe(false);
+            expect(result.affectedGenerators).toEqual([]);
+            expect(result.affectedFixtures).toEqual([]);
         });
 
         it("detects seed.yml change alongside other changes", () => {
@@ -575,5 +657,38 @@ describe("end-to-end scenario tests", () => {
             const fixtures = resolveAffectedFixtures(affected, ALL_FIXTURES, gen.workspaceName);
             expect(fixtures).toEqual(ALL_FIXTURES);
         }
+    });
+
+    it("scenario: unrelated CLI changes skip all seed tests", () => {
+        const changedFiles = [
+            "packages/cli/cli/src/commands/check.ts",
+            "packages/cli/cli/src/commands/apiCheck.ts",
+            "packages/cli/cli/src/cli.ts"
+        ];
+        const affected = detectAffected(changedFiles, ALL_GENERATORS);
+
+        // No generators should run
+        const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
+        expect(generators).toHaveLength(0);
+
+        // No fixtures should be resolved for any generator
+        for (const gen of ALL_GENERATORS) {
+            const fixtures = resolveAffectedFixtures(affected, ALL_FIXTURES, gen.workspaceName);
+            expect(fixtures).toEqual([]);
+        }
+    });
+
+    it("scenario: mixed unrelated and seed-related changes only runs affected", () => {
+        const changedFiles = ["packages/cli/cli/src/commands/check.ts", "generators/python/src/generator.ts"];
+        const affected = detectAffected(changedFiles, ALL_GENERATORS);
+
+        // Only python generators should run (CLI changes are ignored)
+        const generators = resolveAffectedGenerators(affected, ALL_GENERATORS);
+        const names = generators.map((g) => g.workspaceName);
+        expect(names).toContain("python-sdk");
+        expect(names).toContain("pydantic");
+        expect(names).toContain("fastapi");
+        expect(names).not.toContain("ts-sdk");
+        expect(names).not.toContain("java-sdk");
     });
 });

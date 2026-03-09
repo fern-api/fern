@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.62.1
+  changelogEntry:
+    - summary: |
+        SDK clients now catch `pydantic.ValidationError` during response parsing and
+        wrap it in `ParsingError` with the response body, headers, status code and cause. Previously,
+        validation errors from `parse_obj_as` would bubble up raw, preventing users from
+        inspecting the actual API response.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
 - version: 4.62.0
   changelogEntry:
     - summary: |
