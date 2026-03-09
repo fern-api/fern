@@ -17,6 +17,15 @@ function nodeToJS(value: unknown): unknown {
     return (value as { toJSON(): unknown }).toJSON();
 }
 
+export interface OverrideEdit {
+    /** 1-based line number where the edit occurred */
+    line: number;
+}
+
+export interface RemoveOverridesResult extends OverrideEdit {
+    removed: string[];
+}
+
 /**
  * Stateful editor for mutating API spec override references in fern.yml.
  *
@@ -26,10 +35,11 @@ function nodeToJS(value: unknown): unknown {
  */
 export class FernYmlApiEditor {
     private dirty = false;
+    private cachedSerialization: { text: string; parsed: Document } | undefined;
 
     private constructor(
         private readonly document: Document,
-        private readonly filePath: AbsoluteFilePath,
+        public readonly filePath: AbsoluteFilePath,
         private readonly specsPath: (string | number)[]
     ) {}
 
@@ -67,14 +77,14 @@ export class FernYmlApiEditor {
 
     /**
      * Adds an override path to the matching spec entry.
-     * Returns true if a mutation was made.
+     * Returns the edit location if a mutation was made, or undefined if no change.
      */
-    public addOverride(specFilePath: AbsoluteFilePath, overrideAbsolutePath: AbsoluteFilePath): boolean {
+    public addOverride(specFilePath: AbsoluteFilePath, overrideAbsolutePath: AbsoluteFilePath): OverrideEdit | undefined {
         const fileDir = dirname(this.filePath);
         const relativeOverridePath = `./${path.relative(fileDir, overrideAbsolutePath)}`;
         const index = this.findSpecIndex(specFilePath);
         if (index < 0) {
-            return false;
+            return undefined;
         }
 
         const overridesPath = [...this.specsPath, index, "overrides"];
@@ -85,40 +95,44 @@ export class FernYmlApiEditor {
             this.document.setIn(overridesPath, relativeOverridePath);
         } else if (typeof existing === "string") {
             if (path.normalize(existing) === normalizedNew) {
-                return false;
+                return undefined;
             }
             this.document.setIn(overridesPath, this.document.createNode([existing, relativeOverridePath]));
         } else if (Array.isArray(existing)) {
             if (existing.some((p: string) => path.normalize(p) === normalizedNew)) {
-                return false;
+                return undefined;
             }
             const updated = [...existing, relativeOverridePath];
             this.document.setIn(overridesPath, this.document.createNode(updated));
         }
 
         this.dirty = true;
-        return true;
+        this.cachedSerialization = undefined;
+        return { line: this.getLineOfPath(overridesPath) };
     }
 
     /**
      * Removes all override references for the matching spec.
-     * Returns the removed override paths.
+     * Returns the removed paths and the edit location, or undefined if nothing was removed.
      */
-    public removeOverrides(specFilePath: AbsoluteFilePath): string[] {
+    public removeOverrides(specFilePath: AbsoluteFilePath): RemoveOverridesResult | undefined {
         const index = this.findSpecIndex(specFilePath);
         if (index < 0) {
-            return [];
+            return undefined;
         }
 
         const overridesPath = [...this.specsPath, index, "overrides"];
         const existing = nodeToJS(this.document.getIn(overridesPath));
         if (existing == null) {
-            return [];
+            return undefined;
         }
+        // Capture line before deletion
+        const line = this.getLineOfPath(overridesPath);
         const removed: string[] = typeof existing === "string" ? [existing] : [...(existing as string[])];
         this.document.deleteIn(overridesPath);
         this.dirty = true;
-        return removed;
+        this.cachedSerialization = undefined;
+        return { removed, line };
     }
 
     /**
@@ -131,6 +145,27 @@ export class FernYmlApiEditor {
         }
         await writeFile(this.filePath, this.document.toString(), "utf-8");
         this.dirty = false;
+        this.cachedSerialization = undefined;
+    }
+
+    /**
+     * Re-serializes the document and finds the 1-based line number of the node at `nodePath`.
+     * Caches the serialization to avoid redundant work when called multiple times between mutations.
+     */
+    private getLineOfPath(nodePath: (string | number)[]): number {
+        if (this.cachedSerialization == null) {
+            const text = this.document.toString();
+            this.cachedSerialization = { text, parsed: parseDocument(text) };
+        }
+        const { text, parsed } = this.cachedSerialization;
+        const node = parsed.getIn(nodePath, true);
+        if (node != null && typeof node === "object" && "range" in node) {
+            const range = (node as { range?: [number, number, number] }).range;
+            if (range != null) {
+                return text.substring(0, range[0]).split("\n").length;
+            }
+        }
+        return 1;
     }
 
     /**

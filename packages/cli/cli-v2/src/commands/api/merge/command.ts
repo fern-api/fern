@@ -1,6 +1,7 @@
 import { mergeWithOverrides } from "@fern-api/core-utils";
 import chalk from "chalk";
 import { unlink, writeFile } from "fs/promises";
+import path from "path";
 import type { Argv } from "yargs";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
@@ -14,7 +15,7 @@ import { loadSpec, serializeSpec } from "../utils/loadSpec.js";
 export declare namespace MergeCommand {
     export interface Args extends GlobalArgs {
         api?: string;
-        delete?: boolean;
+        remove?: boolean;
     }
 }
 
@@ -33,7 +34,7 @@ export class MergeCommand {
             return;
         }
 
-        const editor = args.delete === true ? await FernYmlApiEditor.load(context.cwd) : undefined;
+        const editor = args.remove === true ? await FernYmlApiEditor.load(context.cwd) : undefined;
         let mergedCount = 0;
 
         for (const entry of entries) {
@@ -57,9 +58,13 @@ export class MergeCommand {
             mergedCount++;
 
             if (editor != null) {
-                editor.removeOverrides(entry.specFilePath);
+                const edit = editor.removeOverrides(entry.specFilePath);
                 await this.cleanupOverrideFiles(context, entry.overrides);
-                context.stderr.info(chalk.dim("  Removed override references from fern.yml"));
+                if (edit != null) {
+                    const relPath = path.relative(context.cwd, editor.filePath);
+                    const names = entry.overrides.map((o) => path.basename(o)).join(", ");
+                    context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: removed reference to ${names}`));
+                }
             }
         }
 
@@ -107,10 +112,10 @@ export function addMergeCommand(cli: Argv<GlobalArgs>): void {
                     type: "string",
                     description: "Filter by API name"
                 })
-                .option("delete", {
+                .option("remove", {
                     type: "boolean",
                     default: false,
-                    description: "Delete override files and remove references from fern.yml after merge"
+                    description: "Remove override files and their references from fern.yml after merge"
                 })
     );
 }

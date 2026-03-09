@@ -22,7 +22,6 @@ const execFileAsync = promisify(execFile);
 export declare namespace SplitCommand {
     export interface Args extends GlobalArgs {
         api?: string;
-        "merge-into"?: string;
         output?: string;
     }
 }
@@ -39,10 +38,6 @@ export class SplitCommand {
             throw new CliError({ message: "No APIs found in workspace." });
         }
 
-        if (args["merge-into"] != null && args.output != null) {
-            throw new CliError({ message: "Cannot use both --merge-into and --output at the same time." });
-        }
-
         const entries = filterSpecs(workspace, { api: args.api });
 
         if (entries.length === 0) {
@@ -50,7 +45,7 @@ export class SplitCommand {
             return;
         }
 
-        const editor = args["merge-into"] == null ? await FernYmlApiEditor.load(context.cwd) : undefined;
+        const editor = await FernYmlApiEditor.load(context.cwd);
         let splitCount = 0;
 
         for (const entry of entries) {
@@ -67,30 +62,24 @@ export class SplitCommand {
                 continue;
             }
 
-            let outputPath: AbsoluteFilePath;
+            const outputPath =
+                args.output != null
+                    ? resolvePathOrThrow(context, args.output)
+                    : deriveOutputPath(entry.specFilePath);
 
-            if (args["merge-into"] != null) {
-                outputPath = resolvePathOrThrow(context, args["merge-into"]);
-                await mergeOverridesIntoFile(outputPath, overrides);
-                context.stderr.info(`${Icons.success} Merged diff into ${chalk.cyan(outputPath)}`);
+            if (await this.tryMergeIntoExistingFile(outputPath, overrides)) {
+                context.stderr.info(`${Icons.success} Merged diff into existing ${chalk.cyan(outputPath)}`);
             } else {
-                outputPath =
-                    args.output != null
-                        ? resolvePathOrThrow(context, args.output)
-                        : deriveOutputPath(entry.specFilePath);
+                await writeFile(outputPath, serializeSpec(overrides, outputPath));
+                context.stderr.info(
+                    `${Icons.success} Overrides written ${chalk.dim("→")} ${chalk.cyan(outputPath)}`
+                );
+            }
 
-                if (await this.tryMergeIntoExistingFile(outputPath, overrides)) {
-                    context.stderr.info(`${Icons.success} Merged diff into existing ${chalk.cyan(outputPath)}`);
-                } else {
-                    await writeFile(outputPath, serializeSpec(overrides, outputPath));
-                    context.stderr.info(
-                        `${Icons.success} Overrides written ${chalk.dim("→")} ${chalk.cyan(outputPath)}`
-                    );
-                }
-
-                if (editor != null && editor.addOverride(entry.specFilePath, outputPath)) {
-                    context.stderr.info(chalk.dim("  Added override reference to fern.yml"));
-                }
+            const edit = editor.addOverride(entry.specFilePath, outputPath);
+            if (edit != null) {
+                const relPath = path.relative(context.cwd, editor.filePath);
+                context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`));
             }
 
             // Restore spec to git HEAD after overrides are safely written
@@ -170,16 +159,6 @@ function resolvePathOrThrow(context: Context, outputPath: string): AbsoluteFileP
     return resolved;
 }
 
-async function mergeOverridesIntoFile(
-    filepath: AbsoluteFilePath,
-    // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
-    overrides: Record<string, any>
-): Promise<void> {
-    const existing = await loadSpec(filepath);
-    const merged = mergeWithOverrides({ data: existing, overrides });
-    await writeFile(filepath, serializeSpec(merged, filepath));
-}
-
 export function addSplitCommand(cli: Argv<GlobalArgs>): void {
     const cmd = new SplitCommand();
     command(
@@ -192,10 +171,6 @@ export function addSplitCommand(cli: Argv<GlobalArgs>): void {
                 .option("api", {
                     type: "string",
                     description: "Filter by API name"
-                })
-                .option("merge-into", {
-                    type: "string",
-                    description: "Merge the extracted diff into this existing override file"
                 })
                 .option("output", {
                     type: "string",

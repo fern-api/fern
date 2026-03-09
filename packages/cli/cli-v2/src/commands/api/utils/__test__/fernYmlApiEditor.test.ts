@@ -39,11 +39,12 @@ describe("FernYmlApiEditor — inline api section", () => {
 
         const editor = await FernYmlApiEditor.load(AbsoluteFilePath.of(testDir));
         const overridePath = AbsoluteFilePath.of(path.join(testDir, "openapi-overrides.yml"));
-        editor.addOverride(specFilePath, overridePath);
+        const edit = editor.addOverride(specFilePath, overridePath);
         await editor.save();
 
         const result = await readFernYml();
         expect(result).toContain("overrides: ./openapi-overrides.yml");
+        expect(edit?.line).toBeGreaterThan(0);
     });
 
     it("converts single override to array when adding second", async () => {
@@ -92,21 +93,21 @@ describe("FernYmlApiEditor — inline api section", () => {
 
         const editor = await FernYmlApiEditor.load(AbsoluteFilePath.of(testDir));
         const overridePath = AbsoluteFilePath.of(path.join(testDir, "openapi-overrides.yml"));
-        const mutated = editor.addOverride(specFilePath, overridePath);
+        const edit = editor.addOverride(specFilePath, overridePath);
 
-        expect(mutated).toBe(false);
+        expect(edit).toBeUndefined();
     });
 
-    it("returns false when no specs array", async () => {
+    it("returns undefined when no specs array", async () => {
         await writeFernYml(`api:
   auth: bearer
 `);
 
         const editor = await FernYmlApiEditor.load(AbsoluteFilePath.of(testDir));
         const overridePath = AbsoluteFilePath.of(path.join(testDir, "overrides.yml"));
-        const mutated = editor.addOverride(specFilePath, overridePath);
+        const edit = editor.addOverride(specFilePath, overridePath);
 
-        expect(mutated).toBe(false);
+        expect(edit).toBeUndefined();
     });
 
     it("removes single override reference", async () => {
@@ -117,12 +118,13 @@ describe("FernYmlApiEditor — inline api section", () => {
 `);
 
         const editor = await FernYmlApiEditor.load(AbsoluteFilePath.of(testDir));
-        const removed = editor.removeOverrides(specFilePath);
+        const edit = editor.removeOverrides(specFilePath);
         await editor.save();
 
         const result = await readFernYml();
         expect(result).not.toContain("overrides");
-        expect(removed).toEqual(["./overrides.yml"]);
+        expect(edit?.removed).toEqual(["./overrides.yml"]);
+        expect(edit?.line).toBeGreaterThan(0);
     });
 
     it("removes array of overrides", async () => {
@@ -135,23 +137,23 @@ describe("FernYmlApiEditor — inline api section", () => {
 `);
 
         const editor = await FernYmlApiEditor.load(AbsoluteFilePath.of(testDir));
-        const removed = editor.removeOverrides(specFilePath);
+        const edit = editor.removeOverrides(specFilePath);
         await editor.save();
 
         const result = await readFernYml();
         expect(result).not.toContain("overrides");
-        expect(removed).toEqual(["./a.yml", "./b.yml"]);
+        expect(edit?.removed).toEqual(["./a.yml", "./b.yml"]);
     });
 
-    it("returns empty array when no overrides exist", async () => {
+    it("returns undefined when no overrides exist", async () => {
         await writeFernYml(`api:
   specs:
     - openapi: ./openapi.yml
 `);
 
         const editor = await FernYmlApiEditor.load(AbsoluteFilePath.of(testDir));
-        const removed = editor.removeOverrides(specFilePath);
-        expect(removed).toEqual([]);
+        const edit = editor.removeOverrides(specFilePath);
+        expect(edit).toBeUndefined();
     });
 
     it("only removes overrides for matching spec", async () => {
@@ -228,10 +230,10 @@ describe("FernYmlApiEditor — $ref api section", () => {
         );
 
         const editor = await FernYmlApiEditor.load(AbsoluteFilePath.of(testDir));
-        const removed = editor.removeOverrides(specFilePath);
+        const edit = editor.removeOverrides(specFilePath);
         await editor.save();
 
-        expect(removed).toEqual(["./overrides.yml"]);
+        expect(edit?.removed).toEqual(["./overrides.yml"]);
         const apiContent = await readFile(apiYmlPath, "utf8");
         expect(apiContent).not.toContain("overrides");
     });
