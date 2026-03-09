@@ -1,7 +1,106 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:ChatResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "ChatResponse",
+                    "camelCase": {
+                        "unsafeName": "chatResponse",
+                        "safeName": "chatResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "chat_response",
+                        "safeName": "chat_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CHAT_RESPONSE",
+                        "safeName": "CHAT_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ChatResponse",
+                        "safeName": "ChatResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "message",
+                            "camelCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "message",
+                                "safeName": "message"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MESSAGE",
+                                "safeName": "MESSAGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Message",
+                                "safeName": "Message"
+                            }
+                        },
+                        "wireValue": "message"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "finish_reason",
+                            "camelCase": {
+                                "unsafeName": "finishReason",
+                                "safeName": "finishReason"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "finish_reason",
+                                "safeName": "finish_reason"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FINISH_REASON",
+                                "safeName": "FINISH_REASON"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "FinishReason",
+                                "safeName": "FinishReason"
+                            }
+                        },
+                        "wireValue": "finish_reason"
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:ChatStreamEvent": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -103,7 +202,148 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.[object Object]": {
+        "endpoint_.chat_stream": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "chat_stream",
+                    "camelCase": {
+                        "unsafeName": "chatStream",
+                        "safeName": "chatStream"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "chat_stream",
+                        "safeName": "chat_stream"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CHAT_STREAM",
+                        "safeName": "CHAT_STREAM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ChatStream",
+                        "safeName": "ChatStream"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/chat"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ChatStreamRequest",
+                        "camelCase": {
+                            "unsafeName": "chatStreamRequest",
+                            "safeName": "chatStreamRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "chat_stream_request",
+                            "safeName": "chat_stream_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CHAT_STREAM_REQUEST",
+                            "safeName": "CHAT_STREAM_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ChatStreamRequest",
+                            "safeName": "ChatStreamRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "prompt",
+                                    "camelCase": {
+                                        "unsafeName": "prompt",
+                                        "safeName": "prompt"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "prompt",
+                                        "safeName": "prompt"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "PROMPT",
+                                        "safeName": "PROMPT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Prompt",
+                                        "safeName": "Prompt"
+                                    }
+                                },
+                                "wireValue": "prompt"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "stream",
+                                    "camelCase": {
+                                        "unsafeName": "stream",
+                                        "safeName": "stream"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "stream",
+                                        "safeName": "stream"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "STREAM",
+                                        "safeName": "STREAM"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Stream",
+                                        "safeName": "Stream"
+                                    }
+                                },
+                                "wireValue": "stream"
+                            },
+                            "typeReference": {
+                                "type": "literal",
+                                "value": {
+                                    "type": "boolean",
+                                    "value": true
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "streaming"
+            },
+            "examples": null
+        },
+        "endpoint_.chat": {
             "auth": null,
             "declaration": {
                 "name": {

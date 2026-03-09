@@ -33,7 +33,7 @@
     "types": {},
     "errors": {},
     "services": {
-        "service_[object Object]": {
+        "service_service": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -96,7 +96,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_service.simple",
                     "name": {
                         "originalName": "simple",
                         "camelCase": {
@@ -184,7 +184,7 @@
                     "docs": null
                 },
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_service.download",
                     "name": {
                         "originalName": "download",
                         "camelCase": {
@@ -393,7 +393,87 @@
         "types": {},
         "headers": [],
         "endpoints": {
-            "endpoint_[object Object].[object Object]": {
+            "endpoint_service.simple": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "simple",
+                        "camelCase": {
+                            "unsafeName": "simple",
+                            "safeName": "simple"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "simple",
+                            "safeName": "simple"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SIMPLE",
+                            "safeName": "SIMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Simple",
+                            "safeName": "Simple"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/snippet"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_service.download": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -516,7 +596,7 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_[object Object]": {
+        "subpackage_service": {
             "name": {
                 "originalName": "service",
                 "camelCase": {
@@ -580,7 +660,7 @@
                     }
                 }
             },
-            "service": "service_[object Object]",
+            "service": "service_service",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -602,7 +682,7 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_[object Object]"
+            "subpackage_service"
         ],
         "webhooks": null,
         "navigationConfig": null,

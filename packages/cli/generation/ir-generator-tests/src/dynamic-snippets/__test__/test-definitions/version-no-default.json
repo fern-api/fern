@@ -1,7 +1,78 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_[object Object]:[object Object]": {
+        "type_user:UserId": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "UserId",
+                    "camelCase": {
+                        "unsafeName": "userID",
+                        "safeName": "userID"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "user_id",
+                        "safeName": "user_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "USER_ID",
+                        "safeName": "USER_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UserID",
+                        "safeName": "UserID"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                }
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            }
+        },
+        "type_user:User": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -93,7 +164,7 @@
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_[object Object]:[object Object]"
+                        "value": "type_user:UserId"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -135,7 +206,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_[object Object].[object Object]": {
+        "endpoint_user.getUser": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -233,7 +304,7 @@
                         },
                         "typeReference": {
                             "type": "named",
-                            "value": "type_[object Object]:[object Object]"
+                            "value": "type_user:UserId"
                         },
                         "propertyAccess": null,
                         "variable": null

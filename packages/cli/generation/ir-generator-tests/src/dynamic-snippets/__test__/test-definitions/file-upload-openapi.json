@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:FileId": {
             "type": "alias",
             "declaration": {
                 "name": {
@@ -37,7 +37,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_[object Object].[object Object]": {
+        "endpoint_fileUploadExample.uploadFile": {
             "auth": null,
             "declaration": {
                 "name": {

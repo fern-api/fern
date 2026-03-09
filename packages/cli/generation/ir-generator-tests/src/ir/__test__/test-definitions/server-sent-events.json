@@ -31,7 +31,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_[object Object]:[object Object]": {
+        "type_completions:StreamedCompletion": {
             "inline": null,
             "name": {
                 "name": {
@@ -97,7 +97,7 @@
                     }
                 },
                 "displayName": null,
-                "typeId": "type_[object Object]:[object Object]"
+                "typeId": "type_completions:StreamedCompletion"
             },
             "shape": {
                 "_type": "object",
@@ -212,7 +212,7 @@
     },
     "errors": {},
     "services": {
-        "service_[object Object]": {
+        "service_completions": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -275,7 +275,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_completions.stream",
                     "name": {
                         "originalName": "stream",
                         "camelCase": {
@@ -523,7 +523,7 @@
                                         }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_[object Object]:[object Object]",
+                                    "typeId": "type_completions:StreamedCompletion",
                                     "default": null,
                                     "inline": null
                                 },
@@ -625,7 +625,7 @@
                                                     "shape": {
                                                         "type": "named",
                                                         "typeName": {
-                                                            "typeId": "type_[object Object]:[object Object]",
+                                                            "typeId": "type_completions:StreamedCompletion",
                                                             "fernFilepath": {
                                                                 "allParts": [
                                                                     {
@@ -729,7 +729,7 @@
                                                                         "jsonExample": "hello"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_[object Object]:[object Object]",
+                                                                        "typeId": "type_completions:StreamedCompletion",
                                                                         "fernFilepath": {
                                                                             "allParts": [
                                                                                 {
@@ -850,7 +850,7 @@
                                                                         "jsonExample": 1
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_[object Object]:[object Object]",
+                                                                        "typeId": "type_completions:StreamedCompletion",
                                                                         "fernFilepath": {
                                                                             "allParts": [
                                                                                 {
@@ -933,7 +933,7 @@
                                                     "shape": {
                                                         "type": "named",
                                                         "typeName": {
-                                                            "typeId": "type_[object Object]:[object Object]",
+                                                            "typeId": "type_completions:StreamedCompletion",
                                                             "fernFilepath": {
                                                                 "allParts": [
                                                                     {
@@ -1037,7 +1037,7 @@
                                                                         "jsonExample": " world"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_[object Object]:[object Object]",
+                                                                        "typeId": "type_completions:StreamedCompletion",
                                                                         "fernFilepath": {
                                                                             "allParts": [
                                                                                 {
@@ -1158,7 +1158,7 @@
                                                                         "jsonExample": 2
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_[object Object]:[object Object]",
+                                                                        "typeId": "type_completions:StreamedCompletion",
                                                                         "fernFilepath": {
                                                                             "allParts": [
                                                                                 {
@@ -1246,7 +1246,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "dafbf13e",
+                                "id": "fa24839a",
                                 "url": "/stream",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1400,7 +1400,7 @@
                                                                             }
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_[object Object]:[object Object]"
+                                                                        "typeId": "type_completions:StreamedCompletion"
                                                                     },
                                                                     "value": {
                                                                         "shape": {
@@ -1503,7 +1503,7 @@
                                                                             }
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_[object Object]:[object Object]"
+                                                                        "typeId": "type_completions:StreamedCompletion"
                                                                     },
                                                                     "value": {
                                                                         "shape": {
@@ -1604,7 +1604,7 @@
                                                                 }
                                                             },
                                                             "displayName": null,
-                                                            "typeId": "type_[object Object]:[object Object]"
+                                                            "typeId": "type_completions:StreamedCompletion"
                                                         }
                                                     },
                                                     "jsonExample": {
@@ -1633,7 +1633,7 @@
                     "docs": null
                 },
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_completions.streamWithoutTerminator",
                     "name": {
                         "originalName": "streamWithoutTerminator",
                         "camelCase": {
@@ -1881,7 +1881,7 @@
                                         }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_[object Object]:[object Object]",
+                                    "typeId": "type_completions:StreamedCompletion",
                                     "default": null,
                                     "inline": null
                                 },
@@ -1983,7 +1983,7 @@
                                                     "shape": {
                                                         "type": "named",
                                                         "typeName": {
-                                                            "typeId": "type_[object Object]:[object Object]",
+                                                            "typeId": "type_completions:StreamedCompletion",
                                                             "fernFilepath": {
                                                                 "allParts": [
                                                                     {
@@ -2087,7 +2087,7 @@
                                                                         "jsonExample": "delta"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_[object Object]:[object Object]",
+                                                                        "typeId": "type_completions:StreamedCompletion",
                                                                         "fernFilepath": {
                                                                             "allParts": [
                                                                                 {
@@ -2208,7 +2208,7 @@
                                                                         "jsonExample": 1
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_[object Object]:[object Object]",
+                                                                        "typeId": "type_completions:StreamedCompletion",
                                                                         "fernFilepath": {
                                                                             "allParts": [
                                                                                 {
@@ -2296,7 +2296,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "dafbf13e",
+                                "id": "fa24839a",
                                 "url": "/stream-no-terminator",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2450,7 +2450,7 @@
                                                                             }
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_[object Object]:[object Object]"
+                                                                        "typeId": "type_completions:StreamedCompletion"
                                                                     },
                                                                     "value": {
                                                                         "shape": {
@@ -2553,7 +2553,7 @@
                                                                             }
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_[object Object]:[object Object]"
+                                                                        "typeId": "type_completions:StreamedCompletion"
                                                                     },
                                                                     "value": {
                                                                         "shape": {
@@ -2654,7 +2654,7 @@
                                                                 }
                                                             },
                                                             "displayName": null,
-                                                            "typeId": "type_[object Object]:[object Object]"
+                                                            "typeId": "type_completions:StreamedCompletion"
                                                         }
                                                     },
                                                     "jsonExample": {
@@ -2719,8 +2719,8 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
-            "service_[object Object]": [
-                "type_[object Object]:[object Object]"
+            "service_completions": [
+                "type_completions:StreamedCompletion"
             ]
         },
         "sharedTypes": []
@@ -2733,7 +2733,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_[object Object]:[object Object]": {
+            "type_completions:StreamedCompletion": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -2870,7 +2870,191 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_[object Object].[object Object]": {
+            "endpoint_completions.stream": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "stream",
+                        "camelCase": {
+                            "unsafeName": "stream",
+                            "safeName": "stream"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "stream",
+                            "safeName": "stream"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAM",
+                            "safeName": "STREAM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Stream",
+                            "safeName": "Stream"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "completions",
+                                "camelCase": {
+                                    "unsafeName": "completions",
+                                    "safeName": "completions"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "completions",
+                                    "safeName": "completions"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COMPLETIONS",
+                                    "safeName": "COMPLETIONS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Completions",
+                                    "safeName": "Completions"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "POST",
+                    "path": "/stream"
+                },
+                "request": {
+                    "type": "inlined",
+                    "declaration": {
+                        "name": {
+                            "originalName": "StreamCompletionRequest",
+                            "camelCase": {
+                                "unsafeName": "streamCompletionRequest",
+                                "safeName": "streamCompletionRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "stream_completion_request",
+                                "safeName": "stream_completion_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STREAM_COMPLETION_REQUEST",
+                                "safeName": "STREAM_COMPLETION_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StreamCompletionRequest",
+                                "safeName": "StreamCompletionRequest"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [
+                                {
+                                    "originalName": "completions",
+                                    "camelCase": {
+                                        "unsafeName": "completions",
+                                        "safeName": "completions"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "completions",
+                                        "safeName": "completions"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "COMPLETIONS",
+                                        "safeName": "COMPLETIONS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Completions",
+                                        "safeName": "Completions"
+                                    }
+                                }
+                            ],
+                            "packagePath": [],
+                            "file": {
+                                "originalName": "completions",
+                                "camelCase": {
+                                    "unsafeName": "completions",
+                                    "safeName": "completions"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "completions",
+                                    "safeName": "completions"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "COMPLETIONS",
+                                    "safeName": "COMPLETIONS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Completions",
+                                    "safeName": "Completions"
+                                }
+                            }
+                        }
+                    },
+                    "pathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "body": {
+                        "type": "properties",
+                        "value": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "query",
+                                        "camelCase": {
+                                            "unsafeName": "query",
+                                            "safeName": "query"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "query",
+                                            "safeName": "query"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "QUERY",
+                                            "safeName": "QUERY"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Query",
+                                            "safeName": "Query"
+                                        }
+                                    },
+                                    "wireValue": "query"
+                                },
+                                "typeReference": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                },
+                                "propertyAccess": null,
+                                "variable": null
+                            }
+                        ]
+                    },
+                    "metadata": {
+                        "includePathParameters": false,
+                        "onlyPathParameters": false
+                    }
+                },
+                "response": {
+                    "type": "streaming"
+                },
+                "examples": null
+            },
+            "endpoint_completions.streamWithoutTerminator": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -3066,7 +3250,7 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_[object Object]": {
+        "subpackage_completions": {
             "name": {
                 "originalName": "completions",
                 "camelCase": {
@@ -3130,7 +3314,7 @@
                     }
                 }
             },
-            "service": "service_[object Object]",
+            "service": "service_completions",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -3152,9 +3336,9 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_[object Object]",
-            "subpackage_[object Object]",
-            "subpackage_[object Object]"
+            "subpackage_completions",
+            "subpackage_completions",
+            "subpackage_completions"
         ],
         "webhooks": null,
         "navigationConfig": null,

@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:PlainObject": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -103,7 +103,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_[object Object].[object Object]": {
+        "endpoint_testGroup.test_method_name": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -301,7 +301,7 @@
                                 "type": "nullable",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:[object Object]"
+                                    "value": "type_:PlainObject"
                                 }
                             }
                         },
@@ -373,7 +373,7 @@
                             "type": "nullable",
                             "value": {
                                 "type": "named",
-                                "value": "type_:[object Object]"
+                                "value": "type_:PlainObject"
                             }
                         }
                     }

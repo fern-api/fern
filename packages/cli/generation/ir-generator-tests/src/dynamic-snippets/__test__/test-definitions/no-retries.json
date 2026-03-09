@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_[object Object]:[object Object]": {
+        "type_retries:User": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -135,7 +135,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_[object Object].[object Object]": {
+        "endpoint_retries.getUsers": {
             "auth": null,
             "declaration": {
                 "name": {

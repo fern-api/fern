@@ -1,7 +1,100 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:Task": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Task",
+                    "camelCase": {
+                        "unsafeName": "task",
+                        "safeName": "task"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "task",
+                        "safeName": "task"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TASK",
+                        "safeName": "TASK"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Task",
+                        "safeName": "Task"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        },
+                        "wireValue": "name"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        },
+                        "wireValue": "user"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:User"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:User": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -223,7 +316,103 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.[object Object]": {
+        "endpoint_.createUser": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createUser",
+                    "camelCase": {
+                        "unsafeName": "createUser",
+                        "safeName": "createUser"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_user",
+                        "safeName": "create_user"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_USER",
+                        "safeName": "CREATE_USER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateUser",
+                        "safeName": "CreateUser"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/users"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:User"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.createTask": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "createTask",
+                    "camelCase": {
+                        "unsafeName": "createTask",
+                        "safeName": "createTask"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_task",
+                        "safeName": "create_task"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_TASK",
+                        "safeName": "CREATE_TASK"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateTask",
+                        "safeName": "CreateTask"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/users"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": {
+                    "type": "typeReference",
+                    "value": {
+                        "type": "named",
+                        "value": "type_:Task"
+                    }
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.emptyResponse": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -262,7 +451,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_:[object Object]"
+                        "value": "type_:Task"
                     }
                 }
             },

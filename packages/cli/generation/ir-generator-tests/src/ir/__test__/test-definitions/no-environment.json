@@ -59,7 +59,7 @@
     "types": {},
     "errors": {},
     "services": {
-        "service_[object Object]": {
+        "service_dummy": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -122,7 +122,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_dummy.getDummy",
                     "name": {
                         "originalName": "getDummy",
                         "camelCase": {
@@ -291,7 +291,7 @@
         "types": {},
         "headers": [],
         "endpoints": {
-            "endpoint_[object Object].[object Object]": {
+            "endpoint_dummy.getDummy": {
                 "auth": {
                     "type": "bearer",
                     "token": {
@@ -404,7 +404,7 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_[object Object]": {
+        "subpackage_dummy": {
             "name": {
                 "originalName": "dummy",
                 "camelCase": {
@@ -468,7 +468,7 @@
                     }
                 }
             },
-            "service": "service_[object Object]",
+            "service": "service_dummy",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -490,7 +490,7 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_[object Object]"
+            "subpackage_dummy"
         ],
         "webhooks": null,
         "navigationConfig": null,

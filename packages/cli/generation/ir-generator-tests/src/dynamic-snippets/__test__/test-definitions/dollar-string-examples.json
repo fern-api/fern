@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:PaymentInfo": {
             "type": "object",
             "declaration": {
                 "name": {

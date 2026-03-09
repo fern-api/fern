@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:User": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -97,7 +97,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.[object Object]": {
+        "endpoint_.getUser": {
             "auth": null,
             "declaration": {
                 "name": {

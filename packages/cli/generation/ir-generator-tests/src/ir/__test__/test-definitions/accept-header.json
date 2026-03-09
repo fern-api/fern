@@ -58,7 +58,7 @@
     "idempotencyHeaders": [],
     "types": {},
     "errors": {
-        "error_[object Object]:[object Object]": {
+        "error_service:NotFoundError": {
             "name": {
                 "name": {
                     "originalName": "NotFoundError",
@@ -122,7 +122,7 @@
                         }
                     }
                 },
-                "errorId": "error_[object Object]:[object Object]"
+                "errorId": "error_service:NotFoundError"
             },
             "discriminantValue": {
                 "name": {
@@ -159,7 +159,7 @@
         }
     },
     "services": {
-        "service_[object Object]": {
+        "service_service": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -222,7 +222,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_service.endpoint",
                     "name": {
                         "originalName": "endpoint",
                         "camelCase": {
@@ -341,7 +341,7 @@
                                         }
                                     }
                                 },
-                                "errorId": "error_[object Object]:[object Object]"
+                                "errorId": "error_service:NotFoundError"
                             },
                             "docs": null
                         }
@@ -372,7 +372,7 @@
                         },
                         {
                             "example": {
-                                "id": "d95a369f",
+                                "id": "bffe7747",
                                 "url": "/container/",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -458,7 +458,7 @@
                                                 }
                                             }
                                         },
-                                        "errorId": "error_[object Object]:[object Object]"
+                                        "errorId": "error_service:NotFoundError"
                                     }
                                 },
                                 "docs": null
@@ -525,7 +525,7 @@
         "types": {},
         "headers": [],
         "endpoints": {
-            "endpoint_[object Object].[object Object]": {
+            "endpoint_service.endpoint": {
                 "auth": {
                     "type": "bearer",
                     "token": {
@@ -638,7 +638,7 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_[object Object]": {
+        "subpackage_service": {
             "name": {
                 "originalName": "service",
                 "camelCase": {
@@ -702,7 +702,7 @@
                     }
                 }
             },
-            "service": "service_[object Object]",
+            "service": "service_service",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -724,9 +724,9 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_[object Object]",
-            "subpackage_[object Object]",
-            "subpackage_[object Object]"
+            "subpackage_service",
+            "subpackage_service",
+            "subpackage_service"
         ],
         "webhooks": null,
         "navigationConfig": null,

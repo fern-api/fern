@@ -302,8 +302,8 @@
                         "safeName": "JSON"
                     },
                     "pascalCase": {
-                        "unsafeName": "Json",
-                        "safeName": "Json"
+                        "unsafeName": "JSON",
+                        "safeName": "JSON"
                     }
                 },
                 "fernFilepath": {

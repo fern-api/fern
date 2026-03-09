@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:EchoRequest": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -97,7 +97,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.[object Object]": {
+        "endpoint_.echo": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -136,7 +136,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_:[object Object]"
+                        "value": "type_:EchoRequest"
                     }
                 }
             },
@@ -145,7 +145,7 @@
             },
             "examples": null
         },
-        "endpoint_[object Object].[object Object]": {
+        "endpoint_service.nop": {
             "auth": null,
             "declaration": {
                 "name": {

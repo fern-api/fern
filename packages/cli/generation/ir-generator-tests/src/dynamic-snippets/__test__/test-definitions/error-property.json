@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_[object Object]:[object Object]": {
+        "type_errors:PropertyBasedErrorTestBody": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -105,7 +105,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_[object Object].[object Object]": {
+        "endpoint_property-based-error.ThrowError": {
             "auth": null,
             "declaration": {
                 "name": {

@@ -31,7 +31,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_[object Object]:[object Object]": {
+        "type_errors:PropertyBasedErrorTestBody": {
             "inline": null,
             "name": {
                 "name": {
@@ -97,7 +97,7 @@
                     }
                 },
                 "displayName": null,
-                "typeId": "type_[object Object]:[object Object]"
+                "typeId": "type_errors:PropertyBasedErrorTestBody"
             },
             "shape": {
                 "_type": "object",
@@ -163,7 +163,7 @@
         }
     },
     "errors": {
-        "error_[object Object]:[object Object]": {
+        "error_errors:PropertyBasedErrorTest": {
             "name": {
                 "name": {
                     "originalName": "PropertyBasedErrorTest",
@@ -227,7 +227,7 @@
                         }
                     }
                 },
-                "errorId": "error_[object Object]:[object Object]"
+                "errorId": "error_errors:PropertyBasedErrorTest"
             },
             "discriminantValue": {
                 "name": {
@@ -318,7 +318,7 @@
                     }
                 },
                 "displayName": null,
-                "typeId": "type_[object Object]:[object Object]",
+                "typeId": "type_errors:PropertyBasedErrorTestBody",
                 "default": null,
                 "inline": null
             },
@@ -330,7 +330,7 @@
         }
     },
     "services": {
-        "service_[object Object]": {
+        "service_property-based-error": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -393,7 +393,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_property-based-error.ThrowError",
                     "name": {
                         "originalName": "ThrowError",
                         "camelCase": {
@@ -526,7 +526,7 @@
                                         }
                                     }
                                 },
-                                "errorId": "error_[object Object]:[object Object]"
+                                "errorId": "error_errors:PropertyBasedErrorTest"
                             },
                             "docs": null
                         }
@@ -568,7 +568,7 @@
                         },
                         {
                             "example": {
-                                "id": "bd2108eb",
+                                "id": "a757648a",
                                 "url": "/property-based-error",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -673,7 +673,7 @@
                                                                 }
                                                             },
                                                             "displayName": null,
-                                                            "typeId": "type_[object Object]:[object Object]"
+                                                            "typeId": "type_errors:PropertyBasedErrorTestBody"
                                                         },
                                                         "value": {
                                                             "shape": {
@@ -756,7 +756,7 @@
                                                     }
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_[object Object]:[object Object]"
+                                                "typeId": "type_errors:PropertyBasedErrorTestBody"
                                             }
                                         },
                                         "jsonExample": {
@@ -826,7 +826,7 @@
                                                 }
                                             }
                                         },
-                                        "errorId": "error_[object Object]:[object Object]"
+                                        "errorId": "error_errors:PropertyBasedErrorTest"
                                     }
                                 },
                                 "docs": null
@@ -926,7 +926,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_[object Object]:[object Object]"
+            "type_errors:PropertyBasedErrorTestBody"
         ]
     },
     "webhookGroups": {},
@@ -937,7 +937,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_[object Object]:[object Object]": {
+            "type_errors:PropertyBasedErrorTestBody": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1041,7 +1041,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_[object Object].[object Object]": {
+            "endpoint_property-based-error.ThrowError": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -1133,7 +1133,83 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_[object Object]": {
+        "subpackage_errors": {
+            "name": {
+                "originalName": "errors",
+                "camelCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                },
+                "snakeCase": {
+                    "unsafeName": "errors",
+                    "safeName": "errors"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERRORS",
+                    "safeName": "ERRORS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Errors",
+                    "safeName": "Errors"
+                }
+            },
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "errors",
+                        "camelCase": {
+                            "unsafeName": "errors",
+                            "safeName": "errors"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "errors",
+                            "safeName": "errors"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ERRORS",
+                            "safeName": "ERRORS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Errors",
+                            "safeName": "Errors"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "errors",
+                    "camelCase": {
+                        "unsafeName": "errors",
+                        "safeName": "errors"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "errors",
+                        "safeName": "errors"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "ERRORS",
+                        "safeName": "ERRORS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Errors",
+                        "safeName": "Errors"
+                    }
+                }
+            },
+            "service": null,
+            "types": [],
+            "errors": [
+                "error_errors:PropertyBasedErrorTest"
+            ],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_property-based-error": {
             "name": {
                 "originalName": "property-based-error",
                 "camelCase": {
@@ -1197,7 +1273,7 @@
                     }
                 }
             },
-            "service": "service_[object Object]",
+            "service": "service_property-based-error",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -1219,10 +1295,10 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_[object Object]",
-            "subpackage_[object Object]",
-            "subpackage_[object Object]",
-            "subpackage_[object Object]"
+            "subpackage_errors",
+            "subpackage_errors",
+            "subpackage_errors",
+            "subpackage_property-based-error"
         ],
         "webhooks": null,
         "navigationConfig": null,

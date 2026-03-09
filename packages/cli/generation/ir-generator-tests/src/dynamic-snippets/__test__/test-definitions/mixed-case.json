@@ -805,8 +805,8 @@
                             "name": {
                                 "originalName": "ResourceID",
                                 "camelCase": {
-                                    "unsafeName": "resourceId",
-                                    "safeName": "resourceId"
+                                    "unsafeName": "resourceID",
+                                    "safeName": "resourceID"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "resource_id",
@@ -817,8 +817,8 @@
                                     "safeName": "RESOURCE_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ResourceId",
-                                    "safeName": "ResourceId"
+                                    "unsafeName": "ResourceID",
+                                    "safeName": "ResourceID"
                                 }
                             },
                             "wireValue": "ResourceID"

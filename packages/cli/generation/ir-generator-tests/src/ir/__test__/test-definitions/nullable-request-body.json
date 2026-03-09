@@ -31,7 +31,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:[object Object]": {
+        "type_:PlainObject": {
             "inline": null,
             "name": {
                 "name": {
@@ -59,7 +59,7 @@
                     "file": null
                 },
                 "displayName": null,
-                "typeId": "type_:[object Object]"
+                "typeId": "type_:PlainObject"
             },
             "shape": {
                 "_type": "object",
@@ -179,7 +179,7 @@
         }
     },
     "errors": {
-        "error_:[object Object]": {
+        "error_:UnprocessableEntityError": {
             "name": {
                 "name": {
                     "originalName": "UnprocessableEntityError",
@@ -205,7 +205,7 @@
                     "packagePath": [],
                     "file": null
                 },
-                "errorId": "error_:[object Object]"
+                "errorId": "error_:UnprocessableEntityError"
             },
             "discriminantValue": {
                 "name": {
@@ -258,7 +258,7 @@
                     "file": null
                 },
                 "displayName": null,
-                "typeId": "type_:[object Object]",
+                "typeId": "type_:PlainObject",
                 "default": null,
                 "inline": null
             },
@@ -269,7 +269,7 @@
                         "shape": {
                             "type": "named",
                             "typeName": {
-                                "typeId": "type_:[object Object]",
+                                "typeId": "type_:PlainObject",
                                 "fernFilepath": {
                                     "allParts": [],
                                     "packagePath": [],
@@ -315,7 +315,7 @@
         }
     },
     "services": {
-        "service_[object Object]": {
+        "service_testGroup": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -378,7 +378,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_testGroup.test_method_name",
                     "name": {
                         "originalName": "test_method_name",
                         "camelCase": {
@@ -567,7 +567,7 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_:[object Object]",
+                                                "typeId": "type_:PlainObject",
                                                 "default": null,
                                                 "inline": null
                                             }
@@ -674,7 +674,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:[object Object]",
+                                    "typeId": "type_:PlainObject",
                                     "default": null,
                                     "inline": null
                                 }
@@ -794,7 +794,7 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "errorId": "error_:[object Object]"
+                                "errorId": "error_:UnprocessableEntityError"
                             },
                             "docs": null
                         }
@@ -855,7 +855,7 @@
                                                 "shape": {
                                                     "type": "named",
                                                     "typeName": {
-                                                        "typeId": "type_:[object Object]",
+                                                        "typeId": "type_:PlainObject",
                                                         "fernFilepath": {
                                                             "allParts": [],
                                                             "packagePath": [],
@@ -917,7 +917,7 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_:[object Object]",
+                                                "typeId": "type_:PlainObject",
                                                 "default": null,
                                                 "inline": null
                                             }
@@ -950,7 +950,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "ca6dd8fa",
+                                "id": "913b0735",
                                 "url": "/optional-request-body/path_param",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1027,7 +1027,7 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_:[object Object]",
+                                                "typeId": "type_:PlainObject",
                                                 "default": null,
                                                 "inline": null
                                             }
@@ -1056,7 +1056,7 @@
                         },
                         {
                             "example": {
-                                "id": "7c4bb3a3",
+                                "id": "c8d8c0c6",
                                 "url": "/optional-request-body/path_param",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1133,7 +1133,7 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_:[object Object]",
+                                                "typeId": "type_:PlainObject",
                                                 "default": null,
                                                 "inline": null
                                             }
@@ -1197,7 +1197,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
-                                                            "typeId": "type_:[object Object]"
+                                                            "typeId": "type_:PlainObject"
                                                         },
                                                         "value": {
                                                             "shape": {
@@ -1270,7 +1270,7 @@
                                                                 "file": null
                                                             },
                                                             "displayName": null,
-                                                            "typeId": "type_:[object Object]"
+                                                            "typeId": "type_:PlainObject"
                                                         },
                                                         "value": {
                                                             "shape": {
@@ -1323,7 +1323,7 @@
                                                     "file": null
                                                 },
                                                 "displayName": null,
-                                                "typeId": "type_:[object Object]"
+                                                "typeId": "type_:PlainObject"
                                             }
                                         },
                                         "jsonExample": {}
@@ -1353,7 +1353,7 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "errorId": "error_:[object Object]"
+                                        "errorId": "error_:UnprocessableEntityError"
                                     }
                                 },
                                 "docs": null
@@ -1408,8 +1408,8 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
-            "service_[object Object]": [
-                "type_:[object Object]"
+            "service_testGroup": [
+                "type_:PlainObject"
             ]
         },
         "sharedTypes": []
@@ -1422,7 +1422,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:[object Object]": {
+            "type_:PlainObject": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1524,7 +1524,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_[object Object].[object Object]": {
+            "endpoint_testGroup.test_method_name": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -1722,7 +1722,7 @@
                                     "type": "nullable",
                                     "value": {
                                         "type": "named",
-                                        "value": "type_:[object Object]"
+                                        "value": "type_:PlainObject"
                                     }
                                 }
                             },
@@ -1794,7 +1794,7 @@
                                 "type": "nullable",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:[object Object]"
+                                    "value": "type_:PlainObject"
                                 }
                             }
                         }
@@ -1821,7 +1821,7 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_[object Object]": {
+        "subpackage_testGroup": {
             "name": {
                 "originalName": "testGroup",
                 "camelCase": {
@@ -1885,7 +1885,7 @@
                     }
                 }
             },
-            "service": "service_[object Object]",
+            "service": "service_testGroup",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -1905,13 +1905,13 @@
         "websocket": null,
         "service": null,
         "types": [
-            "type_:[object Object]"
+            "type_:PlainObject"
         ],
         "errors": [
-            "error_:[object Object]"
+            "error_:UnprocessableEntityError"
         ],
         "subpackages": [
-            "subpackage_[object Object]"
+            "subpackage_testGroup"
         ],
         "webhooks": null,
         "navigationConfig": null,

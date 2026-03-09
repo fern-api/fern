@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_[object Object]:[object Object]": {
+        "type_user:User": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -138,7 +138,87 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_[object Object].[object Object]": {
+        "endpoint_user.head": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "head",
+                    "camelCase": {
+                        "unsafeName": "head",
+                        "safeName": "head"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "head",
+                        "safeName": "head"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "HEAD",
+                        "safeName": "HEAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Head",
+                        "safeName": "Head"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "HEAD",
+                "path": "/users"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_user.list": {
             "auth": null,
             "declaration": {
                 "name": {

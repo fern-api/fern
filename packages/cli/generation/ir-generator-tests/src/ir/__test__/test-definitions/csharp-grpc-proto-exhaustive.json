@@ -33,7 +33,7 @@
     "types": {},
     "errors": {},
     "services": {
-        "service_[object Object]": {
+        "service_dataservice": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -96,7 +96,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_dataservice.foo",
                     "name": {
                         "originalName": "foo",
                         "camelCase": {
@@ -418,7 +418,7 @@
         "types": {},
         "headers": [],
         "endpoints": {
-            "endpoint_[object Object].[object Object]": {
+            "endpoint_dataservice.foo": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -541,7 +541,7 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_[object Object]": {
+        "subpackage_dataservice": {
             "name": {
                 "originalName": "dataservice",
                 "camelCase": {
@@ -605,7 +605,7 @@
                     }
                 }
             },
-            "service": "service_[object Object]",
+            "service": "service_dataservice",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -627,7 +627,7 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_[object Object]"
+            "subpackage_dataservice"
         ],
         "webhooks": null,
         "navigationConfig": null,

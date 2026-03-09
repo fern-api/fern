@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_[object Object]:[object Object]": {
+        "type_service:Foo": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -855,7 +855,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_[object Object].[object Object]": {
+        "endpoint_service.get": {
             "auth": null,
             "declaration": {
                 "name": {

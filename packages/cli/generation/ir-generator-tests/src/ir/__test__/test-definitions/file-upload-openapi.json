@@ -31,7 +31,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:[object Object]": {
+        "type_:FileId": {
             "inline": null,
             "name": {
                 "name": {
@@ -59,7 +59,7 @@
                     "file": null
                 },
                 "displayName": null,
-                "typeId": "type_:[object Object]"
+                "typeId": "type_:FileId"
             },
             "shape": {
                 "_type": "alias",
@@ -101,7 +101,7 @@
     },
     "errors": {},
     "services": {
-        "service_[object Object]": {
+        "service_fileUploadExample": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -164,7 +164,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_fileUploadExample.uploadFile",
                     "name": {
                         "originalName": "uploadFile",
                         "camelCase": {
@@ -405,7 +405,7 @@
                                         "file": null
                                     },
                                     "displayName": null,
-                                    "typeId": "type_:[object Object]",
+                                    "typeId": "type_:FileId",
                                     "default": null,
                                     "inline": null
                                 },
@@ -485,7 +485,7 @@
                                             "shape": {
                                                 "type": "named",
                                                 "typeName": {
-                                                    "typeId": "type_:[object Object]",
+                                                    "typeId": "type_:FileId",
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -586,8 +586,8 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
-            "service_[object Object]": [
-                "type_:[object Object]"
+            "service_fileUploadExample": [
+                "type_:FileId"
             ]
         },
         "sharedTypes": []
@@ -600,7 +600,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:[object Object]": {
+            "type_:FileId": {
                 "type": "alias",
                 "declaration": {
                     "name": {
@@ -636,7 +636,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_[object Object].[object Object]": {
+            "endpoint_fileUploadExample.uploadFile": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -856,7 +856,7 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_[object Object]": {
+        "subpackage_fileUploadExample": {
             "name": {
                 "originalName": "fileUploadExample",
                 "camelCase": {
@@ -920,7 +920,7 @@
                     }
                 }
             },
-            "service": "service_[object Object]",
+            "service": "service_fileUploadExample",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -940,11 +940,11 @@
         "websocket": null,
         "service": null,
         "types": [
-            "type_:[object Object]"
+            "type_:FileId"
         ],
         "errors": [],
         "subpackages": [
-            "subpackage_[object Object]"
+            "subpackage_fileUploadExample"
         ],
         "webhooks": null,
         "navigationConfig": null,

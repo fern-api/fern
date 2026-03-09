@@ -1,7 +1,82 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:SortOrder": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "SortOrder",
+                    "camelCase": {
+                        "unsafeName": "sortOrder",
+                        "safeName": "sortOrder"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "sort_order",
+                        "safeName": "sort_order"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SORT_ORDER",
+                        "safeName": "SORT_ORDER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SortOrder",
+                        "safeName": "SortOrder"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "name": {
+                        "originalName": "ASC",
+                        "camelCase": {
+                            "unsafeName": "asc",
+                            "safeName": "asc"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "asc",
+                            "safeName": "asc"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ASC",
+                            "safeName": "ASC"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Asc",
+                            "safeName": "Asc"
+                        }
+                    },
+                    "wireValue": "ASC"
+                },
+                {
+                    "name": {
+                        "originalName": "DESC",
+                        "camelCase": {
+                            "unsafeName": "desc",
+                            "safeName": "desc"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "desc",
+                            "safeName": "desc"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DESC",
+                            "safeName": "DESC"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Desc",
+                            "safeName": "Desc"
+                        }
+                    },
+                    "wireValue": "DESC"
+                }
+            ]
+        },
+        "type_:SearchResponse": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -230,7 +305,7 @@
                             "type": "nullable",
                             "value": {
                                 "type": "named",
-                                "value": "type_:[object Object]"
+                                "value": "type_:SortOrder"
                             }
                         }
                     },
@@ -244,7 +319,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.[object Object]": {
+        "endpoint_.search": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -443,7 +518,7 @@
                                 "type": "nullable",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:[object Object]"
+                                    "value": "type_:SortOrder"
                                 }
                             }
                         },

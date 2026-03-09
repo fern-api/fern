@@ -57,7 +57,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_[object Object]:[object Object]": {
+        "type_telemetry:GetTelemetryDataTelemetryResponse": {
             "inline": null,
             "name": {
                 "name": {
@@ -123,7 +123,7 @@
                     }
                 },
                 "displayName": null,
-                "typeId": "type_[object Object]:[object Object]"
+                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse"
             },
             "shape": {
                 "_type": "object",
@@ -352,7 +352,7 @@
                                         }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_[object Object]/[object Object]:[object Object]",
+                                    "typeId": "type_infra/telemetry:TelemetryData",
                                     "default": null,
                                     "inline": null
                                 }
@@ -371,7 +371,7 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_[object Object]/[object Object]:[object Object]"
+                "type_infra/telemetry:TelemetryData"
             ],
             "encoding": {
                 "json": {},
@@ -384,7 +384,7 @@
             "availability": null,
             "docs": null
         },
-        "type_[object Object]/[object Object]:[object Object]": {
+        "type_infra/telemetry:TelemetryData": {
             "inline": null,
             "name": {
                 "name": {
@@ -489,7 +489,7 @@
                     }
                 },
                 "displayName": null,
-                "typeId": "type_[object Object]/[object Object]:[object Object]"
+                "typeId": "type_infra/telemetry:TelemetryData"
             },
             "shape": {
                 "_type": "object",
@@ -646,7 +646,7 @@
     },
     "errors": {},
     "services": {
-        "service_[object Object]": {
+        "service_telemetry": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -709,7 +709,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_telemetry.getTelemetryData",
                     "name": {
                         "originalName": "getTelemetryData",
                         "camelCase": {
@@ -935,7 +935,7 @@
                                         }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_[object Object]:[object Object]",
+                                    "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse",
                                     "default": null,
                                     "inline": null
                                 },
@@ -970,7 +970,7 @@
                                             "shape": {
                                                 "type": "named",
                                                 "typeName": {
-                                                    "typeId": "type_[object Object]:[object Object]",
+                                                    "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse",
                                                     "fernFilepath": {
                                                         "allParts": [
                                                             {
@@ -1088,7 +1088,7 @@
                                                                 "jsonExample": 1.1
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_[object Object]:[object Object]",
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [
                                                                         {
@@ -1211,7 +1211,7 @@
                                                                 "jsonExample": "status"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_[object Object]:[object Object]",
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [
                                                                         {
@@ -1310,7 +1310,7 @@
                                                                             "shape": {
                                                                                 "type": "named",
                                                                                 "typeName": {
-                                                                                    "typeId": "type_[object Object]/[object Object]:[object Object]",
+                                                                                    "typeId": "type_infra/telemetry:TelemetryData",
                                                                                     "fernFilepath": {
                                                                                         "allParts": [
                                                                                             {
@@ -1467,7 +1467,7 @@
                                                                                                 "jsonExample": 1.1
                                                                                             },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "typeId": "type_[object Object]/[object Object]:[object Object]",
+                                                                                                "typeId": "type_infra/telemetry:TelemetryData",
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [
                                                                                                         {
@@ -1623,7 +1623,7 @@
                                                                                                 "jsonExample": 1.1
                                                                                             },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "typeId": "type_[object Object]/[object Object]:[object Object]",
+                                                                                                "typeId": "type_infra/telemetry:TelemetryData",
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [
                                                                                                         {
@@ -1779,7 +1779,7 @@
                                                                                                 "jsonExample": 1.1
                                                                                             },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "typeId": "type_[object Object]/[object Object]:[object Object]",
+                                                                                                "typeId": "type_infra/telemetry:TelemetryData",
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [
                                                                                                         {
@@ -1999,7 +1999,7 @@
                                                                                 }
                                                                             },
                                                                             "displayName": null,
-                                                                            "typeId": "type_[object Object]/[object Object]:[object Object]",
+                                                                            "typeId": "type_infra/telemetry:TelemetryData",
                                                                             "default": null,
                                                                             "inline": null
                                                                         }
@@ -2012,7 +2012,7 @@
                                                                 }
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_[object Object]:[object Object]",
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse",
                                                                 "fernFilepath": {
                                                                     "allParts": [
                                                                         {
@@ -2103,7 +2103,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "6dbb48b",
+                                "id": "8ec4bd05",
                                 "url": "/telemetry",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -2210,7 +2210,7 @@
                                                                     }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_[object Object]:[object Object]"
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2327,7 +2327,7 @@
                                                                     }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_[object Object]:[object Object]"
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2450,7 +2450,7 @@
                                                                     }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_[object Object]:[object Object]"
+                                                                "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -2589,7 +2589,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "typeId": "type_[object Object]/[object Object]:[object Object]"
+                                                                                                "typeId": "type_infra/telemetry:TelemetryData"
                                                                                             },
                                                                                             "value": {
                                                                                                 "shape": {
@@ -2745,7 +2745,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "typeId": "type_[object Object]/[object Object]:[object Object]"
+                                                                                                "typeId": "type_infra/telemetry:TelemetryData"
                                                                                             },
                                                                                             "value": {
                                                                                                 "shape": {
@@ -2901,7 +2901,7 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "displayName": null,
-                                                                                                "typeId": "type_[object Object]/[object Object]:[object Object]"
+                                                                                                "typeId": "type_infra/telemetry:TelemetryData"
                                                                                             },
                                                                                             "value": {
                                                                                                 "shape": {
@@ -3037,7 +3037,7 @@
                                                                                         }
                                                                                     },
                                                                                     "displayName": null,
-                                                                                    "typeId": "type_[object Object]/[object Object]:[object Object]"
+                                                                                    "typeId": "type_infra/telemetry:TelemetryData"
                                                                                 }
                                                                             },
                                                                             "jsonExample": {
@@ -3150,7 +3150,7 @@
                                                                                 }
                                                                             },
                                                                             "displayName": null,
-                                                                            "typeId": "type_[object Object]/[object Object]:[object Object]",
+                                                                            "typeId": "type_infra/telemetry:TelemetryData",
                                                                             "default": null,
                                                                             "inline": null
                                                                         }
@@ -3231,7 +3231,7 @@
                                                         }
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_[object Object]:[object Object]"
+                                                    "typeId": "type_telemetry:GetTelemetryDataTelemetryResponse"
                                                 }
                                             },
                                             "jsonExample": {
@@ -3298,9 +3298,9 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
-            "service_[object Object]": [
-                "type_[object Object]:[object Object]",
-                "type_[object Object]/[object Object]:[object Object]"
+            "service_telemetry": [
+                "type_telemetry:GetTelemetryDataTelemetryResponse",
+                "type_infra/telemetry:TelemetryData"
             ]
         },
         "sharedTypes": []
@@ -3313,7 +3313,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_[object Object]:[object Object]": {
+            "type_telemetry:GetTelemetryDataTelemetryResponse": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -3473,7 +3473,7 @@
                             "type": "optional",
                             "value": {
                                 "type": "named",
-                                "value": "type_[object Object]/[object Object]:[object Object]"
+                                "value": "type_infra/telemetry:TelemetryData"
                             }
                         },
                         "propertyAccess": null,
@@ -3483,7 +3483,7 @@
                 "extends": null,
                 "additionalProperties": false
             },
-            "type_[object Object]/[object Object]:[object Object]": {
+            "type_infra/telemetry:TelemetryData": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -3695,7 +3695,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_[object Object].[object Object]": {
+            "endpoint_telemetry.getTelemetryData": {
                 "auth": {
                     "type": "bearer",
                     "token": {
@@ -3912,7 +3912,81 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_[object Object]": {
+        "subpackage_telemetry": {
+            "name": {
+                "originalName": "telemetry",
+                "camelCase": {
+                    "unsafeName": "telemetry",
+                    "safeName": "telemetry"
+                },
+                "snakeCase": {
+                    "unsafeName": "telemetry",
+                    "safeName": "telemetry"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "TELEMETRY",
+                    "safeName": "TELEMETRY"
+                },
+                "pascalCase": {
+                    "unsafeName": "Telemetry",
+                    "safeName": "Telemetry"
+                }
+            },
+            "displayName": null,
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "telemetry",
+                        "camelCase": {
+                            "unsafeName": "telemetry",
+                            "safeName": "telemetry"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "telemetry",
+                            "safeName": "telemetry"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TELEMETRY",
+                            "safeName": "TELEMETRY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Telemetry",
+                            "safeName": "Telemetry"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "telemetry",
+                    "camelCase": {
+                        "unsafeName": "telemetry",
+                        "safeName": "telemetry"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "telemetry",
+                        "safeName": "telemetry"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TELEMETRY",
+                        "safeName": "TELEMETRY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Telemetry",
+                        "safeName": "Telemetry"
+                    }
+                }
+            },
+            "service": "service_telemetry",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
+        "subpackage_infra": {
             "name": {
                 "originalName": "infra",
                 "camelCase": {
@@ -3982,7 +4056,7 @@
             "types": [],
             "errors": [],
             "subpackages": [
-                "subpackage_[object Object]/[object Object]"
+                "subpackage_infra/telemetry"
             ],
             "navigationConfig": null,
             "webhooks": null,
@@ -3990,7 +4064,7 @@
             "hasEndpointsInTree": false,
             "docs": null
         },
-        "subpackage_[object Object]/[object Object]": {
+        "subpackage_infra/telemetry": {
             "name": {
                 "originalName": "telemetry",
                 "camelCase": {
@@ -4095,7 +4169,7 @@
             },
             "service": null,
             "types": [
-                "type_[object Object]/[object Object]:[object Object]"
+                "type_infra/telemetry:TelemetryData"
             ],
             "errors": [],
             "subpackages": [],
@@ -4117,15 +4191,15 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_[object Object]",
-            "subpackage_[object Object]",
-            "subpackage_[object Object]",
-            "subpackage_[object Object]",
-            "subpackage_[object Object]"
+            "subpackage_telemetry",
+            "subpackage_telemetry",
+            "subpackage_telemetry",
+            "subpackage_infra",
+            "subpackage_infra"
         ],
         "webhooks": null,
         "navigationConfig": null,
-        "hasEndpointsInTree": false,
+        "hasEndpointsInTree": true,
         "docs": null
     },
     "sdkConfig": {

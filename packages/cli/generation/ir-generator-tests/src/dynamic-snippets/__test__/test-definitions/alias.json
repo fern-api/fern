@@ -1,7 +1,133 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:TypeId": {
+            "type": "alias",
+            "declaration": {
+                "name": {
+                    "originalName": "TypeId",
+                    "camelCase": {
+                        "unsafeName": "typeID",
+                        "safeName": "typeID"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type_id",
+                        "safeName": "type_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE_ID",
+                        "safeName": "TYPE_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TypeID",
+                        "safeName": "TypeID"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            }
+        },
+        "type_:Type": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        },
+                        "wireValue": "id"
+                    },
+                    "typeReference": {
+                        "type": "named",
+                        "value": "type_:TypeId"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        },
+                        "wireValue": "name"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false
+        },
+        "type_:Object": {
             "type": "alias",
             "declaration": {
                 "name": {
@@ -31,13 +157,13 @@
             },
             "typeReference": {
                 "type": "named",
-                "value": "type_:[object Object]"
+                "value": "type_:Type"
             }
         }
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.[object Object]": {
+        "endpoint_.get": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -97,7 +223,7 @@
                         },
                         "typeReference": {
                             "type": "named",
-                            "value": "type_:[object Object]"
+                            "value": "type_:TypeId"
                         },
                         "propertyAccess": null,
                         "variable": null

@@ -32,7 +32,190 @@
     "idempotencyHeaders": [],
     "types": {},
     "errors": {
-        "error_:[object Object]": {
+        "error_:BadRequestError": {
+            "name": {
+                "name": {
+                    "originalName": "BadRequestError",
+                    "camelCase": {
+                        "unsafeName": "badRequestError",
+                        "safeName": "badRequestError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bad_request_error",
+                        "safeName": "bad_request_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BAD_REQUEST_ERROR",
+                        "safeName": "BAD_REQUEST_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BadRequestError",
+                        "safeName": "BadRequestError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "errorId": "error_:BadRequestError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "BadRequestError",
+                    "camelCase": {
+                        "unsafeName": "badRequestError",
+                        "safeName": "badRequestError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bad_request_error",
+                        "safeName": "bad_request_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BAD_REQUEST_ERROR",
+                        "safeName": "BAD_REQUEST_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BadRequestError",
+                        "safeName": "BadRequestError"
+                    }
+                },
+                "wireValue": "BadRequestError"
+            },
+            "statusCode": 400,
+            "isWildcardStatusCode": null,
+            "type": {
+                "_type": "unknown"
+            },
+            "examples": [],
+            "v2Examples": null,
+            "displayName": null,
+            "headers": [],
+            "docs": "Invalid request URI. The message will vary depending on the cause."
+        },
+        "error_:UnauthorizedError": {
+            "name": {
+                "name": {
+                    "originalName": "UnauthorizedError",
+                    "camelCase": {
+                        "unsafeName": "unauthorizedError",
+                        "safeName": "unauthorizedError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "unauthorized_error",
+                        "safeName": "unauthorized_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNAUTHORIZED_ERROR",
+                        "safeName": "UNAUTHORIZED_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnauthorizedError",
+                        "safeName": "UnauthorizedError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "errorId": "error_:UnauthorizedError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "UnauthorizedError",
+                    "camelCase": {
+                        "unsafeName": "unauthorizedError",
+                        "safeName": "unauthorizedError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "unauthorized_error",
+                        "safeName": "unauthorized_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNAUTHORIZED_ERROR",
+                        "safeName": "UNAUTHORIZED_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnauthorizedError",
+                        "safeName": "UnauthorizedError"
+                    }
+                },
+                "wireValue": "UnauthorizedError"
+            },
+            "statusCode": 401,
+            "isWildcardStatusCode": null,
+            "type": {
+                "_type": "unknown"
+            },
+            "examples": [],
+            "v2Examples": null,
+            "displayName": null,
+            "headers": [],
+            "docs": "Invalid token."
+        },
+        "error_:ForbiddenError": {
+            "name": {
+                "name": {
+                    "originalName": "ForbiddenError",
+                    "camelCase": {
+                        "unsafeName": "forbiddenError",
+                        "safeName": "forbiddenError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "forbidden_error",
+                        "safeName": "forbidden_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FORBIDDEN_ERROR",
+                        "safeName": "FORBIDDEN_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ForbiddenError",
+                        "safeName": "ForbiddenError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "errorId": "error_:ForbiddenError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "ForbiddenError",
+                    "camelCase": {
+                        "unsafeName": "forbiddenError",
+                        "safeName": "forbiddenError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "forbidden_error",
+                        "safeName": "forbidden_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FORBIDDEN_ERROR",
+                        "safeName": "FORBIDDEN_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ForbiddenError",
+                        "safeName": "ForbiddenError"
+                    }
+                },
+                "wireValue": "ForbiddenError"
+            },
+            "statusCode": 403,
+            "isWildcardStatusCode": null,
+            "type": {
+                "_type": "unknown"
+            },
+            "examples": [],
+            "v2Examples": null,
+            "displayName": null,
+            "headers": [],
+            "docs": "Insufficient scope, expected: read:actions."
+        },
+        "error_:TooManyRequestsError": {
             "name": {
                 "name": {
                     "originalName": "TooManyRequestsError",
@@ -58,7 +241,7 @@
                     "packagePath": [],
                     "file": null
                 },
-                "errorId": "error_:[object Object]"
+                "errorId": "error_:TooManyRequestsError"
             },
             "discriminantValue": {
                 "name": {
@@ -120,7 +303,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_.[object Object]",
+                    "id": "endpoint_.getFoo",
                     "name": {
                         "originalName": "getFoo",
                         "camelCase": {
@@ -224,7 +407,7 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "errorId": "error_:[object Object]"
+                                "errorId": "error_:BadRequestError"
                             },
                             "docs": null
                         },
@@ -254,7 +437,7 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "errorId": "error_:[object Object]"
+                                "errorId": "error_:UnauthorizedError"
                             },
                             "docs": null
                         },
@@ -284,7 +467,7 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "errorId": "error_:[object Object]"
+                                "errorId": "error_:ForbiddenError"
                             },
                             "docs": null
                         },
@@ -314,7 +497,7 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "errorId": "error_:[object Object]"
+                                "errorId": "error_:TooManyRequestsError"
                             },
                             "docs": null
                         }
@@ -469,7 +652,7 @@
                         },
                         {
                             "example": {
-                                "id": "cfdb7973",
+                                "id": "19e11cb8",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -494,22 +677,22 @@
                                     },
                                     "error": {
                                         "name": {
-                                            "originalName": "TooManyRequestsError",
+                                            "originalName": "BadRequestError",
                                             "camelCase": {
-                                                "unsafeName": "tooManyRequestsError",
-                                                "safeName": "tooManyRequestsError"
+                                                "unsafeName": "badRequestError",
+                                                "safeName": "badRequestError"
                                             },
                                             "snakeCase": {
-                                                "unsafeName": "too_many_requests_error",
-                                                "safeName": "too_many_requests_error"
+                                                "unsafeName": "bad_request_error",
+                                                "safeName": "bad_request_error"
                                             },
                                             "screamingSnakeCase": {
-                                                "unsafeName": "TOO_MANY_REQUESTS_ERROR",
-                                                "safeName": "TOO_MANY_REQUESTS_ERROR"
+                                                "unsafeName": "BAD_REQUEST_ERROR",
+                                                "safeName": "BAD_REQUEST_ERROR"
                                             },
                                             "pascalCase": {
-                                                "unsafeName": "TooManyRequestsError",
-                                                "safeName": "TooManyRequestsError"
+                                                "unsafeName": "BadRequestError",
+                                                "safeName": "BadRequestError"
                                             }
                                         },
                                         "fernFilepath": {
@@ -517,7 +700,7 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "errorId": "error_:[object Object]"
+                                        "errorId": "error_:BadRequestError"
                                     }
                                 },
                                 "docs": null
@@ -525,7 +708,7 @@
                         },
                         {
                             "example": {
-                                "id": "cfdb7973",
+                                "id": "e96ec960",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -550,22 +733,22 @@
                                     },
                                     "error": {
                                         "name": {
-                                            "originalName": "TooManyRequestsError",
+                                            "originalName": "UnauthorizedError",
                                             "camelCase": {
-                                                "unsafeName": "tooManyRequestsError",
-                                                "safeName": "tooManyRequestsError"
+                                                "unsafeName": "unauthorizedError",
+                                                "safeName": "unauthorizedError"
                                             },
                                             "snakeCase": {
-                                                "unsafeName": "too_many_requests_error",
-                                                "safeName": "too_many_requests_error"
+                                                "unsafeName": "unauthorized_error",
+                                                "safeName": "unauthorized_error"
                                             },
                                             "screamingSnakeCase": {
-                                                "unsafeName": "TOO_MANY_REQUESTS_ERROR",
-                                                "safeName": "TOO_MANY_REQUESTS_ERROR"
+                                                "unsafeName": "UNAUTHORIZED_ERROR",
+                                                "safeName": "UNAUTHORIZED_ERROR"
                                             },
                                             "pascalCase": {
-                                                "unsafeName": "TooManyRequestsError",
-                                                "safeName": "TooManyRequestsError"
+                                                "unsafeName": "UnauthorizedError",
+                                                "safeName": "UnauthorizedError"
                                             }
                                         },
                                         "fernFilepath": {
@@ -573,7 +756,7 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "errorId": "error_:[object Object]"
+                                        "errorId": "error_:UnauthorizedError"
                                     }
                                 },
                                 "docs": null
@@ -581,7 +764,7 @@
                         },
                         {
                             "example": {
-                                "id": "cfdb7973",
+                                "id": "8304cb04",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -606,22 +789,22 @@
                                     },
                                     "error": {
                                         "name": {
-                                            "originalName": "TooManyRequestsError",
+                                            "originalName": "ForbiddenError",
                                             "camelCase": {
-                                                "unsafeName": "tooManyRequestsError",
-                                                "safeName": "tooManyRequestsError"
+                                                "unsafeName": "forbiddenError",
+                                                "safeName": "forbiddenError"
                                             },
                                             "snakeCase": {
-                                                "unsafeName": "too_many_requests_error",
-                                                "safeName": "too_many_requests_error"
+                                                "unsafeName": "forbidden_error",
+                                                "safeName": "forbidden_error"
                                             },
                                             "screamingSnakeCase": {
-                                                "unsafeName": "TOO_MANY_REQUESTS_ERROR",
-                                                "safeName": "TOO_MANY_REQUESTS_ERROR"
+                                                "unsafeName": "FORBIDDEN_ERROR",
+                                                "safeName": "FORBIDDEN_ERROR"
                                             },
                                             "pascalCase": {
-                                                "unsafeName": "TooManyRequestsError",
-                                                "safeName": "TooManyRequestsError"
+                                                "unsafeName": "ForbiddenError",
+                                                "safeName": "ForbiddenError"
                                             }
                                         },
                                         "fernFilepath": {
@@ -629,7 +812,7 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "errorId": "error_:[object Object]"
+                                        "errorId": "error_:ForbiddenError"
                                     }
                                 },
                                 "docs": null
@@ -637,7 +820,7 @@
                         },
                         {
                             "example": {
-                                "id": "cfdb7973",
+                                "id": "3985fb10",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -685,7 +868,7 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "errorId": "error_:[object Object]"
+                                        "errorId": "error_:TooManyRequestsError"
                                     }
                                 },
                                 "docs": null
@@ -704,7 +887,7 @@
                     "docs": null
                 },
                 {
-                    "id": "endpoint_.[object Object]",
+                    "id": "endpoint_.create_foo",
                     "name": {
                         "originalName": "create_foo",
                         "camelCase": {
@@ -883,7 +1066,7 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "errorId": "error_:[object Object]"
+                                "errorId": "error_:BadRequestError"
                             },
                             "docs": null
                         },
@@ -913,7 +1096,7 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "errorId": "error_:[object Object]"
+                                "errorId": "error_:UnauthorizedError"
                             },
                             "docs": null
                         },
@@ -943,7 +1126,7 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "errorId": "error_:[object Object]"
+                                "errorId": "error_:ForbiddenError"
                             },
                             "docs": null
                         },
@@ -973,7 +1156,7 @@
                                     "packagePath": [],
                                     "file": null
                                 },
-                                "errorId": "error_:[object Object]"
+                                "errorId": "error_:TooManyRequestsError"
                             },
                             "docs": null
                         }
@@ -1230,7 +1413,7 @@
                         },
                         {
                             "example": {
-                                "id": "3844a675",
+                                "id": "2bc28ef2",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1309,22 +1492,22 @@
                                     },
                                     "error": {
                                         "name": {
-                                            "originalName": "TooManyRequestsError",
+                                            "originalName": "BadRequestError",
                                             "camelCase": {
-                                                "unsafeName": "tooManyRequestsError",
-                                                "safeName": "tooManyRequestsError"
+                                                "unsafeName": "badRequestError",
+                                                "safeName": "badRequestError"
                                             },
                                             "snakeCase": {
-                                                "unsafeName": "too_many_requests_error",
-                                                "safeName": "too_many_requests_error"
+                                                "unsafeName": "bad_request_error",
+                                                "safeName": "bad_request_error"
                                             },
                                             "screamingSnakeCase": {
-                                                "unsafeName": "TOO_MANY_REQUESTS_ERROR",
-                                                "safeName": "TOO_MANY_REQUESTS_ERROR"
+                                                "unsafeName": "BAD_REQUEST_ERROR",
+                                                "safeName": "BAD_REQUEST_ERROR"
                                             },
                                             "pascalCase": {
-                                                "unsafeName": "TooManyRequestsError",
-                                                "safeName": "TooManyRequestsError"
+                                                "unsafeName": "BadRequestError",
+                                                "safeName": "BadRequestError"
                                             }
                                         },
                                         "fernFilepath": {
@@ -1332,7 +1515,7 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "errorId": "error_:[object Object]"
+                                        "errorId": "error_:BadRequestError"
                                     }
                                 },
                                 "docs": null
@@ -1340,7 +1523,7 @@
                         },
                         {
                             "example": {
-                                "id": "3844a675",
+                                "id": "c1ea454a",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1419,22 +1602,22 @@
                                     },
                                     "error": {
                                         "name": {
-                                            "originalName": "TooManyRequestsError",
+                                            "originalName": "UnauthorizedError",
                                             "camelCase": {
-                                                "unsafeName": "tooManyRequestsError",
-                                                "safeName": "tooManyRequestsError"
+                                                "unsafeName": "unauthorizedError",
+                                                "safeName": "unauthorizedError"
                                             },
                                             "snakeCase": {
-                                                "unsafeName": "too_many_requests_error",
-                                                "safeName": "too_many_requests_error"
+                                                "unsafeName": "unauthorized_error",
+                                                "safeName": "unauthorized_error"
                                             },
                                             "screamingSnakeCase": {
-                                                "unsafeName": "TOO_MANY_REQUESTS_ERROR",
-                                                "safeName": "TOO_MANY_REQUESTS_ERROR"
+                                                "unsafeName": "UNAUTHORIZED_ERROR",
+                                                "safeName": "UNAUTHORIZED_ERROR"
                                             },
                                             "pascalCase": {
-                                                "unsafeName": "TooManyRequestsError",
-                                                "safeName": "TooManyRequestsError"
+                                                "unsafeName": "UnauthorizedError",
+                                                "safeName": "UnauthorizedError"
                                             }
                                         },
                                         "fernFilepath": {
@@ -1442,7 +1625,7 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "errorId": "error_:[object Object]"
+                                        "errorId": "error_:UnauthorizedError"
                                     }
                                 },
                                 "docs": null
@@ -1450,7 +1633,7 @@
                         },
                         {
                             "example": {
-                                "id": "3844a675",
+                                "id": "96efac0e",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1529,22 +1712,22 @@
                                     },
                                     "error": {
                                         "name": {
-                                            "originalName": "TooManyRequestsError",
+                                            "originalName": "ForbiddenError",
                                             "camelCase": {
-                                                "unsafeName": "tooManyRequestsError",
-                                                "safeName": "tooManyRequestsError"
+                                                "unsafeName": "forbiddenError",
+                                                "safeName": "forbiddenError"
                                             },
                                             "snakeCase": {
-                                                "unsafeName": "too_many_requests_error",
-                                                "safeName": "too_many_requests_error"
+                                                "unsafeName": "forbidden_error",
+                                                "safeName": "forbidden_error"
                                             },
                                             "screamingSnakeCase": {
-                                                "unsafeName": "TOO_MANY_REQUESTS_ERROR",
-                                                "safeName": "TOO_MANY_REQUESTS_ERROR"
+                                                "unsafeName": "FORBIDDEN_ERROR",
+                                                "safeName": "FORBIDDEN_ERROR"
                                             },
                                             "pascalCase": {
-                                                "unsafeName": "TooManyRequestsError",
-                                                "safeName": "TooManyRequestsError"
+                                                "unsafeName": "ForbiddenError",
+                                                "safeName": "ForbiddenError"
                                             }
                                         },
                                         "fernFilepath": {
@@ -1552,7 +1735,7 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "errorId": "error_:[object Object]"
+                                        "errorId": "error_:ForbiddenError"
                                     }
                                 },
                                 "docs": null
@@ -1560,7 +1743,7 @@
                         },
                         {
                             "example": {
-                                "id": "3844a675",
+                                "id": "c61d9f9a",
                                 "url": "/foo",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1662,7 +1845,7 @@
                                             "packagePath": [],
                                             "file": null
                                         },
-                                        "errorId": "error_:[object Object]"
+                                        "errorId": "error_:TooManyRequestsError"
                                     }
                                 },
                                 "docs": null
@@ -1729,7 +1912,49 @@
         "types": {},
         "headers": [],
         "endpoints": {
-            "endpoint_.[object Object]": {
+            "endpoint_.getFoo": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "getFoo",
+                        "camelCase": {
+                            "unsafeName": "getFoo",
+                            "safeName": "getFoo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_foo",
+                            "safeName": "get_foo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_FOO",
+                            "safeName": "GET_FOO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetFoo",
+                            "safeName": "GetFoo"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/foo"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_.create_foo": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -1805,10 +2030,10 @@
         "service": "service_",
         "types": [],
         "errors": [
-            "error_:[object Object]",
-            "error_:[object Object]",
-            "error_:[object Object]",
-            "error_:[object Object]"
+            "error_:BadRequestError",
+            "error_:UnauthorizedError",
+            "error_:ForbiddenError",
+            "error_:TooManyRequestsError"
         ],
         "subpackages": [],
         "webhooks": null,

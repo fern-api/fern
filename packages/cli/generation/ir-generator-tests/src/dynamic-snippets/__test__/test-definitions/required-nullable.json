@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:Foo": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -169,7 +169,214 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.[object Object]": {
+        "endpoint_.getFoo": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "getFoo",
+                    "camelCase": {
+                        "unsafeName": "getFoo",
+                        "safeName": "getFoo"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_foo",
+                        "safeName": "get_foo"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_FOO",
+                        "safeName": "GET_FOO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetFoo",
+                        "safeName": "GetFoo"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/foo"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "GetFooRequest",
+                        "camelCase": {
+                            "unsafeName": "getFooRequest",
+                            "safeName": "getFooRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_foo_request",
+                            "safeName": "get_foo_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_FOO_REQUEST",
+                            "safeName": "GET_FOO_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetFooRequest",
+                            "safeName": "GetFooRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "optional_baz",
+                                "camelCase": {
+                                    "unsafeName": "optionalBaz",
+                                    "safeName": "optionalBaz"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "optional_baz",
+                                    "safeName": "optional_baz"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OPTIONAL_BAZ",
+                                    "safeName": "OPTIONAL_BAZ"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "OptionalBaz",
+                                    "safeName": "OptionalBaz"
+                                }
+                            },
+                            "wireValue": "optional_baz"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "optional_nullable_baz",
+                                "camelCase": {
+                                    "unsafeName": "optionalNullableBaz",
+                                    "safeName": "optionalNullableBaz"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "optional_nullable_baz",
+                                    "safeName": "optional_nullable_baz"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OPTIONAL_NULLABLE_BAZ",
+                                    "safeName": "OPTIONAL_NULLABLE_BAZ"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "OptionalNullableBaz",
+                                    "safeName": "OptionalNullableBaz"
+                                }
+                            },
+                            "wireValue": "optional_nullable_baz"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "nullable",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "required_baz",
+                                "camelCase": {
+                                    "unsafeName": "requiredBaz",
+                                    "safeName": "requiredBaz"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "required_baz",
+                                    "safeName": "required_baz"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REQUIRED_BAZ",
+                                    "safeName": "REQUIRED_BAZ"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RequiredBaz",
+                                    "safeName": "RequiredBaz"
+                                }
+                            },
+                            "wireValue": "required_baz"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "required_nullable_baz",
+                                "camelCase": {
+                                    "unsafeName": "requiredNullableBaz",
+                                    "safeName": "requiredNullableBaz"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "required_nullable_baz",
+                                    "safeName": "required_nullable_baz"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REQUIRED_NULLABLE_BAZ",
+                                    "safeName": "REQUIRED_NULLABLE_BAZ"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RequiredNullableBaz",
+                                    "safeName": "RequiredNullableBaz"
+                                }
+                            },
+                            "wireValue": "required_nullable_baz"
+                        },
+                        "typeReference": {
+                            "type": "nullable",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_.updateFoo": {
             "auth": null,
             "declaration": {
                 "name": {

@@ -31,7 +31,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:[object Object]": {
+        "type_:ConfigurableProp": {
             "inline": null,
             "name": {
                 "name": {
@@ -59,7 +59,7 @@
                     "file": null
                 },
                 "displayName": null,
-                "typeId": "type_:[object Object]"
+                "typeId": "type_:ConfigurableProp"
             },
             "shape": {
                 "_type": "object",
@@ -303,7 +303,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_:[object Object]"
+            "type_:ConfigurableProp"
         ]
     },
     "webhookGroups": {},
@@ -314,7 +314,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:[object Object]": {
+            "type_:ConfigurableProp": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -499,7 +499,7 @@
         "websocket": null,
         "service": null,
         "types": [
-            "type_:[object Object]"
+            "type_:ConfigurableProp"
         ],
         "errors": [],
         "subpackages": [],

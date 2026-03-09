@@ -31,7 +31,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:[object Object]": {
+        "type_:PaymentInfo": {
             "inline": null,
             "name": {
                 "name": {
@@ -59,7 +59,7 @@
                     "file": null
                 },
                 "displayName": null,
-                "typeId": "type_:[object Object]"
+                "typeId": "type_:PaymentInfo"
             },
             "shape": {
                 "_type": "object",
@@ -250,7 +250,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_:[object Object]"
+            "type_:PaymentInfo"
         ]
     },
     "webhookGroups": {
@@ -308,7 +308,7 @@
                             "file": null
                         },
                         "displayName": null,
-                        "typeId": "type_:[object Object]",
+                        "typeId": "type_:PaymentInfo",
                         "default": null,
                         "inline": null
                     },
@@ -342,7 +342,7 @@
                             "shape": {
                                 "type": "named",
                                 "typeName": {
-                                    "typeId": "type_:[object Object]",
+                                    "typeId": "type_:PaymentInfo",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -408,7 +408,7 @@
                                                 "jsonExample": "$3.00"
                                             },
                                             "originalTypeDeclaration": {
-                                                "typeId": "type_:[object Object]",
+                                                "typeId": "type_:PaymentInfo",
                                                 "fernFilepath": {
                                                     "allParts": [],
                                                     "packagePath": [],
@@ -473,7 +473,7 @@
                                                 "jsonExample": "USD"
                                             },
                                             "originalTypeDeclaration": {
-                                                "typeId": "type_:[object Object]",
+                                                "typeId": "type_:PaymentInfo",
                                                 "fernFilepath": {
                                                     "allParts": [],
                                                     "packagePath": [],
@@ -558,7 +558,7 @@
                                                 "jsonExample": "Payment for order #12345"
                                             },
                                             "originalTypeDeclaration": {
-                                                "typeId": "type_:[object Object]",
+                                                "typeId": "type_:PaymentInfo",
                                                 "fernFilepath": {
                                                     "allParts": [],
                                                     "packagePath": [],
@@ -623,7 +623,7 @@
                             "shape": {
                                 "type": "named",
                                 "typeName": {
-                                    "typeId": "type_:[object Object]",
+                                    "typeId": "type_:PaymentInfo",
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -689,7 +689,7 @@
                                                 "jsonExample": "$1,234.56"
                                             },
                                             "originalTypeDeclaration": {
-                                                "typeId": "type_:[object Object]",
+                                                "typeId": "type_:PaymentInfo",
                                                 "fernFilepath": {
                                                     "allParts": [],
                                                     "packagePath": [],
@@ -754,7 +754,7 @@
                                                 "jsonExample": "USD"
                                             },
                                             "originalTypeDeclaration": {
-                                                "typeId": "type_:[object Object]",
+                                                "typeId": "type_:PaymentInfo",
                                                 "fernFilepath": {
                                                     "allParts": [],
                                                     "packagePath": [],
@@ -828,7 +828,7 @@
                                                 "jsonExample": null
                                             },
                                             "originalTypeDeclaration": {
-                                                "typeId": "type_:[object Object]",
+                                                "typeId": "type_:PaymentInfo",
                                                 "fernFilepath": {
                                                     "allParts": [],
                                                     "packagePath": [],
@@ -883,7 +883,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:[object Object]": {
+            "type_:PaymentInfo": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1032,7 +1032,7 @@
         "websocket": null,
         "service": null,
         "types": [
-            "type_:[object Object]"
+            "type_:PaymentInfo"
         ],
         "errors": [],
         "subpackages": [],

@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:[object Object]": {
+        "type_:ConfigurableProp": {
             "type": "object",
             "declaration": {
                 "name": {

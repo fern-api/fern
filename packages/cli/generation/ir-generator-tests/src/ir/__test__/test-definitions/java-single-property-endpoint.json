@@ -33,7 +33,7 @@
     "types": {},
     "errors": {},
     "services": {
-        "service_[object Object]": {
+        "service_single-property": {
             "availability": null,
             "name": {
                 "fernFilepath": {
@@ -96,7 +96,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_[object Object].[object Object]",
+                    "id": "endpoint_single-property.doThing",
                     "name": {
                         "originalName": "doThing",
                         "camelCase": {
@@ -500,7 +500,7 @@
         "types": {},
         "headers": [],
         "endpoints": {
-            "endpoint_[object Object].[object Object]": {
+            "endpoint_single-property.doThing": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -727,7 +727,7 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_[object Object]": {
+        "subpackage_single-property": {
             "name": {
                 "originalName": "single-property",
                 "camelCase": {
@@ -791,7 +791,7 @@
                     }
                 }
             },
-            "service": "service_[object Object]",
+            "service": "service_single-property",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -813,7 +813,7 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_[object Object]"
+            "subpackage_single-property"
         ],
         "webhooks": null,
         "navigationConfig": null,

@@ -3,7 +3,7 @@
     "types": {},
     "headers": [],
     "endpoints": {
-        "endpoint_[object Object].[object Object]": {
+        "endpoint_dataservice.foo": {
             "auth": null,
             "declaration": {
                 "name": {

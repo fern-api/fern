@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_[object Object]:[object Object]": {
+        "type_auth:TokenResponse": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -138,10 +138,1106 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_[object Object].[object Object]": {
+        "endpoint_auth.getTokenWithClientCredentials": {
             "auth": {
                 "type": "inferred",
-                "parameters": []
+                "parameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Api-Key",
+                                "camelCase": {
+                                    "unsafeName": "xAPIKey",
+                                    "safeName": "xAPIKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_api_key",
+                                    "safeName": "x_api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_API_KEY",
+                                    "safeName": "X_API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XAPIKey",
+                                    "safeName": "XAPIKey"
+                                }
+                            },
+                            "wireValue": "X-Api-Key"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "client_id",
+                                "camelCase": {
+                                    "unsafeName": "clientID",
+                                    "safeName": "clientID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "client_id",
+                                    "safeName": "client_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CLIENT_ID",
+                                    "safeName": "CLIENT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ClientID",
+                                    "safeName": "ClientID"
+                                }
+                            },
+                            "wireValue": "client_id"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "client_secret",
+                                "camelCase": {
+                                    "unsafeName": "clientSecret",
+                                    "safeName": "clientSecret"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "client_secret",
+                                    "safeName": "client_secret"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CLIENT_SECRET",
+                                    "safeName": "CLIENT_SECRET"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ClientSecret",
+                                    "safeName": "ClientSecret"
+                                }
+                            },
+                            "wireValue": "client_secret"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "scope",
+                                "camelCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SCOPE",
+                                    "safeName": "SCOPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Scope",
+                                    "safeName": "Scope"
+                                }
+                            },
+                            "wireValue": "scope"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ]
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getTokenWithClientCredentials",
+                    "camelCase": {
+                        "unsafeName": "getTokenWithClientCredentials",
+                        "safeName": "getTokenWithClientCredentials"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_token_with_client_credentials",
+                        "safeName": "get_token_with_client_credentials"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_TOKEN_WITH_CLIENT_CREDENTIALS",
+                        "safeName": "GET_TOKEN_WITH_CLIENT_CREDENTIALS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetTokenWithClientCredentials",
+                        "safeName": "GetTokenWithClientCredentials"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "auth",
+                            "camelCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTH",
+                                "safeName": "AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Auth",
+                                "safeName": "Auth"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "auth",
+                        "camelCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AUTH",
+                            "safeName": "AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Auth",
+                            "safeName": "Auth"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/token"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "GetTokenRequest",
+                        "camelCase": {
+                            "unsafeName": "getTokenRequest",
+                            "safeName": "getTokenRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_token_request",
+                            "safeName": "get_token_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_TOKEN_REQUEST",
+                            "safeName": "GET_TOKEN_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetTokenRequest",
+                            "safeName": "GetTokenRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "auth",
+                                "camelCase": {
+                                    "unsafeName": "auth",
+                                    "safeName": "auth"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "auth",
+                                    "safeName": "auth"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AUTH",
+                                    "safeName": "AUTH"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Auth",
+                                    "safeName": "Auth"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "auth",
+                            "camelCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTH",
+                                "safeName": "AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Auth",
+                                "safeName": "Auth"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Api-Key",
+                                "camelCase": {
+                                    "unsafeName": "xAPIKey",
+                                    "safeName": "xAPIKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_api_key",
+                                    "safeName": "x_api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_API_KEY",
+                                    "safeName": "X_API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XAPIKey",
+                                    "safeName": "XAPIKey"
+                                }
+                            },
+                            "wireValue": "X-Api-Key"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "client_id",
+                                    "camelCase": {
+                                        "unsafeName": "clientID",
+                                        "safeName": "clientID"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "client_id",
+                                        "safeName": "client_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CLIENT_ID",
+                                        "safeName": "CLIENT_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ClientID",
+                                        "safeName": "ClientID"
+                                    }
+                                },
+                                "wireValue": "client_id"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "client_secret",
+                                    "camelCase": {
+                                        "unsafeName": "clientSecret",
+                                        "safeName": "clientSecret"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "client_secret",
+                                        "safeName": "client_secret"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CLIENT_SECRET",
+                                        "safeName": "CLIENT_SECRET"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ClientSecret",
+                                        "safeName": "ClientSecret"
+                                    }
+                                },
+                                "wireValue": "client_secret"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "audience",
+                                    "camelCase": {
+                                        "unsafeName": "audience",
+                                        "safeName": "audience"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "audience",
+                                        "safeName": "audience"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "AUDIENCE",
+                                        "safeName": "AUDIENCE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Audience",
+                                        "safeName": "Audience"
+                                    }
+                                },
+                                "wireValue": "audience"
+                            },
+                            "typeReference": {
+                                "type": "literal",
+                                "value": {
+                                    "type": "string",
+                                    "value": "https://api.example.com"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "grant_type",
+                                    "camelCase": {
+                                        "unsafeName": "grantType",
+                                        "safeName": "grantType"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "grant_type",
+                                        "safeName": "grant_type"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "GRANT_TYPE",
+                                        "safeName": "GRANT_TYPE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "GrantType",
+                                        "safeName": "GrantType"
+                                    }
+                                },
+                                "wireValue": "grant_type"
+                            },
+                            "typeReference": {
+                                "type": "literal",
+                                "value": {
+                                    "type": "string",
+                                    "value": "client_credentials"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "scope",
+                                    "camelCase": {
+                                        "unsafeName": "scope",
+                                        "safeName": "scope"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "scope",
+                                        "safeName": "scope"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SCOPE",
+                                        "safeName": "SCOPE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Scope",
+                                        "safeName": "Scope"
+                                    }
+                                },
+                                "wireValue": "scope"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_auth.refreshToken": {
+            "auth": {
+                "type": "inferred",
+                "parameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Api-Key",
+                                "camelCase": {
+                                    "unsafeName": "xAPIKey",
+                                    "safeName": "xAPIKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_api_key",
+                                    "safeName": "x_api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_API_KEY",
+                                    "safeName": "X_API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XAPIKey",
+                                    "safeName": "XAPIKey"
+                                }
+                            },
+                            "wireValue": "X-Api-Key"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "client_id",
+                                "camelCase": {
+                                    "unsafeName": "clientID",
+                                    "safeName": "clientID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "client_id",
+                                    "safeName": "client_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CLIENT_ID",
+                                    "safeName": "CLIENT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ClientID",
+                                    "safeName": "ClientID"
+                                }
+                            },
+                            "wireValue": "client_id"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "client_secret",
+                                "camelCase": {
+                                    "unsafeName": "clientSecret",
+                                    "safeName": "clientSecret"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "client_secret",
+                                    "safeName": "client_secret"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CLIENT_SECRET",
+                                    "safeName": "CLIENT_SECRET"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ClientSecret",
+                                    "safeName": "ClientSecret"
+                                }
+                            },
+                            "wireValue": "client_secret"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "scope",
+                                "camelCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SCOPE",
+                                    "safeName": "SCOPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Scope",
+                                    "safeName": "Scope"
+                                }
+                            },
+                            "wireValue": "scope"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ]
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "refreshToken",
+                    "camelCase": {
+                        "unsafeName": "refreshToken",
+                        "safeName": "refreshToken"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "refresh_token",
+                        "safeName": "refresh_token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REFRESH_TOKEN",
+                        "safeName": "REFRESH_TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RefreshToken",
+                        "safeName": "RefreshToken"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "auth",
+                            "camelCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTH",
+                                "safeName": "AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Auth",
+                                "safeName": "Auth"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "auth",
+                        "camelCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AUTH",
+                            "safeName": "AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Auth",
+                            "safeName": "Auth"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/token/refresh"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "RefreshTokenRequest",
+                        "camelCase": {
+                            "unsafeName": "refreshTokenRequest",
+                            "safeName": "refreshTokenRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "refresh_token_request",
+                            "safeName": "refresh_token_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REFRESH_TOKEN_REQUEST",
+                            "safeName": "REFRESH_TOKEN_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "RefreshTokenRequest",
+                            "safeName": "RefreshTokenRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "auth",
+                                "camelCase": {
+                                    "unsafeName": "auth",
+                                    "safeName": "auth"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "auth",
+                                    "safeName": "auth"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AUTH",
+                                    "safeName": "AUTH"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Auth",
+                                    "safeName": "Auth"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "auth",
+                            "camelCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTH",
+                                "safeName": "AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Auth",
+                                "safeName": "Auth"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Api-Key",
+                                "camelCase": {
+                                    "unsafeName": "xAPIKey",
+                                    "safeName": "xAPIKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_api_key",
+                                    "safeName": "x_api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_API_KEY",
+                                    "safeName": "X_API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XAPIKey",
+                                    "safeName": "XAPIKey"
+                                }
+                            },
+                            "wireValue": "X-Api-Key"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "body": {
+                    "type": "properties",
+                    "value": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "client_id",
+                                    "camelCase": {
+                                        "unsafeName": "clientID",
+                                        "safeName": "clientID"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "client_id",
+                                        "safeName": "client_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CLIENT_ID",
+                                        "safeName": "CLIENT_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ClientID",
+                                        "safeName": "ClientID"
+                                    }
+                                },
+                                "wireValue": "client_id"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "client_secret",
+                                    "camelCase": {
+                                        "unsafeName": "clientSecret",
+                                        "safeName": "clientSecret"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "client_secret",
+                                        "safeName": "client_secret"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CLIENT_SECRET",
+                                        "safeName": "CLIENT_SECRET"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ClientSecret",
+                                        "safeName": "ClientSecret"
+                                    }
+                                },
+                                "wireValue": "client_secret"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "refresh_token",
+                                    "camelCase": {
+                                        "unsafeName": "refreshToken",
+                                        "safeName": "refreshToken"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "refresh_token",
+                                        "safeName": "refresh_token"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "REFRESH_TOKEN",
+                                        "safeName": "REFRESH_TOKEN"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "RefreshToken",
+                                        "safeName": "RefreshToken"
+                                    }
+                                },
+                                "wireValue": "refresh_token"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "audience",
+                                    "camelCase": {
+                                        "unsafeName": "audience",
+                                        "safeName": "audience"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "audience",
+                                        "safeName": "audience"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "AUDIENCE",
+                                        "safeName": "AUDIENCE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Audience",
+                                        "safeName": "Audience"
+                                    }
+                                },
+                                "wireValue": "audience"
+                            },
+                            "typeReference": {
+                                "type": "literal",
+                                "value": {
+                                    "type": "string",
+                                    "value": "https://api.example.com"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "grant_type",
+                                    "camelCase": {
+                                        "unsafeName": "grantType",
+                                        "safeName": "grantType"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "grant_type",
+                                        "safeName": "grant_type"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "GRANT_TYPE",
+                                        "safeName": "GRANT_TYPE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "GrantType",
+                                        "safeName": "GrantType"
+                                    }
+                                },
+                                "wireValue": "grant_type"
+                            },
+                            "typeReference": {
+                                "type": "literal",
+                                "value": {
+                                    "type": "string",
+                                    "value": "refresh_token"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "scope",
+                                    "camelCase": {
+                                        "unsafeName": "scope",
+                                        "safeName": "scope"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "scope",
+                                        "safeName": "scope"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SCOPE",
+                                        "safeName": "SCOPE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Scope",
+                                        "safeName": "Scope"
+                                    }
+                                },
+                                "wireValue": "scope"
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_nested-no-auth/api.getSomething": {
+            "auth": {
+                "type": "inferred",
+                "parameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Api-Key",
+                                "camelCase": {
+                                    "unsafeName": "xAPIKey",
+                                    "safeName": "xAPIKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_api_key",
+                                    "safeName": "x_api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_API_KEY",
+                                    "safeName": "X_API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XAPIKey",
+                                    "safeName": "XAPIKey"
+                                }
+                            },
+                            "wireValue": "X-Api-Key"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "client_id",
+                                "camelCase": {
+                                    "unsafeName": "clientID",
+                                    "safeName": "clientID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "client_id",
+                                    "safeName": "client_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CLIENT_ID",
+                                    "safeName": "CLIENT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ClientID",
+                                    "safeName": "ClientID"
+                                }
+                            },
+                            "wireValue": "client_id"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "client_secret",
+                                "camelCase": {
+                                    "unsafeName": "clientSecret",
+                                    "safeName": "clientSecret"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "client_secret",
+                                    "safeName": "client_secret"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CLIENT_SECRET",
+                                    "safeName": "CLIENT_SECRET"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ClientSecret",
+                                    "safeName": "ClientSecret"
+                                }
+                            },
+                            "wireValue": "client_secret"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "scope",
+                                "camelCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SCOPE",
+                                    "safeName": "SCOPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Scope",
+                                    "safeName": "Scope"
+                                }
+                            },
+                            "wireValue": "scope"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ]
             },
             "declaration": {
                 "name": {
@@ -166,50 +1262,89 @@
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "simple",
+                            "originalName": "nested-no-auth",
                             "camelCase": {
-                                "unsafeName": "simple",
-                                "safeName": "simple"
+                                "unsafeName": "nestedNoAuth",
+                                "safeName": "nestedNoAuth"
                             },
                             "snakeCase": {
-                                "unsafeName": "simple",
-                                "safeName": "simple"
+                                "unsafeName": "nested_no_auth",
+                                "safeName": "nested_no_auth"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "SIMPLE",
-                                "safeName": "SIMPLE"
+                                "unsafeName": "NESTED_NO_AUTH",
+                                "safeName": "NESTED_NO_AUTH"
                             },
                             "pascalCase": {
-                                "unsafeName": "Simple",
-                                "safeName": "Simple"
+                                "unsafeName": "NestedNoAuth",
+                                "safeName": "NestedNoAuth"
+                            }
+                        },
+                        {
+                            "originalName": "api",
+                            "camelCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
                             }
                         }
                     ],
-                    "packagePath": [],
+                    "packagePath": [
+                        {
+                            "originalName": "nested-no-auth",
+                            "camelCase": {
+                                "unsafeName": "nestedNoAuth",
+                                "safeName": "nestedNoAuth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested_no_auth",
+                                "safeName": "nested_no_auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED_NO_AUTH",
+                                "safeName": "NESTED_NO_AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NestedNoAuth",
+                                "safeName": "NestedNoAuth"
+                            }
+                        }
+                    ],
                     "file": {
-                        "originalName": "simple",
+                        "originalName": "api",
                         "camelCase": {
-                            "unsafeName": "simple",
-                            "safeName": "simple"
+                            "unsafeName": "api",
+                            "safeName": "api"
                         },
                         "snakeCase": {
-                            "unsafeName": "simple",
-                            "safeName": "simple"
+                            "unsafeName": "api",
+                            "safeName": "api"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "SIMPLE",
-                            "safeName": "SIMPLE"
+                            "unsafeName": "API",
+                            "safeName": "API"
                         },
                         "pascalCase": {
-                            "unsafeName": "Simple",
-                            "safeName": "Simple"
+                            "unsafeName": "API",
+                            "safeName": "API"
                         }
                     }
                 }
             },
             "location": {
                 "method": "GET",
-                "path": "/get-something"
+                "path": "/nested-no-auth/get-something"
             },
             "request": {
                 "type": "body",
@@ -221,10 +1356,134 @@
             },
             "examples": null
         },
-        "endpoint_[object Object]/[object Object].[object Object]": {
+        "endpoint_nested/api.getSomething": {
             "auth": {
                 "type": "inferred",
-                "parameters": []
+                "parameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Api-Key",
+                                "camelCase": {
+                                    "unsafeName": "xAPIKey",
+                                    "safeName": "xAPIKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_api_key",
+                                    "safeName": "x_api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_API_KEY",
+                                    "safeName": "X_API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XAPIKey",
+                                    "safeName": "XAPIKey"
+                                }
+                            },
+                            "wireValue": "X-Api-Key"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "client_id",
+                                "camelCase": {
+                                    "unsafeName": "clientID",
+                                    "safeName": "clientID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "client_id",
+                                    "safeName": "client_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CLIENT_ID",
+                                    "safeName": "CLIENT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ClientID",
+                                    "safeName": "ClientID"
+                                }
+                            },
+                            "wireValue": "client_id"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "client_secret",
+                                "camelCase": {
+                                    "unsafeName": "clientSecret",
+                                    "safeName": "clientSecret"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "client_secret",
+                                    "safeName": "client_secret"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CLIENT_SECRET",
+                                    "safeName": "CLIENT_SECRET"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ClientSecret",
+                                    "safeName": "ClientSecret"
+                                }
+                            },
+                            "wireValue": "client_secret"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "scope",
+                                "camelCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SCOPE",
+                                    "safeName": "SCOPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Scope",
+                                    "safeName": "Scope"
+                                }
+                            },
+                            "wireValue": "scope"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ]
             },
             "declaration": {
                 "name": {
@@ -332,6 +1591,213 @@
             "location": {
                 "method": "GET",
                 "path": "/nested/get-something"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_simple.getSomething": {
+            "auth": {
+                "type": "inferred",
+                "parameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "X-Api-Key",
+                                "camelCase": {
+                                    "unsafeName": "xAPIKey",
+                                    "safeName": "xAPIKey"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "x_api_key",
+                                    "safeName": "x_api_key"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "X_API_KEY",
+                                    "safeName": "X_API_KEY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "XAPIKey",
+                                    "safeName": "XAPIKey"
+                                }
+                            },
+                            "wireValue": "X-Api-Key"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "client_id",
+                                "camelCase": {
+                                    "unsafeName": "clientID",
+                                    "safeName": "clientID"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "client_id",
+                                    "safeName": "client_id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CLIENT_ID",
+                                    "safeName": "CLIENT_ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ClientID",
+                                    "safeName": "ClientID"
+                                }
+                            },
+                            "wireValue": "client_id"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "client_secret",
+                                "camelCase": {
+                                    "unsafeName": "clientSecret",
+                                    "safeName": "clientSecret"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "client_secret",
+                                    "safeName": "client_secret"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CLIENT_SECRET",
+                                    "safeName": "CLIENT_SECRET"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ClientSecret",
+                                    "safeName": "ClientSecret"
+                                }
+                            },
+                            "wireValue": "client_secret"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "scope",
+                                "camelCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SCOPE",
+                                    "safeName": "SCOPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Scope",
+                                    "safeName": "Scope"
+                                }
+                            },
+                            "wireValue": "scope"
+                        },
+                        "typeReference": {
+                            "type": "optional",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ]
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getSomething",
+                    "camelCase": {
+                        "unsafeName": "getSomething",
+                        "safeName": "getSomething"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_something",
+                        "safeName": "get_something"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_SOMETHING",
+                        "safeName": "GET_SOMETHING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetSomething",
+                        "safeName": "GetSomething"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "simple",
+                            "camelCase": {
+                                "unsafeName": "simple",
+                                "safeName": "simple"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "simple",
+                                "safeName": "simple"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SIMPLE",
+                                "safeName": "SIMPLE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Simple",
+                                "safeName": "Simple"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "simple",
+                        "camelCase": {
+                            "unsafeName": "simple",
+                            "safeName": "simple"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "simple",
+                            "safeName": "simple"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SIMPLE",
+                            "safeName": "SIMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Simple",
+                            "safeName": "Simple"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/get-something"
             },
             "request": {
                 "type": "body",

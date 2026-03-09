@@ -1,15 +1,16 @@
 import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath, FernIr } from "@fern-api/ir-sdk";
 
+import { getNameString } from "./getNameString.js";
 import { stringifyFernFilepath } from "./stringifyFernFilepath.js";
 
 export const IdGenerator = {
     generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {
         const joinedFernFilePath = stringifyFernFilepath(typeName.fernFilepath);
-        return `type_${joinedFernFilePath}:${typeName.name}`;
+        return `type_${joinedFernFilePath}:${getNameString(typeName.name)}`;
     },
     generateErrorId: (errorName: Omit<DeclaredErrorName, "errorId">): FernIr.commons.TypeId => {
         const joinedFernFilePath = stringifyFernFilepath(errorName.fernFilepath);
-        return `error_${joinedFernFilePath}:${errorName.name}`;
+        return `error_${joinedFernFilePath}:${getNameString(errorName.name)}`;
     },
     generateServiceId: (serviceName: DeclaredServiceName): FernIr.commons.TypeId => {
         const joinedFernFilePath = stringifyFernFilepath(serviceName.fernFilepath);
@@ -28,7 +29,7 @@ export const IdGenerator = {
         httpEndpoint: Omit<FernIr.http.HttpEndpoint, "id">
     ): string => {
         const joinedFernFilePath = stringifyFernFilepath(declaredServiceName.fernFilepath);
-        const endpointId = httpEndpoint.name;
+        const endpointId = getNameString(httpEndpoint.name);
         return `endpoint_${joinedFernFilePath}.${endpointId}`;
     },
     generateWebhookGroupId: (fernFilepath: FernFilepath): string => {

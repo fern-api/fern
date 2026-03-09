@@ -31,7 +31,7 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:[object Object]": {
+        "type_:Type": {
             "inline": null,
             "name": {
                 "name": {
@@ -59,7 +59,7 @@
                     "file": null
                 },
                 "displayName": null,
-                "typeId": "type_:[object Object]"
+                "typeId": "type_:Type"
             },
             "shape": {
                 "_type": "object",
@@ -151,7 +151,7 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_.[object Object]",
+                    "id": "endpoint_.get",
                     "name": {
                         "originalName": "get",
                         "camelCase": {
@@ -276,7 +276,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_:[object Object]"
+            "type_:Type"
         ]
     },
     "webhookGroups": {},
@@ -287,7 +287,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:[object Object]": {
+            "type_:Type": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -353,7 +353,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_.[object Object]": {
+            "endpoint_.get": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -416,7 +416,7 @@
         "websocket": null,
         "service": "service_",
         "types": [
-            "type_:[object Object]"
+            "type_:Type"
         ],
         "errors": [],
         "subpackages": [],
