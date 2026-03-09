@@ -94,40 +94,28 @@ import { type CasingsGenerator, constructCasingsGenerator, type FullCasingsGener
 // NormalizedIR type utility
 // ---------------------------------------------------------------------------
 
-/**
- * Returns true if A and B are exactly the same type.
- */
 type IsExact<A, B> = [A] extends [B] ? ([B] extends [A] ? true : false) : false;
 
-/**
- * Recursively replaces all occurrences of From with To throughout a type.
- */
 type DeepReplace<T, From, To> =
     IsExact<T, From> extends true
         ? To
-        : T extends Array<infer Item>
-          ? Array<DeepReplace<Item, From, To>>
-          : T extends object
-            ? { [K in keyof T]: DeepReplace<T[K], From, To> }
-            : T;
+        : IsExact<T, From | undefined> extends true
+          ? To | undefined
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          : T extends (...args: any[]) => any
+            ? T
+            : T extends Array<infer Item>
+              ? Array<DeepReplace<Item, From, To>>
+              : T extends object
+                ? { [K in keyof T]: DeepReplace<T[K], From, To> }
+                : T;
 
-/**
- * Converts all NameOrString fields to Name throughout an IR type.
- * After inflation, every NameOrString is guaranteed to be a full Name object.
- */
 export type NormalizedIR<T> = DeepReplace<T, NameOrString, Name>;
 
 // ---------------------------------------------------------------------------
 // Core inflation helpers
 // ---------------------------------------------------------------------------
 
-/**
- * Inflates a single NameOrString to a full Name.
- * If the value is already a Name object, returns it as-is.
- * If it is a string, computes all casings using the CasingsGenerator.
- *
- * Detection: typeof nameOrString === "string" is the marker.
- */
 export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator: FullCasingsGenerator): Name;
 export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator: CasingsGenerator): NameOrString;
 export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator: CasingsGenerator): NameOrString {
@@ -137,9 +125,6 @@ export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator
     return nameOrString;
 }
 
-/**
- * Inflates an optional NameOrString to a Name or undefined.
- */
 export function inflateOptionalNameOrString(
     nameOrString: NameOrString | undefined,
     casingsGenerator: FullCasingsGenerator
@@ -158,13 +143,10 @@ export function inflateOptionalNameOrString(
     return inflateNameOrString(nameOrString, casingsGenerator);
 }
 
-/**
- * Inflates a NameAndWireValue (where name may be a string) to one with a full Name.
- */
 export function inflateNameAndWireValue(
     nwv: NameAndWireValue,
     casingsGenerator: FullCasingsGenerator
-): NameAndWireValue & { name: Name };
+): NameAndWireValue;
 export function inflateNameAndWireValue(nwv: NameAndWireValue, casingsGenerator: CasingsGenerator): NameAndWireValue;
 export function inflateNameAndWireValue(nwv: NameAndWireValue, casingsGenerator: CasingsGenerator): NameAndWireValue {
     return {
@@ -173,13 +155,10 @@ export function inflateNameAndWireValue(nwv: NameAndWireValue, casingsGenerator:
     };
 }
 
-/**
- * Inflates a FernFilepath (where parts may be strings) to one with full Names.
- */
 export function inflateFernFilepath(
     fp: FernFilepath,
     casingsGenerator: FullCasingsGenerator
-): FernFilepath & { allParts: Name[]; packagePath: Name[]; file: Name | undefined };
+): FernFilepath;
 export function inflateFernFilepath(fp: FernFilepath, casingsGenerator: CasingsGenerator): FernFilepath;
 export function inflateFernFilepath(fp: FernFilepath, casingsGenerator: CasingsGenerator): FernFilepath {
     return {
@@ -190,14 +169,21 @@ export function inflateFernFilepath(fp: FernFilepath, casingsGenerator: CasingsG
 }
 
 // ---------------------------------------------------------------------------
+// Utility helpers
+// ---------------------------------------------------------------------------
+
+function mapRecord<V, R>(record: Record<string, V>, fn: (value: V) => R): Record<string, R> {
+    const result: Record<string, R> = {};
+    for (const [k, v] of Object.entries(record)) {
+        result[k] = fn(v);
+    }
+    return result;
+}
+
+// ---------------------------------------------------------------------------
 // IR-level inflation
 // ---------------------------------------------------------------------------
 
-/**
- * Creates a CasingsGenerator configured from IR metadata fields.
- * The returned generator produces full Name objects with all casings.
- * Used by generators and migration code to inflate slim Names.
- */
 export function createCasingsGeneratorForInflation(ir: {
     smartCasing?: boolean | undefined;
     generationLanguage?: string | undefined;
@@ -209,21 +195,6 @@ export function createCasingsGeneratorForInflation(ir: {
     });
 }
 
-/**
- * Inflates all NameOrString fields in an IntermediateRepresentation.
- *
- * This function explicitly walks the IR object graph field by field,
- * visiting every NameOrString property as defined in the IR YAML type schema.
- * NO recursion or key-name guessing -- every field is visited by its exact path.
- *
- * Uses smartCasing and generationLanguage from the IR metadata to configure
- * the CasingsGenerator for correct casing computation.
- *
- * Used by:
- * - The v66->v65 migration (to restore full Names for older generators)
- * - CLI code that needs full Names after reading v66 IR
- * - Generators that adopt v66 IR (to inflate Names at deserialization time)
- */
 export function inflateIrNames(
     ir: IntermediateRepresentation,
     opts?: {
@@ -231,7 +202,15 @@ export function inflateIrNames(
         keywords?: string[];
         smartCasing?: boolean;
     }
-): NormalizedIR<IntermediateRepresentation> {
+): NormalizedIR<IntermediateRepresentation>;
+export function inflateIrNames(
+    ir: IntermediateRepresentation,
+    opts?: {
+        generationLanguage?: generatorsYml.GenerationLanguage;
+        keywords?: string[];
+        smartCasing?: boolean;
+    }
+): IntermediateRepresentation {
     const cg = constructCasingsGenerator({
         generationLanguage:
             opts?.generationLanguage ??
@@ -241,17 +220,12 @@ export function inflateIrNames(
         smartCasing: opts?.smartCasing ?? ir.smartCasing ?? false
     });
 
-    inflateIrInPlace(ir, cg);
-    return ir as NormalizedIR<IntermediateRepresentation>;
+    return inflateIr(ir, cg);
 }
 
-/**
- * Inflates all NameOrString fields in a DynamicIntermediateRepresentation (or any object).
- *
- * This is useful for test utilities that load dynamic IR fixtures from JSON files,
- * where Name fields may be serialized as strings (NameOrString).
- * Uses default casings settings (no generation language, no smart casing).
- */
+export function inflateDynamicIrNames(
+    ir: dynamic.DynamicIntermediateRepresentation
+): NormalizedIR<dynamic.DynamicIntermediateRepresentation>;
 export function inflateDynamicIrNames(
     ir: dynamic.DynamicIntermediateRepresentation
 ): dynamic.DynamicIntermediateRepresentation {
@@ -260,970 +234,1096 @@ export function inflateDynamicIrNames(
         keywords: undefined,
         smartCasing: false
     });
-    inflateDynamicIrInPlace(ir, cg);
-    return ir;
+    return inflateDynamicIr(ir, cg);
 }
 
 // ---------------------------------------------------------------------------
-// Explicit IR visitors -- no recursion, every NameOrString field visited by path
+// Main IR inflation -- constructs new objects, no mutation
 // ---------------------------------------------------------------------------
 
-/**
- * Mutates the IR in place, inflating every NameOrString field.
- * Each field is visited explicitly based on the IR YAML type schema.
- */
-function inflateIrInPlace(ir: IntermediateRepresentation, cg: FullCasingsGenerator): void {
-    // IntermediateRepresentation.apiName
-    ir.apiName = inflateNameOrString(ir.apiName, cg);
-
-    // auth: ApiAuth
-    inflateApiAuth(ir.auth, cg);
-
-    // headers: HttpHeader[]
-    for (const header of ir.headers ?? []) {
-        inflateHttpHeader(header, cg);
-    }
-
-    // idempotencyHeaders: HttpHeader[]
-    for (const header of ir.idempotencyHeaders ?? []) {
-        inflateHttpHeader(header, cg);
-    }
-
-    // types: Record<TypeId, TypeDeclaration>
-    for (const typeDecl of Object.values(ir.types ?? {})) {
-        inflateTypeDeclaration(typeDecl, cg);
-    }
-
-    // services: Record<ServiceId, HttpService>
-    for (const service of Object.values(ir.services ?? {})) {
-        inflateHttpService(service, cg);
-    }
-
-    // webhookGroups: Record<WebhookGroupId, WebhookGroup>
-    for (const group of Object.values(ir.webhookGroups ?? {})) {
-        inflateWebhookGroup(group, cg);
-    }
-
-    // websocketChannels: Record<WebSocketChannelId, WebSocketChannel>
-    for (const channel of Object.values(ir.websocketChannels ?? {})) {
-        inflateWebSocketChannel(channel, cg);
-    }
-
-    // errors: Record<ErrorId, ErrorDeclaration>
-    for (const errorDecl of Object.values(ir.errors ?? {})) {
-        inflateErrorDeclaration(errorDecl, cg);
-    }
-
-    // subpackages: Record<SubpackageId, Subpackage>
-    for (const subpackage of Object.values(ir.subpackages ?? {})) {
-        inflateSubpackage(subpackage, cg);
-    }
-
-    // rootPackage: Package
-    if (ir.rootPackage != null) {
-        inflatePackage(ir.rootPackage, cg);
-    }
-
-    // environments: EnvironmentsConfig
-    if (ir.environments != null) {
-        inflateEnvironmentsConfig(ir.environments, cg);
-    }
-
-    // pathParameters: PathParameter[]
-    for (const param of ir.pathParameters ?? []) {
-        inflatePathParameter(param, cg);
-    }
-
-    // errorDiscriminationStrategy
-    if (ir.errorDiscriminationStrategy != null) {
-        inflateErrorDiscriminationStrategy(ir.errorDiscriminationStrategy, cg);
-    }
-
-    // constants: Constants
-    if (ir.constants != null) {
-        inflateConstants(ir.constants, cg);
-    }
-
-    // variables: VariableDeclaration[]
-    for (const variable of ir.variables ?? []) {
-        inflateVariableDeclaration(variable, cg);
-    }
-
-    // apiVersion: ApiVersionScheme
-    if (ir.apiVersion != null) {
-        inflateApiVersionScheme(ir.apiVersion, cg);
-    }
-
-    // dynamic: DynamicIntermediateRepresentation
-    if (ir.dynamic != null) {
-        inflateDynamicIrInPlace(ir.dynamic, cg);
-    }
+function inflateIr(ir: IntermediateRepresentation, cg: FullCasingsGenerator) {
+    return {
+        ...ir,
+        apiName: inflateNameOrString(ir.apiName, cg),
+        apiVersion: ir.apiVersion != null ? inflateApiVersionScheme(ir.apiVersion, cg) : undefined,
+        auth: inflateApiAuth(ir.auth, cg),
+        headers: ir.headers.map((h) => inflateHttpHeader(h, cg)),
+        idempotencyHeaders: ir.idempotencyHeaders.map((h) => inflateHttpHeader(h, cg)),
+        types: mapRecord(ir.types, (td) => inflateTypeDeclaration(td, cg)),
+        services: mapRecord(ir.services, (s) => inflateHttpService(s, cg)),
+        webhookGroups: mapRecord(ir.webhookGroups, (g) => inflateWebhookGroup(g, cg)),
+        websocketChannels:
+            ir.websocketChannels != null
+                ? mapRecord(ir.websocketChannels, (ch) => inflateWebSocketChannel(ch, cg))
+                : undefined,
+        errors: mapRecord(ir.errors, (e) => inflateErrorDeclaration(e, cg)),
+        subpackages: mapRecord(ir.subpackages, (s) => inflateSubpackage(s, cg)),
+        rootPackage: inflatePackage(ir.rootPackage, cg),
+        constants: inflateConstants(ir.constants, cg),
+        environments: ir.environments != null ? inflateEnvironmentsConfig(ir.environments, cg) : undefined,
+        pathParameters: ir.pathParameters.map((p) => inflatePathParameter(p, cg)),
+        errorDiscriminationStrategy: inflateErrorDiscriminationStrategy(ir.errorDiscriminationStrategy, cg),
+        variables: ir.variables.map((v) => inflateVariableDeclaration(v, cg)),
+        dynamic: ir.dynamic != null ? inflateDynamicIr(ir.dynamic, cg) : undefined
+    };
 }
 
 // ---------------------------------------------------------------------------
 // Auth
 // ---------------------------------------------------------------------------
 
-function inflateApiAuth(auth: ApiAuth | undefined, cg: FullCasingsGenerator): void {
-    if (auth == null) {
-        return;
-    }
-    for (const scheme of auth.schemes ?? []) {
-        inflateAuthScheme(scheme, cg);
-    }
+function inflateApiAuth(auth: ApiAuth, cg: FullCasingsGenerator) {
+    return {
+        ...auth,
+        schemes: auth.schemes.map((s) => inflateAuthScheme(s, cg))
+    };
 }
 
-function inflateAuthScheme(scheme: AuthScheme, cg: FullCasingsGenerator): void {
-    if (scheme == null) {
-        return;
-    }
+function inflateAuthScheme(scheme: AuthScheme, cg: FullCasingsGenerator) {
     switch (scheme.type) {
         case "bearer":
-            scheme.token = inflateNameOrString(scheme.token, cg);
-            break;
+            return { ...scheme, token: inflateNameOrString(scheme.token, cg) };
         case "basic":
-            scheme.username = inflateNameOrString(scheme.username, cg);
-            scheme.password = inflateNameOrString(scheme.password, cg);
-            break;
+            return {
+                ...scheme,
+                username: inflateNameOrString(scheme.username, cg),
+                password: inflateNameOrString(scheme.password, cg)
+            };
         case "header":
-            inflateNameAndWireValueInPlace(scheme.name, cg);
-            break;
+            return {
+                ...scheme,
+                name: inflateNameAndWireValue(scheme.name, cg),
+                valueType: inflateTypeReference(scheme.valueType, cg)
+            };
         case "oauth":
-            inflateOAuthScheme(scheme.configuration, cg);
-            break;
+            return { ...scheme, configuration: inflateOAuthConfiguration(scheme.configuration, cg) };
+        default:
+            return scheme;
     }
 }
 
-function inflateOAuthScheme(config: OAuthConfiguration | undefined, cg: FullCasingsGenerator): void {
-    if (config == null) {
-        return;
-    }
+function inflateOAuthConfiguration(
+    config: OAuthConfiguration,
+    cg: FullCasingsGenerator
+) {
     if (config.type === "clientCredentials") {
-        inflateOAuthTokenEndpoint(config.tokenEndpoint, cg);
-        inflateOAuthRefreshEndpoint(config.refreshEndpoint, cg);
+        return {
+            ...config,
+            tokenEndpoint: inflateOAuthTokenEndpoint(config.tokenEndpoint, cg),
+            refreshEndpoint:
+                config.refreshEndpoint != null ? inflateOAuthRefreshEndpoint(config.refreshEndpoint, cg) : undefined
+        };
     }
+    return config;
 }
 
-function inflateOAuthTokenEndpoint(endpoint: OAuthTokenEndpoint | undefined, cg: FullCasingsGenerator): void {
-    if (endpoint == null) {
-        return;
-    }
-    inflateOAuthAccessTokenRequestProperties(endpoint.requestProperties, cg);
-    inflateOAuthResponseProperties(endpoint.responseProperties, cg);
+function inflateOAuthTokenEndpoint(
+    endpoint: OAuthTokenEndpoint,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...endpoint,
+        requestProperties: inflateOAuthAccessTokenRequestProperties(endpoint.requestProperties, cg),
+        responseProperties: inflateOAuthResponseProperties(endpoint.responseProperties, cg)
+    };
 }
 
-function inflateOAuthRefreshEndpoint(endpoint: OAuthRefreshEndpoint | undefined, cg: FullCasingsGenerator): void {
-    if (endpoint == null) {
-        return;
-    }
-    inflateOAuthRefreshTokenRequestProperties(endpoint.requestProperties, cg);
-    inflateOAuthResponseProperties(endpoint.responseProperties, cg);
+function inflateOAuthRefreshEndpoint(
+    endpoint: OAuthRefreshEndpoint,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...endpoint,
+        requestProperties: inflateOAuthRefreshTokenRequestProperties(endpoint.requestProperties, cg),
+        responseProperties: inflateOAuthResponseProperties(endpoint.responseProperties, cg)
+    };
 }
 
 function inflateOAuthAccessTokenRequestProperties(
-    props: OAuthAccessTokenRequestProperties | undefined,
+    props: OAuthAccessTokenRequestProperties,
     cg: FullCasingsGenerator
-): void {
-    if (props == null) {
-        return;
-    }
-    inflateRequestProperty(props.clientId, cg);
-    inflateRequestProperty(props.clientSecret, cg);
-    inflateRequestProperty(props.scopes, cg);
-    for (const customProp of props.customProperties ?? []) {
-        inflateRequestProperty(customProp, cg);
-    }
+) {
+    return {
+        ...props,
+        clientId: inflateRequestProperty(props.clientId, cg),
+        clientSecret: inflateRequestProperty(props.clientSecret, cg),
+        scopes: props.scopes != null ? inflateRequestProperty(props.scopes, cg) : undefined,
+        customProperties: (props.customProperties ?? []).map((p) => inflateRequestProperty(p, cg))
+    };
 }
 
 function inflateOAuthRefreshTokenRequestProperties(
-    props: OAuthRefreshTokenRequestProperties | undefined,
+    props: OAuthRefreshTokenRequestProperties,
     cg: FullCasingsGenerator
-): void {
-    if (props == null) {
-        return;
-    }
-    inflateRequestProperty(props.refreshToken, cg);
+) {
+    return {
+        ...props,
+        refreshToken: inflateRequestProperty(props.refreshToken, cg)
+    };
 }
 
 function inflateOAuthResponseProperties(
-    props: OAuthAccessTokenResponseProperties | undefined,
+    props: OAuthAccessTokenResponseProperties,
     cg: FullCasingsGenerator
-): void {
-    if (props == null) {
-        return;
-    }
-    inflateResponseProperty(props.accessToken, cg);
-    inflateResponseProperty(props.expiresIn, cg);
-    inflateResponseProperty(props.refreshToken, cg);
+) {
+    return {
+        ...props,
+        accessToken: inflateResponseProperty(props.accessToken, cg),
+        expiresIn: props.expiresIn != null ? inflateResponseProperty(props.expiresIn, cg) : undefined,
+        refreshToken: props.refreshToken != null ? inflateResponseProperty(props.refreshToken, cg) : undefined
+    };
 }
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-function inflateTypeDeclaration(td: TypeDeclaration, cg: FullCasingsGenerator): void {
-    inflateDeclaredTypeName(td.name, cg);
-    inflateTypeShape(td.shape, cg);
-    inflateTypeDeclarationSource(td.source, cg);
-    for (const ex of td.autogeneratedExamples ?? []) {
-        inflateExampleType(ex, cg);
-    }
-    for (const ex of td.userProvidedExamples ?? []) {
-        inflateExampleType(ex, cg);
-    }
+function inflateTypeDeclaration(td: TypeDeclaration, cg: FullCasingsGenerator) {
+    return {
+        ...td,
+        name: inflateDeclaredTypeName(td.name, cg),
+        shape: inflateTypeShape(td.shape, cg),
+        source: td.source != null ? inflateTypeDeclarationSource(td.source, cg) : undefined,
+        autogeneratedExamples: (td.autogeneratedExamples ?? []).map((ex) => inflateExampleType(ex, cg)),
+        userProvidedExamples: (td.userProvidedExamples ?? []).map((ex) => inflateExampleType(ex, cg))
+    };
 }
 
-function inflateDeclaredTypeName(dtn: DeclaredTypeName | undefined, cg: FullCasingsGenerator): void {
-    if (dtn == null) {
-        return;
-    }
-    dtn.name = inflateNameOrString(dtn.name, cg);
-    inflateFernFilepathInPlace(dtn.fernFilepath, cg);
+function inflateDeclaredTypeName(dtn: DeclaredTypeName, cg: FullCasingsGenerator) {
+    return {
+        ...dtn,
+        name: inflateNameOrString(dtn.name, cg),
+        fernFilepath: inflateFernFilepath(dtn.fernFilepath, cg)
+    };
 }
 
-function inflateTypeShape(shape: Type | undefined, cg: FullCasingsGenerator): void {
-    if (shape == null) {
-        return;
-    }
+function inflateTypeShape(shape: Type, cg: FullCasingsGenerator) {
     switch (shape.type) {
         case "alias":
-            inflateAliasTypeDeclaration(shape, cg);
-            break;
+            return {
+                ...shape,
+                aliasOf: inflateTypeReference(shape.aliasOf, cg),
+                resolvedType: inflateResolvedTypeReference(shape.resolvedType, cg)
+            };
         case "enum":
-            inflateEnumTypeDeclaration(shape, cg);
-            break;
+            return {
+                ...shape,
+                default: shape.default != null ? inflateEnumValue(shape.default, cg) : undefined,
+                values: (shape.values ?? []).map((v) => inflateEnumValue(v, cg))
+            };
         case "object":
-            inflateObjectTypeDeclaration(shape, cg);
-            break;
+            return {
+                ...shape,
+                extends: shape.extends.map((ext) => inflateDeclaredTypeName(ext, cg)),
+                properties: shape.properties.map((p) => inflateObjectProperty(p, cg)),
+                extendedProperties: (shape.extendedProperties ?? []).map((p) => inflateObjectProperty(p, cg))
+            };
         case "union":
-            inflateUnionTypeDeclaration(shape, cg);
-            break;
+            return {
+                ...shape,
+                discriminant: inflateNameAndWireValue(shape.discriminant, cg),
+                extends: shape.extends.map((ext) => inflateDeclaredTypeName(ext, cg)),
+                baseProperties: shape.baseProperties.map((p) => inflateObjectProperty(p, cg)),
+                types: shape.types.map((t) => inflateSingleUnionType(t, cg))
+            };
         case "undiscriminatedUnion":
-            inflateUndiscriminatedUnionTypeDeclaration(shape, cg);
-            break;
+            return {
+                ...shape,
+                members: (shape.members ?? []).map((m) => ({
+                    ...m,
+                    type: inflateTypeReference(m.type, cg)
+                }))
+            };
     }
 }
 
-function inflateAliasTypeDeclaration(alias: AliasTypeDeclaration, cg: FullCasingsGenerator): void {
-    inflateTypeReference(alias.aliasOf, cg);
-    inflateResolvedTypeReference(alias.resolvedType, cg);
+function inflateAliasTypeDeclaration(
+    alias: AliasTypeDeclaration,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...alias,
+        aliasOf: inflateTypeReference(alias.aliasOf, cg),
+        resolvedType: inflateResolvedTypeReference(alias.resolvedType, cg)
+    };
 }
 
-function inflateResolvedTypeReference(resolved: ResolvedTypeReference | undefined, cg: FullCasingsGenerator): void {
-    if (resolved == null) {
-        return;
-    }
-    if (resolved.type === "named") {
-        inflateDeclaredTypeName(resolved.name, cg);
-    } else if (resolved.type === "container") {
-        inflateContainerType(resolved.container, cg);
+function inflateResolvedTypeReference(
+    resolved: ResolvedTypeReference,
+    cg: FullCasingsGenerator
+) {
+    switch (resolved.type) {
+        case "named":
+            return { ...resolved, name: inflateDeclaredTypeName(resolved.name, cg) };
+        case "container":
+            return { ...resolved, container: inflateContainerType(resolved.container, cg) };
+        default:
+            return resolved;
     }
 }
 
-function inflateTypeReference(tr: TypeReference | undefined, cg: FullCasingsGenerator): void {
-    if (tr == null) {
-        return;
-    }
+function inflateTypeReference(tr: TypeReference, cg: FullCasingsGenerator): TypeReference {
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (tr.type) {
         case "named":
-            tr.name = inflateNameOrString(tr.name, cg);
-            inflateFernFilepathInPlace(tr.fernFilepath, cg);
-            if (tr.default != null && tr.default.type === "enum") {
-                inflateEnumValue(tr.default, cg);
-            }
-            break;
+            return {
+                ...tr,
+                name: inflateNameOrString(tr.name, cg),
+                fernFilepath: inflateFernFilepath(tr.fernFilepath, cg),
+                default: tr.default != null ? { ...tr.default, name: inflateNameAndWireValue(tr.default.name, cg) } : tr.default
+            };
         case "container":
-            inflateContainerType(tr.container, cg);
-            break;
+            return { ...tr, container: inflateContainerType(tr.container, cg) };
+        default:
+            return tr;
     }
 }
 
-function inflateContainerType(ct: ContainerType | undefined, cg: FullCasingsGenerator): void {
-    if (ct == null) {
-        return;
-    }
+function inflateContainerType(ct: ContainerType, cg: FullCasingsGenerator): ContainerType {
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (ct.type) {
         case "list":
-            inflateTypeReference(ct.list, cg);
-            break;
+            return { ...ct, list: inflateTypeReference(ct.list, cg) };
         case "nullable":
-            inflateTypeReference(ct.nullable, cg);
-            break;
+            return { ...ct, nullable: inflateTypeReference(ct.nullable, cg) };
         case "optional":
-            inflateTypeReference(ct.optional, cg);
-            break;
+            return { ...ct, optional: inflateTypeReference(ct.optional, cg) };
         case "set":
-            inflateTypeReference(ct.set, cg);
-            break;
+            return { ...ct, set: inflateTypeReference(ct.set, cg) };
         case "map":
-            inflateTypeReference(ct.keyType, cg);
-            inflateTypeReference(ct.valueType, cg);
-            break;
+            return {
+                ...ct,
+                keyType: inflateTypeReference(ct.keyType, cg),
+                valueType: inflateTypeReference(ct.valueType, cg)
+            };
+        default:
+            return ct;
     }
 }
 
-function inflateEnumTypeDeclaration(enumDecl: EnumTypeDeclaration, cg: FullCasingsGenerator): void {
-    if (enumDecl.default != null) {
-        inflateEnumValue(enumDecl.default, cg);
-    }
-    for (const val of enumDecl.values ?? []) {
-        inflateEnumValue(val, cg);
-    }
+function inflateEnumTypeDeclaration(
+    enumDecl: EnumTypeDeclaration,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...enumDecl,
+        default: enumDecl.default != null ? inflateEnumValue(enumDecl.default, cg) : undefined,
+        values: (enumDecl.values ?? []).map((v) => inflateEnumValue(v, cg))
+    };
 }
 
-function inflateEnumValue(ev: EnumValue | undefined, cg: FullCasingsGenerator): void {
-    if (ev == null) {
-        return;
-    }
-    inflateNameAndWireValueInPlace(ev.name, cg);
+function inflateEnumValue(ev: EnumValue, cg: FullCasingsGenerator) {
+    return { ...ev, name: inflateNameAndWireValue(ev.name, cg) };
 }
 
-function inflateObjectTypeDeclaration(obj: ObjectTypeDeclaration, cg: FullCasingsGenerator): void {
-    for (const ext of obj.extends ?? []) {
-        inflateDeclaredTypeName(ext, cg);
-    }
-    for (const prop of obj.properties ?? []) {
-        inflateObjectProperty(prop, cg);
-    }
-    for (const prop of obj.extendedProperties ?? []) {
-        inflateObjectProperty(prop, cg);
-    }
+function inflateObjectTypeDeclaration(
+    obj: ObjectTypeDeclaration,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...obj,
+        extends: (obj.extends ?? []).map((ext) => inflateDeclaredTypeName(ext, cg)),
+        properties: (obj.properties ?? []).map((p) => inflateObjectProperty(p, cg)),
+        extendedProperties: (obj.extendedProperties ?? []).map((p) => inflateObjectProperty(p, cg))
+    };
 }
 
-function inflateObjectProperty(prop: ObjectProperty | undefined, cg: FullCasingsGenerator): void {
-    if (prop == null) {
-        return;
-    }
-    inflateNameAndWireValueInPlace(prop.name, cg);
-    inflateTypeReference(prop.valueType, cg);
+function inflateObjectProperty(prop: ObjectProperty, cg: FullCasingsGenerator) {
+    return {
+        ...prop,
+        name: inflateNameAndWireValue(prop.name, cg),
+        valueType: inflateTypeReference(prop.valueType, cg)
+    };
 }
 
-function inflateUnionTypeDeclaration(union: UnionTypeDeclaration, cg: FullCasingsGenerator): void {
-    inflateNameAndWireValueInPlace(union.discriminant, cg);
-    for (const ext of union.extends ?? []) {
-        inflateDeclaredTypeName(ext, cg);
-    }
-    for (const sut of union.types ?? []) {
-        inflateSingleUnionType(sut, cg);
-    }
-    for (const prop of union.baseProperties ?? []) {
-        inflateObjectProperty(prop, cg);
-    }
+function inflateUnionTypeDeclaration(
+    union: UnionTypeDeclaration,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...union,
+        discriminant: inflateNameAndWireValue(union.discriminant, cg),
+        extends: (union.extends ?? []).map((ext) => inflateDeclaredTypeName(ext, cg)),
+        types: (union.types ?? []).map((sut) => inflateSingleUnionType(sut, cg)),
+        baseProperties: (union.baseProperties ?? []).map((p) => inflateObjectProperty(p, cg))
+    };
 }
 
-function inflateSingleUnionType(sut: SingleUnionType, cg: FullCasingsGenerator): void {
-    inflateNameAndWireValueInPlace(sut.discriminantValue, cg);
-    if (sut.shape != null) {
-        switch (sut.shape.propertiesType) {
-            case "samePropertiesAsObject":
-                inflateDeclaredTypeName(sut.shape, cg);
-                break;
-            case "singleProperty":
-                inflateNameAndWireValueInPlace(sut.shape.name, cg);
-                inflateTypeReference(sut.shape.type, cg);
-                break;
-        }
+function inflateSingleUnionType(sut: SingleUnionType, cg: FullCasingsGenerator) {
+    const base = {
+        ...sut,
+        discriminantValue: inflateNameAndWireValue(sut.discriminantValue, cg)
+    };
+    if (sut.shape == null) {
+        return base;
+    }
+    switch (sut.shape.propertiesType) {
+        case "samePropertiesAsObject":
+            return {
+                ...base,
+                shape: {
+                    ...sut.shape,
+                    name: inflateNameOrString(sut.shape.name, cg),
+                    fernFilepath: inflateFernFilepath(sut.shape.fernFilepath, cg)
+                }
+            };
+        case "singleProperty":
+            return {
+                ...base,
+                shape: {
+                    ...sut.shape,
+                    name: inflateNameAndWireValue(sut.shape.name, cg),
+                    type: inflateTypeReference(sut.shape.type, cg)
+                }
+            };
+        default:
+            return base;
     }
 }
 
 function inflateUndiscriminatedUnionTypeDeclaration(
     uuDecl: UndiscriminatedUnionTypeDeclaration,
     cg: FullCasingsGenerator
-): void {
-    for (const member of uuDecl.members ?? []) {
-        inflateTypeReference(member.type, cg);
-    }
+) {
+    return {
+        ...uuDecl,
+        members: (uuDecl.members ?? []).map((m) => ({
+            ...m,
+            type: inflateTypeReference(m.type, cg)
+        }))
+    };
 }
 
 // ---------------------------------------------------------------------------
 // HTTP Services and Endpoints
 // ---------------------------------------------------------------------------
 
-function inflateHttpService(service: HttpService, cg: FullCasingsGenerator): void {
-    if (service.name != null) {
-        inflateFernFilepathInPlace(service.name.fernFilepath, cg);
-    }
-    for (const endpoint of service.endpoints ?? []) {
-        inflateHttpEndpoint(endpoint, cg);
-    }
-    for (const header of service.headers ?? []) {
-        inflateHttpHeader(header, cg);
-    }
-    for (const param of service.pathParameters ?? []) {
-        inflatePathParameter(param, cg);
-    }
-    inflateTransport(service.transport, cg);
+function inflateHttpService(service: HttpService, cg: FullCasingsGenerator) {
+    return {
+        ...service,
+        name: {
+            ...service.name,
+            fernFilepath: inflateFernFilepath(service.name.fernFilepath, cg)
+        },
+        endpoints: (service.endpoints ?? []).map((ep) => inflateHttpEndpoint(ep, cg)),
+        headers: (service.headers ?? []).map((h) => inflateHttpHeader(h, cg)),
+        pathParameters: (service.pathParameters ?? []).map((p) => inflatePathParameter(p, cg)),
+        transport: service.transport != null ? inflateTransport(service.transport, cg) : undefined
+    };
 }
 
-function inflateHttpEndpoint(ep: HttpEndpoint, cg: FullCasingsGenerator): void {
-    ep.name = inflateNameOrString(ep.name, cg);
-
-    for (const header of ep.headers ?? []) {
-        inflateHttpHeader(header, cg);
-    }
-    for (const header of ep.responseHeaders ?? []) {
-        inflateHttpHeader(header, cg);
-    }
-    for (const param of ep.pathParameters ?? []) {
-        inflatePathParameter(param, cg);
-    }
-    for (const param of ep.allPathParameters ?? []) {
-        inflatePathParameter(param, cg);
-    }
-    for (const qp of ep.queryParameters ?? []) {
-        inflateQueryParameter(qp, cg);
-    }
-
-    inflateHttpRequestBody(ep.requestBody, cg);
-
-    if (ep.v2RequestBodies?.requestBodies != null) {
-        for (const body of ep.v2RequestBodies.requestBodies) {
-            inflateHttpRequestBody(body, cg);
-        }
-    }
-
-    inflateSdkRequest(ep.sdkRequest, cg);
-    inflateHttpResponse(ep.response, cg);
-
-    if (ep.v2Responses?.responses != null) {
-        for (const resp of ep.v2Responses.responses) {
-            inflateHttpResponse(resp, cg);
-        }
-    }
-
-    for (const err of ep.errors ?? []) {
-        if (err.error != null) {
-            inflateDeclaredErrorName(err.error, cg);
-        }
-    }
-
-    inflatePagination(ep.pagination, cg);
-
-    for (const ex of ep.userSpecifiedExamples ?? []) {
-        inflateExampleEndpointCall(ex.example, cg);
-        for (const cs of ex.codeSamples ?? []) {
-            inflateExampleCodeSample(cs, cg);
-        }
-    }
-    for (const ex of ep.autogeneratedExamples ?? []) {
-        inflateExampleEndpointCall(ex.example, cg);
-    }
-
-    inflateTransport(ep.transport, cg);
+function inflateHttpEndpoint(ep: HttpEndpoint, cg: FullCasingsGenerator) {
+    return {
+        ...ep,
+        name: inflateNameOrString(ep.name, cg),
+        headers: (ep.headers ?? []).map((h) => inflateHttpHeader(h, cg)),
+        responseHeaders: (ep.responseHeaders ?? []).map((h) => inflateHttpHeader(h, cg)),
+        pathParameters: (ep.pathParameters ?? []).map((p) => inflatePathParameter(p, cg)),
+        allPathParameters: (ep.allPathParameters ?? []).map((p) => inflatePathParameter(p, cg)),
+        queryParameters: (ep.queryParameters ?? []).map((qp) => inflateQueryParameter(qp, cg)),
+        requestBody: ep.requestBody != null ? inflateHttpRequestBody(ep.requestBody, cg) : undefined,
+        v2RequestBodies:
+            ep.v2RequestBodies != null
+                ? {
+                      ...ep.v2RequestBodies,
+                      requestBodies: (ep.v2RequestBodies.requestBodies ?? []).map((b) => inflateHttpRequestBody(b, cg))
+                  }
+                : undefined,
+        sdkRequest: ep.sdkRequest != null ? inflateSdkRequest(ep.sdkRequest, cg) : undefined,
+        response: ep.response != null ? inflateHttpResponse(ep.response, cg) : undefined,
+        v2Responses:
+            ep.v2Responses != null
+                ? {
+                      ...ep.v2Responses,
+                      responses: (ep.v2Responses.responses ?? []).map((r) => inflateHttpResponse(r, cg))
+                  }
+                : undefined,
+        errors: (ep.errors ?? []).map((err) => ({
+            ...err,
+            error: inflateDeclaredErrorName(err.error, cg)
+        })),
+        pagination: ep.pagination != null ? inflatePagination(ep.pagination, cg) : undefined,
+        userSpecifiedExamples: (ep.userSpecifiedExamples ?? []).map((ex) => ({
+            ...ex,
+            example: ex.example != null ? inflateExampleEndpointCall(ex.example, cg) : undefined,
+            codeSamples: (ex.codeSamples ?? []).map((cs) => inflateExampleCodeSample(cs, cg))
+        })),
+        autogeneratedExamples: (ep.autogeneratedExamples ?? []).map((ex) => ({
+            ...ex,
+            example: inflateExampleEndpointCall(ex.example, cg)
+        })),
+        transport: ep.transport != null ? inflateTransport(ep.transport, cg) : undefined
+    };
 }
 
-function inflateTransport(transport: Transport | undefined, cg: FullCasingsGenerator): void {
-    if (transport == null) {
-        return;
-    }
+function inflateTransport(transport: Transport, cg: FullCasingsGenerator) {
     if (transport.type === "grpc") {
-        inflateProtobufService(transport.service, cg);
+        return { ...transport, service: inflateProtobufService(transport.service, cg) };
     }
+    return transport;
 }
 
-function inflateProtobufService(ps: ProtobufService | undefined, cg: FullCasingsGenerator): void {
-    if (ps == null) {
-        return;
-    }
-    ps.name = inflateNameOrString(ps.name, cg);
+function inflateProtobufService(ps: ProtobufService, cg: FullCasingsGenerator) {
+    return { ...ps, name: inflateNameOrString(ps.name, cg) };
 }
 
-function inflateHttpHeader(header: HttpHeader | undefined, cg: FullCasingsGenerator): void {
-    if (header == null) {
-        return;
-    }
-    inflateNameAndWireValueInPlace(header.name, cg);
-    inflateTypeReference(header.valueType, cg);
+function inflateHttpHeader(header: HttpHeader, cg: FullCasingsGenerator) {
+    return {
+        ...header,
+        name: inflateNameAndWireValue(header.name, cg),
+        valueType: inflateTypeReference(header.valueType, cg)
+    };
 }
 
-function inflatePathParameter(param: PathParameter | undefined, cg: FullCasingsGenerator): void {
-    if (param == null) {
-        return;
-    }
-    param.name = inflateNameOrString(param.name, cg);
-    inflateTypeReference(param.valueType, cg);
+function inflatePathParameter(param: PathParameter, cg: FullCasingsGenerator) {
+    return {
+        ...param,
+        name: inflateNameOrString(param.name, cg),
+        valueType: inflateTypeReference(param.valueType, cg)
+    };
 }
 
-function inflateQueryParameter(qp: QueryParameter | undefined, cg: FullCasingsGenerator): void {
-    if (qp == null) {
-        return;
-    }
-    inflateNameAndWireValueInPlace(qp.name, cg);
-    inflateTypeReference(qp.valueType, cg);
+function inflateQueryParameter(qp: QueryParameter, cg: FullCasingsGenerator) {
+    return {
+        ...qp,
+        name: inflateNameAndWireValue(qp.name, cg),
+        valueType: inflateTypeReference(qp.valueType, cg)
+    };
 }
 
-function inflateHttpRequestBody(body: HttpRequestBody | undefined, cg: FullCasingsGenerator): void {
-    if (body == null) {
-        return;
-    }
+function inflateHttpRequestBody(body: HttpRequestBody, cg: FullCasingsGenerator) {
     switch (body.type) {
         case "inlinedRequestBody":
-            inflateInlinedRequestBody(body, cg);
-            break;
+            return {
+                ...body,
+                name: inflateNameOrString(body.name, cg),
+                extends: (body.extends ?? []).map((ext) => inflateDeclaredTypeName(ext, cg)),
+                properties: (body.properties ?? []).map((p) => ({
+                    ...p,
+                    name: inflateNameAndWireValue(p.name, cg),
+                    valueType: inflateTypeReference(p.valueType, cg)
+                })),
+                extendedProperties: (body.extendedProperties ?? []).map((p) => inflateObjectProperty(p, cg))
+            };
         case "reference":
-            inflateTypeReference(body.requestBodyType, cg);
-            break;
+            return { ...body, requestBodyType: inflateTypeReference(body.requestBodyType, cg) };
         case "fileUpload":
-            inflateFileUploadRequest(body, cg);
-            break;
+            return {
+                ...body,
+                name: inflateNameOrString(body.name, cg),
+                properties: (body.properties ?? []).map((prop) => {
+                    if (prop.type === "file") {
+                        return { ...prop, value: inflateFileProperty(prop.value, cg) };
+                    } else if (prop.type === "bodyProperty") {
+                        return {
+                            ...prop,
+                            name: inflateNameAndWireValue(prop.name, cg),
+                            valueType: inflateTypeReference(prop.valueType, cg)
+                        };
+                    }
+                    return prop;
+                })
+            };
+        default:
+            return body;
     }
 }
 
-function inflateInlinedRequestBody(irb: InlinedRequestBody, cg: FullCasingsGenerator): void {
-    irb.name = inflateNameOrString(irb.name, cg);
-    for (const ext of irb.extends ?? []) {
-        inflateDeclaredTypeName(ext, cg);
-    }
-    for (const prop of irb.properties ?? []) {
-        inflateNameAndWireValueInPlace(prop.name, cg);
-        inflateTypeReference(prop.valueType, cg);
-    }
-    for (const prop of irb.extendedProperties ?? []) {
-        inflateObjectProperty(prop, cg);
-    }
+function inflateInlinedRequestBody(
+    irb: InlinedRequestBody,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...irb,
+        name: inflateNameOrString(irb.name, cg),
+        extends: (irb.extends ?? []).map((ext) => inflateDeclaredTypeName(ext, cg)),
+        properties: (irb.properties ?? []).map((p) => ({
+            ...p,
+            name: inflateNameAndWireValue(p.name, cg),
+            valueType: inflateTypeReference(p.valueType, cg)
+        })),
+        extendedProperties: (irb.extendedProperties ?? []).map((p) => inflateObjectProperty(p, cg))
+    };
 }
 
-function inflateFileUploadRequest(fur: FileUploadRequest, cg: FullCasingsGenerator): void {
-    fur.name = inflateNameOrString(fur.name, cg);
-    for (const prop of fur.properties ?? []) {
-        if (prop.type === "file") {
-            inflateFileProperty(prop.value, cg);
-        } else if (prop.type === "bodyProperty") {
-            inflateNameAndWireValueInPlace(prop.name, cg);
-            inflateTypeReference(prop.valueType, cg);
-        }
-    }
+function inflateFileUploadRequest(fur: FileUploadRequest, cg: FullCasingsGenerator) {
+    return {
+        ...fur,
+        name: inflateNameOrString(fur.name, cg),
+        properties: (fur.properties ?? []).map((prop) => {
+            if (prop.type === "file") {
+                return { ...prop, value: inflateFileProperty(prop.value, cg) };
+            } else if (prop.type === "bodyProperty") {
+                return {
+                    ...prop,
+                    name: inflateNameAndWireValue(prop.name, cg),
+                    valueType: inflateTypeReference(prop.valueType, cg)
+                };
+            }
+            return prop;
+        })
+    };
 }
 
-function inflateFileProperty(fp: FileProperty | undefined, cg: FullCasingsGenerator): void {
-    if (fp == null) {
-        return;
-    }
-    inflateNameAndWireValueInPlace(fp.key, cg);
+function inflateFileProperty(fp: FileProperty, cg: FullCasingsGenerator) {
+    return { ...fp, key: inflateNameAndWireValue(fp.key, cg) };
 }
 
-function inflateSdkRequest(sdkReq: SdkRequest | undefined, cg: FullCasingsGenerator): void {
-    if (sdkReq == null) {
-        return;
+function inflateSdkRequest(sdkReq: SdkRequest, cg: FullCasingsGenerator) {
+    const base = {
+        ...sdkReq,
+        requestParameterName: inflateNameOrString(sdkReq.requestParameterName, cg),
+        streamParameter:
+            sdkReq.streamParameter != null ? inflateRequestProperty(sdkReq.streamParameter, cg) : undefined
+    };
+    if (sdkReq.shape == null) {
+        return base;
     }
-    sdkReq.requestParameterName = inflateNameOrString(sdkReq.requestParameterName, cg);
-
-    if (sdkReq.shape != null) {
-        if (sdkReq.shape.type === "wrapper") {
-            sdkReq.shape.wrapperName = inflateNameOrString(sdkReq.shape.wrapperName, cg);
-            sdkReq.shape.bodyKey = inflateNameOrString(sdkReq.shape.bodyKey, cg);
-        } else if (sdkReq.shape.type === "justRequestBody") {
-            inflateSdkRequestBodyType(sdkReq.shape.value, cg);
-        }
+    if (sdkReq.shape.type === "wrapper") {
+        return {
+            ...base,
+            shape: {
+                ...sdkReq.shape,
+                wrapperName: inflateNameOrString(sdkReq.shape.wrapperName, cg),
+                bodyKey: inflateNameOrString(sdkReq.shape.bodyKey, cg)
+            }
+        };
     }
-
-    inflateRequestProperty(sdkReq.streamParameter, cg);
+    if (sdkReq.shape.type === "justRequestBody") {
+        return {
+            ...base,
+            shape: {
+                ...sdkReq.shape,
+                value: inflateSdkRequestBodyType(sdkReq.shape.value, cg)
+            }
+        };
+    }
+    return base;
 }
 
-function inflateSdkRequestBodyType(bodyType: SdkRequestBodyType | undefined, cg: FullCasingsGenerator): void {
-    if (bodyType == null) {
-        return;
-    }
+function inflateSdkRequestBodyType(
+    bodyType: SdkRequestBodyType,
+    cg: FullCasingsGenerator
+) {
     if (bodyType.type === "typeReference") {
-        inflateTypeReference(bodyType.requestBodyType, cg);
+        return { ...bodyType, requestBodyType: inflateTypeReference(bodyType.requestBodyType, cg) };
     }
+    return bodyType;
 }
 
-function inflateHttpResponse(resp: HttpResponse | undefined, cg: FullCasingsGenerator): void {
-    if (resp == null || resp.body == null) {
-        return;
-    }
-    inflateHttpResponseBody(resp.body, cg);
+function inflateHttpResponse(resp: HttpResponse, cg: FullCasingsGenerator) {
+    return {
+        ...resp,
+        body: resp.body != null ? inflateHttpResponseBody(resp.body, cg) : undefined
+    };
 }
 
-function inflateHttpResponseBody(body: HttpResponseBody | undefined, cg: FullCasingsGenerator): void {
-    if (body == null) {
-        return;
-    }
+function inflateHttpResponseBody(body: HttpResponseBody, cg: FullCasingsGenerator) {
     switch (body.type) {
         case "json":
-            inflateJsonResponse(body.value, cg);
-            break;
+            return { ...body, value: inflateJsonResponse(body.value, cg) };
         case "streaming":
-            inflateStreamingResponse(body.value, cg);
-            break;
+            return { ...body, value: inflateStreamingResponse(body.value, cg) };
         case "streamParameter":
-            if (body.nonStreamResponse != null) {
-                inflateNonStreamHttpResponseBody(body.nonStreamResponse, cg);
-            }
-            if (body.streamResponse != null) {
-                inflateStreamingResponse(body.streamResponse, cg);
-            }
-            break;
+            return {
+                ...body,
+                nonStreamResponse: inflateNonStreamHttpResponseBody(body.nonStreamResponse, cg),
+                streamResponse: inflateStreamingResponse(body.streamResponse, cg)
+            };
+        default:
+            return body;
     }
 }
 
-function inflateNonStreamHttpResponseBody(body: NonStreamHttpResponseBody | undefined, cg: FullCasingsGenerator): void {
-    if (body == null) {
-        return;
-    }
+function inflateNonStreamHttpResponseBody(
+    body: NonStreamHttpResponseBody,
+    cg: FullCasingsGenerator
+) {
     if (body.type === "json") {
-        inflateJsonResponse(body.value, cg);
+        return { ...body, value: inflateJsonResponse(body.value, cg) };
     }
+    return body;
 }
 
-function inflateJsonResponse(json: JsonResponse | undefined, cg: FullCasingsGenerator): void {
-    if (json == null) {
-        return;
-    }
+function inflateJsonResponse(json: JsonResponse, cg: FullCasingsGenerator) {
     switch (json.type) {
         case "response":
-            inflateTypeReference(json.responseBodyType, cg);
-            break;
+            return { ...json, responseBodyType: inflateTypeReference(json.responseBodyType, cg) };
         case "nestedPropertyAsResponse":
-            inflateTypeReference(json.responseBodyType, cg);
-            inflateObjectProperty(json.responseProperty, cg);
-            break;
+            return {
+                ...json,
+                responseBodyType: inflateTypeReference(json.responseBodyType, cg),
+                responseProperty:
+                    json.responseProperty != null ? inflateObjectProperty(json.responseProperty, cg) : undefined
+            };
+        default:
+            return json;
     }
 }
 
-function inflateStreamingResponse(sr: StreamingResponse | undefined, cg: FullCasingsGenerator): void {
-    if (sr == null) {
-        return;
-    }
+function inflateStreamingResponse(
+    sr: StreamingResponse,
+    cg: FullCasingsGenerator
+) {
     if (sr.type === "json" || sr.type === "sse") {
-        inflateTypeReference(sr.payload, cg);
+        return { ...sr, payload: inflateTypeReference(sr.payload, cg) };
     }
+    return sr;
 }
 
 // ---------------------------------------------------------------------------
 // Pagination
 // ---------------------------------------------------------------------------
 
-function inflatePagination(pagination: Pagination | undefined, cg: FullCasingsGenerator): void {
-    if (pagination == null) {
-        return;
-    }
+function inflatePagination(pagination: Pagination, cg: FullCasingsGenerator) {
     switch (pagination.type) {
         case "cursor":
-            inflateRequestProperty(pagination.page, cg);
-            inflateResponseProperty(pagination.next, cg);
-            inflateResponseProperty(pagination.results, cg);
-            break;
+            return {
+                ...pagination,
+                page: inflateRequestProperty(pagination.page, cg),
+                next: inflateResponseProperty(pagination.next, cg),
+                results: inflateResponseProperty(pagination.results, cg)
+            };
         case "offset":
-            inflateRequestProperty(pagination.page, cg);
-            inflateResponseProperty(pagination.results, cg);
-            inflateResponseProperty(pagination.hasNextPage, cg);
-            inflateRequestProperty(pagination.step, cg);
-            break;
+            return {
+                ...pagination,
+                page: inflateRequestProperty(pagination.page, cg),
+                results: inflateResponseProperty(pagination.results, cg),
+                hasNextPage:
+                    pagination.hasNextPage != null
+                        ? inflateResponseProperty(pagination.hasNextPage, cg)
+                        : undefined,
+                step: pagination.step != null ? inflateRequestProperty(pagination.step, cg) : undefined
+            };
         case "custom":
-            inflateResponseProperty(pagination.results, cg);
-            break;
+            return { ...pagination, results: inflateResponseProperty(pagination.results, cg) };
         case "uri":
-            inflateResponseProperty(pagination.nextUri, cg);
-            inflateResponseProperty(pagination.results, cg);
-            break;
+            return {
+                ...pagination,
+                nextUri: inflateResponseProperty(pagination.nextUri, cg),
+                results: inflateResponseProperty(pagination.results, cg)
+            };
         case "path":
-            inflateResponseProperty(pagination.nextPath, cg);
-            inflateResponseProperty(pagination.results, cg);
-            break;
+            return {
+                ...pagination,
+                nextPath: inflateResponseProperty(pagination.nextPath, cg),
+                results: inflateResponseProperty(pagination.results, cg)
+            };
     }
 }
 
-function inflateRequestProperty(rp: RequestProperty | undefined, cg: FullCasingsGenerator): void {
-    if (rp == null) {
-        return;
+function inflateRequestProperty(rp: RequestProperty, cg: FullCasingsGenerator) {
+    const inflatedPropertyPath = (rp.propertyPath ?? []).map((item) => inflatePropertyPathItem(item, cg));
+    if (rp.property == null) {
+        return { ...rp, propertyPath: inflatedPropertyPath };
     }
-    for (const item of rp.propertyPath ?? []) {
-        inflatePropertyPathItem(item, cg);
-    }
-    if (rp.property != null) {
-        if (rp.property.type === "query") {
-            inflateQueryParameter(rp.property, cg);
-        } else if (rp.property.type === "body") {
-            inflateObjectProperty(rp.property, cg);
-        }
+    switch (rp.property.type) {
+        case "query":
+            return {
+                ...rp,
+                propertyPath: inflatedPropertyPath,
+                property: {
+                    ...rp.property,
+                    name: inflateNameAndWireValue(rp.property.name, cg),
+                    valueType: inflateTypeReference(rp.property.valueType, cg)
+                }
+            };
+        case "body":
+            return {
+                ...rp,
+                propertyPath: inflatedPropertyPath,
+                property: {
+                    ...rp.property,
+                    name: inflateNameAndWireValue(rp.property.name, cg),
+                    valueType: inflateTypeReference(rp.property.valueType, cg)
+                }
+            };
+        default:
+            return { ...rp, propertyPath: inflatedPropertyPath };
     }
 }
 
-function inflateResponseProperty(rp: ResponseProperty | undefined, cg: FullCasingsGenerator): void {
-    if (rp == null) {
-        return;
-    }
-    for (const item of rp.propertyPath ?? []) {
-        inflatePropertyPathItem(item, cg);
-    }
-    inflateObjectProperty(rp.property, cg);
+function inflateResponseProperty(rp: ResponseProperty, cg: FullCasingsGenerator) {
+    return {
+        ...rp,
+        propertyPath: (rp.propertyPath ?? []).map((item) => inflatePropertyPathItem(item, cg)),
+        property: inflateObjectProperty(rp.property, cg)
+    };
 }
 
-function inflatePropertyPathItem(item: PropertyPathItem | undefined, cg: FullCasingsGenerator): void {
-    if (item == null) {
-        return;
-    }
-    item.name = inflateNameOrString(item.name, cg);
-    inflateTypeReference(item.type, cg);
+function inflatePropertyPathItem(
+    item: PropertyPathItem,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...item,
+        name: inflateNameOrString(item.name, cg),
+        type: inflateTypeReference(item.type, cg)
+    };
 }
 
 // ---------------------------------------------------------------------------
 // Examples
 // ---------------------------------------------------------------------------
 
-function inflateExampleEndpointCall(ex: ExampleEndpointCall | undefined, cg: FullCasingsGenerator): void {
-    if (ex == null) {
-        return;
-    }
-    if (ex.name != null) {
-        ex.name = inflateNameOrString(ex.name, cg);
-    }
-
-    for (const pp of ex.rootPathParameters ?? []) {
-        inflateExamplePathParameter(pp, cg);
-    }
-    for (const pp of ex.servicePathParameters ?? []) {
-        inflateExamplePathParameter(pp, cg);
-    }
-    for (const pp of ex.endpointPathParameters ?? []) {
-        inflateExamplePathParameter(pp, cg);
-    }
-
-    for (const h of ex.serviceHeaders ?? []) {
-        inflateNameAndWireValueInPlace(h.name, cg);
-    }
-    for (const h of ex.endpointHeaders ?? []) {
-        inflateNameAndWireValueInPlace(h.name, cg);
-    }
-
-    for (const qp of ex.queryParameters ?? []) {
-        inflateNameAndWireValueInPlace(qp.name, cg);
-    }
-
-    inflateExampleRequestBody(ex.request, cg);
-    inflateExampleResponse(ex.response, cg);
+function inflateExampleEndpointCall(
+    ex: ExampleEndpointCall,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...ex,
+        name: ex.name != null ? inflateNameOrString(ex.name, cg) : undefined,
+        rootPathParameters: (ex.rootPathParameters ?? []).map((pp) => inflateExamplePathParameter(pp, cg)),
+        servicePathParameters: (ex.servicePathParameters ?? []).map((pp) => inflateExamplePathParameter(pp, cg)),
+        endpointPathParameters: (ex.endpointPathParameters ?? []).map((pp) => inflateExamplePathParameter(pp, cg)),
+        serviceHeaders: (ex.serviceHeaders ?? []).map((h) => ({
+            ...h,
+            name: inflateNameAndWireValue(h.name, cg)
+        })),
+        endpointHeaders: (ex.endpointHeaders ?? []).map((h) => ({
+            ...h,
+            name: inflateNameAndWireValue(h.name, cg)
+        })),
+        queryParameters: (ex.queryParameters ?? []).map((qp) => ({
+            ...qp,
+            name: inflateNameAndWireValue(qp.name, cg)
+        })),
+        request: ex.request != null ? inflateExampleRequestBody(ex.request, cg) : undefined,
+        response: inflateExampleResponse(ex.response, cg)
+    };
 }
 
-function inflateExamplePathParameter(pp: ExamplePathParameter | undefined, cg: FullCasingsGenerator): void {
-    if (pp == null) {
-        return;
-    }
-    pp.name = inflateNameOrString(pp.name, cg);
-    inflateExampleTypeReference(pp.value, cg);
+function inflateExamplePathParameter(
+    pp: ExamplePathParameter,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...pp,
+        name: inflateNameOrString(pp.name, cg),
+        value: inflateExampleTypeReference(pp.value, cg)
+    };
 }
 
-function inflateExampleRequestBody(body: ExampleRequestBody | undefined, cg: FullCasingsGenerator): void {
-    if (body == null) {
-        return;
-    }
-    if (body.type === "inlinedRequestBody") {
-        inflateExampleInlinedRequestBody(body, cg);
-    } else if (body.type === "reference") {
-        inflateExampleTypeReference(body, cg);
-    }
-}
-
-function inflateExampleInlinedRequestBody(body: ExampleInlinedRequestBody | undefined, cg: FullCasingsGenerator): void {
-    if (body == null) {
-        return;
-    }
-    for (const prop of body.properties ?? []) {
-        inflateNameAndWireValueInPlace(prop.name, cg);
-        inflateExampleTypeReference(prop.value, cg);
-        if (prop.originalTypeDeclaration != null) {
-            inflateDeclaredTypeName(prop.originalTypeDeclaration, cg);
+function inflateExampleRequestBody(
+    body: ExampleRequestBody,
+    cg: FullCasingsGenerator
+) {
+    switch (body.type) {
+        case "inlinedRequestBody": {
+            const inflated = inflateExampleInlinedRequestBody(body, cg);
+            return { ...body, properties: inflated.properties, extraProperties: inflated.extraProperties };
         }
-    }
-    for (const prop of body.extraProperties ?? []) {
-        inflateNameAndWireValueInPlace(prop.name, cg);
-        inflateExampleTypeReference(prop.value, cg);
+        case "reference": {
+            const inflated = inflateExampleTypeReference(body, cg);
+            return { ...body, shape: inflated.shape };
+        }
+        default:
+            return body;
     }
 }
 
-function inflateExampleResponse(resp: ExampleResponse | undefined, cg: FullCasingsGenerator): void {
-    if (resp == null) {
-        return;
-    }
+function inflateExampleInlinedRequestBody(
+    body: ExampleInlinedRequestBody,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...body,
+        properties: (body.properties ?? []).map((prop) => ({
+            ...prop,
+            name: inflateNameAndWireValue(prop.name, cg),
+            value: inflateExampleTypeReference(prop.value, cg),
+            originalTypeDeclaration:
+                prop.originalTypeDeclaration != null
+                    ? inflateDeclaredTypeName(prop.originalTypeDeclaration, cg)
+                    : undefined
+        })),
+        extraProperties: (body.extraProperties ?? []).map((prop) => ({
+            ...prop,
+            name: inflateNameAndWireValue(prop.name, cg),
+            value: inflateExampleTypeReference(prop.value, cg)
+        }))
+    };
+}
+
+function inflateExampleResponse(resp: ExampleResponse, cg: FullCasingsGenerator) {
     if (resp.type === "ok") {
-        inflateExampleEndpointSuccessResponse(resp.value, cg);
-    } else if (resp.type === "error") {
-        if (resp.error != null) {
-            inflateDeclaredErrorName(resp.error, cg);
-        }
-        inflateExampleTypeReference(resp.body, cg);
+        return { ...resp, value: inflateExampleEndpointSuccessResponse(resp.value, cg) };
     }
+    if (resp.type === "error") {
+        return {
+            ...resp,
+            error: inflateDeclaredErrorName(resp.error, cg),
+            body: resp.body != null ? inflateExampleTypeReference(resp.body, cg) : undefined
+        };
+    }
+    return resp;
 }
 
 function inflateExampleEndpointSuccessResponse(
-    resp: ExampleEndpointSuccessResponse | undefined,
+    resp: ExampleEndpointSuccessResponse,
     cg: FullCasingsGenerator
-): void {
-    if (resp == null) {
-        return;
-    }
+) {
     switch (resp.type) {
         case "body":
-            if (resp.value != null) {
-                inflateExampleTypeReference(resp.value, cg);
-            }
-            break;
+            return {
+                ...resp,
+                value: resp.value != null ? inflateExampleTypeReference(resp.value, cg) : undefined
+            };
         case "stream":
-            for (const item of resp.value ?? []) {
-                inflateExampleTypeReference(item, cg);
-            }
-            break;
+            return {
+                ...resp,
+                value: (resp.value ?? []).map((item) => inflateExampleTypeReference(item, cg))
+            };
         case "sse":
-            for (const evt of resp.value ?? []) {
-                inflateExampleTypeReference(evt.data, cg);
-            }
-            break;
+            return {
+                ...resp,
+                value: (resp.value ?? []).map((evt) => ({
+                    ...evt,
+                    data: inflateExampleTypeReference(evt.data, cg)
+                }))
+            };
+        default:
+            return resp;
     }
 }
 
-function inflateExampleCodeSample(cs: ExampleCodeSample | undefined, cg: FullCasingsGenerator): void {
-    if (cs == null) {
-        return;
-    }
+function inflateExampleCodeSample(
+    cs: ExampleCodeSample,
+    cg: FullCasingsGenerator
+) {
     if (cs.name != null) {
-        cs.name = inflateNameOrString(cs.name, cg);
+        return { ...cs, name: inflateNameOrString(cs.name, cg) };
     }
+    return cs;
 }
 
-function inflateExampleType(ex: ExampleType | undefined, cg: FullCasingsGenerator): void {
-    if (ex == null) {
-        return;
-    }
-    if (ex.name != null) {
-        ex.name = inflateNameOrString(ex.name, cg);
-    }
-    inflateExampleTypeShape(ex.shape, cg);
+function inflateExampleType(ex: ExampleType, cg: FullCasingsGenerator) {
+    return {
+        ...ex,
+        name: ex.name != null ? inflateNameOrString(ex.name, cg) : undefined,
+        shape: inflateExampleTypeShape(ex.shape, cg)
+    };
 }
 
-function inflateExampleTypeShape(shape: ExampleTypeShape | undefined, cg: FullCasingsGenerator): void {
-    if (shape == null) {
-        return;
-    }
+function inflateExampleTypeShape(
+    shape: ExampleTypeShape,
+    cg: FullCasingsGenerator
+): ExampleTypeShape {
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (shape.type) {
         case "alias":
-            inflateExampleTypeReference(shape.value, cg);
-            break;
+            return { ...shape, value: inflateExampleTypeReference(shape.value, cg) };
         case "enum":
-            inflateNameAndWireValueInPlace(shape.value, cg);
-            break;
+            return { ...shape, value: inflateNameAndWireValue(shape.value, cg) };
         case "object":
-            inflateExampleObjectType(shape, cg);
-            break;
+            return {
+                ...shape,
+                properties: (shape.properties ?? []).map((prop) => ({
+                    ...prop,
+                    name: inflateNameAndWireValue(prop.name, cg),
+                    value: inflateExampleTypeReference(prop.value, cg),
+                    originalTypeDeclaration: inflateDeclaredTypeName(prop.originalTypeDeclaration, cg)
+                })),
+                extraProperties: (shape.extraProperties ?? []).map((prop) => ({
+                    ...prop,
+                    name: inflateNameAndWireValue(prop.name, cg),
+                    value: inflateExampleTypeReference(prop.value, cg)
+                }))
+            };
         case "union":
-            inflateExampleUnionType(shape, cg);
-            break;
+            return {
+                ...shape,
+                discriminant: inflateNameAndWireValue(shape.discriminant, cg),
+                singleUnionType: {
+                    ...shape.singleUnionType,
+                    wireDiscriminantValue: inflateNameAndWireValue(
+                        shape.singleUnionType.wireDiscriminantValue,
+                        cg
+                    ),
+                    shape: inflateExampleSingleUnionTypeProperties(shape.singleUnionType.shape, cg)
+                },
+                extendProperties: (shape.extendProperties ?? []).map((prop) => ({
+                    ...prop,
+                    name: inflateNameAndWireValue(prop.name, cg),
+                    value: inflateExampleTypeReference(prop.value, cg),
+                    originalTypeDeclaration: inflateDeclaredTypeName(prop.originalTypeDeclaration, cg)
+                })),
+                baseProperties: (shape.baseProperties ?? []).map((prop) => ({
+                    ...prop,
+                    name: inflateNameAndWireValue(prop.name, cg),
+                    value: inflateExampleTypeReference(prop.value, cg)
+                }))
+            };
         case "undiscriminatedUnion":
-            inflateExampleTypeReference(shape.singleUnionType, cg);
-            break;
+            return { ...shape, singleUnionType: inflateExampleTypeReference(shape.singleUnionType, cg) };
     }
 }
 
-function inflateExampleObjectType(obj: ExampleObjectType, cg: FullCasingsGenerator): void {
-    for (const prop of obj.properties ?? []) {
-        inflateNameAndWireValueInPlace(prop.name, cg);
-        inflateExampleTypeReference(prop.value, cg);
-        if (prop.originalTypeDeclaration != null) {
-            inflateDeclaredTypeName(prop.originalTypeDeclaration, cg);
-        }
-    }
-    for (const prop of obj.extraProperties ?? []) {
-        inflateNameAndWireValueInPlace(prop.name, cg);
-        inflateExampleTypeReference(prop.value, cg);
-    }
+function inflateExampleObjectType(
+    obj: ExampleObjectType,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...obj,
+        properties: (obj.properties ?? []).map((prop) => ({
+            ...prop,
+            name: inflateNameAndWireValue(prop.name, cg),
+            value: inflateExampleTypeReference(prop.value, cg),
+            originalTypeDeclaration:
+                prop.originalTypeDeclaration != null
+                    ? inflateDeclaredTypeName(prop.originalTypeDeclaration, cg)
+                    : undefined
+        })),
+        extraProperties: (obj.extraProperties ?? []).map((prop) => ({
+            ...prop,
+            name: inflateNameAndWireValue(prop.name, cg),
+            value: inflateExampleTypeReference(prop.value, cg)
+        }))
+    };
 }
 
-function inflateExampleUnionType(union: ExampleUnionType, cg: FullCasingsGenerator): void {
-    inflateNameAndWireValueInPlace(union.discriminant, cg);
-    if (union.singleUnionType != null) {
-        inflateNameAndWireValueInPlace(union.singleUnionType.wireDiscriminantValue, cg);
-        inflateExampleSingleUnionTypeProperties(union.singleUnionType.shape, cg);
-    }
-    for (const prop of union.extendProperties ?? []) {
-        inflateNameAndWireValueInPlace(prop.name, cg);
-        inflateExampleTypeReference(prop.value, cg);
-        if (prop.originalTypeDeclaration != null) {
-            inflateDeclaredTypeName(prop.originalTypeDeclaration, cg);
-        }
-    }
-    for (const prop of union.baseProperties ?? []) {
-        inflateNameAndWireValueInPlace(prop.name, cg);
-        inflateExampleTypeReference(prop.value, cg);
-    }
+function inflateExampleUnionType(
+    union: ExampleUnionType,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...union,
+        discriminant: inflateNameAndWireValue(union.discriminant, cg),
+        singleUnionType:
+            union.singleUnionType != null
+                ? {
+                      ...union.singleUnionType,
+                      wireDiscriminantValue: inflateNameAndWireValue(
+                          union.singleUnionType.wireDiscriminantValue,
+                          cg
+                      ),
+                      shape: inflateExampleSingleUnionTypeProperties(union.singleUnionType.shape, cg)
+                  }
+                : undefined,
+        extendProperties: (union.extendProperties ?? []).map((prop) => ({
+            ...prop,
+            name: inflateNameAndWireValue(prop.name, cg),
+            value: inflateExampleTypeReference(prop.value, cg),
+            originalTypeDeclaration:
+                prop.originalTypeDeclaration != null
+                    ? inflateDeclaredTypeName(prop.originalTypeDeclaration, cg)
+                    : undefined
+        })),
+        baseProperties: (union.baseProperties ?? []).map((prop) => ({
+            ...prop,
+            name: inflateNameAndWireValue(prop.name, cg),
+            value: inflateExampleTypeReference(prop.value, cg)
+        }))
+    };
 }
 
 function inflateExampleSingleUnionTypeProperties(
-    shape: ExampleSingleUnionTypeProperties | undefined,
+    sutProps: ExampleSingleUnionTypeProperties,
     cg: FullCasingsGenerator
-): void {
-    if (shape == null) {
-        return;
-    }
-    switch (shape.type) {
+): ExampleSingleUnionTypeProperties {
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
+    switch (sutProps.type) {
         case "samePropertiesAsObject":
-            inflateExampleObjectType(shape.object, cg);
-            break;
-        case "singleProperty":
-            inflateExampleTypeReference(shape, cg);
-            break;
+            return {
+                ...sutProps,
+                object: {
+                    ...sutProps.object,
+                    properties: (sutProps.object.properties ?? []).map((prop) => ({
+                        ...prop,
+                        name: inflateNameAndWireValue(prop.name, cg),
+                        value: inflateExampleTypeReference(prop.value, cg),
+                        originalTypeDeclaration: inflateDeclaredTypeName(prop.originalTypeDeclaration, cg)
+                    })),
+                    extraProperties: (sutProps.object.extraProperties ?? []).map((prop) => ({
+                        ...prop,
+                        name: inflateNameAndWireValue(prop.name, cg),
+                        value: inflateExampleTypeReference(prop.value, cg)
+                    }))
+                }
+            };
+        case "singleProperty": {
+            const inflatedRef = inflateExampleTypeReference(sutProps, cg);
+            return { ...sutProps, shape: inflatedRef.shape };
+        }
+        default:
+            return sutProps;
     }
 }
 
-function inflateExampleTypeReference(etr: ExampleTypeReference | undefined, cg: FullCasingsGenerator): void {
-    if (etr == null || etr.shape == null) {
-        return;
-    }
+function inflateExampleTypeReference(
+    etr: ExampleTypeReference,
+    cg: FullCasingsGenerator
+): ExampleTypeReference {
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (etr.shape.type) {
         case "named":
-            if (etr.shape.typeName != null) {
-                inflateDeclaredTypeName(etr.shape.typeName, cg);
-            }
-            inflateExampleTypeShape(etr.shape.shape, cg);
-            break;
+            return {
+                ...etr,
+                shape: {
+                    ...etr.shape,
+                    typeName: inflateDeclaredTypeName(etr.shape.typeName, cg),
+                    shape: inflateExampleTypeShape(etr.shape.shape, cg)
+                }
+            };
         case "container":
-            inflateExampleContainer(etr.shape.container, cg);
-            break;
+            return {
+                ...etr,
+                shape: {
+                    ...etr.shape,
+                    container: inflateExampleContainer(etr.shape.container, cg)
+                }
+            };
+        case "primitive":
+        case "unknown":
+            return { ...etr, shape: { ...etr.shape } };
     }
 }
 
-function inflateExampleContainer(container: ExampleContainer | undefined, cg: FullCasingsGenerator): void {
-    if (container == null) {
-        return;
-    }
+function inflateExampleContainer(
+    container: ExampleContainer,
+    cg: FullCasingsGenerator
+): ExampleContainer {
+    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
     switch (container.type) {
         case "list":
-            // Inflate TypeReference metadata
-            inflateTypeReference(container.itemType, cg);
-            // Inflate example values
-            for (const item of container.list ?? []) {
-                inflateExampleTypeReference(item, cg);
-            }
-            break;
+            return {
+                ...container,
+                itemType: inflateTypeReference(container.itemType, cg),
+                list: (container.list ?? []).map((item) => inflateExampleTypeReference(item, cg))
+            };
         case "set":
-            // Inflate TypeReference metadata
-            inflateTypeReference(container.itemType, cg);
-            // Inflate example values
-            for (const item of container.set ?? []) {
-                inflateExampleTypeReference(item, cg);
-            }
-            break;
+            return {
+                ...container,
+                itemType: inflateTypeReference(container.itemType, cg),
+                set: (container.set ?? []).map((item) => inflateExampleTypeReference(item, cg))
+            };
         case "optional":
-            // Inflate TypeReference metadata
-            inflateTypeReference(container.valueType, cg);
-            // Inflate example value
-            inflateExampleTypeReference(container.optional, cg);
-            break;
+            return {
+                ...container,
+                valueType: inflateTypeReference(container.valueType, cg),
+                optional:
+                    container.optional != null ? inflateExampleTypeReference(container.optional, cg) : undefined
+            };
         case "nullable":
-            // Inflate TypeReference metadata
-            inflateTypeReference(container.valueType, cg);
-            // Inflate example value
-            inflateExampleTypeReference(container.nullable, cg);
-            break;
+            return {
+                ...container,
+                valueType: inflateTypeReference(container.valueType, cg),
+                nullable:
+                    container.nullable != null ? inflateExampleTypeReference(container.nullable, cg) : undefined
+            };
         case "map":
-            // Inflate TypeReference metadata
-            inflateTypeReference(container.keyType, cg);
-            inflateTypeReference(container.valueType, cg);
-            // Inflate example values
-            for (const pair of container.map ?? []) {
-                inflateExampleTypeReference(pair.key, cg);
-                inflateExampleTypeReference(pair.value, cg);
-            }
-            break;
+            return {
+                ...container,
+                keyType: inflateTypeReference(container.keyType, cg),
+                valueType: inflateTypeReference(container.valueType, cg),
+                map: (container.map ?? []).map((pair) => ({
+                    ...pair,
+                    key: inflateExampleTypeReference(pair.key, cg),
+                    value: inflateExampleTypeReference(pair.value, cg)
+                }))
+            };
+        case "literal":
+            return { ...container };
     }
 }
 
@@ -1231,267 +1331,310 @@ function inflateExampleContainer(container: ExampleContainer | undefined, cg: Fu
 // Errors
 // ---------------------------------------------------------------------------
 
-function inflateErrorDeclaration(ed: ErrorDeclaration, cg: FullCasingsGenerator): void {
-    inflateDeclaredErrorName(ed.name, cg);
-    inflateNameAndWireValueInPlace(ed.discriminantValue, cg);
-    inflateTypeReference(ed.type, cg);
-    for (const ex of ed.examples ?? []) {
-        inflateExampleError(ex, cg);
-    }
-    for (const header of ed.headers ?? []) {
-        inflateHttpHeader(header, cg);
-    }
+function inflateErrorDeclaration(
+    ed: ErrorDeclaration,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...ed,
+        name: inflateDeclaredErrorName(ed.name, cg),
+        discriminantValue: inflateNameAndWireValue(ed.discriminantValue, cg),
+        type: ed.type != null ? inflateTypeReference(ed.type, cg) : undefined,
+        examples: (ed.examples ?? []).map((ex) => inflateExampleError(ex, cg)),
+        headers: (ed.headers ?? []).map((h) => inflateHttpHeader(h, cg))
+    };
 }
 
-function inflateDeclaredErrorName(den: DeclaredErrorName | undefined, cg: FullCasingsGenerator): void {
-    if (den == null) {
-        return;
-    }
-    den.name = inflateNameOrString(den.name, cg);
-    inflateFernFilepathInPlace(den.fernFilepath, cg);
+function inflateDeclaredErrorName(
+    den: DeclaredErrorName,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...den,
+        name: inflateNameOrString(den.name, cg),
+        fernFilepath: inflateFernFilepath(den.fernFilepath, cg)
+    };
 }
 
-function inflateExampleError(ex: ExampleError | undefined, cg: FullCasingsGenerator): void {
-    if (ex == null) {
-        return;
-    }
-    if (ex.name != null) {
-        ex.name = inflateNameOrString(ex.name, cg);
-    }
-    inflateExampleTypeReference(ex.shape, cg);
+function inflateExampleError(ex: ExampleError, cg: FullCasingsGenerator) {
+    return {
+        ...ex,
+        name: ex.name != null ? inflateNameOrString(ex.name, cg) : undefined,
+        shape: inflateExampleTypeReference(ex.shape, cg)
+    };
 }
 
 // ---------------------------------------------------------------------------
 // Environments
 // ---------------------------------------------------------------------------
 
-function inflateEnvironmentsConfig(config: EnvironmentsConfig | undefined, cg: FullCasingsGenerator): void {
-    if (config == null || config.environments == null) {
-        return;
+function inflateEnvironmentsConfig(
+    config: EnvironmentsConfig,
+    cg: FullCasingsGenerator
+) {
+    if (config.environments == null) {
+        return config;
     }
     switch (config.environments.type) {
         case "singleBaseUrl":
-            for (const env of config.environments.environments ?? []) {
-                env.name = inflateNameOrString(env.name, cg);
-                for (const sv of env.urlVariables ?? []) {
-                    inflateServerVariable(sv, cg);
+            return {
+                ...config,
+                environments: {
+                    ...config.environments,
+                    environments: (config.environments.environments ?? []).map((env) => ({
+                        ...env,
+                        name: inflateNameOrString(env.name, cg),
+                        urlVariables: (env.urlVariables ?? []).map((sv) => inflateServerVariable(sv, cg))
+                    }))
                 }
-            }
-            break;
+            };
         case "multipleBaseUrls":
-            for (const bu of config.environments.baseUrls ?? []) {
-                bu.name = inflateNameOrString(bu.name, cg);
-            }
-            for (const env of config.environments.environments ?? []) {
-                env.name = inflateNameOrString(env.name, cg);
-            }
-            break;
+            return {
+                ...config,
+                environments: {
+                    ...config.environments,
+                    baseUrls: (config.environments.baseUrls ?? []).map((bu) => ({
+                        ...bu,
+                        name: inflateNameOrString(bu.name, cg)
+                    })),
+                    environments: (config.environments.environments ?? []).map((env) => ({
+                        ...env,
+                        name: inflateNameOrString(env.name, cg)
+                    }))
+                }
+            };
     }
 }
 
-function inflateServerVariable(sv: ServerVariable | undefined, cg: FullCasingsGenerator): void {
-    if (sv == null) {
-        return;
-    }
-    sv.name = inflateNameOrString(sv.name, cg);
+function inflateServerVariable(sv: ServerVariable, cg: FullCasingsGenerator) {
+    return { ...sv, name: inflateNameOrString(sv.name, cg) };
 }
 
 // ---------------------------------------------------------------------------
 // Packages / Subpackages
 // ---------------------------------------------------------------------------
 
-function inflatePackage(pkg: Package | undefined, cg: FullCasingsGenerator): void {
-    if (pkg == null) {
-        return;
-    }
-    inflateFernFilepathInPlace(pkg.fernFilepath, cg);
+function inflatePackage(pkg: Package, cg: FullCasingsGenerator) {
+    return { ...pkg, fernFilepath: inflateFernFilepath(pkg.fernFilepath, cg) };
 }
 
-function inflateSubpackage(sub: Subpackage, cg: FullCasingsGenerator): void {
-    inflatePackage(sub, cg);
-    sub.name = inflateNameOrString(sub.name, cg);
+function inflateSubpackage(sub: Subpackage, cg: FullCasingsGenerator) {
+    return {
+        ...sub,
+        fernFilepath: inflateFernFilepath(sub.fernFilepath, cg),
+        name: inflateNameOrString(sub.name, cg)
+    };
 }
 
 // ---------------------------------------------------------------------------
 // Constants
 // ---------------------------------------------------------------------------
 
-function inflateConstants(constants: Constants | undefined, cg: FullCasingsGenerator): void {
-    if (constants == null) {
-        return;
-    }
-    inflateNameAndWireValueInPlace(constants.errorInstanceIdKey, cg);
+function inflateConstants(constants: Constants, cg: FullCasingsGenerator) {
+    return {
+        ...constants,
+        errorInstanceIdKey: inflateNameAndWireValue(constants.errorInstanceIdKey, cg)
+    };
 }
 
 // ---------------------------------------------------------------------------
 // Variables
 // ---------------------------------------------------------------------------
 
-function inflateVariableDeclaration(v: VariableDeclaration | undefined, cg: FullCasingsGenerator): void {
-    if (v == null) {
-        return;
-    }
-    v.name = inflateNameOrString(v.name, cg);
-    inflateTypeReference(v.type, cg);
+function inflateVariableDeclaration(
+    v: VariableDeclaration,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...v,
+        name: inflateNameOrString(v.name, cg),
+        type: inflateTypeReference(v.type, cg)
+    };
 }
 
 // ---------------------------------------------------------------------------
 // Webhooks
 // ---------------------------------------------------------------------------
 
-function inflateWebhookGroup(group: WebhookGroup, cg: FullCasingsGenerator): void {
+function inflateWebhookGroup(group: WebhookGroup, cg: FullCasingsGenerator) {
     if (!Array.isArray(group)) {
-        return;
+        return group;
     }
-    for (const webhook of group) {
-        inflateWebhook(webhook, cg);
-    }
+    return group.map((wh) => inflateWebhook(wh, cg));
 }
 
-function inflateWebhook(wh: Webhook, cg: FullCasingsGenerator): void {
-    wh.name = inflateNameOrString(wh.name, cg);
-
-    for (const header of wh.headers ?? []) {
-        inflateHttpHeader(header, cg);
-    }
-
-    inflateWebhookPayload(wh.payload, cg);
-
-    inflateWebhookSignatureVerification(wh.signatureVerification, cg);
-
-    for (const ex of wh.examples ?? []) {
-        inflateExampleWebhookCall(ex, cg);
-    }
+function inflateWebhook(wh: Webhook, cg: FullCasingsGenerator) {
+    return {
+        ...wh,
+        name: inflateNameOrString(wh.name, cg),
+        headers: (wh.headers ?? []).map((h) => inflateHttpHeader(h, cg)),
+        payload: inflateWebhookPayload(wh.payload, cg),
+        signatureVerification:
+            wh.signatureVerification != null
+                ? inflateWebhookSignatureVerification(wh.signatureVerification, cg)
+                : undefined,
+        examples: (wh.examples ?? []).map((ex) => inflateExampleWebhookCall(ex, cg))
+    };
 }
 
-function inflateWebhookPayload(payload: WebhookPayload | undefined, cg: FullCasingsGenerator): void {
-    if (payload == null) {
-        return;
-    }
+function inflateWebhookPayload(
+    payload: WebhookPayload,
+    cg: FullCasingsGenerator
+) {
     if (payload.type === "inlinedPayload") {
-        payload.name = inflateNameOrString(payload.name, cg);
-        for (const ext of payload.extends ?? []) {
-            inflateDeclaredTypeName(ext, cg);
-        }
-        for (const prop of payload.properties ?? []) {
-            inflateNameAndWireValueInPlace(prop.name, cg);
-            inflateTypeReference(prop.valueType, cg);
-        }
-    } else if (payload.type === "reference") {
-        inflateTypeReference(payload.payloadType, cg);
+        return {
+            ...payload,
+            name: inflateNameOrString(payload.name, cg),
+            extends: (payload.extends ?? []).map((ext) => inflateDeclaredTypeName(ext, cg)),
+            properties: (payload.properties ?? []).map((prop) => ({
+                ...prop,
+                name: inflateNameAndWireValue(prop.name, cg),
+                valueType: inflateTypeReference(prop.valueType, cg)
+            }))
+        };
     }
+    if (payload.type === "reference") {
+        return { ...payload, payloadType: inflateTypeReference(payload.payloadType, cg) };
+    }
+    return payload;
 }
 
 function inflateWebhookSignatureVerification(
-    sv: WebhookSignatureVerification | undefined,
+    sv: WebhookSignatureVerification,
     cg: FullCasingsGenerator
-): void {
-    if (sv == null) {
-        return;
-    }
+) {
     if (sv.type === "hmac") {
-        inflateNameAndWireValueInPlace(sv.signatureHeaderName, cg);
-        if (sv.timestamp != null) {
-            inflateNameAndWireValueInPlace(sv.timestamp.headerName, cg);
-        }
-    } else if (sv.type === "asymmetric") {
-        inflateNameAndWireValueInPlace(sv.signatureHeaderName, cg);
-        if (sv.timestamp != null) {
-            inflateNameAndWireValueInPlace(sv.timestamp.headerName, cg);
-        }
-        if (sv.keySource?.type === "jwks" && sv.keySource.keyIdHeader != null) {
-            inflateNameAndWireValueInPlace(sv.keySource.keyIdHeader, cg);
-        }
+        return {
+            ...sv,
+            signatureHeaderName: inflateNameAndWireValue(sv.signatureHeaderName, cg),
+            timestamp:
+                sv.timestamp != null
+                    ? { ...sv.timestamp, headerName: inflateNameAndWireValue(sv.timestamp.headerName, cg) }
+                    : undefined
+        };
     }
+    if (sv.type === "asymmetric") {
+        return {
+            ...sv,
+            signatureHeaderName: inflateNameAndWireValue(sv.signatureHeaderName, cg),
+            timestamp:
+                sv.timestamp != null
+                    ? { ...sv.timestamp, headerName: inflateNameAndWireValue(sv.timestamp.headerName, cg) }
+                    : undefined,
+            keySource:
+                sv.keySource != null && sv.keySource.type === "jwks" && sv.keySource.keyIdHeader != null
+                    ? {
+                          ...sv.keySource,
+                          keyIdHeader: inflateNameAndWireValue(sv.keySource.keyIdHeader, cg)
+                      }
+                    : sv.keySource
+        };
+    }
+    return sv;
 }
 
-function inflateExampleWebhookCall(ex: ExampleWebhookCall | undefined, cg: FullCasingsGenerator): void {
-    if (ex == null) {
-        return;
-    }
-    if (ex.name != null) {
-        ex.name = inflateNameOrString(ex.name, cg);
-    }
-    inflateExampleTypeReference(ex.payload, cg);
+function inflateExampleWebhookCall(
+    ex: ExampleWebhookCall,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...ex,
+        name: ex.name != null ? inflateNameOrString(ex.name, cg) : undefined,
+        payload: inflateExampleTypeReference(ex.payload, cg)
+    };
 }
 
 // ---------------------------------------------------------------------------
 // WebSocket Channels
 // ---------------------------------------------------------------------------
 
-function inflateWebSocketChannel(channel: WebSocketChannel, cg: FullCasingsGenerator): void {
-    channel.name = inflateNameOrString(channel.name, cg);
-
-    for (const header of channel.headers ?? []) {
-        inflateHttpHeader(header, cg);
-    }
-    for (const qp of channel.queryParameters ?? []) {
-        inflateQueryParameter(qp, cg);
-    }
-    for (const param of channel.pathParameters ?? []) {
-        inflatePathParameter(param, cg);
-    }
-    for (const msg of channel.messages ?? []) {
-        inflateWebSocketMessage(msg, cg);
-    }
-    for (const ex of channel.examples ?? []) {
-        inflateExampleWebSocketSession(ex, cg);
-    }
+function inflateWebSocketChannel(
+    channel: WebSocketChannel,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...channel,
+        name: inflateNameOrString(channel.name, cg),
+        headers: (channel.headers ?? []).map((h) => inflateHttpHeader(h, cg)),
+        queryParameters: (channel.queryParameters ?? []).map((qp) => inflateQueryParameter(qp, cg)),
+        pathParameters: (channel.pathParameters ?? []).map((p) => inflatePathParameter(p, cg)),
+        messages: (channel.messages ?? []).map((msg) => inflateWebSocketMessage(msg, cg)),
+        examples: (channel.examples ?? []).map((ex) => inflateExampleWebSocketSession(ex, cg))
+    };
 }
 
-function inflateWebSocketMessage(msg: WebSocketMessage | undefined, cg: FullCasingsGenerator): void {
-    if (msg == null) {
-        return;
+function inflateWebSocketMessage(
+    msg: WebSocketMessage,
+    cg: FullCasingsGenerator
+) {
+    if (msg.body == null) {
+        return msg;
     }
-    if (msg.body != null) {
-        if (msg.body.type === "inlinedBody") {
-            msg.body.name = inflateNameOrString(msg.body.name, cg);
-            for (const ext of msg.body.extends ?? []) {
-                inflateDeclaredTypeName(ext, cg);
+    if (msg.body.type === "inlinedBody") {
+        return {
+            ...msg,
+            body: {
+                ...msg.body,
+                name: inflateNameOrString(msg.body.name, cg),
+                extends: (msg.body.extends ?? []).map((ext) => inflateDeclaredTypeName(ext, cg)),
+                properties: (msg.body.properties ?? []).map((prop) => ({
+                    ...prop,
+                    name: inflateNameAndWireValue(prop.name, cg),
+                    valueType: inflateTypeReference(prop.valueType, cg)
+                }))
             }
-            for (const prop of msg.body.properties ?? []) {
-                inflateNameAndWireValueInPlace(prop.name, cg);
-                inflateTypeReference(prop.valueType, cg);
-            }
-        } else if (msg.body.type === "reference") {
-            inflateTypeReference(msg.body.bodyType, cg);
-        }
+        };
     }
+    if (msg.body.type === "reference") {
+        return {
+            ...msg,
+            body: {
+                ...msg.body,
+                bodyType: inflateTypeReference(msg.body.bodyType, cg)
+            }
+        };
+    }
+    return msg;
 }
 
-function inflateExampleWebSocketSession(ex: ExampleWebSocketSession | undefined, cg: FullCasingsGenerator): void {
-    if (ex == null) {
-        return;
-    }
-    if (ex.name != null) {
-        ex.name = inflateNameOrString(ex.name, cg);
-    }
-
-    for (const pp of ex.pathParameters ?? []) {
-        inflateExamplePathParameter(pp, cg);
-    }
-    for (const h of ex.headers ?? []) {
-        inflateNameAndWireValueInPlace(h.name, cg);
-    }
-    for (const qp of ex.queryParameters ?? []) {
-        inflateNameAndWireValueInPlace(qp.name, cg);
-    }
-    for (const msg of ex.messages ?? []) {
-        inflateExampleWebSocketMessageBody(msg.body, cg);
-    }
+function inflateExampleWebSocketSession(
+    ex: ExampleWebSocketSession,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...ex,
+        name: ex.name != null ? inflateNameOrString(ex.name, cg) : undefined,
+        pathParameters: (ex.pathParameters ?? []).map((pp) => inflateExamplePathParameter(pp, cg)),
+        headers: (ex.headers ?? []).map((h) => ({
+            ...h,
+            name: inflateNameAndWireValue(h.name, cg)
+        })),
+        queryParameters: (ex.queryParameters ?? []).map((qp) => ({
+            ...qp,
+            name: inflateNameAndWireValue(qp.name, cg)
+        })),
+        messages: (ex.messages ?? []).map((msg) => ({
+            ...msg,
+            body: inflateExampleWebSocketMessageBody(msg.body, cg)
+        }))
+    };
 }
 
 function inflateExampleWebSocketMessageBody(
-    body: ExampleWebSocketMessageBody | undefined,
+    body: ExampleWebSocketMessageBody,
     cg: FullCasingsGenerator
-): void {
-    if (body == null) {
-        return;
-    }
-    if (body.type === "inlinedBody") {
-        inflateExampleInlinedRequestBody(body, cg);
-    } else if (body.type === "reference") {
-        inflateExampleTypeReference(body, cg);
+) {
+    switch (body.type) {
+        case "inlinedBody": {
+            const inflated = inflateExampleInlinedRequestBody(body, cg);
+            return { ...body, properties: inflated.properties, extraProperties: inflated.extraProperties };
+        }
+        case "reference": {
+            const inflated = inflateExampleTypeReference(body, cg);
+            return { ...body, shape: inflated.shape };
+        }
+        default:
+            return body;
     }
 }
 
@@ -1499,311 +1642,283 @@ function inflateExampleWebSocketMessageBody(
 // ErrorDiscriminationStrategy
 // ---------------------------------------------------------------------------
 
-function inflateErrorDiscriminationStrategy(strategy: ErrorDiscriminationStrategy, cg: FullCasingsGenerator): void {
-    if (strategy == null) {
-        return;
-    }
+function inflateErrorDiscriminationStrategy(
+    strategy: ErrorDiscriminationStrategy,
+    cg: FullCasingsGenerator
+) {
     if (strategy.type === "property") {
-        inflateNameAndWireValueInPlace(strategy.discriminant, cg);
-        inflateNameAndWireValueInPlace(strategy.contentProperty, cg);
+        return {
+            ...strategy,
+            discriminant: inflateNameAndWireValue(strategy.discriminant, cg),
+            contentProperty: inflateNameAndWireValue(strategy.contentProperty, cg)
+        };
     }
+    return strategy;
 }
 
 // ---------------------------------------------------------------------------
 // ApiVersionScheme
 // ---------------------------------------------------------------------------
 
-function inflateApiVersionScheme(scheme: ApiVersionScheme | undefined, cg: FullCasingsGenerator): void {
-    if (scheme == null) {
-        return;
-    }
+function inflateApiVersionScheme(
+    scheme: ApiVersionScheme,
+    cg: FullCasingsGenerator
+) {
     if (scheme.type === "header") {
-        inflateHttpHeader(scheme.header, cg);
-        inflateEnumTypeDeclaration(scheme.value, cg);
+        return {
+            ...scheme,
+            header: inflateHttpHeader(scheme.header, cg),
+            value: inflateEnumTypeDeclaration(scheme.value, cg)
+        };
     }
+    return scheme;
 }
 
 // ---------------------------------------------------------------------------
 // Proto types (Source on TypeDeclaration)
 // ---------------------------------------------------------------------------
 
-function inflateTypeDeclarationSource(source: Source | undefined, cg: FullCasingsGenerator): void {
-    if (source == null) {
-        return;
-    }
+function inflateTypeDeclarationSource(source: Source, cg: FullCasingsGenerator) {
     if (source.type === "proto") {
-        inflateProtobufType(source.value, cg);
+        return { ...source, value: inflateProtobufType(source.value, cg) };
     }
+    return source;
 }
 
-function inflateProtobufType(pt: ProtobufType | undefined, cg: FullCasingsGenerator): void {
-    if (pt == null) {
-        return;
-    }
+function inflateProtobufType(pt: ProtobufType, cg: FullCasingsGenerator) {
     if (pt.type === "userDefined") {
-        pt.name = inflateNameOrString(pt.name, cg);
+        return { ...pt, name: inflateNameOrString(pt.name, cg) };
     }
+    return pt;
 }
 
 // ---------------------------------------------------------------------------
-// Dynamic IR -- explicit visitor
+// Dynamic IR -- constructs new objects (no mutation)
 // ---------------------------------------------------------------------------
 
-function inflateDynamicIrInPlace(
-    dynIr: dynamic.DynamicIntermediateRepresentation | undefined,
+function inflateDynamicIr(
+    dynIr: dynamic.DynamicIntermediateRepresentation,
     cg: FullCasingsGenerator
-): void {
-    if (dynIr == null) {
-        return;
-    }
-
-    for (const namedType of Object.values(dynIr.types ?? {})) {
-        inflateDynamicNamedType(namedType, cg);
-    }
-
-    for (const endpoint of Object.values(dynIr.endpoints ?? {})) {
-        inflateDynamicEndpoint(endpoint, cg);
-    }
-
-    if (dynIr.environments != null) {
-        inflateDynamicEnvironmentsConfig(dynIr.environments, cg);
-    }
-
-    for (const param of dynIr.headers ?? []) {
-        inflateDynamicNamedParameter(param, cg);
-    }
-
-    for (const param of dynIr.pathParameters ?? []) {
-        inflateDynamicNamedParameter(param, cg);
-    }
-
-    for (const v of dynIr.variables ?? []) {
-        inflateDynamicVariableDeclaration(v, cg);
-    }
+) {
+    return {
+        ...dynIr,
+        types: mapRecord(dynIr.types ?? {}, (nt) => inflateDynamicNamedType(nt, cg)),
+        endpoints: mapRecord(dynIr.endpoints ?? {}, (ep) => inflateDynamicEndpoint(ep, cg)),
+        environments:
+            dynIr.environments != null ? inflateDynamicEnvironmentsConfig(dynIr.environments, cg) : undefined,
+        headers: (dynIr.headers ?? []).map((h) => inflateDynamicNamedParameter(h, cg)),
+        pathParameters: (dynIr.pathParameters ?? []).map((p) => inflateDynamicNamedParameter(p, cg)),
+        variables: (dynIr.variables ?? []).map((v) => inflateDynamicVariableDeclaration(v, cg))
+    };
 }
 
-function inflateDynamicDeclaration(decl: dynamic.Declaration | undefined, cg: FullCasingsGenerator): void {
-    if (decl == null) {
-        return;
-    }
-    decl.name = inflateNameOrString(decl.name, cg);
-    inflateDynamicFernFilepathInPlace(decl.fernFilepath, cg);
-}
-
-function inflateDynamicFernFilepathInPlace(fp: dynamic.FernFilepath | undefined, cg: FullCasingsGenerator): void {
-    if (fp == null) {
-        return;
-    }
-    fp.allParts = (fp.allParts ?? []).map((n: NameOrString) => inflateNameOrString(n, cg));
-    fp.packagePath = (fp.packagePath ?? []).map((n: NameOrString) => inflateNameOrString(n, cg));
-    if (fp.file != null) {
-        fp.file = inflateNameOrString(fp.file, cg);
-    }
-}
-
-function inflateDynamicNameAndWireValueInPlace(
-    nwv: dynamic.NameAndWireValue | undefined,
+function inflateDynamicDeclaration(
+    decl: dynamic.Declaration,
     cg: FullCasingsGenerator
-): void {
-    if (nwv == null) {
-        return;
-    }
-    nwv.name = inflateNameOrString(nwv.name, cg);
+) {
+    return {
+        ...decl,
+        name: inflateNameOrString(decl.name, cg),
+        fernFilepath: inflateDynamicFernFilepath(decl.fernFilepath, cg)
+    };
 }
 
-function inflateDynamicNamedParameter(param: dynamic.NamedParameter | undefined, cg: FullCasingsGenerator): void {
-    if (param == null) {
-        return;
-    }
-    inflateDynamicNameAndWireValueInPlace(param.name, cg);
+function inflateDynamicFernFilepath(
+    fp: dynamic.FernFilepath,
+    cg: FullCasingsGenerator
+) {
+    return {
+        allParts: (fp.allParts ?? []).map((n: NameOrString) => inflateNameOrString(n, cg)),
+        packagePath: (fp.packagePath ?? []).map((n: NameOrString) => inflateNameOrString(n, cg)),
+        file: fp.file != null ? inflateNameOrString(fp.file, cg) : undefined
+    };
 }
 
-function inflateDynamicNamedType(nt: dynamic.NamedType | undefined, cg: FullCasingsGenerator): void {
-    if (nt == null) {
-        return;
-    }
+function inflateDynamicNameAndWireValue(
+    nwv: dynamic.NameAndWireValue,
+    cg: FullCasingsGenerator
+) {
+    return { ...nwv, name: inflateNameOrString(nwv.name, cg) };
+}
+
+function inflateDynamicNamedParameter(
+    param: dynamic.NamedParameter,
+    cg: FullCasingsGenerator
+) {
+    return { ...param, name: inflateDynamicNameAndWireValue(param.name, cg) };
+}
+
+function inflateDynamicNamedType(
+    nt: dynamic.NamedType,
+    cg: FullCasingsGenerator
+) {
     switch (nt.type) {
         case "alias":
-            inflateDynamicDeclaration(nt.declaration, cg);
-            break;
+            return { ...nt, declaration: inflateDynamicDeclaration(nt.declaration, cg) };
         case "enum":
-            inflateDynamicDeclaration(nt.declaration, cg);
-            for (const val of nt.values ?? []) {
-                inflateDynamicNameAndWireValueInPlace(val, cg);
-            }
-            break;
+            return {
+                ...nt,
+                declaration: inflateDynamicDeclaration(nt.declaration, cg),
+                values: (nt.values ?? []).map((val) => inflateDynamicNameAndWireValue(val, cg))
+            };
         case "object":
-            inflateDynamicDeclaration(nt.declaration, cg);
-            for (const prop of nt.properties ?? []) {
-                inflateDynamicNamedParameter(prop, cg);
-            }
-            break;
+            return {
+                ...nt,
+                declaration: inflateDynamicDeclaration(nt.declaration, cg),
+                properties: (nt.properties ?? []).map((prop) => inflateDynamicNamedParameter(prop, cg))
+            };
         case "discriminatedUnion":
-            inflateDynamicDeclaration(nt.declaration, cg);
-            inflateDynamicNameAndWireValueInPlace(nt.discriminant, cg);
-            for (const sut of Object.values(nt.types ?? {})) {
-                inflateDynamicSingleDiscriminatedUnionType(sut, cg);
-            }
-            break;
+            return {
+                ...nt,
+                declaration: inflateDynamicDeclaration(nt.declaration, cg),
+                discriminant: inflateDynamicNameAndWireValue(nt.discriminant, cg),
+                types: mapRecord(nt.types ?? {}, (sut) => inflateDynamicSingleDiscriminatedUnionType(sut, cg))
+            };
         case "undiscriminatedUnion":
-            inflateDynamicDeclaration(nt.declaration, cg);
-            break;
+            return { ...nt, declaration: inflateDynamicDeclaration(nt.declaration, cg) };
     }
 }
 
 function inflateDynamicSingleDiscriminatedUnionType(
-    sut: dynamic.SingleDiscriminatedUnionType | undefined,
+    sut: dynamic.SingleDiscriminatedUnionType,
     cg: FullCasingsGenerator
-): void {
-    if (sut == null) {
-        return;
-    }
-    inflateDynamicNameAndWireValueInPlace(sut.discriminantValue, cg);
-    for (const prop of sut.properties ?? []) {
-        inflateDynamicNamedParameter(prop, cg);
-    }
+) {
+    return {
+        ...sut,
+        discriminantValue: inflateDynamicNameAndWireValue(sut.discriminantValue, cg),
+        properties: (sut.properties ?? []).map((prop) => inflateDynamicNamedParameter(prop, cg))
+    };
 }
 
-function inflateDynamicEndpoint(ep: dynamic.Endpoint | undefined, cg: FullCasingsGenerator): void {
-    if (ep == null) {
-        return;
-    }
-    inflateDynamicAuth(ep.auth, cg);
-    inflateDynamicDeclaration(ep.declaration, cg);
-    inflateDynamicRequest(ep.request, cg);
+function inflateDynamicEndpoint(
+    ep: dynamic.Endpoint,
+    cg: FullCasingsGenerator
+) {
+    return {
+        ...ep,
+        auth: ep.auth != null ? inflateDynamicAuth(ep.auth, cg) : undefined,
+        declaration: inflateDynamicDeclaration(ep.declaration, cg),
+        request: inflateDynamicRequest(ep.request, cg)
+    };
 }
 
-function inflateDynamicAuth(auth: dynamic.Auth | undefined, cg: FullCasingsGenerator): void {
-    if (auth == null) {
-        return;
-    }
+function inflateDynamicAuth(auth: dynamic.Auth, cg: FullCasingsGenerator) {
     switch (auth.type) {
         case "basic":
-            auth.username = inflateNameOrString(auth.username, cg);
-            auth.password = inflateNameOrString(auth.password, cg);
-            break;
+            return {
+                ...auth,
+                username: inflateNameOrString(auth.username, cg),
+                password: inflateNameOrString(auth.password, cg)
+            };
         case "bearer":
-            auth.token = inflateNameOrString(auth.token, cg);
-            break;
+            return { ...auth, token: inflateNameOrString(auth.token, cg) };
         case "header":
-            inflateDynamicNamedParameter(auth.header, cg);
-            break;
+            return { ...auth, header: inflateDynamicNamedParameter(auth.header, cg) };
         case "oauth":
-            auth.clientId = inflateNameOrString(auth.clientId, cg);
-            auth.clientSecret = inflateNameOrString(auth.clientSecret, cg);
-            break;
+            return {
+                ...auth,
+                clientId: inflateNameOrString(auth.clientId, cg),
+                clientSecret: inflateNameOrString(auth.clientSecret, cg)
+            };
+        default:
+            return auth;
     }
 }
 
-function inflateDynamicRequest(request: dynamic.Request | undefined, cg: FullCasingsGenerator): void {
-    if (request == null) {
-        return;
-    }
+function inflateDynamicRequest(
+    request: dynamic.Request,
+    cg: FullCasingsGenerator
+) {
     switch (request.type) {
         case "body":
-            for (const param of request.pathParameters ?? []) {
-                inflateDynamicNamedParameter(param, cg);
-            }
-            break;
+            return {
+                ...request,
+                pathParameters: (request.pathParameters ?? []).map((p) => inflateDynamicNamedParameter(p, cg))
+            };
         case "inlined":
-            inflateDynamicDeclaration(request.declaration, cg);
-            for (const param of request.pathParameters ?? []) {
-                inflateDynamicNamedParameter(param, cg);
-            }
-            for (const param of request.queryParameters ?? []) {
-                inflateDynamicNamedParameter(param, cg);
-            }
-            for (const param of request.headers ?? []) {
-                inflateDynamicNamedParameter(param, cg);
-            }
-            inflateDynamicInlinedRequestBody(request.body, cg);
-            break;
+            return {
+                ...request,
+                declaration: inflateDynamicDeclaration(request.declaration, cg),
+                pathParameters: (request.pathParameters ?? []).map((p) => inflateDynamicNamedParameter(p, cg)),
+                queryParameters: (request.queryParameters ?? []).map((p) => inflateDynamicNamedParameter(p, cg)),
+                headers: (request.headers ?? []).map((h) => inflateDynamicNamedParameter(h, cg)),
+                body: request.body != null ? inflateDynamicInlinedRequestBody(request.body, cg) : undefined
+            };
     }
 }
 
 function inflateDynamicInlinedRequestBody(
-    body: dynamic.InlinedRequestBody | undefined,
+    body: dynamic.InlinedRequestBody,
     cg: FullCasingsGenerator
-): void {
-    if (body == null) {
-        return;
-    }
+) {
     switch (body.type) {
         case "properties":
-            if (Array.isArray(body.value)) {
-                for (const param of body.value) {
-                    inflateDynamicNamedParameter(param, cg);
-                }
-            }
-            break;
+            return {
+                ...body,
+                value: Array.isArray(body.value)
+                    ? body.value.map((param) => inflateDynamicNamedParameter(param, cg))
+                    : body.value
+            };
         case "referenced":
-            body.bodyKey = inflateNameOrString(body.bodyKey, cg);
-            break;
+            return { ...body, bodyKey: inflateNameOrString(body.bodyKey, cg) };
         case "fileUpload":
-            for (const prop of body.properties ?? []) {
-                switch (prop.type) {
-                    case "file":
-                    case "fileArray":
-                        inflateDynamicNameAndWireValueInPlace(prop, cg);
-                        break;
-                    case "bodyProperty":
-                        inflateDynamicNamedParameter(prop, cg);
-                        break;
-                }
-            }
-            break;
+            return {
+                ...body,
+                properties: (body.properties ?? []).map((prop) => {
+                    switch (prop.type) {
+                        case "file":
+                        case "fileArray":
+                            return { ...prop, name: inflateNameOrString(prop.name, cg) };
+                        case "bodyProperty":
+                            return { ...prop, name: { ...prop.name, name: inflateNameOrString(prop.name.name, cg) } };
+                        default:
+                            return prop;
+                    }
+                })
+            };
     }
 }
 
-function inflateDynamicVariableDeclaration(v: dynamic.VariableDeclaration | undefined, cg: FullCasingsGenerator): void {
-    if (v == null) {
-        return;
-    }
-    v.name = inflateNameOrString(v.name, cg);
+function inflateDynamicVariableDeclaration(
+    v: dynamic.VariableDeclaration,
+    cg: FullCasingsGenerator
+) {
+    return { ...v, name: inflateNameOrString(v.name, cg) };
 }
 
 function inflateDynamicEnvironmentsConfig(
-    config: dynamic.EnvironmentsConfig | undefined,
+    config: dynamic.EnvironmentsConfig,
     cg: FullCasingsGenerator
-): void {
-    if (config == null || config.environments == null) {
-        return;
+) {
+    if (config.environments == null) {
+        return config;
     }
     switch (config.environments.type) {
         case "singleBaseUrl":
-            for (const env of config.environments.environments ?? []) {
-                env.name = inflateNameOrString(env.name, cg);
-            }
-            break;
+            return {
+                ...config,
+                environments: {
+                    ...config.environments,
+                    environments: (config.environments.environments ?? []).map((env) => ({
+                        ...env,
+                        name: inflateNameOrString(env.name, cg)
+                    }))
+                }
+            };
         case "multipleBaseUrls":
-            for (const bu of config.environments.baseUrls ?? []) {
-                bu.name = inflateNameOrString(bu.name, cg);
-            }
-            for (const env of config.environments.environments ?? []) {
-                env.name = inflateNameOrString(env.name, cg);
-            }
-            break;
+            return {
+                ...config,
+                environments: {
+                    ...config.environments,
+                    baseUrls: (config.environments.baseUrls ?? []).map((bu) => ({
+                        ...bu,
+                        name: inflateNameOrString(bu.name, cg)
+                    })),
+                    environments: (config.environments.environments ?? []).map((env) => ({
+                        ...env,
+                        name: inflateNameOrString(env.name, cg)
+                    }))
+                }
+            };
     }
-}
-
-// ---------------------------------------------------------------------------
-// In-place mutation helpers for FernFilepath and NameAndWireValue
-// ---------------------------------------------------------------------------
-
-function inflateFernFilepathInPlace(fp: FernFilepath | undefined, cg: FullCasingsGenerator): void {
-    if (fp == null) {
-        return;
-    }
-    fp.allParts = (fp.allParts ?? []).map((n: NameOrString) => inflateNameOrString(n, cg));
-    fp.packagePath = (fp.packagePath ?? []).map((n: NameOrString) => inflateNameOrString(n, cg));
-    if (fp.file != null) {
-        fp.file = inflateNameOrString(fp.file, cg);
-    }
-}
-
-function inflateNameAndWireValueInPlace(nwv: NameAndWireValue | undefined, cg: FullCasingsGenerator): void {
-    if (nwv == null) {
-        return;
-    }
-    nwv.name = inflateNameOrString(nwv.name, cg);
 }
