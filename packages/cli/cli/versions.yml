@@ -6,7 +6,7 @@
         across multiple OpenAPI specs. When two specs define
         `components/schemas` with the same name, one silently overwrites the
         other during merge. The new `no-component-schema-collisions` rule now
-        reports this as an error, unless `resolve-schema-collisions` is enabled.
+        reports this as a warning, unless `resolve-schema-collisions` is enabled.
       type: feat
   createdAt: "2026-03-09"
   irVersion: 65

@@ -61,7 +61,7 @@ export const NoComponentSchemaCollisionsRule: Rule = {
                 if (existing != null) {
                     violations.push({
                         name: "no-component-schema-collisions",
-                        severity: "error",
+                        severity: "warning",
                         relativeFilepath,
                         nodePath: ["components", "schemas", schemaId],
                         message: `Component schema collision detected: Schema '${schemaId}' is defined in both '${existing.specFile}' and '${relativeFilepath}'. One will overwrite the other. Rename the schema in one of the specs or use namespaces to avoid conflicts.`

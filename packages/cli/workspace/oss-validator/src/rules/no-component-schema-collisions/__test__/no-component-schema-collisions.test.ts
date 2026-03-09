@@ -15,7 +15,7 @@ describe("no-component-schema-collisions", () => {
         });
 
         expect(violations.length).toBe(1);
-        expect(violations[0]?.severity).toBe("error");
+        expect(violations[0]?.severity).toBe("warning");
         expect(violations[0]?.message).toContain("Component schema collision detected");
         expect(violations[0]?.message).toContain("User");
         expect(violations[0]?.message).toContain("api1.yml");
