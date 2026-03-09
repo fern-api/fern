@@ -1,16 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.17.0
+  changelogEntry:
+    - summary: |
+        Add IR v66 with slim Names. The IR generator now produces `NameOrString`
+        fields (plain strings) instead of full Name objects with all casings,
+        reducing IR JSON size by 60-75%. Generators on older IR versions receive
+        inflated Names via the v66-to-v65 migration. A shared `inflateNameOrString`
+        utility in `@fern-api/casings-generator` makes it easy for generators to
+        adopt v66 directly.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 66
+
 - version: 4.16.0
   changelogEntry:
     - summary: |
-        Add IR v66 with `smartCasing` and `generationLanguage` metadata fields
-        on the IR root, and a Name inflation utility in `@fern-api/casings-generator`.
-        This lays the groundwork for stripping redundant Name casings from the IR
-        JSON wire format, which currently accounts for 60-78% of IR size. A follow-up
-        will strip casings from Names and use these metadata fields to re-compute them
-        on demand, reducing IR payloads by 60-75%.
+        Auto-discover `.fernignore` for generators configured with local file system
+        output. When running `fern generate` without the `--fernignore` flag, the CLI
+        now automatically looks for a `.fernignore` file in the generator's configured
+        output directory and uses it if present. This eliminates the need to explicitly
+        pass `--fernignore` for the common case where the `.fernignore` lives alongside
+        the generated code.
       type: feat
-  createdAt: "2026-03-08"
-  irVersion: 66
+  createdAt: "2026-03-09"
+  irVersion: 65
 
 - version: 4.15.5
   changelogEntry:
