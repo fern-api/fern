@@ -70,7 +70,8 @@ export async function publishDocs({
     withAiExamples = true,
     excludeApis = false,
     targetAudiences,
-    docsUrl
+    docsUrl,
+    previewId
 }: {
     token: FernToken;
     organization: string;
@@ -89,6 +90,7 @@ export async function publishDocs({
     excludeApis?: boolean;
     targetAudiences?: string[];
     docsUrl?: string;
+    previewId?: string;
 }): Promise<void> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -203,13 +205,21 @@ export async function publishDocs({
             context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
             if (preview) {
-                const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
+                // Build the request with previewId for stable preview URLs.
+                // previewId is an optional field added to the server contract;
+                // it will be included in the HTTP body even if not yet in the SDK types.
+                const previewRegisterRequest = {
                     orgId: CjsFdrSdk.OrgId(organization),
-                    authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
+                    authConfig: isPrivate
+                        ? ({ type: "private", authType: "sso" } as const)
+                        : ({ type: "public" } as const),
                     filepaths: filepaths,
                     images,
-                    basePath
-                });
+                    basePath,
+                    ...(previewId != null ? { previewId } : {})
+                };
+                const startDocsRegisterResponse =
+                    await fdr.docs.v2.write.startDocsPreviewRegister(previewRegisterRequest);
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;

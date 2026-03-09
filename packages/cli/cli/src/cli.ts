@@ -698,6 +698,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                })
+                .option("preview-id", {
+                    type: "string",
+                    description:
+                        "Stable identifier for preview (e.g. PR number). When provided, the same preview URL is reused across commits."
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -773,6 +778,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 if (argv.version != null) {
                     cliContext.logger.warn("--version is ignored when generating docs");
                 }
+                if (argv.previewId != null && !argv.preview) {
+                    return cliContext.failWithoutThrowing("The --preview-id flag can only be used with --preview.");
+                }
                 return await generateDocsWorkspace({
                     project: await loadProjectAndRegisterWorkspacesWithContext(
                         cliContext,
@@ -789,7 +797,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
                     noPrompt: !argv.prompt,
-                    skipUpload: argv.skipUpload
+                    skipUpload: argv.skipUpload,
+                    previewId: argv.previewId
                 });
             }
             // default to loading api workspace to preserve legacy behavior
