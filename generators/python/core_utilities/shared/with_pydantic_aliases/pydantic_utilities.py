@@ -52,10 +52,20 @@ if IS_PYDANTIC_V2:
     from enum import Enum as _Enum
     from ipaddress import (
         IPv4Address as _IPv4Address,
+    )
+    from ipaddress import (
         IPv4Interface as _IPv4Interface,
+    )
+    from ipaddress import (
         IPv4Network as _IPv4Network,
+    )
+    from ipaddress import (
         IPv6Address as _IPv6Address,
+    )
+    from ipaddress import (
         IPv6Interface as _IPv6Interface,
+    )
+    from ipaddress import (
         IPv6Network as _IPv6Network,
     )
     from pathlib import Path as _Path
