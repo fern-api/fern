@@ -3,6 +3,7 @@ imports:
   generators: ./generators.yml
   license: ./license.yml
   auth: ./fernDefinition/auth.yml
+  service: ./fernDefinition/service.yml
 
 types:
   GeneratorGroupSchema:
@@ -58,6 +59,12 @@ types:
     properties:
       auth: optional<auth.ApiAuthSchema>
       auth-schemes: optional<map<string, auth.AuthSchemeDeclarationSchema>>
+      headers:
+        type: optional<map<string, service.HttpHeaderSchema>>
+        docs: |
+          Override or extend the global headers for this generator.
+          When provided, these headers are merged with the top-level api.headers configuration,
+          with per-generator headers taking precedence for same-key headers.
       settings: optional<generators.APIConfigurationV2SettingsSchema>
       specs:
         type: optional<generators.APIConfigurationV2SpecsSchema>

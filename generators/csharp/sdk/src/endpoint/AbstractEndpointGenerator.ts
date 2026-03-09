@@ -116,10 +116,21 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
 
     protected getPagerReturnType(endpoint: HttpEndpoint): ast.Type {
         const itemType = this.getPaginationItemType(endpoint);
-        if (endpoint.pagination?.type === "custom") {
-            return this.Types.CustomPagerClass(itemType);
+        this.assertHasPagination(endpoint);
+        switch (endpoint.pagination.type) {
+            case "offset":
+            case "cursor":
+                return this.Types.Pager(itemType);
+            case "custom":
+                return this.Types.CustomPagerClass(itemType);
+            case "uri":
+            case "path":
+                throw new Error(
+                    `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
+                );
+            default:
+                assertNever(endpoint.pagination);
         }
-        return this.Types.Pager(itemType);
     }
 
     protected getPaginationItemType(endpoint: HttpEndpoint): ast.Type {
@@ -133,6 +144,11 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
                         return endpoint.pagination.results.property.valueType;
                     case "custom":
                         return endpoint.pagination.results.property.valueType;
+                    case "uri":
+                    case "path":
+                        throw new Error(
+                            `'${endpoint.pagination.type}' pagination is not supported in C# and should have been skipped.`
+                        );
                     default:
                         assertNever(endpoint.pagination);
                 }

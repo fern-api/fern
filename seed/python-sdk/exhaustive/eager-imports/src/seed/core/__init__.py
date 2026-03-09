@@ -11,6 +11,7 @@ from .http_response import AsyncHttpResponse, HttpResponse
 from .jsonable_encoder import jsonable_encoder
 from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
 from .pagination import AsyncPager, SyncPager
+from .parse_error import ParsingError
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
@@ -42,6 +43,7 @@ __all__ = [
     "LogConfig",
     "LogLevel",
     "Logger",
+    "ParsingError",
     "RequestOptions",
     "Rfc2822DateTime",
     "SyncClientWrapper",

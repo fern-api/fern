@@ -8,7 +8,8 @@ export function getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(
     if (
         generatorInvocation.settings == null &&
         generatorInvocation.apiOverride?.auth == null &&
-        generatorInvocation.apiOverride?.["auth-schemes"] == null
+        generatorInvocation.apiOverride?.["auth-schemes"] == null &&
+        generatorInvocation.apiOverride?.headers == null
     ) {
         return undefined;
     }
@@ -26,6 +27,10 @@ export function getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(
 
     if (generatorInvocation.apiOverride?.["auth-schemes"] != null) {
         result.authSchemes = generatorInvocation.apiOverride["auth-schemes"];
+    }
+
+    if (generatorInvocation.apiOverride?.headers != null) {
+        result.headers = generatorInvocation.apiOverride.headers;
     }
 
     return result;

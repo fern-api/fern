@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post</a>(...) -&gt; AsyncHttpResponse[typing.List[typing.Any]]</code></summary>
+<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post</a>(...) -> typing.List[typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -18,6 +18,7 @@ from seed import SeedUnknownAsAny
 client = SeedUnknownAsAny(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.unknown.post(
     request={"key": "value"},
 )
@@ -56,7 +57,7 @@ client.unknown.post(
 </dl>
 </details>
 
-<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post_object</a>(...) -&gt; AsyncHttpResponse[typing.List[typing.Any]]</code></summary>
+<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post_object</a>(...) -> typing.List[typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -74,6 +75,7 @@ from seed import SeedUnknownAsAny
 client = SeedUnknownAsAny(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.unknown.post_object(
     unknown={"key": "value"},
 )
@@ -92,7 +94,7 @@ client.unknown.post_object(
 <dl>
 <dd>
 
-**unknown:** `typing.Any` 
+**request:** `MyObject` 
     
 </dd>
 </dl>

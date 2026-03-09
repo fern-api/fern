@@ -1,6 +1,9 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { ContainerRunner } from "@fern-api/core-utils";
-import { runContainerizedGenerationForSeed } from "@fern-api/local-workspace-runner";
+import {
+    ReusableContainerExecutionEnvironment,
+    runContainerizedGenerationForSeed
+} from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import path from "path";
 
@@ -11,9 +14,12 @@ import { TestRunner } from "./TestRunner.js";
 
 export class ContainerTestRunner extends TestRunner {
     private readonly runner: ContainerRunner;
+    private readonly parallelism: number;
+    private reusableContainer: ReusableContainerExecutionEnvironment | undefined;
 
-    constructor(args: TestRunner.Args & { runner?: ContainerRunner }) {
+    constructor(args: TestRunner.Args & { runner?: ContainerRunner; parallelism?: number }) {
         super(args);
+        this.parallelism = args.parallelism ?? 4;
 
         if (args.runner != null) {
             this.runner = args.runner;
@@ -52,6 +58,24 @@ export class ContainerTestRunner extends TestRunner {
         });
         if (containerBuildReturn.exitCode !== 0) {
             throw new Error(`Failed to build the container for ${this.generator.workspaceName}.`);
+        }
+
+        // Start a reusable long-lived container for generation (guard against double build() calls)
+        if (this.reusableContainer != null) {
+            return;
+        }
+        this.reusableContainer = new ReusableContainerExecutionEnvironment({
+            imageName: this.getContainerImageName(),
+            runner: this.runner,
+            poolSize: this.parallelism
+        });
+        await this.reusableContainer.start(CONSOLE_LOGGER);
+    }
+
+    public async cleanup(): Promise<void> {
+        if (this.reusableContainer != null) {
+            await this.reusableContainer.stop(CONSOLE_LOGGER);
+            this.reusableContainer = undefined;
         }
     }
 
@@ -111,6 +135,7 @@ export class ContainerTestRunner extends TestRunner {
             keepDocker: keepContainer ?? false,
             dockerImage: this.getContainerImageName(),
             runner: this.runner,
+            executionEnvironment: this.reusableContainer,
             ai: undefined
         });
     }

@@ -6,7 +6,8 @@ import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
-import { LegacyGeneratorMigrator } from "../../../sdk/migrator/LegacyGeneratorMigrator.js";
+import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
+import { GeneratorMigrator } from "../../../sdk/updater/GeneratorMigrator.js";
 import { SdkUpdater } from "../../../sdk/updater/SdkUpdater.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
@@ -36,6 +37,12 @@ export class UpdateCommand {
             throw new CliError({
                 message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`
             });
+        }
+
+        const sdkChecker = new SdkChecker({ context });
+        const sdkCheckResult = await sdkChecker.check({ workspace });
+        if (sdkCheckResult.errorCount > 0) {
+            throw CliError.exit();
         }
 
         const targets = workspace.sdks?.targets;
@@ -75,12 +82,12 @@ export class UpdateCommand {
 
         // Apply updates via FernYmlEditor.
         const editor = await FernYmlEditor.load({ fernYmlPath });
-        const migrator = new LegacyGeneratorMigrator({
+
+        const migrator = new GeneratorMigrator({
             logger: context.stderr,
             cachePath: context.cache.migrations.absoluteFilePath
         });
-        const migrationInfo = new Map<string, LegacyGeneratorMigrator.MigrationInfo>();
-
+        const migrationInfo = new Map<string, GeneratorMigrator.MigrationInfo>();
         for (const update of selectedUpdates) {
             editor.setTargetVersion(update.name, update.latestVersion);
 
@@ -147,7 +154,7 @@ export class UpdateCommand {
     }: {
         context: Context;
         updates: SdkUpdater.TargetUpdate[];
-        migrationInfo: Map<string, LegacyGeneratorMigrator.MigrationInfo>;
+        migrationInfo: Map<string, GeneratorMigrator.MigrationInfo>;
     }): void {
         if (updates.length === 0) {
             return;
@@ -237,7 +244,6 @@ export function addUpdateCommand(cli: Argv<GlobalArgs>, parentPath?: string): vo
                 })
                 .option("yes", {
                     type: "boolean",
-                    alias: "y",
                     description: "Accept all defaults (non-interactive mode)",
                     default: false
                 }),

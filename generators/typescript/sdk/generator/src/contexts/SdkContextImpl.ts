@@ -153,38 +153,19 @@ export declare namespace SdkContextImpl {
 }
 
 export class SdkContextImpl implements SdkContext {
+    // Stored init params for lazy sub-context initialization
+    private readonly initParams: SdkContextImpl.Init;
+
+    // Eagerly initialized (cheap scalar/reference assignments)
     public readonly logger: Logger;
     public readonly ir: FernIr.IntermediateRepresentation;
     public readonly config: FernGeneratorExec.GeneratorConfig;
-    public readonly generatorNotificationService: GeneratorNotificationService;
     public readonly sourceFile: SourceFile;
-    public readonly externalDependencies: ExternalDependencies;
-    public readonly coreUtilities: CoreUtilities;
     public readonly fernConstants: FernIr.Constants;
-
     public readonly npmPackage: NpmPackage | undefined;
-    public readonly type: TypeContextImpl;
-    public readonly typeSchema: TypeSchemaContextImpl;
     public readonly namespaceExport: string;
     public readonly rootClientVariableName: string;
     public readonly sdkInstanceReferenceForSnippet: ts.Identifier;
-
-    public readonly versionContext: VersionContextImpl;
-    public readonly jsonContext: JsonContext;
-    public readonly sdkError: SdkErrorContextImpl;
-    public readonly sdkErrorSchema: SdkErrorSchemaContextImpl;
-    public readonly endpointErrorUnion: EndpointErrorUnionContextImpl;
-    public readonly requestWrapper: RequestWrapperContextImpl;
-    public readonly sdkInlinedRequestBodySchema: SdkInlinedRequestBodySchemaContext;
-    public readonly sdkEndpointTypeSchemas: SdkEndpointTypeSchemasContextImpl;
-    public readonly sdkClientClass: SdkClientClassContext;
-    public readonly baseClient: BaseClientContext;
-    public readonly websocketTypeSchema: WebsocketTypeSchemaContext;
-    public readonly websocket: WebsocketContextImpl;
-    public readonly environments: EnvironmentsContext;
-    public readonly genericAPISdkError: GenericAPISdkErrorContext;
-    public readonly timeoutSdkError: TimeoutSdkErrorContext;
-    public readonly nonStatusCodeErrorHandler: NonStatusCodeErrorHandlerContext;
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
     public readonly inlineFileProperties: boolean;
@@ -198,286 +179,309 @@ export class SdkContextImpl implements SdkContext {
     public readonly exportsManager: ExportsManager;
     public readonly relativePackagePath: string;
     public readonly relativeTestPath: string;
-    public readonly authProvider: AuthProviderContext;
     public readonly enableInlineTypes: boolean;
+    public readonly baseClient: BaseClientContext;
 
-    constructor({
-        logger,
-        ir,
-        config,
-        npmPackage,
-        isForSnippet,
-        intermediateRepresentation,
-        versionGenerator,
-        versionDeclarationReferencer,
-        jsonDeclarationReferencer,
-        typeGenerator,
-        typeResolver,
-        typeDeclarationReferencer,
-        typeSchemaGenerator,
-        typeSchemaDeclarationReferencer,
-        typeReferenceExampleGenerator,
-        sdkErrorGenerator,
-        errorResolver,
-        errorDeclarationReferencer,
-        sdkErrorSchemaDeclarationReferencer,
-        sdkErrorSchemaGenerator,
-        endpointErrorUnionDeclarationReferencer,
-        sdkEndpointSchemaDeclarationReferencer,
-        endpointErrorUnionGenerator,
-        sdkEndpointTypeSchemasGenerator,
-        requestWrapperDeclarationReferencer,
-        requestWrapperGenerator,
-        sdkInlinedRequestBodySchemaDeclarationReferencer,
-        sdkInlinedRequestBodySchemaGenerator,
-        websocketTypeSchemaGenerator,
-        websocketSocketDeclarationReferencer,
-        websocketGenerator,
-        packageResolver,
-        sdkClientClassDeclarationReferencer,
-        sdkClientClassGenerator,
-        websocketTypeSchemaDeclarationReferencer,
-        environmentsGenerator,
-        environmentsDeclarationReferencer,
-        baseClientTypeDeclarationReferencer,
-        baseClientContext,
-        genericAPISdkErrorDeclarationReferencer,
-        genericAPISdkErrorGenerator,
-        timeoutSdkErrorDeclarationReferencer,
-        timeoutSdkErrorGenerator,
-        nonStatusCodeErrorHandlerDeclarationReferencer,
-        nonStatusCodeErrorHandlerGenerator,
-        treatUnknownAsAny,
-        sourceFile,
-        importsManager,
-        exportsManager,
-        dependencyManager,
-        coreUtilitiesManager,
-        fernConstants,
-        includeSerdeLayer,
-        retainOriginalCasing,
-        inlineFileProperties,
-        inlinePathParameters,
-        generateOAuthClients,
-        omitUndefined,
-        allowExtraFields,
-        useBigInt,
-        neverThrowErrors,
-        enableInlineTypes,
-        relativePackagePath,
-        relativeTestPath,
-        formDataSupport,
-        useDefaultRequestParameterValues,
-        generateReadWriteOnlyTypes,
-        flattenRequestParameters,
-        parameterNaming
-    }: SdkContextImpl.Init) {
-        this.logger = logger;
-        this.ir = ir;
-        this.config = config;
-        this.generatorNotificationService = new GeneratorNotificationService(config.environment);
-        this.includeSerdeLayer = includeSerdeLayer;
-        this.retainOriginalCasing = retainOriginalCasing;
-        this.omitUndefined = omitUndefined;
-        this.inlineFileProperties = inlineFileProperties;
-        this.inlinePathParameters = inlinePathParameters;
-        this.formDataSupport = formDataSupport;
-        this.generateOAuthClients = generateOAuthClients;
-        this.flattenRequestParameters = flattenRequestParameters;
-        this.namespaceExport = typeDeclarationReferencer.namespaceExport;
+    // Lazy backing fields for sub-contexts and utilities
+    private _generatorNotificationService: GeneratorNotificationService | undefined;
+    private _externalDependencies: ExternalDependencies | undefined;
+    private _coreUtilities: CoreUtilities | undefined;
+    private _type: TypeContextImpl | undefined;
+    private _typeSchema: TypeSchemaContextImpl | undefined;
+    private _versionContext: VersionContextImpl | undefined;
+    private _jsonContext: JsonContextImpl | undefined;
+    private _sdkError: SdkErrorContextImpl | undefined;
+    private _sdkErrorSchema: SdkErrorSchemaContextImpl | undefined;
+    private _endpointErrorUnion: EndpointErrorUnionContextImpl | undefined;
+    private _requestWrapper: RequestWrapperContextImpl | undefined;
+    private _sdkInlinedRequestBodySchema: SdkInlinedRequestBodySchemaContextImpl | undefined;
+    private _sdkEndpointTypeSchemas: SdkEndpointTypeSchemasContextImpl | undefined;
+    private _sdkClientClass: SdkClientClassContextImpl | undefined;
+    private _websocketTypeSchema: WebsocketTypeSchemaContextImpl | undefined;
+    private _websocket: WebsocketContextImpl | undefined;
+    private _environments: EnvironmentsContextImpl | undefined;
+    private _genericAPISdkError: GenericAPISdkErrorContextImpl | undefined;
+    private _timeoutSdkError: TimeoutSdkErrorContextImpl | undefined;
+    private _nonStatusCodeErrorHandler: NonStatusCodeErrorHandlerContextImpl | undefined;
+    private _authProvider: AuthProviderContext | undefined;
+
+    constructor(init: SdkContextImpl.Init) {
+        this.initParams = init;
+        this.logger = init.logger;
+        this.ir = init.ir;
+        this.config = init.config;
+        this.includeSerdeLayer = init.includeSerdeLayer;
+        this.retainOriginalCasing = init.retainOriginalCasing;
+        this.omitUndefined = init.omitUndefined;
+        this.inlineFileProperties = init.inlineFileProperties;
+        this.inlinePathParameters = init.inlinePathParameters;
+        this.formDataSupport = init.formDataSupport;
+        this.generateOAuthClients = init.generateOAuthClients;
+        this.flattenRequestParameters = init.flattenRequestParameters;
+        this.namespaceExport = init.typeDeclarationReferencer.namespaceExport;
         this.rootClientVariableName = ROOT_CLIENT_VARIABLE_NAME;
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);
-        this.sourceFile = sourceFile;
-        this.npmPackage = npmPackage;
-        this.neverThrowErrors = neverThrowErrors;
-        this.importsManager = importsManager;
-        this.exportsManager = exportsManager;
-        this.relativePackagePath = relativePackagePath;
-        this.relativeTestPath = relativeTestPath;
-        this.enableInlineTypes = enableInlineTypes;
-        this.externalDependencies = createExternalDependencies({
-            dependencyManager,
-            importsManager
-        });
-        this.coreUtilities = coreUtilitiesManager.getCoreUtilities({
-            sourceFile,
-            importsManager,
-            exportsManager,
-            relativePackagePath,
-            relativeTestPath
-        });
-        this.fernConstants = fernConstants;
-
-        this.versionContext = new VersionContextImpl({
-            intermediateRepresentation,
-            versionGenerator,
-            versionDeclarationReferencer,
-            importsManager,
-            exportsManager,
-            sourceFile
-        });
-        this.jsonContext = new JsonContextImpl({
-            sourceFile,
-            importsManager,
-            exportsManager,
-            jsonDeclarationReferencer
-        });
-        this.type = new TypeContextImpl({
-            npmPackage,
-            isForSnippet,
-            sourceFile: this.sourceFile,
-            importsManager,
-            exportsManager,
-            typeResolver,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeReferenceExampleGenerator,
-            treatUnknownAsAny,
-            includeSerdeLayer,
-            retainOriginalCasing,
-            useBigInt,
-            enableInlineTypes,
-            allowExtraFields,
-            omitUndefined,
-            useDefaultRequestParameterValues,
-            context: this,
-            generateReadWriteOnlyTypes
-        });
-        this.typeSchema = new TypeSchemaContextImpl({
-            sourceFile,
-            coreUtilities: this.coreUtilities,
-            importsManager,
-            exportsManager,
-            context: this,
-            typeSchemaDeclarationReferencer,
-            typeDeclarationReferencer,
-            typeGenerator,
-            typeSchemaGenerator,
-            treatUnknownAsAny,
-            includeSerdeLayer,
-            retainOriginalCasing,
-            useBigInt,
-            enableInlineTypes,
-            allowExtraFields,
-            omitUndefined,
-            generateReadWriteOnlyTypes
-        });
-        this.sdkError = new SdkErrorContextImpl({
-            sourceFile,
-            importsManager,
-            exportsManager,
-            errorDeclarationReferencer,
-            sdkErrorGenerator,
-            errorResolver
-        });
-        this.sdkErrorSchema = new SdkErrorSchemaContextImpl({
-            sourceFile,
-            importsManager,
-            exportsManager,
-            coreUtilities: this.coreUtilities,
-            sdkErrorSchemaDeclarationReferencer,
-            errorResolver,
-            sdkErrorSchemaGenerator
-        });
-        this.endpointErrorUnion = new EndpointErrorUnionContextImpl({
-            sourceFile: this.sourceFile,
-            importsManager,
-            exportsManager,
-            endpointErrorUnionDeclarationReferencer,
-            endpointErrorUnionGenerator,
-            packageResolver
-        });
-        this.requestWrapper = new RequestWrapperContextImpl({
-            requestWrapperDeclarationReferencer,
-            requestWrapperGenerator,
-            packageResolver,
-            sourceFile: this.sourceFile,
-            importsManager,
-            exportsManager,
-            includeSerdeLayer,
-            retainOriginalCasing,
-            inlineFileProperties,
-            inlinePathParameters,
-            enableInlineTypes,
-            formDataSupport,
-            flattenRequestParameters,
-            parameterNaming
-        });
-        this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
-            importsManager,
-            exportsManager,
-            packageResolver,
-            sourceFile: this.sourceFile,
-            sdkInlinedRequestBodySchemaDeclarationReferencer,
-            sdkInlinedRequestBodySchemaGenerator
-        });
-        this.sdkEndpointTypeSchemas = new SdkEndpointTypeSchemasContextImpl({
-            packageResolver,
-            sdkEndpointTypeSchemasGenerator,
-            sdkEndpointSchemaDeclarationReferencer,
-            importsManager,
-            exportsManager,
-            sourceFile
-        });
-        this.sdkClientClass = new SdkClientClassContextImpl({
-            sourceFile: this.sourceFile,
-            importsManager,
-            exportsManager,
-            sdkClientClassDeclarationReferencer,
-            sdkClientClassGenerator,
-            baseClientTypeDeclarationReferencer,
-            packageResolver
-        });
-        this.baseClient = baseClientContext;
-        this.websocketTypeSchema = new WebsocketTypeSchemaContextImpl({
-            sourceFile: this.sourceFile,
-            importsManager,
-            exportsManager,
-            websocketTypeSchemaGenerator,
-            packageResolver,
-            websocketTypeSchemaDeclarationReferencer
-        });
-        this.websocket = new WebsocketContextImpl({
-            sourceFile: this.sourceFile,
-            importsManager,
-            exportsManager,
-            websocketSocketDeclarationReferencer,
-            websocketGenerator,
-            includeSerdeLayer,
-            packageResolver
-        });
-        this.environments = new EnvironmentsContextImpl({
-            sourceFile: this.sourceFile,
-            importsManager,
-            exportsManager,
-            intermediateRepresentation,
-            environmentsDeclarationReferencer,
-            environmentsGenerator
-        });
-        this.genericAPISdkError = new GenericAPISdkErrorContextImpl({
-            sourceFile: this.sourceFile,
-            importsManager,
-            exportsManager,
-            genericAPISdkErrorDeclarationReferencer,
-            genericAPISdkErrorGenerator
-        });
-        this.timeoutSdkError = new TimeoutSdkErrorContextImpl({
-            sourceFile: this.sourceFile,
-            importsManager,
-            exportsManager,
-            timeoutSdkErrorDeclarationReferencer,
-            timeoutSdkErrorGenerator
-        });
-        this.nonStatusCodeErrorHandler = new NonStatusCodeErrorHandlerContextImpl({
-            sourceFile: this.sourceFile,
-            importsManager,
-            exportsManager,
-            nonStatusCodeErrorHandlerDeclarationReferencer,
-            nonStatusCodeErrorHandlerGenerator
-        });
-        this.authProvider = new AuthProviderContext({
-            context: this
-        });
+        this.sourceFile = init.sourceFile;
+        this.npmPackage = init.npmPackage;
+        this.neverThrowErrors = init.neverThrowErrors;
+        this.importsManager = init.importsManager;
+        this.exportsManager = init.exportsManager;
+        this.relativePackagePath = init.relativePackagePath;
+        this.relativeTestPath = init.relativeTestPath;
+        this.enableInlineTypes = init.enableInlineTypes;
+        this.fernConstants = init.fernConstants;
+        this.baseClient = init.baseClientContext;
     }
+
+    // Lazy getters for utilities
+
+    get generatorNotificationService(): GeneratorNotificationService {
+        return (this._generatorNotificationService ??= new GeneratorNotificationService(this.config.environment));
+    }
+
+    get externalDependencies(): ExternalDependencies {
+        return (this._externalDependencies ??= createExternalDependencies({
+            dependencyManager: this.initParams.dependencyManager,
+            importsManager: this.importsManager
+        }));
+    }
+
+    get coreUtilities(): CoreUtilities {
+        return (this._coreUtilities ??= this.initParams.coreUtilitiesManager.getCoreUtilities({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            relativePackagePath: this.relativePackagePath,
+            relativeTestPath: this.relativeTestPath
+        }));
+    }
+
+    // Lazy getters for sub-contexts
+
+    get versionContext(): VersionContextImpl {
+        return (this._versionContext ??= new VersionContextImpl({
+            intermediateRepresentation: this.initParams.intermediateRepresentation,
+            versionGenerator: this.initParams.versionGenerator,
+            versionDeclarationReferencer: this.initParams.versionDeclarationReferencer,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            sourceFile: this.sourceFile
+        }));
+    }
+
+    get jsonContext(): JsonContext {
+        return (this._jsonContext ??= new JsonContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            jsonDeclarationReferencer: this.initParams.jsonDeclarationReferencer
+        }));
+    }
+
+    get type(): TypeContextImpl {
+        return (this._type ??= new TypeContextImpl({
+            npmPackage: this.npmPackage,
+            isForSnippet: this.initParams.isForSnippet,
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            typeResolver: this.initParams.typeResolver,
+            typeDeclarationReferencer: this.initParams.typeDeclarationReferencer,
+            typeGenerator: this.initParams.typeGenerator,
+            typeReferenceExampleGenerator: this.initParams.typeReferenceExampleGenerator,
+            treatUnknownAsAny: this.initParams.treatUnknownAsAny,
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing,
+            useBigInt: this.initParams.useBigInt,
+            enableInlineTypes: this.enableInlineTypes,
+            allowExtraFields: this.initParams.allowExtraFields,
+            omitUndefined: this.omitUndefined,
+            useDefaultRequestParameterValues: this.initParams.useDefaultRequestParameterValues,
+            context: this,
+            generateReadWriteOnlyTypes: this.initParams.generateReadWriteOnlyTypes
+        }));
+    }
+
+    get typeSchema(): TypeSchemaContextImpl {
+        return (this._typeSchema ??= new TypeSchemaContextImpl({
+            sourceFile: this.sourceFile,
+            coreUtilities: this.coreUtilities,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            context: this,
+            typeSchemaDeclarationReferencer: this.initParams.typeSchemaDeclarationReferencer,
+            typeDeclarationReferencer: this.initParams.typeDeclarationReferencer,
+            typeGenerator: this.initParams.typeGenerator,
+            typeSchemaGenerator: this.initParams.typeSchemaGenerator,
+            treatUnknownAsAny: this.initParams.treatUnknownAsAny,
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing,
+            useBigInt: this.initParams.useBigInt,
+            enableInlineTypes: this.enableInlineTypes,
+            allowExtraFields: this.initParams.allowExtraFields,
+            omitUndefined: this.omitUndefined,
+            generateReadWriteOnlyTypes: this.initParams.generateReadWriteOnlyTypes
+        }));
+    }
+
+    get sdkError(): SdkErrorContextImpl {
+        return (this._sdkError ??= new SdkErrorContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            errorDeclarationReferencer: this.initParams.errorDeclarationReferencer,
+            sdkErrorGenerator: this.initParams.sdkErrorGenerator,
+            errorResolver: this.initParams.errorResolver
+        }));
+    }
+
+    get sdkErrorSchema(): SdkErrorSchemaContextImpl {
+        return (this._sdkErrorSchema ??= new SdkErrorSchemaContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            coreUtilities: this.coreUtilities,
+            sdkErrorSchemaDeclarationReferencer: this.initParams.sdkErrorSchemaDeclarationReferencer,
+            errorResolver: this.initParams.errorResolver,
+            sdkErrorSchemaGenerator: this.initParams.sdkErrorSchemaGenerator
+        }));
+    }
+
+    get endpointErrorUnion(): EndpointErrorUnionContextImpl {
+        return (this._endpointErrorUnion ??= new EndpointErrorUnionContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            endpointErrorUnionDeclarationReferencer: this.initParams.endpointErrorUnionDeclarationReferencer,
+            endpointErrorUnionGenerator: this.initParams.endpointErrorUnionGenerator,
+            packageResolver: this.initParams.packageResolver
+        }));
+    }
+
+    get requestWrapper(): RequestWrapperContextImpl {
+        return (this._requestWrapper ??= new RequestWrapperContextImpl({
+            requestWrapperDeclarationReferencer: this.initParams.requestWrapperDeclarationReferencer,
+            requestWrapperGenerator: this.initParams.requestWrapperGenerator,
+            packageResolver: this.initParams.packageResolver,
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing,
+            inlineFileProperties: this.inlineFileProperties,
+            inlinePathParameters: this.inlinePathParameters,
+            enableInlineTypes: this.enableInlineTypes,
+            formDataSupport: this.formDataSupport,
+            flattenRequestParameters: this.flattenRequestParameters,
+            parameterNaming: this.initParams.parameterNaming
+        }));
+    }
+
+    get sdkInlinedRequestBodySchema(): SdkInlinedRequestBodySchemaContext {
+        return (this._sdkInlinedRequestBodySchema ??= new SdkInlinedRequestBodySchemaContextImpl({
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            packageResolver: this.initParams.packageResolver,
+            sourceFile: this.sourceFile,
+            sdkInlinedRequestBodySchemaDeclarationReferencer:
+                this.initParams.sdkInlinedRequestBodySchemaDeclarationReferencer,
+            sdkInlinedRequestBodySchemaGenerator: this.initParams.sdkInlinedRequestBodySchemaGenerator
+        }));
+    }
+
+    get sdkEndpointTypeSchemas(): SdkEndpointTypeSchemasContextImpl {
+        return (this._sdkEndpointTypeSchemas ??= new SdkEndpointTypeSchemasContextImpl({
+            packageResolver: this.initParams.packageResolver,
+            sdkEndpointTypeSchemasGenerator: this.initParams.sdkEndpointTypeSchemasGenerator,
+            sdkEndpointSchemaDeclarationReferencer: this.initParams.sdkEndpointSchemaDeclarationReferencer,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            sourceFile: this.sourceFile
+        }));
+    }
+
+    get sdkClientClass(): SdkClientClassContext {
+        return (this._sdkClientClass ??= new SdkClientClassContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            sdkClientClassDeclarationReferencer: this.initParams.sdkClientClassDeclarationReferencer,
+            sdkClientClassGenerator: this.initParams.sdkClientClassGenerator,
+            baseClientTypeDeclarationReferencer: this.initParams.baseClientTypeDeclarationReferencer,
+            packageResolver: this.initParams.packageResolver
+        }));
+    }
+
+    get websocketTypeSchema(): WebsocketTypeSchemaContext {
+        return (this._websocketTypeSchema ??= new WebsocketTypeSchemaContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            websocketTypeSchemaGenerator: this.initParams.websocketTypeSchemaGenerator,
+            packageResolver: this.initParams.packageResolver,
+            websocketTypeSchemaDeclarationReferencer: this.initParams.websocketTypeSchemaDeclarationReferencer
+        }));
+    }
+
+    get websocket(): WebsocketContextImpl {
+        return (this._websocket ??= new WebsocketContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            websocketSocketDeclarationReferencer: this.initParams.websocketSocketDeclarationReferencer,
+            websocketGenerator: this.initParams.websocketGenerator,
+            includeSerdeLayer: this.includeSerdeLayer,
+            packageResolver: this.initParams.packageResolver
+        }));
+    }
+
+    get environments(): EnvironmentsContext {
+        return (this._environments ??= new EnvironmentsContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            intermediateRepresentation: this.initParams.intermediateRepresentation,
+            environmentsDeclarationReferencer: this.initParams.environmentsDeclarationReferencer,
+            environmentsGenerator: this.initParams.environmentsGenerator
+        }));
+    }
+
+    get genericAPISdkError(): GenericAPISdkErrorContext {
+        return (this._genericAPISdkError ??= new GenericAPISdkErrorContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            genericAPISdkErrorDeclarationReferencer: this.initParams.genericAPISdkErrorDeclarationReferencer,
+            genericAPISdkErrorGenerator: this.initParams.genericAPISdkErrorGenerator
+        }));
+    }
+
+    get timeoutSdkError(): TimeoutSdkErrorContext {
+        return (this._timeoutSdkError ??= new TimeoutSdkErrorContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            timeoutSdkErrorDeclarationReferencer: this.initParams.timeoutSdkErrorDeclarationReferencer,
+            timeoutSdkErrorGenerator: this.initParams.timeoutSdkErrorGenerator
+        }));
+    }
+
+    get nonStatusCodeErrorHandler(): NonStatusCodeErrorHandlerContext {
+        return (this._nonStatusCodeErrorHandler ??= new NonStatusCodeErrorHandlerContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager: this.importsManager,
+            exportsManager: this.exportsManager,
+            nonStatusCodeErrorHandlerDeclarationReferencer:
+                this.initParams.nonStatusCodeErrorHandlerDeclarationReferencer,
+            nonStatusCodeErrorHandlerGenerator: this.initParams.nonStatusCodeErrorHandlerGenerator
+        }));
+    }
+
+    get authProvider(): AuthProviderContext {
+        return (this._authProvider ??= new AuthProviderContext({
+            context: this
+        }));
+    }
+
     version: string | undefined;
 }

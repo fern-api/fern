@@ -675,7 +675,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("fernignore", {
                     type: "string",
                     description:
-                        "Path to a custom .fernignore file to use instead of the one on the main branch (remote generation only)"
+                        "Path to a custom .fernignore file. For generators with local file system output, the .fernignore in the output directory is used automatically if not specified"
                 })
                 .option("dynamic-ir-only", {
                     boolean: true,
@@ -692,6 +692,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: true,
                     hidden: true,
                     description: "Run replay after generation (use --no-replay to skip)"
+                })
+                .option("retry-rate-limited", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -753,7 +759,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     fernignorePath: argv.fernignore,
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
-                    noReplay: !argv.replay
+                    noReplay: !argv.replay,
+                    retryRateLimited: argv["retry-rate-limited"]
                 });
             }
             if (argv.docs != null) {
@@ -807,7 +814,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 fernignorePath: argv.fernignore,
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
-                noReplay: !argv.replay
+                noReplay: !argv.replay,
+                retryRateLimited: argv["retry-rate-limited"]
             });
         }
     );
@@ -2111,9 +2119,11 @@ function addReplayInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             }
 
             if (githubRepo == null || token == null) {
-                return cliContext.failAndThrow(
-                    "Missing required github config. Either use --group to read from generators.yml, or provide --github and --token directly."
-                );
+                const hint =
+                    githubRepo != null
+                        ? "Repository found but no token. Pass --token or set GITHUB_TOKEN environment variable."
+                        : "Either use --group to read from generators.yml, or provide --github and --token directly.";
+                return cliContext.failAndThrow(`Missing required github config. ${hint}`);
             }
 
             cliContext.logger.info(`Initializing Replay for: ${githubRepo}`);

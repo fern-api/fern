@@ -113,7 +113,7 @@ func (r *Retrier) run(
 	}
 
 	if r.shouldRetry(response) {
-		defer response.Body.Close()
+		defer func() { _ = response.Body.Close() }()
 
 		delay, err := r.retryDelay(response, retryAttempt)
 		if err != nil {

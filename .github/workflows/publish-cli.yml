@@ -205,7 +205,7 @@ jobs:
             echo "CLI_VERSION=${{ inputs.version }}" >> $GITHUB_OUTPUT
           else
             # Automatic publish - extract from versions.yml
-            version=$(head -n 20 packages/cli/cli/versions.yml | grep -m 1 "version:" | awk '{print $2}')
+            version=$(head -n 20 packages/cli/cli/versions.yml | grep -m 1 "version:" | awk '{print $3}')
             echo "CLI_VERSION=${version}" >> $GITHUB_OUTPUT
           fi
 

@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">get_dummy</a>() -&gt; AsyncHttpResponse[str]</code></summary>
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">get_dummy</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -17,9 +17,10 @@ from seed import SeedSingleUrlEnvironmentNoDefault
 from seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 
 client = SeedSingleUrlEnvironmentNoDefault(
-    token="YOUR_TOKEN",
+    token="<token>",
     environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,
 )
+
 client.dummy.get_dummy()
 
 ```

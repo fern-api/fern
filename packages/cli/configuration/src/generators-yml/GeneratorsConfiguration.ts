@@ -177,6 +177,7 @@ export interface GeneratorInvocation {
         specs?: ApiConfigurationV2SpecsSchema;
         auth?: RawSchemas.ApiAuthSchema;
         "auth-schemes"?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
+        headers?: Record<string, RawSchemas.HttpHeaderSchema>;
     };
 }
 

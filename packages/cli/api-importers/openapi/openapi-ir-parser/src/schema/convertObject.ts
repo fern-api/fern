@@ -278,8 +278,11 @@ export function convertObject({
             const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
             const availability = convertAvailability(propertySchema);
 
-            const readonly = isReferenceObject(propertySchema) ? false : propertySchema.readOnly;
-            const writeonly = isReferenceObject(propertySchema) ? false : propertySchema.writeOnly;
+            const resolvedPropertySchema = isReferenceObject(propertySchema)
+                ? context.resolveSchemaReference(propertySchema)
+                : propertySchema;
+            const readonly = resolvedPropertySchema.readOnly;
+            const writeonly = resolvedPropertySchema.writeOnly;
 
             const isRequired = allRequired.includes(propertyName) && !readonly;
             const isPropertyOptional = !isRequired;

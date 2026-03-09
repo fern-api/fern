@@ -14,6 +14,18 @@
             }
         },
         {
+            "example_identifier": "Bad request",
+            "id": {
+                "path": "/stream",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nvar items = client.Completions.StreamAsync(new StreamCompletionRequest { Query = \"\" });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
             "example_identifier": "Stream events",
             "id": {
                 "path": "/stream-events",
@@ -23,6 +35,18 @@
             "snippet": {
                 "type": "csharp",
                 "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nvar items = client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = \"query\" });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": "Bad request",
+            "id": {
+                "path": "/stream-events",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.streamEvents"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nvar items = client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = \"\" });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
         }
     ]

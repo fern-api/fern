@@ -1,6 +1,7 @@
 import type { Argv } from "yargs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
+import { addApiCommand } from "./commands/api/index.js";
 import { addAuthCommand } from "./commands/auth/index.js";
 import { addCacheCommand } from "./commands/cache/index.js";
 import { addCheckCommand } from "./commands/check/index.js";
@@ -45,6 +46,7 @@ function createCliV2(argv?: string[]): Argv<GlobalArgs> {
             process.exit(1);
         });
 
+    addApiCommand(cli);
     addAuthCommand(cli);
     addCacheCommand(cli);
     addCheckCommand(cli);

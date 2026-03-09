@@ -20,7 +20,7 @@ $ pnpm add @boundaryml/baml
 
 import { FieldType } from '@boundaryml/baml/native'
 import { TypeBuilder as _TypeBuilder, EnumBuilder, EnumViewer, ClassBuilder, ClassViewer } from '@boundaryml/baml/type_builder'
-import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals.js"
+import { DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME } from "./globals"
 
 export { FieldType, EnumBuilder, ClassBuilder }
 
@@ -29,7 +29,7 @@ export default class TypeBuilder {
     
     AnalyzeCommitDiffRequest: ClassViewer<'AnalyzeCommitDiffRequest', "diff">;
     
-    AnalyzeCommitDiffResponse: ClassViewer<'AnalyzeCommitDiffResponse', "message" | "version_bump">;
+    AnalyzeCommitDiffResponse: ClassViewer<'AnalyzeCommitDiffResponse', "message" | "changelog_entry" | "version_bump">;
     
     
     VersionBump: EnumViewer<'VersionBump', "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE">;
@@ -51,7 +51,7 @@ export default class TypeBuilder {
         ]);
         
         this.AnalyzeCommitDiffResponse = this.tb.classViewer("AnalyzeCommitDiffResponse", [
-          "message","version_bump",
+          "message","changelog_entry","version_bump",
         ]);
         
         

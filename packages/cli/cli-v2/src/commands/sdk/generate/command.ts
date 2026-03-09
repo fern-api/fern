@@ -4,6 +4,7 @@ import type { ContainerRunner } from "@fern-api/core-utils";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { ValidationIssue } from "@fern-api/yaml-loader";
+import chalk from "chalk";
 import { readdir } from "fs/promises";
 import inquirer from "inquirer";
 import yaml from "js-yaml";
@@ -16,6 +17,7 @@ import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
 import { ValidationError } from "../../../errors/ValidationError.js";
+import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
 import { GeneratorPipeline } from "../../../sdk/generator/GeneratorPipeline.js";
@@ -66,6 +68,9 @@ export declare namespace GenerateCommand {
 
         /** Force generation without prompts */
         force: boolean;
+
+        /** Path to .fernignore file */
+        fernignore?: string;
     }
 }
 
@@ -110,7 +115,7 @@ export class GenerateCommand {
         const targets = this.getTargets({
             workspace: workspaceWithOverrides,
             args,
-            groupName: args.group ?? workspaceWithOverrides.sdks?.defaultGroup
+            groupName: args.target != null ? undefined : (args.group ?? workspaceWithOverrides.sdks?.defaultGroup)
         });
 
         this.validateArgs({ workspace: workspaceWithOverrides, args, targets });
@@ -184,16 +189,39 @@ export class GenerateCommand {
             throw new Error("No SDKs configured");
         }
 
+        // Check that the APIs referenced by each target are valid.
         const apisToCheck = [...new Set(targets.map((t) => t.api))];
-        const checker = new ApiChecker({
+        const apiChecker = new ApiChecker({
             context,
             cliVersion: workspace.cliVersion
         });
-
-        const checkResult = await checker.check({
+        const checkResult = await apiChecker.check({
             workspace,
             apiNames: apisToCheck
         });
+        if (checkResult.violations.length > 0) {
+            for (const v of checkResult.violations) {
+                process.stderr.write(
+                    `${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`
+                );
+            }
+        }
+
+        // Check that the SDK configurations are valid (when fern.yml exists).
+        if (workspace.fernYml != null) {
+            const sdkChecker = new SdkChecker({ context });
+            const sdkCheckResult = await sdkChecker.check({ workspace });
+            if (sdkCheckResult.violations.length > 0) {
+                for (const v of sdkCheckResult.violations) {
+                    process.stderr.write(
+                        `${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`
+                    );
+                }
+            }
+            if (sdkCheckResult.errorCount > 0) {
+                throw CliError.exit();
+            }
+        }
 
         const validTargets = targets.filter((t) => checkResult.validApis.has(t.api));
         if (validTargets.length === 0) {
@@ -294,7 +322,8 @@ export class GenerateCommand {
                     preview: args.preview,
                     outputPath: args.output != null ? resolve(context.cwd, args.output) : undefined,
                     token,
-                    version: args["output-version"]
+                    version: args["output-version"],
+                    fernignorePath: args.fernignore
                 });
                 if (!pipelineResult.success) {
                     task.stage.generator.fail(pipelineResult.error);
@@ -627,6 +656,11 @@ export function addGenerateCommand(cli: Argv<GlobalArgs>, parentPath?: string): 
                     type: "boolean",
                     default: false,
                     description: "Ignore prompts to confirm generation"
+                })
+                .option("fernignore", {
+                    type: "string",
+                    description: "Path to .fernignore file",
+                    hidden: true
                 }),
         parentPath
     );

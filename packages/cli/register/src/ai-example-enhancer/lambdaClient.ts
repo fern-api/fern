@@ -218,7 +218,7 @@ export class LambdaExampleEnhancer {
                 };
             } catch (error) {
                 lastError = error as Error;
-                this.context.logger.warn(`Attempt ${attempt} failed to enhance example: ${error}`);
+                this.context.logger.debug(`Attempt ${attempt} failed to enhance example: ${error}`);
 
                 if (attempt < maxAttempts) {
                     // Exponential backoff before retry

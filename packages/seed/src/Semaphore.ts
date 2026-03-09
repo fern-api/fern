@@ -15,10 +15,11 @@ export class Semaphore {
     }
 
     release(): void {
-        this.count++;
         const next = this.waiting.shift();
         if (next) {
             next();
+        } else {
+            this.count++;
         }
     }
 }
