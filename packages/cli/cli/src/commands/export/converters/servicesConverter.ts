@@ -25,6 +25,7 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { getNameString } from "@fern-api/ir-utils";
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
@@ -254,7 +255,7 @@ function convertRequestBody({
     for (const example of examples) {
         if (example.request != null) {
             if (example.name && example.name !== "") {
-                openapiExamples[example.name] = {
+                openapiExamples[getNameString(example.name)] = {
                     value: example.request.jsonExample
                 };
             } else {
@@ -398,7 +399,7 @@ function convertResponse({
                 example.response.value.value != null
             ) {
                 if (example.name && example.name !== "") {
-                    openapiExamples[example.name] = {
+                    openapiExamples[getNameString(example.name)] = {
                         value: example.response.value.value.jsonExample
                     };
                 } else {
@@ -498,7 +499,7 @@ function convertResponse({
                             isEqual(responseError.error, example.response.error)
                         ) {
                             if (example.name && example.name !== "") {
-                                openapiExamples[example.name] = {
+                                openapiExamples[getNameString(example.name)] = {
                                     value: example.response.body.jsonExample
                                 };
                             } else {
@@ -547,7 +548,7 @@ function convertResponse({
                         const errorForExample = example.response.error;
                         if (errorInfos.some((errorInfo) => isEqual(errorInfo.errorDeclaration.name, errorForExample))) {
                             if (example.name && example.name !== "") {
-                                openapiExamples[example.name] = {
+                                openapiExamples[getNameString(example.name)] = {
                                     value: example.response.body.jsonExample
                                 };
                             } else {
@@ -663,7 +664,7 @@ function convertPathParameter({
     examples: ExampleEndpointCall[];
 }): OpenAPIV3.ParameterObject {
     const convertedParameter: OpenAPIV3.ParameterObject = {
-        name: pathParameter.name,
+        name: getNameString(pathParameter.name),
         in: "path",
         description: pathParameter.docs ?? undefined,
         required: true,
@@ -679,7 +680,7 @@ function convertPathParameter({
         ].find((param) => param.name === pathParameter.name);
         if (pathParameterExample != null) {
             if (example.name && example.name !== "") {
-                openapiExamples[example.name] = {
+                openapiExamples[getNameString(example.name)] = {
                     value: pathParameterExample.value.jsonExample
                 };
             } else {
@@ -726,7 +727,7 @@ function convertQueryParameter({
         );
         if (queryParameterExample != null) {
             if (example.name && example.name !== "") {
-                openapiExamples[example.name] = {
+                openapiExamples[getNameString(example.name)] = {
                     value: queryParameterExample.value.jsonExample
                 };
             } else {
@@ -771,7 +772,7 @@ function convertHeader({
         );
         if (headerExample != null) {
             if (example.name && example.name !== "") {
-                openapiExamples[example.name] = {
+                openapiExamples[getNameString(example.name)] = {
                     value: headerExample.value.jsonExample
                 };
             } else {

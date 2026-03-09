@@ -5,6 +5,7 @@ import {
     IntermediateRepresentation,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
+import { getNameString } from "@fern-api/ir-utils";
 import { OpenAPIV3 } from "openapi-types";
 
 import { convertServices } from "./converters/servicesConverter.js";
@@ -76,7 +77,10 @@ export function convertIrToOpenApi({
         openAPISpec.servers = ir.environments.environments.environments.map((environment) => {
             return {
                 url: environment.url,
-                description: environment.docs != null ? `${environment.name} (${environment.docs})` : environment.name
+                description:
+                    environment.docs != null
+                        ? `${getNameString(environment.name)} (${environment.docs})`
+                        : getNameString(environment.name)
             };
         });
     }
@@ -85,9 +89,15 @@ export function convertIrToOpenApi({
 }
 
 export function getDeclaredTypeNameKey(declaredTypeName: DeclaredTypeName): string {
-    return [...declaredTypeName.fernFilepath.allParts.map((part) => part), declaredTypeName.name].join("-");
+    return [
+        ...declaredTypeName.fernFilepath.allParts.map((part) => getNameString(part)),
+        getNameString(declaredTypeName.name)
+    ].join("-");
 }
 
 export function getErrorTypeNameKey(declaredErrorName: DeclaredErrorName): string {
-    return [...declaredErrorName.fernFilepath.allParts.map((part) => part), declaredErrorName.name].join("-");
+    return [
+        ...declaredErrorName.fernFilepath.allParts.map((part) => getNameString(part)),
+        getNameString(declaredErrorName.name)
+    ].join("-");
 }
