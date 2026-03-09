@@ -15,6 +15,7 @@ import FormData from "form-data";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import urlJoin from "url-join";
+import { gzipSync } from "zlib";
 import { retryWithRateLimit, TooManyRequestsError } from "./retryWithRateLimit.js";
 
 export async function createAndStartJob({
@@ -283,7 +284,12 @@ async function startJob({
             context.logger.debug("Wrote IR to disk: " + irFilepath);
         }
     });
-    formData.append("file", irAsString);
+    const compressed = gzipSync(Buffer.from(irAsString, "utf-8"));
+    context.logger.debug(
+        `Compressed IR from ${irAsString.length} bytes to ${compressed.length} bytes ` +
+            `(${((1 - compressed.length / irAsString.length) * 100).toFixed(1)}% reduction)`
+    );
+    formData.append("file", compressed, { filename: "ir.json", contentType: "application/octet-stream" });
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
     try {
