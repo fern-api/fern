@@ -28,7 +28,7 @@ func do() {
 				"public",
 			),
 		},
-		XAPIVersion: "0.0.1",
+		XApiVersion: "0.0.1",
 	}
 	client.Service.GetMetadata(
 		context.TODO(),
@@ -63,7 +63,7 @@ func do() {
 				"development",
 			),
 		},
-		XAPIVersion: "0.0.1",
+		XApiVersion: "0.0.1",
 	}
 	client.Service.GetMetadata(
 		context.TODO(),
@@ -93,7 +93,7 @@ func do() {
 	request := &acme.BigEntity{
 		CastMember: &acme.CastMember{
 			Actor: &acme.Actor{
-				ID:   "john.doe",
+				Id:   "john.doe",
 				Name: "John Doe",
 			},
 		},
@@ -104,7 +104,7 @@ func do() {
 				"Uma Thurman",
 				"Bruce Willis",
 			},
-			ID:     "movie-sda231x",
+			Id:     "movie-sda231x",
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
 			Rating: 8.5,
@@ -121,12 +121,12 @@ func do() {
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
-				ID: "event-12345",
+				Id: "event-12345",
 				Data: map[string]string{
 					"key1": "val1",
 					"key2": "val2",
 				},
-				JSONString: acme.String(
+				JsonString: acme.String(
 					"abc",
 				),
 			},
@@ -174,7 +174,7 @@ func do() {
 		),
 	)
 	request := &acme.Movie{
-		ID: "movie-c06a4ad7",
+		Id: "movie-c06a4ad7",
 		Prequel: acme.String(
 			"movie-cv9b914f",
 		),
@@ -248,7 +248,7 @@ func do() {
 				"2023-01-15",
 			),
 		),
-		UUID: acme.UUID(
+		Uuid: acme.UUID(
 			uuid.MustParse(
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
@@ -604,10 +604,10 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.GetPresignedURLRequest{
+	request := &acme.GetPresignedUrlRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	client.S3.GetPresignedUrl(
 		context.TODO(),
 		request,
 	)
@@ -634,10 +634,10 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.GetPresignedURLRequest{
+	request := &acme.GetPresignedUrlRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	client.S3.GetPresignedUrl(
 		context.TODO(),
 		request,
 	)
@@ -789,7 +789,7 @@ func do() {
 		),
 	)
 	request := &acme.User{
-		ID:       "id",
+		Id:       "id",
 		Password: "password",
 		Profile: &acme.UserProfile{
 			Name:         "name",
@@ -930,7 +930,7 @@ func do() {
 				"public",
 			),
 		},
-		XAPIVersion: "0.0.1",
+		XApiVersion: "0.0.1",
 	}
 	client.Service.GetMetadata(
 		context.TODO(),
@@ -965,7 +965,7 @@ func do() {
 				"development",
 			),
 		},
-		XAPIVersion: "0.0.1",
+		XApiVersion: "0.0.1",
 	}
 	client.Service.GetMetadata(
 		context.TODO(),
@@ -995,7 +995,7 @@ func do() {
 	request := &acme.BigEntity{
 		CastMember: &acme.CastMember{
 			Actor: &acme.Actor{
-				ID:   "john.doe",
+				Id:   "john.doe",
 				Name: "John Doe",
 			},
 		},
@@ -1006,7 +1006,7 @@ func do() {
 				"Uma Thurman",
 				"Bruce Willis",
 			},
-			ID:     "movie-sda231x",
+			Id:     "movie-sda231x",
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
 			Rating: 8.5,
@@ -1023,12 +1023,12 @@ func do() {
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
-				ID: "event-12345",
+				Id: "event-12345",
 				Data: map[string]string{
 					"key1": "val1",
 					"key2": "val2",
 				},
-				JSONString: acme.String(
+				JsonString: acme.String(
 					"abc",
 				),
 			},
@@ -1076,7 +1076,7 @@ func do() {
 		),
 	)
 	request := &acme.Movie{
-		ID: "movie-c06a4ad7",
+		Id: "movie-c06a4ad7",
 		Prequel: acme.String(
 			"movie-cv9b914f",
 		),
@@ -1150,7 +1150,7 @@ func do() {
 				"2023-01-15",
 			),
 		),
-		UUID: acme.UUID(
+		Uuid: acme.UUID(
 			uuid.MustParse(
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
@@ -1506,10 +1506,10 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.GetPresignedURLRequest{
+	request := &acme.GetPresignedUrlRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	client.S3.GetPresignedUrl(
 		context.TODO(),
 		request,
 	)
@@ -1536,10 +1536,10 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.GetPresignedURLRequest{
+	request := &acme.GetPresignedUrlRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	client.S3.GetPresignedUrl(
 		context.TODO(),
 		request,
 	)
@@ -1691,7 +1691,7 @@ func do() {
 		),
 	)
 	request := &acme.User{
-		ID:       "id",
+		Id:       "id",
 		Password: "password",
 		Profile: &acme.UserProfile{
 			Name:         "name",
@@ -1832,7 +1832,7 @@ func do() {
 				"public",
 			),
 		},
-		XAPIVersion: "0.0.1",
+		XApiVersion: "0.0.1",
 	}
 	client.Service.GetMetadata(
 		context.TODO(),
@@ -1867,7 +1867,7 @@ func do() {
 				"development",
 			),
 		},
-		XAPIVersion: "0.0.1",
+		XApiVersion: "0.0.1",
 	}
 	client.Service.GetMetadata(
 		context.TODO(),
@@ -1897,7 +1897,7 @@ func do() {
 	request := &acme.BigEntity{
 		CastMember: &acme.CastMember{
 			Actor: &acme.Actor{
-				ID:   "john.doe",
+				Id:   "john.doe",
 				Name: "John Doe",
 			},
 		},
@@ -1908,7 +1908,7 @@ func do() {
 				"Uma Thurman",
 				"Bruce Willis",
 			},
-			ID:     "movie-sda231x",
+			Id:     "movie-sda231x",
 			Title:  "Pulp Fiction",
 			From:   "Quentin Tarantino",
 			Rating: 8.5,
@@ -1925,12 +1925,12 @@ func do() {
 		},
 		EventInfo: &commons.EventInfo{
 			Metadata: &commons.Metadata{
-				ID: "event-12345",
+				Id: "event-12345",
 				Data: map[string]string{
 					"key1": "val1",
 					"key2": "val2",
 				},
-				JSONString: acme.String(
+				JsonString: acme.String(
 					"abc",
 				),
 			},
@@ -1978,7 +1978,7 @@ func do() {
 		),
 	)
 	request := &acme.Movie{
-		ID: "movie-c06a4ad7",
+		Id: "movie-c06a4ad7",
 		Prequel: acme.String(
 			"movie-cv9b914f",
 		),
@@ -2052,7 +2052,7 @@ func do() {
 				"2023-01-15",
 			),
 		),
-		UUID: acme.UUID(
+		Uuid: acme.UUID(
 			uuid.MustParse(
 				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
 			),
@@ -2408,10 +2408,10 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.GetPresignedURLRequest{
+	request := &acme.GetPresignedUrlRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	client.S3.GetPresignedUrl(
 		context.TODO(),
 		request,
 	)
@@ -2438,10 +2438,10 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	request := &acme.GetPresignedURLRequest{
+	request := &acme.GetPresignedUrlRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	client.S3.GetPresignedUrl(
 		context.TODO(),
 		request,
 	)
@@ -2593,7 +2593,7 @@ func do() {
 		),
 	)
 	request := &acme.User{
-		ID:       "id",
+		Id:       "id",
 		Password: "password",
 		Profile: &acme.UserProfile{
 			Name:         "name",

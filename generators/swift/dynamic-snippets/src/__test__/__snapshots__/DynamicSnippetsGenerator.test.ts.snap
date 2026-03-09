@@ -319,7 +319,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.imdb.getMovie(movieID: "movie_xyz")
+    _ = try await client.imdb.getMovie(movieId: "movie_xyz")
 }
 
 try await main()
@@ -350,7 +350,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
+    _ = try await client.s3.getPresignedUrl(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -364,7 +364,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
+    _ = try await client.s3.getPresignedUrl(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -378,7 +378,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
+    _ = try await client.s3.getPresignedUrl(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -392,7 +392,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
+    _ = try await client.s3.getPresignedUrl(request: .init(s3Key: "xyz"))
 }
 
 try await main()
@@ -406,7 +406,7 @@ import Acme
 private func main() async throws {
     let client = AcmeClient(token: "<YOUR_API_KEY>")
 
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
+    _ = try await client.s3.getPresignedUrl(request: .init(s3Key: "xyz"))
 }
 
 try await main()

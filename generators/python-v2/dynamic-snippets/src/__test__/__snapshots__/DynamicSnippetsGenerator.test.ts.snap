@@ -146,7 +146,7 @@ client.endpoints.object.get_and_return_with_optional_field(
     datetime=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     date=datetime.date.fromisoformat("2023-01-15"),
     uuid=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    base64="SGVsbG8gd29ybGQh",
+    base_64="SGVsbG8gd29ybGQh",
     list=[
         "list",
         "list"
@@ -356,8 +356,8 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.s3.get_presigned_url(
-    s3key="xyz",
+client.s_3.get_presigned_url(
+    s_3_key="xyz",
 )
 "
 `;
@@ -381,8 +381,8 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.s3.get_presigned_url(
-    s3key="xyz",
+client.s_3.get_presigned_url(
+    s_3_key="xyz",
 )
 "
 `;
@@ -396,8 +396,8 @@ client = Acme(
     token="<YOUR_API_KEY>",
 )
 
-client.s3.get_presigned_url(
-    s3key="xyz",
+client.s_3.get_presigned_url(
+    s_3_key="xyz",
 )
 "
 `;

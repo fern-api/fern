@@ -18,7 +18,7 @@ $client->service->getMetadata(
             'development',
             'public',
         ],
-        'xAPIVersion' => '0.0.1',
+        'xApiVersion' => '0.0.1',
     ]),
 );
 "
@@ -41,7 +41,7 @@ $client->service->getMetadata(
         'tag' => [
             'development',
         ],
-        'xAPIVersion' => '0.0.1',
+        'xApiVersion' => '0.0.1',
     ]),
 );
 "
@@ -409,14 +409,14 @@ namespace Example;
 
 use Acme\\AcmeClient;
 use Acme\\Environments;
-use Acme\\S3\\Requests\\GetPresignedURLRequest;
+use Acme\\S3\\Requests\\GetPresignedUrlRequest;
 
 $client = new AcmeClient(
     token: '<YOUR_API_KEY>',
     environment: Environments::custom(ec2: 'https://custom.ec2.aws.com', s3: 'https://custom.s3.aws.com'),
 );
-$client->s3->getPresignedURL(
-    new GetPresignedURLRequest([
+$client->s3->getPresignedUrl(
+    new GetPresignedUrlRequest([
         's3Key' => 'xyz',
     ]),
 );
@@ -445,14 +445,14 @@ namespace Example;
 
 use Acme\\AcmeClient;
 use Acme\\Environments;
-use Acme\\S3\\Requests\\GetPresignedURLRequest;
+use Acme\\S3\\Requests\\GetPresignedUrlRequest;
 
 $client = new AcmeClient(
     token: '<YOUR_API_KEY>',
     environment: Environments::Production(),
 );
-$client->s3->getPresignedURL(
-    new GetPresignedURLRequest([
+$client->s3->getPresignedUrl(
+    new GetPresignedUrlRequest([
         's3Key' => 'xyz',
     ]),
 );
@@ -466,14 +466,14 @@ namespace Example;
 
 use Acme\\AcmeClient;
 use Acme\\Environments;
-use Acme\\S3\\Requests\\GetPresignedURLRequest;
+use Acme\\S3\\Requests\\GetPresignedUrlRequest;
 
 $client = new AcmeClient(
     token: '<YOUR_API_KEY>',
     environment: Environments::Staging(),
 );
-$client->s3->getPresignedURL(
-    new GetPresignedURLRequest([
+$client->s3->getPresignedUrl(
+    new GetPresignedUrlRequest([
         's3Key' => 'xyz',
     ]),
 );

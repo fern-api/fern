@@ -13,7 +13,7 @@ async function main() {
             "development",
             "public",
         ],
-        xAPIVersion: "0.0.1",
+        xApiVersion: "0.0.1",
     });
 }
 main();
@@ -32,7 +32,7 @@ async function main() {
         tag: [
             "development",
         ],
-        xAPIVersion: "0.0.1",
+        xApiVersion: "0.0.1",
     });
 }
 main();
@@ -351,7 +351,7 @@ async function main() {
         },
         token: "<YOUR_API_KEY>",
     });
-    await client.s3.getPresignedURL({
+    await client.s3.getPresignedUrl({
         s3Key: "xyz",
     });
 }
@@ -377,7 +377,7 @@ async function main() {
         environment: AcmeEnvironment.Production,
         token: "<YOUR_API_KEY>",
     });
-    await client.s3.getPresignedURL({
+    await client.s3.getPresignedUrl({
         s3Key: "xyz",
     });
 }
@@ -393,7 +393,7 @@ async function main() {
         environment: AcmeEnvironment.Staging,
         token: "<YOUR_API_KEY>",
     });
-    await client.s3.getPresignedURL({
+    await client.s3.getPresignedUrl({
         s3Key: "xyz",
     });
 }

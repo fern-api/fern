@@ -1187,22 +1187,38 @@ function inflateExampleContainer(container: ExampleContainer | undefined, cg: Fu
     }
     switch (container.type) {
         case "list":
+            // Inflate TypeReference metadata
+            inflateTypeReference(container.itemType, cg);
+            // Inflate example values
             for (const item of container.list ?? []) {
                 inflateExampleTypeReference(item, cg);
             }
             break;
         case "set":
+            // Inflate TypeReference metadata
+            inflateTypeReference(container.itemType, cg);
+            // Inflate example values
             for (const item of container.set ?? []) {
                 inflateExampleTypeReference(item, cg);
             }
             break;
         case "optional":
+            // Inflate TypeReference metadata
+            inflateTypeReference(container.valueType, cg);
+            // Inflate example value
             inflateExampleTypeReference(container.optional, cg);
             break;
         case "nullable":
+            // Inflate TypeReference metadata
+            inflateTypeReference(container.valueType, cg);
+            // Inflate example value
             inflateExampleTypeReference(container.nullable, cg);
             break;
         case "map":
+            // Inflate TypeReference metadata
+            inflateTypeReference(container.keyType, cg);
+            inflateTypeReference(container.valueType, cg);
+            // Inflate example values
             for (const pair of container.map ?? []) {
                 inflateExampleTypeReference(pair.key, cg);
                 inflateExampleTypeReference(pair.value, cg);

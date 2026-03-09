@@ -15,7 +15,7 @@ AcmeAcmeClient client = AcmeAcmeClient
 client.service().getMetadata(
     GetMetadataRequest
         .builder()
-        .xAPIVersion("0.0.1")
+        .xApiVersion("0.0.1")
         .tag(
             Arrays.asList("development", "public")
         )
@@ -40,7 +40,7 @@ AcmeAcmeClient client = AcmeAcmeClient
 client.service().getMetadata(
     GetMetadataRequest
         .builder()
-        .xAPIVersion("0.0.1")
+        .xApiVersion("0.0.1")
         .tag(
             Arrays.asList("development")
         )
@@ -456,7 +456,7 @@ exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] =
 
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.core.Environment;
-import com.acme.acme.types.GetPresignedURLRequest;
+import com.acme.acme.types.GetPresignedUrlRequest;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -466,8 +466,8 @@ AcmeAcmeClient client = AcmeAcmeClient
     )
     .build();
 
-client.s3().getPresignedURL(
-    GetPresignedURLRequest
+client.s3().getPresignedUrl(
+    GetPresignedUrlRequest
         .builder()
         .s3Key("xyz")
         .build()
@@ -490,7 +490,7 @@ exports[`snippets (default) > multi-url-environment > 'Production environment' 1
 
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.core.Environment;
-import com.acme.acme.types.GetPresignedURLRequest;
+import com.acme.acme.types.GetPresignedUrlRequest;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -500,8 +500,8 @@ AcmeAcmeClient client = AcmeAcmeClient
     )
     .build();
 
-client.s3().getPresignedURL(
-    GetPresignedURLRequest
+client.s3().getPresignedUrl(
+    GetPresignedUrlRequest
         .builder()
         .s3Key("xyz")
         .build()
@@ -514,7 +514,7 @@ exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] 
 
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.core.Environment;
-import com.acme.acme.types.GetPresignedURLRequest;
+import com.acme.acme.types.GetPresignedUrlRequest;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -524,8 +524,8 @@ AcmeAcmeClient client = AcmeAcmeClient
     )
     .build();
 
-client.s3().getPresignedURL(
-    GetPresignedURLRequest
+client.s3().getPresignedUrl(
+    GetPresignedUrlRequest
         .builder()
         .s3Key("xyz")
         .build()
