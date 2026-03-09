@@ -957,9 +957,6 @@
               "type": "boolean"
             },
             {
-              "const": "open-by-default"
-            },
-            {
               "type": "null"
             }
           ]
