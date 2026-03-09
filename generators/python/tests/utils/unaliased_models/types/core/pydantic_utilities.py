@@ -39,7 +39,7 @@ if IS_PYDANTIC_V2:
         return typing_extensions.get_origin(tp) is typing_extensions.Literal
 
     def is_union(tp: typing.Optional[typing.Type[typing.Any]]) -> bool:  # type: ignore[misc]
-        return tp is typing.Union or typing_extensions.get_origin(tp) is typing.Union
+        return tp is typing.Union or typing_extensions.get_origin(tp) is typing.Union  # type: ignore[comparison-overlap]
 
     ModelField = pydantic.fields.FieldInfo  # type: ignore[misc, assignment]
 
