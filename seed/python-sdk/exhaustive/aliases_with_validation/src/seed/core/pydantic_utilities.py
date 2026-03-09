@@ -20,8 +20,6 @@ if TYPE_CHECKING:
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    import warnings
-
     _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore[attr-defined]
     _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore[attr-defined]
 
@@ -37,14 +35,72 @@ if IS_PYDANTIC_V2:
             return value
         return _date_adapter.validate_python(value)
 
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore", UserWarning)
-        from pydantic.v1.fields import ModelField as ModelField
-        from pydantic.v1.json import ENCODERS_BY_TYPE as encoders_by_type  # type: ignore[attr-defined]
-        from pydantic.v1.typing import get_args as get_args
-        from pydantic.v1.typing import get_origin as get_origin
-        from pydantic.v1.typing import is_literal_type as is_literal_type
-        from pydantic.v1.typing import is_union as is_union
+    # Avoid importing from pydantic.v1 to maintain Python 3.14 compatibility.
+    from typing import get_args as get_args  # type: ignore[assignment]
+    from typing import get_origin as get_origin  # type: ignore[assignment]
+
+    def is_literal_type(tp: Optional[Type[Any]]) -> bool:  # type: ignore[misc]
+        return typing_extensions.get_origin(tp) is typing_extensions.Literal
+
+    def is_union(tp: Optional[Type[Any]]) -> bool:  # type: ignore[misc]
+        return tp is Union or typing_extensions.get_origin(tp) is Union
+
+    ModelField = pydantic.fields.FieldInfo  # type: ignore[misc, assignment]
+
+    # Inline encoders_by_type to avoid importing from pydantic.v1.json
+    import re as _re
+    from collections import deque as _deque
+    from decimal import Decimal as _Decimal
+    from enum import Enum as _Enum
+    from ipaddress import (
+        IPv4Address as _IPv4Address,
+    )
+    from ipaddress import (
+        IPv4Interface as _IPv4Interface,
+    )
+    from ipaddress import (
+        IPv4Network as _IPv4Network,
+    )
+    from ipaddress import (
+        IPv6Address as _IPv6Address,
+    )
+    from ipaddress import (
+        IPv6Interface as _IPv6Interface,
+    )
+    from ipaddress import (
+        IPv6Network as _IPv6Network,
+    )
+    from pathlib import Path as _Path
+    from types import GeneratorType as _GeneratorType
+    from uuid import UUID as _UUID
+
+    def _decimal_encoder(dec_value: Any) -> Any:
+        if dec_value.as_tuple().exponent >= 0:
+            return int(dec_value)
+        return float(dec_value)
+
+    encoders_by_type: Dict[Type[Any], Callable[[Any], Any]] = {  # type: ignore[no-redef]
+        bytes: lambda o: o.decode(),
+        dt.date: lambda o: o.isoformat(),
+        dt.datetime: lambda o: o.isoformat(),
+        dt.time: lambda o: o.isoformat(),
+        dt.timedelta: lambda td: td.total_seconds(),
+        _Decimal: _decimal_encoder,
+        _Enum: lambda o: o.value,
+        frozenset: list,
+        _deque: list,
+        _GeneratorType: list,
+        _IPv4Address: str,
+        _IPv4Interface: str,
+        _IPv4Network: str,
+        _IPv6Address: str,
+        _IPv6Interface: str,
+        _IPv6Network: str,
+        _Path: str,
+        _re.Pattern: lambda o: o.pattern,
+        set: list,
+        _UUID: str,
+    }
 else:
     from pydantic.datetime_parse import parse_date as parse_date  # type: ignore[no-redef]
     from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore[no-redef]
