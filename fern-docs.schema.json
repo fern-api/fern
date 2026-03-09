@@ -353,9 +353,18 @@
               "type": "boolean"
             },
             {
-              "type": "string",
-              "enum": [
-                "open-by-default"
+              "type": "object",
+              "properties": {
+                "default": {
+                  "type": "string",
+                  "enum": [
+                    "closed",
+                    "open"
+                  ]
+                }
+              },
+              "required": [
+                "default"
               ]
             }
           ]

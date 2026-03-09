@@ -58,7 +58,7 @@ describe("docs.yml navigation collapsible config", () => {
         ).rejects.toBeInstanceOf(FernCliError);
     });
 
-    it("should throw if collapsible is used alongside deprecated collapsed: open-by-default", async () => {
+    it("should throw if collapsible is used alongside deprecated collapsed with object syntax", async () => {
         const context = createMockTaskContext();
 
         const rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration = {
@@ -69,7 +69,7 @@ describe("docs.yml navigation collapsible config", () => {
                     section: "Section",
                     contents: [],
                     collapsible: true,
-                    collapsed: "open-by-default"
+                    collapsed: { default: "open" }
                 }
             ]
         };
@@ -84,7 +84,7 @@ describe("docs.yml navigation collapsible config", () => {
         ).rejects.toBeInstanceOf(FernCliError);
     });
 
-    it("should accept open-by-default as a collapsed value on sections", async () => {
+    it("should accept collapsed with object syntax { default: 'open' } on sections", async () => {
         const context = createMockTaskContext();
 
         const rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration = {
@@ -94,7 +94,7 @@ describe("docs.yml navigation collapsible config", () => {
                 {
                     section: "Section",
                     contents: [],
-                    collapsed: "open-by-default"
+                    collapsed: { default: "open" }
                 }
             ]
         };
@@ -112,7 +112,41 @@ describe("docs.yml navigation collapsible config", () => {
                 {
                     type: "section",
                     title: "Section",
-                    collapsed: "open-by-default"
+                    collapsed: { default: "open" }
+                }
+            ]
+        });
+    });
+
+    it("should accept collapsed with object syntax { default: 'closed' } on sections", async () => {
+        const context = createMockTaskContext();
+
+        const rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration = {
+            instances: [],
+            title: "Test",
+            navigation: [
+                {
+                    section: "Section",
+                    contents: [],
+                    collapsed: { default: "closed" }
+                }
+            ]
+        };
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration,
+            absolutePathToFernFolder: AbsoluteFilePath.of("/tmp"),
+            absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/tmp/docs.yml"),
+            context
+        });
+
+        expect(parsed.navigation).toMatchObject({
+            type: "untabbed",
+            items: [
+                {
+                    type: "section",
+                    title: "Section",
+                    collapsed: { default: "closed" }
                 }
             ]
         });

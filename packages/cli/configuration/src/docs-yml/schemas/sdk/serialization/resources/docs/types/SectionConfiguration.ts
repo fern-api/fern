@@ -15,7 +15,7 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
         section: core.serialization.string(),
         path: core.serialization.string().optional(),
         contents: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)),
-        collapsed: core.serialization.undiscriminatedUnion([core.serialization.boolean(), core.serialization.stringLiteral("open-by-default")]).optional(),
+        collapsed: core.serialization.undiscriminatedUnion([core.serialization.boolean(), core.serialization.object({ default: core.serialization.stringLiteral("closed") }), core.serialization.object({ default: core.serialization.stringLiteral("open") })]).optional(),
         collapsible: core.serialization.boolean().optional(),
         collapsedByDefault: core.serialization.property(
             "collapsed-by-default",
@@ -35,7 +35,7 @@ export declare namespace SectionConfiguration {
         section: string;
         path?: string | null;
         contents: serializers.NavigationItem.Raw[];
-        collapsed?: boolean | "open-by-default" | null;
+        collapsed?: boolean | { default: "closed" } | { default: "open" } | null;
         collapsible?: boolean | null;
         "collapsed-by-default"?: boolean | null;
         slug?: string | null;

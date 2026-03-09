@@ -28,7 +28,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         postman: core.serialization.string().optional(),
         summary: core.serialization.string().optional(),
         layout: core.serialization.list(core.serialization.lazy(() => serializers.ApiReferenceLayoutItem)).optional(),
-        collapsed: core.serialization.undiscriminatedUnion([core.serialization.boolean(), core.serialization.stringLiteral("open-by-default")]).optional(),
+        collapsed: core.serialization.undiscriminatedUnion([core.serialization.boolean(), core.serialization.object({ default: core.serialization.stringLiteral("closed") }), core.serialization.object({ default: core.serialization.stringLiteral("open") })]).optional(),
         icon: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
@@ -54,7 +54,7 @@ export declare namespace ApiReferenceConfiguration {
         postman?: string | null;
         summary?: string | null;
         layout?: serializers.ApiReferenceLayoutItem.Raw[] | null;
-        collapsed?: boolean | "open-by-default" | null;
+        collapsed?: boolean | { default: "closed" } | { default: "open" } | null;
         icon?: string | null;
         slug?: string | null;
         hidden?: boolean | null;

@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.21.0
+  changelogEntry:
+    - summary: |
+        Replace `collapsed: "open-by-default"` string literal with object syntax
+        `collapsed: { default: "closed" | "open" }` in docs navigation configuration.
+        Boolean `collapsed: true` continues to work as before. The new object form
+        is more explicit: `collapsed: { default: open }` starts expanded but
+        collapsible, `collapsed: { default: closed }` is equivalent to `collapsed: true`.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
 - version: 4.20.0
   changelogEntry:
     - summary: |

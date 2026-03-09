@@ -29,7 +29,7 @@ import { camelCase, kebabCase } from "lodash-es";
 
 // TODO: Remove this when the new fdr-sdk is integrated
 type SectionNodeWithNewCollapsibleConfig = FernNavigation.V1.SectionNode & {
-    collapsed?: boolean | "open-by-default";
+    collapsed?: boolean | { default: "closed" | "open" };
 };
 
 /**

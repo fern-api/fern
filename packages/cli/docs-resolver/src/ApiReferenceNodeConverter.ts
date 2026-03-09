@@ -10,10 +10,10 @@ import urlJoin from "url-join";
 
 // TODO: Remove these when the new fdr-sdk is integrated
 type ApiReferenceNodeWithCollapsibleConfig = FernNavigation.V1.ApiReferenceNode & {
-    collapsed?: boolean | "open-by-default";
+    collapsed?: boolean | { default: "closed" | "open" };
 };
 type ApiPackageNodeWithCollapsibleConfig = FernNavigation.V1.ApiPackageNode & {
-    collapsed?: boolean | "open-by-default";
+    collapsed?: boolean | { default: "closed" | "open" };
 };
 
 import { ApiDefinitionHolder } from "./ApiDefinitionHolder.js";

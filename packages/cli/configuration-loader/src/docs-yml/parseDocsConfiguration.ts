@@ -1684,7 +1684,7 @@ function validateCollapsibleConfig({
 }: {
     context: TaskContext;
     sectionTitle: string;
-    collapsed: boolean | "open-by-default" | undefined;
+    collapsed: boolean | { default: "closed" | "open" } | undefined;
     collapsible: boolean | undefined;
     collapsedByDefault: boolean | undefined;
 }): void {

@@ -328,7 +328,7 @@ export declare namespace DocsNavigationItem {
         title: string;
         icon: string | AbsoluteFilePath | undefined;
         contents: DocsNavigationItem[];
-        collapsed: boolean | "open-by-default" | undefined;
+        collapsed: boolean | { default: "closed" | "open" } | undefined;
         collapsible: boolean | undefined;
         collapsedByDefault: boolean | undefined;
         slug: string | undefined;
@@ -354,7 +354,7 @@ export declare namespace DocsNavigationItem {
         postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiReferenceLayoutItem[];
-        collapsed: boolean | "open-by-default" | undefined;
+        collapsed: boolean | { default: "closed" | "open" } | undefined;
         hidden: boolean | undefined;
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
