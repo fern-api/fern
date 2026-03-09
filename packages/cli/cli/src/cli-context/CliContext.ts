@@ -11,9 +11,13 @@ import { maxBy } from "lodash-es";
 import { CliEnvironment } from "./CliEnvironment.js";
 import { StdoutRedirector } from "./StdoutRedirector.js";
 import { TaskContextImpl } from "./TaskContextImpl.js";
+import { readCache, writeCache } from "./upgrade-utils/CliCache.js";
 import { getFernUpgradeMessage } from "./upgrade-utils/getFernUpgradeMessage.js";
 import { FernGeneratorUpgradeInfo, getProjectGeneratorUpgrades } from "./upgrade-utils/getGeneratorVersions.js";
 import { getLatestVersionOfCli } from "./upgrade-utils/getLatestVersionOfCli.js";
+
+const UPGRADE_NUDGE_CACHE_KEY = "upgrade-nudge-message";
+const UPGRADE_NUDGE_CACHE_TTL_MS = 4 * 60 * 60 * 1000; // 4 hours
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
 
@@ -141,6 +145,17 @@ export class CliContext {
     }
 
     private async nudgeUpgradeIfAvailable() {
+        // Show cached upgrade message immediately (no network I/O)
+        try {
+            const cachedMessage = readCache<string>(UPGRADE_NUDGE_CACHE_KEY, UPGRADE_NUDGE_CACHE_TTL_MS);
+            if (cachedMessage != null && cachedMessage.length > 0) {
+                this.stderr.info(cachedMessage);
+            }
+        } catch {
+            // swallow cache read errors
+        }
+
+        // Refresh the cache in the background for next run
         try {
             const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([
                 this.isUpgradeAvailable(),
@@ -155,7 +170,15 @@ export class CliContext {
                 if (!upgradeMessage.endsWith("\n")) {
                     upgradeMessage += "\n";
                 }
-                this.stderr.info(upgradeMessage);
+                writeCache(UPGRADE_NUDGE_CACHE_KEY, upgradeMessage);
+                // If we didn't have a cached message, show the fresh one
+                const cachedMessage = readCache<string>(UPGRADE_NUDGE_CACHE_KEY, UPGRADE_NUDGE_CACHE_TTL_MS);
+                if (cachedMessage == null) {
+                    this.stderr.info(upgradeMessage);
+                }
+            } else {
+                // No upgrade available, clear the cache
+                writeCache(UPGRADE_NUDGE_CACHE_KEY, "");
             }
         } catch {
             // swallow error when failing to check for upgrade
