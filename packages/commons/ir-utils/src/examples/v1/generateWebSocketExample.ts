@@ -163,7 +163,11 @@ function getUrlForExample(channel: WebSocketChannel, example: Omit<ExampleWebSoc
     [...example.pathParameters].forEach((examplePathParameter) => {
         const value = examplePathParameter.value.jsonExample;
         const stringValue = typeof value === "string" ? value : JSON.stringify(value);
-        pathParameters[examplePathParameter.name] = stringValue;
+        const paramName =
+            typeof examplePathParameter.name === "string"
+                ? examplePathParameter.name
+                : examplePathParameter.name.originalName;
+        pathParameters[paramName] = stringValue;
     });
     const url =
         channel.path.head +

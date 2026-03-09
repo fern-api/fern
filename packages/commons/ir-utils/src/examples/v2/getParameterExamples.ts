@@ -29,19 +29,23 @@ export function getParameterExamples({
 
     for (const parameter of endpoint.pathParameters) {
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
+        const paramName = typeof parameter.name === "string" ? parameter.name : parameter.name.originalName;
 
         if (userExample !== undefined) {
-            result.pathParameters[parameter.name] = userExample;
+            result.pathParameters[paramName] = userExample;
         } else if (autoExample !== undefined) {
-            result.pathParameters[parameter.name] = autoExample;
+            result.pathParameters[paramName] = autoExample;
         }
     }
 
     for (const parameter of endpoint.queryParameters) {
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
+        const queryName =
+            typeof parameter.name.name === "string" ? parameter.name.name : parameter.name.name.originalName;
+
         if (userExample !== undefined) {
-            result.queryParameters[parameter.name.name] = userExample;
+            result.queryParameters[queryName] = userExample;
         } else if (autoExample !== undefined) {
             if (
                 skipOptionalRequestProperties &&
@@ -50,7 +54,7 @@ export function getParameterExamples({
                 continue;
             }
 
-            result.queryParameters[parameter.name.name] = autoExample;
+            result.queryParameters[queryName] = autoExample;
         }
     }
 

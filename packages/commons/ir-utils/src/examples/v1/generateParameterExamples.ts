@@ -31,7 +31,7 @@ export function generatePathParameterExamples(
 
     for (const p of pathParameters) {
         const generatedExample = generateTypeReferenceExample({
-            fieldName: p.name,
+            fieldName: typeof p.name === "string" ? p.name : p.name.originalName,
             currentDepth: 0,
             maxDepth: options.maxDepth ?? 1,
             typeDeclarations: options.typeDeclarations,
@@ -72,8 +72,9 @@ export function generateHeaderExamples(
             continue;
         }
 
+        const headerNameStr = typeof h.name.name === "string" ? h.name.name : h.name.name.originalName;
         const generatedExample = generateTypeReferenceExample({
-            fieldName: h.name.name,
+            fieldName: headerNameStr,
             currentDepth: 0,
             maxDepth: options.maxDepth ?? 1,
             typeDeclarations: options.typeDeclarations,
@@ -113,8 +114,9 @@ export function generateQueryParameterExamples(
             continue;
         }
 
+        const queryNameStr = typeof q.name.name === "string" ? q.name.name : q.name.name.originalName;
         const generatedExample = generateTypeReferenceExample({
-            fieldName: q.name.name,
+            fieldName: queryNameStr,
             currentDepth: 0,
             maxDepth: options.maxDepth ?? 10,
             typeDeclarations: options.typeDeclarations,

@@ -19,8 +19,8 @@ import {
     IntermediateRepresentation,
     JsonResponse,
     Literal,
-    Name,
     NameAndWireValue,
+    NameOrString,
     ObjectProperty,
     PathParameter,
     QueryParameter,
@@ -341,8 +341,13 @@ export class IntermediateRepresentationChangeDetector {
         from: PathParameter[];
         to: PathParameter[];
     }): void {
-        const fromPathParams = Object.fromEntries(from.map((param) => [param.name, param]));
-        const toPathParams = Object.fromEntries(to.map((param) => [param.name, param]));
+        const nameStr = (n: NameOrString): string => (typeof n === "string" ? n : n.originalName);
+        const fromPathParams: Record<string, PathParameter> = Object.fromEntries(
+            from.map((param) => [nameStr(param.name), param])
+        );
+        const toPathParams: Record<string, PathParameter> = Object.fromEntries(
+            to.map((param) => [nameStr(param.name), param])
+        );
         for (const [paramName, fromParam] of Object.entries(fromPathParams)) {
             const toParam = toPathParams[paramName];
             if (!toParam) {
@@ -1175,8 +1180,10 @@ export class IntermediateRepresentationChangeDetector {
         });
     }
 
-    private areNamesCompatible({ from, to }: { from: Name; to: Name }): boolean {
-        return from === to;
+    private areNamesCompatible({ from, to }: { from: NameOrString; to: NameOrString }): boolean {
+        const fromStr = typeof from === "string" ? from : from.originalName;
+        const toStr = typeof to === "string" ? to : to.originalName;
+        return fromStr === toStr;
     }
 
     private getInlinedRequestBody(
@@ -1208,8 +1215,9 @@ export class IntermediateRepresentationChangeDetector {
         return properties;
     }
 
-    private getKeyForDeclaration({ name, fernFilepath }: { name: Name; fernFilepath: FernFilepath }): string {
-        const prefix = fernFilepath.allParts.join(".");
-        return `${prefix}.${name}`;
+    private getKeyForDeclaration({ name, fernFilepath }: { name: NameOrString; fernFilepath: FernFilepath }): string {
+        const prefix = fernFilepath.allParts.map((p) => (typeof p === "string" ? p : p.originalName)).join(".");
+        const nameStr = typeof name === "string" ? name : name.originalName;
+        return `${prefix}.${nameStr}`;
     }
 }

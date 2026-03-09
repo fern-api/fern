@@ -107,13 +107,14 @@ function getUrlForExample(endpoint: HttpEndpoint): string {
     [...endpoint.pathParameters, ...endpoint.allPathParameters].forEach((pathParameter) => {
         const { userExample, autoExample } = getFirstExamples(pathParameter.v2Examples);
         const value = userExample ?? autoExample;
+        const paramName = typeof pathParameter.name === "string" ? pathParameter.name : pathParameter.name.originalName;
         let stringValue: string;
         if (value == null) {
-            stringValue = pathParameter.name;
+            stringValue = paramName;
         } else {
             stringValue = typeof value === "string" ? value : JSON.stringify(value);
         }
-        pathParameters[pathParameter.name] = stringValue;
+        pathParameters[paramName] = stringValue;
     });
     const url =
         endpoint.fullPath.head +
