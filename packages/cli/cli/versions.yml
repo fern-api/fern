@@ -1,14 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.18.0
+- version: 4.19.0
   changelogEntry:
     - summary: |
-        Add `fern api merge` CLI command that decomposes x-fern-examples from an
+        Add `fern api enrich` CLI command that decomposes x-fern-examples from an
         overrides file into native OpenAPI example fields per endpoint. Usage:
-        `fern api merge openapi.yml overrides.yml -o output.yml`.
+        `fern api enrich openapi.yml overrides.yml -o output.yml`.
       type: feat
   createdAt: "2026-03-09"
   irVersion: 65
 
+- version: 4.18.0
+  changelogEntry:
+    - summary: |
+        Gzip-compress IR before uploading to Fiddle for remote generation. This
+        reduces upload size by ~85-90% on typical IR payloads, improving upload
+        speed and reducing bandwidth usage. The Fiddle receiver transparently
+        detects and decompresses gzip content, maintaining backward compatibility
+        with older CLI versions.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
 - version: 4.17.0
   changelogEntry:
     - summary: |
@@ -20,7 +31,6 @@
       type: feat
   createdAt: "2026-03-09"
   irVersion: 65
-
 - version: 4.16.0
   changelogEntry:
     - summary: |
