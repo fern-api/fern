@@ -146,16 +146,13 @@ export class CliContext {
 
     private async nudgeUpgradeIfAvailable() {
         // Show cached upgrade message immediately (no network I/O)
-        try {
-            const cachedMessage = readCache<string>(UPGRADE_NUDGE_CACHE_KEY, UPGRADE_NUDGE_CACHE_TTL_MS);
-            if (cachedMessage != null && cachedMessage.length > 0) {
-                this.stderr.info(cachedMessage);
-            }
-        } catch {
-            // swallow cache read errors
+        const cachedMessage = readCache<string>(UPGRADE_NUDGE_CACHE_KEY, UPGRADE_NUDGE_CACHE_TTL_MS);
+        const hadCachedMessage = cachedMessage != null && cachedMessage.length > 0;
+        if (hadCachedMessage) {
+            this.stderr.info(cachedMessage);
         }
 
-        // Refresh the cache in the background for next run
+        // Refresh the cache for next run (with 300ms timeout to avoid blocking exit)
         try {
             const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([
                 this.isUpgradeAvailable(),
@@ -171,9 +168,8 @@ export class CliContext {
                     upgradeMessage += "\n";
                 }
                 writeCache(UPGRADE_NUDGE_CACHE_KEY, upgradeMessage);
-                // If we didn't have a cached message, show the fresh one
-                const cachedMessage = readCache<string>(UPGRADE_NUDGE_CACHE_KEY, UPGRADE_NUDGE_CACHE_TTL_MS);
-                if (cachedMessage == null) {
+                // If there was no cached message, show the fresh one now
+                if (!hadCachedMessage) {
                     this.stderr.info(upgradeMessage);
                 }
             } else {
