@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.53.7
+  changelogEntry:
+    - summary: |
+        Revert union member interface naming from `safeName` back to `unsafeName`.
+        The v3.53.4 change to use `safeName` for union variant interface names (e.g.,
+        `Date_` instead of `Date`, `Error_` instead of `Error`) was a breaking change.
+        Union member interfaces are generated inside a namespace, so they do not
+        shadow global TypeScript types like `Date` or `Error`.
+      type: fix
+    - summary: |
+        Qualify global type references with `globalThis.` inside union namespaces
+        when a sibling interface would shadow them. For example, if a union has both
+        `Date` and `Datetime` variants, the `Datetime` interface's `value: Date`
+        property now generates `value: globalThis.Date` to correctly reference the
+        built-in Date type instead of the local `Date` interface.
+      type: fix
+  createdAt: "2026-03-08"
+  irVersion: 65
+
 - version: 3.53.6
   changelogEntry:
     - summary: |

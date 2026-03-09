@@ -23,14 +23,14 @@ export const UnionWithTime: core.serialization.Schema<serializers.UnionWithTime.
         });
 
 export declare namespace UnionWithTime {
-    export type Raw = UnionWithTime.Value | UnionWithTime.Date_ | UnionWithTime.Datetime;
+    export type Raw = UnionWithTime.Value | UnionWithTime.Date | UnionWithTime.Datetime;
 
     export interface Value {
         type: "value";
         value: number;
     }
 
-    export interface Date_ {
+    export interface Date {
         type: "date";
         value: string;
     }

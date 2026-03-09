@@ -252,6 +252,7 @@ export class ExampleGenerator extends WithGeneration {
             uuid: (p) => this.csharp.InstantiatedPrimitive.uuid(p),
             base64: (p) => this.csharp.InstantiatedPrimitive.string(p),
             bigInteger: (p) => this.csharp.InstantiatedPrimitive.string(p),
+            datetimeRfc2822: (example) => this.csharp.InstantiatedPrimitive.dateTime(example.datetime, parseDatetimes),
             _other: (value) => {
                 throw new Error(`Unknown example type reference: ${value.type}`);
             }
