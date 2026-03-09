@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.53.9
+  changelogEntry:
+    - summary: |
+        Fix README generation in Docker by adding `ca-certificates` to the Debian slim
+        base image. Since the switch from Alpine to Debian slim in v3.48.4, the container
+        was missing CA certificates, causing `git clone` over HTTPS to fail with
+        "server certificate verification failed". This resulted in empty README files
+        being generated.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
 - version: 3.53.8
   changelogEntry:
     - summary: |
