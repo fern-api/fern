@@ -507,7 +507,7 @@
         "head": "",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": "Sessions",
       "encoding": undefined,
       "endpoints": [
         {
@@ -990,7 +990,7 @@
   "sourceConfig": undefined,
   "subpackages": {
     "subpackage_sessions": {
-      "displayName": undefined,
+      "displayName": "Sessions",
       "docs": undefined,
       "errors": [],
       "fernFilepath": {

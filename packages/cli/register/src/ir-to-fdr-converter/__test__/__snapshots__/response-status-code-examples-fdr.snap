@@ -33,7 +33,7 @@
   "subpackages": {
     "subpackage_sessions": {
       "description": undefined,
-      "displayName": undefined,
+      "displayName": "Sessions",
       "endpoints": [
         {
           "auth": false,

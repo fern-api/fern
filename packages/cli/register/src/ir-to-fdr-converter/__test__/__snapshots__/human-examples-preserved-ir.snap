@@ -2366,7 +2366,7 @@
   "sourceConfig": undefined,
   "subpackages": {
     "subpackage_products": {
-      "displayName": undefined,
+      "displayName": "products",
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
