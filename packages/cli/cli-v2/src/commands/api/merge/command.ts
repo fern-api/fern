@@ -1,4 +1,4 @@
-import { mergeWithOverrides } from "@fern-api/core-utils";
+import { applyOpenAPIOverlay, mergeWithOverrides } from "@fern-api/core-utils";
 import chalk from "chalk";
 import { unlink, writeFile } from "fs/promises";
 import path from "path";
@@ -8,6 +8,7 @@ import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
+import { type OverlayDocument, toOverlay } from "../split/diffSpecs.js";
 import { FernYmlApiEditor } from "../utils/fernYmlApiEditor.js";
 import { filterSpecs } from "../utils/filterSpecs.js";
 import { loadSpec, serializeSpec } from "../utils/loadSpec.js";
@@ -38,32 +39,61 @@ export class MergeCommand {
         let mergedCount = 0;
 
         for (const entry of entries) {
-            if (entry.overrides == null || entry.overrides.length === 0) {
-                context.stderr.info(chalk.dim(`  ${entry.specFilePath}: no overrides configured, skipping.`));
+            const overlayPath = entry.overlays;
+            const overridePaths = entry.overrides != null && entry.overrides.length > 0 ? entry.overrides : undefined;
+
+            if (overlayPath == null && overridePaths == null) {
+                context.stderr.info(chalk.dim(`  ${entry.specFilePath}: no overrides or overlays configured, skipping.`));
                 continue;
             }
 
             // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
             let merged: Record<string, any> = await loadSpec(entry.specFilePath);
 
-            for (const overridePath of entry.overrides) {
-                const overrideContent = await loadSpec(overridePath);
-                merged = mergeWithOverrides({ data: merged, overrides: overrideContent });
+            // Apply overlays first (per user requirement: overlays before overrides)
+            if (overlayPath != null) {
+                const overlayContent = await loadSpec(overlayPath) as OverlayDocument;
+                const overlay = toOverlay(overlayContent);
+                merged = applyOpenAPIOverlay({ data: merged, overlay });
+                context.stderr.info(
+                    `${Icons.success} Applied overlay (${chalk.bold(String(overlay.actions.length))} action(s)) ${chalk.dim("→")} ${chalk.cyan(entry.specFilePath)}`
+                );
+            }
+
+            // Then apply overrides
+            if (overridePaths != null) {
+                for (const overridePath of overridePaths) {
+                    const overrideContent = await loadSpec(overridePath);
+                    merged = mergeWithOverrides({ data: merged, overrides: overrideContent });
+                }
+                context.stderr.info(
+                    `${Icons.success} Merged ${chalk.bold(String(overridePaths.length))} override(s) ${chalk.dim("→")} ${chalk.cyan(entry.specFilePath)}`
+                );
             }
 
             await writeFile(entry.specFilePath, serializeSpec(merged, entry.specFilePath));
-            context.stderr.info(
-                `${Icons.success} Merged ${chalk.bold(String(entry.overrides.length))} override(s) ${chalk.dim("→")} ${chalk.cyan(entry.specFilePath)}`
-            );
             mergedCount++;
 
             if (editor != null) {
-                const edit = editor.removeOverrides(entry.specFilePath);
-                await this.cleanupOverrideFiles(context, entry.overrides);
-                if (edit != null) {
-                    const relPath = path.relative(context.cwd, editor.filePath);
-                    const names = entry.overrides.map((o) => path.basename(o)).join(", ");
-                    context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: removed reference to ${names}`));
+                // Clean up overrides
+                if (overridePaths != null) {
+                    const edit = editor.removeOverrides(entry.specFilePath);
+                    await this.cleanupFiles(context, overridePaths);
+                    if (edit != null) {
+                        const relPath = path.relative(context.cwd, editor.filePath);
+                        const names = overridePaths.map((o) => path.basename(o)).join(", ");
+                        context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: removed reference to ${names}`));
+                    }
+                }
+
+                // Clean up overlays
+                if (overlayPath != null) {
+                    const edit = editor.removeOverlay(entry.specFilePath);
+                    await this.cleanupFiles(context, [overlayPath]);
+                    if (edit != null) {
+                        const relPath = path.relative(context.cwd, editor.filePath);
+                        context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: removed reference to ${path.basename(overlayPath)}`));
+                    }
                 }
             }
         }
@@ -73,16 +103,16 @@ export class MergeCommand {
         }
 
         if (mergedCount === 0) {
-            context.stderr.info(chalk.dim("No specs had overrides to merge."));
+            context.stderr.info(chalk.dim("No specs had overrides or overlays to merge."));
         }
     }
 
-    private async cleanupOverrideFiles(context: Context, overridePaths: string[]): Promise<void> {
+    private async cleanupFiles(context: Context, filePaths: string[]): Promise<void> {
         await Promise.all(
-            overridePaths.map(async (overridePath) => {
+            filePaths.map(async (filePath) => {
                 try {
-                    await unlink(overridePath);
-                    context.stderr.info(chalk.dim(`  Deleted ${overridePath}`));
+                    await unlink(filePath);
+                    context.stderr.info(chalk.dim(`  Deleted ${filePath}`));
                 } catch (error: unknown) {
                     if (
                         !(
@@ -104,7 +134,7 @@ export function addMergeCommand(cli: Argv<GlobalArgs>): void {
     command(
         cli,
         "merge",
-        "Flatten override files into the base API spec",
+        "Flatten overlay and override files into the base API spec",
         (context, args) => cmd.handle(context, args as MergeCommand.Args),
         (yargs) =>
             yargs
@@ -115,7 +145,7 @@ export function addMergeCommand(cli: Argv<GlobalArgs>): void {
                 .option("remove", {
                     type: "boolean",
                     default: false,
-                    description: "Remove override files and their references from fern.yml after merge"
+                    description: "Remove overlay/override files and their references from fern.yml after merge"
                 })
     );
 }

@@ -136,6 +136,77 @@ export class FernYmlApiEditor {
     }
 
     /**
+     * Returns the existing overlay path for the matching spec entry, or undefined.
+     */
+    public getOverlayPath(specFilePath: AbsoluteFilePath): AbsoluteFilePath | undefined {
+        const index = this.findSpecIndex(specFilePath);
+        if (index < 0) {
+            return undefined;
+        }
+        const overlaysPath = [...this.specsPath, index, "overlays"];
+        const existing = nodeToJS(this.document.getIn(overlaysPath));
+        if (typeof existing === "string") {
+            const fileDir = dirname(this.filePath);
+            return join(fileDir, RelativeFilePath.of(existing));
+        }
+        return undefined;
+    }
+
+    /**
+     * Adds an overlay path to the matching spec entry.
+     * Unlike overrides, overlays is a single path (not an array).
+     * Returns the edit location if a mutation was made, or undefined if no change.
+     */
+    public addOverlay(specFilePath: AbsoluteFilePath, overlayAbsolutePath: AbsoluteFilePath): OverrideEdit | undefined {
+        const fileDir = dirname(this.filePath);
+        const relativeOverlayPath = `./${path.relative(fileDir, overlayAbsolutePath)}`;
+        const index = this.findSpecIndex(specFilePath);
+        if (index < 0) {
+            return undefined;
+        }
+
+        const overlaysPath = [...this.specsPath, index, "overlays"];
+        const existing = nodeToJS(this.document.getIn(overlaysPath));
+        const normalizedNew = path.normalize(relativeOverlayPath);
+
+        if (existing == null) {
+            this.document.setIn(overlaysPath, relativeOverlayPath);
+        } else if (typeof existing === "string") {
+            if (path.normalize(existing) === normalizedNew) {
+                return undefined;
+            }
+            // Replace the existing overlay path
+            this.document.setIn(overlaysPath, relativeOverlayPath);
+        }
+
+        this.dirty = true;
+        this.cachedSerialization = undefined;
+        return { line: this.getLineOfPath(overlaysPath) };
+    }
+
+    /**
+     * Removes the overlay reference for the matching spec.
+     * Returns the edit location, or undefined if nothing was removed.
+     */
+    public removeOverlay(specFilePath: AbsoluteFilePath): OverrideEdit | undefined {
+        const index = this.findSpecIndex(specFilePath);
+        if (index < 0) {
+            return undefined;
+        }
+
+        const overlaysPath = [...this.specsPath, index, "overlays"];
+        const existing = nodeToJS(this.document.getIn(overlaysPath));
+        if (existing == null) {
+            return undefined;
+        }
+        const line = this.getLineOfPath(overlaysPath);
+        this.document.deleteIn(overlaysPath);
+        this.dirty = true;
+        this.cachedSerialization = undefined;
+        return { line };
+    }
+
+    /**
      * Writes the document back to disk if any mutations were made.
      * Preserves YAML formatting via the `yaml` package's Document model.
      */

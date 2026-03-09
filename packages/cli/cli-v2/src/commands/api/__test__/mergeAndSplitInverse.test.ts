@@ -1,11 +1,11 @@
-import { mergeWithOverrides } from "@fern-api/core-utils";
+import { applyOpenAPIOverlay, mergeWithOverrides } from "@fern-api/core-utils";
 import { randomUUID } from "crypto";
 import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { tmpdir } from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { generateOverrides } from "../split/diffSpecs.js";
+import { generateOverlay, generateOverrides, toOverlay } from "../split/diffSpecs.js";
 import { serializeSpec } from "../utils/loadSpec.js";
 
 /**
@@ -377,5 +377,158 @@ describe("merge and split are inverses", () => {
         expect(() => JSON.parse(raw)).toThrow();
         const parsed = yaml.load(raw) as Spec;
         expect(parsed.paths["/pets"].get["x-fern-sdk-group-name"]).toBe("pets");
+    });
+});
+
+/** Simulates `fern api merge` with overlays */
+function mergeOverlay(base: Spec, overlayDoc: ReturnType<typeof generateOverlay>): Spec {
+    return applyOpenAPIOverlay({
+        data: structuredClone(base),
+        overlay: toOverlay(overlayDoc)
+    });
+}
+
+/** Simulates `fern api split --format overlays` */
+function splitOverlay(original: Spec, modified: Spec): { restored: Spec; overlay: ReturnType<typeof generateOverlay> } {
+    const overlay = generateOverlay(original, modified);
+    return { restored: structuredClone(original), overlay };
+}
+
+describe("merge and split are inverses (overlay format)", () => {
+    it("split as overlay then merge recovers the modified spec", () => {
+        const modified = structuredClone(baseSpec);
+        modified.paths["/pets"].get["x-fern-sdk-group-name"] = "pets";
+        modified.paths["/pets"].get["x-fern-sdk-method-name"] = "list";
+        modified.info.description = "An updated API";
+
+        const { restored, overlay } = splitOverlay(baseSpec, modified);
+
+        // Restored should equal base
+        expect(restored).toEqual(baseSpec);
+
+        // Merge overlay into base should recover modified
+        const remerged = mergeOverlay(baseSpec, overlay);
+        expect(remerged).toEqual(modified);
+    });
+
+    it("merge overlay then split recovers the overlay actions' effect", () => {
+        // Start with a known overlay
+        const overlay = generateOverlay(baseSpec, merge(baseSpec, sampleOverrides));
+
+        // Merge overlay into base
+        const merged = mergeOverlay(baseSpec, overlay);
+
+        // Split should produce an overlay that has the same effect
+        const { overlay: recoveredOverlay } = splitOverlay(baseSpec, merged);
+        const remerged = mergeOverlay(baseSpec, recoveredOverlay);
+        expect(remerged).toEqual(merged);
+    });
+
+    it("overlay merge then split then merge is idempotent", () => {
+        const modified = structuredClone(baseSpec);
+        modified.paths["/pets"].get["x-fern-sdk-group-name"] = "pets";
+        modified.components.schemas.Pet.properties.breed = { type: "string" };
+
+        const merged1 = mergeOverlay(baseSpec, generateOverlay(baseSpec, modified));
+        const { overlay } = splitOverlay(baseSpec, merged1);
+        const merged2 = mergeOverlay(baseSpec, overlay);
+
+        expect(merged2).toEqual(merged1);
+    });
+
+    it("handles empty overlay as no-op", () => {
+        const overlay = generateOverlay(baseSpec, structuredClone(baseSpec));
+        expect(overlay.actions).toHaveLength(0);
+
+        const merged = mergeOverlay(baseSpec, overlay);
+        expect(merged).toEqual(baseSpec);
+    });
+
+    it("handles adding entirely new paths via overlay", () => {
+        const modified = structuredClone(baseSpec);
+        modified.paths["/owners"] = {
+            get: { operationId: "listOwners", summary: "List all owners" }
+        };
+
+        const overlay = generateOverlay(baseSpec, modified);
+        const merged = mergeOverlay(baseSpec, overlay);
+        expect(merged).toEqual(modified);
+
+        // Round trip
+        const { overlay: recovered } = splitOverlay(baseSpec, merged);
+        const remerged = mergeOverlay(baseSpec, recovered);
+        expect(remerged).toEqual(modified);
+    });
+
+    it("handles adding new component schemas via overlay", () => {
+        const modified = structuredClone(baseSpec);
+        modified.components.schemas.Owner = {
+            type: "object",
+            properties: {
+                name: { type: "string" },
+                email: { type: "string" }
+            }
+        };
+
+        const overlay = generateOverlay(baseSpec, modified);
+        const merged = mergeOverlay(baseSpec, overlay);
+        expect(merged).toEqual(modified);
+    });
+
+    it("round-trips through YAML serialization with overlay", () => {
+        const base = yamlRoundTrip(baseSpec);
+        const modified = structuredClone(base);
+        modified.paths["/pets"].get["x-fern-sdk-group-name"] = "pets";
+        modified.paths["/pets"].get["x-fern-sdk-method-name"] = "list";
+
+        const overlay = generateOverlay(base, modified);
+        const overlayYaml = yamlRoundTrip(overlay);
+
+        // Apply serialized overlay
+        const merged = mergeOverlay(base, overlayYaml as ReturnType<typeof generateOverlay>);
+        expect(merged).toEqual(modified);
+    });
+
+    it("handles deletions via overlay remove actions", () => {
+        const modified = structuredClone(baseSpec);
+        // Delete a property
+        delete modified.info.description;
+        // Delete a path
+        delete modified.paths["/pets/{petId}"];
+
+        const overlay = generateOverlay(baseSpec, modified);
+        const merged = mergeOverlay(baseSpec, overlay);
+        expect(merged).toEqual(modified);
+
+        // Round trip
+        const { overlay: recovered } = splitOverlay(baseSpec, merged);
+        const remerged = mergeOverlay(baseSpec, recovered);
+        expect(remerged).toEqual(modified);
+    });
+
+    it("handles array element modifications with index targeting via overlay", () => {
+        const modified = structuredClone(baseSpec);
+        // Modify 2nd parameter element by index
+        modified.paths["/pets"].get.parameters[0].description = "Max items to return";
+
+        const overlay = generateOverlay(baseSpec, modified);
+        const merged = mergeOverlay(baseSpec, overlay);
+        expect(merged).toEqual(modified);
+    });
+
+    it("handles combined additions and deletions via overlay", () => {
+        const modified = structuredClone(baseSpec);
+        modified.paths["/pets"].get["x-fern-group"] = "pets";
+        delete modified.paths["/pets"].post;
+        delete modified.components.schemas.Error;
+
+        const overlay = generateOverlay(baseSpec, modified);
+        const merged = mergeOverlay(baseSpec, overlay);
+        expect(merged).toEqual(modified);
+
+        // Round trip
+        const { overlay: recovered } = splitOverlay(baseSpec, merged);
+        const remerged = mergeOverlay(baseSpec, recovered);
+        expect(remerged).toEqual(modified);
     });
 });

@@ -11,11 +11,12 @@ import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
+import type { SpecEntry } from "../utils/filterSpecs.js";
 import { FernYmlApiEditor } from "../utils/fernYmlApiEditor.js";
 import { filterSpecs } from "../utils/filterSpecs.js";
 import { loadSpec, parseSpec, serializeSpec } from "../utils/loadSpec.js";
-import { deriveOutputPath } from "./deriveOutputPath.js";
-import { generateOverrides } from "./diffSpecs.js";
+import { type SplitFormat, deriveOutputPath } from "./deriveOutputPath.js";
+import { type OverlayOutputAction, generateOverlay, generateOverrides, hasChanges } from "./diffSpecs.js";
 
 const execFileAsync = promisify(execFile);
 
@@ -23,6 +24,7 @@ export declare namespace SplitCommand {
     export interface Args extends GlobalArgs {
         api?: string;
         output?: string;
+        format?: SplitFormat;
     }
 }
 
@@ -45,6 +47,7 @@ export class SplitCommand {
             return;
         }
 
+        const format: SplitFormat = args.format ?? "overlays";
         const editor = await FernYmlApiEditor.load(context.cwd);
         let splitCount = 0;
 
@@ -55,47 +58,133 @@ export class SplitCommand {
             ]);
             const originalContent = parseSpec(originalRaw, entry.specFilePath);
 
-            const overrides = generateOverrides(originalContent, currentContent);
-
-            if (Object.keys(overrides).length === 0) {
+            if (!hasChanges(originalContent, currentContent)) {
                 context.stderr.info(chalk.dim(`  ${entry.specFilePath}: no changes from git HEAD, skipping.`));
                 continue;
             }
 
-            const outputPath =
-                args.output != null
-                    ? resolvePathOrThrow(context, args.output)
-                    : deriveOutputPath(entry.specFilePath);
-
-            if (await this.tryMergeIntoExistingFile(outputPath, overrides)) {
-                context.stderr.info(`${Icons.success} Merged diff into existing ${chalk.cyan(outputPath)}`);
+            if (format === "overlays") {
+                await this.splitAsOverlay(context, editor, entry, originalContent, currentContent, args.output);
             } else {
-                await writeFile(outputPath, serializeSpec(overrides, outputPath));
-                context.stderr.info(
-                    `${Icons.success} Overrides written ${chalk.dim("→")} ${chalk.cyan(outputPath)}`
-                );
+                await this.splitAsOverrides(context, editor, entry, originalContent, currentContent, args.output);
             }
 
-            const edit = editor.addOverride(entry.specFilePath, outputPath);
-            if (edit != null) {
-                const relPath = path.relative(context.cwd, editor.filePath);
-                context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`));
-            }
-
-            // Restore spec to git HEAD after overrides are safely written
+            // Restore spec to git HEAD after overlay/overrides are safely written
             await writeFile(entry.specFilePath, originalRaw);
             context.stderr.info(chalk.dim(`  Restored ${entry.specFilePath} to git HEAD`));
 
             splitCount++;
         }
 
-        if (editor != null) {
-            await editor.save();
-        }
+        await editor.save();
 
         if (splitCount === 0) {
             context.stderr.info(chalk.dim("No specs had changes to split."));
         }
+    }
+
+    private async splitAsOverlay(
+        context: Context,
+        editor: FernYmlApiEditor,
+        entry: SpecEntry,
+        // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
+        originalContent: Record<string, any>,
+        // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
+        currentContent: Record<string, any>,
+        outputArg: string | undefined
+    ): Promise<void> {
+        const overlay = generateOverlay(originalContent, currentContent);
+
+        // Check if there's an existing overlay configured in fern.yml
+        const existingOverlayPath = editor.getOverlayPath(entry.specFilePath) ?? entry.overlays;
+
+        let outputPath: AbsoluteFilePath;
+        if (existingOverlayPath != null) {
+            if (outputArg != null) {
+                context.stderr.info(
+                    chalk.yellow(`  Warning: --output ignored; merging into existing overlay file ${chalk.cyan(existingOverlayPath)}`)
+                );
+            }
+            outputPath = existingOverlayPath;
+        } else {
+            outputPath =
+                outputArg != null
+                    ? resolvePathOrThrow(context, outputArg)
+                    : deriveOutputPath(entry.specFilePath, "overlays");
+        }
+
+        if (await this.tryMergeOverlayIntoExistingFile(outputPath, overlay.actions)) {
+            context.stderr.info(
+                `${Icons.success} Merged ${chalk.bold(String(overlay.actions.length))} action(s) into existing ${chalk.cyan(outputPath)}`
+            );
+        } else {
+            await writeFile(outputPath, serializeSpec(overlay, outputPath));
+            context.stderr.info(
+                `${Icons.success} Overlay written (${chalk.bold(String(overlay.actions.length))} action(s)) ${chalk.dim("→")} ${chalk.cyan(outputPath)}`
+            );
+        }
+
+        const edit = editor.addOverlay(entry.specFilePath, outputPath);
+        if (edit != null) {
+            const relPath = path.relative(context.cwd, editor.filePath);
+            context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`));
+        }
+    }
+
+    private async splitAsOverrides(
+        context: Context,
+        editor: FernYmlApiEditor,
+        entry: SpecEntry,
+        // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
+        originalContent: Record<string, any>,
+        // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
+        currentContent: Record<string, any>,
+        outputArg: string | undefined
+    ): Promise<void> {
+        const overrides = generateOverrides(originalContent, currentContent);
+        const outputPath =
+            outputArg != null
+                ? resolvePathOrThrow(context, outputArg)
+                : deriveOutputPath(entry.specFilePath, "overrides");
+
+        if (await this.tryMergeIntoExistingFile(outputPath, overrides)) {
+            context.stderr.info(`${Icons.success} Merged diff into existing ${chalk.cyan(outputPath)}`);
+        } else {
+            await writeFile(outputPath, serializeSpec(overrides, outputPath));
+            context.stderr.info(
+                `${Icons.success} Overrides written ${chalk.dim("→")} ${chalk.cyan(outputPath)}`
+            );
+        }
+
+        const edit = editor.addOverride(entry.specFilePath, outputPath);
+        if (edit != null) {
+            const relPath = path.relative(context.cwd, editor.filePath);
+            context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`));
+        }
+    }
+
+    /**
+     * Tries to load an existing overlay file and append new actions to it.
+     * Returns true if the file existed and was merged, false if the file does not exist.
+     */
+    private async tryMergeOverlayIntoExistingFile(
+        outputPath: AbsoluteFilePath,
+        newActions: OverlayOutputAction[]
+    ): Promise<boolean> {
+        let raw: string;
+        try {
+            raw = await readFile(outputPath, "utf8");
+        } catch (error: unknown) {
+            if (error instanceof Error && "code" in error && (error as NodeJS.ErrnoException).code === "ENOENT") {
+                return false;
+            }
+            throw error;
+        }
+        const existing = parseSpec(raw, outputPath);
+        const existingActions = Array.isArray(existing.actions) ? existing.actions : [];
+        existing.actions = [...existingActions, ...newActions];
+        await writeFile(outputPath, serializeSpec(existing, outputPath));
+        return true;
     }
 
     /**
@@ -110,8 +199,11 @@ export class SplitCommand {
         let raw: string;
         try {
             raw = await readFile(outputPath, "utf8");
-        } catch {
-            return false;
+        } catch (error: unknown) {
+            if (error instanceof Error && "code" in error && (error as NodeJS.ErrnoException).code === "ENOENT") {
+                return false;
+            }
+            throw error;
         }
         const existing = parseSpec(raw, outputPath);
         const merged = mergeWithOverrides({ data: existing, overrides });
@@ -164,7 +256,7 @@ export function addSplitCommand(cli: Argv<GlobalArgs>): void {
     command(
         cli,
         "split",
-        "Extract changes from a modified spec into an override file, restoring the spec to its git HEAD state",
+        "Extract changes from a modified spec into an overlay or override file, restoring the spec to its git HEAD state",
         (context, args) => cmd.handle(context, args as SplitCommand.Args),
         (yargs) =>
             yargs
@@ -173,8 +265,15 @@ export function addSplitCommand(cli: Argv<GlobalArgs>): void {
                     description: "Filter by API name"
                 })
                 .option("output", {
+                    alias: "o",
                     type: "string",
-                    description: "Custom output path for the new override file"
+                    description: "Custom output path for the new overlay/override file"
+                })
+                .option("format", {
+                    type: "string",
+                    choices: ["overlays", "overrides"] as const,
+                    default: "overlays" as const,
+                    description: "Output format: 'overlays' (OpenAPI Overlay 1.0.0) or 'overrides' (Fern deep-merge)"
                 })
     );
 }

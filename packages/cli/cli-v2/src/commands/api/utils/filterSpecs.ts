@@ -11,6 +11,8 @@ export interface SpecEntry {
     specFilePath: AbsoluteFilePath;
     /** Absolute path(s) to override files, if any */
     overrides: AbsoluteFilePath[] | undefined;
+    /** Absolute path to the overlay file, if any */
+    overlays: AbsoluteFilePath | undefined;
 }
 
 /**
@@ -28,10 +30,12 @@ export function filterSpecs(workspace: Workspace, options: { api?: string }): Sp
         for (const apiSpec of apiDef.specs) {
             let specFilePath: AbsoluteFilePath | undefined;
             let overrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+            let overlays: AbsoluteFilePath | undefined;
 
             if (isOpenApiSpec(apiSpec)) {
                 specFilePath = apiSpec.openapi;
                 overrides = apiSpec.overrides;
+                overlays = apiSpec.overlays;
             } else if (isAsyncApiSpec(apiSpec)) {
                 specFilePath = apiSpec.asyncapi;
                 overrides = apiSpec.overrides;
@@ -41,7 +45,7 @@ export function filterSpecs(workspace: Workspace, options: { api?: string }): Sp
 
             const overridesList = overrides == null ? undefined : Array.isArray(overrides) ? overrides : [overrides];
 
-            results.push({ apiName, spec: apiSpec, specFilePath, overrides: overridesList });
+            results.push({ apiName, spec: apiSpec, specFilePath, overrides: overridesList, overlays });
         }
     }
 
