@@ -20,7 +20,7 @@ import Trace
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = "string"
+        let expectedResponse = CreateProblemResponse.success("string")
         let response = try await client.problem.createProblem(
             request: CreateProblemRequest(
                 problemName: "problemName",

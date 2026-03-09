@@ -228,7 +228,7 @@ import Examples
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = "<head>...</head>"
+        let expectedResponse = MetadataType.html("<head>...</head>")
         let response = try await client.service.getMetadata(
             shallow: false,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -259,7 +259,7 @@ import Examples
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = "string"
+        let expectedResponse = MetadataType.html("string")
         let response = try await client.service.getMetadata(
             shallow: true,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
