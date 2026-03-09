@@ -60,6 +60,18 @@ function getGitDiagnostics(): string {
 }
 
 /**
+ * Checks if the error message indicates an SSL certificate verification failure.
+ * This commonly occurs in Docker containers that lack CA certificates.
+ */
+function isSSLCertificateError(errorMessage: string): boolean {
+    return (
+        errorMessage.includes("server certificate verification failed") ||
+        errorMessage.includes("SSL certificate problem") ||
+        errorMessage.includes("unable to get local issuer certificate")
+    );
+}
+
+/**
  * Clones the repository to the local file system.
  * @param githubRepository a string that can be parsed into a RepositoryReference (e.g. 'owner/repo')
  */
@@ -94,13 +106,15 @@ export async function cloneRepository({
         );
     }
 
+    const timeoutConfig =
+        timeoutMs != null
+            ? {
+                  block: timeoutMs // Kill the process if no data is received for the specified time
+              }
+            : undefined;
+
     const git = simpleGit(clonePath, {
-        timeout:
-            timeoutMs != null
-                ? {
-                      block: timeoutMs // Kill the process if no data is received for the specified time
-                  }
-                : undefined
+        timeout: timeoutConfig
     });
 
     const startTime = Date.now();
@@ -109,6 +123,34 @@ export async function cloneRepository({
     } catch (error) {
         const elapsed = Date.now() - startTime;
         const errorMessage = error instanceof Error ? error.message : String(error);
+
+        // SSL certificate verification failure - retry with SSL verification disabled.
+        // This commonly occurs in Docker containers that lack CA certificates.
+        if (isSSLCertificateError(errorMessage)) {
+            const retryClonePath = targetDirectory ?? (await tmp.dir()).path;
+            const gitWithoutSsl = simpleGit(retryClonePath, {
+                timeout: timeoutConfig,
+                config: ["http.sslVerify=false"]
+            });
+            try {
+                await gitWithoutSsl.clone(cloneUrl, ".");
+                return new ClonedRepository({
+                    clonePath: retryClonePath,
+                    git: gitWithoutSsl
+                });
+            } catch (retryError) {
+                const retryElapsed = Date.now() - startTime;
+                const retryErrorMessage = retryError instanceof Error ? retryError.message : String(retryError);
+                throw new Error(
+                    `Failed to clone repository: SSL certificate verification failed, ` +
+                        `and retry with SSL verification disabled also failed. ` +
+                        `URL: ${sanitizedUrl}. ` +
+                        `Elapsed: ${retryElapsed}ms. ` +
+                        `Original error: ${errorMessage}. ` +
+                        `Retry error: ${retryErrorMessage}`
+                );
+            }
+        }
 
         // Git binary not found
         if (errorMessage.includes("ENOENT") || errorMessage.includes("spawn git")) {
