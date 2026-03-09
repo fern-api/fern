@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:PlainObject": {
+        "type_:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -47,8 +47,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
+                                "unsafeName": "ID",
+                                "safeName": "ID"
                             }
                         },
                         "wireValue": "id"
@@ -103,7 +103,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_testGroup.test_method_name": {
+        "endpoint_[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -301,7 +301,7 @@
                                 "type": "nullable",
                                 "value": {
                                     "type": "named",
-                                    "value": "type_:PlainObject"
+                                    "value": "type_:[object Object]"
                                 }
                             }
                         },
@@ -373,7 +373,7 @@
                             "type": "nullable",
                             "value": {
                                 "type": "named",
-                                "value": "type_:PlainObject"
+                                "value": "type_:[object Object]"
                             }
                         }
                     }

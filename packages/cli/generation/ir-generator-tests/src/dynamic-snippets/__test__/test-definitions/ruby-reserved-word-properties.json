@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_service:Foo": {
+        "type_[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -85,8 +85,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
+                                "unsafeName": "ID",
+                                "safeName": "ID"
                             }
                         },
                         "wireValue": "id"
@@ -193,8 +193,8 @@
                         "name": {
                             "originalName": "object_id",
                             "camelCase": {
-                                "unsafeName": "objectId",
-                                "safeName": "objectId"
+                                "unsafeName": "objectID",
+                                "safeName": "objectID"
                             },
                             "snakeCase": {
                                 "unsafeName": "object_id",
@@ -205,8 +205,8 @@
                                 "safeName": "OBJECT_ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "ObjectId",
-                                "safeName": "ObjectId"
+                                "unsafeName": "ObjectID",
+                                "safeName": "ObjectID"
                             }
                         },
                         "wireValue": "object_id"
@@ -855,7 +855,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_service.get": {
+        "endpoint_[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {

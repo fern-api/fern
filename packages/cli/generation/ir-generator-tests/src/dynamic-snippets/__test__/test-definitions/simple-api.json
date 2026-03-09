@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_user:User": {
+        "type_[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -85,8 +85,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
+                                "unsafeName": "ID",
+                                "safeName": "ID"
                             }
                         },
                         "wireValue": "id"
@@ -165,7 +165,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_user.get": {
+        "endpoint_[object Object].[object Object]": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -276,8 +276,8 @@
                                     "safeName": "ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Id",
-                                    "safeName": "Id"
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
                                 }
                             },
                             "wireValue": "id"

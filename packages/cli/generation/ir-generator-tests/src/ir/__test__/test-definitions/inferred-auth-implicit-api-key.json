@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "inferred-auth-implicit-api-key",
+    "apiName": {
+        "originalName": "inferred-auth-implicit-api-key",
+        "camelCase": {
+            "unsafeName": "inferredAuthImplicitAPIKey",
+            "safeName": "inferredAuthImplicitAPIKey"
+        },
+        "snakeCase": {
+            "unsafeName": "inferred_auth_implicit_api_key",
+            "safeName": "inferred_auth_implicit_api_key"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "INFERRED_AUTH_IMPLICIT_API_KEY",
+            "safeName": "INFERRED_AUTH_IMPLICIT_API_KEY"
+        },
+        "pascalCase": {
+            "unsafeName": "InferredAuthImplicitAPIKey",
+            "safeName": "InferredAuthImplicitAPIKey"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -12,15 +30,33 @@
                 "_type": "inferred",
                 "tokenEndpoint": {
                     "endpoint": {
-                        "endpointId": "endpoint_auth.getToken",
-                        "serviceId": "service_auth",
-                        "subpackageId": "subpackage_auth"
+                        "endpointId": "endpoint_[object Object].getToken",
+                        "serviceId": "service_[object Object]",
+                        "subpackageId": "subpackage_[object Object]"
                     },
                     "expiryProperty": {
                         "propertyPath": [],
                         "property": {
                             "name": {
-                                "name": "expires_in",
+                                "name": {
+                                    "originalName": "expires_in",
+                                    "camelCase": {
+                                        "unsafeName": "expiresIn",
+                                        "safeName": "expiresIn"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "expires_in",
+                                        "safeName": "expires_in"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "EXPIRES_IN",
+                                        "safeName": "EXPIRES_IN"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ExpiresIn",
+                                        "safeName": "ExpiresIn"
+                                    }
+                                },
                                 "wireValue": "expires_in"
                             },
                             "valueType": {
@@ -50,7 +86,25 @@
                                 "propertyPath": [],
                                 "property": {
                                     "name": {
-                                        "name": "access_token",
+                                        "name": {
+                                            "originalName": "access_token",
+                                            "camelCase": {
+                                                "unsafeName": "accessToken",
+                                                "safeName": "accessToken"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "access_token",
+                                                "safeName": "access_token"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ACCESS_TOKEN",
+                                                "safeName": "ACCESS_TOKEN"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "AccessToken",
+                                                "safeName": "AccessToken"
+                                            }
+                                        },
                                         "wireValue": "access_token"
                                     },
                                     "valueType": {
@@ -86,19 +140,73 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_auth:TokenResponse": {
+        "type_[object Object]:[object Object]": {
             "inline": null,
             "name": {
-                "name": "TokenResponse",
+                "name": {
+                    "originalName": "TokenResponse",
+                    "camelCase": {
+                        "unsafeName": "tokenResponse",
+                        "safeName": "tokenResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token_response",
+                        "safeName": "token_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN_RESPONSE",
+                        "safeName": "TOKEN_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TokenResponse",
+                        "safeName": "TokenResponse"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
-                        "auth"
+                        {
+                            "originalName": "auth",
+                            "camelCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTH",
+                                "safeName": "AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Auth",
+                                "safeName": "Auth"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "auth"
+                    "file": {
+                        "originalName": "auth",
+                        "camelCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AUTH",
+                            "safeName": "AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Auth",
+                            "safeName": "Auth"
+                        }
+                    }
                 },
                 "displayName": null,
-                "typeId": "type_auth:TokenResponse"
+                "typeId": "type_[object Object]:[object Object]"
             },
             "shape": {
                 "_type": "object",
@@ -106,7 +214,25 @@
                 "properties": [
                     {
                         "name": {
-                            "name": "access_token",
+                            "name": {
+                                "originalName": "access_token",
+                                "camelCase": {
+                                    "unsafeName": "accessToken",
+                                    "safeName": "accessToken"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "access_token",
+                                    "safeName": "access_token"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ACCESS_TOKEN",
+                                    "safeName": "ACCESS_TOKEN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "AccessToken",
+                                    "safeName": "AccessToken"
+                                }
+                            },
                             "wireValue": "access_token"
                         },
                         "valueType": {
@@ -130,7 +256,25 @@
                     },
                     {
                         "name": {
-                            "name": "token_type",
+                            "name": {
+                                "originalName": "token_type",
+                                "camelCase": {
+                                    "unsafeName": "tokenType",
+                                    "safeName": "tokenType"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "token_type",
+                                    "safeName": "token_type"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TOKEN_TYPE",
+                                    "safeName": "TOKEN_TYPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TokenType",
+                                    "safeName": "TokenType"
+                                }
+                            },
                             "wireValue": "token_type"
                         },
                         "valueType": {
@@ -154,7 +298,25 @@
                     },
                     {
                         "name": {
-                            "name": "expires_in",
+                            "name": {
+                                "originalName": "expires_in",
+                                "camelCase": {
+                                    "unsafeName": "expiresIn",
+                                    "safeName": "expiresIn"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "expires_in",
+                                    "safeName": "expires_in"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "EXPIRES_IN",
+                                    "safeName": "EXPIRES_IN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ExpiresIn",
+                                    "safeName": "ExpiresIn"
+                                }
+                            },
                             "wireValue": "expires_in"
                         },
                         "valueType": {
@@ -178,7 +340,25 @@
                     },
                     {
                         "name": {
-                            "name": "scope",
+                            "name": {
+                                "originalName": "scope",
+                                "camelCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "scope",
+                                    "safeName": "scope"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SCOPE",
+                                    "safeName": "SCOPE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Scope",
+                                    "safeName": "Scope"
+                                }
+                            },
                             "wireValue": "scope"
                         },
                         "valueType": {
@@ -225,15 +405,51 @@
     },
     "errors": {},
     "services": {
-        "service_auth": {
+        "service_[object Object]": {
             "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "auth"
+                        {
+                            "originalName": "simple",
+                            "camelCase": {
+                                "unsafeName": "simple",
+                                "safeName": "simple"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "simple",
+                                "safeName": "simple"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SIMPLE",
+                                "safeName": "SIMPLE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Simple",
+                                "safeName": "Simple"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "auth"
+                    "file": {
+                        "originalName": "simple",
+                        "camelCase": {
+                            "unsafeName": "simple",
+                            "safeName": "simple"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "simple",
+                            "safeName": "simple"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SIMPLE",
+                            "safeName": "SIMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Simple",
+                            "safeName": "Simple"
+                        }
+                    }
                 }
             },
             "displayName": null,
@@ -252,561 +468,26 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_auth.getToken",
-                    "name": "getToken",
-                    "displayName": null,
-                    "auth": false,
-                    "security": null,
-                    "idempotent": false,
-                    "baseUrl": null,
-                    "v2BaseUrls": null,
-                    "method": "POST",
-                    "basePath": null,
-                    "path": {
-                        "head": "/token",
-                        "parts": []
-                    },
-                    "fullPath": {
-                        "head": "/token",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
-                    "headers": [
-                        {
-                            "name": {
-                                "name": "api_key",
-                                "wireValue": "X-Api-Key"
-                            },
-                            "valueType": {
-                                "_type": "primitive",
-                                "primitive": {
-                                    "v1": "STRING",
-                                    "v2": {
-                                        "type": "string",
-                                        "default": null,
-                                        "validation": null
-                                    }
-                                }
-                            },
-                            "env": null,
-                            "v2Examples": {
-                                "userSpecifiedExamples": {},
-                                "autogeneratedExamples": {}
-                            },
-                            "availability": null,
-                            "docs": null
-                        }
-                    ],
-                    "requestBody": null,
-                    "v2RequestBodies": null,
-                    "sdkRequest": {
-                        "shape": {
-                            "type": "wrapper",
-                            "wrapperName": "GetTokenRequest",
-                            "bodyKey": "body",
-                            "includePathParameters": false,
-                            "onlyPathParameters": false
+                    "id": "endpoint_[object Object].[object Object]",
+                    "name": {
+                        "originalName": "getSomething",
+                        "camelCase": {
+                            "unsafeName": "getSomething",
+                            "safeName": "getSomething"
                         },
-                        "requestParameterName": "request",
-                        "streamParameter": null
-                    },
-                    "response": {
-                        "body": {
-                            "type": "json",
-                            "value": {
-                                "type": "response",
-                                "responseBodyType": {
-                                    "_type": "named",
-                                    "name": "TokenResponse",
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            "auth"
-                                        ],
-                                        "packagePath": [],
-                                        "file": "auth"
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_auth:TokenResponse",
-                                    "default": null,
-                                    "inline": null
-                                },
-                                "docs": null,
-                                "v2Examples": null
-                            }
+                        "snakeCase": {
+                            "unsafeName": "get_something",
+                            "safeName": "get_something"
                         },
-                        "status-code": null,
-                        "isWildcardStatusCode": null,
-                        "docs": null
-                    },
-                    "v2Responses": null,
-                    "errors": [],
-                    "userSpecifiedExamples": [],
-                    "autogeneratedExamples": [
-                        {
-                            "example": {
-                                "id": "1b35c7c5",
-                                "url": "/token",
-                                "name": null,
-                                "endpointHeaders": [
-                                    {
-                                        "name": {
-                                            "name": "api_key",
-                                            "wireValue": "X-Api-Key"
-                                        },
-                                        "value": {
-                                            "shape": {
-                                                "type": "primitive",
-                                                "primitive": {
-                                                    "type": "string",
-                                                    "string": {
-                                                        "original": "api_key"
-                                                    }
-                                                }
-                                            },
-                                            "jsonExample": "api_key"
-                                        }
-                                    }
-                                ],
-                                "endpointPathParameters": [],
-                                "queryParameters": [],
-                                "servicePathParameters": [],
-                                "serviceHeaders": [],
-                                "rootPathParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": {
-                                            "shape": {
-                                                "type": "named",
-                                                "shape": {
-                                                    "type": "object",
-                                                    "properties": [
-                                                        {
-                                                            "name": {
-                                                                "name": "access_token",
-                                                                "wireValue": "access_token"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "name": "TokenResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "auth"
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": "auth"
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_auth:TokenResponse"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "access_token"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "access_token"
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": {
-                                                                "name": "token_type",
-                                                                "wireValue": "token_type"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "name": "TokenResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "auth"
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": "auth"
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_auth:TokenResponse"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "string",
-                                                                        "string": {
-                                                                            "original": "token_type"
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "token_type"
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": {
-                                                                "name": "expires_in",
-                                                                "wireValue": "expires_in"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "name": "TokenResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "auth"
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": "auth"
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_auth:TokenResponse"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "primitive",
-                                                                    "primitive": {
-                                                                        "type": "integer",
-                                                                        "integer": 1
-                                                                    }
-                                                                },
-                                                                "jsonExample": 1
-                                                            },
-                                                            "propertyAccess": null
-                                                        },
-                                                        {
-                                                            "name": {
-                                                                "name": "scope",
-                                                                "wireValue": "scope"
-                                                            },
-                                                            "originalTypeDeclaration": {
-                                                                "name": "TokenResponse",
-                                                                "fernFilepath": {
-                                                                    "allParts": [
-                                                                        "auth"
-                                                                    ],
-                                                                    "packagePath": [],
-                                                                    "file": "auth"
-                                                                },
-                                                                "displayName": null,
-                                                                "typeId": "type_auth:TokenResponse"
-                                                            },
-                                                            "value": {
-                                                                "shape": {
-                                                                    "type": "container",
-                                                                    "container": {
-                                                                        "type": "optional",
-                                                                        "optional": {
-                                                                            "shape": {
-                                                                                "type": "primitive",
-                                                                                "primitive": {
-                                                                                    "type": "string",
-                                                                                    "string": {
-                                                                                        "original": "scope"
-                                                                                    }
-                                                                                }
-                                                                            },
-                                                                            "jsonExample": "scope"
-                                                                        },
-                                                                        "valueType": {
-                                                                            "_type": "primitive",
-                                                                            "primitive": {
-                                                                                "v1": "STRING",
-                                                                                "v2": {
-                                                                                    "type": "string",
-                                                                                    "default": null,
-                                                                                    "validation": null
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                },
-                                                                "jsonExample": "scope"
-                                                            },
-                                                            "propertyAccess": null
-                                                        }
-                                                    ],
-                                                    "extraProperties": null
-                                                },
-                                                "typeName": {
-                                                    "name": "TokenResponse",
-                                                    "fernFilepath": {
-                                                        "allParts": [
-                                                            "auth"
-                                                        ],
-                                                        "packagePath": [],
-                                                        "file": "auth"
-                                                    },
-                                                    "displayName": null,
-                                                    "typeId": "type_auth:TokenResponse"
-                                                }
-                                            },
-                                            "jsonExample": {
-                                                "access_token": "access_token",
-                                                "token_type": "token_type",
-                                                "expires_in": 1,
-                                                "scope": "scope"
-                                            }
-                                        }
-                                    }
-                                },
-                                "docs": null
-                            }
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_SOMETHING",
+                            "safeName": "GET_SOMETHING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetSomething",
+                            "safeName": "GetSomething"
                         }
-                    ],
-                    "pagination": null,
-                    "transport": null,
-                    "v2Examples": null,
-                    "source": null,
-                    "audiences": null,
-                    "retries": null,
-                    "apiPlayground": null,
-                    "responseHeaders": [],
-                    "availability": null,
-                    "docs": null
-                }
-            ],
-            "audiences": null
-        },
-        "service_nested-no-auth/api": {
-            "availability": null,
-            "name": {
-                "fernFilepath": {
-                    "allParts": [
-                        "nested-no-auth",
-                        "api"
-                    ],
-                    "packagePath": [
-                        "nested-no-auth"
-                    ],
-                    "file": "api"
-                }
-            },
-            "displayName": null,
-            "basePath": {
-                "head": "/nested-no-auth",
-                "parts": []
-            },
-            "headers": [],
-            "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "transport": {
-                "type": "http"
-            },
-            "endpoints": [
-                {
-                    "id": "endpoint_nested-no-auth/api.getSomething",
-                    "name": "getSomething",
-                    "displayName": null,
-                    "auth": false,
-                    "security": null,
-                    "idempotent": false,
-                    "baseUrl": null,
-                    "v2BaseUrls": null,
-                    "method": "GET",
-                    "basePath": null,
-                    "path": {
-                        "head": "/get-something",
-                        "parts": []
                     },
-                    "fullPath": {
-                        "head": "/nested-no-auth/get-something",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
-                    "headers": [],
-                    "requestBody": null,
-                    "v2RequestBodies": null,
-                    "sdkRequest": null,
-                    "response": {
-                        "body": null,
-                        "status-code": null,
-                        "isWildcardStatusCode": null,
-                        "docs": null
-                    },
-                    "v2Responses": null,
-                    "errors": [],
-                    "userSpecifiedExamples": [],
-                    "autogeneratedExamples": [
-                        {
-                            "example": {
-                                "id": "b8b5a106",
-                                "url": "/nested-no-auth/get-something",
-                                "name": null,
-                                "endpointHeaders": [],
-                                "endpointPathParameters": [],
-                                "queryParameters": [],
-                                "servicePathParameters": [],
-                                "serviceHeaders": [],
-                                "rootPathParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": null
-                                    }
-                                },
-                                "docs": null
-                            }
-                        }
-                    ],
-                    "pagination": null,
-                    "transport": null,
-                    "v2Examples": null,
-                    "source": null,
-                    "audiences": null,
-                    "retries": null,
-                    "apiPlayground": null,
-                    "responseHeaders": [],
-                    "availability": null,
-                    "docs": null
-                }
-            ],
-            "audiences": null
-        },
-        "service_nested/api": {
-            "availability": null,
-            "name": {
-                "fernFilepath": {
-                    "allParts": [
-                        "nested",
-                        "api"
-                    ],
-                    "packagePath": [
-                        "nested"
-                    ],
-                    "file": "api"
-                }
-            },
-            "displayName": null,
-            "basePath": {
-                "head": "/nested",
-                "parts": []
-            },
-            "headers": [],
-            "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "transport": {
-                "type": "http"
-            },
-            "endpoints": [
-                {
-                    "id": "endpoint_nested/api.getSomething",
-                    "name": "getSomething",
-                    "displayName": null,
-                    "auth": true,
-                    "security": [
-                        {
-                            "InferredAuthScheme": []
-                        }
-                    ],
-                    "idempotent": false,
-                    "baseUrl": null,
-                    "v2BaseUrls": null,
-                    "method": "GET",
-                    "basePath": null,
-                    "path": {
-                        "head": "/get-something",
-                        "parts": []
-                    },
-                    "fullPath": {
-                        "head": "/nested/get-something",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
-                    "headers": [],
-                    "requestBody": null,
-                    "v2RequestBodies": null,
-                    "sdkRequest": null,
-                    "response": {
-                        "body": null,
-                        "status-code": null,
-                        "isWildcardStatusCode": null,
-                        "docs": null
-                    },
-                    "v2Responses": null,
-                    "errors": [],
-                    "userSpecifiedExamples": [],
-                    "autogeneratedExamples": [
-                        {
-                            "example": {
-                                "id": "b8b5a106",
-                                "url": "/nested/get-something",
-                                "name": null,
-                                "endpointHeaders": [],
-                                "endpointPathParameters": [],
-                                "queryParameters": [],
-                                "servicePathParameters": [],
-                                "serviceHeaders": [],
-                                "rootPathParameters": [],
-                                "request": null,
-                                "response": {
-                                    "type": "ok",
-                                    "value": {
-                                        "type": "body",
-                                        "value": null
-                                    }
-                                },
-                                "docs": null
-                            }
-                        }
-                    ],
-                    "pagination": null,
-                    "transport": null,
-                    "v2Examples": null,
-                    "source": null,
-                    "audiences": null,
-                    "retries": null,
-                    "apiPlayground": null,
-                    "responseHeaders": [],
-                    "availability": null,
-                    "docs": null
-                }
-            ],
-            "audiences": null
-        },
-        "service_simple": {
-            "availability": null,
-            "name": {
-                "fernFilepath": {
-                    "allParts": [
-                        "simple"
-                    ],
-                    "packagePath": [],
-                    "file": "simple"
-                }
-            },
-            "displayName": null,
-            "basePath": {
-                "head": "/",
-                "parts": []
-            },
-            "headers": [],
-            "pathParameters": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "transport": {
-                "type": "http"
-            },
-            "endpoints": [
-                {
-                    "id": "endpoint_simple.getSomething",
-                    "name": "getSomething",
                     "displayName": null,
                     "auth": true,
                     "security": [
@@ -880,11 +561,225 @@
                 }
             ],
             "audiences": null
+        },
+        "service_[object Object]/[object Object]": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        },
+                        {
+                            "originalName": "api",
+                            "camelCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "api",
+                        "camelCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/nested",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_[object Object]/[object Object].[object Object]",
+                    "name": {
+                        "originalName": "getSomething",
+                        "camelCase": {
+                            "unsafeName": "getSomething",
+                            "safeName": "getSomething"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_something",
+                            "safeName": "get_something"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_SOMETHING",
+                            "safeName": "GET_SOMETHING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetSomething",
+                            "safeName": "GetSomething"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": true,
+                    "security": [
+                        {
+                            "InferredAuthScheme": []
+                        }
+                    ],
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/get-something",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/nested/get-something",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": null,
+                        "status-code": null,
+                        "isWildcardStatusCode": null,
+                        "docs": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "b8b5a106",
+                                "url": "/nested/get-something",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": null
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "apiPlayground": null,
+                    "responseHeaders": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
         }
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
             "wireValue": "errorInstanceId"
         }
     },
@@ -896,12 +791,10 @@
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
-        "typesReferencedOnlyByService": {
-            "service_auth": [
-                "type_auth:TokenResponse"
-            ]
-        },
-        "sharedTypes": []
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_[object Object]:[object Object]"
+        ]
     },
     "webhookGroups": {},
     "websocketChannels": {},
@@ -911,7 +804,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_auth:TokenResponse": {
+            "type_[object Object]:[object Object]": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1108,256 +1001,10 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_auth.getToken": {
+            "endpoint_[object Object].[object Object]": {
                 "auth": {
                     "type": "inferred",
-                    "parameters": [
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "api_key",
-                                    "camelCase": {
-                                        "unsafeName": "apiKey",
-                                        "safeName": "apiKey"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "api_key",
-                                        "safeName": "api_key"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "API_KEY",
-                                        "safeName": "API_KEY"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "APIKey",
-                                        "safeName": "APIKey"
-                                    }
-                                },
-                                "wireValue": "X-Api-Key"
-                            },
-                            "typeReference": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        }
-                    ]
-                },
-                "declaration": {
-                    "name": {
-                        "originalName": "getToken",
-                        "camelCase": {
-                            "unsafeName": "getToken",
-                            "safeName": "getToken"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get_token",
-                            "safeName": "get_token"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET_TOKEN",
-                            "safeName": "GET_TOKEN"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "GetToken",
-                            "safeName": "GetToken"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "auth",
-                                "camelCase": {
-                                    "unsafeName": "auth",
-                                    "safeName": "auth"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "auth",
-                                    "safeName": "auth"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "AUTH",
-                                    "safeName": "AUTH"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Auth",
-                                    "safeName": "Auth"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "auth",
-                            "camelCase": {
-                                "unsafeName": "auth",
-                                "safeName": "auth"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "auth",
-                                "safeName": "auth"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "AUTH",
-                                "safeName": "AUTH"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Auth",
-                                "safeName": "Auth"
-                            }
-                        }
-                    }
-                },
-                "location": {
-                    "method": "POST",
-                    "path": "/token"
-                },
-                "request": {
-                    "type": "inlined",
-                    "declaration": {
-                        "name": {
-                            "originalName": "GetTokenRequest",
-                            "camelCase": {
-                                "unsafeName": "getTokenRequest",
-                                "safeName": "getTokenRequest"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "get_token_request",
-                                "safeName": "get_token_request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "GET_TOKEN_REQUEST",
-                                "safeName": "GET_TOKEN_REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "GetTokenRequest",
-                                "safeName": "GetTokenRequest"
-                            }
-                        },
-                        "fernFilepath": {
-                            "allParts": [
-                                {
-                                    "originalName": "auth",
-                                    "camelCase": {
-                                        "unsafeName": "auth",
-                                        "safeName": "auth"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "auth",
-                                        "safeName": "auth"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "AUTH",
-                                        "safeName": "AUTH"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Auth",
-                                        "safeName": "Auth"
-                                    }
-                                }
-                            ],
-                            "packagePath": [],
-                            "file": {
-                                "originalName": "auth",
-                                "camelCase": {
-                                    "unsafeName": "auth",
-                                    "safeName": "auth"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "auth",
-                                    "safeName": "auth"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "AUTH",
-                                    "safeName": "AUTH"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Auth",
-                                    "safeName": "Auth"
-                                }
-                            }
-                        }
-                    },
-                    "pathParameters": [],
-                    "queryParameters": [],
-                    "headers": [
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "api_key",
-                                    "camelCase": {
-                                        "unsafeName": "apiKey",
-                                        "safeName": "apiKey"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "api_key",
-                                        "safeName": "api_key"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "API_KEY",
-                                        "safeName": "API_KEY"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "APIKey",
-                                        "safeName": "APIKey"
-                                    }
-                                },
-                                "wireValue": "X-Api-Key"
-                            },
-                            "typeReference": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        }
-                    ],
-                    "body": null,
-                    "metadata": {
-                        "includePathParameters": false,
-                        "onlyPathParameters": false
-                    }
-                },
-                "response": {
-                    "type": "json"
-                },
-                "examples": null
-            },
-            "endpoint_nested-no-auth/api.getSomething": {
-                "auth": {
-                    "type": "inferred",
-                    "parameters": [
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "api_key",
-                                    "camelCase": {
-                                        "unsafeName": "apiKey",
-                                        "safeName": "apiKey"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "api_key",
-                                        "safeName": "api_key"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "API_KEY",
-                                        "safeName": "API_KEY"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "APIKey",
-                                        "safeName": "APIKey"
-                                    }
-                                },
-                                "wireValue": "X-Api-Key"
-                            },
-                            "typeReference": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        }
-                    ]
+                    "parameters": []
                 },
                 "declaration": {
                     "name": {
@@ -1382,89 +1029,50 @@
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "nested-no-auth",
+                                "originalName": "simple",
                                 "camelCase": {
-                                    "unsafeName": "nestedNoAuth",
-                                    "safeName": "nestedNoAuth"
+                                    "unsafeName": "simple",
+                                    "safeName": "simple"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "nested_no_auth",
-                                    "safeName": "nested_no_auth"
+                                    "unsafeName": "simple",
+                                    "safeName": "simple"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "NESTED_NO_AUTH",
-                                    "safeName": "NESTED_NO_AUTH"
+                                    "unsafeName": "SIMPLE",
+                                    "safeName": "SIMPLE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "NestedNoAuth",
-                                    "safeName": "NestedNoAuth"
-                                }
-                            },
-                            {
-                                "originalName": "api",
-                                "camelCase": {
-                                    "unsafeName": "api",
-                                    "safeName": "api"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "api",
-                                    "safeName": "api"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "API",
-                                    "safeName": "API"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "API",
-                                    "safeName": "API"
+                                    "unsafeName": "Simple",
+                                    "safeName": "Simple"
                                 }
                             }
                         ],
-                        "packagePath": [
-                            {
-                                "originalName": "nested-no-auth",
-                                "camelCase": {
-                                    "unsafeName": "nestedNoAuth",
-                                    "safeName": "nestedNoAuth"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "nested_no_auth",
-                                    "safeName": "nested_no_auth"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "NESTED_NO_AUTH",
-                                    "safeName": "NESTED_NO_AUTH"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "NestedNoAuth",
-                                    "safeName": "NestedNoAuth"
-                                }
-                            }
-                        ],
+                        "packagePath": [],
                         "file": {
-                            "originalName": "api",
+                            "originalName": "simple",
                             "camelCase": {
-                                "unsafeName": "api",
-                                "safeName": "api"
+                                "unsafeName": "simple",
+                                "safeName": "simple"
                             },
                             "snakeCase": {
-                                "unsafeName": "api",
-                                "safeName": "api"
+                                "unsafeName": "simple",
+                                "safeName": "simple"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "API",
-                                "safeName": "API"
+                                "unsafeName": "SIMPLE",
+                                "safeName": "SIMPLE"
                             },
                             "pascalCase": {
-                                "unsafeName": "API",
-                                "safeName": "API"
+                                "unsafeName": "Simple",
+                                "safeName": "Simple"
                             }
                         }
                     }
                 },
                 "location": {
                     "method": "GET",
-                    "path": "/nested-no-auth/get-something"
+                    "path": "/get-something"
                 },
                 "request": {
                     "type": "body",
@@ -1476,41 +1084,10 @@
                 },
                 "examples": null
             },
-            "endpoint_nested/api.getSomething": {
+            "endpoint_[object Object]/[object Object].[object Object]": {
                 "auth": {
                     "type": "inferred",
-                    "parameters": [
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "api_key",
-                                    "camelCase": {
-                                        "unsafeName": "apiKey",
-                                        "safeName": "apiKey"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "api_key",
-                                        "safeName": "api_key"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "API_KEY",
-                                        "safeName": "API_KEY"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "APIKey",
-                                        "safeName": "APIKey"
-                                    }
-                                },
-                                "wireValue": "X-Api-Key"
-                            },
-                            "typeReference": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        }
-                    ]
+                    "parameters": []
                 },
                 "declaration": {
                     "name": {
@@ -1628,120 +1205,6 @@
                     "type": "json"
                 },
                 "examples": null
-            },
-            "endpoint_simple.getSomething": {
-                "auth": {
-                    "type": "inferred",
-                    "parameters": [
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "api_key",
-                                    "camelCase": {
-                                        "unsafeName": "apiKey",
-                                        "safeName": "apiKey"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "api_key",
-                                        "safeName": "api_key"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "API_KEY",
-                                        "safeName": "API_KEY"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "APIKey",
-                                        "safeName": "APIKey"
-                                    }
-                                },
-                                "wireValue": "X-Api-Key"
-                            },
-                            "typeReference": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            },
-                            "propertyAccess": null,
-                            "variable": null
-                        }
-                    ]
-                },
-                "declaration": {
-                    "name": {
-                        "originalName": "getSomething",
-                        "camelCase": {
-                            "unsafeName": "getSomething",
-                            "safeName": "getSomething"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get_something",
-                            "safeName": "get_something"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET_SOMETHING",
-                            "safeName": "GET_SOMETHING"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "GetSomething",
-                            "safeName": "GetSomething"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "simple",
-                                "camelCase": {
-                                    "unsafeName": "simple",
-                                    "safeName": "simple"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "simple",
-                                    "safeName": "simple"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SIMPLE",
-                                    "safeName": "SIMPLE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Simple",
-                                    "safeName": "Simple"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "simple",
-                            "camelCase": {
-                                "unsafeName": "simple",
-                                "safeName": "simple"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "simple",
-                                "safeName": "simple"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SIMPLE",
-                                "safeName": "SIMPLE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Simple",
-                                "safeName": "Simple"
-                            }
-                        }
-                    }
-                },
-                "location": {
-                    "method": "GET",
-                    "path": "/get-something"
-                },
-                "request": {
-                    "type": "body",
-                    "pathParameters": [],
-                    "body": null
-                },
-                "response": {
-                    "type": "json"
-                },
-                "examples": null
             }
         },
         "pathParameters": [],
@@ -1755,66 +1218,71 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_auth": {
-            "name": "auth",
+        "subpackage_[object Object]": {
+            "name": {
+                "originalName": "simple",
+                "camelCase": {
+                    "unsafeName": "simple",
+                    "safeName": "simple"
+                },
+                "snakeCase": {
+                    "unsafeName": "simple",
+                    "safeName": "simple"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "SIMPLE",
+                    "safeName": "SIMPLE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Simple",
+                    "safeName": "Simple"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "auth"
+                    {
+                        "originalName": "simple",
+                        "camelCase": {
+                            "unsafeName": "simple",
+                            "safeName": "simple"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "simple",
+                            "safeName": "simple"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SIMPLE",
+                            "safeName": "SIMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Simple",
+                            "safeName": "Simple"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "auth"
+                "file": {
+                    "originalName": "simple",
+                    "camelCase": {
+                        "unsafeName": "simple",
+                        "safeName": "simple"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "simple",
+                        "safeName": "simple"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SIMPLE",
+                        "safeName": "SIMPLE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Simple",
+                        "safeName": "Simple"
+                    }
+                }
             },
-            "service": "service_auth",
-            "types": [
-                "type_auth:TokenResponse"
-            ],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        },
-        "subpackage_nested-no-auth": {
-            "name": "nested-no-auth",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    "nested-no-auth"
-                ],
-                "packagePath": [
-                    "nested-no-auth"
-                ],
-                "file": null
-            },
-            "service": null,
-            "types": [],
-            "errors": [],
-            "subpackages": [
-                "subpackage_nested-no-auth/api"
-            ],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        },
-        "subpackage_nested-no-auth/api": {
-            "name": "api",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    "nested-no-auth",
-                    "api"
-                ],
-                "packagePath": [
-                    "nested-no-auth"
-                ],
-                "file": "api"
-            },
-            "service": "service_nested-no-auth/api",
+            "service": "service_[object Object]",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -1824,71 +1292,117 @@
             "hasEndpointsInTree": true,
             "docs": null
         },
-        "subpackage_nested": {
-            "name": "nested",
+        "subpackage_[object Object]/[object Object]": {
+            "name": {
+                "originalName": "api",
+                "camelCase": {
+                    "unsafeName": "api",
+                    "safeName": "api"
+                },
+                "snakeCase": {
+                    "unsafeName": "api",
+                    "safeName": "api"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "API",
+                    "safeName": "API"
+                },
+                "pascalCase": {
+                    "unsafeName": "API",
+                    "safeName": "API"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "nested"
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    },
+                    {
+                        "originalName": "api",
+                        "camelCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        }
+                    }
                 ],
                 "packagePath": [
-                    "nested"
+                    {
+                        "originalName": "nested",
+                        "camelCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "nested",
+                            "safeName": "nested"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NESTED",
+                            "safeName": "NESTED"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Nested",
+                            "safeName": "Nested"
+                        }
+                    }
                 ],
-                "file": null
+                "file": {
+                    "originalName": "api",
+                    "camelCase": {
+                        "unsafeName": "api",
+                        "safeName": "api"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "api",
+                        "safeName": "api"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "API",
+                        "safeName": "API"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "API",
+                        "safeName": "API"
+                    }
+                }
             },
-            "service": null,
-            "types": [],
-            "errors": [],
-            "subpackages": [
-                "subpackage_nested/api"
-            ],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        },
-        "subpackage_nested/api": {
-            "name": "api",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    "nested",
-                    "api"
-                ],
-                "packagePath": [
-                    "nested"
-                ],
-                "file": "api"
-            },
-            "service": "service_nested/api",
+            "service": "service_[object Object]/[object Object]",
             "types": [],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
             "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        },
-        "subpackage_simple": {
-            "name": "simple",
-            "displayName": null,
-            "fernFilepath": {
-                "allParts": [
-                    "simple"
-                ],
-                "packagePath": [],
-                "file": "simple"
-            },
-            "service": "service_simple",
-            "types": [],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
+            "hasEndpointsInTree": false,
             "docs": null
         }
     },
@@ -1903,10 +1417,12 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_auth",
-            "subpackage_nested-no-auth",
-            "subpackage_nested",
-            "subpackage_simple"
+            "subpackage_[object Object]",
+            "subpackage_[object Object]",
+            "subpackage_[object Object]",
+            "subpackage_[object Object]",
+            "subpackage_[object Object]",
+            "subpackage_[object Object]"
         ],
         "webhooks": null,
         "navigationConfig": null,
@@ -1914,7 +1430,7 @@
         "docs": null
     },
     "sdkConfig": {
-        "isAuthMandatory": false,
+        "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,

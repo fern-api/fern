@@ -1,70 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:UsernameCursor": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "UsernameCursor",
-                    "camelCase": {
-                        "unsafeName": "usernameCursor",
-                        "safeName": "usernameCursor"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "username_cursor",
-                        "safeName": "username_cursor"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "USERNAME_CURSOR",
-                        "safeName": "USERNAME_CURSOR"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "UsernameCursor",
-                        "safeName": "UsernameCursor"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "cursor",
-                            "camelCase": {
-                                "unsafeName": "cursor",
-                                "safeName": "cursor"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "cursor",
-                                "safeName": "cursor"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "CURSOR",
-                                "safeName": "CURSOR"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Cursor",
-                                "safeName": "Cursor"
-                            }
-                        },
-                        "wireValue": "cursor"
-                    },
-                    "typeReference": {
-                        "type": "named",
-                        "value": "type_:UsernamePage"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_:UsernamePage": {
+        "type_:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -166,7 +103,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_users.listUsernamesCustom": {
+        "endpoint_[object Object].[object Object]": {
             "auth": {
                 "type": "bearer",
                 "token": {

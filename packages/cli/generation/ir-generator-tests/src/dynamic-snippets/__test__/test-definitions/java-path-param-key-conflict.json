@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:Item": {
+        "type_:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -47,8 +47,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
+                                "unsafeName": "ID",
+                                "safeName": "ID"
                             }
                         },
                         "wireValue": "id"
@@ -97,7 +97,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.createItem": {
+        "endpoint_.[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {

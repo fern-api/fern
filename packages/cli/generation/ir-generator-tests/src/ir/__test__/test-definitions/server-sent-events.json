@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "server-sent-events",
+    "apiName": {
+        "originalName": "server-sent-events",
+        "camelCase": {
+            "unsafeName": "serverSentEvents",
+            "safeName": "serverSentEvents"
+        },
+        "snakeCase": {
+            "unsafeName": "server_sent_events",
+            "safeName": "server_sent_events"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "SERVER_SENT_EVENTS",
+            "safeName": "SERVER_SENT_EVENTS"
+        },
+        "pascalCase": {
+            "unsafeName": "ServerSentEvents",
+            "safeName": "ServerSentEvents"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -13,19 +31,73 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_completions:StreamedCompletion": {
+        "type_[object Object]:[object Object]": {
             "inline": null,
             "name": {
-                "name": "StreamedCompletion",
+                "name": {
+                    "originalName": "StreamedCompletion",
+                    "camelCase": {
+                        "unsafeName": "streamedCompletion",
+                        "safeName": "streamedCompletion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "streamed_completion",
+                        "safeName": "streamed_completion"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "STREAMED_COMPLETION",
+                        "safeName": "STREAMED_COMPLETION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "StreamedCompletion",
+                        "safeName": "StreamedCompletion"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
-                        "completions"
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "completions"
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
                 },
                 "displayName": null,
-                "typeId": "type_completions:StreamedCompletion"
+                "typeId": "type_[object Object]:[object Object]"
             },
             "shape": {
                 "_type": "object",
@@ -33,7 +105,25 @@
                 "properties": [
                     {
                         "name": {
-                            "name": "delta",
+                            "name": {
+                                "originalName": "delta",
+                                "camelCase": {
+                                    "unsafeName": "delta",
+                                    "safeName": "delta"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "delta",
+                                    "safeName": "delta"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DELTA",
+                                    "safeName": "DELTA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Delta",
+                                    "safeName": "Delta"
+                                }
+                            },
                             "wireValue": "delta"
                         },
                         "valueType": {
@@ -57,7 +147,25 @@
                     },
                     {
                         "name": {
-                            "name": "tokens",
+                            "name": {
+                                "originalName": "tokens",
+                                "camelCase": {
+                                    "unsafeName": "tokens",
+                                    "safeName": "tokens"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "tokens",
+                                    "safeName": "tokens"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TOKENS",
+                                    "safeName": "TOKENS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Tokens",
+                                    "safeName": "Tokens"
+                                }
+                            },
                             "wireValue": "tokens"
                         },
                         "valueType": {
@@ -104,15 +212,51 @@
     },
     "errors": {},
     "services": {
-        "service_completions": {
+        "service_[object Object]": {
             "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "completions"
+                        {
+                            "originalName": "completions",
+                            "camelCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "completions",
+                                "safeName": "completions"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMPLETIONS",
+                                "safeName": "COMPLETIONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Completions",
+                                "safeName": "Completions"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "completions"
+                    "file": {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
                 }
             },
             "displayName": null,
@@ -131,8 +275,26 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_completions.stream",
-                    "name": "stream",
+                    "id": "endpoint_[object Object].[object Object]",
+                    "name": {
+                        "originalName": "stream",
+                        "camelCase": {
+                            "unsafeName": "stream",
+                            "safeName": "stream"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "stream",
+                            "safeName": "stream"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAM",
+                            "safeName": "STREAM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Stream",
+                            "safeName": "Stream"
+                        }
+                    },
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -155,12 +317,48 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "StreamCompletionRequest",
+                        "name": {
+                            "originalName": "StreamCompletionRequest",
+                            "camelCase": {
+                                "unsafeName": "streamCompletionRequest",
+                                "safeName": "streamCompletionRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "stream_completion_request",
+                                "safeName": "stream_completion_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STREAM_COMPLETION_REQUEST",
+                                "safeName": "STREAM_COMPLETION_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StreamCompletionRequest",
+                                "safeName": "StreamCompletionRequest"
+                            }
+                        },
                         "extends": [],
                         "properties": [
                             {
                                 "name": {
-                                    "name": "query",
+                                    "name": {
+                                        "originalName": "query",
+                                        "camelCase": {
+                                            "unsafeName": "query",
+                                            "safeName": "query"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "query",
+                                            "safeName": "query"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "QUERY",
+                                            "safeName": "QUERY"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Query",
+                                            "safeName": "Query"
+                                        }
+                                    },
                                     "wireValue": "query"
                                 },
                                 "valueType": {
@@ -193,12 +391,66 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "StreamCompletionRequest",
-                            "bodyKey": "body",
+                            "wrapperName": {
+                                "originalName": "StreamCompletionRequest",
+                                "camelCase": {
+                                    "unsafeName": "streamCompletionRequest",
+                                    "safeName": "streamCompletionRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "stream_completion_request",
+                                    "safeName": "stream_completion_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STREAM_COMPLETION_REQUEST",
+                                    "safeName": "STREAM_COMPLETION_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "StreamCompletionRequest",
+                                    "safeName": "StreamCompletionRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -208,16 +460,70 @@
                                 "type": "sse",
                                 "payload": {
                                     "_type": "named",
-                                    "name": "StreamedCompletion",
+                                    "name": {
+                                        "originalName": "StreamedCompletion",
+                                        "camelCase": {
+                                            "unsafeName": "streamedCompletion",
+                                            "safeName": "streamedCompletion"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "streamed_completion",
+                                            "safeName": "streamed_completion"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "STREAMED_COMPLETION",
+                                            "safeName": "STREAMED_COMPLETION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "StreamedCompletion",
+                                            "safeName": "StreamedCompletion"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [
-                                            "completions"
+                                            {
+                                                "originalName": "completions",
+                                                "camelCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "COMPLETIONS",
+                                                    "safeName": "COMPLETIONS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Completions",
+                                                    "safeName": "Completions"
+                                                }
+                                            }
                                         ],
                                         "packagePath": [],
-                                        "file": "completions"
+                                        "file": {
+                                            "originalName": "completions",
+                                            "camelCase": {
+                                                "unsafeName": "completions",
+                                                "safeName": "completions"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "completions",
+                                                "safeName": "completions"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "COMPLETIONS",
+                                                "safeName": "COMPLETIONS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Completions",
+                                                "safeName": "Completions"
+                                            }
+                                        }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_completions:StreamedCompletion",
+                                    "typeId": "type_[object Object]:[object Object]",
                                     "default": null,
                                     "inline": null
                                 },
@@ -236,7 +542,25 @@
                         {
                             "example": {
                                 "id": "Stream completions",
-                                "name": "Stream completions",
+                                "name": {
+                                    "originalName": "Stream completions",
+                                    "camelCase": {
+                                        "unsafeName": "streamCompletions",
+                                        "safeName": "streamCompletions"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "stream_completions",
+                                        "safeName": "stream_completions"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "STREAM_COMPLETIONS",
+                                        "safeName": "STREAM_COMPLETIONS"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "StreamCompletions",
+                                        "safeName": "StreamCompletions"
+                                    }
+                                },
                                 "url": "/stream",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -249,7 +573,25 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": "query",
+                                                "name": {
+                                                    "originalName": "query",
+                                                    "camelCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "QUERY",
+                                                        "safeName": "QUERY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Query",
+                                                        "safeName": "Query"
+                                                    }
+                                                },
                                                 "wireValue": "query"
                                             },
                                             "value": {
@@ -283,15 +625,69 @@
                                                     "shape": {
                                                         "type": "named",
                                                         "typeName": {
-                                                            "typeId": "type_completions:StreamedCompletion",
+                                                            "typeId": "type_[object Object]:[object Object]",
                                                             "fernFilepath": {
                                                                 "allParts": [
-                                                                    "completions"
+                                                                    {
+                                                                        "originalName": "completions",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "COMPLETIONS",
+                                                                            "safeName": "COMPLETIONS"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Completions",
+                                                                            "safeName": "Completions"
+                                                                        }
+                                                                    }
                                                                 ],
                                                                 "packagePath": [],
-                                                                "file": "completions"
+                                                                "file": {
+                                                                    "originalName": "completions",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "COMPLETIONS",
+                                                                        "safeName": "COMPLETIONS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Completions",
+                                                                        "safeName": "Completions"
+                                                                    }
+                                                                }
                                                             },
-                                                            "name": "StreamedCompletion",
+                                                            "name": {
+                                                                "originalName": "StreamedCompletion",
+                                                                "camelCase": {
+                                                                    "unsafeName": "streamedCompletion",
+                                                                    "safeName": "streamedCompletion"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "streamed_completion",
+                                                                    "safeName": "streamed_completion"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "STREAMED_COMPLETION",
+                                                                    "safeName": "STREAMED_COMPLETION"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "StreamedCompletion",
+                                                                    "safeName": "StreamedCompletion"
+                                                                }
+                                                            },
                                                             "displayName": null
                                                         },
                                                         "shape": {
@@ -299,7 +695,25 @@
                                                             "properties": [
                                                                 {
                                                                     "name": {
-                                                                        "name": "delta",
+                                                                        "name": {
+                                                                            "originalName": "delta",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "delta",
+                                                                                "safeName": "delta"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "delta",
+                                                                                "safeName": "delta"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DELTA",
+                                                                                "safeName": "DELTA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Delta",
+                                                                                "safeName": "Delta"
+                                                                            }
+                                                                        },
                                                                         "wireValue": "delta"
                                                                     },
                                                                     "value": {
@@ -315,22 +729,94 @@
                                                                         "jsonExample": "hello"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
+                                                                        "typeId": "type_[object Object]:[object Object]",
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                "completions"
+                                                                                {
+                                                                                    "originalName": "completions",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "COMPLETIONS",
+                                                                                        "safeName": "COMPLETIONS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Completions",
+                                                                                        "safeName": "Completions"
+                                                                                    }
+                                                                                }
                                                                             ],
                                                                             "packagePath": [],
-                                                                            "file": "completions"
+                                                                            "file": {
+                                                                                "originalName": "completions",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                    "safeName": "COMPLETIONS"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Completions",
+                                                                                    "safeName": "Completions"
+                                                                                }
+                                                                            }
                                                                         },
-                                                                        "name": "StreamedCompletion",
+                                                                        "name": {
+                                                                            "originalName": "StreamedCompletion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "streamedCompletion",
+                                                                                "safeName": "streamedCompletion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "streamed_completion",
+                                                                                "safeName": "streamed_completion"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "STREAMED_COMPLETION",
+                                                                                "safeName": "STREAMED_COMPLETION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "StreamedCompletion",
+                                                                                "safeName": "StreamedCompletion"
+                                                                            }
+                                                                        },
                                                                         "displayName": null
                                                                     },
                                                                     "propertyAccess": null
                                                                 },
                                                                 {
                                                                     "name": {
-                                                                        "name": "tokens",
+                                                                        "name": {
+                                                                            "originalName": "tokens",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "tokens",
+                                                                                "safeName": "tokens"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "tokens",
+                                                                                "safeName": "tokens"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TOKENS",
+                                                                                "safeName": "TOKENS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Tokens",
+                                                                                "safeName": "Tokens"
+                                                                            }
+                                                                        },
                                                                         "wireValue": "tokens"
                                                                     },
                                                                     "value": {
@@ -364,15 +850,69 @@
                                                                         "jsonExample": 1
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
+                                                                        "typeId": "type_[object Object]:[object Object]",
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                "completions"
+                                                                                {
+                                                                                    "originalName": "completions",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "COMPLETIONS",
+                                                                                        "safeName": "COMPLETIONS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Completions",
+                                                                                        "safeName": "Completions"
+                                                                                    }
+                                                                                }
                                                                             ],
                                                                             "packagePath": [],
-                                                                            "file": "completions"
+                                                                            "file": {
+                                                                                "originalName": "completions",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                    "safeName": "COMPLETIONS"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Completions",
+                                                                                    "safeName": "Completions"
+                                                                                }
+                                                                            }
                                                                         },
-                                                                        "name": "StreamedCompletion",
+                                                                        "name": {
+                                                                            "originalName": "StreamedCompletion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "streamedCompletion",
+                                                                                "safeName": "streamedCompletion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "streamed_completion",
+                                                                                "safeName": "streamed_completion"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "STREAMED_COMPLETION",
+                                                                                "safeName": "STREAMED_COMPLETION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "StreamedCompletion",
+                                                                                "safeName": "StreamedCompletion"
+                                                                            }
+                                                                        },
                                                                         "displayName": null
                                                                     },
                                                                     "propertyAccess": null
@@ -393,15 +933,69 @@
                                                     "shape": {
                                                         "type": "named",
                                                         "typeName": {
-                                                            "typeId": "type_completions:StreamedCompletion",
+                                                            "typeId": "type_[object Object]:[object Object]",
                                                             "fernFilepath": {
                                                                 "allParts": [
-                                                                    "completions"
+                                                                    {
+                                                                        "originalName": "completions",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "COMPLETIONS",
+                                                                            "safeName": "COMPLETIONS"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Completions",
+                                                                            "safeName": "Completions"
+                                                                        }
+                                                                    }
                                                                 ],
                                                                 "packagePath": [],
-                                                                "file": "completions"
+                                                                "file": {
+                                                                    "originalName": "completions",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "COMPLETIONS",
+                                                                        "safeName": "COMPLETIONS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Completions",
+                                                                        "safeName": "Completions"
+                                                                    }
+                                                                }
                                                             },
-                                                            "name": "StreamedCompletion",
+                                                            "name": {
+                                                                "originalName": "StreamedCompletion",
+                                                                "camelCase": {
+                                                                    "unsafeName": "streamedCompletion",
+                                                                    "safeName": "streamedCompletion"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "streamed_completion",
+                                                                    "safeName": "streamed_completion"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "STREAMED_COMPLETION",
+                                                                    "safeName": "STREAMED_COMPLETION"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "StreamedCompletion",
+                                                                    "safeName": "StreamedCompletion"
+                                                                }
+                                                            },
                                                             "displayName": null
                                                         },
                                                         "shape": {
@@ -409,7 +1003,25 @@
                                                             "properties": [
                                                                 {
                                                                     "name": {
-                                                                        "name": "delta",
+                                                                        "name": {
+                                                                            "originalName": "delta",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "delta",
+                                                                                "safeName": "delta"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "delta",
+                                                                                "safeName": "delta"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DELTA",
+                                                                                "safeName": "DELTA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Delta",
+                                                                                "safeName": "Delta"
+                                                                            }
+                                                                        },
                                                                         "wireValue": "delta"
                                                                     },
                                                                     "value": {
@@ -425,22 +1037,94 @@
                                                                         "jsonExample": " world"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
+                                                                        "typeId": "type_[object Object]:[object Object]",
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                "completions"
+                                                                                {
+                                                                                    "originalName": "completions",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "COMPLETIONS",
+                                                                                        "safeName": "COMPLETIONS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Completions",
+                                                                                        "safeName": "Completions"
+                                                                                    }
+                                                                                }
                                                                             ],
                                                                             "packagePath": [],
-                                                                            "file": "completions"
+                                                                            "file": {
+                                                                                "originalName": "completions",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                    "safeName": "COMPLETIONS"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Completions",
+                                                                                    "safeName": "Completions"
+                                                                                }
+                                                                            }
                                                                         },
-                                                                        "name": "StreamedCompletion",
+                                                                        "name": {
+                                                                            "originalName": "StreamedCompletion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "streamedCompletion",
+                                                                                "safeName": "streamedCompletion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "streamed_completion",
+                                                                                "safeName": "streamed_completion"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "STREAMED_COMPLETION",
+                                                                                "safeName": "STREAMED_COMPLETION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "StreamedCompletion",
+                                                                                "safeName": "StreamedCompletion"
+                                                                            }
+                                                                        },
                                                                         "displayName": null
                                                                     },
                                                                     "propertyAccess": null
                                                                 },
                                                                 {
                                                                     "name": {
-                                                                        "name": "tokens",
+                                                                        "name": {
+                                                                            "originalName": "tokens",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "tokens",
+                                                                                "safeName": "tokens"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "tokens",
+                                                                                "safeName": "tokens"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TOKENS",
+                                                                                "safeName": "TOKENS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Tokens",
+                                                                                "safeName": "Tokens"
+                                                                            }
+                                                                        },
                                                                         "wireValue": "tokens"
                                                                     },
                                                                     "value": {
@@ -474,15 +1158,69 @@
                                                                         "jsonExample": 2
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
+                                                                        "typeId": "type_[object Object]:[object Object]",
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                "completions"
+                                                                                {
+                                                                                    "originalName": "completions",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "COMPLETIONS",
+                                                                                        "safeName": "COMPLETIONS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Completions",
+                                                                                        "safeName": "Completions"
+                                                                                    }
+                                                                                }
                                                                             ],
                                                                             "packagePath": [],
-                                                                            "file": "completions"
+                                                                            "file": {
+                                                                                "originalName": "completions",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                    "safeName": "COMPLETIONS"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Completions",
+                                                                                    "safeName": "Completions"
+                                                                                }
+                                                                            }
                                                                         },
-                                                                        "name": "StreamedCompletion",
+                                                                        "name": {
+                                                                            "originalName": "StreamedCompletion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "streamedCompletion",
+                                                                                "safeName": "streamedCompletion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "streamed_completion",
+                                                                                "safeName": "streamed_completion"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "STREAMED_COMPLETION",
+                                                                                "safeName": "STREAMED_COMPLETION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "StreamedCompletion",
+                                                                                "safeName": "StreamedCompletion"
+                                                                            }
+                                                                        },
                                                                         "displayName": null
                                                                     },
                                                                     "propertyAccess": null
@@ -508,7 +1246,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "2934753e",
+                                "id": "dafbf13e",
                                 "url": "/stream",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -522,7 +1260,25 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": "query",
+                                                "name": {
+                                                    "originalName": "query",
+                                                    "camelCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "QUERY",
+                                                        "safeName": "QUERY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Query",
+                                                        "safeName": "Query"
+                                                    }
+                                                },
                                                 "wireValue": "query"
                                             },
                                             "originalTypeDeclaration": null,
@@ -559,20 +1315,92 @@
                                                             "properties": [
                                                                 {
                                                                     "name": {
-                                                                        "name": "delta",
+                                                                        "name": {
+                                                                            "originalName": "delta",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "delta",
+                                                                                "safeName": "delta"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "delta",
+                                                                                "safeName": "delta"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DELTA",
+                                                                                "safeName": "DELTA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Delta",
+                                                                                "safeName": "Delta"
+                                                                            }
+                                                                        },
                                                                         "wireValue": "delta"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "name": "StreamedCompletion",
+                                                                        "name": {
+                                                                            "originalName": "StreamedCompletion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "streamedCompletion",
+                                                                                "safeName": "streamedCompletion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "streamed_completion",
+                                                                                "safeName": "streamed_completion"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "STREAMED_COMPLETION",
+                                                                                "safeName": "STREAMED_COMPLETION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "StreamedCompletion",
+                                                                                "safeName": "StreamedCompletion"
+                                                                            }
+                                                                        },
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                "completions"
+                                                                                {
+                                                                                    "originalName": "completions",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "COMPLETIONS",
+                                                                                        "safeName": "COMPLETIONS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Completions",
+                                                                                        "safeName": "Completions"
+                                                                                    }
+                                                                                }
                                                                             ],
                                                                             "packagePath": [],
-                                                                            "file": "completions"
+                                                                            "file": {
+                                                                                "originalName": "completions",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                    "safeName": "COMPLETIONS"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Completions",
+                                                                                    "safeName": "Completions"
+                                                                                }
+                                                                            }
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_completions:StreamedCompletion"
+                                                                        "typeId": "type_[object Object]:[object Object]"
                                                                     },
                                                                     "value": {
                                                                         "shape": {
@@ -590,20 +1418,92 @@
                                                                 },
                                                                 {
                                                                     "name": {
-                                                                        "name": "tokens",
+                                                                        "name": {
+                                                                            "originalName": "tokens",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "tokens",
+                                                                                "safeName": "tokens"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "tokens",
+                                                                                "safeName": "tokens"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TOKENS",
+                                                                                "safeName": "TOKENS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Tokens",
+                                                                                "safeName": "Tokens"
+                                                                            }
+                                                                        },
                                                                         "wireValue": "tokens"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "name": "StreamedCompletion",
+                                                                        "name": {
+                                                                            "originalName": "StreamedCompletion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "streamedCompletion",
+                                                                                "safeName": "streamedCompletion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "streamed_completion",
+                                                                                "safeName": "streamed_completion"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "STREAMED_COMPLETION",
+                                                                                "safeName": "STREAMED_COMPLETION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "StreamedCompletion",
+                                                                                "safeName": "StreamedCompletion"
+                                                                            }
+                                                                        },
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                "completions"
+                                                                                {
+                                                                                    "originalName": "completions",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "COMPLETIONS",
+                                                                                        "safeName": "COMPLETIONS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Completions",
+                                                                                        "safeName": "Completions"
+                                                                                    }
+                                                                                }
                                                                             ],
                                                                             "packagePath": [],
-                                                                            "file": "completions"
+                                                                            "file": {
+                                                                                "originalName": "completions",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                    "safeName": "COMPLETIONS"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Completions",
+                                                                                    "safeName": "Completions"
+                                                                                }
+                                                                            }
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_completions:StreamedCompletion"
+                                                                        "typeId": "type_[object Object]:[object Object]"
                                                                     },
                                                                     "value": {
                                                                         "shape": {
@@ -641,16 +1541,70 @@
                                                             "extraProperties": null
                                                         },
                                                         "typeName": {
-                                                            "name": "StreamedCompletion",
+                                                            "name": {
+                                                                "originalName": "StreamedCompletion",
+                                                                "camelCase": {
+                                                                    "unsafeName": "streamedCompletion",
+                                                                    "safeName": "streamedCompletion"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "streamed_completion",
+                                                                    "safeName": "streamed_completion"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "STREAMED_COMPLETION",
+                                                                    "safeName": "STREAMED_COMPLETION"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "StreamedCompletion",
+                                                                    "safeName": "StreamedCompletion"
+                                                                }
+                                                            },
                                                             "fernFilepath": {
                                                                 "allParts": [
-                                                                    "completions"
+                                                                    {
+                                                                        "originalName": "completions",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "COMPLETIONS",
+                                                                            "safeName": "COMPLETIONS"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Completions",
+                                                                            "safeName": "Completions"
+                                                                        }
+                                                                    }
                                                                 ],
                                                                 "packagePath": [],
-                                                                "file": "completions"
+                                                                "file": {
+                                                                    "originalName": "completions",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "COMPLETIONS",
+                                                                        "safeName": "COMPLETIONS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Completions",
+                                                                        "safeName": "Completions"
+                                                                    }
+                                                                }
                                                             },
                                                             "displayName": null,
-                                                            "typeId": "type_completions:StreamedCompletion"
+                                                            "typeId": "type_[object Object]:[object Object]"
                                                         }
                                                     },
                                                     "jsonExample": {
@@ -679,8 +1633,26 @@
                     "docs": null
                 },
                 {
-                    "id": "endpoint_completions.streamWithoutTerminator",
-                    "name": "streamWithoutTerminator",
+                    "id": "endpoint_[object Object].[object Object]",
+                    "name": {
+                        "originalName": "streamWithoutTerminator",
+                        "camelCase": {
+                            "unsafeName": "streamWithoutTerminator",
+                            "safeName": "streamWithoutTerminator"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "stream_without_terminator",
+                            "safeName": "stream_without_terminator"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STREAM_WITHOUT_TERMINATOR",
+                            "safeName": "STREAM_WITHOUT_TERMINATOR"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "StreamWithoutTerminator",
+                            "safeName": "StreamWithoutTerminator"
+                        }
+                    },
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -703,12 +1675,48 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "StreamCompletionRequestWithoutTerminator",
+                        "name": {
+                            "originalName": "StreamCompletionRequestWithoutTerminator",
+                            "camelCase": {
+                                "unsafeName": "streamCompletionRequestWithoutTerminator",
+                                "safeName": "streamCompletionRequestWithoutTerminator"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "stream_completion_request_without_terminator",
+                                "safeName": "stream_completion_request_without_terminator"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STREAM_COMPLETION_REQUEST_WITHOUT_TERMINATOR",
+                                "safeName": "STREAM_COMPLETION_REQUEST_WITHOUT_TERMINATOR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StreamCompletionRequestWithoutTerminator",
+                                "safeName": "StreamCompletionRequestWithoutTerminator"
+                            }
+                        },
                         "extends": [],
                         "properties": [
                             {
                                 "name": {
-                                    "name": "query",
+                                    "name": {
+                                        "originalName": "query",
+                                        "camelCase": {
+                                            "unsafeName": "query",
+                                            "safeName": "query"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "query",
+                                            "safeName": "query"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "QUERY",
+                                            "safeName": "QUERY"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Query",
+                                            "safeName": "Query"
+                                        }
+                                    },
                                     "wireValue": "query"
                                 },
                                 "valueType": {
@@ -741,12 +1749,66 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "StreamCompletionRequestWithoutTerminator",
-                            "bodyKey": "body",
+                            "wrapperName": {
+                                "originalName": "StreamCompletionRequestWithoutTerminator",
+                                "camelCase": {
+                                    "unsafeName": "streamCompletionRequestWithoutTerminator",
+                                    "safeName": "streamCompletionRequestWithoutTerminator"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "stream_completion_request_without_terminator",
+                                    "safeName": "stream_completion_request_without_terminator"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STREAM_COMPLETION_REQUEST_WITHOUT_TERMINATOR",
+                                    "safeName": "STREAM_COMPLETION_REQUEST_WITHOUT_TERMINATOR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "StreamCompletionRequestWithoutTerminator",
+                                    "safeName": "StreamCompletionRequestWithoutTerminator"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -756,16 +1818,70 @@
                                 "type": "sse",
                                 "payload": {
                                     "_type": "named",
-                                    "name": "StreamedCompletion",
+                                    "name": {
+                                        "originalName": "StreamedCompletion",
+                                        "camelCase": {
+                                            "unsafeName": "streamedCompletion",
+                                            "safeName": "streamedCompletion"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "streamed_completion",
+                                            "safeName": "streamed_completion"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "STREAMED_COMPLETION",
+                                            "safeName": "STREAMED_COMPLETION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "StreamedCompletion",
+                                            "safeName": "StreamedCompletion"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [
-                                            "completions"
+                                            {
+                                                "originalName": "completions",
+                                                "camelCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "completions",
+                                                    "safeName": "completions"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "COMPLETIONS",
+                                                    "safeName": "COMPLETIONS"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Completions",
+                                                    "safeName": "Completions"
+                                                }
+                                            }
                                         ],
                                         "packagePath": [],
-                                        "file": "completions"
+                                        "file": {
+                                            "originalName": "completions",
+                                            "camelCase": {
+                                                "unsafeName": "completions",
+                                                "safeName": "completions"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "completions",
+                                                "safeName": "completions"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "COMPLETIONS",
+                                                "safeName": "COMPLETIONS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Completions",
+                                                "safeName": "Completions"
+                                            }
+                                        }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_completions:StreamedCompletion",
+                                    "typeId": "type_[object Object]:[object Object]",
                                     "default": null,
                                     "inline": null
                                 },
@@ -784,7 +1900,25 @@
                         {
                             "example": {
                                 "id": "Stream without terminator",
-                                "name": "Stream without terminator",
+                                "name": {
+                                    "originalName": "Stream without terminator",
+                                    "camelCase": {
+                                        "unsafeName": "streamWithoutTerminator",
+                                        "safeName": "streamWithoutTerminator"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "stream_without_terminator",
+                                        "safeName": "stream_without_terminator"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "STREAM_WITHOUT_TERMINATOR",
+                                        "safeName": "STREAM_WITHOUT_TERMINATOR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "StreamWithoutTerminator",
+                                        "safeName": "StreamWithoutTerminator"
+                                    }
+                                },
                                 "url": "/stream-no-terminator",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
@@ -797,7 +1931,25 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": "query",
+                                                "name": {
+                                                    "originalName": "query",
+                                                    "camelCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "QUERY",
+                                                        "safeName": "QUERY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Query",
+                                                        "safeName": "Query"
+                                                    }
+                                                },
                                                 "wireValue": "query"
                                             },
                                             "value": {
@@ -831,15 +1983,69 @@
                                                     "shape": {
                                                         "type": "named",
                                                         "typeName": {
-                                                            "typeId": "type_completions:StreamedCompletion",
+                                                            "typeId": "type_[object Object]:[object Object]",
                                                             "fernFilepath": {
                                                                 "allParts": [
-                                                                    "completions"
+                                                                    {
+                                                                        "originalName": "completions",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "COMPLETIONS",
+                                                                            "safeName": "COMPLETIONS"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Completions",
+                                                                            "safeName": "Completions"
+                                                                        }
+                                                                    }
                                                                 ],
                                                                 "packagePath": [],
-                                                                "file": "completions"
+                                                                "file": {
+                                                                    "originalName": "completions",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "COMPLETIONS",
+                                                                        "safeName": "COMPLETIONS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Completions",
+                                                                        "safeName": "Completions"
+                                                                    }
+                                                                }
                                                             },
-                                                            "name": "StreamedCompletion",
+                                                            "name": {
+                                                                "originalName": "StreamedCompletion",
+                                                                "camelCase": {
+                                                                    "unsafeName": "streamedCompletion",
+                                                                    "safeName": "streamedCompletion"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "streamed_completion",
+                                                                    "safeName": "streamed_completion"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "STREAMED_COMPLETION",
+                                                                    "safeName": "STREAMED_COMPLETION"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "StreamedCompletion",
+                                                                    "safeName": "StreamedCompletion"
+                                                                }
+                                                            },
                                                             "displayName": null
                                                         },
                                                         "shape": {
@@ -847,7 +2053,25 @@
                                                             "properties": [
                                                                 {
                                                                     "name": {
-                                                                        "name": "delta",
+                                                                        "name": {
+                                                                            "originalName": "delta",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "delta",
+                                                                                "safeName": "delta"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "delta",
+                                                                                "safeName": "delta"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DELTA",
+                                                                                "safeName": "DELTA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Delta",
+                                                                                "safeName": "Delta"
+                                                                            }
+                                                                        },
                                                                         "wireValue": "delta"
                                                                     },
                                                                     "value": {
@@ -863,22 +2087,94 @@
                                                                         "jsonExample": "delta"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
+                                                                        "typeId": "type_[object Object]:[object Object]",
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                "completions"
+                                                                                {
+                                                                                    "originalName": "completions",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "COMPLETIONS",
+                                                                                        "safeName": "COMPLETIONS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Completions",
+                                                                                        "safeName": "Completions"
+                                                                                    }
+                                                                                }
                                                                             ],
                                                                             "packagePath": [],
-                                                                            "file": "completions"
+                                                                            "file": {
+                                                                                "originalName": "completions",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                    "safeName": "COMPLETIONS"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Completions",
+                                                                                    "safeName": "Completions"
+                                                                                }
+                                                                            }
                                                                         },
-                                                                        "name": "StreamedCompletion",
+                                                                        "name": {
+                                                                            "originalName": "StreamedCompletion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "streamedCompletion",
+                                                                                "safeName": "streamedCompletion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "streamed_completion",
+                                                                                "safeName": "streamed_completion"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "STREAMED_COMPLETION",
+                                                                                "safeName": "STREAMED_COMPLETION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "StreamedCompletion",
+                                                                                "safeName": "StreamedCompletion"
+                                                                            }
+                                                                        },
                                                                         "displayName": null
                                                                     },
                                                                     "propertyAccess": null
                                                                 },
                                                                 {
                                                                     "name": {
-                                                                        "name": "tokens",
+                                                                        "name": {
+                                                                            "originalName": "tokens",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "tokens",
+                                                                                "safeName": "tokens"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "tokens",
+                                                                                "safeName": "tokens"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TOKENS",
+                                                                                "safeName": "TOKENS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Tokens",
+                                                                                "safeName": "Tokens"
+                                                                            }
+                                                                        },
                                                                         "wireValue": "tokens"
                                                                     },
                                                                     "value": {
@@ -912,15 +2208,69 @@
                                                                         "jsonExample": 1
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "typeId": "type_completions:StreamedCompletion",
+                                                                        "typeId": "type_[object Object]:[object Object]",
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                "completions"
+                                                                                {
+                                                                                    "originalName": "completions",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "COMPLETIONS",
+                                                                                        "safeName": "COMPLETIONS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Completions",
+                                                                                        "safeName": "Completions"
+                                                                                    }
+                                                                                }
                                                                             ],
                                                                             "packagePath": [],
-                                                                            "file": "completions"
+                                                                            "file": {
+                                                                                "originalName": "completions",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                    "safeName": "COMPLETIONS"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Completions",
+                                                                                    "safeName": "Completions"
+                                                                                }
+                                                                            }
                                                                         },
-                                                                        "name": "StreamedCompletion",
+                                                                        "name": {
+                                                                            "originalName": "StreamedCompletion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "streamedCompletion",
+                                                                                "safeName": "streamedCompletion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "streamed_completion",
+                                                                                "safeName": "streamed_completion"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "STREAMED_COMPLETION",
+                                                                                "safeName": "STREAMED_COMPLETION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "StreamedCompletion",
+                                                                                "safeName": "StreamedCompletion"
+                                                                            }
+                                                                        },
                                                                         "displayName": null
                                                                     },
                                                                     "propertyAccess": null
@@ -946,7 +2296,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "2934753e",
+                                "id": "dafbf13e",
                                 "url": "/stream-no-terminator",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -960,7 +2310,25 @@
                                     "properties": [
                                         {
                                             "name": {
-                                                "name": "query",
+                                                "name": {
+                                                    "originalName": "query",
+                                                    "camelCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "query",
+                                                        "safeName": "query"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "QUERY",
+                                                        "safeName": "QUERY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Query",
+                                                        "safeName": "Query"
+                                                    }
+                                                },
                                                 "wireValue": "query"
                                             },
                                             "originalTypeDeclaration": null,
@@ -997,20 +2365,92 @@
                                                             "properties": [
                                                                 {
                                                                     "name": {
-                                                                        "name": "delta",
+                                                                        "name": {
+                                                                            "originalName": "delta",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "delta",
+                                                                                "safeName": "delta"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "delta",
+                                                                                "safeName": "delta"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "DELTA",
+                                                                                "safeName": "DELTA"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Delta",
+                                                                                "safeName": "Delta"
+                                                                            }
+                                                                        },
                                                                         "wireValue": "delta"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "name": "StreamedCompletion",
+                                                                        "name": {
+                                                                            "originalName": "StreamedCompletion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "streamedCompletion",
+                                                                                "safeName": "streamedCompletion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "streamed_completion",
+                                                                                "safeName": "streamed_completion"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "STREAMED_COMPLETION",
+                                                                                "safeName": "STREAMED_COMPLETION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "StreamedCompletion",
+                                                                                "safeName": "StreamedCompletion"
+                                                                            }
+                                                                        },
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                "completions"
+                                                                                {
+                                                                                    "originalName": "completions",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "COMPLETIONS",
+                                                                                        "safeName": "COMPLETIONS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Completions",
+                                                                                        "safeName": "Completions"
+                                                                                    }
+                                                                                }
                                                                             ],
                                                                             "packagePath": [],
-                                                                            "file": "completions"
+                                                                            "file": {
+                                                                                "originalName": "completions",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                    "safeName": "COMPLETIONS"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Completions",
+                                                                                    "safeName": "Completions"
+                                                                                }
+                                                                            }
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_completions:StreamedCompletion"
+                                                                        "typeId": "type_[object Object]:[object Object]"
                                                                     },
                                                                     "value": {
                                                                         "shape": {
@@ -1028,20 +2468,92 @@
                                                                 },
                                                                 {
                                                                     "name": {
-                                                                        "name": "tokens",
+                                                                        "name": {
+                                                                            "originalName": "tokens",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "tokens",
+                                                                                "safeName": "tokens"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "tokens",
+                                                                                "safeName": "tokens"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "TOKENS",
+                                                                                "safeName": "TOKENS"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Tokens",
+                                                                                "safeName": "Tokens"
+                                                                            }
+                                                                        },
                                                                         "wireValue": "tokens"
                                                                     },
                                                                     "originalTypeDeclaration": {
-                                                                        "name": "StreamedCompletion",
+                                                                        "name": {
+                                                                            "originalName": "StreamedCompletion",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "streamedCompletion",
+                                                                                "safeName": "streamedCompletion"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "streamed_completion",
+                                                                                "safeName": "streamed_completion"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "STREAMED_COMPLETION",
+                                                                                "safeName": "STREAMED_COMPLETION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "StreamedCompletion",
+                                                                                "safeName": "StreamedCompletion"
+                                                                            }
+                                                                        },
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                "completions"
+                                                                                {
+                                                                                    "originalName": "completions",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "completions",
+                                                                                        "safeName": "completions"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "COMPLETIONS",
+                                                                                        "safeName": "COMPLETIONS"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Completions",
+                                                                                        "safeName": "Completions"
+                                                                                    }
+                                                                                }
                                                                             ],
                                                                             "packagePath": [],
-                                                                            "file": "completions"
+                                                                            "file": {
+                                                                                "originalName": "completions",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "completions",
+                                                                                    "safeName": "completions"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "COMPLETIONS",
+                                                                                    "safeName": "COMPLETIONS"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Completions",
+                                                                                    "safeName": "Completions"
+                                                                                }
+                                                                            }
                                                                         },
                                                                         "displayName": null,
-                                                                        "typeId": "type_completions:StreamedCompletion"
+                                                                        "typeId": "type_[object Object]:[object Object]"
                                                                     },
                                                                     "value": {
                                                                         "shape": {
@@ -1079,16 +2591,70 @@
                                                             "extraProperties": null
                                                         },
                                                         "typeName": {
-                                                            "name": "StreamedCompletion",
+                                                            "name": {
+                                                                "originalName": "StreamedCompletion",
+                                                                "camelCase": {
+                                                                    "unsafeName": "streamedCompletion",
+                                                                    "safeName": "streamedCompletion"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "streamed_completion",
+                                                                    "safeName": "streamed_completion"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "STREAMED_COMPLETION",
+                                                                    "safeName": "STREAMED_COMPLETION"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "StreamedCompletion",
+                                                                    "safeName": "StreamedCompletion"
+                                                                }
+                                                            },
                                                             "fernFilepath": {
                                                                 "allParts": [
-                                                                    "completions"
+                                                                    {
+                                                                        "originalName": "completions",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "completions",
+                                                                            "safeName": "completions"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "COMPLETIONS",
+                                                                            "safeName": "COMPLETIONS"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Completions",
+                                                                            "safeName": "Completions"
+                                                                        }
+                                                                    }
                                                                 ],
                                                                 "packagePath": [],
-                                                                "file": "completions"
+                                                                "file": {
+                                                                    "originalName": "completions",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "completions",
+                                                                        "safeName": "completions"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "COMPLETIONS",
+                                                                        "safeName": "COMPLETIONS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Completions",
+                                                                        "safeName": "Completions"
+                                                                    }
+                                                                }
                                                             },
                                                             "displayName": null,
-                                                            "typeId": "type_completions:StreamedCompletion"
+                                                            "typeId": "type_[object Object]:[object Object]"
                                                         }
                                                     },
                                                     "jsonExample": {
@@ -1122,7 +2688,25 @@
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
             "wireValue": "errorInstanceId"
         }
     },
@@ -1135,8 +2719,8 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
-            "service_completions": [
-                "type_completions:StreamedCompletion"
+            "service_[object Object]": [
+                "type_[object Object]:[object Object]"
             ]
         },
         "sharedTypes": []
@@ -1149,7 +2733,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_completions:StreamedCompletion": {
+            "type_[object Object]:[object Object]": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1286,191 +2870,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_completions.stream": {
-                "auth": null,
-                "declaration": {
-                    "name": {
-                        "originalName": "stream",
-                        "camelCase": {
-                            "unsafeName": "stream",
-                            "safeName": "stream"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "stream",
-                            "safeName": "stream"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "STREAM",
-                            "safeName": "STREAM"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Stream",
-                            "safeName": "Stream"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "completions",
-                                "camelCase": {
-                                    "unsafeName": "completions",
-                                    "safeName": "completions"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "completions",
-                                    "safeName": "completions"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "COMPLETIONS",
-                                    "safeName": "COMPLETIONS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Completions",
-                                    "safeName": "Completions"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "completions",
-                            "camelCase": {
-                                "unsafeName": "completions",
-                                "safeName": "completions"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "completions",
-                                "safeName": "completions"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "COMPLETIONS",
-                                "safeName": "COMPLETIONS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Completions",
-                                "safeName": "Completions"
-                            }
-                        }
-                    }
-                },
-                "location": {
-                    "method": "POST",
-                    "path": "/stream"
-                },
-                "request": {
-                    "type": "inlined",
-                    "declaration": {
-                        "name": {
-                            "originalName": "StreamCompletionRequest",
-                            "camelCase": {
-                                "unsafeName": "streamCompletionRequest",
-                                "safeName": "streamCompletionRequest"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "stream_completion_request",
-                                "safeName": "stream_completion_request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "STREAM_COMPLETION_REQUEST",
-                                "safeName": "STREAM_COMPLETION_REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "StreamCompletionRequest",
-                                "safeName": "StreamCompletionRequest"
-                            }
-                        },
-                        "fernFilepath": {
-                            "allParts": [
-                                {
-                                    "originalName": "completions",
-                                    "camelCase": {
-                                        "unsafeName": "completions",
-                                        "safeName": "completions"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "completions",
-                                        "safeName": "completions"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "COMPLETIONS",
-                                        "safeName": "COMPLETIONS"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Completions",
-                                        "safeName": "Completions"
-                                    }
-                                }
-                            ],
-                            "packagePath": [],
-                            "file": {
-                                "originalName": "completions",
-                                "camelCase": {
-                                    "unsafeName": "completions",
-                                    "safeName": "completions"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "completions",
-                                    "safeName": "completions"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "COMPLETIONS",
-                                    "safeName": "COMPLETIONS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Completions",
-                                    "safeName": "Completions"
-                                }
-                            }
-                        }
-                    },
-                    "pathParameters": [],
-                    "queryParameters": [],
-                    "headers": [],
-                    "body": {
-                        "type": "properties",
-                        "value": [
-                            {
-                                "name": {
-                                    "name": {
-                                        "originalName": "query",
-                                        "camelCase": {
-                                            "unsafeName": "query",
-                                            "safeName": "query"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "query",
-                                            "safeName": "query"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "QUERY",
-                                            "safeName": "QUERY"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Query",
-                                            "safeName": "Query"
-                                        }
-                                    },
-                                    "wireValue": "query"
-                                },
-                                "typeReference": {
-                                    "type": "primitive",
-                                    "value": "STRING"
-                                },
-                                "propertyAccess": null,
-                                "variable": null
-                            }
-                        ]
-                    },
-                    "metadata": {
-                        "includePathParameters": false,
-                        "onlyPathParameters": false
-                    }
-                },
-                "response": {
-                    "type": "streaming"
-                },
-                "examples": null
-            },
-            "endpoint_completions.streamWithoutTerminator": {
+            "endpoint_[object Object].[object Object]": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -1666,20 +3066,72 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_completions": {
-            "name": "completions",
+        "subpackage_[object Object]": {
+            "name": {
+                "originalName": "completions",
+                "camelCase": {
+                    "unsafeName": "completions",
+                    "safeName": "completions"
+                },
+                "snakeCase": {
+                    "unsafeName": "completions",
+                    "safeName": "completions"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "COMPLETIONS",
+                    "safeName": "COMPLETIONS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Completions",
+                    "safeName": "Completions"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "completions"
+                    {
+                        "originalName": "completions",
+                        "camelCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "completions",
+                            "safeName": "completions"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMPLETIONS",
+                            "safeName": "COMPLETIONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Completions",
+                            "safeName": "Completions"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "completions"
+                "file": {
+                    "originalName": "completions",
+                    "camelCase": {
+                        "unsafeName": "completions",
+                        "safeName": "completions"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "completions",
+                        "safeName": "completions"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "COMPLETIONS",
+                        "safeName": "COMPLETIONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Completions",
+                        "safeName": "Completions"
+                    }
+                }
             },
-            "service": "service_completions",
-            "types": [
-                "type_completions:StreamedCompletion"
-            ],
+            "service": "service_[object Object]",
+            "types": [],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -1700,7 +3152,9 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_completions"
+            "subpackage_[object Object]",
+            "subpackage_[object Object]",
+            "subpackage_[object Object]"
         ],
         "webhooks": null,
         "navigationConfig": null,

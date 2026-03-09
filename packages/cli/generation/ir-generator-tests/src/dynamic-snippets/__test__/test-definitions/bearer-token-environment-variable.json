@@ -37,7 +37,7 @@
         }
     ],
     "endpoints": {
-        "endpoint_service.getWithBearerToken": {
+        "endpoint_[object Object].[object Object]": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -55,8 +55,8 @@
                         "safeName": "API_KEY"
                     },
                     "pascalCase": {
-                        "unsafeName": "ApiKey",
-                        "safeName": "ApiKey"
+                        "unsafeName": "APIKey",
+                        "safeName": "APIKey"
                     }
                 }
             },

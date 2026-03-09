@@ -1,26 +1,26 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:User": {
+        "type_:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
-                    "originalName": "User",
+                    "originalName": "Task",
                     "camelCase": {
-                        "unsafeName": "user",
-                        "safeName": "user"
+                        "unsafeName": "task",
+                        "safeName": "task"
                     },
                     "snakeCase": {
-                        "unsafeName": "user",
-                        "safeName": "user"
+                        "unsafeName": "task",
+                        "safeName": "task"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "USER",
-                        "safeName": "USER"
+                        "unsafeName": "TASK",
+                        "safeName": "TASK"
                     },
                     "pascalCase": {
-                        "unsafeName": "User",
-                        "safeName": "User"
+                        "unsafeName": "Task",
+                        "safeName": "Task"
                     }
                 },
                 "fernFilepath": {
@@ -47,8 +47,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
+                                "unsafeName": "ID",
+                                "safeName": "ID"
                             }
                         },
                         "wireValue": "id"
@@ -154,293 +154,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_:Task": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "Task",
-                    "camelCase": {
-                        "unsafeName": "task",
-                        "safeName": "task"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "task",
-                        "safeName": "task"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TASK",
-                        "safeName": "TASK"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Task",
-                        "safeName": "Task"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "id",
-                            "camelCase": {
-                                "unsafeName": "id",
-                                "safeName": "id"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "id",
-                                "safeName": "id"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
-                            }
-                        },
-                        "wireValue": "id"
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": "READ_ONLY",
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "name",
-                            "camelCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NAME",
-                                "safeName": "NAME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Name",
-                                "safeName": "Name"
-                            }
-                        },
-                        "wireValue": "name"
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "email",
-                            "camelCase": {
-                                "unsafeName": "email",
-                                "safeName": "email"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "email",
-                                "safeName": "email"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "EMAIL",
-                                "safeName": "EMAIL"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Email",
-                                "safeName": "Email"
-                            }
-                        },
-                        "wireValue": "email"
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "password",
-                            "camelCase": {
-                                "unsafeName": "password",
-                                "safeName": "password"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "password",
-                                "safeName": "password"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PASSWORD",
-                                "safeName": "PASSWORD"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Password",
-                                "safeName": "Password"
-                            }
-                        },
-                        "wireValue": "password"
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": "WRITE_ONLY",
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_System:Task": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "Task",
-                    "camelCase": {
-                        "unsafeName": "task",
-                        "safeName": "task"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "task",
-                        "safeName": "task"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TASK",
-                        "safeName": "TASK"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Task",
-                        "safeName": "Task"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "System",
-                            "camelCase": {
-                                "unsafeName": "system",
-                                "safeName": "system"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "system",
-                                "safeName": "system"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SYSTEM",
-                                "safeName": "SYSTEM"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "System",
-                                "safeName": "System"
-                            }
-                        }
-                    ],
-                    "packagePath": [
-                        {
-                            "originalName": "System",
-                            "camelCase": {
-                                "unsafeName": "system",
-                                "safeName": "system"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "system",
-                                "safeName": "system"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SYSTEM",
-                                "safeName": "SYSTEM"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "System",
-                                "safeName": "System"
-                            }
-                        }
-                    ],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "name",
-                            "camelCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NAME",
-                                "safeName": "NAME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Name",
-                                "safeName": "Name"
-                            }
-                        },
-                        "wireValue": "name"
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        },
-                        "wireValue": "user"
-                    },
-                    "typeReference": {
-                        "type": "named",
-                        "value": "type_System:User"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_System:User": {
+        "type_[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -518,12 +232,12 @@
                                 "safeName": "line1"
                             },
                             "snakeCase": {
-                                "unsafeName": "line_1",
-                                "safeName": "line_1"
+                                "unsafeName": "line1",
+                                "safeName": "line1"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "LINE_1",
-                                "safeName": "LINE_1"
+                                "unsafeName": "LINE1",
+                                "safeName": "LINE1"
                             },
                             "pascalCase": {
                                 "unsafeName": "Line1",
@@ -548,12 +262,12 @@
                                 "safeName": "line2"
                             },
                             "snakeCase": {
-                                "unsafeName": "line_2",
-                                "safeName": "line_2"
+                                "unsafeName": "line2",
+                                "safeName": "line2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "LINE_2",
-                                "safeName": "LINE_2"
+                                "unsafeName": "LINE2",
+                                "safeName": "LINE2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Line2",
@@ -702,55 +416,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.createUser": {
-            "auth": null,
-            "declaration": {
-                "name": {
-                    "originalName": "createUser",
-                    "camelCase": {
-                        "unsafeName": "createUser",
-                        "safeName": "createUser"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "create_user",
-                        "safeName": "create_user"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CREATE_USER",
-                        "safeName": "CREATE_USER"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CreateUser",
-                        "safeName": "CreateUser"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "location": {
-                "method": "POST",
-                "path": "/users"
-            },
-            "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "named",
-                        "value": "type_:User"
-                    }
-                }
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
-        "endpoint_.createTask": {
+        "endpoint_.[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -789,7 +455,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_:Task"
+                        "value": "type_:[object Object]"
                     }
                 }
             },
@@ -798,95 +464,7 @@
             },
             "examples": null
         },
-        "endpoint_System.createUser": {
-            "auth": null,
-            "declaration": {
-                "name": {
-                    "originalName": "createUser",
-                    "camelCase": {
-                        "unsafeName": "createUser",
-                        "safeName": "createUser"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "create_user",
-                        "safeName": "create_user"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CREATE_USER",
-                        "safeName": "CREATE_USER"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CreateUser",
-                        "safeName": "CreateUser"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "System",
-                            "camelCase": {
-                                "unsafeName": "system",
-                                "safeName": "system"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "system",
-                                "safeName": "system"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SYSTEM",
-                                "safeName": "SYSTEM"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "System",
-                                "safeName": "System"
-                            }
-                        }
-                    ],
-                    "packagePath": [
-                        {
-                            "originalName": "System",
-                            "camelCase": {
-                                "unsafeName": "system",
-                                "safeName": "system"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "system",
-                                "safeName": "system"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SYSTEM",
-                                "safeName": "SYSTEM"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "System",
-                                "safeName": "System"
-                            }
-                        }
-                    ],
-                    "file": null
-                }
-            },
-            "location": {
-                "method": "POST",
-                "path": "/users"
-            },
-            "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "named",
-                        "value": "type_System:User"
-                    }
-                }
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
-        "endpoint_System.createTask": {
+        "endpoint_[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -965,7 +543,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_System:Task"
+                        "value": "type_[object Object]:[object Object]"
                     }
                 }
             },

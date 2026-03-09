@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "builder-extension",
+    "apiName": {
+        "originalName": "builder-extension",
+        "camelCase": {
+            "unsafeName": "builderExtension",
+            "safeName": "builderExtension"
+        },
+        "snakeCase": {
+            "unsafeName": "builder_extension",
+            "safeName": "builder_extension"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "BUILDER_EXTENSION",
+            "safeName": "BUILDER_EXTENSION"
+        },
+        "pascalCase": {
+            "unsafeName": "BuilderExtension",
+            "safeName": "BuilderExtension"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -10,7 +28,25 @@
         "schemes": [
             {
                 "_type": "bearer",
-                "token": "token",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                },
                 "tokenEnvVar": null,
                 "key": "bearer",
                 "docs": null
@@ -21,19 +57,73 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_service:HelloResponse": {
+        "type_[object Object]:[object Object]": {
             "inline": null,
             "name": {
-                "name": "HelloResponse",
+                "name": {
+                    "originalName": "HelloResponse",
+                    "camelCase": {
+                        "unsafeName": "helloResponse",
+                        "safeName": "helloResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "hello_response",
+                        "safeName": "hello_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "HELLO_RESPONSE",
+                        "safeName": "HELLO_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "HelloResponse",
+                        "safeName": "HelloResponse"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
-                        "service"
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "service"
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 },
                 "displayName": null,
-                "typeId": "type_service:HelloResponse"
+                "typeId": "type_[object Object]:[object Object]"
             },
             "shape": {
                 "_type": "object",
@@ -41,7 +131,25 @@
                 "properties": [
                     {
                         "name": {
-                            "name": "message",
+                            "name": {
+                                "originalName": "message",
+                                "camelCase": {
+                                    "unsafeName": "message",
+                                    "safeName": "message"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "message",
+                                    "safeName": "message"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MESSAGE",
+                                    "safeName": "MESSAGE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Message",
+                                    "safeName": "Message"
+                                }
+                            },
                             "wireValue": "message"
                         },
                         "valueType": {
@@ -82,15 +190,51 @@
     },
     "errors": {},
     "services": {
-        "service_service": {
+        "service_[object Object]": {
             "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "service"
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "service"
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "displayName": null,
@@ -109,8 +253,26 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_service.hello",
-                    "name": "hello",
+                    "id": "endpoint_[object Object].[object Object]",
+                    "name": {
+                        "originalName": "hello",
+                        "camelCase": {
+                            "unsafeName": "hello",
+                            "safeName": "hello"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "hello",
+                            "safeName": "hello"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "HELLO",
+                            "safeName": "HELLO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Hello",
+                            "safeName": "Hello"
+                        }
+                    },
                     "displayName": null,
                     "auth": true,
                     "security": [
@@ -145,16 +307,70 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": "HelloResponse",
+                                    "name": {
+                                        "originalName": "HelloResponse",
+                                        "camelCase": {
+                                            "unsafeName": "helloResponse",
+                                            "safeName": "helloResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "hello_response",
+                                            "safeName": "hello_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "HELLO_RESPONSE",
+                                            "safeName": "HELLO_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "HelloResponse",
+                                            "safeName": "HelloResponse"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [
-                                            "service"
+                                            {
+                                                "originalName": "service",
+                                                "camelCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SERVICE",
+                                                    "safeName": "SERVICE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Service",
+                                                    "safeName": "Service"
+                                                }
+                                            }
                                         ],
                                         "packagePath": [],
-                                        "file": "service"
+                                        "file": {
+                                            "originalName": "service",
+                                            "camelCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SERVICE",
+                                                "safeName": "SERVICE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Service",
+                                                "safeName": "Service"
+                                            }
+                                        }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_service:HelloResponse",
+                                    "typeId": "type_[object Object]:[object Object]",
                                     "default": null,
                                     "inline": null
                                 },
@@ -172,7 +388,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "50bcaad8",
+                                "id": "f99a4f73",
                                 "url": "/api/hello",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -194,20 +410,92 @@
                                                     "properties": [
                                                         {
                                                             "name": {
-                                                                "name": "message",
+                                                                "name": {
+                                                                    "originalName": "message",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "message",
+                                                                        "safeName": "message"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "message",
+                                                                        "safeName": "message"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "MESSAGE",
+                                                                        "safeName": "MESSAGE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Message",
+                                                                        "safeName": "Message"
+                                                                    }
+                                                                },
                                                                 "wireValue": "message"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "name": "HelloResponse",
+                                                                "name": {
+                                                                    "originalName": "HelloResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "helloResponse",
+                                                                        "safeName": "helloResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "hello_response",
+                                                                        "safeName": "hello_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "HELLO_RESPONSE",
+                                                                        "safeName": "HELLO_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "HelloResponse",
+                                                                        "safeName": "HelloResponse"
+                                                                    }
+                                                                },
                                                                 "fernFilepath": {
                                                                     "allParts": [
-                                                                        "service"
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
                                                                     ],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:HelloResponse"
+                                                                "typeId": "type_[object Object]:[object Object]"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -227,16 +515,70 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": "HelloResponse",
+                                                    "name": {
+                                                        "originalName": "HelloResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "helloResponse",
+                                                            "safeName": "helloResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "hello_response",
+                                                            "safeName": "hello_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "HELLO_RESPONSE",
+                                                            "safeName": "HELLO_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "HelloResponse",
+                                                            "safeName": "HelloResponse"
+                                                        }
+                                                    },
                                                     "fernFilepath": {
                                                         "allParts": [
-                                                            "service"
+                                                            {
+                                                                "originalName": "service",
+                                                                "camelCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SERVICE",
+                                                                    "safeName": "SERVICE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Service",
+                                                                    "safeName": "Service"
+                                                                }
+                                                            }
                                                         ],
                                                         "packagePath": [],
-                                                        "file": "service"
+                                                        "file": {
+                                                            "originalName": "service",
+                                                            "camelCase": {
+                                                                "unsafeName": "service",
+                                                                "safeName": "service"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "service",
+                                                                "safeName": "service"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SERVICE",
+                                                                "safeName": "SERVICE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Service",
+                                                                "safeName": "Service"
+                                                            }
+                                                        }
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_service:HelloResponse"
+                                                    "typeId": "type_[object Object]:[object Object]"
                                                 }
                                             },
                                             "jsonExample": {
@@ -266,7 +608,25 @@
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
             "wireValue": "errorInstanceId"
         }
     },
@@ -277,7 +637,25 @@
             "environments": [
                 {
                     "id": "Production",
-                    "name": "Production",
+                    "name": {
+                        "originalName": "Production",
+                        "camelCase": {
+                            "unsafeName": "production",
+                            "safeName": "production"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "production",
+                            "safeName": "production"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTION",
+                            "safeName": "PRODUCTION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Production",
+                            "safeName": "Production"
+                        }
+                    },
                     "url": "https://api.example.com",
                     "audiences": null,
                     "defaultUrl": null,
@@ -287,7 +665,25 @@
                 },
                 {
                     "id": "Development",
-                    "name": "Development",
+                    "name": {
+                        "originalName": "Development",
+                        "camelCase": {
+                            "unsafeName": "development",
+                            "safeName": "development"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "development",
+                            "safeName": "development"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEVELOPMENT",
+                            "safeName": "DEVELOPMENT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Development",
+                            "safeName": "Development"
+                        }
+                    },
                     "url": "https://api.${DEV_NAMESPACE}.example.com",
                     "audiences": null,
                     "defaultUrl": null,
@@ -297,7 +693,25 @@
                 },
                 {
                     "id": "Staging",
-                    "name": "Staging",
+                    "name": {
+                        "originalName": "Staging",
+                        "camelCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STAGING",
+                            "safeName": "STAGING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Staging",
+                            "safeName": "Staging"
+                        }
+                    },
                     "url": "https://api.${STAGE_ENV}.example.com",
                     "audiences": null,
                     "defaultUrl": null,
@@ -316,8 +730,8 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
-            "service_service": [
-                "type_service:HelloResponse"
+            "service_[object Object]": [
+                "type_[object Object]:[object Object]"
             ]
         },
         "sharedTypes": []
@@ -330,7 +744,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_service:HelloResponse": {
+            "type_[object Object]:[object Object]": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -434,7 +848,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_service.hello": {
+            "endpoint_[object Object].[object Object]": {
                 "auth": {
                     "type": "bearer",
                     "token": {
@@ -626,20 +1040,72 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_service": {
-            "name": "service",
+        "subpackage_[object Object]": {
+            "name": {
+                "originalName": "service",
+                "camelCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "snakeCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "SERVICE",
+                    "safeName": "SERVICE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Service",
+                    "safeName": "Service"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "service"
+                    {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "service"
+                "file": {
+                    "originalName": "service",
+                    "camelCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SERVICE",
+                        "safeName": "SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Service",
+                        "safeName": "Service"
+                    }
+                }
             },
-            "service": "service_service",
-            "types": [
-                "type_service:HelloResponse"
-            ],
+            "service": "service_[object Object]",
+            "types": [],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -660,7 +1126,9 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_service"
+            "subpackage_[object Object]",
+            "subpackage_[object Object]",
+            "subpackage_[object Object]"
         ],
         "webhooks": null,
         "navigationConfig": null,

@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        }
+    },
     "apiDisplayName": "Test API",
     "apiDocs": null,
     "auth": {
@@ -15,15 +33,51 @@
     "types": {},
     "errors": {},
     "services": {
-        "service_dataservice": {
+        "service_[object Object]": {
             "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "dataservice"
+                        {
+                            "originalName": "dataservice",
+                            "camelCase": {
+                                "unsafeName": "dataservice",
+                                "safeName": "dataservice"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dataservice",
+                                "safeName": "dataservice"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATASERVICE",
+                                "safeName": "DATASERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dataservice",
+                                "safeName": "Dataservice"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "dataservice"
+                    "file": {
+                        "originalName": "dataservice",
+                        "camelCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DATASERVICE",
+                            "safeName": "DATASERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dataservice",
+                            "safeName": "Dataservice"
+                        }
+                    }
                 }
             },
             "displayName": null,
@@ -42,8 +96,26 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_dataservice.foo",
-                    "name": "foo",
+                    "id": "endpoint_[object Object].[object Object]",
+                    "name": {
+                        "originalName": "foo",
+                        "camelCase": {
+                            "unsafeName": "foo",
+                            "safeName": "foo"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "foo",
+                            "safeName": "foo"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FOO",
+                            "safeName": "FOO"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Foo",
+                            "safeName": "Foo"
+                        }
+                    },
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -268,7 +340,25 @@
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
             "wireValue": "errorInstanceId"
         }
     },
@@ -279,7 +369,25 @@
             "environments": [
                 {
                     "id": "Default",
-                    "name": "Default",
+                    "name": {
+                        "originalName": "Default",
+                        "camelCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "default",
+                            "safeName": "default"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEFAULT",
+                            "safeName": "DEFAULT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Default",
+                            "safeName": "Default"
+                        }
+                    },
                     "url": "https://localhost",
                     "audiences": null,
                     "defaultUrl": null,
@@ -310,7 +418,7 @@
         "types": {},
         "headers": [],
         "endpoints": {
-            "endpoint_dataservice.foo": {
+            "endpoint_[object Object].[object Object]": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -433,17 +541,71 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_dataservice": {
-            "name": "dataservice",
+        "subpackage_[object Object]": {
+            "name": {
+                "originalName": "dataservice",
+                "camelCase": {
+                    "unsafeName": "dataservice",
+                    "safeName": "dataservice"
+                },
+                "snakeCase": {
+                    "unsafeName": "dataservice",
+                    "safeName": "dataservice"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "DATASERVICE",
+                    "safeName": "DATASERVICE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Dataservice",
+                    "safeName": "Dataservice"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "dataservice"
+                    {
+                        "originalName": "dataservice",
+                        "camelCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dataservice",
+                            "safeName": "dataservice"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DATASERVICE",
+                            "safeName": "DATASERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dataservice",
+                            "safeName": "Dataservice"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "dataservice"
+                "file": {
+                    "originalName": "dataservice",
+                    "camelCase": {
+                        "unsafeName": "dataservice",
+                        "safeName": "dataservice"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "dataservice",
+                        "safeName": "dataservice"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DATASERVICE",
+                        "safeName": "DATASERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Dataservice",
+                        "safeName": "Dataservice"
+                    }
+                }
             },
-            "service": "service_dataservice",
+            "service": "service_[object Object]",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -465,7 +627,7 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_dataservice"
+            "subpackage_[object Object]"
         ],
         "webhooks": null,
         "navigationConfig": null,

@@ -1,81 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_literals:LiteralString": {
-            "type": "alias",
-            "declaration": {
-                "name": {
-                    "originalName": "LiteralString",
-                    "camelCase": {
-                        "unsafeName": "literalString",
-                        "safeName": "literalString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "literal_string",
-                        "safeName": "literal_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "LITERAL_STRING",
-                        "safeName": "LITERAL_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "LiteralString",
-                        "safeName": "LiteralString"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "literals",
-                            "camelCase": {
-                                "unsafeName": "literals",
-                                "safeName": "literals"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "literals",
-                                "safeName": "literals"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "LITERALS",
-                                "safeName": "LITERALS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Literals",
-                                "safeName": "Literals"
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "literals",
-                        "camelCase": {
-                            "unsafeName": "literals",
-                            "safeName": "literals"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "literals",
-                            "safeName": "literals"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "LITERALS",
-                            "safeName": "LITERALS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Literals",
-                            "safeName": "Literals"
-                        }
-                    }
-                }
-            },
-            "typeReference": {
-                "type": "literal",
-                "value": {
-                    "type": "string",
-                    "value": "literally"
-                }
-            }
-        },
-        "type_literals:UnionOverLiteral": {
+        "type_[object Object]:[object Object]": {
             "type": "undiscriminatedUnion",
             "declaration": {
                 "name": {
@@ -148,7 +74,7 @@
                 },
                 {
                     "type": "named",
-                    "value": "type_literals:LiteralString"
+                    "value": "type_[object Object]:[object Object]"
                 }
             ]
         }

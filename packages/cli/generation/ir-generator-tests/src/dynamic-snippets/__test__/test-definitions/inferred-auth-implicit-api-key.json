@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_auth:TokenResponse": {
+        "type_[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -198,562 +198,10 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_auth.getToken": {
+        "endpoint_[object Object].[object Object]": {
             "auth": {
                 "type": "inferred",
-                "parameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "api_key",
-                                "camelCase": {
-                                    "unsafeName": "apiKey",
-                                    "safeName": "apiKey"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "api_key",
-                                    "safeName": "api_key"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "API_KEY",
-                                    "safeName": "API_KEY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ApiKey",
-                                    "safeName": "ApiKey"
-                                }
-                            },
-                            "wireValue": "X-Api-Key"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ]
-            },
-            "declaration": {
-                "name": {
-                    "originalName": "getToken",
-                    "camelCase": {
-                        "unsafeName": "getToken",
-                        "safeName": "getToken"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "get_token",
-                        "safeName": "get_token"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "GET_TOKEN",
-                        "safeName": "GET_TOKEN"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "GetToken",
-                        "safeName": "GetToken"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "auth",
-                            "camelCase": {
-                                "unsafeName": "auth",
-                                "safeName": "auth"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "auth",
-                                "safeName": "auth"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "AUTH",
-                                "safeName": "AUTH"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Auth",
-                                "safeName": "Auth"
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "auth",
-                        "camelCase": {
-                            "unsafeName": "auth",
-                            "safeName": "auth"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "auth",
-                            "safeName": "auth"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "AUTH",
-                            "safeName": "AUTH"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Auth",
-                            "safeName": "Auth"
-                        }
-                    }
-                }
-            },
-            "location": {
-                "method": "POST",
-                "path": "/token"
-            },
-            "request": {
-                "type": "inlined",
-                "declaration": {
-                    "name": {
-                        "originalName": "GetTokenRequest",
-                        "camelCase": {
-                            "unsafeName": "getTokenRequest",
-                            "safeName": "getTokenRequest"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get_token_request",
-                            "safeName": "get_token_request"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET_TOKEN_REQUEST",
-                            "safeName": "GET_TOKEN_REQUEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "GetTokenRequest",
-                            "safeName": "GetTokenRequest"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "auth",
-                                "camelCase": {
-                                    "unsafeName": "auth",
-                                    "safeName": "auth"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "auth",
-                                    "safeName": "auth"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "AUTH",
-                                    "safeName": "AUTH"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Auth",
-                                    "safeName": "Auth"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "auth",
-                            "camelCase": {
-                                "unsafeName": "auth",
-                                "safeName": "auth"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "auth",
-                                "safeName": "auth"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "AUTH",
-                                "safeName": "AUTH"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Auth",
-                                "safeName": "Auth"
-                            }
-                        }
-                    }
-                },
-                "pathParameters": [],
-                "queryParameters": [],
-                "headers": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "api_key",
-                                "camelCase": {
-                                    "unsafeName": "apiKey",
-                                    "safeName": "apiKey"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "api_key",
-                                    "safeName": "api_key"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "API_KEY",
-                                    "safeName": "API_KEY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ApiKey",
-                                    "safeName": "ApiKey"
-                                }
-                            },
-                            "wireValue": "X-Api-Key"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ],
-                "body": null,
-                "metadata": {
-                    "includePathParameters": false,
-                    "onlyPathParameters": false
-                }
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
-        "endpoint_nested-no-auth/api.getSomething": {
-            "auth": {
-                "type": "inferred",
-                "parameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "api_key",
-                                "camelCase": {
-                                    "unsafeName": "apiKey",
-                                    "safeName": "apiKey"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "api_key",
-                                    "safeName": "api_key"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "API_KEY",
-                                    "safeName": "API_KEY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ApiKey",
-                                    "safeName": "ApiKey"
-                                }
-                            },
-                            "wireValue": "X-Api-Key"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ]
-            },
-            "declaration": {
-                "name": {
-                    "originalName": "getSomething",
-                    "camelCase": {
-                        "unsafeName": "getSomething",
-                        "safeName": "getSomething"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "get_something",
-                        "safeName": "get_something"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "GET_SOMETHING",
-                        "safeName": "GET_SOMETHING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "GetSomething",
-                        "safeName": "GetSomething"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "nested-no-auth",
-                            "camelCase": {
-                                "unsafeName": "nestedNoAuth",
-                                "safeName": "nestedNoAuth"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "nested_no_auth",
-                                "safeName": "nested_no_auth"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NESTED_NO_AUTH",
-                                "safeName": "NESTED_NO_AUTH"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "NestedNoAuth",
-                                "safeName": "NestedNoAuth"
-                            }
-                        },
-                        {
-                            "originalName": "api",
-                            "camelCase": {
-                                "unsafeName": "api",
-                                "safeName": "api"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "api",
-                                "safeName": "api"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "API",
-                                "safeName": "API"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Api",
-                                "safeName": "Api"
-                            }
-                        }
-                    ],
-                    "packagePath": [
-                        {
-                            "originalName": "nested-no-auth",
-                            "camelCase": {
-                                "unsafeName": "nestedNoAuth",
-                                "safeName": "nestedNoAuth"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "nested_no_auth",
-                                "safeName": "nested_no_auth"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NESTED_NO_AUTH",
-                                "safeName": "NESTED_NO_AUTH"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "NestedNoAuth",
-                                "safeName": "NestedNoAuth"
-                            }
-                        }
-                    ],
-                    "file": {
-                        "originalName": "api",
-                        "camelCase": {
-                            "unsafeName": "api",
-                            "safeName": "api"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "api",
-                            "safeName": "api"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "API",
-                            "safeName": "API"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Api",
-                            "safeName": "Api"
-                        }
-                    }
-                }
-            },
-            "location": {
-                "method": "GET",
-                "path": "/nested-no-auth/get-something"
-            },
-            "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": null
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
-        "endpoint_nested/api.getSomething": {
-            "auth": {
-                "type": "inferred",
-                "parameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "api_key",
-                                "camelCase": {
-                                    "unsafeName": "apiKey",
-                                    "safeName": "apiKey"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "api_key",
-                                    "safeName": "api_key"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "API_KEY",
-                                    "safeName": "API_KEY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ApiKey",
-                                    "safeName": "ApiKey"
-                                }
-                            },
-                            "wireValue": "X-Api-Key"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ]
-            },
-            "declaration": {
-                "name": {
-                    "originalName": "getSomething",
-                    "camelCase": {
-                        "unsafeName": "getSomething",
-                        "safeName": "getSomething"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "get_something",
-                        "safeName": "get_something"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "GET_SOMETHING",
-                        "safeName": "GET_SOMETHING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "GetSomething",
-                        "safeName": "GetSomething"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "nested",
-                            "camelCase": {
-                                "unsafeName": "nested",
-                                "safeName": "nested"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "nested",
-                                "safeName": "nested"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NESTED",
-                                "safeName": "NESTED"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Nested",
-                                "safeName": "Nested"
-                            }
-                        },
-                        {
-                            "originalName": "api",
-                            "camelCase": {
-                                "unsafeName": "api",
-                                "safeName": "api"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "api",
-                                "safeName": "api"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "API",
-                                "safeName": "API"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Api",
-                                "safeName": "Api"
-                            }
-                        }
-                    ],
-                    "packagePath": [
-                        {
-                            "originalName": "nested",
-                            "camelCase": {
-                                "unsafeName": "nested",
-                                "safeName": "nested"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "nested",
-                                "safeName": "nested"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NESTED",
-                                "safeName": "NESTED"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Nested",
-                                "safeName": "Nested"
-                            }
-                        }
-                    ],
-                    "file": {
-                        "originalName": "api",
-                        "camelCase": {
-                            "unsafeName": "api",
-                            "safeName": "api"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "api",
-                            "safeName": "api"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "API",
-                            "safeName": "API"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Api",
-                            "safeName": "Api"
-                        }
-                    }
-                }
-            },
-            "location": {
-                "method": "GET",
-                "path": "/nested/get-something"
-            },
-            "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": null
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
-        "endpoint_simple.getSomething": {
-            "auth": {
-                "type": "inferred",
-                "parameters": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "api_key",
-                                "camelCase": {
-                                    "unsafeName": "apiKey",
-                                    "safeName": "apiKey"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "api_key",
-                                    "safeName": "api_key"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "API_KEY",
-                                    "safeName": "API_KEY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ApiKey",
-                                    "safeName": "ApiKey"
-                                }
-                            },
-                            "wireValue": "X-Api-Key"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ]
+                "parameters": []
             },
             "declaration": {
                 "name": {
@@ -822,6 +270,128 @@
             "location": {
                 "method": "GET",
                 "path": "/get-something"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        },
+        "endpoint_[object Object]/[object Object].[object Object]": {
+            "auth": {
+                "type": "inferred",
+                "parameters": []
+            },
+            "declaration": {
+                "name": {
+                    "originalName": "getSomething",
+                    "camelCase": {
+                        "unsafeName": "getSomething",
+                        "safeName": "getSomething"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get_something",
+                        "safeName": "get_something"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET_SOMETHING",
+                        "safeName": "GET_SOMETHING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "GetSomething",
+                        "safeName": "GetSomething"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        },
+                        {
+                            "originalName": "api",
+                            "camelCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "api",
+                                "safeName": "api"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "API",
+                                "safeName": "API"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "nested",
+                            "camelCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "nested",
+                                "safeName": "nested"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NESTED",
+                                "safeName": "NESTED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Nested",
+                                "safeName": "Nested"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "api",
+                        "camelCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "api",
+                            "safeName": "api"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "API",
+                            "safeName": "API"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/nested/get-something"
             },
             "request": {
                 "type": "body",

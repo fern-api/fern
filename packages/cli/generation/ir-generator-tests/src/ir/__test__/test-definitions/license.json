@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "license",
+    "apiName": {
+        "originalName": "license",
+        "camelCase": {
+            "unsafeName": "license",
+            "safeName": "license"
+        },
+        "snakeCase": {
+            "unsafeName": "license",
+            "safeName": "license"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "LICENSE",
+            "safeName": "LICENSE"
+        },
+        "pascalCase": {
+            "unsafeName": "License",
+            "safeName": "License"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -13,17 +31,35 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_:Type": {
+        "type_:[object Object]": {
             "inline": null,
             "name": {
-                "name": "Type",
+                "name": {
+                    "originalName": "Type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
                     "file": null
                 },
                 "displayName": null,
-                "typeId": "type_:Type"
+                "typeId": "type_:[object Object]"
             },
             "shape": {
                 "_type": "object",
@@ -31,7 +67,25 @@
                 "properties": [
                     {
                         "name": {
-                            "name": "name",
+                            "name": {
+                                "originalName": "name",
+                                "camelCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NAME",
+                                    "safeName": "NAME"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Name",
+                                    "safeName": "Name"
+                                }
+                            },
                             "wireValue": "name"
                         },
                         "valueType": {
@@ -97,8 +151,26 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_.get",
-                    "name": "get",
+                    "id": "endpoint_.[object Object]",
+                    "name": {
+                        "originalName": "get",
+                        "camelCase": {
+                            "unsafeName": "get",
+                            "safeName": "get"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get",
+                            "safeName": "get"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET",
+                            "safeName": "GET"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Get",
+                            "safeName": "Get"
+                        }
+                    },
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -172,7 +244,25 @@
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
             "wireValue": "errorInstanceId"
         }
     },
@@ -186,7 +276,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_:Type"
+            "type_:[object Object]"
         ]
     },
     "webhookGroups": {},
@@ -197,7 +287,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_:Type": {
+            "type_:[object Object]": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -263,7 +353,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_.get": {
+            "endpoint_.[object Object]": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -326,7 +416,7 @@
         "websocket": null,
         "service": "service_",
         "types": [
-            "type_:Type"
+            "type_:[object Object]"
         ],
         "errors": [],
         "subpackages": [],

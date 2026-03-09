@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:Type": {
+        "type_:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -67,7 +67,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.get": {
+        "endpoint_.[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {

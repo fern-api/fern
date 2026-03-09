@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:Id": {
+        "type_:[object Object]": {
             "type": "alias",
             "declaration": {
                 "name": {
@@ -19,8 +19,8 @@
                         "safeName": "ID"
                     },
                     "pascalCase": {
-                        "unsafeName": "Id",
-                        "safeName": "Id"
+                        "unsafeName": "ID",
+                        "safeName": "ID"
                     }
                 },
                 "fernFilepath": {
@@ -34,272 +34,7 @@
                 "value": "STRING"
             }
         },
-        "type_organization:Organization": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "Organization",
-                    "camelCase": {
-                        "unsafeName": "organization",
-                        "safeName": "organization"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "organization",
-                        "safeName": "organization"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ORGANIZATION",
-                        "safeName": "ORGANIZATION"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Organization",
-                        "safeName": "Organization"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "organization",
-                            "camelCase": {
-                                "unsafeName": "organization",
-                                "safeName": "organization"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "organization",
-                                "safeName": "organization"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ORGANIZATION",
-                                "safeName": "ORGANIZATION"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Organization",
-                                "safeName": "Organization"
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "organization",
-                        "camelCase": {
-                            "unsafeName": "organization",
-                            "safeName": "organization"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "organization",
-                            "safeName": "organization"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ORGANIZATION",
-                            "safeName": "ORGANIZATION"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Organization",
-                            "safeName": "Organization"
-                        }
-                    }
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "id",
-                            "camelCase": {
-                                "unsafeName": "id",
-                                "safeName": "id"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "id",
-                                "safeName": "id"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ID",
-                                "safeName": "ID"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
-                            }
-                        },
-                        "wireValue": "id"
-                    },
-                    "typeReference": {
-                        "type": "named",
-                        "value": "type_:Id"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "name",
-                            "camelCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NAME",
-                                "safeName": "NAME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Name",
-                                "safeName": "Name"
-                            }
-                        },
-                        "wireValue": "name"
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "users",
-                            "camelCase": {
-                                "unsafeName": "users",
-                                "safeName": "users"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "users",
-                                "safeName": "users"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USERS",
-                                "safeName": "USERS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Users",
-                                "safeName": "Users"
-                            }
-                        },
-                        "wireValue": "users"
-                    },
-                    "typeReference": {
-                        "type": "list",
-                        "value": {
-                            "type": "named",
-                            "value": "type_user:User"
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_organization:CreateOrganizationRequest": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "CreateOrganizationRequest",
-                    "camelCase": {
-                        "unsafeName": "createOrganizationRequest",
-                        "safeName": "createOrganizationRequest"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "create_organization_request",
-                        "safeName": "create_organization_request"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CREATE_ORGANIZATION_REQUEST",
-                        "safeName": "CREATE_ORGANIZATION_REQUEST"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CreateOrganizationRequest",
-                        "safeName": "CreateOrganizationRequest"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "organization",
-                            "camelCase": {
-                                "unsafeName": "organization",
-                                "safeName": "organization"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "organization",
-                                "safeName": "organization"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ORGANIZATION",
-                                "safeName": "ORGANIZATION"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Organization",
-                                "safeName": "Organization"
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "organization",
-                        "camelCase": {
-                            "unsafeName": "organization",
-                            "safeName": "organization"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "organization",
-                            "safeName": "organization"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ORGANIZATION",
-                            "safeName": "ORGANIZATION"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Organization",
-                            "safeName": "Organization"
-                        }
-                    }
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "name",
-                            "camelCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NAME",
-                                "safeName": "NAME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Name",
-                                "safeName": "Name"
-                            }
-                        },
-                        "wireValue": "name"
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_user:User": {
+        "type_[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -383,15 +118,15 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
+                                "unsafeName": "ID",
+                                "safeName": "ID"
                             }
                         },
                         "wireValue": "id"
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_:Id"
+                        "value": "type_:[object Object]"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -460,7 +195,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_user/events:Event": {
+        "type_[object Object]/[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -583,15 +318,15 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
+                                "unsafeName": "ID",
+                                "safeName": "ID"
                             }
                         },
                         "wireValue": "id"
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_:Id"
+                        "value": "type_:[object Object]"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -630,7 +365,7 @@
             "extends": null,
             "additionalProperties": false
         },
-        "type_user/events/metadata:Metadata": {
+        "type_[object Object]/[object Object]/[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -791,15 +526,15 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
+                                "unsafeName": "ID",
+                                "safeName": "ID"
                             }
                         },
                         "wireValue": "id"
                     },
                     "typeReference": {
                         "type": "named",
-                        "value": "type_:Id"
+                        "value": "type_:[object Object]"
                     },
                     "propertyAccess": null,
                     "variable": null
@@ -840,93 +575,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_organization.create": {
-            "auth": null,
-            "declaration": {
-                "name": {
-                    "originalName": "create",
-                    "camelCase": {
-                        "unsafeName": "create",
-                        "safeName": "create"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "create",
-                        "safeName": "create"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CREATE",
-                        "safeName": "CREATE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Create",
-                        "safeName": "Create"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "organization",
-                            "camelCase": {
-                                "unsafeName": "organization",
-                                "safeName": "organization"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "organization",
-                                "safeName": "organization"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ORGANIZATION",
-                                "safeName": "ORGANIZATION"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Organization",
-                                "safeName": "Organization"
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "organization",
-                        "camelCase": {
-                            "unsafeName": "organization",
-                            "safeName": "organization"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "organization",
-                            "safeName": "organization"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ORGANIZATION",
-                            "safeName": "ORGANIZATION"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Organization",
-                            "safeName": "Organization"
-                        }
-                    }
-                }
-            },
-            "location": {
-                "method": "POST",
-                "path": "/organizations/"
-            },
-            "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "named",
-                        "value": "type_organization:CreateOrganizationRequest"
-                    }
-                }
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
-        "endpoint_user.list": {
+        "endpoint_[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -1110,7 +759,7 @@
             },
             "examples": null
         },
-        "endpoint_user/events.listEvents": {
+        "endpoint_[object Object]/[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -1372,7 +1021,7 @@
             },
             "examples": null
         },
-        "endpoint_user/events/metadata.getMetadata": {
+        "endpoint_[object Object]/[object Object]/[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -1681,15 +1330,15 @@
                                     "safeName": "ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Id",
-                                    "safeName": "Id"
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
                                 }
                             },
                             "wireValue": "id"
                         },
                         "typeReference": {
                             "type": "named",
-                            "value": "type_:Id"
+                            "value": "type_:[object Object]"
                         },
                         "propertyAccess": null,
                         "variable": null

@@ -3,7 +3,7 @@
     "types": {},
     "headers": [],
     "endpoints": {
-        "endpoint_single-property.doThing": {
+        "endpoint_[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -157,8 +157,8 @@
                                     "safeName": "ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Id",
-                                    "safeName": "Id"
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
                                 }
                             },
                             "wireValue": "id"

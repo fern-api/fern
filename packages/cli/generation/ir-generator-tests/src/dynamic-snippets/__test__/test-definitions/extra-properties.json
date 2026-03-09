@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:Failure": {
+        "type_:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -67,7 +67,7 @@
             "extends": null,
             "additionalProperties": true
         },
-        "type_user:User": {
+        "type_[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -171,7 +171,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_user.createUser": {
+        "endpoint_[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {

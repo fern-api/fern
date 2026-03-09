@@ -1,100 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:Task": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "Task",
-                    "camelCase": {
-                        "unsafeName": "task",
-                        "safeName": "task"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "task",
-                        "safeName": "task"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "TASK",
-                        "safeName": "TASK"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Task",
-                        "safeName": "Task"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "name",
-                            "camelCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "name",
-                                "safeName": "name"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NAME",
-                                "safeName": "NAME"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Name",
-                                "safeName": "Name"
-                            }
-                        },
-                        "wireValue": "name"
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "user",
-                            "camelCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "user",
-                                "safeName": "user"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "USER",
-                                "safeName": "USER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "User",
-                                "safeName": "User"
-                            }
-                        },
-                        "wireValue": "user"
-                    },
-                    "typeReference": {
-                        "type": "named",
-                        "value": "type_:User"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_:User": {
+        "type_:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -132,12 +39,12 @@
                                 "safeName": "line1"
                             },
                             "snakeCase": {
-                                "unsafeName": "line_1",
-                                "safeName": "line_1"
+                                "unsafeName": "line1",
+                                "safeName": "line1"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "LINE_1",
-                                "safeName": "LINE_1"
+                                "unsafeName": "LINE1",
+                                "safeName": "LINE1"
                             },
                             "pascalCase": {
                                 "unsafeName": "Line1",
@@ -162,12 +69,12 @@
                                 "safeName": "line2"
                             },
                             "snakeCase": {
-                                "unsafeName": "line_2",
-                                "safeName": "line_2"
+                                "unsafeName": "line2",
+                                "safeName": "line2"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "LINE_2",
-                                "safeName": "LINE_2"
+                                "unsafeName": "LINE2",
+                                "safeName": "LINE2"
                             },
                             "pascalCase": {
                                 "unsafeName": "Line2",
@@ -316,103 +223,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.createUser": {
-            "auth": null,
-            "declaration": {
-                "name": {
-                    "originalName": "createUser",
-                    "camelCase": {
-                        "unsafeName": "createUser",
-                        "safeName": "createUser"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "create_user",
-                        "safeName": "create_user"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CREATE_USER",
-                        "safeName": "CREATE_USER"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CreateUser",
-                        "safeName": "CreateUser"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "location": {
-                "method": "POST",
-                "path": "/users"
-            },
-            "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "named",
-                        "value": "type_:User"
-                    }
-                }
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
-        "endpoint_.createTask": {
-            "auth": null,
-            "declaration": {
-                "name": {
-                    "originalName": "createTask",
-                    "camelCase": {
-                        "unsafeName": "createTask",
-                        "safeName": "createTask"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "create_task",
-                        "safeName": "create_task"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CREATE_TASK",
-                        "safeName": "CREATE_TASK"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CreateTask",
-                        "safeName": "CreateTask"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "location": {
-                "method": "POST",
-                "path": "/users"
-            },
-            "request": {
-                "type": "body",
-                "pathParameters": [],
-                "body": {
-                    "type": "typeReference",
-                    "value": {
-                        "type": "named",
-                        "value": "type_:Task"
-                    }
-                }
-            },
-            "response": {
-                "type": "json"
-            },
-            "examples": null
-        },
-        "endpoint_.emptyResponse": {
+        "endpoint_.[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -451,7 +262,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_:Task"
+                        "value": "type_:[object Object]"
                     }
                 }
             },

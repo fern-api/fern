@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_service:User": {
+        "type_[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -85,8 +85,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
+                                "unsafeName": "ID",
+                                "safeName": "ID"
                             }
                         },
                         "wireValue": "id"
@@ -135,7 +135,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_service.getUser": {
+        "endpoint_[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -213,8 +213,8 @@
                             "name": {
                                 "originalName": "userId",
                                 "camelCase": {
-                                    "unsafeName": "userId",
-                                    "safeName": "userId"
+                                    "unsafeName": "userID",
+                                    "safeName": "userID"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "user_id",
@@ -225,8 +225,8 @@
                                     "safeName": "USER_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "UserId",
-                                    "safeName": "UserId"
+                                    "unsafeName": "UserID",
+                                    "safeName": "UserID"
                                 }
                             },
                             "wireValue": "userId"

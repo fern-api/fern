@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "single-property",
+    "apiName": {
+        "originalName": "single-property",
+        "camelCase": {
+            "unsafeName": "singleProperty",
+            "safeName": "singleProperty"
+        },
+        "snakeCase": {
+            "unsafeName": "single_property",
+            "safeName": "single_property"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "SINGLE_PROPERTY",
+            "safeName": "SINGLE_PROPERTY"
+        },
+        "pascalCase": {
+            "unsafeName": "SingleProperty",
+            "safeName": "SingleProperty"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -15,15 +33,51 @@
     "types": {},
     "errors": {},
     "services": {
-        "service_single-property": {
+        "service_[object Object]": {
             "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "single-property"
+                        {
+                            "originalName": "single-property",
+                            "camelCase": {
+                                "unsafeName": "singleProperty",
+                                "safeName": "singleProperty"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "single_property",
+                                "safeName": "single_property"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SINGLE_PROPERTY",
+                                "safeName": "SINGLE_PROPERTY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SingleProperty",
+                                "safeName": "SingleProperty"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "single-property"
+                    "file": {
+                        "originalName": "single-property",
+                        "camelCase": {
+                            "unsafeName": "singleProperty",
+                            "safeName": "singleProperty"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "single_property",
+                            "safeName": "single_property"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SINGLE_PROPERTY",
+                            "safeName": "SINGLE_PROPERTY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SingleProperty",
+                            "safeName": "SingleProperty"
+                        }
+                    }
                 }
             },
             "displayName": null,
@@ -42,8 +96,26 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_single-property.doThing",
-                    "name": "doThing",
+                    "id": "endpoint_[object Object].[object Object]",
+                    "name": {
+                        "originalName": "doThing",
+                        "camelCase": {
+                            "unsafeName": "doThing",
+                            "safeName": "doThing"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "do_thing",
+                            "safeName": "do_thing"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DO_THING",
+                            "safeName": "DO_THING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "DoThing",
+                            "safeName": "DoThing"
+                        }
+                    },
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -72,7 +144,25 @@
                     },
                     "pathParameters": [
                         {
-                            "name": "id",
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                }
+                            },
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -96,7 +186,25 @@
                     ],
                     "allPathParameters": [
                         {
-                            "name": "id",
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                }
+                            },
                             "valueType": {
                                 "_type": "primitive",
                                 "primitive": {
@@ -121,7 +229,25 @@
                     "queryParameters": [
                         {
                             "name": {
-                                "name": "include-remote-data",
+                                "name": {
+                                    "originalName": "include-remote-data",
+                                    "camelCase": {
+                                        "unsafeName": "includeRemoteData",
+                                        "safeName": "includeRemoteData"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "include_remote_data",
+                                        "safeName": "include_remote_data"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "INCLUDE_REMOTE_DATA",
+                                        "safeName": "INCLUDE_REMOTE_DATA"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "IncludeRemoteData",
+                                        "safeName": "IncludeRemoteData"
+                                    }
+                                },
                                 "wireValue": "include-remote-data"
                             },
                             "valueType": {
@@ -156,12 +282,66 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "GetThingRequest",
-                            "bodyKey": "body",
+                            "wrapperName": {
+                                "originalName": "GetThingRequest",
+                                "camelCase": {
+                                    "unsafeName": "getThingRequest",
+                                    "safeName": "getThingRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "get_thing_request",
+                                    "safeName": "get_thing_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "GET_THING_REQUEST",
+                                    "safeName": "GET_THING_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "GetThingRequest",
+                                    "safeName": "GetThingRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
                             "includePathParameters": true,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -194,13 +374,31 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "fd306a5f",
+                                "id": "a52a5ddc",
                                 "url": "/id",
                                 "name": null,
                                 "endpointHeaders": [],
                                 "endpointPathParameters": [
                                     {
-                                        "name": "id",
+                                        "name": {
+                                            "originalName": "id",
+                                            "camelCase": {
+                                                "unsafeName": "id",
+                                                "safeName": "id"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "id",
+                                                "safeName": "id"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ID",
+                                                "safeName": "ID"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ID",
+                                                "safeName": "ID"
+                                            }
+                                        },
                                         "value": {
                                             "shape": {
                                                 "type": "primitive",
@@ -259,7 +457,25 @@
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
             "wireValue": "errorInstanceId"
         }
     },
@@ -284,7 +500,7 @@
         "types": {},
         "headers": [],
         "endpoints": {
-            "endpoint_single-property.doThing": {
+            "endpoint_[object Object].[object Object]": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -511,17 +727,71 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_single-property": {
-            "name": "single-property",
+        "subpackage_[object Object]": {
+            "name": {
+                "originalName": "single-property",
+                "camelCase": {
+                    "unsafeName": "singleProperty",
+                    "safeName": "singleProperty"
+                },
+                "snakeCase": {
+                    "unsafeName": "single_property",
+                    "safeName": "single_property"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "SINGLE_PROPERTY",
+                    "safeName": "SINGLE_PROPERTY"
+                },
+                "pascalCase": {
+                    "unsafeName": "SingleProperty",
+                    "safeName": "SingleProperty"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "single-property"
+                    {
+                        "originalName": "single-property",
+                        "camelCase": {
+                            "unsafeName": "singleProperty",
+                            "safeName": "singleProperty"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "single_property",
+                            "safeName": "single_property"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SINGLE_PROPERTY",
+                            "safeName": "SINGLE_PROPERTY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SingleProperty",
+                            "safeName": "SingleProperty"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "single-property"
+                "file": {
+                    "originalName": "single-property",
+                    "camelCase": {
+                        "unsafeName": "singleProperty",
+                        "safeName": "singleProperty"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "single_property",
+                        "safeName": "single_property"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SINGLE_PROPERTY",
+                        "safeName": "SINGLE_PROPERTY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SingleProperty",
+                        "safeName": "SingleProperty"
+                    }
+                }
             },
-            "service": "service_single-property",
+            "service": "service_[object Object]",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -543,7 +813,7 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_single-property"
+            "subpackage_[object Object]"
         ],
         "webhooks": null,
         "navigationConfig": null,

@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:EchoRequest": {
+        "type_:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -97,7 +97,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.echo": {
+        "endpoint_.[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -136,7 +136,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_:EchoRequest"
+                        "value": "type_:[object Object]"
                     }
                 }
             },
@@ -145,7 +145,7 @@
             },
             "examples": null
         },
-        "endpoint_service.nop": {
+        "endpoint_[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -223,8 +223,8 @@
                             "name": {
                                 "originalName": "nestedId",
                                 "camelCase": {
-                                    "unsafeName": "nestedId",
-                                    "safeName": "nestedId"
+                                    "unsafeName": "nestedID",
+                                    "safeName": "nestedID"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "nested_id",
@@ -235,8 +235,8 @@
                                     "safeName": "NESTED_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "NestedId",
-                                    "safeName": "NestedId"
+                                    "unsafeName": "NestedID",
+                                    "safeName": "NestedID"
                                 }
                             },
                             "wireValue": "nestedId"
@@ -275,8 +275,8 @@
                         "safeName": "ID"
                     },
                     "pascalCase": {
-                        "unsafeName": "Id",
-                        "safeName": "Id"
+                        "unsafeName": "ID",
+                        "safeName": "ID"
                     }
                 },
                 "wireValue": "id"

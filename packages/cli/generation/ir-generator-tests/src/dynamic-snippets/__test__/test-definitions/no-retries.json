@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_retries:User": {
+        "type_[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -85,8 +85,8 @@
                                 "safeName": "ID"
                             },
                             "pascalCase": {
-                                "unsafeName": "Id",
-                                "safeName": "Id"
+                                "unsafeName": "ID",
+                                "safeName": "ID"
                             }
                         },
                         "wireValue": "id"
@@ -135,7 +135,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_retries.getUsers": {
+        "endpoint_[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {

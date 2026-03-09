@@ -1,139 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:SortField": {
-            "type": "alias",
-            "declaration": {
-                "name": {
-                    "originalName": "SortField",
-                    "camelCase": {
-                        "unsafeName": "sortField",
-                        "safeName": "sortField"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "sort_field",
-                        "safeName": "sort_field"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SORT_FIELD",
-                        "safeName": "SORT_FIELD"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SortField",
-                        "safeName": "SortField"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "typeReference": {
-                "type": "literal",
-                "value": {
-                    "type": "string",
-                    "value": "DEFAULT"
-                }
-            }
-        },
-        "type_:SearchRequest": {
-            "type": "object",
-            "declaration": {
-                "name": {
-                    "originalName": "SearchRequest",
-                    "camelCase": {
-                        "unsafeName": "searchRequest",
-                        "safeName": "searchRequest"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "search_request",
-                        "safeName": "search_request"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SEARCH_REQUEST",
-                        "safeName": "SEARCH_REQUEST"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "SearchRequest",
-                        "safeName": "SearchRequest"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": [],
-                    "file": null
-                }
-            },
-            "properties": [
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "sortField",
-                            "camelCase": {
-                                "unsafeName": "sortField",
-                                "safeName": "sortField"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "sort_field",
-                                "safeName": "sort_field"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SORT_FIELD",
-                                "safeName": "SORT_FIELD"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "SortField",
-                                "safeName": "SortField"
-                            }
-                        },
-                        "wireValue": "sortField"
-                    },
-                    "typeReference": {
-                        "type": "optional",
-                        "value": {
-                            "type": "named",
-                            "value": "type_:SortField"
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "name": {
-                            "originalName": "query",
-                            "camelCase": {
-                                "unsafeName": "query",
-                                "safeName": "query"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "query",
-                                "safeName": "query"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "QUERY",
-                                "safeName": "QUERY"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Query",
-                                "safeName": "Query"
-                            }
-                        },
-                        "wireValue": "query"
-                    },
-                    "typeReference": {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                }
-            ],
-            "extends": null,
-            "additionalProperties": false
-        },
-        "type_:SearchResponse": {
+        "type_:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -199,7 +67,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.search": {
+        "endpoint_.[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {
@@ -238,7 +106,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_:SearchRequest"
+                        "value": "type_:[object Object]"
                     }
                 }
             },

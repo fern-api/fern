@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_imdb:CreateMovieRequest": {
+        "type_[object Object]:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -135,7 +135,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_imdb.createMovie": {
+        "endpoint_[object Object].[object Object]": {
             "auth": {
                 "type": "bearer",
                 "token": {
@@ -233,7 +233,7 @@
                     "type": "typeReference",
                     "value": {
                         "type": "named",
-                        "value": "type_imdb:CreateMovieRequest"
+                        "value": "type_[object Object]:[object Object]"
                     }
                 }
             },

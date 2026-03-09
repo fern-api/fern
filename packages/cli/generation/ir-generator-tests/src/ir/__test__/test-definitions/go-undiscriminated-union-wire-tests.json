@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -10,7 +28,25 @@
         "schemes": [
             {
                 "_type": "bearer",
-                "token": "token",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                },
                 "tokenEnvVar": null,
                 "key": "bearer",
                 "docs": null
@@ -21,84 +57,73 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
-        "type_service:DocumentItem": {
+        "type_[object Object]:[object Object]": {
             "inline": null,
             "name": {
-                "name": "DocumentItem",
+                "name": {
+                    "originalName": "RerankResponse",
+                    "camelCase": {
+                        "unsafeName": "rerankResponse",
+                        "safeName": "rerankResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "rerank_response",
+                        "safeName": "rerank_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RERANK_RESPONSE",
+                        "safeName": "RERANK_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RerankResponse",
+                        "safeName": "RerankResponse"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [
-                        "service"
-                    ],
-                    "packagePath": [],
-                    "file": "service"
-                },
-                "displayName": null,
-                "typeId": "type_service:DocumentItem"
-            },
-            "shape": {
-                "_type": "undiscriminatedUnion",
-                "members": [
-                    {
-                        "type": {
-                            "_type": "primitive",
-                            "primitive": {
-                                "v1": "STRING",
-                                "v2": {
-                                    "type": "string",
-                                    "default": null,
-                                    "validation": null
-                                }
-                            }
-                        },
-                        "docs": null
-                    },
-                    {
-                        "type": {
-                            "_type": "named",
-                            "name": "DocumentObject",
-                            "fernFilepath": {
-                                "allParts": [
-                                    "service"
-                                ],
-                                "packagePath": [],
-                                "file": "service"
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
                             },
-                            "displayName": "Document Object",
-                            "typeId": "type_service:DocumentObject",
-                            "default": null,
-                            "inline": null
-                        },
-                        "docs": null
-                    }
-                ]
-            },
-            "referencedTypes": [
-                "type_service:DocumentObject"
-            ],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_service:DocumentObject": {
-            "inline": null,
-            "name": {
-                "name": "DocumentObject",
-                "fernFilepath": {
-                    "allParts": [
-                        "service"
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "service"
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 },
                 "displayName": null,
-                "typeId": "type_service:DocumentObject"
+                "typeId": "type_[object Object]:[object Object]"
             },
             "shape": {
                 "_type": "object",
@@ -106,160 +131,25 @@
                 "properties": [
                     {
                         "name": {
-                            "name": "text",
-                            "wireValue": "text"
-                        },
-                        "valueType": {
-                            "_type": "primitive",
-                            "primitive": {
-                                "v1": "STRING",
-                                "v2": {
-                                    "type": "string",
-                                    "default": null,
-                                    "validation": null
+                            "name": {
+                                "originalName": "results",
+                                "camelCase": {
+                                    "unsafeName": "results",
+                                    "safeName": "results"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "results",
+                                    "safeName": "results"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESULTS",
+                                    "safeName": "RESULTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Results",
+                                    "safeName": "Results"
                                 }
-                            }
-                        },
-                        "propertyAccess": null,
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": []
-            },
-            "referencedTypes": [],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_service:RerankRequest": {
-            "inline": null,
-            "name": {
-                "name": "RerankRequest",
-                "fernFilepath": {
-                    "allParts": [
-                        "service"
-                    ],
-                    "packagePath": [],
-                    "file": "service"
-                },
-                "displayName": null,
-                "typeId": "type_service:RerankRequest"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
-                    {
-                        "name": {
-                            "name": "documents",
-                            "wireValue": "documents"
-                        },
-                        "valueType": {
-                            "_type": "container",
-                            "container": {
-                                "_type": "list",
-                                "list": {
-                                    "_type": "named",
-                                    "name": "DocumentItem",
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            "service"
-                                        ],
-                                        "packagePath": [],
-                                        "file": "service"
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_service:DocumentItem",
-                                    "default": null,
-                                    "inline": null
-                                }
-                            }
-                        },
-                        "propertyAccess": null,
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": null
-                    },
-                    {
-                        "name": {
-                            "name": "query",
-                            "wireValue": "query"
-                        },
-                        "valueType": {
-                            "_type": "primitive",
-                            "primitive": {
-                                "v1": "STRING",
-                                "v2": {
-                                    "type": "string",
-                                    "default": null,
-                                    "validation": null
-                                }
-                            }
-                        },
-                        "propertyAccess": null,
-                        "v2Examples": {
-                            "userSpecifiedExamples": {},
-                            "autogeneratedExamples": {}
-                        },
-                        "availability": null,
-                        "docs": null
-                    }
-                ],
-                "extra-properties": false,
-                "extendedProperties": []
-            },
-            "referencedTypes": [
-                "type_service:DocumentItem",
-                "type_service:DocumentObject"
-            ],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "v2Examples": null,
-            "availability": null,
-            "docs": null
-        },
-        "type_service:RerankResponse": {
-            "inline": null,
-            "name": {
-                "name": "RerankResponse",
-                "fernFilepath": {
-                    "allParts": [
-                        "service"
-                    ],
-                    "packagePath": [],
-                    "file": "service"
-                },
-                "displayName": null,
-                "typeId": "type_service:RerankResponse"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [],
-                "properties": [
-                    {
-                        "name": {
-                            "name": "results",
+                            },
                             "wireValue": "results"
                         },
                         "valueType": {
@@ -306,15 +196,51 @@
     },
     "errors": {},
     "services": {
-        "service_service": {
+        "service_[object Object]": {
             "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "service"
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "service"
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "displayName": null,
@@ -333,8 +259,26 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_service.rerank",
-                    "name": "rerank",
+                    "id": "endpoint_[object Object].[object Object]",
+                    "name": {
+                        "originalName": "rerank",
+                        "camelCase": {
+                            "unsafeName": "rerank",
+                            "safeName": "rerank"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "rerank",
+                            "safeName": "rerank"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "RERANK",
+                            "safeName": "RERANK"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Rerank",
+                            "safeName": "Rerank"
+                        }
+                    },
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -359,16 +303,70 @@
                         "type": "reference",
                         "requestBodyType": {
                             "_type": "named",
-                            "name": "RerankRequest",
+                            "name": {
+                                "originalName": "RerankRequest",
+                                "camelCase": {
+                                    "unsafeName": "rerankRequest",
+                                    "safeName": "rerankRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "rerank_request",
+                                    "safeName": "rerank_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RERANK_REQUEST",
+                                    "safeName": "RERANK_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RerankRequest",
+                                    "safeName": "RerankRequest"
+                                }
+                            },
                             "fernFilepath": {
                                 "allParts": [
-                                    "service"
+                                    {
+                                        "originalName": "service",
+                                        "camelCase": {
+                                            "unsafeName": "service",
+                                            "safeName": "service"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "service",
+                                            "safeName": "service"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SERVICE",
+                                            "safeName": "SERVICE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Service",
+                                            "safeName": "Service"
+                                        }
+                                    }
                                 ],
                                 "packagePath": [],
-                                "file": "service"
+                                "file": {
+                                    "originalName": "service",
+                                    "camelCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SERVICE",
+                                        "safeName": "SERVICE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Service",
+                                        "safeName": "Service"
+                                    }
+                                }
                             },
                             "displayName": null,
-                            "typeId": "type_service:RerankRequest",
+                            "typeId": "type_[object Object]:[object Object]",
                             "default": null,
                             "inline": null
                         },
@@ -384,16 +382,70 @@
                                 "type": "typeReference",
                                 "requestBodyType": {
                                     "_type": "named",
-                                    "name": "RerankRequest",
+                                    "name": {
+                                        "originalName": "RerankRequest",
+                                        "camelCase": {
+                                            "unsafeName": "rerankRequest",
+                                            "safeName": "rerankRequest"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "rerank_request",
+                                            "safeName": "rerank_request"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RERANK_REQUEST",
+                                            "safeName": "RERANK_REQUEST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RerankRequest",
+                                            "safeName": "RerankRequest"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [
-                                            "service"
+                                            {
+                                                "originalName": "service",
+                                                "camelCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SERVICE",
+                                                    "safeName": "SERVICE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Service",
+                                                    "safeName": "Service"
+                                                }
+                                            }
                                         ],
                                         "packagePath": [],
-                                        "file": "service"
+                                        "file": {
+                                            "originalName": "service",
+                                            "camelCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SERVICE",
+                                                "safeName": "SERVICE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Service",
+                                                "safeName": "Service"
+                                            }
+                                        }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_service:RerankRequest",
+                                    "typeId": "type_[object Object]:[object Object]",
                                     "default": null,
                                     "inline": null
                                 },
@@ -402,7 +454,25 @@
                                 "v2Examples": null
                             }
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -412,16 +482,70 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": "RerankResponse",
+                                    "name": {
+                                        "originalName": "RerankResponse",
+                                        "camelCase": {
+                                            "unsafeName": "rerankResponse",
+                                            "safeName": "rerankResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "rerank_response",
+                                            "safeName": "rerank_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RERANK_RESPONSE",
+                                            "safeName": "RERANK_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RerankResponse",
+                                            "safeName": "RerankResponse"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [
-                                            "service"
+                                            {
+                                                "originalName": "service",
+                                                "camelCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SERVICE",
+                                                    "safeName": "SERVICE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Service",
+                                                    "safeName": "Service"
+                                                }
+                                            }
                                         ],
                                         "packagePath": [],
-                                        "file": "service"
+                                        "file": {
+                                            "originalName": "service",
+                                            "camelCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SERVICE",
+                                                "safeName": "SERVICE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Service",
+                                                "safeName": "Service"
+                                            }
+                                        }
                                     },
                                     "displayName": null,
-                                    "typeId": "type_service:RerankResponse",
+                                    "typeId": "type_[object Object]:[object Object]",
                                     "default": null,
                                     "inline": null
                                 },
@@ -452,15 +576,69 @@
                                     "shape": {
                                         "type": "named",
                                         "typeName": {
-                                            "typeId": "type_service:RerankRequest",
+                                            "typeId": "type_[object Object]:[object Object]",
                                             "fernFilepath": {
                                                 "allParts": [
-                                                    "service"
+                                                    {
+                                                        "originalName": "service",
+                                                        "camelCase": {
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SERVICE",
+                                                            "safeName": "SERVICE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Service",
+                                                            "safeName": "Service"
+                                                        }
+                                                    }
                                                 ],
                                                 "packagePath": [],
-                                                "file": "service"
+                                                "file": {
+                                                    "originalName": "service",
+                                                    "camelCase": {
+                                                        "unsafeName": "service",
+                                                        "safeName": "service"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "service",
+                                                        "safeName": "service"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SERVICE",
+                                                        "safeName": "SERVICE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Service",
+                                                        "safeName": "Service"
+                                                    }
+                                                }
                                             },
-                                            "name": "RerankRequest",
+                                            "name": {
+                                                "originalName": "RerankRequest",
+                                                "camelCase": {
+                                                    "unsafeName": "rerankRequest",
+                                                    "safeName": "rerankRequest"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "rerank_request",
+                                                    "safeName": "rerank_request"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "RERANK_REQUEST",
+                                                    "safeName": "RERANK_REQUEST"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "RerankRequest",
+                                                    "safeName": "RerankRequest"
+                                                }
+                                            },
                                             "displayName": null
                                         },
                                         "shape": {
@@ -468,7 +646,25 @@
                                             "properties": [
                                                 {
                                                     "name": {
-                                                        "name": "documents",
+                                                        "name": {
+                                                            "originalName": "documents",
+                                                            "camelCase": {
+                                                                "unsafeName": "documents",
+                                                                "safeName": "documents"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "documents",
+                                                                "safeName": "documents"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "DOCUMENTS",
+                                                                "safeName": "DOCUMENTS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Documents",
+                                                                "safeName": "Documents"
+                                                            }
+                                                        },
                                                         "wireValue": "documents"
                                                     },
                                                     "value": {
@@ -479,79 +675,9 @@
                                                                 "list": [
                                                                     {
                                                                         "shape": {
-                                                                            "type": "named",
-                                                                            "typeName": {
-                                                                                "typeId": "type_service:DocumentItem",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "service"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "service"
-                                                                                },
-                                                                                "name": "DocumentItem",
-                                                                                "displayName": null
-                                                                            },
-                                                                            "shape": {
-                                                                                "type": "undiscriminatedUnion",
-                                                                                "index": 1,
-                                                                                "singleUnionType": {
-                                                                                    "shape": {
-                                                                                        "type": "named",
-                                                                                        "typeName": {
-                                                                                            "typeId": "type_service:DocumentObject",
-                                                                                            "fernFilepath": {
-                                                                                                "allParts": [
-                                                                                                    "service"
-                                                                                                ],
-                                                                                                "packagePath": [],
-                                                                                                "file": "service"
-                                                                                            },
-                                                                                            "name": "DocumentObject",
-                                                                                            "displayName": null
-                                                                                        },
-                                                                                        "shape": {
-                                                                                            "type": "object",
-                                                                                            "properties": [
-                                                                                                {
-                                                                                                    "name": {
-                                                                                                        "name": "text",
-                                                                                                        "wireValue": "text"
-                                                                                                    },
-                                                                                                    "value": {
-                                                                                                        "shape": {
-                                                                                                            "type": "primitive",
-                                                                                                            "primitive": {
-                                                                                                                "type": "string",
-                                                                                                                "string": {
-                                                                                                                    "original": "Carson City is the capital city of the American state of Nevada."
-                                                                                                                }
-                                                                                                            }
-                                                                                                        },
-                                                                                                        "jsonExample": "Carson City is the capital city of the American state of Nevada."
-                                                                                                    },
-                                                                                                    "originalTypeDeclaration": {
-                                                                                                        "typeId": "type_service:DocumentObject",
-                                                                                                        "fernFilepath": {
-                                                                                                            "allParts": [
-                                                                                                                "service"
-                                                                                                            ],
-                                                                                                            "packagePath": [],
-                                                                                                            "file": "service"
-                                                                                                        },
-                                                                                                        "name": "DocumentObject",
-                                                                                                        "displayName": null
-                                                                                                    },
-                                                                                                    "propertyAccess": null
-                                                                                                }
-                                                                                            ],
-                                                                                            "extraProperties": null
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": {
-                                                                                        "text": "Carson City is the capital city of the American state of Nevada."
-                                                                                    }
-                                                                                }
+                                                                            "type": "unknown",
+                                                                            "unknown": {
+                                                                                "text": "Carson City is the capital city of the American state of Nevada."
                                                                             }
                                                                         },
                                                                         "jsonExample": {
@@ -560,79 +686,9 @@
                                                                     },
                                                                     {
                                                                         "shape": {
-                                                                            "type": "named",
-                                                                            "typeName": {
-                                                                                "typeId": "type_service:DocumentItem",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "service"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "service"
-                                                                                },
-                                                                                "name": "DocumentItem",
-                                                                                "displayName": null
-                                                                            },
-                                                                            "shape": {
-                                                                                "type": "undiscriminatedUnion",
-                                                                                "index": 1,
-                                                                                "singleUnionType": {
-                                                                                    "shape": {
-                                                                                        "type": "named",
-                                                                                        "typeName": {
-                                                                                            "typeId": "type_service:DocumentObject",
-                                                                                            "fernFilepath": {
-                                                                                                "allParts": [
-                                                                                                    "service"
-                                                                                                ],
-                                                                                                "packagePath": [],
-                                                                                                "file": "service"
-                                                                                            },
-                                                                                            "name": "DocumentObject",
-                                                                                            "displayName": null
-                                                                                        },
-                                                                                        "shape": {
-                                                                                            "type": "object",
-                                                                                            "properties": [
-                                                                                                {
-                                                                                                    "name": {
-                                                                                                        "name": "text",
-                                                                                                        "wireValue": "text"
-                                                                                                    },
-                                                                                                    "value": {
-                                                                                                        "shape": {
-                                                                                                            "type": "primitive",
-                                                                                                            "primitive": {
-                                                                                                                "type": "string",
-                                                                                                                "string": {
-                                                                                                                    "original": "Washington, D.C. is the capital of the United States."
-                                                                                                                }
-                                                                                                            }
-                                                                                                        },
-                                                                                                        "jsonExample": "Washington, D.C. is the capital of the United States."
-                                                                                                    },
-                                                                                                    "originalTypeDeclaration": {
-                                                                                                        "typeId": "type_service:DocumentObject",
-                                                                                                        "fernFilepath": {
-                                                                                                            "allParts": [
-                                                                                                                "service"
-                                                                                                            ],
-                                                                                                            "packagePath": [],
-                                                                                                            "file": "service"
-                                                                                                        },
-                                                                                                        "name": "DocumentObject",
-                                                                                                        "displayName": null
-                                                                                                    },
-                                                                                                    "propertyAccess": null
-                                                                                                }
-                                                                                            ],
-                                                                                            "extraProperties": null
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": {
-                                                                                        "text": "Washington, D.C. is the capital of the United States."
-                                                                                    }
-                                                                                }
+                                                                            "type": "unknown",
+                                                                            "unknown": {
+                                                                                "text": "Washington, D.C. is the capital of the United States."
                                                                             }
                                                                         },
                                                                         "jsonExample": {
@@ -642,16 +698,70 @@
                                                                 ],
                                                                 "itemType": {
                                                                     "_type": "named",
-                                                                    "name": "DocumentItem",
+                                                                    "name": {
+                                                                        "originalName": "DocumentItem",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "documentItem",
+                                                                            "safeName": "documentItem"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "document_item",
+                                                                            "safeName": "document_item"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "DOCUMENT_ITEM",
+                                                                            "safeName": "DOCUMENT_ITEM"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "DocumentItem",
+                                                                            "safeName": "DocumentItem"
+                                                                        }
+                                                                    },
                                                                     "fernFilepath": {
                                                                         "allParts": [
-                                                                            "service"
+                                                                            {
+                                                                                "originalName": "service",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "service",
+                                                                                    "safeName": "service"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "service",
+                                                                                    "safeName": "service"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "SERVICE",
+                                                                                    "safeName": "SERVICE"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Service",
+                                                                                    "safeName": "Service"
+                                                                                }
+                                                                            }
                                                                         ],
                                                                         "packagePath": [],
-                                                                        "file": "service"
+                                                                        "file": {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
                                                                     },
                                                                     "displayName": null,
-                                                                    "typeId": "type_service:DocumentItem",
+                                                                    "typeId": "type_[object Object]:[object Object]",
                                                                     "default": null,
                                                                     "inline": null
                                                                 }
@@ -667,22 +777,94 @@
                                                         ]
                                                     },
                                                     "originalTypeDeclaration": {
-                                                        "typeId": "type_service:RerankRequest",
+                                                        "typeId": "type_[object Object]:[object Object]",
                                                         "fernFilepath": {
                                                             "allParts": [
-                                                                "service"
+                                                                {
+                                                                    "originalName": "service",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "service",
+                                                                        "safeName": "service"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "service",
+                                                                        "safeName": "service"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "SERVICE",
+                                                                        "safeName": "SERVICE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Service",
+                                                                        "safeName": "Service"
+                                                                    }
+                                                                }
                                                             ],
                                                             "packagePath": [],
-                                                            "file": "service"
+                                                            "file": {
+                                                                "originalName": "service",
+                                                                "camelCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SERVICE",
+                                                                    "safeName": "SERVICE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Service",
+                                                                    "safeName": "Service"
+                                                                }
+                                                            }
                                                         },
-                                                        "name": "RerankRequest",
+                                                        "name": {
+                                                            "originalName": "RerankRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "rerankRequest",
+                                                                "safeName": "rerankRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "rerank_request",
+                                                                "safeName": "rerank_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "RERANK_REQUEST",
+                                                                "safeName": "RERANK_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "RerankRequest",
+                                                                "safeName": "RerankRequest"
+                                                            }
+                                                        },
                                                         "displayName": null
                                                     },
                                                     "propertyAccess": null
                                                 },
                                                 {
                                                     "name": {
-                                                        "name": "query",
+                                                        "name": {
+                                                            "originalName": "query",
+                                                            "camelCase": {
+                                                                "unsafeName": "query",
+                                                                "safeName": "query"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "query",
+                                                                "safeName": "query"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "QUERY",
+                                                                "safeName": "QUERY"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Query",
+                                                                "safeName": "Query"
+                                                            }
+                                                        },
                                                         "wireValue": "query"
                                                     },
                                                     "value": {
@@ -698,15 +880,69 @@
                                                         "jsonExample": "What is the capital of the United States?"
                                                     },
                                                     "originalTypeDeclaration": {
-                                                        "typeId": "type_service:RerankRequest",
+                                                        "typeId": "type_[object Object]:[object Object]",
                                                         "fernFilepath": {
                                                             "allParts": [
-                                                                "service"
+                                                                {
+                                                                    "originalName": "service",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "service",
+                                                                        "safeName": "service"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "service",
+                                                                        "safeName": "service"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "SERVICE",
+                                                                        "safeName": "SERVICE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Service",
+                                                                        "safeName": "Service"
+                                                                    }
+                                                                }
                                                             ],
                                                             "packagePath": [],
-                                                            "file": "service"
+                                                            "file": {
+                                                                "originalName": "service",
+                                                                "camelCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SERVICE",
+                                                                    "safeName": "SERVICE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Service",
+                                                                    "safeName": "Service"
+                                                                }
+                                                            }
                                                         },
-                                                        "name": "RerankRequest",
+                                                        "name": {
+                                                            "originalName": "RerankRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "rerankRequest",
+                                                                "safeName": "rerankRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "rerank_request",
+                                                                "safeName": "rerank_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "RERANK_REQUEST",
+                                                                "safeName": "RERANK_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "RerankRequest",
+                                                                "safeName": "RerankRequest"
+                                                            }
+                                                        },
                                                         "displayName": null
                                                     },
                                                     "propertyAccess": null
@@ -735,15 +971,69 @@
                                             "shape": {
                                                 "type": "named",
                                                 "typeName": {
-                                                    "typeId": "type_service:RerankResponse",
+                                                    "typeId": "type_[object Object]:[object Object]",
                                                     "fernFilepath": {
                                                         "allParts": [
-                                                            "service"
+                                                            {
+                                                                "originalName": "service",
+                                                                "camelCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SERVICE",
+                                                                    "safeName": "SERVICE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Service",
+                                                                    "safeName": "Service"
+                                                                }
+                                                            }
                                                         ],
                                                         "packagePath": [],
-                                                        "file": "service"
+                                                        "file": {
+                                                            "originalName": "service",
+                                                            "camelCase": {
+                                                                "unsafeName": "service",
+                                                                "safeName": "service"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "service",
+                                                                "safeName": "service"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SERVICE",
+                                                                "safeName": "SERVICE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Service",
+                                                                "safeName": "Service"
+                                                            }
+                                                        }
                                                     },
-                                                    "name": "RerankResponse",
+                                                    "name": {
+                                                        "originalName": "RerankResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "rerankResponse",
+                                                            "safeName": "rerankResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "rerank_response",
+                                                            "safeName": "rerank_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RERANK_RESPONSE",
+                                                            "safeName": "RERANK_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "RerankResponse",
+                                                            "safeName": "RerankResponse"
+                                                        }
+                                                    },
                                                     "displayName": null
                                                 },
                                                 "shape": {
@@ -751,7 +1041,25 @@
                                                     "properties": [
                                                         {
                                                             "name": {
-                                                                "name": "results",
+                                                                "name": {
+                                                                    "originalName": "results",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "results",
+                                                                        "safeName": "results"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "results",
+                                                                        "safeName": "results"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RESULTS",
+                                                                        "safeName": "RESULTS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Results",
+                                                                        "safeName": "Results"
+                                                                    }
+                                                                },
                                                                 "wireValue": "results"
                                                             },
                                                             "value": {
@@ -804,15 +1112,69 @@
                                                                 ]
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "typeId": "type_service:RerankResponse",
+                                                                "typeId": "type_[object Object]:[object Object]",
                                                                 "fernFilepath": {
                                                                     "allParts": [
-                                                                        "service"
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
                                                                     ],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
-                                                                "name": "RerankResponse",
+                                                                "name": {
+                                                                    "originalName": "RerankResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "rerankResponse",
+                                                                        "safeName": "rerankResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "rerank_response",
+                                                                        "safeName": "rerank_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RERANK_RESPONSE",
+                                                                        "safeName": "RERANK_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "RerankResponse",
+                                                                        "safeName": "RerankResponse"
+                                                                    }
+                                                                },
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
@@ -838,7 +1200,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "de80d439",
+                                "id": "c486f039",
                                 "url": "/rerank",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -856,20 +1218,92 @@
                                             "properties": [
                                                 {
                                                     "name": {
-                                                        "name": "documents",
-                                                        "wireValue": "documents"
+                                                        "name": {
+                                                            "originalName": "results",
+                                                            "camelCase": {
+                                                                "unsafeName": "results",
+                                                                "safeName": "results"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "results",
+                                                                "safeName": "results"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "RESULTS",
+                                                                "safeName": "RESULTS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Results",
+                                                                "safeName": "Results"
+                                                            }
+                                                        },
+                                                        "wireValue": "results"
                                                     },
                                                     "originalTypeDeclaration": {
-                                                        "name": "RerankRequest",
+                                                        "name": {
+                                                            "originalName": "RerankResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "rerankResponse",
+                                                                "safeName": "rerankResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "rerank_response",
+                                                                "safeName": "rerank_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "RERANK_RESPONSE",
+                                                                "safeName": "RERANK_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "RerankResponse",
+                                                                "safeName": "RerankResponse"
+                                                            }
+                                                        },
                                                         "fernFilepath": {
                                                             "allParts": [
-                                                                "service"
+                                                                {
+                                                                    "originalName": "service",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "service",
+                                                                        "safeName": "service"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "service",
+                                                                        "safeName": "service"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "SERVICE",
+                                                                        "safeName": "SERVICE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Service",
+                                                                        "safeName": "Service"
+                                                                    }
+                                                                }
                                                             ],
                                                             "packagePath": [],
-                                                            "file": "service"
+                                                            "file": {
+                                                                "originalName": "service",
+                                                                "camelCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SERVICE",
+                                                                    "safeName": "SERVICE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Service",
+                                                                    "safeName": "Service"
+                                                                }
+                                                            }
                                                         },
                                                         "displayName": null,
-                                                        "typeId": "type_service:RerankRequest"
+                                                        "typeId": "type_[object Object]:[object Object]"
                                                     },
                                                     "value": {
                                                         "shape": {
@@ -879,125 +1313,46 @@
                                                                 "list": [
                                                                     {
                                                                         "shape": {
-                                                                            "type": "named",
-                                                                            "shape": {
-                                                                                "type": "undiscriminatedUnion",
-                                                                                "index": 0,
-                                                                                "singleUnionType": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "string",
-                                                                                            "string": {
-                                                                                                "original": "documents"
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": "documents"
+                                                                            "type": "primitive",
+                                                                            "primitive": {
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "results"
                                                                                 }
-                                                                            },
-                                                                            "typeName": {
-                                                                                "name": "DocumentItem",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "service"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "service"
-                                                                                },
-                                                                                "displayName": null,
-                                                                                "typeId": "type_service:DocumentItem"
                                                                             }
                                                                         },
-                                                                        "jsonExample": "documents"
+                                                                        "jsonExample": "results"
                                                                     },
                                                                     {
                                                                         "shape": {
-                                                                            "type": "named",
-                                                                            "shape": {
-                                                                                "type": "undiscriminatedUnion",
-                                                                                "index": 0,
-                                                                                "singleUnionType": {
-                                                                                    "shape": {
-                                                                                        "type": "primitive",
-                                                                                        "primitive": {
-                                                                                            "type": "string",
-                                                                                            "string": {
-                                                                                                "original": "documents"
-                                                                                            }
-                                                                                        }
-                                                                                    },
-                                                                                    "jsonExample": "documents"
+                                                                            "type": "primitive",
+                                                                            "primitive": {
+                                                                                "type": "string",
+                                                                                "string": {
+                                                                                    "original": "results"
                                                                                 }
-                                                                            },
-                                                                            "typeName": {
-                                                                                "name": "DocumentItem",
-                                                                                "fernFilepath": {
-                                                                                    "allParts": [
-                                                                                        "service"
-                                                                                    ],
-                                                                                    "packagePath": [],
-                                                                                    "file": "service"
-                                                                                },
-                                                                                "displayName": null,
-                                                                                "typeId": "type_service:DocumentItem"
                                                                             }
                                                                         },
-                                                                        "jsonExample": "documents"
+                                                                        "jsonExample": "results"
                                                                     }
                                                                 ],
                                                                 "itemType": {
-                                                                    "_type": "named",
-                                                                    "name": "DocumentItem",
-                                                                    "fernFilepath": {
-                                                                        "allParts": [
-                                                                            "service"
-                                                                        ],
-                                                                        "packagePath": [],
-                                                                        "file": "service"
-                                                                    },
-                                                                    "displayName": null,
-                                                                    "typeId": "type_service:DocumentItem",
-                                                                    "default": null,
-                                                                    "inline": null
+                                                                    "_type": "primitive",
+                                                                    "primitive": {
+                                                                        "v1": "STRING",
+                                                                        "v2": {
+                                                                            "type": "string",
+                                                                            "default": null,
+                                                                            "validation": null
+                                                                        }
+                                                                    }
                                                                 }
                                                             }
                                                         },
                                                         "jsonExample": [
-                                                            "documents",
-                                                            "documents"
+                                                            "results",
+                                                            "results"
                                                         ]
-                                                    },
-                                                    "propertyAccess": null
-                                                },
-                                                {
-                                                    "name": {
-                                                        "name": "query",
-                                                        "wireValue": "query"
-                                                    },
-                                                    "originalTypeDeclaration": {
-                                                        "name": "RerankRequest",
-                                                        "fernFilepath": {
-                                                            "allParts": [
-                                                                "service"
-                                                            ],
-                                                            "packagePath": [],
-                                                            "file": "service"
-                                                        },
-                                                        "displayName": null,
-                                                        "typeId": "type_service:RerankRequest"
-                                                    },
-                                                    "value": {
-                                                        "shape": {
-                                                            "type": "primitive",
-                                                            "primitive": {
-                                                                "type": "string",
-                                                                "string": {
-                                                                    "original": "query"
-                                                                }
-                                                            }
-                                                        },
-                                                        "jsonExample": "query"
                                                     },
                                                     "propertyAccess": null
                                                 }
@@ -1005,24 +1360,77 @@
                                             "extraProperties": null
                                         },
                                         "typeName": {
-                                            "name": "RerankRequest",
+                                            "name": {
+                                                "originalName": "RerankResponse",
+                                                "camelCase": {
+                                                    "unsafeName": "rerankResponse",
+                                                    "safeName": "rerankResponse"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "rerank_response",
+                                                    "safeName": "rerank_response"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "RERANK_RESPONSE",
+                                                    "safeName": "RERANK_RESPONSE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "RerankResponse",
+                                                    "safeName": "RerankResponse"
+                                                }
+                                            },
                                             "fernFilepath": {
                                                 "allParts": [
-                                                    "service"
+                                                    {
+                                                        "originalName": "service",
+                                                        "camelCase": {
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "service",
+                                                            "safeName": "service"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SERVICE",
+                                                            "safeName": "SERVICE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Service",
+                                                            "safeName": "Service"
+                                                        }
+                                                    }
                                                 ],
                                                 "packagePath": [],
-                                                "file": "service"
+                                                "file": {
+                                                    "originalName": "service",
+                                                    "camelCase": {
+                                                        "unsafeName": "service",
+                                                        "safeName": "service"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "service",
+                                                        "safeName": "service"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SERVICE",
+                                                        "safeName": "SERVICE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Service",
+                                                        "safeName": "Service"
+                                                    }
+                                                }
                                             },
                                             "displayName": null,
-                                            "typeId": "type_service:RerankRequest"
+                                            "typeId": "type_[object Object]:[object Object]"
                                         }
                                     },
                                     "jsonExample": {
-                                        "documents": [
-                                            "documents",
-                                            "documents"
-                                        ],
-                                        "query": "query"
+                                        "results": [
+                                            "results",
+                                            "results"
+                                        ]
                                     }
                                 },
                                 "response": {
@@ -1037,20 +1445,92 @@
                                                     "properties": [
                                                         {
                                                             "name": {
-                                                                "name": "results",
+                                                                "name": {
+                                                                    "originalName": "results",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "results",
+                                                                        "safeName": "results"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "results",
+                                                                        "safeName": "results"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RESULTS",
+                                                                        "safeName": "RESULTS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Results",
+                                                                        "safeName": "Results"
+                                                                    }
+                                                                },
                                                                 "wireValue": "results"
                                                             },
                                                             "originalTypeDeclaration": {
-                                                                "name": "RerankResponse",
+                                                                "name": {
+                                                                    "originalName": "RerankResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "rerankResponse",
+                                                                        "safeName": "rerankResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "rerank_response",
+                                                                        "safeName": "rerank_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RERANK_RESPONSE",
+                                                                        "safeName": "RERANK_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "RerankResponse",
+                                                                        "safeName": "RerankResponse"
+                                                                    }
+                                                                },
                                                                 "fernFilepath": {
                                                                     "allParts": [
-                                                                        "service"
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
                                                                     ],
                                                                     "packagePath": [],
-                                                                    "file": "service"
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
                                                                 },
                                                                 "displayName": null,
-                                                                "typeId": "type_service:RerankResponse"
+                                                                "typeId": "type_[object Object]:[object Object]"
                                                             },
                                                             "value": {
                                                                 "shape": {
@@ -1107,16 +1587,70 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": "RerankResponse",
+                                                    "name": {
+                                                        "originalName": "RerankResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "rerankResponse",
+                                                            "safeName": "rerankResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "rerank_response",
+                                                            "safeName": "rerank_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RERANK_RESPONSE",
+                                                            "safeName": "RERANK_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "RerankResponse",
+                                                            "safeName": "RerankResponse"
+                                                        }
+                                                    },
                                                     "fernFilepath": {
                                                         "allParts": [
-                                                            "service"
+                                                            {
+                                                                "originalName": "service",
+                                                                "camelCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SERVICE",
+                                                                    "safeName": "SERVICE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Service",
+                                                                    "safeName": "Service"
+                                                                }
+                                                            }
                                                         ],
                                                         "packagePath": [],
-                                                        "file": "service"
+                                                        "file": {
+                                                            "originalName": "service",
+                                                            "camelCase": {
+                                                                "unsafeName": "service",
+                                                                "safeName": "service"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "service",
+                                                                "safeName": "service"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SERVICE",
+                                                                "safeName": "SERVICE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Service",
+                                                                "safeName": "Service"
+                                                            }
+                                                        }
                                                     },
                                                     "displayName": null,
-                                                    "typeId": "type_service:RerankResponse"
+                                                    "typeId": "type_[object Object]:[object Object]"
                                                 }
                                             },
                                             "jsonExample": {
@@ -1149,7 +1683,25 @@
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
             "wireValue": "errorInstanceId"
         }
     },
@@ -1162,11 +1714,8 @@
     "variables": [],
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
-            "service_service": [
-                "type_service:DocumentItem",
-                "type_service:DocumentObject",
-                "type_service:RerankRequest",
-                "type_service:RerankResponse"
+            "service_[object Object]": [
+                "type_[object Object]:[object Object]"
             ]
         },
         "sharedTypes": []
@@ -1179,319 +1728,7 @@
     "dynamic": {
         "version": "1.0.0",
         "types": {
-            "type_service:DocumentItem": {
-                "type": "undiscriminatedUnion",
-                "declaration": {
-                    "name": {
-                        "originalName": "DocumentItem",
-                        "camelCase": {
-                            "unsafeName": "documentItem",
-                            "safeName": "documentItem"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "document_item",
-                            "safeName": "document_item"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "DOCUMENT_ITEM",
-                            "safeName": "DOCUMENT_ITEM"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "DocumentItem",
-                            "safeName": "DocumentItem"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "service",
-                                "camelCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE",
-                                    "safeName": "SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Service",
-                                    "safeName": "Service"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    }
-                },
-                "types": [
-                    {
-                        "type": "primitive",
-                        "value": "STRING"
-                    },
-                    {
-                        "type": "named",
-                        "value": "type_service:DocumentObject"
-                    }
-                ]
-            },
-            "type_service:DocumentObject": {
-                "type": "object",
-                "declaration": {
-                    "name": {
-                        "originalName": "DocumentObject",
-                        "camelCase": {
-                            "unsafeName": "documentObject",
-                            "safeName": "documentObject"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "document_object",
-                            "safeName": "document_object"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "DOCUMENT_OBJECT",
-                            "safeName": "DOCUMENT_OBJECT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "DocumentObject",
-                            "safeName": "DocumentObject"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "service",
-                                "camelCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE",
-                                    "safeName": "SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Service",
-                                    "safeName": "Service"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    }
-                },
-                "properties": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "text",
-                                "camelCase": {
-                                    "unsafeName": "text",
-                                    "safeName": "text"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "text",
-                                    "safeName": "text"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TEXT",
-                                    "safeName": "TEXT"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Text",
-                                    "safeName": "Text"
-                                }
-                            },
-                            "wireValue": "text"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ],
-                "extends": null,
-                "additionalProperties": false
-            },
-            "type_service:RerankRequest": {
-                "type": "object",
-                "declaration": {
-                    "name": {
-                        "originalName": "RerankRequest",
-                        "camelCase": {
-                            "unsafeName": "rerankRequest",
-                            "safeName": "rerankRequest"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "rerank_request",
-                            "safeName": "rerank_request"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "RERANK_REQUEST",
-                            "safeName": "RERANK_REQUEST"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "RerankRequest",
-                            "safeName": "RerankRequest"
-                        }
-                    },
-                    "fernFilepath": {
-                        "allParts": [
-                            {
-                                "originalName": "service",
-                                "camelCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "service",
-                                    "safeName": "service"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SERVICE",
-                                    "safeName": "SERVICE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Service",
-                                    "safeName": "Service"
-                                }
-                            }
-                        ],
-                        "packagePath": [],
-                        "file": {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
-                    }
-                },
-                "properties": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "documents",
-                                "camelCase": {
-                                    "unsafeName": "documents",
-                                    "safeName": "documents"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "documents",
-                                    "safeName": "documents"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DOCUMENTS",
-                                    "safeName": "DOCUMENTS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Documents",
-                                    "safeName": "Documents"
-                                }
-                            },
-                            "wireValue": "documents"
-                        },
-                        "typeReference": {
-                            "type": "list",
-                            "value": {
-                                "type": "named",
-                                "value": "type_service:DocumentItem"
-                            }
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    },
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "query",
-                                "camelCase": {
-                                    "unsafeName": "query",
-                                    "safeName": "query"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "query",
-                                    "safeName": "query"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "QUERY",
-                                    "safeName": "QUERY"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Query",
-                                    "safeName": "Query"
-                                }
-                            },
-                            "wireValue": "query"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    }
-                ],
-                "extends": null,
-                "additionalProperties": false
-            },
-            "type_service:RerankResponse": {
+            "type_[object Object]:[object Object]": {
                 "type": "object",
                 "declaration": {
                     "name": {
@@ -1598,7 +1835,7 @@
         },
         "headers": [],
         "endpoints": {
-            "endpoint_service.rerank": {
+            "endpoint_[object Object].[object Object]": {
                 "auth": {
                     "type": "bearer",
                     "token": {
@@ -1696,7 +1933,7 @@
                         "type": "typeReference",
                         "value": {
                             "type": "named",
-                            "value": "type_service:RerankRequest"
+                            "value": "type_[object Object]:[object Object]"
                         }
                     }
                 },
@@ -1717,23 +1954,72 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_service": {
-            "name": "service",
+        "subpackage_[object Object]": {
+            "name": {
+                "originalName": "service",
+                "camelCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "snakeCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "SERVICE",
+                    "safeName": "SERVICE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Service",
+                    "safeName": "Service"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "service"
+                    {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "service"
+                "file": {
+                    "originalName": "service",
+                    "camelCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SERVICE",
+                        "safeName": "SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Service",
+                        "safeName": "Service"
+                    }
+                }
             },
-            "service": "service_service",
-            "types": [
-                "type_service:DocumentItem",
-                "type_service:DocumentObject",
-                "type_service:RerankRequest",
-                "type_service:RerankResponse"
-            ],
+            "service": "service_[object Object]",
+            "types": [],
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
@@ -1754,7 +2040,12 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_service"
+            "subpackage_[object Object]",
+            "subpackage_[object Object]",
+            "subpackage_[object Object]",
+            "subpackage_[object Object]",
+            "subpackage_[object Object]",
+            "subpackage_[object Object]"
         ],
         "webhooks": null,
         "navigationConfig": null,

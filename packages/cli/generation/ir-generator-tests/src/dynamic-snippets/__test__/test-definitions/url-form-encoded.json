@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:PostSubmitResponse": {
+        "type_:[object Object]": {
             "type": "object",
             "declaration": {
                 "name": {
@@ -103,7 +103,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_.submitFormData": {
+        "endpoint_.[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {

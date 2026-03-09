@@ -1,14 +1,14 @@
 {
     "version": "1.0.0",
     "types": {
-        "type_:FileId": {
+        "type_:[object Object]": {
             "type": "alias",
             "declaration": {
                 "name": {
                     "originalName": "FileId",
                     "camelCase": {
-                        "unsafeName": "fileId",
-                        "safeName": "fileId"
+                        "unsafeName": "fileID",
+                        "safeName": "fileID"
                     },
                     "snakeCase": {
                         "unsafeName": "file_id",
@@ -19,8 +19,8 @@
                         "safeName": "FILE_ID"
                     },
                     "pascalCase": {
-                        "unsafeName": "FileId",
-                        "safeName": "FileId"
+                        "unsafeName": "FileID",
+                        "safeName": "FileID"
                     }
                 },
                 "fernFilepath": {
@@ -37,7 +37,7 @@
     },
     "headers": [],
     "endpoints": {
-        "endpoint_fileUploadExample.uploadFile": {
+        "endpoint_[object Object].[object Object]": {
             "auth": null,
             "declaration": {
                 "name": {

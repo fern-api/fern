@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "go-bytes-request",
+    "apiName": {
+        "originalName": "go-bytes-request",
+        "camelCase": {
+            "unsafeName": "goBytesRequest",
+            "safeName": "goBytesRequest"
+        },
+        "snakeCase": {
+            "unsafeName": "go_bytes_request",
+            "safeName": "go_bytes_request"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "GO_BYTES_REQUEST",
+            "safeName": "GO_BYTES_REQUEST"
+        },
+        "pascalCase": {
+            "unsafeName": "GoBytesRequest",
+            "safeName": "GoBytesRequest"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -15,15 +33,51 @@
     "types": {},
     "errors": {},
     "services": {
-        "service_service": {
+        "service_[object Object]": {
             "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "service"
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "service"
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 }
             },
             "displayName": null,
@@ -42,8 +96,26 @@
             },
             "endpoints": [
                 {
-                    "id": "endpoint_service.upload",
-                    "name": "upload",
+                    "id": "endpoint_[object Object].[object Object]",
+                    "name": {
+                        "originalName": "upload",
+                        "camelCase": {
+                            "unsafeName": "upload",
+                            "safeName": "upload"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "upload",
+                            "safeName": "upload"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPLOAD",
+                            "safeName": "UPLOAD"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Upload",
+                            "safeName": "Upload"
+                        }
+                    },
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -83,7 +155,25 @@
                                 "contentType": null
                             }
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -113,7 +203,25 @@
     },
     "constants": {
         "errorInstanceIdKey": {
-            "name": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            },
             "wireValue": "errorInstanceId"
         }
     },
@@ -138,7 +246,7 @@
         "types": {},
         "headers": [],
         "endpoints": {
-            "endpoint_service.upload": {
+            "endpoint_[object Object].[object Object]": {
                 "auth": null,
                 "declaration": {
                     "name": {
@@ -232,17 +340,71 @@
     "smartCasing": true,
     "generationLanguage": null,
     "subpackages": {
-        "subpackage_service": {
-            "name": "service",
+        "subpackage_[object Object]": {
+            "name": {
+                "originalName": "service",
+                "camelCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "snakeCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "SERVICE",
+                    "safeName": "SERVICE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Service",
+                    "safeName": "Service"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "service"
+                    {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "service"
+                "file": {
+                    "originalName": "service",
+                    "camelCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SERVICE",
+                        "safeName": "SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Service",
+                        "safeName": "Service"
+                    }
+                }
             },
-            "service": "service_service",
+            "service": "service_[object Object]",
             "types": [],
             "errors": [],
             "subpackages": [],
@@ -264,7 +426,7 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_service"
+            "subpackage_[object Object]"
         ],
         "webhooks": null,
         "navigationConfig": null,
