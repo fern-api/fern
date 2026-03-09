@@ -620,28 +620,28 @@ import NullableOptional
                 optionalStatus: .active,
                 optionalNullableStatus: .value(.active),
                 nullableNotification: .value(NotificationMethod.email(
-                    .init(
+                    EmailNotification(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 )),
                 optionalNotification: NotificationMethod.email(
-                    .init(
+                    EmailNotification(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 ),
                 optionalNullableNotification: .value(NotificationMethod.email(
-                    .init(
+                    EmailNotification(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 )),
                 nullableSearchResult: .value(SearchResult.user(
-                    .init(
+                    UserResponse(
                         id: "id",
                         username: "username",
                         email: .value("email"),
@@ -660,7 +660,7 @@ import NullableOptional
                     )
                 )),
                 optionalSearchResult: SearchResult.user(
-                    .init(
+                    UserResponse(
                         id: "id",
                         username: "username",
                         email: .value("email"),
@@ -707,14 +707,14 @@ import NullableOptional
                 ]),
                 nullableListOfUnions: .value([
                     NotificationMethod.email(
-                        .init(
+                        EmailNotification(
                             emailAddress: "emailAddress",
                             subject: "subject",
                             htmlContent: "htmlContent"
                         )
                     ),
                     NotificationMethod.email(
-                        .init(
+                        EmailNotification(
                             emailAddress: "emailAddress",
                             subject: "subject",
                             htmlContent: "htmlContent"
@@ -1209,14 +1209,14 @@ import NullableOptional
                 nullableRole: .value(.admin),
                 nullableStatus: .value(.active),
                 nullableNotification: .value(NotificationMethod.email(
-                    .init(
+                    EmailNotification(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 )),
                 nullableSearchResult: .value(SearchResult.user(
-                    .init(
+                    UserResponse(
                         id: "id",
                         username: "username",
                         email: .value("email"),
@@ -1385,14 +1385,14 @@ import NullableOptional
                 nullableEnum: .value(.admin),
                 optionalEnum: .active,
                 nullableUnion: .value(NotificationMethod.email(
-                    .init(
+                    EmailNotification(
                         emailAddress: "emailAddress",
                         subject: "subject",
                         htmlContent: "htmlContent"
                     )
                 )),
                 optionalUnion: SearchResult.user(
-                    .init(
+                    UserResponse(
                         id: "id",
                         username: "username",
                         email: .value("email"),

@@ -91,9 +91,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.date(
-                .init(
-                    date: 
-                )
+
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -116,9 +114,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.datetime(
-                .init(
-                    datetime: 
-                )
+
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )
@@ -141,9 +137,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.types.update(
             request: UnionWithTime.value(
-                .init(
-                    value: 1
-                )
+                1
             ),
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
         )

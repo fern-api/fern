@@ -29,7 +29,7 @@ import Exhaustive
         )
         let response = try await client.endpoints.union.getAndReturnUnion(
             request: Animal.dog(
-                .init(
+                Dog(
                     name: "name",
                     likesToWoof: true
                 )
