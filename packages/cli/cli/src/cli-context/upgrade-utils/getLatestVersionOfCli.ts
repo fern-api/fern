@@ -9,10 +9,12 @@ const CACHE_TTL_MS = 4 * 60 * 60 * 1000; // 4 hours
 
 export async function getLatestVersionOfCli({
     cliEnvironment,
-    includePreReleases = false
+    includePreReleases = false,
+    useCache = false
 }: {
     cliEnvironment: CliEnvironment;
     includePreReleases?: boolean;
+    useCache?: boolean;
 }): Promise<string> {
     // when running a non-prod version of the CLI (e.g. dev-cli in ETE tests),
     // don't try to upgrade
@@ -21,9 +23,11 @@ export async function getLatestVersionOfCli({
     }
 
     const cacheKey = includePreReleases ? LATEST_PRERELEASE_VERSION_CACHE_KEY : LATEST_VERSION_CACHE_KEY;
-    const cached = readCache<string>(cacheKey, CACHE_TTL_MS);
-    if (cached != null) {
-        return cached;
+    if (useCache) {
+        const cached = readCache<string>(cacheKey, CACHE_TTL_MS);
+        if (cached != null) {
+            return cached;
+        }
     }
 
     const version = await latestVersion(cliEnvironment.packageName, {

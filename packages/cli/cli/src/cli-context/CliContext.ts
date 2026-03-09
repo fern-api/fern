@@ -22,6 +22,7 @@ const UPGRADE_NUDGE_CACHE_TTL_MS = 4 * 60 * 60 * 1000; // 4 hours
 interface UpgradeNudgeCache {
     message: string;
     latestVersion: string;
+    fromVersion: string;
 }
 
 const WORKSPACE_NAME_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
@@ -155,6 +156,7 @@ export class CliContext {
         const cachedIsRelevant =
             cached != null &&
             cached.message.length > 0 &&
+            cached.fromVersion === this.environment.packageVersion &&
             isVersionAhead(cached.latestVersion, this.environment.packageVersion);
         if (cachedIsRelevant) {
             this.stderr.info(cached.message);
@@ -176,14 +178,22 @@ export class CliContext {
                     upgradeMessage += "\n";
                 }
                 const latestVersion = upgradeInfo.cliUpgradeInfo?.latestVersion ?? "";
-                writeCache<UpgradeNudgeCache>(UPGRADE_NUDGE_CACHE_KEY, { message: upgradeMessage, latestVersion });
+                writeCache<UpgradeNudgeCache>(UPGRADE_NUDGE_CACHE_KEY, {
+                    message: upgradeMessage,
+                    latestVersion,
+                    fromVersion: this.environment.packageVersion
+                });
                 // If we didn't show a cached message, show the fresh one now
                 if (!cachedIsRelevant) {
                     this.stderr.info(upgradeMessage);
                 }
             } else {
                 // No upgrade available, clear the cache
-                writeCache<UpgradeNudgeCache>(UPGRADE_NUDGE_CACHE_KEY, { message: "", latestVersion: "" });
+                writeCache<UpgradeNudgeCache>(UPGRADE_NUDGE_CACHE_KEY, {
+                    message: "",
+                    latestVersion: "",
+                    fromVersion: this.environment.packageVersion
+                });
             }
         } catch {
             // swallow error when failing to check for upgrade
@@ -358,7 +368,8 @@ export class CliContext {
 
             const latestPackageVersion = await getLatestVersionOfCli({
                 cliEnvironment: this.environment,
-                includePreReleases
+                includePreReleases,
+                useCache: true
             });
             const isUpgradeAvailable = isVersionAhead(latestPackageVersion, this.environment.packageVersion);
 
