@@ -13,9 +13,8 @@ interface CacheEntry<T> {
 function ensureCacheDir(): void {
     try {
         fs.mkdirSync(FERN_CACHE_DIR, { recursive: true });
-    } catch (error) {
-        // biome-ignore lint/suspicious/noConsole: cache utility has no logger access
-        console.debug("Failed to create fern cache directory", error);
+    } catch {
+        // Best-effort: silently ignore permission/filesystem errors
     }
 }
 
@@ -31,9 +30,8 @@ export function readCache<T>(key: string, ttlMs: number): T | undefined {
         if (Date.now() - entry.timestamp < ttlMs) {
             return entry.value;
         }
-    } catch (error) {
-        // biome-ignore lint/suspicious/noConsole: cache utility has no logger access
-        console.debug(`Cache miss or corrupted for key "${key}"`, error);
+    } catch {
+        // Best-effort: cache miss, corrupted, or missing file
     }
     return undefined;
 }
@@ -51,8 +49,7 @@ export function writeCache<T>(key: string, value: T): void {
         const tmpPath = `${cachePath}.${crypto.randomBytes(4).toString("hex")}.tmp`;
         fs.writeFileSync(tmpPath, data, "utf-8");
         fs.renameSync(tmpPath, cachePath);
-    } catch (error) {
-        // biome-ignore lint/suspicious/noConsole: cache utility has no logger access
-        console.debug(`Failed to write cache for key "${key}"`, error);
+    } catch {
+        // Best-effort: silently ignore write errors
     }
 }
