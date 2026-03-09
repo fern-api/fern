@@ -10,6 +10,16 @@
       type: feat
   createdAt: "2026-03-09"
   irVersion: 65
+- version: 4.20.1
+  changelogEntry:
+    - summary: |
+        Revert treating JSON Schema `const` values as literal types regardless of
+        `coerceEnumsToLiterals`. This reverts the behavior introduced in 3.90.8 so
+        that `const` values are again converted to single-value enums when
+        `coerceEnumsToLiterals` is not enabled.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
 - version: 4.20.0
   changelogEntry:
     - summary: |
