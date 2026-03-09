@@ -1,23 +1,121 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { FernFilepath, IntermediateRepresentation, Name, NameAndWireValue, NameOrString } from "@fern-api/ir-sdk";
+import {
+    type AliasTypeDeclaration,
+    type ApiAuth,
+    type ApiVersionScheme,
+    type AuthScheme,
+    type Constants,
+    type ContainerType,
+    type DeclaredErrorName,
+    type DeclaredTypeName,
+    dynamic,
+    type EnumTypeDeclaration,
+    type EnumValue,
+    type EnvironmentsConfig,
+    type ErrorDeclaration,
+    type ErrorDiscriminationStrategy,
+    type ExampleCodeSample,
+    type ExampleContainer,
+    type ExampleEndpointCall,
+    type ExampleEndpointSuccessResponse,
+    type ExampleError,
+    type ExampleInlinedRequestBody,
+    type ExampleObjectType,
+    type ExamplePathParameter,
+    type ExampleRequestBody,
+    type ExampleResponse,
+    type ExampleSingleUnionTypeProperties,
+    type ExampleType,
+    type ExampleTypeReference,
+    type ExampleTypeShape,
+    type ExampleUnionType,
+    type ExampleWebhookCall,
+    type ExampleWebSocketMessageBody,
+    type ExampleWebSocketSession,
+    type FernFilepath,
+    type FileProperty,
+    type FileUploadRequest,
+    type HttpEndpoint,
+    type HttpHeader,
+    type HttpRequestBody,
+    type HttpResponse,
+    type HttpResponseBody,
+    type HttpService,
+    type InlinedRequestBody,
+    type IntermediateRepresentation,
+    type JsonResponse,
+    type Name,
+    type NameAndWireValue,
+    type NameOrString,
+    type NonStreamHttpResponseBody,
+    type OAuthAccessTokenRequestProperties,
+    type OAuthAccessTokenResponseProperties,
+    type OAuthConfiguration,
+    type OAuthRefreshEndpoint,
+    type OAuthRefreshTokenRequestProperties,
+    type OAuthTokenEndpoint,
+    type ObjectProperty,
+    type ObjectTypeDeclaration,
+    type Package,
+    type Pagination,
+    type PathParameter,
+    type PropertyPathItem,
+    type ProtobufService,
+    type ProtobufType,
+    type QueryParameter,
+    type RequestProperty,
+    type ResolvedTypeReference,
+    type ResponseProperty,
+    type SdkRequest,
+    type SdkRequestBodyType,
+    type ServerVariable,
+    type SingleUnionType,
+    type Source,
+    type StreamingResponse,
+    type Subpackage,
+    type Transport,
+    type Type,
+    type TypeDeclaration,
+    type TypeReference,
+    type UndiscriminatedUnionTypeDeclaration,
+    type UnionTypeDeclaration,
+    type VariableDeclaration,
+    type Webhook,
+    type WebhookGroup,
+    type WebhookPayload,
+    type WebhookSignatureVerification,
+    type WebSocketChannel,
+    type WebSocketMessage
+} from "@fern-api/ir-sdk";
 
-import { CasingsGenerator, constructCasingsGenerator } from "./CasingsGenerator.js";
+import { constructCasingsGenerator, type FullCasingsGenerator } from "./CasingsGenerator.js";
 
 // ---------------------------------------------------------------------------
-// InflatedIR type utility
+// NormalizedIR type utility
 // ---------------------------------------------------------------------------
 
 /**
- * Recursively converts all NameOrString fields to Name throughout an IR type.
+ * Returns true if A and B are exactly the same type.
+ */
+type IsExact<A, B> = [A] extends [B] ? ([B] extends [A] ? true : false) : false;
+
+/**
+ * Recursively replaces all occurrences of From with To throughout a type.
+ */
+type DeepReplace<T, From, To> =
+    IsExact<T, From> extends true
+        ? To
+        : T extends Array<infer Item>
+          ? Array<DeepReplace<Item, From, To>>
+          : T extends object
+            ? { [K in keyof T]: DeepReplace<T[K], From, To> }
+            : T;
+
+/**
+ * Converts all NameOrString fields to Name throughout an IR type.
  * After inflation, every NameOrString is guaranteed to be a full Name object.
  */
-export type InflatedIR<T> = T extends NameOrString
-    ? Name
-    : T extends (infer U)[]
-      ? InflatedIR<U>[]
-      : T extends Record<string, unknown>
-        ? { [K in keyof T]: InflatedIR<T[K]> }
-        : T;
+export type NormalizedIR<T> = DeepReplace<T, NameOrString, Name>;
 
 // ---------------------------------------------------------------------------
 // Core inflation helpers
@@ -30,9 +128,9 @@ export type InflatedIR<T> = T extends NameOrString
  *
  * Detection: typeof nameOrString === "string" is the marker.
  */
-export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator: CasingsGenerator): Name {
+export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator: FullCasingsGenerator): Name {
     if (typeof nameOrString === "string") {
-        return casingsGenerator.generateName(nameOrString) as Name;
+        return casingsGenerator.generateName(nameOrString);
     }
     return nameOrString;
 }
@@ -42,7 +140,7 @@ export function inflateNameOrString(nameOrString: NameOrString, casingsGenerator
  */
 export function inflateOptionalNameOrString(
     nameOrString: NameOrString | undefined,
-    casingsGenerator: CasingsGenerator
+    casingsGenerator: FullCasingsGenerator
 ): Name | undefined {
     if (nameOrString == null) {
         return undefined;
@@ -55,7 +153,7 @@ export function inflateOptionalNameOrString(
  */
 export function inflateNameAndWireValue(
     nwv: NameAndWireValue,
-    casingsGenerator: CasingsGenerator
+    casingsGenerator: FullCasingsGenerator
 ): NameAndWireValue & { name: Name } {
     return {
         ...nwv,
@@ -68,7 +166,7 @@ export function inflateNameAndWireValue(
  */
 export function inflateFernFilepath(
     fp: FernFilepath,
-    casingsGenerator: CasingsGenerator
+    casingsGenerator: FullCasingsGenerator
 ): FernFilepath & { allParts: Name[]; packagePath: Name[]; file: Name | undefined } {
     return {
         allParts: fp.allParts.map((n) => inflateNameOrString(n, casingsGenerator)),
@@ -89,7 +187,7 @@ export function inflateFernFilepath(
 export function createCasingsGeneratorForInflation(ir: {
     smartCasing?: boolean | undefined;
     generationLanguage?: string | undefined;
-}): CasingsGenerator {
+}): FullCasingsGenerator {
     return constructCasingsGenerator({
         generationLanguage: ir.generationLanguage as generatorsYml.GenerationLanguage | undefined,
         keywords: undefined,
@@ -119,7 +217,7 @@ export function inflateIrNames(
         keywords?: string[];
         smartCasing?: boolean;
     }
-): InflatedIR<IntermediateRepresentation> {
+): NormalizedIR<IntermediateRepresentation> {
     const cg = constructCasingsGenerator({
         generationLanguage:
             opts?.generationLanguage ??
@@ -130,7 +228,7 @@ export function inflateIrNames(
     });
 
     inflateIrInPlace(ir, cg);
-    return ir as InflatedIR<IntermediateRepresentation>;
+    return ir as NormalizedIR<IntermediateRepresentation>;
 }
 
 /**
@@ -140,14 +238,15 @@ export function inflateIrNames(
  * where Name fields may be serialized as strings (NameOrString).
  * Uses default casings settings (no generation language, no smart casing).
  */
-export function inflateDynamicIrNames<T extends Record<string, unknown>>(ir: T): T {
+export function inflateDynamicIrNames(
+    ir: dynamic.DynamicIntermediateRepresentation
+): dynamic.DynamicIntermediateRepresentation {
     const cg = constructCasingsGenerator({
         generationLanguage: undefined,
         keywords: undefined,
         smartCasing: false
     });
-    // biome-ignore lint/suspicious/noExplicitAny: dynamic IR shape is untyped here
-    inflateDynamicIrInPlace(ir as any, cg);
+    inflateDynamicIrInPlace(ir, cg);
     return ir;
 }
 
@@ -155,14 +254,11 @@ export function inflateDynamicIrNames<T extends Record<string, unknown>>(ir: T):
 // Explicit IR visitors -- no recursion, every NameOrString field visited by path
 // ---------------------------------------------------------------------------
 
-// biome-ignore lint/suspicious/noExplicitAny: IR structures are accessed dynamically during inflation
-type AnyRecord = any;
-
 /**
  * Mutates the IR in place, inflating every NameOrString field.
  * Each field is visited explicitly based on the IR YAML type schema.
  */
-function inflateIrInPlace(ir: AnyRecord, cg: CasingsGenerator): void {
+function inflateIrInPlace(ir: IntermediateRepresentation, cg: FullCasingsGenerator): void {
     // IntermediateRepresentation.apiName
     ir.apiName = inflateNameOrString(ir.apiName, cg);
 
@@ -181,32 +277,32 @@ function inflateIrInPlace(ir: AnyRecord, cg: CasingsGenerator): void {
 
     // types: Record<TypeId, TypeDeclaration>
     for (const typeDecl of Object.values(ir.types ?? {})) {
-        inflateTypeDeclaration(typeDecl as AnyRecord, cg);
+        inflateTypeDeclaration(typeDecl, cg);
     }
 
     // services: Record<ServiceId, HttpService>
     for (const service of Object.values(ir.services ?? {})) {
-        inflateHttpService(service as AnyRecord, cg);
+        inflateHttpService(service, cg);
     }
 
     // webhookGroups: Record<WebhookGroupId, WebhookGroup>
     for (const group of Object.values(ir.webhookGroups ?? {})) {
-        inflateWebhookGroup(group as AnyRecord, cg);
+        inflateWebhookGroup(group, cg);
     }
 
     // websocketChannels: Record<WebSocketChannelId, WebSocketChannel>
     for (const channel of Object.values(ir.websocketChannels ?? {})) {
-        inflateWebSocketChannel(channel as AnyRecord, cg);
+        inflateWebSocketChannel(channel, cg);
     }
 
     // errors: Record<ErrorId, ErrorDeclaration>
     for (const errorDecl of Object.values(ir.errors ?? {})) {
-        inflateErrorDeclaration(errorDecl as AnyRecord, cg);
+        inflateErrorDeclaration(errorDecl, cg);
     }
 
     // subpackages: Record<SubpackageId, Subpackage>
     for (const subpackage of Object.values(ir.subpackages ?? {})) {
-        inflateSubpackage(subpackage as AnyRecord, cg);
+        inflateSubpackage(subpackage, cg);
     }
 
     // rootPackage: Package
@@ -254,7 +350,7 @@ function inflateIrInPlace(ir: AnyRecord, cg: CasingsGenerator): void {
 // Auth
 // ---------------------------------------------------------------------------
 
-function inflateApiAuth(auth: AnyRecord, cg: CasingsGenerator): void {
+function inflateApiAuth(auth: ApiAuth | undefined, cg: FullCasingsGenerator): void {
     if (auth == null) {
         return;
     }
@@ -263,7 +359,7 @@ function inflateApiAuth(auth: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateAuthScheme(scheme: AnyRecord, cg: CasingsGenerator): void {
+function inflateAuthScheme(scheme: AuthScheme, cg: FullCasingsGenerator): void {
     if (scheme == null) {
         return;
     }
@@ -284,29 +380,36 @@ function inflateAuthScheme(scheme: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateOAuthScheme(config: AnyRecord, cg: CasingsGenerator): void {
+function inflateOAuthScheme(config: OAuthConfiguration | undefined, cg: FullCasingsGenerator): void {
     if (config == null) {
         return;
     }
     if (config.type === "clientCredentials") {
-        if (config.tokenEndpoint != null) {
-            inflateOAuthEndpoint(config.tokenEndpoint, cg);
-        }
-        if (config.refreshEndpoint != null) {
-            inflateOAuthEndpoint(config.refreshEndpoint, cg);
-        }
+        inflateOAuthTokenEndpoint(config.tokenEndpoint, cg);
+        inflateOAuthRefreshEndpoint(config.refreshEndpoint, cg);
     }
 }
 
-function inflateOAuthEndpoint(endpoint: AnyRecord, cg: CasingsGenerator): void {
+function inflateOAuthTokenEndpoint(endpoint: OAuthTokenEndpoint | undefined, cg: FullCasingsGenerator): void {
     if (endpoint == null) {
         return;
     }
-    inflateOAuthRequestProperties(endpoint.requestProperties, cg);
+    inflateOAuthAccessTokenRequestProperties(endpoint.requestProperties, cg);
     inflateOAuthResponseProperties(endpoint.responseProperties, cg);
 }
 
-function inflateOAuthRequestProperties(props: AnyRecord, cg: CasingsGenerator): void {
+function inflateOAuthRefreshEndpoint(endpoint: OAuthRefreshEndpoint | undefined, cg: FullCasingsGenerator): void {
+    if (endpoint == null) {
+        return;
+    }
+    inflateOAuthRefreshTokenRequestProperties(endpoint.requestProperties, cg);
+    inflateOAuthResponseProperties(endpoint.responseProperties, cg);
+}
+
+function inflateOAuthAccessTokenRequestProperties(
+    props: OAuthAccessTokenRequestProperties | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (props == null) {
         return;
     }
@@ -316,10 +419,22 @@ function inflateOAuthRequestProperties(props: AnyRecord, cg: CasingsGenerator): 
     for (const customProp of props.customProperties ?? []) {
         inflateRequestProperty(customProp, cg);
     }
+}
+
+function inflateOAuthRefreshTokenRequestProperties(
+    props: OAuthRefreshTokenRequestProperties | undefined,
+    cg: FullCasingsGenerator
+): void {
+    if (props == null) {
+        return;
+    }
     inflateRequestProperty(props.refreshToken, cg);
 }
 
-function inflateOAuthResponseProperties(props: AnyRecord, cg: CasingsGenerator): void {
+function inflateOAuthResponseProperties(
+    props: OAuthAccessTokenResponseProperties | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (props == null) {
         return;
     }
@@ -332,7 +447,7 @@ function inflateOAuthResponseProperties(props: AnyRecord, cg: CasingsGenerator):
 // Types
 // ---------------------------------------------------------------------------
 
-function inflateTypeDeclaration(td: AnyRecord, cg: CasingsGenerator): void {
+function inflateTypeDeclaration(td: TypeDeclaration, cg: FullCasingsGenerator): void {
     inflateDeclaredTypeName(td.name, cg);
     inflateTypeShape(td.shape, cg);
     inflateTypeDeclarationSource(td.source, cg);
@@ -344,7 +459,7 @@ function inflateTypeDeclaration(td: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateDeclaredTypeName(dtn: AnyRecord, cg: CasingsGenerator): void {
+function inflateDeclaredTypeName(dtn: DeclaredTypeName | undefined, cg: FullCasingsGenerator): void {
     if (dtn == null) {
         return;
     }
@@ -352,7 +467,7 @@ function inflateDeclaredTypeName(dtn: AnyRecord, cg: CasingsGenerator): void {
     inflateFernFilepathInPlace(dtn.fernFilepath, cg);
 }
 
-function inflateTypeShape(shape: AnyRecord, cg: CasingsGenerator): void {
+function inflateTypeShape(shape: Type | undefined, cg: FullCasingsGenerator): void {
     if (shape == null) {
         return;
     }
@@ -375,12 +490,12 @@ function inflateTypeShape(shape: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateAliasTypeDeclaration(alias: AnyRecord, cg: CasingsGenerator): void {
+function inflateAliasTypeDeclaration(alias: AliasTypeDeclaration, cg: FullCasingsGenerator): void {
     inflateTypeReference(alias.aliasOf, cg);
     inflateResolvedTypeReference(alias.resolvedType, cg);
 }
 
-function inflateResolvedTypeReference(resolved: AnyRecord, cg: CasingsGenerator): void {
+function inflateResolvedTypeReference(resolved: ResolvedTypeReference | undefined, cg: FullCasingsGenerator): void {
     if (resolved == null) {
         return;
     }
@@ -391,7 +506,7 @@ function inflateResolvedTypeReference(resolved: AnyRecord, cg: CasingsGenerator)
     }
 }
 
-function inflateTypeReference(tr: AnyRecord, cg: CasingsGenerator): void {
+function inflateTypeReference(tr: TypeReference | undefined, cg: FullCasingsGenerator): void {
     if (tr == null) {
         return;
     }
@@ -409,7 +524,7 @@ function inflateTypeReference(tr: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateContainerType(ct: AnyRecord, cg: CasingsGenerator): void {
+function inflateContainerType(ct: ContainerType | undefined, cg: FullCasingsGenerator): void {
     if (ct == null) {
         return;
     }
@@ -433,7 +548,7 @@ function inflateContainerType(ct: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateEnumTypeDeclaration(enumDecl: AnyRecord, cg: CasingsGenerator): void {
+function inflateEnumTypeDeclaration(enumDecl: EnumTypeDeclaration, cg: FullCasingsGenerator): void {
     if (enumDecl.default != null) {
         inflateEnumValue(enumDecl.default, cg);
     }
@@ -442,14 +557,14 @@ function inflateEnumTypeDeclaration(enumDecl: AnyRecord, cg: CasingsGenerator): 
     }
 }
 
-function inflateEnumValue(ev: AnyRecord, cg: CasingsGenerator): void {
+function inflateEnumValue(ev: EnumValue | undefined, cg: FullCasingsGenerator): void {
     if (ev == null) {
         return;
     }
     inflateNameAndWireValueInPlace(ev.name, cg);
 }
 
-function inflateObjectTypeDeclaration(obj: AnyRecord, cg: CasingsGenerator): void {
+function inflateObjectTypeDeclaration(obj: ObjectTypeDeclaration, cg: FullCasingsGenerator): void {
     for (const ext of obj.extends ?? []) {
         inflateDeclaredTypeName(ext, cg);
     }
@@ -461,7 +576,7 @@ function inflateObjectTypeDeclaration(obj: AnyRecord, cg: CasingsGenerator): voi
     }
 }
 
-function inflateObjectProperty(prop: AnyRecord, cg: CasingsGenerator): void {
+function inflateObjectProperty(prop: ObjectProperty | undefined, cg: FullCasingsGenerator): void {
     if (prop == null) {
         return;
     }
@@ -469,7 +584,7 @@ function inflateObjectProperty(prop: AnyRecord, cg: CasingsGenerator): void {
     inflateTypeReference(prop.valueType, cg);
 }
 
-function inflateUnionTypeDeclaration(union: AnyRecord, cg: CasingsGenerator): void {
+function inflateUnionTypeDeclaration(union: UnionTypeDeclaration, cg: FullCasingsGenerator): void {
     inflateNameAndWireValueInPlace(union.discriminant, cg);
     for (const ext of union.extends ?? []) {
         inflateDeclaredTypeName(ext, cg);
@@ -482,7 +597,7 @@ function inflateUnionTypeDeclaration(union: AnyRecord, cg: CasingsGenerator): vo
     }
 }
 
-function inflateSingleUnionType(sut: AnyRecord, cg: CasingsGenerator): void {
+function inflateSingleUnionType(sut: SingleUnionType, cg: FullCasingsGenerator): void {
     inflateNameAndWireValueInPlace(sut.discriminantValue, cg);
     if (sut.shape != null) {
         switch (sut.shape.propertiesType) {
@@ -497,7 +612,10 @@ function inflateSingleUnionType(sut: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateUndiscriminatedUnionTypeDeclaration(uuDecl: AnyRecord, cg: CasingsGenerator): void {
+function inflateUndiscriminatedUnionTypeDeclaration(
+    uuDecl: UndiscriminatedUnionTypeDeclaration,
+    cg: FullCasingsGenerator
+): void {
     for (const member of uuDecl.members ?? []) {
         inflateTypeReference(member.type, cg);
     }
@@ -507,7 +625,7 @@ function inflateUndiscriminatedUnionTypeDeclaration(uuDecl: AnyRecord, cg: Casin
 // HTTP Services and Endpoints
 // ---------------------------------------------------------------------------
 
-function inflateHttpService(service: AnyRecord, cg: CasingsGenerator): void {
+function inflateHttpService(service: HttpService, cg: FullCasingsGenerator): void {
     if (service.name != null) {
         inflateFernFilepathInPlace(service.name.fernFilepath, cg);
     }
@@ -523,7 +641,7 @@ function inflateHttpService(service: AnyRecord, cg: CasingsGenerator): void {
     inflateTransport(service.transport, cg);
 }
 
-function inflateHttpEndpoint(ep: AnyRecord, cg: CasingsGenerator): void {
+function inflateHttpEndpoint(ep: HttpEndpoint, cg: FullCasingsGenerator): void {
     ep.name = inflateNameOrString(ep.name, cg);
 
     for (const header of ep.headers ?? []) {
@@ -580,7 +698,7 @@ function inflateHttpEndpoint(ep: AnyRecord, cg: CasingsGenerator): void {
     inflateTransport(ep.transport, cg);
 }
 
-function inflateTransport(transport: AnyRecord, cg: CasingsGenerator): void {
+function inflateTransport(transport: Transport | undefined, cg: FullCasingsGenerator): void {
     if (transport == null) {
         return;
     }
@@ -589,14 +707,14 @@ function inflateTransport(transport: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateProtobufService(ps: AnyRecord, cg: CasingsGenerator): void {
+function inflateProtobufService(ps: ProtobufService | undefined, cg: FullCasingsGenerator): void {
     if (ps == null) {
         return;
     }
     ps.name = inflateNameOrString(ps.name, cg);
 }
 
-function inflateHttpHeader(header: AnyRecord, cg: CasingsGenerator): void {
+function inflateHttpHeader(header: HttpHeader | undefined, cg: FullCasingsGenerator): void {
     if (header == null) {
         return;
     }
@@ -604,7 +722,7 @@ function inflateHttpHeader(header: AnyRecord, cg: CasingsGenerator): void {
     inflateTypeReference(header.valueType, cg);
 }
 
-function inflatePathParameter(param: AnyRecord, cg: CasingsGenerator): void {
+function inflatePathParameter(param: PathParameter | undefined, cg: FullCasingsGenerator): void {
     if (param == null) {
         return;
     }
@@ -612,7 +730,7 @@ function inflatePathParameter(param: AnyRecord, cg: CasingsGenerator): void {
     inflateTypeReference(param.valueType, cg);
 }
 
-function inflateQueryParameter(qp: AnyRecord, cg: CasingsGenerator): void {
+function inflateQueryParameter(qp: QueryParameter | undefined, cg: FullCasingsGenerator): void {
     if (qp == null) {
         return;
     }
@@ -620,7 +738,7 @@ function inflateQueryParameter(qp: AnyRecord, cg: CasingsGenerator): void {
     inflateTypeReference(qp.valueType, cg);
 }
 
-function inflateHttpRequestBody(body: AnyRecord, cg: CasingsGenerator): void {
+function inflateHttpRequestBody(body: HttpRequestBody | undefined, cg: FullCasingsGenerator): void {
     if (body == null) {
         return;
     }
@@ -637,7 +755,7 @@ function inflateHttpRequestBody(body: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateInlinedRequestBody(irb: AnyRecord, cg: CasingsGenerator): void {
+function inflateInlinedRequestBody(irb: InlinedRequestBody, cg: FullCasingsGenerator): void {
     irb.name = inflateNameOrString(irb.name, cg);
     for (const ext of irb.extends ?? []) {
         inflateDeclaredTypeName(ext, cg);
@@ -651,11 +769,11 @@ function inflateInlinedRequestBody(irb: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateFileUploadRequest(fur: AnyRecord, cg: CasingsGenerator): void {
+function inflateFileUploadRequest(fur: FileUploadRequest, cg: FullCasingsGenerator): void {
     fur.name = inflateNameOrString(fur.name, cg);
     for (const prop of fur.properties ?? []) {
         if (prop.type === "file") {
-            inflateFileProperty(prop, cg);
+            inflateFileProperty(prop.value, cg);
         } else if (prop.type === "bodyProperty") {
             inflateNameAndWireValueInPlace(prop.name, cg);
             inflateTypeReference(prop.valueType, cg);
@@ -663,14 +781,14 @@ function inflateFileUploadRequest(fur: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateFileProperty(fp: AnyRecord, cg: CasingsGenerator): void {
+function inflateFileProperty(fp: FileProperty | undefined, cg: FullCasingsGenerator): void {
     if (fp == null) {
         return;
     }
     inflateNameAndWireValueInPlace(fp.key, cg);
 }
 
-function inflateSdkRequest(sdkReq: AnyRecord, cg: CasingsGenerator): void {
+function inflateSdkRequest(sdkReq: SdkRequest | undefined, cg: FullCasingsGenerator): void {
     if (sdkReq == null) {
         return;
     }
@@ -681,30 +799,39 @@ function inflateSdkRequest(sdkReq: AnyRecord, cg: CasingsGenerator): void {
             sdkReq.shape.wrapperName = inflateNameOrString(sdkReq.shape.wrapperName, cg);
             sdkReq.shape.bodyKey = inflateNameOrString(sdkReq.shape.bodyKey, cg);
         } else if (sdkReq.shape.type === "justRequestBody") {
-            inflateTypeReference(sdkReq.shape.requestBodyType, cg);
+            inflateSdkRequestBodyType(sdkReq.shape.value, cg);
         }
     }
 
     inflateRequestProperty(sdkReq.streamParameter, cg);
 }
 
-function inflateHttpResponse(resp: AnyRecord, cg: CasingsGenerator): void {
+function inflateSdkRequestBodyType(bodyType: SdkRequestBodyType | undefined, cg: FullCasingsGenerator): void {
+    if (bodyType == null) {
+        return;
+    }
+    if (bodyType.type === "typeReference") {
+        inflateTypeReference(bodyType.requestBodyType, cg);
+    }
+}
+
+function inflateHttpResponse(resp: HttpResponse | undefined, cg: FullCasingsGenerator): void {
     if (resp == null || resp.body == null) {
         return;
     }
     inflateHttpResponseBody(resp.body, cg);
 }
 
-function inflateHttpResponseBody(body: AnyRecord, cg: CasingsGenerator): void {
+function inflateHttpResponseBody(body: HttpResponseBody | undefined, cg: FullCasingsGenerator): void {
     if (body == null) {
         return;
     }
     switch (body.type) {
         case "json":
-            inflateJsonResponse(body, cg);
+            inflateJsonResponse(body.value, cg);
             break;
         case "streaming":
-            inflateStreamingResponse(body, cg);
+            inflateStreamingResponse(body.value, cg);
             break;
         case "streamParameter":
             if (body.nonStreamResponse != null) {
@@ -717,16 +844,16 @@ function inflateHttpResponseBody(body: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateNonStreamHttpResponseBody(body: AnyRecord, cg: CasingsGenerator): void {
+function inflateNonStreamHttpResponseBody(body: NonStreamHttpResponseBody | undefined, cg: FullCasingsGenerator): void {
     if (body == null) {
         return;
     }
     if (body.type === "json") {
-        inflateJsonResponse(body, cg);
+        inflateJsonResponse(body.value, cg);
     }
 }
 
-function inflateJsonResponse(json: AnyRecord, cg: CasingsGenerator): void {
+function inflateJsonResponse(json: JsonResponse | undefined, cg: FullCasingsGenerator): void {
     if (json == null) {
         return;
     }
@@ -741,7 +868,7 @@ function inflateJsonResponse(json: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateStreamingResponse(sr: AnyRecord, cg: CasingsGenerator): void {
+function inflateStreamingResponse(sr: StreamingResponse | undefined, cg: FullCasingsGenerator): void {
     if (sr == null) {
         return;
     }
@@ -754,7 +881,7 @@ function inflateStreamingResponse(sr: AnyRecord, cg: CasingsGenerator): void {
 // Pagination
 // ---------------------------------------------------------------------------
 
-function inflatePagination(pagination: AnyRecord, cg: CasingsGenerator): void {
+function inflatePagination(pagination: Pagination | undefined, cg: FullCasingsGenerator): void {
     if (pagination == null) {
         return;
     }
@@ -784,7 +911,7 @@ function inflatePagination(pagination: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateRequestProperty(rp: AnyRecord, cg: CasingsGenerator): void {
+function inflateRequestProperty(rp: RequestProperty | undefined, cg: FullCasingsGenerator): void {
     if (rp == null) {
         return;
     }
@@ -800,7 +927,7 @@ function inflateRequestProperty(rp: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateResponseProperty(rp: AnyRecord, cg: CasingsGenerator): void {
+function inflateResponseProperty(rp: ResponseProperty | undefined, cg: FullCasingsGenerator): void {
     if (rp == null) {
         return;
     }
@@ -810,7 +937,7 @@ function inflateResponseProperty(rp: AnyRecord, cg: CasingsGenerator): void {
     inflateObjectProperty(rp.property, cg);
 }
 
-function inflatePropertyPathItem(item: AnyRecord, cg: CasingsGenerator): void {
+function inflatePropertyPathItem(item: PropertyPathItem | undefined, cg: FullCasingsGenerator): void {
     if (item == null) {
         return;
     }
@@ -822,7 +949,7 @@ function inflatePropertyPathItem(item: AnyRecord, cg: CasingsGenerator): void {
 // Examples
 // ---------------------------------------------------------------------------
 
-function inflateExampleEndpointCall(ex: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleEndpointCall(ex: ExampleEndpointCall | undefined, cg: FullCasingsGenerator): void {
     if (ex == null) {
         return;
     }
@@ -855,7 +982,7 @@ function inflateExampleEndpointCall(ex: AnyRecord, cg: CasingsGenerator): void {
     inflateExampleResponse(ex.response, cg);
 }
 
-function inflateExamplePathParameter(pp: AnyRecord, cg: CasingsGenerator): void {
+function inflateExamplePathParameter(pp: ExamplePathParameter | undefined, cg: FullCasingsGenerator): void {
     if (pp == null) {
         return;
     }
@@ -863,7 +990,7 @@ function inflateExamplePathParameter(pp: AnyRecord, cg: CasingsGenerator): void 
     inflateExampleTypeReference(pp.value, cg);
 }
 
-function inflateExampleRequestBody(body: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleRequestBody(body: ExampleRequestBody | undefined, cg: FullCasingsGenerator): void {
     if (body == null) {
         return;
     }
@@ -874,7 +1001,7 @@ function inflateExampleRequestBody(body: AnyRecord, cg: CasingsGenerator): void 
     }
 }
 
-function inflateExampleInlinedRequestBody(body: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleInlinedRequestBody(body: ExampleInlinedRequestBody | undefined, cg: FullCasingsGenerator): void {
     if (body == null) {
         return;
     }
@@ -891,12 +1018,12 @@ function inflateExampleInlinedRequestBody(body: AnyRecord, cg: CasingsGenerator)
     }
 }
 
-function inflateExampleResponse(resp: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleResponse(resp: ExampleResponse | undefined, cg: FullCasingsGenerator): void {
     if (resp == null) {
         return;
     }
     if (resp.type === "ok") {
-        inflateExampleEndpointSuccessResponse(resp, cg);
+        inflateExampleEndpointSuccessResponse(resp.value, cg);
     } else if (resp.type === "error") {
         if (resp.error != null) {
             inflateDeclaredErrorName(resp.error, cg);
@@ -905,22 +1032,33 @@ function inflateExampleResponse(resp: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateExampleEndpointSuccessResponse(resp: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleEndpointSuccessResponse(
+    resp: ExampleEndpointSuccessResponse | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (resp == null) {
         return;
     }
-    if (resp.body != null) {
-        inflateExampleTypeReference(resp.body, cg);
-    }
-    for (const item of resp.stream ?? []) {
-        inflateExampleTypeReference(item, cg);
-    }
-    for (const evt of resp.sse ?? []) {
-        inflateExampleTypeReference(evt.data, cg);
+    switch (resp.type) {
+        case "body":
+            if (resp.value != null) {
+                inflateExampleTypeReference(resp.value, cg);
+            }
+            break;
+        case "stream":
+            for (const item of resp.value ?? []) {
+                inflateExampleTypeReference(item, cg);
+            }
+            break;
+        case "sse":
+            for (const evt of resp.value ?? []) {
+                inflateExampleTypeReference(evt.data, cg);
+            }
+            break;
     }
 }
 
-function inflateExampleCodeSample(cs: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleCodeSample(cs: ExampleCodeSample | undefined, cg: FullCasingsGenerator): void {
     if (cs == null) {
         return;
     }
@@ -929,7 +1067,7 @@ function inflateExampleCodeSample(cs: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateExampleType(ex: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleType(ex: ExampleType | undefined, cg: FullCasingsGenerator): void {
     if (ex == null) {
         return;
     }
@@ -939,7 +1077,7 @@ function inflateExampleType(ex: AnyRecord, cg: CasingsGenerator): void {
     inflateExampleTypeShape(ex.shape, cg);
 }
 
-function inflateExampleTypeShape(shape: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleTypeShape(shape: ExampleTypeShape | undefined, cg: FullCasingsGenerator): void {
     if (shape == null) {
         return;
     }
@@ -962,7 +1100,7 @@ function inflateExampleTypeShape(shape: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateExampleObjectType(obj: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleObjectType(obj: ExampleObjectType, cg: FullCasingsGenerator): void {
     for (const prop of obj.properties ?? []) {
         inflateNameAndWireValueInPlace(prop.name, cg);
         inflateExampleTypeReference(prop.value, cg);
@@ -976,7 +1114,7 @@ function inflateExampleObjectType(obj: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateExampleUnionType(union: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleUnionType(union: ExampleUnionType, cg: FullCasingsGenerator): void {
     inflateNameAndWireValueInPlace(union.discriminant, cg);
     if (union.singleUnionType != null) {
         inflateNameAndWireValueInPlace(union.singleUnionType.wireDiscriminantValue, cg);
@@ -995,7 +1133,10 @@ function inflateExampleUnionType(union: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateExampleSingleUnionTypeProperties(shape: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleSingleUnionTypeProperties(
+    shape: ExampleSingleUnionTypeProperties | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (shape == null) {
         return;
     }
@@ -1009,7 +1150,7 @@ function inflateExampleSingleUnionTypeProperties(shape: AnyRecord, cg: CasingsGe
     }
 }
 
-function inflateExampleTypeReference(etr: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleTypeReference(etr: ExampleTypeReference | undefined, cg: FullCasingsGenerator): void {
     if (etr == null || etr.shape == null) {
         return;
     }
@@ -1026,7 +1167,7 @@ function inflateExampleTypeReference(etr: AnyRecord, cg: CasingsGenerator): void
     }
 }
 
-function inflateExampleContainer(container: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleContainer(container: ExampleContainer | undefined, cg: FullCasingsGenerator): void {
     if (container == null) {
         return;
     }
@@ -1060,7 +1201,7 @@ function inflateExampleContainer(container: AnyRecord, cg: CasingsGenerator): vo
 // Errors
 // ---------------------------------------------------------------------------
 
-function inflateErrorDeclaration(ed: AnyRecord, cg: CasingsGenerator): void {
+function inflateErrorDeclaration(ed: ErrorDeclaration, cg: FullCasingsGenerator): void {
     inflateDeclaredErrorName(ed.name, cg);
     inflateNameAndWireValueInPlace(ed.discriminantValue, cg);
     inflateTypeReference(ed.type, cg);
@@ -1072,7 +1213,7 @@ function inflateErrorDeclaration(ed: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateDeclaredErrorName(den: AnyRecord, cg: CasingsGenerator): void {
+function inflateDeclaredErrorName(den: DeclaredErrorName | undefined, cg: FullCasingsGenerator): void {
     if (den == null) {
         return;
     }
@@ -1080,7 +1221,7 @@ function inflateDeclaredErrorName(den: AnyRecord, cg: CasingsGenerator): void {
     inflateFernFilepathInPlace(den.fernFilepath, cg);
 }
 
-function inflateExampleError(ex: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleError(ex: ExampleError | undefined, cg: FullCasingsGenerator): void {
     if (ex == null) {
         return;
     }
@@ -1094,7 +1235,7 @@ function inflateExampleError(ex: AnyRecord, cg: CasingsGenerator): void {
 // Environments
 // ---------------------------------------------------------------------------
 
-function inflateEnvironmentsConfig(config: AnyRecord, cg: CasingsGenerator): void {
+function inflateEnvironmentsConfig(config: EnvironmentsConfig | undefined, cg: FullCasingsGenerator): void {
     if (config == null || config.environments == null) {
         return;
     }
@@ -1118,7 +1259,7 @@ function inflateEnvironmentsConfig(config: AnyRecord, cg: CasingsGenerator): voi
     }
 }
 
-function inflateServerVariable(sv: AnyRecord, cg: CasingsGenerator): void {
+function inflateServerVariable(sv: ServerVariable | undefined, cg: FullCasingsGenerator): void {
     if (sv == null) {
         return;
     }
@@ -1129,14 +1270,14 @@ function inflateServerVariable(sv: AnyRecord, cg: CasingsGenerator): void {
 // Packages / Subpackages
 // ---------------------------------------------------------------------------
 
-function inflatePackage(pkg: AnyRecord, cg: CasingsGenerator): void {
+function inflatePackage(pkg: Package | undefined, cg: FullCasingsGenerator): void {
     if (pkg == null) {
         return;
     }
     inflateFernFilepathInPlace(pkg.fernFilepath, cg);
 }
 
-function inflateSubpackage(sub: AnyRecord, cg: CasingsGenerator): void {
+function inflateSubpackage(sub: Subpackage, cg: FullCasingsGenerator): void {
     inflatePackage(sub, cg);
     sub.name = inflateNameOrString(sub.name, cg);
 }
@@ -1145,7 +1286,7 @@ function inflateSubpackage(sub: AnyRecord, cg: CasingsGenerator): void {
 // Constants
 // ---------------------------------------------------------------------------
 
-function inflateConstants(constants: AnyRecord, cg: CasingsGenerator): void {
+function inflateConstants(constants: Constants | undefined, cg: FullCasingsGenerator): void {
     if (constants == null) {
         return;
     }
@@ -1156,7 +1297,7 @@ function inflateConstants(constants: AnyRecord, cg: CasingsGenerator): void {
 // Variables
 // ---------------------------------------------------------------------------
 
-function inflateVariableDeclaration(v: AnyRecord, cg: CasingsGenerator): void {
+function inflateVariableDeclaration(v: VariableDeclaration | undefined, cg: FullCasingsGenerator): void {
     if (v == null) {
         return;
     }
@@ -1168,7 +1309,7 @@ function inflateVariableDeclaration(v: AnyRecord, cg: CasingsGenerator): void {
 // Webhooks
 // ---------------------------------------------------------------------------
 
-function inflateWebhookGroup(group: AnyRecord, cg: CasingsGenerator): void {
+function inflateWebhookGroup(group: WebhookGroup, cg: FullCasingsGenerator): void {
     if (!Array.isArray(group)) {
         return;
     }
@@ -1177,7 +1318,7 @@ function inflateWebhookGroup(group: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateWebhook(wh: AnyRecord, cg: CasingsGenerator): void {
+function inflateWebhook(wh: Webhook, cg: FullCasingsGenerator): void {
     wh.name = inflateNameOrString(wh.name, cg);
 
     for (const header of wh.headers ?? []) {
@@ -1193,7 +1334,7 @@ function inflateWebhook(wh: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateWebhookPayload(payload: AnyRecord, cg: CasingsGenerator): void {
+function inflateWebhookPayload(payload: WebhookPayload | undefined, cg: FullCasingsGenerator): void {
     if (payload == null) {
         return;
     }
@@ -1211,20 +1352,30 @@ function inflateWebhookPayload(payload: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateWebhookSignatureVerification(sv: AnyRecord, cg: CasingsGenerator): void {
+function inflateWebhookSignatureVerification(
+    sv: WebhookSignatureVerification | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (sv == null) {
         return;
     }
-    inflateNameAndWireValueInPlace(sv.signatureHeaderName, cg);
-    if (sv.timestamp != null) {
-        inflateNameAndWireValueInPlace(sv.timestamp.headerName, cg);
-    }
-    if (sv.keySource?.type === "jwks" && sv.keySource.keyIdHeader != null) {
-        inflateNameAndWireValueInPlace(sv.keySource.keyIdHeader, cg);
+    if (sv.type === "hmac") {
+        inflateNameAndWireValueInPlace(sv.signatureHeaderName, cg);
+        if (sv.timestamp != null) {
+            inflateNameAndWireValueInPlace(sv.timestamp.headerName, cg);
+        }
+    } else if (sv.type === "asymmetric") {
+        inflateNameAndWireValueInPlace(sv.signatureHeaderName, cg);
+        if (sv.timestamp != null) {
+            inflateNameAndWireValueInPlace(sv.timestamp.headerName, cg);
+        }
+        if (sv.keySource?.type === "jwks" && sv.keySource.keyIdHeader != null) {
+            inflateNameAndWireValueInPlace(sv.keySource.keyIdHeader, cg);
+        }
     }
 }
 
-function inflateExampleWebhookCall(ex: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleWebhookCall(ex: ExampleWebhookCall | undefined, cg: FullCasingsGenerator): void {
     if (ex == null) {
         return;
     }
@@ -1238,7 +1389,7 @@ function inflateExampleWebhookCall(ex: AnyRecord, cg: CasingsGenerator): void {
 // WebSocket Channels
 // ---------------------------------------------------------------------------
 
-function inflateWebSocketChannel(channel: AnyRecord, cg: CasingsGenerator): void {
+function inflateWebSocketChannel(channel: WebSocketChannel, cg: FullCasingsGenerator): void {
     channel.name = inflateNameOrString(channel.name, cg);
 
     for (const header of channel.headers ?? []) {
@@ -1258,7 +1409,7 @@ function inflateWebSocketChannel(channel: AnyRecord, cg: CasingsGenerator): void
     }
 }
 
-function inflateWebSocketMessage(msg: AnyRecord, cg: CasingsGenerator): void {
+function inflateWebSocketMessage(msg: WebSocketMessage | undefined, cg: FullCasingsGenerator): void {
     if (msg == null) {
         return;
     }
@@ -1278,7 +1429,7 @@ function inflateWebSocketMessage(msg: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateExampleWebSocketSession(ex: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleWebSocketSession(ex: ExampleWebSocketSession | undefined, cg: FullCasingsGenerator): void {
     if (ex == null) {
         return;
     }
@@ -1300,7 +1451,10 @@ function inflateExampleWebSocketSession(ex: AnyRecord, cg: CasingsGenerator): vo
     }
 }
 
-function inflateExampleWebSocketMessageBody(body: AnyRecord, cg: CasingsGenerator): void {
+function inflateExampleWebSocketMessageBody(
+    body: ExampleWebSocketMessageBody | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (body == null) {
         return;
     }
@@ -1315,7 +1469,7 @@ function inflateExampleWebSocketMessageBody(body: AnyRecord, cg: CasingsGenerato
 // ErrorDiscriminationStrategy
 // ---------------------------------------------------------------------------
 
-function inflateErrorDiscriminationStrategy(strategy: AnyRecord, cg: CasingsGenerator): void {
+function inflateErrorDiscriminationStrategy(strategy: ErrorDiscriminationStrategy, cg: FullCasingsGenerator): void {
     if (strategy == null) {
         return;
     }
@@ -1329,7 +1483,7 @@ function inflateErrorDiscriminationStrategy(strategy: AnyRecord, cg: CasingsGene
 // ApiVersionScheme
 // ---------------------------------------------------------------------------
 
-function inflateApiVersionScheme(scheme: AnyRecord, cg: CasingsGenerator): void {
+function inflateApiVersionScheme(scheme: ApiVersionScheme | undefined, cg: FullCasingsGenerator): void {
     if (scheme == null) {
         return;
     }
@@ -1343,16 +1497,16 @@ function inflateApiVersionScheme(scheme: AnyRecord, cg: CasingsGenerator): void 
 // Proto types (Source on TypeDeclaration)
 // ---------------------------------------------------------------------------
 
-function inflateTypeDeclarationSource(source: AnyRecord, cg: CasingsGenerator): void {
+function inflateTypeDeclarationSource(source: Source | undefined, cg: FullCasingsGenerator): void {
     if (source == null) {
         return;
     }
     if (source.type === "proto") {
-        inflateProtobufType(source, cg);
+        inflateProtobufType(source.value, cg);
     }
 }
 
-function inflateProtobufType(pt: AnyRecord, cg: CasingsGenerator): void {
+function inflateProtobufType(pt: ProtobufType | undefined, cg: FullCasingsGenerator): void {
     if (pt == null) {
         return;
     }
@@ -1365,17 +1519,20 @@ function inflateProtobufType(pt: AnyRecord, cg: CasingsGenerator): void {
 // Dynamic IR -- explicit visitor
 // ---------------------------------------------------------------------------
 
-function inflateDynamicIrInPlace(dynIr: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicIrInPlace(
+    dynIr: dynamic.DynamicIntermediateRepresentation | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (dynIr == null) {
         return;
     }
 
     for (const namedType of Object.values(dynIr.types ?? {})) {
-        inflateDynamicNamedType(namedType as AnyRecord, cg);
+        inflateDynamicNamedType(namedType, cg);
     }
 
     for (const endpoint of Object.values(dynIr.endpoints ?? {})) {
-        inflateDynamicEndpoint(endpoint as AnyRecord, cg);
+        inflateDynamicEndpoint(endpoint, cg);
     }
 
     if (dynIr.environments != null) {
@@ -1395,7 +1552,7 @@ function inflateDynamicIrInPlace(dynIr: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateDynamicDeclaration(decl: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicDeclaration(decl: dynamic.Declaration | undefined, cg: FullCasingsGenerator): void {
     if (decl == null) {
         return;
     }
@@ -1403,7 +1560,7 @@ function inflateDynamicDeclaration(decl: AnyRecord, cg: CasingsGenerator): void 
     inflateDynamicFernFilepathInPlace(decl.fernFilepath, cg);
 }
 
-function inflateDynamicFernFilepathInPlace(fp: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicFernFilepathInPlace(fp: dynamic.FernFilepath | undefined, cg: FullCasingsGenerator): void {
     if (fp == null) {
         return;
     }
@@ -1414,21 +1571,24 @@ function inflateDynamicFernFilepathInPlace(fp: AnyRecord, cg: CasingsGenerator):
     }
 }
 
-function inflateDynamicNameAndWireValueInPlace(nwv: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicNameAndWireValueInPlace(
+    nwv: dynamic.NameAndWireValue | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (nwv == null) {
         return;
     }
     nwv.name = inflateNameOrString(nwv.name, cg);
 }
 
-function inflateDynamicNamedParameter(param: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicNamedParameter(param: dynamic.NamedParameter | undefined, cg: FullCasingsGenerator): void {
     if (param == null) {
         return;
     }
     inflateDynamicNameAndWireValueInPlace(param.name, cg);
 }
 
-function inflateDynamicNamedType(nt: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicNamedType(nt: dynamic.NamedType | undefined, cg: FullCasingsGenerator): void {
     if (nt == null) {
         return;
     }
@@ -1452,7 +1612,7 @@ function inflateDynamicNamedType(nt: AnyRecord, cg: CasingsGenerator): void {
             inflateDynamicDeclaration(nt.declaration, cg);
             inflateDynamicNameAndWireValueInPlace(nt.discriminant, cg);
             for (const sut of Object.values(nt.types ?? {})) {
-                inflateDynamicSingleDiscriminatedUnionType(sut as AnyRecord, cg);
+                inflateDynamicSingleDiscriminatedUnionType(sut, cg);
             }
             break;
         case "undiscriminatedUnion":
@@ -1461,7 +1621,10 @@ function inflateDynamicNamedType(nt: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateDynamicSingleDiscriminatedUnionType(sut: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicSingleDiscriminatedUnionType(
+    sut: dynamic.SingleDiscriminatedUnionType | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (sut == null) {
         return;
     }
@@ -1471,7 +1634,7 @@ function inflateDynamicSingleDiscriminatedUnionType(sut: AnyRecord, cg: CasingsG
     }
 }
 
-function inflateDynamicEndpoint(ep: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicEndpoint(ep: dynamic.Endpoint | undefined, cg: FullCasingsGenerator): void {
     if (ep == null) {
         return;
     }
@@ -1480,7 +1643,7 @@ function inflateDynamicEndpoint(ep: AnyRecord, cg: CasingsGenerator): void {
     inflateDynamicRequest(ep.request, cg);
 }
 
-function inflateDynamicAuth(auth: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicAuth(auth: dynamic.Auth | undefined, cg: FullCasingsGenerator): void {
     if (auth == null) {
         return;
     }
@@ -1502,7 +1665,7 @@ function inflateDynamicAuth(auth: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateDynamicRequest(request: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicRequest(request: dynamic.Request | undefined, cg: FullCasingsGenerator): void {
     if (request == null) {
         return;
     }
@@ -1528,7 +1691,10 @@ function inflateDynamicRequest(request: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateDynamicInlinedRequestBody(body: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicInlinedRequestBody(
+    body: dynamic.InlinedRequestBody | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (body == null) {
         return;
     }
@@ -1559,14 +1725,17 @@ function inflateDynamicInlinedRequestBody(body: AnyRecord, cg: CasingsGenerator)
     }
 }
 
-function inflateDynamicVariableDeclaration(v: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicVariableDeclaration(v: dynamic.VariableDeclaration | undefined, cg: FullCasingsGenerator): void {
     if (v == null) {
         return;
     }
     v.name = inflateNameOrString(v.name, cg);
 }
 
-function inflateDynamicEnvironmentsConfig(config: AnyRecord, cg: CasingsGenerator): void {
+function inflateDynamicEnvironmentsConfig(
+    config: dynamic.EnvironmentsConfig | undefined,
+    cg: FullCasingsGenerator
+): void {
     if (config == null || config.environments == null) {
         return;
     }
@@ -1591,7 +1760,7 @@ function inflateDynamicEnvironmentsConfig(config: AnyRecord, cg: CasingsGenerato
 // In-place mutation helpers for FernFilepath and NameAndWireValue
 // ---------------------------------------------------------------------------
 
-function inflateFernFilepathInPlace(fp: AnyRecord, cg: CasingsGenerator): void {
+function inflateFernFilepathInPlace(fp: FernFilepath | undefined, cg: FullCasingsGenerator): void {
     if (fp == null) {
         return;
     }
@@ -1602,7 +1771,7 @@ function inflateFernFilepathInPlace(fp: AnyRecord, cg: CasingsGenerator): void {
     }
 }
 
-function inflateNameAndWireValueInPlace(nwv: AnyRecord, cg: CasingsGenerator): void {
+function inflateNameAndWireValueInPlace(nwv: NameAndWireValue | undefined, cg: FullCasingsGenerator): void {
     if (nwv == null) {
         return;
     }

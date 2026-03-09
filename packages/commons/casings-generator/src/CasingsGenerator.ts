@@ -1,6 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { NameAndWireValue, NameOrString, SafeAndUnsafeString } from "@fern-api/ir-sdk";
+import { Name, NameAndWireValue, NameOrString, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 
 import { RESERVED_KEYWORDS } from "./reserved.js";
@@ -24,6 +24,23 @@ export interface CasingsGenerator {
     }): NameAndWireValue;
 }
 
+/**
+ * A CasingsGenerator that is guaranteed to produce full Name objects (not strings).
+ * Used by inflation utilities where we know the generator always returns Name.
+ * This avoids the need for casts when assigning the result to Name fields.
+ */
+export interface FullCasingsGenerator {
+    generateName(
+        name: string,
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean }
+    ): Name;
+    generateNameAndWireValue(args: {
+        name: string;
+        wireValue: string;
+        opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean };
+    }): NameAndWireValue & { name: Name };
+}
+
 const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"];
 
 /**
@@ -44,6 +61,7 @@ export function constructSlimCasingsGenerator(): CasingsGenerator {
 /**
  * Constructs a CasingsGenerator that produces full Name objects with all casings.
  * Used by inflation utilities and the v66→v65 migration.
+ * Returns FullCasingsGenerator since the implementation always produces Name objects.
  */
 export function constructCasingsGenerator({
     generationLanguage,
@@ -53,8 +71,8 @@ export function constructCasingsGenerator({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
-}): CasingsGenerator {
-    const casingsGenerator: CasingsGenerator = {
+}): FullCasingsGenerator {
+    const casingsGenerator: FullCasingsGenerator = {
         generateName: (inputName, opts) => {
             const name = preprocessName(inputName);
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({

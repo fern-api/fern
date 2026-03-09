@@ -1,4 +1,4 @@
-import { InflatedIR, inflateIrNames } from "@fern-api/casings-generator";
+import { inflateIrNames, NormalizedIR } from "@fern-api/casings-generator";
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { IrMigrationContext } from "../../IrMigrationContext";
@@ -72,7 +72,7 @@ export const V66_TO_V65_MIGRATION: IrMigration<
  * types come from @fern-fern/ir-v65-sdk — TypeScript can't prove cross-package structural
  * equivalence, so we cast the explicitly-constructed object at the return boundary.
  */
-function buildV65Ir(inflated: InflatedIR<IntermediateRepresentation>): IrVersions.V65.ir.IntermediateRepresentation {
+function buildV65Ir(inflated: NormalizedIR<IntermediateRepresentation>): IrVersions.V65.ir.IntermediateRepresentation {
     // Explicitly construct each field so that if a field is added to V65/V66,
     // the developer must update this mapping rather than silently passing through.
     const v65Ir = {
@@ -110,7 +110,7 @@ function buildV65Ir(inflated: InflatedIR<IntermediateRepresentation>): IrVersion
     };
 
     // Cross-package cast: after inflation, all Name fields contain full Name objects.
-    // V66's InflatedIR and V65's IR are structurally identical, but TypeScript can't
+    // V66's NormalizedIR and V65's IR are structurally identical, but TypeScript can't
     // verify this across package boundaries (@fern-api/ir-sdk vs @fern-fern/ir-v65-sdk).
     // This is the standard pattern used by all IR migrations (see v65-to-v63 for precedent).
     return v65Ir as unknown as IrVersions.V65.ir.IntermediateRepresentation;
