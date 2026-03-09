@@ -5,7 +5,7 @@ import uuid
 
 import pydantic
 import typing_extensions
-from .pydantic_utilities import (
+from .pydantic_utilities import (  # type: ignore[attr-defined]
     IS_PYDANTIC_V2,
     ModelField,
     UniversalBaseModel,
