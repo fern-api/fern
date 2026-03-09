@@ -1519,12 +1519,6 @@
               "type": "boolean"
             },
             {
-              "type": "string",
-              "enum": [
-                "open-by-default"
-              ]
-            },
-            {
               "type": "null"
             }
           ]
@@ -2488,12 +2482,6 @@
               "type": "boolean"
             },
             {
-              "type": "string",
-              "enum": [
-                "open-by-default"
-              ]
-            },
-            {
               "type": "null"
             }
           ]
@@ -2848,12 +2836,6 @@
           "oneOf": [
             {
               "type": "boolean"
-            },
-            {
-              "type": "string",
-              "enum": [
-                "open-by-default"
-              ]
             },
             {
               "type": "null"
