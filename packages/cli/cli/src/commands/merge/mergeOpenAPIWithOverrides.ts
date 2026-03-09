@@ -91,13 +91,14 @@ function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec, contex
         merged.paths = {};
     }
 
-    for (const [path, pathItem] of Object.entries(overridePaths)) {
+    for (const [overridePath, pathItem] of Object.entries(overridePaths)) {
         if (pathItem == null || typeof pathItem !== "object") {
             continue;
         }
 
-        if (merged.paths[path] == null) {
-            context.logger.warn(`Path ${path} not found in OpenAPI spec, skipping.`);
+        const specPath = findMatchingSpecPath(overridePath, merged.paths);
+        if (specPath == null) {
+            context.logger.warn(`Path ${overridePath} not found in OpenAPI spec, skipping.`);
             continue;
         }
 
@@ -106,9 +107,11 @@ function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec, contex
                 continue;
             }
 
-            const specOperation = merged.paths[path][method];
+            const specOperation = merged.paths[specPath][method];
             if (specOperation == null || typeof specOperation !== "object") {
-                context.logger.warn(`Operation ${method.toUpperCase()} ${path} not found in OpenAPI spec, skipping.`);
+                context.logger.warn(
+                    `Operation ${method.toUpperCase()} ${overridePath} not found in OpenAPI spec, skipping.`
+                );
                 continue;
             }
 
@@ -125,6 +128,9 @@ function mergeExamplesIntoSpec(spec: OpenAPISpec, overrides: OpenAPISpec, contex
             }
         }
     }
+
+    // Strip all x-fern-examples from the merged spec
+    stripFernExamples(merged);
 
     return merged;
 }
@@ -372,4 +378,73 @@ function getFirstSuccessResponse(operation: any): any | undefined {
 function getFirstContentType(content: Record<string, unknown>): string | undefined {
     const keys = Object.keys(content);
     return keys.length > 0 ? keys[0] : undefined;
+}
+
+/**
+ * Finds a matching spec path for an override path.
+ * Supports exact matches and fuzzy matches where override paths use bare
+ * parameter names (e.g. `/customers/customerId`) that correspond to
+ * templated spec paths (e.g. `/customers/{customerId}`).
+ */
+function findMatchingSpecPath(overridePath: string, specPaths: Record<string, unknown>): string | undefined {
+    // Try exact match first
+    if (specPaths[overridePath] != null) {
+        return overridePath;
+    }
+
+    const overrideSegments = overridePath.split("/");
+
+    for (const specPath of Object.keys(specPaths)) {
+        const specSegments = specPath.split("/");
+        if (specSegments.length !== overrideSegments.length) {
+            continue;
+        }
+
+        let matches = true;
+        for (let i = 0; i < specSegments.length; i++) {
+            const specSeg = specSegments[i];
+            const overrideSeg = overrideSegments[i];
+            if (specSeg === overrideSeg) {
+                continue;
+            }
+            // Match templated segment {param} against bare param name
+            if (specSeg != null && specSeg.startsWith("{") && specSeg.endsWith("}")) {
+                const paramName = specSeg.slice(1, -1);
+                if (paramName === overrideSeg) {
+                    continue;
+                }
+            }
+            matches = false;
+            break;
+        }
+
+        if (matches) {
+            return specPath;
+        }
+    }
+
+    return undefined;
+}
+
+/**
+ * Strips all x-fern-examples from every operation in the spec.
+ */
+function stripFernExamples(spec: OpenAPISpec): void {
+    const paths = spec.paths;
+    if (paths == null || typeof paths !== "object") {
+        return;
+    }
+    for (const pathItem of Object.values(paths)) {
+        if (pathItem == null || typeof pathItem !== "object") {
+            continue;
+        }
+        for (const [method, operation] of Object.entries(pathItem as Record<string, unknown>)) {
+            if (!HTTP_METHODS.has(method.toLowerCase())) {
+                continue;
+            }
+            if (operation != null && typeof operation === "object" && "x-fern-examples" in operation) {
+                delete (operation as Record<string, unknown>)["x-fern-examples"];
+            }
+        }
+    }
 }
