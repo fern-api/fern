@@ -81,6 +81,15 @@ class CoreUtilities:
         )
         self._copy_file_to_project(
             project=project,
+            relative_filepath_on_disk="parse_error.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="parse_error"),
+            ),
+            exports={"ParsingError"} if not self._exclude_types_from_init_exports else set(),
+        )
+        self._copy_file_to_project(
+            project=project,
             relative_filepath_on_disk="jsonable_encoder.py",
             filepath_in_project=Filepath(
                 directories=self.filepath,
@@ -393,6 +402,15 @@ class CoreUtilities:
             import_=AST.ReferenceImport(module=module, named_import="ApiError"),
         )
 
+    def get_reference_to_parsing_error(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "parse_error"),
+                named_import="ParsingError",
+            ),
+        )
+
     def get_oauth_token_provider(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
@@ -485,6 +503,33 @@ class CoreUtilities:
             if body is not None:
                 writer.write("body=")
                 writer.write_node(body)
+            writer.write_line(")")
+
+        return AST.CodeWriter(code_writer=_write)
+
+    def instantiate_parsing_error(
+        self,
+        *,
+        headers: Optional[AST.Expression],
+        status_code: Optional[AST.Expression],
+        body: Optional[AST.Expression],
+    ) -> AST.AstNode:
+        def _write(writer: AST.NodeWriter) -> None:
+            writer.write_node(AST.Expression(self.get_reference_to_parsing_error()))
+            writer.write("(")
+            if status_code is not None:
+                writer.write("status_code=")
+                writer.write_node(status_code)
+                writer.write(", ")
+            if headers is not None:
+                writer.write("headers=dict(")
+                writer.write_node(headers)
+                writer.write("), ")
+            if body is not None:
+                writer.write("body=")
+                writer.write_node(body)
+                writer.write(", ")
+            writer.write("cause=e")
             writer.write_line(")")
 
         return AST.CodeWriter(code_writer=_write)
