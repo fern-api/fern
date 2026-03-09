@@ -20,7 +20,7 @@ export const FolderConfiguration: core.serialization.ObjectSchema<
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
-        collapsed: core.serialization.union([core.serialization.boolean(), core.serialization.stringLiteral("open-by-default")]).optional(),
+        collapsed: core.serialization.undiscriminatedUnion([core.serialization.boolean(), core.serialization.stringLiteral("open-by-default")]).optional(),
         collapsible: core.serialization.boolean().optional(),
         collapsedByDefault: core.serialization.property(
             "collapsed-by-default",

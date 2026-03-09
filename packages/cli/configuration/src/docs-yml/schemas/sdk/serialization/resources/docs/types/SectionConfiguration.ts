@@ -15,7 +15,7 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
         section: core.serialization.string(),
         path: core.serialization.string().optional(),
         contents: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)),
-        collapsed: core.serialization.union([core.serialization.boolean(), core.serialization.stringLiteral("open-by-default")]).optional(),
+        collapsed: core.serialization.undiscriminatedUnion([core.serialization.boolean(), core.serialization.stringLiteral("open-by-default")]).optional(),
         collapsible: core.serialization.boolean().optional(),
         collapsedByDefault: core.serialization.property(
             "collapsed-by-default",

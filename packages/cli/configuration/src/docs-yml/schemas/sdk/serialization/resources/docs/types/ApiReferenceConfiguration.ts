@@ -28,7 +28,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         postman: core.serialization.string().optional(),
         summary: core.serialization.string().optional(),
         layout: core.serialization.list(core.serialization.lazy(() => serializers.ApiReferenceLayoutItem)).optional(),
-        collapsed: core.serialization.union([core.serialization.boolean(), core.serialization.stringLiteral("open-by-default")]).optional(),
+        collapsed: core.serialization.undiscriminatedUnion([core.serialization.boolean(), core.serialization.stringLiteral("open-by-default")]).optional(),
         icon: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
