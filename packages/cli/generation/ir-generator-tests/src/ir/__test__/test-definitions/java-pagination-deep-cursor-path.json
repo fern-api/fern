@@ -7827,7 +7827,7 @@
                     "safeName": "DeepCursorPath"
                 }
             },
-            "displayName": null,
+            "displayName": "Long Path",
             "fernFilepath": {
                 "allParts": [
                     {
