@@ -28,14 +28,24 @@ export interface AffectedResult {
 
 /**
  * Paths that, when changed, affect ALL generators and ALL fixtures.
- * These are infrastructure-level changes. Includes shared base packages
- * (generators/base/, generators/browser-compatible-base/) since all generators
- * depend on them.
+ * These are infrastructure-level changes that feed into IR generation
+ * or affect how seed tests execute. Includes:
+ * - IR SDK and IR generator (the core IR pipeline)
+ * - Seed CLI itself
+ * - Workspace loader, API importers, Fern definition parsing (affect IR input)
+ * - Configuration parsing (affects generator config)
+ * - Local workspace runner (affects how generators are invoked)
+ * - Shared generator base packages
  */
 const GLOBAL_AFFECT_PATHS = [
     "packages/ir-sdk/",
     "packages/seed/",
     "packages/cli/generation/ir-generator/",
+    "packages/cli/generation/local-generation/",
+    "packages/cli/workspace/",
+    "packages/cli/api-importers/",
+    "packages/cli/fern-definition/",
+    "packages/cli/configuration/",
     "generators/base/",
     "generators/browser-compatible-base/"
 ];

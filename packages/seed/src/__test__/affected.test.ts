@@ -127,6 +127,47 @@ describe("detectAffected", () => {
             expect(result.allGeneratorsAffected).toBe(true);
             expect(result.allFixturesAffected).toBe(true);
         });
+
+        it("runs everything when workspace loader changes", () => {
+            const result = detectAffected(["packages/cli/workspace/loader/src/loadWorkspace.ts"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when api-importers change", () => {
+            const result = detectAffected(
+                ["packages/cli/api-importers/openapi-to-ir/src/converter.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when fern-definition parsing changes", () => {
+            const result = detectAffected(["packages/cli/fern-definition/schema/src/schemas.ts"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when configuration package changes", () => {
+            const result = detectAffected(["packages/cli/configuration/src/generators-yml.ts"], ALL_GENERATORS);
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
+
+        it("runs everything when local-generation changes", () => {
+            const result = detectAffected(
+                ["packages/cli/generation/local-generation/local-workspace-runner/src/runner.ts"],
+                ALL_GENERATORS
+            );
+
+            expect(result.allGeneratorsAffected).toBe(true);
+            expect(result.allFixturesAffected).toBe(true);
+        });
     });
 
     describe("fixture detection (test definitions)", () => {
