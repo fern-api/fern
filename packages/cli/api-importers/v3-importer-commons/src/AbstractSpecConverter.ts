@@ -313,7 +313,7 @@ export abstract class AbstractSpecConverter<
             groupParts: endpointGroup,
             namespace: this.context.namespace
         });
-        const pkg = this.getOrCreatePackage({ group: endpointGroup });
+        const pkg = this.getOrCreatePackage({ group: endpointGroup, displayName: endpointGroupDisplayName });
 
         const allParts = [...group].map((part) => this.context.casingsGenerator.generateName(part));
         const finalpart = allParts[allParts.length - 1];
@@ -326,23 +326,6 @@ export abstract class AbstractSpecConverter<
             this.ir.services[pkg.service] = this.createNewService({ allParts, finalpart, endpointGroupDisplayName });
         }
         this.ir.services[pkg.service]?.endpoints.push(endpoint);
-
-        // Propagate the endpoint group display name to the subpackage so that
-        // the original tag capitalization/formatting is preserved in navigation.
-        if (endpointGroupDisplayName != null) {
-            const groupParts: string[] = [];
-            if (this.context.namespace != null) {
-                groupParts.push(this.context.namespace);
-            }
-            groupParts.push(...(endpointGroup ?? []).map((part) => camelCase(part)));
-            if (groupParts.length > 0) {
-                const subpackageId = `subpackage_${groupParts.join("/")}`;
-                const subpackage = this.ir.subpackages[subpackageId];
-                if (subpackage != null && subpackage.displayName == null) {
-                    subpackage.displayName = endpointGroupDisplayName;
-                }
-            }
-        }
 
         const service = this.ir.services[pkg.service];
         if (service != null) {
@@ -574,7 +557,7 @@ export abstract class AbstractSpecConverter<
      * @param context The converter context
      * @returns The package object
      */
-    protected getOrCreatePackage({ group }: { group?: string[] }): Package {
+    protected getOrCreatePackage({ group, displayName }: { group?: string[]; displayName?: string }): Package {
         const groupParts = [];
         if (this.context.namespace != null) {
             groupParts.push(this.context.namespace);
@@ -603,6 +586,15 @@ export abstract class AbstractSpecConverter<
             }
             pkg = curr;
         }
+
+        // Propagate the display name to the leaf subpackage so that
+        // the original tag capitalization/formatting is preserved in navigation.
+        const leafId = `subpackage_${groupParts.join("/")}`;
+        const leafSubpackage = this.ir.subpackages[leafId];
+        if (displayName != null && leafSubpackage != null && leafSubpackage.displayName == null) {
+            leafSubpackage.displayName = displayName;
+        }
+
         return pkg;
     }
 }

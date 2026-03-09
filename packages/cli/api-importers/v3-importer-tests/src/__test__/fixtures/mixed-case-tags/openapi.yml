@@ -1,0 +1,131 @@
+openapi: 3.0.3
+info:
+  title: Mixed Case Tags API
+  version: 1.0.0
+tags:
+  - name: Garden Management
+    description: Endpoints for managing gardens
+  - name: plant Care tips
+    description: Tips for caring for plants
+  - name: SEED inventory
+    description: Seed inventory management
+  - name: GPT-4
+    description: GPT-4 model endpoints
+  - name: MyCustomAPI
+    description: Custom API endpoints
+paths:
+  /plants/{plantId}:
+    get:
+      tags:
+        - Garden Management
+      operationId: getPlant
+      summary: Get a plant by ID
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A plant
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plant"
+  /plants/{plantId}/water:
+    post:
+      tags:
+        - plant Care tips
+      operationId: waterPlant
+      summary: Water a plant
+      parameters:
+        - name: plantId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Watered
+  /inventory/seeds:
+    get:
+      tags:
+        - SEED inventory
+      operationId: listSeeds
+      summary: List all seeds
+      responses:
+        "200":
+          description: List of seeds
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Seed"
+  /models/gpt4/complete:
+    post:
+      tags:
+        - GPT-4
+      operationId: completeGpt4
+      summary: Complete a prompt using GPT-4
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompletionRequest"
+      responses:
+        "200":
+          description: Completion response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompletionResponse"
+  /custom/resource:
+    get:
+      tags:
+        - MyCustomAPI
+      operationId: getResource
+      summary: Get a custom resource
+      responses:
+        "200":
+          description: A resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Resource"
+components:
+  schemas:
+    Plant:
+      type: object
+      properties:
+        name:
+          type: string
+        species:
+          type: string
+    Seed:
+      type: object
+      properties:
+        variety:
+          type: string
+        quantity:
+          type: integer
+    CompletionRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+        maxTokens:
+          type: integer
+    CompletionResponse:
+      type: object
+      properties:
+        text:
+          type: string
+    Resource:
+      type: object
+      properties:
+        id:
+          type: string
+        value:
+          type: string
