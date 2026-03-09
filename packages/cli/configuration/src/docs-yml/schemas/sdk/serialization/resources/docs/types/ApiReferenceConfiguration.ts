@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { Audience } from "./Audience.js";
 import { Availability } from "./Availability.js";
+import { CollapsedConfig } from "./CollapsedConfig.js";
 import { PlaygroundSettings } from "./PlaygroundSettings.js";
 import { SnippetsConfiguration } from "./SnippetsConfiguration.js";
 import { WithFeatureFlags } from "./WithFeatureFlags.js";
@@ -28,7 +29,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         postman: core.serialization.string().optional(),
         summary: core.serialization.string().optional(),
         layout: core.serialization.list(core.serialization.lazy(() => serializers.ApiReferenceLayoutItem)).optional(),
-        collapsed: core.serialization.undiscriminatedUnion([core.serialization.boolean(), core.serialization.object({ default: core.serialization.stringLiteral("closed") }), core.serialization.object({ default: core.serialization.stringLiteral("open") })]).optional(),
+        collapsed: CollapsedConfig.optional(),
         icon: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
@@ -54,7 +55,7 @@ export declare namespace ApiReferenceConfiguration {
         postman?: string | null;
         summary?: string | null;
         layout?: serializers.ApiReferenceLayoutItem.Raw[] | null;
-        collapsed?: boolean | { default: "closed" } | { default: "open" } | null;
+        collapsed?: CollapsedConfig.Raw | null;
         icon?: string | null;
         slug?: string | null;
         hidden?: boolean | null;

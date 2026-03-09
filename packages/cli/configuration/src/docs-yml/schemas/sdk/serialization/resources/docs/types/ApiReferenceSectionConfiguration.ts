@@ -25,7 +25,10 @@ export const ApiReferenceSectionConfiguration: core.serialization.ObjectSchema<
         hidden: core.serialization.boolean().optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
         collapsible: core.serialization.boolean().optional(),
-        collapsedByDefault: core.serialization.property("collapsed-by-default", core.serialization.boolean().optional()),
+        collapsedByDefault: core.serialization.property(
+            "collapsed-by-default",
+            core.serialization.boolean().optional(),
+        ),
         availability: Availability.optional(),
         playground: PlaygroundSettings.optional(),
     })

@@ -1094,9 +1094,9 @@ types:
           The relative path to the markdown file that will be displayed when the section is clicked.
       contents: list<NavigationItem>
       collapsed:
-        type: optional<boolean>
+        type: optional<CollapsedConfig>
         docs: |
-          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead. When set to `true` or `{ default: "closed" }`, the section starts collapsed. When set to `{ default: "open" }`, the section starts expanded but can be collapsed.
         availability: deprecated
       collapsible:
         type: optional<boolean>
@@ -1132,9 +1132,9 @@ types:
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       collapsed:
-        type: optional<boolean>
+        type: optional<CollapsedConfig>
         docs: |
-          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead. When set to `true` or `{ default: "closed" }`, the section starts collapsed. When set to `{ default: "open" }`, the section starts expanded but can be collapsed.
         availability: deprecated
       collapsible:
         type: optional<boolean>
@@ -1145,6 +1145,21 @@ types:
         docs: |
           Whether the section starts collapsed. Only meaningful when `collapsible` is true. Defaults to false (starts open).
       availability: optional<Availability>
+
+  CollapsedDefaultValue:
+    enum:
+      - closed
+      - open
+
+  CollapsedDefaultConfig:
+    properties:
+      default: CollapsedDefaultValue
+
+  CollapsedConfig:
+    discriminated: false
+    union:
+      - boolean
+      - CollapsedDefaultConfig
 
   TitleSource:
     enum:
@@ -1181,7 +1196,7 @@ types:
         docs: |
           Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
       collapsed:
-        type: optional<boolean>
+        type: optional<CollapsedConfig>
         availability: deprecated
       icon: optional<string>
       slug: optional<string>
