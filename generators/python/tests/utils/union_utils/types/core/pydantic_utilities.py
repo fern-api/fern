@@ -8,6 +8,7 @@ from collections import defaultdict
 import typing_extensions
 
 import pydantic
+from pydantic.fields import FieldInfo as _FieldInfo
 
 from .datetime_utils import serialize_datetime
 
@@ -39,7 +40,7 @@ if IS_PYDANTIC_V2:
     def is_union(tp: typing.Optional[typing.Type[typing.Any]]) -> bool:  # type: ignore[misc]
         return tp is typing.Union or typing_extensions.get_origin(tp) is typing.Union  # type: ignore[comparison-overlap]
 
-    ModelField = pydantic.fields.FieldInfo  # type: ignore[misc, assignment]
+    from pydantic.fields import FieldInfo as ModelField  # type: ignore[no-redef, assignment]
 
     import re as _re
     from collections import deque as _deque
@@ -263,7 +264,7 @@ def universal_field_validator(field_name: str, pre: bool = False) -> typing.Call
     return decorator
 
 
-PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]
+PydanticField = typing.Union[ModelField, _FieldInfo]
 
 
 def _get_model_fields(

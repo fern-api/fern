@@ -24,6 +24,7 @@ from typing import (
 
 import pydantic
 import typing_extensions
+from pydantic.fields import FieldInfo as _FieldInfo
 
 _logger = logging.getLogger(__name__)
 
@@ -58,8 +59,6 @@ if IS_PYDANTIC_V2:
     def is_union(tp: Optional[Type[Any]]) -> bool:  # type: ignore[misc]
         return tp is Union or typing_extensions.get_origin(tp) is Union  # type: ignore[comparison-overlap]
 
-    ModelField = pydantic.fields.FieldInfo  # type: ignore[misc, assignment]
-
     # Inline encoders_by_type to avoid importing from pydantic.v1.json
     import re as _re
     from collections import deque as _deque
@@ -86,6 +85,8 @@ if IS_PYDANTIC_V2:
     from pathlib import Path as _Path
     from types import GeneratorType as _GeneratorType
     from uuid import UUID as _UUID
+
+    from pydantic.fields import FieldInfo as ModelField  # type: ignore[no-redef, assignment]
 
     def _decimal_encoder(dec_value: Any) -> Any:
         if dec_value.as_tuple().exponent >= 0:
@@ -608,7 +609,7 @@ def universal_field_validator(field_name: str, pre: bool = False) -> Callable[[A
     return decorator
 
 
-PydanticField = Union[ModelField, pydantic.fields.FieldInfo]
+PydanticField = Union[ModelField, _FieldInfo]
 
 
 def _get_model_fields(model: Type["Model"]) -> Mapping[str, PydanticField]:
