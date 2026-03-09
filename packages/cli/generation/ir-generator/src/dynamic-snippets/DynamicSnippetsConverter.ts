@@ -1,4 +1,4 @@
-import { CasingsGenerator, constructSlimCasingsGenerator } from "@fern-api/casings-generator";
+import { CasingsGenerator, constructSlimCasingsGenerator, inflateNameOrString, inflateFernFilepath } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import {
@@ -104,7 +104,7 @@ export class DynamicSnippetsConverter {
             headers: this.convertHeaders(),
             endpoints: this.convertEndpoints({ disableExamples }),
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
-            environments: this.ir.environments,
+            environments: this.inflateEnvironments(this.ir.environments),
             variables: this.convertVariables(),
             generatorConfig: this.generatorConfig
         };
@@ -129,7 +129,7 @@ export class DynamicSnippetsConverter {
         }
         return this.ir.variables.map((variable) => ({
             id: variable.id,
-            name: variable.name,
+            name: inflateNameOrString(variable.name, this.casingsGenerator),
             typeReference: this.convertTypeReference(variable.type)
         }));
     }
@@ -275,14 +275,14 @@ export class DynamicSnippetsConverter {
             }
             case "reference":
                 return DynamicSnippets.InlinedRequestBody.referenced({
-                    bodyKey: wrapper.bodyKey,
+                    bodyKey: inflateNameOrString(wrapper.bodyKey, this.casingsGenerator),
                     bodyType: DynamicSnippets.ReferencedRequestBodyType.typeReference(
                         this.convertTypeReference(body.requestBodyType)
                     )
                 });
             case "bytes":
                 return DynamicSnippets.InlinedRequestBody.referenced({
-                    bodyKey: wrapper.bodyKey,
+                    bodyKey: inflateNameOrString(wrapper.bodyKey, this.casingsGenerator),
                     bodyType: DynamicSnippets.ReferencedRequestBodyType.bytes()
                 });
             case "fileUpload":
@@ -313,7 +313,10 @@ export class DynamicSnippetsConverter {
                     return this.convertFileUploadRequestBodyFileProperty({ fileProperty: property.value });
                 case "bodyProperty":
                     return DynamicSnippets.FileUploadRequestBodyProperty.bodyProperty({
-                        name: property.name,
+                        name: {
+                            ...property.name,
+                            name: inflateNameOrString(property.name.name, this.casingsGenerator)
+                        },
                         typeReference: this.convertTypeReference(property.valueType),
                         propertyAccess: property.propertyAccess,
                         variable: undefined
@@ -331,9 +334,15 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.FileUploadRequestBodyProperty {
         switch (fileProperty.type) {
             case "file":
-                return DynamicSnippets.FileUploadRequestBodyProperty.file(fileProperty.key);
+                return DynamicSnippets.FileUploadRequestBodyProperty.file({
+                    ...fileProperty.key,
+                    name: inflateNameOrString(fileProperty.key.name, this.casingsGenerator)
+                });
             case "fileArray":
-                return DynamicSnippets.FileUploadRequestBodyProperty.fileArray(fileProperty.key);
+                return DynamicSnippets.FileUploadRequestBodyProperty.fileArray({
+                    ...fileProperty.key,
+                    name: inflateNameOrString(fileProperty.key.name, this.casingsGenerator)
+                });
             default:
                 assertNever(fileProperty);
         }
@@ -346,7 +355,7 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.NamedParameter[] {
         return pathParameters.map((pathParameter) => ({
             name: {
-                name: pathParameter.name,
+                name: inflateNameOrString(pathParameter.name, this.casingsGenerator),
                 wireValue: getNameString(pathParameter.name)
             },
             typeReference: this.convertTypeReference(pathParameter.valueType),
@@ -362,7 +371,7 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.NamedParameter[] {
         return properties.map((property) => ({
             name: {
-                name: property.name.name,
+                name: inflateNameOrString(property.name.name, this.casingsGenerator),
                 wireValue: property.name.wireValue
             },
             typeReference: this.convertTypeReference(property.valueType),
@@ -378,7 +387,7 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.NamedParameter[] {
         return wireValueParameters.map((parameter) => ({
             name: {
-                name: parameter.name.name,
+                name: inflateNameOrString(parameter.name.name, this.casingsGenerator),
                 wireValue: parameter.name.wireValue
             },
             typeReference: this.convertTypeReference(parameter.valueType),
@@ -400,7 +409,7 @@ export class DynamicSnippetsConverter {
             }
             parameters.push({
                 name: {
-                    name: queryParameter.name.name,
+                    name: inflateNameOrString(queryParameter.name.name, this.casingsGenerator),
                     wireValue: queryParameter.name.wireValue
                 },
                 typeReference,
@@ -496,7 +505,10 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.enum({
             declaration,
-            values: enum_.values.map((value) => value.name)
+            values: enum_.values.map((value) => ({
+                ...value.name,
+                name: inflateNameOrString(value.name.name, this.casingsGenerator)
+            }))
         });
     }
 
@@ -558,13 +570,19 @@ export class DynamicSnippetsConverter {
         const inheritedProperties = [...this.resolveProperties(union.extends), ...union.baseProperties];
         return DynamicSnippets.NamedType.discriminatedUnion({
             declaration,
-            discriminant: union.discriminant,
+            discriminant: {
+                ...union.discriminant,
+                name: inflateNameOrString(union.discriminant.name, this.casingsGenerator)
+            },
             types: Object.fromEntries(
                 union.types.map((unionType) => [
                     unionType.discriminantValue.wireValue,
                     this.convertDiscriminatedUnionType({
                         inheritedProperties,
-                        discriminantValue: unionType.discriminantValue,
+                        discriminantValue: {
+                            ...unionType.discriminantValue,
+                            name: inflateNameOrString(unionType.discriminantValue.name, this.casingsGenerator)
+                        },
                         singleUnionTypeProperties: unionType.shape
                     })
                 ])
@@ -694,13 +712,23 @@ export class DynamicSnippetsConverter {
         const scheme = auth.schemes[0];
         switch (scheme.type) {
             case "basic":
-                return DynamicSnippets.Auth.basic(scheme);
+                return DynamicSnippets.Auth.basic({
+                    ...scheme,
+                    username: inflateNameOrString(scheme.username, this.casingsGenerator),
+                    password: inflateNameOrString(scheme.password, this.casingsGenerator)
+                });
             case "bearer":
-                return DynamicSnippets.Auth.bearer(scheme);
+                return DynamicSnippets.Auth.bearer({
+                    ...scheme,
+                    token: inflateNameOrString(scheme.token, this.casingsGenerator)
+                });
             case "header":
                 return DynamicSnippets.Auth.header({
                     header: {
-                        name: scheme.name,
+                        name: {
+                            ...scheme.name,
+                            name: inflateNameOrString(scheme.name.name, this.casingsGenerator)
+                        },
                         typeReference: this.convertTypeReference(scheme.valueType),
                         propertyAccess: undefined,
                         variable: undefined
@@ -772,7 +800,7 @@ export class DynamicSnippetsConverter {
             if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
                 parameters.push({
                     name: {
-                        name: header.name.name,
+                        name: inflateNameOrString(header.name.name, this.casingsGenerator),
                         wireValue: header.name.wireValue
                     },
                     typeReference: this.convertTypeReference(header.valueType),
@@ -789,7 +817,7 @@ export class DynamicSnippetsConverter {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
                     parameters.push({
                         name: {
-                            name: property.name.name,
+                            name: inflateNameOrString(property.name.name, this.casingsGenerator),
                             wireValue: property.name.wireValue
                         },
                         typeReference: this.convertTypeReference(property.valueType),
@@ -855,6 +883,41 @@ export class DynamicSnippetsConverter {
         return properties;
     }
 
+    private inflateEnvironments(
+        environments: IntermediateRepresentation["environments"]
+    ): DynamicSnippets.DynamicIntermediateRepresentation["environments"] {
+        if (environments == null) {
+            return undefined;
+        }
+        const inflateEnvName = (name: NameOrString) => inflateNameOrString(name, this.casingsGenerator);
+        return {
+            defaultEnvironment: environments.defaultEnvironment,
+            environments: environments.environments._visit<DynamicSnippets.Environments>({
+                singleBaseUrl: (singleBaseUrl) =>
+                    DynamicSnippets.Environments.singleBaseUrl({
+                        environments: singleBaseUrl.environments.map((env) => ({
+                            ...env,
+                            name: inflateEnvName(env.name)
+                        }))
+                    }),
+                multipleBaseUrls: (multipleBaseUrls) =>
+                    DynamicSnippets.Environments.multipleBaseUrls({
+                        baseUrls: multipleBaseUrls.baseUrls.map((baseUrl) => ({
+                            ...baseUrl,
+                            name: inflateEnvName(baseUrl.name)
+                        })),
+                        environments: multipleBaseUrls.environments.map((env) => ({
+                            ...env,
+                            name: inflateEnvName(env.name)
+                        }))
+                    }),
+                _other: () => {
+                    throw new Error("Unknown environments type");
+                }
+            })
+        };
+    }
+
     private convertDeclaration({
         name,
         fernFilepath
@@ -863,8 +926,8 @@ export class DynamicSnippetsConverter {
         fernFilepath: FernFilepath;
     }): DynamicSnippets.Declaration {
         return {
-            name,
-            fernFilepath
+            name: inflateNameOrString(name, this.casingsGenerator),
+            fernFilepath: inflateFernFilepath(fernFilepath, this.casingsGenerator)
         };
     }
 
@@ -959,7 +1022,7 @@ export class DynamicSnippetsConverter {
                 ),
                 pathParameters: Object.fromEntries(
                     pathParameterExamples.map((parameter) => {
-                        return [parameter.name, parameter.value.jsonExample];
+                        return [getNameString(parameter.name), parameter.value.jsonExample];
                     })
                 ),
                 queryParameters: Object.fromEntries(

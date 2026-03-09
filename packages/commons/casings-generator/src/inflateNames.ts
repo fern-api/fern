@@ -137,17 +137,32 @@ export function inflateIrNames(
     return deepInflateValue(ir, casingsGenerator) as InflatedIR<IntermediateRepresentation>;
 }
 
+/**
+ * Inflates all NameOrString fields in a DynamicIntermediateRepresentation (or any object).
+ *
+ * This is useful for test utilities that load dynamic IR fixtures from JSON files,
+ * where Name fields may be serialized as strings (NameOrString).
+ * Uses default casings settings (no generation language, no smart casing).
+ */
+export function inflateDynamicIrNames<T extends Record<string, unknown>>(ir: T): T {
+    const casingsGenerator = constructCasingsGenerator({
+        generationLanguage: undefined,
+        keywords: undefined,
+        smartCasing: false
+    });
+    return deepInflateValue(ir, casingsGenerator) as T;
+}
+
 // ---------------------------------------------------------------------------
 // Deep walk -- visits every NameOrString field by key name
 // ---------------------------------------------------------------------------
 
 /**
  * Set of top-level IR keys whose subtrees should NOT be traversed for inflation.
- * The `dynamic` field contains a DynamicSnippetsIntermediateRepresentation
- * which uses plain strings for fields like `apiName`, `token`, `name`, etc.
- * Inflating those would break generators that expect strings in the dynamic IR.
+ * Currently empty — the `dynamic` field also uses NameOrString and must be inflated
+ * when migrating v66→v65, because v65 generators expect full Name objects everywhere.
  */
-const SKIP_INFLATION_KEYS = new Set(["dynamic"]);
+const SKIP_INFLATION_KEYS = new Set<string>();
 
 /**
  * Set of keys that hold NameOrString values (singular) in the IR type schema.
