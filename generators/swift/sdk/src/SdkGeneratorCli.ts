@@ -1,5 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
+import { assertNever, entries, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
