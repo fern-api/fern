@@ -1,15 +1,15 @@
-public enum UnionWithMixedNoProperties: Codable, Hashable, Sendable {
-    case empty
-    case foo(Foo)
+public enum KeyedVariantsUnion: Codable, Hashable, Sendable {
+    case square(Square)
+    case triangle(Triangle)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "empty":
-            self = .empty
-        case "foo":
-            self = .foo(try Foo(from: decoder))
+        case "square":
+            self = .square(try container.decode(Square.self, forKey: .square))
+        case "triangle":
+            self = .triangle(try container.decode(Triangle.self, forKey: .triangle))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -23,15 +23,18 @@ public enum UnionWithMixedNoProperties: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .empty:
-            try container.encode("empty", forKey: .type)
-        case .foo(let data):
-            try container.encode("foo", forKey: .type)
-            try data.encode(to: encoder)
+        case .square(let data):
+            try container.encode("square", forKey: .type)
+            try container.encode(data, forKey: .square)
+        case .triangle(let data):
+            try container.encode("triangle", forKey: .type)
+            try container.encode(data, forKey: .triangle)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
+        case square
+        case triangle
     }
 }

@@ -1,15 +1,12 @@
-public enum UnionWithCustomDiscriminant: Codable, Hashable, Sendable {
-    case alpha(Alpha)
-    case beta(Beta)
+public enum DiscriminantKeyCollisionUnion: Codable, Hashable, Sendable {
+    case foo
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .kind)
+        let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "alpha":
-            self = .alpha(try Alpha(from: decoder))
-        case "beta":
-            self = .beta(try Beta(from: decoder))
+        case "foo":
+            self = .foo
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -23,16 +20,12 @@ public enum UnionWithCustomDiscriminant: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .alpha(let data):
-            try container.encode("alpha", forKey: .kind)
-            try data.encode(to: encoder)
-        case .beta(let data):
-            try container.encode("beta", forKey: .kind)
-            try data.encode(to: encoder)
+        case .foo:
+            try container.encode("foo", forKey: .type)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
-        case kind
+        case type
     }
 }

@@ -1,21 +1,17 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
-  UnionWithSingleProperty:
+  # samePropertiesAsObject with custom discriminant wire value
+  CustomDiscriminantObjectUnion:
+    discriminant:
+      value: animal_type
+      name: animalType
     union:
-      integer: integer
-      string: string
+      dog: Dog
+      cat: Cat
 
-  UnionWithNamedSingleProperty:
-    union:
-      foo:
-        type: Foo
-        key: foo
-      bar:
-        type: Bar
-        key: bar
-
-  UnionWithCustomDiscriminantAndKeys:
+  # singleProperty with custom discriminant + explicit keys
+  CustomDiscriminantKeyedUnion:
     discriminant:
       value: shape_type
       name: shapeType
@@ -27,13 +23,13 @@ types:
         type: Square
         key: square
 
-  Foo:
+  Dog:
     properties:
       name: string
 
-  Bar:
+  Cat:
     properties:
-      value: integer
+      name: string
 
   Triangle:
     properties:

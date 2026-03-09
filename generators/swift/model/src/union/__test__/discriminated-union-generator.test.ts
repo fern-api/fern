@@ -38,71 +38,86 @@ function generateUnion(context: ModelGeneratorContext, moduleName: string, union
 }
 
 describe("DiscriminatedUnionGenerator", () => {
-    it("correctly sanitizes discriminant values", async () => {
-        const context = await createSampleGeneratorContext(
-            pathToDefinition("discriminant-values-with-special-characters")
-        );
-        const union = generateUnion(context, "DiscriminantValuesWithSpecialCharacters", "UnionWithSpecialCharacters");
-        await expect(union.toString()).toMatchFileSnapshot("snapshots/UnionWithSpecialCharacters.swift");
+    describe("standard-shapes", () => {
+        let context: ModelGeneratorContext;
+        beforeAll(async () => {
+            context = await createSampleGeneratorContext(pathToDefinition("standard-shapes"));
+        });
+
+        it("samePropertiesAsObject: uses standalone types as associated values", async () => {
+            const union = generateUnion(context, "StandardShapes", "ObjectVariantsUnion");
+            await expect(union.toString()).toMatchFileSnapshot("snapshots/standard-shapes/ObjectVariantsUnion.swift");
+        });
+
+        it("singleProperty with primitives: wraps primitives under default value key", async () => {
+            const union = generateUnion(context, "StandardShapes", "PrimitiveVariantsUnion");
+            await expect(union.toString()).toMatchFileSnapshot(
+                "snapshots/standard-shapes/PrimitiveVariantsUnion.swift"
+            );
+        });
+
+        it("singleProperty with explicit keys: wraps named types under specified keys", async () => {
+            const union = generateUnion(context, "StandardShapes", "KeyedVariantsUnion");
+            await expect(union.toString()).toMatchFileSnapshot("snapshots/standard-shapes/KeyedVariantsUnion.swift");
+        });
+
+        it("noProperties: generates bare enum cases without associated values", async () => {
+            const union = generateUnion(context, "StandardShapes", "EmptyVariantsUnion");
+            await expect(union.toString()).toMatchFileSnapshot("snapshots/standard-shapes/EmptyVariantsUnion.swift");
+        });
+
+        it("mixed: combines all three variant shapes in one union", async () => {
+            const union = generateUnion(context, "StandardShapes", "MixedShapesUnion");
+            await expect(union.toString()).toMatchFileSnapshot("snapshots/standard-shapes/MixedShapesUnion.swift");
+        });
     });
 
-    it("correctly omits variant properties colliding with discriminant", async () => {
-        const context = await createSampleGeneratorContext(
-            pathToDefinition("discriminated-union-variants-with-duplicate-discriminant")
-        );
-        const union = generateUnion(
-            context,
-            "DiscriminatedUnionVariantsWithDuplicateDiscriminant",
-            "UnionWithDuplicateVariantDiscriminant"
-        );
-        await expect(union.toString()).toMatchFileSnapshot("snapshots/UnionWithDuplicateVariantDiscriminant.swift");
+    describe("custom-discriminant", () => {
+        let context: ModelGeneratorContext;
+        beforeAll(async () => {
+            context = await createSampleGeneratorContext(pathToDefinition("custom-discriminant"));
+        });
+
+        it("samePropertiesAsObject with custom discriminant wire value", async () => {
+            const union = generateUnion(context, "CustomDiscriminant", "CustomDiscriminantObjectUnion");
+            await expect(union.toString()).toMatchFileSnapshot(
+                "snapshots/custom-discriminant/CustomDiscriminantObjectUnion.swift"
+            );
+        });
+
+        it("singleProperty with custom discriminant and explicit keys", async () => {
+            const union = generateUnion(context, "CustomDiscriminant", "CustomDiscriminantKeyedUnion");
+            await expect(union.toString()).toMatchFileSnapshot(
+                "snapshots/custom-discriminant/CustomDiscriminantKeyedUnion.swift"
+            );
+        });
     });
 
-    it("generates samePropertiesAsObject variants using standalone types", async () => {
-        const context = await createSampleGeneratorContext(pathToDefinition("same-properties-as-object"));
-        const union = generateUnion(context, "SamePropertiesAsObject", "Animal");
-        await expect(union.toString()).toMatchFileSnapshot("snapshots/Animal.swift");
-    });
+    describe("edge-cases", () => {
+        let context: ModelGeneratorContext;
+        beforeAll(async () => {
+            context = await createSampleGeneratorContext(pathToDefinition("edge-cases"));
+        });
 
-    it("generates singleProperty variants with inner types directly", async () => {
-        const context = await createSampleGeneratorContext(pathToDefinition("single-property-variants"));
-        const union = generateUnion(context, "SinglePropertyVariants", "UnionWithSingleProperty");
-        await expect(union.toString()).toMatchFileSnapshot("snapshots/UnionWithSingleProperty.swift");
-    });
+        it("sanitizes discriminant values with special characters", async () => {
+            const union = generateUnion(context, "EdgeCases", "SpecialCharacterDiscriminantsUnion");
+            await expect(union.toString()).toMatchFileSnapshot(
+                "snapshots/edge-cases/SpecialCharacterDiscriminantsUnion.swift"
+            );
+        });
 
-    it("generates singleProperty variants with named type keys", async () => {
-        const context = await createSampleGeneratorContext(pathToDefinition("single-property-variants"));
-        const union = generateUnion(context, "SinglePropertyVariants", "UnionWithNamedSingleProperty");
-        await expect(union.toString()).toMatchFileSnapshot("snapshots/UnionWithNamedSingleProperty.swift");
-    });
+        it("collapses singleProperty to bare case when key equals discriminant", async () => {
+            const union = generateUnion(context, "EdgeCases", "DiscriminantKeyCollisionUnion");
+            await expect(union.toString()).toMatchFileSnapshot(
+                "snapshots/edge-cases/DiscriminantKeyCollisionUnion.swift"
+            );
+        });
 
-    it("generates singleProperty variants with custom discriminant and explicit keys", async () => {
-        const context = await createSampleGeneratorContext(pathToDefinition("single-property-variants"));
-        const union = generateUnion(context, "SinglePropertyVariants", "UnionWithCustomDiscriminantAndKeys");
-        await expect(union.toString()).toMatchFileSnapshot("snapshots/UnionWithCustomDiscriminantAndKeys.swift");
-    });
-
-    it("generates noProperties variants without associated values", async () => {
-        const context = await createSampleGeneratorContext(pathToDefinition("no-properties-variants"));
-        const union = generateUnion(context, "NoPropertiesVariants", "UnionWithNoProperties");
-        await expect(union.toString()).toMatchFileSnapshot("snapshots/UnionWithNoProperties.swift");
-    });
-
-    it("generates mixed noProperties and samePropertiesAsObject variants", async () => {
-        const context = await createSampleGeneratorContext(pathToDefinition("no-properties-variants"));
-        const union = generateUnion(context, "NoPropertiesVariants", "UnionWithMixedNoProperties");
-        await expect(union.toString()).toMatchFileSnapshot("snapshots/UnionWithMixedNoProperties.swift");
-    });
-
-    it("generates union with all three variant shapes", async () => {
-        const context = await createSampleGeneratorContext(pathToDefinition("mixed-variant-shapes"));
-        const union = generateUnion(context, "MixedVariantShapes", "MixedUnion");
-        await expect(union.toString()).toMatchFileSnapshot("snapshots/MixedUnion.swift");
-    });
-
-    it("generates union with custom discriminant key", async () => {
-        const context = await createSampleGeneratorContext(pathToDefinition("mixed-variant-shapes"));
-        const union = generateUnion(context, "MixedVariantShapes", "UnionWithCustomDiscriminant");
-        await expect(union.toString()).toMatchFileSnapshot("snapshots/UnionWithCustomDiscriminant.swift");
+        it("handles multiple variants with the same underlying primitive type", async () => {
+            const union = generateUnion(context, "EdgeCases", "DuplicatePrimitiveVariantsUnion");
+            await expect(union.toString()).toMatchFileSnapshot(
+                "snapshots/edge-cases/DuplicatePrimitiveVariantsUnion.swift"
+            );
+        });
     });
 });

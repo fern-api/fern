@@ -1,15 +1,15 @@
-public enum UnionWithNoProperties: Codable, Hashable, Sendable {
-    case active
-    case inactive
+public enum CustomDiscriminantObjectUnion: Codable, Hashable, Sendable {
+    case cat(Cat)
+    case dog(Dog)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let discriminant = try container.decode(String.self, forKey: .type)
+        let discriminant = try container.decode(String.self, forKey: .animalType)
         switch discriminant {
-        case "active":
-            self = .active
-        case "inactive":
-            self = .inactive
+        case "cat":
+            self = .cat(try Cat(from: decoder))
+        case "dog":
+            self = .dog(try Dog(from: decoder))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -23,14 +23,16 @@ public enum UnionWithNoProperties: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .active:
-            try container.encode("active", forKey: .type)
-        case .inactive:
-            try container.encode("inactive", forKey: .type)
+        case .cat(let data):
+            try container.encode("cat", forKey: .animalType)
+            try data.encode(to: encoder)
+        case .dog(let data):
+            try container.encode("dog", forKey: .animalType)
+            try data.encode(to: encoder)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
-        case type
+        case animalType = "animal_type"
     }
 }

@@ -1,18 +1,15 @@
-public enum MixedUnion: Codable, Hashable, Sendable {
-    case empty
-    case namedObject(NamedObject)
-    case primitive(Int)
+public enum PrimitiveVariantsUnion: Codable, Hashable, Sendable {
+    case integer(Int)
+    case string(String)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "empty":
-            self = .empty
-        case "namedObject":
-            self = .namedObject(try NamedObject(from: decoder))
-        case "primitive":
-            self = .primitive(try container.decode(Int.self, forKey: .value))
+        case "integer":
+            self = .integer(try container.decode(Int.self, forKey: .value))
+        case "string":
+            self = .string(try container.decode(String.self, forKey: .value))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -26,19 +23,17 @@ public enum MixedUnion: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .empty:
-            try container.encode("empty", forKey: .type)
-        case .namedObject(let data):
-            try container.encode("namedObject", forKey: .type)
-            try data.encode(to: encoder)
-        case .primitive(let data):
-            try container.encode("primitive", forKey: .type)
+        case .integer(let data):
+            try container.encode("integer", forKey: .type)
+            try container.encode(data, forKey: .value)
+        case .string(let data):
+            try container.encode("string", forKey: .type)
             try container.encode(data, forKey: .value)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
-        case type = "_type"
+        case type
         case value
     }
 }

@@ -1,15 +1,15 @@
-public enum UnionWithNamedSingleProperty: Codable, Hashable, Sendable {
-    case bar(Bar)
-    case foo(Foo)
+public enum EmptyVariantsUnion: Codable, Hashable, Sendable {
+    case active
+    case inactive
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
-        case "bar":
-            self = .bar(try container.decode(Bar.self, forKey: .bar))
-        case "foo":
-            self = .foo(try container.decode(Foo.self, forKey: .foo))
+        case "active":
+            self = .active
+        case "inactive":
+            self = .inactive
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -23,18 +23,14 @@ public enum UnionWithNamedSingleProperty: Codable, Hashable, Sendable {
     public func encode(to encoder: Encoder) throws -> Void {
         var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
-        case .bar(let data):
-            try container.encode("bar", forKey: .type)
-            try container.encode(data, forKey: .bar)
-        case .foo(let data):
-            try container.encode("foo", forKey: .type)
-            try container.encode(data, forKey: .foo)
+        case .active:
+            try container.encode("active", forKey: .type)
+        case .inactive:
+            try container.encode("inactive", forKey: .type)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
-        case bar
-        case foo
     }
 }

@@ -1,4 +1,4 @@
-public enum UnionWithSpecialCharacters: Codable, Hashable, Sendable {
+public enum SpecialCharacterDiscriminantsUnion: Codable, Hashable, Sendable {
     case abc(UnionVariant)
     case abcdEfgh(UnionVariant)
     case camelCase(UnionVariant)

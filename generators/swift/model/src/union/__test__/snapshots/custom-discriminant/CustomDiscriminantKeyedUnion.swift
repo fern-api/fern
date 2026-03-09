@@ -1,4 +1,4 @@
-public enum UnionWithCustomDiscriminantAndKeys: Codable, Hashable, Sendable {
+public enum CustomDiscriminantKeyedUnion: Codable, Hashable, Sendable {
     case square(Square)
     case triangle(Triangle)
 
