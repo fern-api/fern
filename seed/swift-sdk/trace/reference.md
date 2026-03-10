@@ -2486,7 +2486,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2.problem.getLightweightProblems()
+    _ = try await client.v2.v3.problem.getLightweightProblems()
 }
 
 try await main()
@@ -2549,7 +2549,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2.problem.getProblems()
+    _ = try await client.v2.v3.problem.getProblems()
 }
 
 try await main()
@@ -2612,7 +2612,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2.problem.getLatestProblem(problemId: "problemId")
+    _ = try await client.v2.v3.problem.getLatestProblem(problemId: "problemId")
 }
 
 try await main()
@@ -2683,7 +2683,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2.problem.getProblemVersion(
+    _ = try await client.v2.v3.problem.getProblemVersion(
         problemId: "problemId",
         problemVersion: 1
     )
@@ -2766,7 +2766,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2.problem.getLightweightProblems()
+    _ = try await client.v2.v3.problem.getLightweightProblems()
 }
 
 try await main()
@@ -2829,7 +2829,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2.problem.getProblems()
+    _ = try await client.v2.v3.problem.getProblems()
 }
 
 try await main()
@@ -2892,7 +2892,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2.problem.getLatestProblem(problemId: "problemId")
+    _ = try await client.v2.v3.problem.getLatestProblem(problemId: "problemId")
 }
 
 try await main()
@@ -2963,7 +2963,7 @@ import Trace
 private func main() async throws {
     let client = TraceClient(token: "<token>")
 
-    _ = try await client.v2.problem.getProblemVersion(
+    _ = try await client.v2.v3.problem.getProblemVersion(
         problemId: "problemId",
         problemVersion: 1
     )
