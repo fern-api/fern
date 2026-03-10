@@ -943,7 +943,8 @@ export class DynamicSnippetsConverter {
             if (header.valueType.type === "container" && header.valueType.container.type === "optional") {
                 continue;
             }
-            values[header.name.wireValue] = `<${header.name.wireValue}>`;
+            const wireValue = typeof header.name === "string" ? header.name : header.name.wireValue;
+            values[wireValue] = `<${wireValue}>`;
         }
         return values;
     }
