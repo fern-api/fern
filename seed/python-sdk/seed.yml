@@ -276,6 +276,9 @@ fixtures:
     - customConfig:
         custom_transport: true
       outputFolder: custom-transport
+    - customConfig:
+        datetime_milliseconds: true
+      outputFolder: datetime-milliseconds
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
