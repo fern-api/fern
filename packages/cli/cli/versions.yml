@@ -6,6 +6,7 @@
         fixes header value lookup in all generator snippet generators (Python,
         TypeScript, Go, Java, C#, PHP, Ruby, Swift) to correctly resolve values
         by wire name.
+      type: fix
   createdAt: "2026-03-10"
   irVersion: 65
 
