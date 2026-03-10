@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.22.0
+  changelogEntry:
+    - summary: |
+        Include the origin git commit hash in `.fern/metadata.json` when generating SDKs.
+        The new `originGitCommit` field is populated with the HEAD commit of the repo where
+        `fern generate` is run. If the working directory is not a git repo or git is unavailable,
+        the field is omitted.
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 65
+
 - version: 4.21.4
   changelogEntry:
     - summary: |
@@ -217,7 +228,6 @@
       type: fix
   createdAt: "2026-03-06"
   irVersion: 65
-
 - version: 4.15.0
   changelogEntry:
     - summary: |

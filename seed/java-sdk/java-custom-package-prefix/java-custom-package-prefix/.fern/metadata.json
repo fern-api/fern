@@ -5,5 +5,6 @@
   "generatorConfig": {
     "package-prefix": "com.customprefix"
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

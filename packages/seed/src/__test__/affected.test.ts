@@ -57,7 +57,7 @@ const ALL_FIXTURES = ["imdb", "exhaustive", "alias", "basic-auth", "file-upload"
 
 describe("detectAffected", () => {
     describe("fallback behavior", () => {
-        it("skips all seed tests when no changed files (e.g. git diff failure)", () => {
+        it("skips all seed tests when no changed files detected", () => {
             const result = detectAffected([], ALL_GENERATORS);
 
             expect(result.allGeneratorsAffected).toBe(false);
