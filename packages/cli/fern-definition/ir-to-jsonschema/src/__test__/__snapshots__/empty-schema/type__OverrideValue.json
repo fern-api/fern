@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "maskedComponent": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/Component"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Component": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    }
+  }
+}

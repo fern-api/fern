@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "additionalProperties": {
+    "$ref": "#/definitions/Component"
+  },
+  "definitions": {
+    "Component": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    }
+  }
+}
