@@ -622,7 +622,16 @@ export class WireTestGenerator {
         // Use the WireMock mapping as the source of truth for expected query parameter values.
         // The mapping values are already normalized by getWireMockConfigContent() based on
         // the datetime_milliseconds config, so they match what the SDK actually sends.
-        const basePath = this.buildPathTemplate(endpoint);
+        let basePath = this.buildPathTemplate(endpoint);
+
+        // Strip URL fragment — fragments are never sent to the server in HTTP requests
+        // and mock-utils strips them when generating WireMock mapping keys.
+        // e.g., "/oauth2/token#refresh" -> "/oauth2/token"
+        const fragmentIndex = basePath.indexOf("#");
+        if (fragmentIndex !== -1) {
+            basePath = basePath.substring(0, fragmentIndex);
+        }
+
         const mappingKey = this.wiremockMappingKey({
             requestMethod: endpoint.method,
             requestUrlPathTemplate: basePath
