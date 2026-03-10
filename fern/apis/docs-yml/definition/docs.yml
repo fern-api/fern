@@ -1159,7 +1159,8 @@ types:
 
   CollapsedStringValue:
     enum:
-      - open-by-default
+      - name: OpenByDefault
+        value: open-by-default
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
