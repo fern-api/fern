@@ -19,9 +19,7 @@ private func main() async throws {
                     directory: "directory"
                 ),
                 returnValue: DebugVariableValue.integerValue(
-                    .init(
-                        integerValue: 
-                    )
+
                 ),
                 expressionLocation: ExpressionLocation(
                     start: 1,
@@ -36,18 +34,14 @@ private func main() async throws {
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-                                        .init(
-                                            integerValue: 
-                                        )
+
                                     )
                                 ]
                             ),
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-                                        .init(
-                                            integerValue: 
-                                        )
+
                                     )
                                 ]
                             )
@@ -64,9 +58,7 @@ private func main() async throws {
                     directory: "directory"
                 ),
                 returnValue: DebugVariableValue.integerValue(
-                    .init(
-                        integerValue: 
-                    )
+
                 ),
                 expressionLocation: ExpressionLocation(
                     start: 1,
@@ -81,18 +73,14 @@ private func main() async throws {
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-                                        .init(
-                                            integerValue: 
-                                        )
+
                                     )
                                 ]
                             ),
                             Scope(
                                 variables: [
                                     "variables": DebugVariableValue.integerValue(
-                                        .init(
-                                            integerValue: 
-                                        )
+
                                     )
                                 ]
                             )
