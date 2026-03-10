@@ -3635,28 +3635,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                         "shape": {
                           "properties": [
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "name",
-                                    "unsafeName": "name",
-                                  },
-                                  "originalName": "name",
-                                  "pascalCase": {
-                                    "safeName": "Name",
-                                    "unsafeName": "Name",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "NAME",
-                                    "unsafeName": "NAME",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "name",
-                                    "unsafeName": "name",
-                                  },
-                                },
-                                "wireValue": "name",
-                              },
+                              "name": "name",
                               "originalTypeDeclaration": {
                                 "fernFilepath": {
                                   "allParts": [
@@ -3929,28 +3908,7 @@ exports[`migrateFromV57ToV56 > simple 1`] = `
                         "shape": {
                           "properties": [
                             {
-                              "name": {
-                                "name": {
-                                  "camelCase": {
-                                    "safeName": "name",
-                                    "unsafeName": "name",
-                                  },
-                                  "originalName": "name",
-                                  "pascalCase": {
-                                    "safeName": "Name",
-                                    "unsafeName": "Name",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "NAME",
-                                    "unsafeName": "NAME",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "name",
-                                    "unsafeName": "name",
-                                  },
-                                },
-                                "wireValue": "name",
-                              },
+                              "name": "name",
                               "originalTypeDeclaration": {
                                 "fernFilepath": {
                                   "allParts": [
