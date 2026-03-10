@@ -324,6 +324,10 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
 
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
         const builder = buildReference({ context });
+        if (builder == null) {
+            context.logger.debug("No endpoint references found; skipping reference.md generation.");
+            return;
+        }
         const content = await context.generatorAgent.generateReference(builder);
         const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(

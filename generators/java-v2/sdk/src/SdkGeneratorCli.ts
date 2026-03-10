@@ -150,6 +150,11 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
         context: SdkGeneratorContext;
         endpointSnippets: Endpoint[];
     }): Promise<void> {
+        const dynamicEndpoints = context.ir.dynamic?.endpoints;
+        if (!dynamicEndpoints || Object.keys(dynamicEndpoints).length === 0) {
+            context.logger.debug("No endpoints found; skipping README.md generation.");
+            return;
+        }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
