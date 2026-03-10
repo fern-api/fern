@@ -6,21 +6,24 @@ import {
     hasLastUpdated,
     injectLastUpdatedDates,
     injectLastUpdatedIntoMarkdown,
-    parseFormattedDate,
     replaceLastUpdatedInMarkdown
 } from "../injectLastUpdated.js";
 
 describe("formatLastUpdatedDate", () => {
-    it("formats an ISO date as 'Month Day, Year'", () => {
-        expect(formatLastUpdatedDate("2026-03-09T10:30:00Z")).toBe("March 9, 2026");
+    it("formats a YYYY-MM-DD date as 'Month Day, Year'", () => {
+        expect(formatLastUpdatedDate("2026-03-09")).toBe("March 9, 2026");
     });
 
     it("handles single-digit days without zero-padding", () => {
-        expect(formatLastUpdatedDate("2024-01-05T00:00:00Z")).toBe("January 5, 2024");
+        expect(formatLastUpdatedDate("2024-01-05")).toBe("January 5, 2024");
     });
 
     it("handles end-of-year dates", () => {
-        expect(formatLastUpdatedDate("2023-12-31T23:59:59Z")).toBe("December 31, 2023");
+        expect(formatLastUpdatedDate("2023-12-31")).toBe("December 31, 2023");
+    });
+
+    it("still handles full ISO 8601 strings", () => {
+        expect(formatLastUpdatedDate("2026-03-09T10:30:00Z")).toBe("March 9, 2026");
     });
 });
 
@@ -67,18 +70,6 @@ describe("replaceLastUpdatedInMarkdown", () => {
         const markdown = "---\ntitle: Foo\n---\n\nContent";
         const result = replaceLastUpdatedInMarkdown(markdown, "March 9, 2026");
         expect(result).toBe("---\ntitle: Foo\nlast-updated: March 9, 2026\n---\n\nContent");
-    });
-});
-
-describe("parseFormattedDate", () => {
-    it("parses a valid 'Month Day, Year' string", () => {
-        const date = parseFormattedDate("March 9, 2026");
-        expect(date).toBeInstanceOf(Date);
-        expect(date?.getFullYear()).toBe(2026);
-    });
-
-    it("returns undefined for an unparseable string", () => {
-        expect(parseFormattedDate("not-a-date")).toBeUndefined();
     });
 });
 
@@ -131,7 +122,7 @@ describe("injectLastUpdatedIntoMarkdown", () => {
 });
 
 describe("injectLastUpdatedDates", () => {
-    it("preserves pages that already have last-updated when no git history available", async () => {
+    it("preserves pages when no git history available", async () => {
         const original = "---\nlast-updated: January 1, 2024\n---\n\nContent";
         const pages: Record<RelativeFilePath, string> = {
             [RelativeFilePath.of("page.mdx")]: original
@@ -139,7 +130,7 @@ describe("injectLastUpdatedDates", () => {
 
         const result = await injectLastUpdatedDates(pages, AbsoluteFilePath.of("/some/nonexistent/path"));
 
-        // No git history at nonexistent path → user-supplied date is kept
+        // No git history at nonexistent path → page is unchanged
         expect(result[RelativeFilePath.of("page.mdx")]).toBe(original);
     });
 
