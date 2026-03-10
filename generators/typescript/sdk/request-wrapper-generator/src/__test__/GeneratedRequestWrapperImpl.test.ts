@@ -33,7 +33,7 @@ function createDefaultInit(overrides?: Partial<GeneratedRequestWrapperImpl.Init>
         service: createHttpService(),
         endpoint: createHttpEndpoint({ sdkRequest: createSdkRequestWrapper() }),
         wrapperName: "TestRequest",
-        packageId: "test-package",
+        packageId: { isRoot: true },
         includeSerdeLayer: true,
         retainOriginalCasing: false,
         inlineFileProperties: false,
@@ -219,17 +219,23 @@ function createFileProperty(
     name: string,
     opts?: { isOptional?: boolean; type?: "file" | "fileArray" }
 ): FernIr.FileUploadRequestProperty {
-    return FernIr.FileUploadRequestProperty.file({
+    const base = {
         key: createNameAndWireValue(name),
         isOptional: opts?.isOptional ?? false,
-        type: opts?.type ?? "file",
-        docs: undefined,
-        availability: undefined
-    });
+        contentType: undefined,
+        docs: undefined
+    };
+    const filePropertyValue =
+        opts?.type === "fileArray" ? FernIr.FileProperty.fileArray(base) : FernIr.FileProperty.file(base);
+    return FernIr.FileUploadRequestProperty.file(filePropertyValue);
 }
 
 function createBodyPropertyForUpload(name: string, valueType: FernIr.TypeReference): FernIr.FileUploadRequestProperty {
-    return FernIr.FileUploadRequestProperty.bodyProperty(createInlinedRequestBodyProperty(name, valueType));
+    return FernIr.FileUploadRequestProperty.bodyProperty({
+        ...createInlinedRequestBodyProperty(name, valueType),
+        contentType: undefined,
+        style: undefined
+    });
 }
 
 // ── Tests ──────────────────────────────────────────────────────────────
@@ -979,6 +985,7 @@ describe("GeneratedRequestWrapperImpl", () => {
                     requestBody: FernIr.HttpRequestBody.bytes({
                         isOptional: false,
                         contentType: undefined,
+                        v2Examples: undefined,
                         docs: undefined
                     }),
                     sdkRequest: createSdkRequestWrapper()
