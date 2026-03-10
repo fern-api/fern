@@ -11,7 +11,25 @@ exports[`generateDynamicIR > go 1`] = `
           "file": undefined,
           "packagePath": [],
         },
-        "name": "getTestData",
+        "name": {
+          "camelCase": {
+            "safeName": "getTestData",
+            "unsafeName": "getTestData",
+          },
+          "originalName": "getTestData",
+          "pascalCase": {
+            "safeName": "GetTestData",
+            "unsafeName": "GetTestData",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_TEST_DATA",
+            "unsafeName": "GET_TEST_DATA",
+          },
+          "snakeCase": {
+            "safeName": "get_test_data",
+            "unsafeName": "get_test_data",
+          },
+        },
       },
       "examples": [],
       "location": {
@@ -44,12 +62,51 @@ exports[`generateDynamicIR > go 1`] = `
           "file": undefined,
           "packagePath": [],
         },
-        "name": "GetTestDataResponse",
+        "name": {
+          "camelCase": {
+            "safeName": "getTestDataResponse",
+            "unsafeName": "getTestDataResponse",
+          },
+          "originalName": "GetTestDataResponse",
+          "pascalCase": {
+            "safeName": "GetTestDataResponse",
+            "unsafeName": "GetTestDataResponse",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_TEST_DATA_RESPONSE",
+            "unsafeName": "GET_TEST_DATA_RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "get_test_data_response",
+            "unsafeName": "get_test_data_response",
+          },
+        },
       },
       "extends": undefined,
       "properties": [
         {
-          "name": "message",
+          "name": {
+            "name": {
+              "camelCase": {
+                "safeName": "message",
+                "unsafeName": "message",
+              },
+              "originalName": "message",
+              "pascalCase": {
+                "safeName": "Message",
+                "unsafeName": "Message",
+              },
+              "screamingSnakeCase": {
+                "safeName": "MESSAGE",
+                "unsafeName": "MESSAGE",
+              },
+              "snakeCase": {
+                "safeName": "message",
+                "unsafeName": "message",
+              },
+            },
+            "wireValue": "message",
+          },
           "propertyAccess": undefined,
           "typeReference": {
             "_visit": [Function],
