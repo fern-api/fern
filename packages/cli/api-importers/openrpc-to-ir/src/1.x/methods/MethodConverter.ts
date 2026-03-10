@@ -70,7 +70,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         // Construct the path with all path parameters
         let pathString = "";
         for (const pathParam of this.pathParameters) {
-            pathString += `/{${pathParam.name.originalName}}`;
+            pathString += `/{${typeof pathParam.name === "string" ? pathParam.name : pathParam.name.originalName}}`;
         }
         const path: HttpPath = constructHttpPath(pathString);
 
