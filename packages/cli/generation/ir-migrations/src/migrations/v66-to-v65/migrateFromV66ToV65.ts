@@ -1855,11 +1855,11 @@ function inflateIr(
         switch (prop.type) {
             case "file":
                 return IrVersions.V65.dynamic.FileUploadRequestBodyProperty.file(
-                    inflateDynamicNameAndWireValue(prop.value)
+                    inflateDynamicNameAndWireValue({ wireValue: prop.wireValue, name: prop.name })
                 );
             case "fileArray":
                 return IrVersions.V65.dynamic.FileUploadRequestBodyProperty.fileArray(
-                    inflateDynamicNameAndWireValue(prop.value)
+                    inflateDynamicNameAndWireValue({ wireValue: prop.wireValue, name: prop.name })
                 );
             case "bodyProperty":
                 return IrVersions.V65.dynamic.FileUploadRequestBodyProperty.bodyProperty(
