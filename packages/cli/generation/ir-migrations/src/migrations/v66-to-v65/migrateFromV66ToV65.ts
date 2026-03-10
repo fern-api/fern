@@ -1,4 +1,4 @@
-import { constructCasingsGenerator, CasingsGenerator } from "@fern-api/casings-generator";
+import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { GeneratorName } from "@fern-api/configuration-loader";
 import { IrMigrationContext } from "../../IrMigrationContext.js";
 import { IrSerialization } from "../../ir-serialization/index.js";
@@ -232,9 +232,7 @@ function inflateIr(
         }))
     });
 
-    const inflateRequestBody = (
-        rb: IrVersions.V65.HttpRequestBody
-    ): IrVersions.V65.HttpRequestBody => {
+    const inflateRequestBody = (rb: IrVersions.V65.HttpRequestBody): IrVersions.V65.HttpRequestBody => {
         switch (rb.type) {
             case "inlinedRequestBody":
                 return IrVersions.V65.HttpRequestBody.inlinedRequestBody({
@@ -306,9 +304,7 @@ function inflateIr(
         name: inflateNameAndWireValue(h.name)
     });
 
-    const inflateExampleRequestBody = (
-        rb: IrVersions.V65.ExampleRequestBody
-    ): IrVersions.V65.ExampleRequestBody => {
+    const inflateExampleRequestBody = (rb: IrVersions.V65.ExampleRequestBody): IrVersions.V65.ExampleRequestBody => {
         switch (rb.type) {
             case "inlinedRequestBody":
                 return IrVersions.V65.ExampleRequestBody.inlinedRequestBody({
@@ -330,17 +326,13 @@ function inflateIr(
             fernFilepath: inflateFernFilepath(svc.name.fernFilepath)
         },
         displayName: svc.displayName != null ? inflateName(svc.displayName) : undefined,
-        basePath: svc.basePath != null
-            ? { ...svc.basePath, head: svc.basePath.head }
-            : undefined,
+        basePath: svc.basePath != null ? { ...svc.basePath, head: svc.basePath.head } : undefined,
         pathParameters: svc.pathParameters.map(inflatePathParameter),
         headers: svc.headers.map(inflateHeader),
         endpoints: svc.endpoints.map(inflateEndpoint)
     });
 
-    const inflateErrorDeclaration = (
-        err: IrVersions.V65.ErrorDeclaration
-    ): IrVersions.V65.ErrorDeclaration => ({
+    const inflateErrorDeclaration = (err: IrVersions.V65.ErrorDeclaration): IrVersions.V65.ErrorDeclaration => ({
         ...err,
         name: {
             ...err.name,
@@ -405,9 +397,7 @@ function inflateIr(
                         requestProperties: {
                             ...config.tokenEndpoint.requestProperties,
                             clientId: inflateNameAndWireValue(config.tokenEndpoint.requestProperties.clientId),
-                            clientSecret: inflateNameAndWireValue(
-                                config.tokenEndpoint.requestProperties.clientSecret
-                            ),
+                            clientSecret: inflateNameAndWireValue(config.tokenEndpoint.requestProperties.clientSecret),
                             scopes:
                                 config.tokenEndpoint.requestProperties.scopes != null
                                     ? inflateNameAndWireValue(config.tokenEndpoint.requestProperties.scopes)
@@ -415,9 +405,7 @@ function inflateIr(
                         },
                         responseProperties: {
                             ...config.tokenEndpoint.responseProperties,
-                            accessToken: inflateNameAndWireValue(
-                                config.tokenEndpoint.responseProperties.accessToken
-                            ),
+                            accessToken: inflateNameAndWireValue(config.tokenEndpoint.responseProperties.accessToken),
                             expiresIn:
                                 config.tokenEndpoint.responseProperties.expiresIn != null
                                     ? inflateNameAndWireValue(config.tokenEndpoint.responseProperties.expiresIn)
@@ -471,7 +459,9 @@ function inflateIr(
         name: inflateName(v.name)
     });
 
-    const inflateChannel = (ch: IrVersions.V65.websocket.WebSocketChannel): IrVersions.V65.websocket.WebSocketChannel => ({
+    const inflateChannel = (
+        ch: IrVersions.V65.websocket.WebSocketChannel
+    ): IrVersions.V65.websocket.WebSocketChannel => ({
         ...ch,
         name: inflateName(ch.name),
         displayName: ch.displayName != null ? inflateName(ch.displayName) : undefined,
@@ -529,9 +519,7 @@ function inflateIr(
 
     const inflatedChannels: Record<string, IrVersions.V65.websocket.WebSocketChannel> | undefined =
         websocketChannels != null
-            ? Object.fromEntries(
-                  Object.entries(websocketChannels).map(([id, ch]) => [id, inflateChannel(ch)])
-              )
+            ? Object.fromEntries(Object.entries(websocketChannels).map(([id, ch]) => [id, inflateChannel(ch)]))
             : undefined;
 
     const inflatedSubpackages: Record<string, IrVersions.V65.Subpackage> = {};

@@ -89,11 +89,12 @@ function getAllPropertiesForRawObjectSchema(
 
     const objectProperties = getObjectPropertiesFromRawObjectSchema(objectSchema, file);
     objectProperties.forEach((objectProperty) => {
-        const propOriginalName = typeof objectProperty.name === "string"
-            ? objectProperty.name
-            : (typeof objectProperty.name.name === "string"
-                ? objectProperty.name.name
-                : objectProperty.name.name.originalName);
+        const propOriginalName =
+            typeof objectProperty.name === "string"
+                ? objectProperty.name
+                : typeof objectProperty.name.name === "string"
+                  ? objectProperty.name.name
+                  : objectProperty.name.name.originalName;
         properties[propOriginalName] = objectProperty;
     });
 

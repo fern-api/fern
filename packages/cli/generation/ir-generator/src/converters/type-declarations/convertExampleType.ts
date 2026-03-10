@@ -165,7 +165,8 @@ export function convertTypeExample({
                         }
                         const propName = typeof property === "string" ? propertyName : (property.name ?? propertyName);
                         return {
-                            name: propertyName === propName ? propertyName : { wireValue: propertyName, name: propName },
+                            name:
+                                propertyName === propName ? propertyName : { wireValue: propertyName, name: propName },
                             value: convertTypeReferenceExample({
                                 example: propertyExample,
                                 rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
@@ -839,7 +840,9 @@ function convertSingleUnionType({
 }): ExampleSingleUnionType {
     const wireDiscriminantValue = (() => {
         const singleName = getSingleUnionTypeName({ unionKey: discriminantValueForExample, rawSingleUnionType }).name;
-        return discriminantValueForExample === singleName ? discriminantValueForExample : { wireValue: discriminantValueForExample, name: singleName };
+        return discriminantValueForExample === singleName
+            ? discriminantValueForExample
+            : { wireValue: discriminantValueForExample, name: singleName };
     })();
     if (rawValueType == null) {
         return {
@@ -865,7 +868,12 @@ function convertSingleUnionType({
                 wireDiscriminantValue,
                 shape: FernIr.ExampleSingleUnionTypeProperties.singleProperty(
                     convertTypeReferenceExample({
-                        example: example[typeof parsedSingleUnionTypeProperties.name === "string" ? parsedSingleUnionTypeProperties.name : parsedSingleUnionTypeProperties.name.wireValue],
+                        example:
+                            example[
+                                typeof parsedSingleUnionTypeProperties.name === "string"
+                                    ? parsedSingleUnionTypeProperties.name
+                                    : parsedSingleUnionTypeProperties.name.wireValue
+                            ],
                         rawTypeBeingExemplified: rawValueType,
                         typeResolver,
                         exampleResolver,

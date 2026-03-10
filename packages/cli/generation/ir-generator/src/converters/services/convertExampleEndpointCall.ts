@@ -17,8 +17,7 @@ import {
     ExamplePathParameter,
     ExampleQueryParameterShape,
     ExampleRequestBody,
-    ExampleResponse,
-    Name
+    ExampleResponse
 } from "@fern-api/ir-sdk";
 import { hashJSON } from "@fern-api/ir-utils";
 import urlJoin from "url-join";
@@ -387,7 +386,10 @@ function convertExampleRequestBody({
         if (inlinedRequestPropertyDeclaration != null) {
             exampleProperties.push({
                 name: (() => {
-                    const pName = getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name;
+                    const pName = getPropertyName({
+                        propertyKey: wireKey,
+                        property: inlinedRequestPropertyDeclaration
+                    }).name;
                     return wireKey === pName ? wireKey : { wireValue: wireKey, name: pName };
                 })(),
                 value: convertTypeReferenceExample({
@@ -428,7 +430,10 @@ function convertExampleRequestBody({
             }
             exampleProperties.push({
                 name: (() => {
-                    const pName = getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType }).name;
+                    const pName = getPropertyName({
+                        propertyKey: wireKey,
+                        property: originalTypeDeclaration.rawPropertyType
+                    }).name;
                     return wireKey === pName ? wireKey : { wireValue: wireKey, name: pName };
                 })(),
                 value: convertTypeReferenceExample({

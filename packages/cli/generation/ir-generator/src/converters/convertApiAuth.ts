@@ -106,7 +106,9 @@ function convertSchemeReference({
                     docs,
                     name: (() => {
                         const headerName = rawHeader.name ?? reference;
-                        return rawHeader.header === headerName ? rawHeader.header : { wireValue: rawHeader.header, name: headerName };
+                        return rawHeader.header === headerName
+                            ? rawHeader.header
+                            : { wireValue: rawHeader.header, name: headerName };
                     })(),
                     valueType: file.parseTypeReference(rawHeader.type ?? "string"),
                     prefix: rawHeader.prefix,

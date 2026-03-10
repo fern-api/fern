@@ -488,10 +488,7 @@ function convertKeySource({
     if (asymmetric["jwks-url"] != null) {
         return AsymmetricKeySource.jwks({
             url: asymmetric["jwks-url"],
-            keyIdHeader:
-                asymmetric["key-id-header"] != null
-                    ? asymmetric["key-id-header"]
-                    : undefined
+            keyIdHeader: asymmetric["key-id-header"] != null ? asymmetric["key-id-header"] : undefined
         });
     }
     return AsymmetricKeySource.static({});

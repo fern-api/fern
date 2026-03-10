@@ -213,7 +213,9 @@ export class PackageTreeGenerator {
         };
         const nextPartOriginalName = typeof nextPart === "string" ? nextPart : nextPart.originalName;
         let nextParent = subpackagesInParent.find(
-            (subpackage) => (typeof subpackage.name === "string" ? subpackage.name : subpackage.name.originalName) === nextPartOriginalName
+            (subpackage) =>
+                (typeof subpackage.name === "string" ? subpackage.name : subpackage.name.originalName) ===
+                nextPartOriginalName
         );
         if (nextParent == null) {
             const newParentId = IdGenerator.generateSubpackageId(fernFilepathForNextParent);

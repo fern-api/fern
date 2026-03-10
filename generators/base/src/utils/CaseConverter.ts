@@ -1,12 +1,6 @@
-import { constructCasingsGenerator, CasingsGenerator } from "@fern-api/casings-generator";
+import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import {
-    Name,
-    NameAndWireValue,
-    NameAndWireValueOrString,
-    NameOrString,
-    SafeAndUnsafeString
-} from "@fern-api/ir-sdk";
+import { Name, NameAndWireValue, NameAndWireValueOrString, NameOrString, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 
 /**
  * Unified input type for CaseConverter methods.

@@ -69,7 +69,7 @@ export function convertChannel({
         baseUrl: channel.url,
         auth: channel.auth,
         // since there's only 1 channel per file, we can use the file name as the channel's name
-        name: file.fernFilepath.file ?? (channel["display-name"] ?? channel.path),
+        name: file.fernFilepath.file ?? channel["display-name"] ?? channel.path,
         displayName: channel["display-name"],
         connectMethodName: channel["connect-method-name"],
         headers:
@@ -230,7 +230,10 @@ function convertExampleWebSocketMessageBody({
         if (inlinedRequestPropertyDeclaration != null) {
             exampleProperties.push({
                 name: (() => {
-                    const pName = getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name;
+                    const pName = getPropertyName({
+                        propertyKey: wireKey,
+                        property: inlinedRequestPropertyDeclaration
+                    }).name;
                     return wireKey === pName ? wireKey : { wireValue: wireKey, name: pName };
                 })(),
                 value: convertTypeReferenceExample({
@@ -259,7 +262,10 @@ function convertExampleWebSocketMessageBody({
             }
             exampleProperties.push({
                 name: (() => {
-                    const pName = getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType }).name;
+                    const pName = getPropertyName({
+                        propertyKey: wireKey,
+                        property: originalTypeDeclaration.rawPropertyType
+                    }).name;
                     return wireKey === pName ? wireKey : { wireValue: wireKey, name: pName };
                 })(),
                 value: convertTypeReferenceExample({
