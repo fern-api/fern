@@ -25,7 +25,8 @@ const (
 )
 
 const (
-	defaultMaxBufSize = 1024 * 1024 // 1MB
+	defaultMaxBufSize  = 1024 * 1024 // 1MB
+	defaultInitBufSize = 4096        // Initial buffer allocation; grows as needed up to maxBufSize.
 )
 
 // Stream represents a stream of messages sent from a server.
@@ -90,7 +91,9 @@ func WithEventDiscriminator(field string) StreamOption {
 // responses contain messages larger than the default, increase this value.
 func WithMaxBufSize(size int) StreamOption {
 	return func(opts *streamOptions) {
-		opts.maxBufSize = size
+		if size > 0 {
+			opts.maxBufSize = size
+		}
 	}
 }
 
@@ -194,7 +197,7 @@ func newScannerStreamReader(
 	options *streamOptions,
 ) *ScannerStreamReader {
 	scanner := bufio.NewScanner(reader)
-	scanner.Buffer(make([]byte, slices.Min([]int{4096, options.maxBufSize})), options.maxBufSize)
+	scanner.Buffer(make([]byte, slices.Min([]int{defaultInitBufSize, options.maxBufSize})), options.maxBufSize)
 	stream := &ScannerStreamReader{
 		scanner: scanner,
 		options: options,
@@ -282,7 +285,7 @@ func newSseStreamReader(
 		scanner: scanner,
 		options: options,
 	}
-	scanner.Buffer(make([]byte, slices.Min([]int{4096, options.maxBufSize})), options.maxBufSize)
+	scanner.Buffer(make([]byte, slices.Min([]int{defaultInitBufSize, options.maxBufSize})), options.maxBufSize)
 
 	// Configure scanner to split on SSE event separator (\n\n)
 	// This is fixed by the SSE specification and cannot be changed
