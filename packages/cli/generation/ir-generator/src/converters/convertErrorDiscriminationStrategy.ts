@@ -8,7 +8,7 @@ const ERROR_CONTENT_PROPERTY_NAME = "content";
 
 export function convertErrorDiscriminationStrategy(
     rawStrategy: RawSchemas.ErrorDiscriminationSchema | undefined,
-    file: FernFileContext
+    _file: FernFileContext
 ): ErrorDiscriminationStrategy {
     if (rawStrategy == null || rawStrategy.strategy === "status-code") {
         return ErrorDiscriminationStrategy.statusCode();
@@ -16,14 +16,8 @@ export function convertErrorDiscriminationStrategy(
     switch (rawStrategy.strategy) {
         case "property":
             return ErrorDiscriminationStrategy.property({
-                discriminant: file.casingsGenerator.generateNameAndWireValue({
-                    name: rawStrategy["property-name"],
-                    wireValue: rawStrategy["property-name"]
-                }),
-                contentProperty: file.casingsGenerator.generateNameAndWireValue({
-                    name: ERROR_CONTENT_PROPERTY_NAME,
-                    wireValue: ERROR_CONTENT_PROPERTY_NAME
-                })
+                discriminant: rawStrategy["property-name"],
+                contentProperty: ERROR_CONTENT_PROPERTY_NAME
             });
         default:
             assertNever(rawStrategy);

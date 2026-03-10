@@ -159,7 +159,7 @@ export function convertHttpService({
             const httpEndpoint: HttpEndpoint = {
                 ...convertDeclaration(endpoint),
                 id: "",
-                name: file.casingsGenerator.generateName(endpointKey),
+                name: endpointKey,
                 displayName: endpoint["display-name"],
                 auth:
                     typeof endpoint.auth === "boolean"
@@ -323,7 +323,7 @@ function convertPathParameter({
 }): PathParameter {
     return {
         ...convertDeclaration(parameter),
-        name: file.casingsGenerator.generateName(parameterName),
+        name: parameterName,
         valueType: getPathParameterType({ parameter, variableResolver, file }),
         location,
         variable: isVariablePathParameter(parameter)
@@ -439,10 +439,7 @@ export function convertHttpHeader({
     const { name } = getHeaderName({ headerKey, header });
     return {
         ...convertDeclaration(header),
-        name: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: headerKey,
-            name
-        }),
+        name: headerKey === name ? headerKey : { wireValue: headerKey, name },
         valueType: file.parseTypeReference(header),
         env: typeof header === "string" ? undefined : header.env,
         v2Examples: {

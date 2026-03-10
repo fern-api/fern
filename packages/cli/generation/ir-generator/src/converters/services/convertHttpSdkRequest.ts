@@ -34,7 +34,7 @@ export function convertHttpSdkRequest({
     }
     return {
         shape,
-        requestParameterName: file.casingsGenerator.generateName(DEFAULT_REQUEST_PARAMETER_NAME),
+        requestParameterName: DEFAULT_REQUEST_PARAMETER_NAME,
         streamParameter:
             endpoint["stream-condition"] != null
                 ? propertyResolver.resolveRequestPropertyOrThrow({
@@ -62,8 +62,8 @@ function convertHttpSdkRequestShape({
             throw new Error("Name is missing for request wrapper");
         }
         return SdkRequestShape.wrapper({
-            wrapperName: file.casingsGenerator.generateName(request.name),
-            bodyKey: file.casingsGenerator.generateName(DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER),
+            wrapperName: request.name,
+            bodyKey: DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
             includePathParameters: shouldIncludePathParametersInWrapper(request),
             onlyPathParameters: doesRequestHaveOnlyPathParameters({ request, file, typeResolver })
         });

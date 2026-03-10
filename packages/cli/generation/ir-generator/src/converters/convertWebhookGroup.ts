@@ -65,7 +65,7 @@ export function convertWebhookGroup({
             displayName: webhook["display-name"],
             docs: webhook.docs,
             method: webhook.method,
-            name: file.casingsGenerator.generateName(webhookId),
+            name: webhookId,
             headers:
                 webhook.headers != null
                     ? Object.entries(webhook.headers).map(([headerKey, header]) =>
@@ -115,7 +115,7 @@ function convertWebhookPayloadSchema({
         });
     } else {
         return WebhookPayload.inlinedPayload({
-            name: file.casingsGenerator.generateName(payload.name),
+            name: payload.name,
             extends: getExtensionsAsList(payload.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
@@ -154,10 +154,10 @@ function convertInlinedRequestProperty({
     return {
         docs,
         availability,
-        name: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: propertyKey,
-            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
-        }),
+        name: (() => {
+            const propName = getPropertyName({ propertyKey, property: propertyDefinition }).name;
+            return propertyKey === propName ? propertyKey : { wireValue: propertyKey, name: propName };
+        })(),
         valueType: file.parseTypeReference(propertyDefinition)
     };
 }
@@ -186,7 +186,7 @@ function convertWebhookExamples({
     if (typeName != null) {
         return examples.map((example) => ({
             docs: webhook.docs,
-            name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+            name: example.name != null ? example.name : undefined,
             payload: convertTypeReferenceExample({
                 example: example.payload,
                 rawTypeBeingExemplified: typeName,
@@ -206,7 +206,7 @@ function convertWebhookExamples({
     // SDKs, we'll need to revisit this.
     return examples.map((example) => ({
         docs: webhook.docs,
-        name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+        name: example.name != null ? example.name : undefined,
         payload: convertTypeReferenceExample({
             example: example.payload,
             rawTypeBeingExemplified: "map<string, unknown>",
@@ -407,10 +407,7 @@ function convertHmacSignature({
     file: FernFileContext;
 }): HmacSignatureVerification {
     return {
-        signatureHeaderName: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: hmac.header,
-            name: hmac.header
-        }),
+        signatureHeaderName: hmac.header,
         algorithm: convertHmacAlgorithm(hmac.algorithm),
         encoding: convertSignatureEncoding(hmac.encoding),
         signaturePrefix: hmac["signature-prefix"],
@@ -427,10 +424,7 @@ function convertAsymmetricSignature({
     file: FernFileContext;
 }): AsymmetricKeySignatureVerification {
     return {
-        signatureHeaderName: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: asymmetric.header,
-            name: asymmetric.header
-        }),
+        signatureHeaderName: asymmetric.header,
         algorithm: convertAsymmetricAlgorithm(asymmetric["asymmetric-algorithm"]),
         encoding: convertSignatureEncoding(asymmetric.encoding),
         signaturePrefix: asymmetric["signature-prefix"],
@@ -496,10 +490,7 @@ function convertKeySource({
             url: asymmetric["jwks-url"],
             keyIdHeader:
                 asymmetric["key-id-header"] != null
-                    ? file.casingsGenerator.generateNameAndWireValue({
-                          wireValue: asymmetric["key-id-header"],
-                          name: asymmetric["key-id-header"]
-                      })
+                    ? asymmetric["key-id-header"]
                     : undefined
         });
     }
@@ -543,10 +534,7 @@ function convertTimestampConfig({
         return undefined;
     }
     return {
-        headerName: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: timestamp.header,
-            name: timestamp.header
-        }),
+        headerName: timestamp.header,
         format: convertTimestampFormat(timestamp.format),
         tolerance: timestamp.tolerance
     };

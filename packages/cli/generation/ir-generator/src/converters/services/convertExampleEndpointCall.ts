@@ -73,7 +73,7 @@ export function convertExampleEndpointCall({
     });
     return {
         id: example.name ?? hashJSON(example),
-        name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+        name: example.name != null ? example.name : undefined,
         docs: example.docs,
         url: buildUrl({ file, service, endpoint, example, pathParams: convertedPathParameters }),
         ...convertedPathParameters,
@@ -89,13 +89,13 @@ export function convertExampleEndpointCall({
                           throw new Error(`Query parameter ${wireKey} does not exist`);
                       }
                       return {
-                          name: file.casingsGenerator.generateNameAndWireValue({
-                              name: getQueryParameterName({
+                          name: (() => {
+                              const qpName = getQueryParameterName({
                                   queryParameterKey: wireKey,
                                   queryParameter: queryParameterDeclaration
-                              }).name,
-                              wireValue: wireKey
-                          }),
+                              }).name;
+                              return wireKey === qpName ? wireKey : { wireValue: wireKey, name: qpName };
+                          })(),
                           value: convertTypeReferenceExample({
                               example: value,
                               rawTypeBeingExemplified:
@@ -161,7 +161,7 @@ function convertPathParameters({
         pathParameterDeclaration,
         examplePathParameter
     }: {
-        name: Name;
+        name: string;
         pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
         examplePathParameter: unknown;
     }) => {
@@ -194,7 +194,7 @@ function convertPathParameters({
             if (rootPathParameterDeclaration != null) {
                 rootPathParameters.push(
                     buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
+                        name: key,
                         pathParameterDeclaration: rootPathParameterDeclaration,
                         examplePathParameter
                     })
@@ -202,7 +202,7 @@ function convertPathParameters({
             } else if (endpointPathParameterDeclaration != null) {
                 endpointPathParameters.push(
                     buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
+                        name: key,
                         pathParameterDeclaration: endpointPathParameterDeclaration,
                         examplePathParameter
                     })
@@ -210,7 +210,7 @@ function convertPathParameters({
             } else if (servicePathParameterDeclaration != null) {
                 servicePathParameters.push(
                     buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
+                        name: key,
                         pathParameterDeclaration: servicePathParameterDeclaration,
                         examplePathParameter
                     })
@@ -258,10 +258,10 @@ function convertHeaders({
             // const globalHeaderDeclaration = workspace.definition.rootApiFile.contents.headers?.[wireKey];
             if (endpointHeaderDeclaration != null) {
                 endpointHeaders.push({
-                    name: file.casingsGenerator.generateNameAndWireValue({
-                        name: getHeaderName({ headerKey: wireKey, header: endpointHeaderDeclaration }).name,
-                        wireValue: wireKey
-                    }),
+                    name: (() => {
+                        const hName = getHeaderName({ headerKey: wireKey, header: endpointHeaderDeclaration }).name;
+                        return wireKey === hName ? wireKey : { wireValue: wireKey, name: hName };
+                    })(),
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
@@ -277,10 +277,10 @@ function convertHeaders({
                 });
             } else if (serviceHeaderDeclaration != null) {
                 serviceHeaders.push({
-                    name: file.casingsGenerator.generateNameAndWireValue({
-                        name: getHeaderName({ headerKey: wireKey, header: serviceHeaderDeclaration }).name,
-                        wireValue: wireKey
-                    }),
+                    name: (() => {
+                        const hName = getHeaderName({ headerKey: wireKey, header: serviceHeaderDeclaration }).name;
+                        return wireKey === hName ? wireKey : { wireValue: wireKey, name: hName };
+                    })(),
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:
@@ -386,10 +386,10 @@ function convertExampleRequestBody({
         }
         if (inlinedRequestPropertyDeclaration != null) {
             exampleProperties.push({
-                name: file.casingsGenerator.generateNameAndWireValue({
-                    name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
-                    wireValue: wireKey
-                }),
+                name: (() => {
+                    const pName = getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name;
+                    return wireKey === pName ? wireKey : { wireValue: wireKey, name: pName };
+                })(),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
@@ -414,10 +414,7 @@ function convertExampleRequestBody({
             if (originalTypeDeclaration == null) {
                 if (requestType["extra-properties"] === true) {
                     exampleExtraProperties.push({
-                        name: file.casingsGenerator.generateNameAndWireValue({
-                            name: wireKey,
-                            wireValue: wireKey
-                        }),
+                        name: wireKey,
                         value: {
                             jsonExample: propertyExample,
                             shape: convertUnknownExample({
@@ -430,11 +427,10 @@ function convertExampleRequestBody({
                 throw new Error("Could not find original type declaration for property: " + wireKey);
             }
             exampleProperties.push({
-                name: file.casingsGenerator.generateNameAndWireValue({
-                    name: getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType })
-                        .name,
-                    wireValue: wireKey
-                }),
+                name: (() => {
+                    const pName = getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType }).name;
+                    return wireKey === pName ? wireKey : { wireValue: wireKey, name: pName };
+                })(),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
@@ -650,7 +646,7 @@ function buildUrl({
             ...pathParams.rootPathParameters
         ]) {
             url = url.replaceAll(
-                `{${parameter.name.originalName}}`,
+                `{${typeof parameter.name === "string" ? parameter.name : parameter.name.originalName}}`,
                 encodeURIComponent(`${parameter.value.jsonExample}`)
             );
         }

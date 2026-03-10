@@ -30,19 +30,19 @@ export function convertDiscriminatedUnionTypeDeclaration({
 }): Type {
     const discriminant = getUnionDiscriminant(union);
     return Type.union({
-        discriminant: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: discriminant,
-            name: getUnionDiscriminantName(union).name
-        }),
+        discriminant: (() => {
+            const discName = getUnionDiscriminantName(union).name;
+            return discriminant === discName ? discriminant : { wireValue: discriminant, name: discName };
+        })(),
         extends: getExtensionsAsList(union.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         baseProperties:
             union["base-properties"] != null
                 ? Object.entries(union["base-properties"]).map(([propertyKey, propertyDefinition]) => ({
                       ...convertDeclaration(propertyDefinition),
-                      name: file.casingsGenerator.generateNameAndWireValue({
-                          wireValue: propertyKey,
-                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name
-                      }),
+                      name: (() => {
+                          const propName = getPropertyName({ propertyKey, property: propertyDefinition }).name;
+                          return propertyKey === propName ? propertyKey : { wireValue: propertyKey, name: propName };
+                      })(),
                       valueType: file.parseTypeReference(propertyDefinition),
                       propertyAccess: getPropertyAccess({ property: propertyDefinition }),
                       v2Examples: {
@@ -59,10 +59,10 @@ export function convertDiscriminatedUnionTypeDeclaration({
                       ? rawSingleUnionType.type
                       : undefined;
 
-            const discriminantValue = file.casingsGenerator.generateNameAndWireValue({
-                wireValue: unionKey,
-                name: getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name
-            });
+            const discriminantValue = (() => {
+                const singleName = getSingleUnionTypeName({ unionKey, rawSingleUnionType }).name;
+                return unionKey === singleName ? unionKey : { wireValue: unionKey, name: singleName };
+            })();
 
             const docs = getDocs(rawSingleUnionType);
 
@@ -177,10 +177,11 @@ export function getSingleUnionTypeProperties({
         return SingleUnionTypeProperties.samePropertiesAsObject(unwrappedType.name);
     }
     return SingleUnionTypeProperties.singleProperty({
-        name: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: getSinglePropertyKeyValue(singlePropertyKey),
-            name: getSinglePropertyKeyName(singlePropertyKey)
-        }),
+        name: (() => {
+            const wireValue = getSinglePropertyKeyValue(singlePropertyKey);
+            const keyName = getSinglePropertyKeyName(singlePropertyKey);
+            return wireValue === keyName ? wireValue : { wireValue, name: keyName };
+        })(),
         type: parsedValueType
     });
 }

@@ -328,7 +328,7 @@ export class PropertyResolverImpl implements PropertyResolver {
                 rootTypeTitle
             });
             result.push({
-                name: file.casingsGenerator.generateName(component),
+                name: component,
                 type: currentType.originalTypeReference
             });
         }
@@ -364,7 +364,7 @@ export class PropertyResolverImpl implements PropertyResolver {
                 );
             }
             result.push({
-                name: file.casingsGenerator.generateName(component),
+                name: component,
                 type: currentType.valueType
             });
         }
@@ -563,7 +563,7 @@ function getTitleForResolvedType(resolvedType: ResolvedType): string {
             }
             break;
         case "named":
-            return resolvedType.name.name.originalName;
+            return typeof resolvedType.name.name === "string" ? resolvedType.name.name : resolvedType.name.name.originalName;
         case "primitive":
             return resolvedType.primitive.v1;
         case "unknown":

@@ -30,10 +30,10 @@ export function getObjectPropertiesFromRawObjectSchema(
     }
     return Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
         ...convertDeclaration(propertyDefinition),
-        name: file.casingsGenerator.generateNameAndWireValue({
-            wireValue: propertyKey,
-            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
-        }),
+        name: (() => {
+            const propName = getPropertyName({ propertyKey, property: propertyDefinition }).name;
+            return propertyKey === propName ? propertyKey : { wireValue: propertyKey, name: propName };
+        })(),
         valueType: file.parseTypeReference(propertyDefinition),
         propertyAccess: getPropertyAccess({ property: propertyDefinition }),
         v2Examples: {

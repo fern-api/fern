@@ -350,7 +350,7 @@ export class DynamicSnippetsConverter {
         return pathParameters.map((pathParameter) => ({
             name: {
                 name: pathParameter.name,
-                wireValue: pathParameter.name.originalName
+                wireValue: typeof pathParameter.name === "string" ? pathParameter.name : pathParameter.name.originalName
             },
             typeReference: this.convertTypeReference(pathParameter.valueType),
             propertyAccess: undefined,
@@ -364,10 +364,10 @@ export class DynamicSnippetsConverter {
         properties: ObjectProperty[];
     }): DynamicSnippets.NamedParameter[] {
         return properties.map((property) => ({
-            name: {
-                name: property.name.name,
-                wireValue: property.name.wireValue
-            },
+            name: typeof property.name === "string"
+                ? property.name
+                : { name: property.name.name, wireValue: property.name.wireValue },
+
             typeReference: this.convertTypeReference(property.valueType),
             propertyAccess: property.propertyAccess,
             variable: undefined
@@ -380,10 +380,10 @@ export class DynamicSnippetsConverter {
         wireValueParameters: { name: NameAndWireValue; valueType: TypeReference }[];
     }): DynamicSnippets.NamedParameter[] {
         return wireValueParameters.map((parameter) => ({
-            name: {
-                name: parameter.name.name,
-                wireValue: parameter.name.wireValue
-            },
+            name: typeof parameter.name === "string"
+                ? parameter.name
+                : { name: parameter.name.name, wireValue: parameter.name.wireValue },
+
             typeReference: this.convertTypeReference(parameter.valueType),
             propertyAccess: undefined,
             variable: undefined
@@ -402,10 +402,10 @@ export class DynamicSnippetsConverter {
                 typeReference = DynamicSnippets.TypeReference.list(typeReference);
             }
             parameters.push({
-                name: {
-                    name: queryParameter.name.name,
-                    wireValue: queryParameter.name.wireValue
-                },
+                name: typeof queryParameter.name === "string"
+                    ? queryParameter.name
+                    : { name: queryParameter.name.name, wireValue: queryParameter.name.wireValue },
+
                 typeReference,
                 propertyAccess: undefined,
                 variable: undefined
@@ -564,7 +564,7 @@ export class DynamicSnippetsConverter {
             discriminant: union.discriminant,
             types: Object.fromEntries(
                 union.types.map((unionType) => [
-                    unionType.discriminantValue.wireValue,
+                    typeof unionType.discriminantValue === "string" ? unionType.discriminantValue : unionType.discriminantValue.wireValue,
                     this.convertDiscriminatedUnionType({
                         inheritedProperties,
                         discriminantValue: unionType.discriminantValue,
@@ -711,8 +711,8 @@ export class DynamicSnippetsConverter {
                 });
             case "oauth":
                 return DynamicSnippets.Auth.oauth({
-                    clientId: this.casingsGenerator.generateName("clientId"),
-                    clientSecret: this.casingsGenerator.generateName("clientSecret")
+                    clientId: "clientId",
+                    clientSecret: "clientSecret"
                 });
             case "inferred":
                 return DynamicSnippets.Auth.inferred({
@@ -774,10 +774,9 @@ export class DynamicSnippetsConverter {
         for (const header of tokenEndpoint.headers) {
             if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
                 parameters.push({
-                    name: {
-                        name: header.name.name,
-                        wireValue: header.name.wireValue
-                    },
+                    name: typeof header.name === "string"
+                        ? header.name
+                        : { name: header.name.name, wireValue: header.name.wireValue },
                     typeReference: this.convertTypeReference(header.valueType),
                     propertyAccess: undefined,
                     variable: undefined
@@ -791,10 +790,9 @@ export class DynamicSnippetsConverter {
             for (const property of properties) {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
                     parameters.push({
-                        name: {
-                            name: property.name.name,
-                            wireValue: property.name.wireValue
-                        },
+                        name: typeof property.name === "string"
+                            ? property.name
+                            : { name: property.name.name, wireValue: property.name.wireValue },
                         typeReference: this.convertTypeReference(property.valueType),
                         propertyAccess: undefined,
                         variable: undefined
@@ -823,7 +821,8 @@ export class DynamicSnippetsConverter {
         // Extract credentials from headers - use wireValue as key
         for (const header of tokenEndpoint.headers) {
             if (header.valueType.type !== "container" || header.valueType.container.type !== "literal") {
-                values[header.name.wireValue] = header.name.wireValue;
+                const headerWireValue = typeof header.name === "string" ? header.name : header.name.wireValue;
+                values[headerWireValue] = headerWireValue;
             }
         }
 
@@ -832,7 +831,8 @@ export class DynamicSnippetsConverter {
             const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
             for (const property of properties) {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
-                    values[property.name.wireValue] = property.name.wireValue;
+                    const propWireValue = typeof property.name === "string" ? property.name : property.name.wireValue;
+                    values[propWireValue] = propWireValue;
                 }
             }
         }
@@ -936,7 +936,7 @@ export class DynamicSnippetsConverter {
             const variableReferencedParams = new Set<string>();
             [...this.ir.pathParameters, ...endpoint.pathParameters].forEach((param) => {
                 if (param.variable != null) {
-                    variableReferencedParams.add(param.name.originalName);
+                    variableReferencedParams.add(typeof param.name === "string" ? param.name : param.name.originalName);
                 }
             });
 
@@ -944,11 +944,11 @@ export class DynamicSnippetsConverter {
                 ...(example.example?.rootPathParameters ?? []),
                 ...(example.example?.servicePathParameters ?? []),
                 ...(example.example?.endpointPathParameters ?? [])
-            ].filter((param) => !variableReferencedParams.has(param.name.originalName));
+            ].filter((param) => !variableReferencedParams.has(typeof param.name === "string" ? param.name : param.name.originalName));
 
             requests.push({
                 id: example?.example?.id ?? uuidv4(),
-                name: example?.example?.name?.originalName,
+                name: example?.example?.name != null ? (typeof example.example.name === "string" ? example.example.name : example.example.name.originalName) : undefined,
                 endpoint: location,
                 baseUrl: undefined,
                 environment: undefined,
@@ -956,18 +956,18 @@ export class DynamicSnippetsConverter {
                 headers: Object.fromEntries(
                     [...(example.example?.serviceHeaders ?? []), ...(example.example?.endpointHeaders ?? [])].map(
                         (header) => {
-                            return [header.name.wireValue, header.value.jsonExample];
+                            return [typeof header.name === "string" ? header.name : header.name.wireValue, header.value.jsonExample];
                         }
                     )
                 ),
                 pathParameters: Object.fromEntries(
                     pathParameterExamples.map((parameter) => {
-                        return [parameter.name.originalName, parameter.value.jsonExample];
+                        return [typeof parameter.name === "string" ? parameter.name : parameter.name.originalName, parameter.value.jsonExample];
                     })
                 ),
                 queryParameters: Object.fromEntries(
                     [...(example.example?.queryParameters ?? [])].map((parameter) => {
-                        return [parameter.name.wireValue, parameter.value.jsonExample];
+                        return [typeof parameter.name === "string" ? parameter.name : parameter.name.wireValue, parameter.value.jsonExample];
                     })
                 ),
                 requestBody: example.example?.request?.jsonExample

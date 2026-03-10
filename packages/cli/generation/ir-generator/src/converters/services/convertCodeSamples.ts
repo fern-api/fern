@@ -13,7 +13,7 @@ export function convertCodeSample({
     return visitExampleCodeSampleSchema<ExampleCodeSample>(codeSample, {
         language: (languageScheme) =>
             ExampleCodeSample.language({
-                name: languageScheme.name != null ? file.casingsGenerator.generateName(languageScheme.name) : undefined,
+                name: languageScheme.name != null ? languageScheme.name : undefined,
                 docs: languageScheme.docs,
                 language: languageScheme.language,
                 code: languageScheme.code,
@@ -21,7 +21,7 @@ export function convertCodeSample({
             }),
         sdk: (sdkScheme) =>
             ExampleCodeSample.sdk({
-                name: sdkScheme.name != null ? file.casingsGenerator.generateName(sdkScheme.name) : undefined,
+                name: sdkScheme.name != null ? sdkScheme.name : undefined,
                 docs: sdkScheme.docs,
                 sdk: removeSdkAlias(sdkScheme.sdk),
                 code: sdkScheme.code
