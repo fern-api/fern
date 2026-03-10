@@ -1,4 +1,8 @@
-import { checkVersionDoesNotAlreadyExist, computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import {
+    checkVersionDoesNotAlreadyExist,
+    computeSemanticVersion,
+    getOriginGitCommit
+} from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
@@ -121,7 +125,8 @@ export async function runRemoteGenerationForGenerator({
             cliVersion: workspace.cliVersion,
             generatorName: generatorInvocation.name,
             generatorVersion: generatorInvocation.version,
-            generatorConfig: generatorInvocation.config
+            generatorConfig: generatorInvocation.config,
+            originGitCommit: getOriginGitCommit()
         }
     });
 
@@ -375,11 +380,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     exampleStyle: undefined
 };
 
-/**
- * Uploads dynamic IR for SDK generation to enable dynamic snippets.
- * This calls the getSdkDynamicIrUploadUrls endpoint to get presigned S3 URLs,
- * generates the dynamic IR, and uploads it.
- */
 async function uploadDynamicIRForSdkGeneration({
     fdr,
     organization,
