@@ -424,28 +424,7 @@
               "shape": {
                 "properties": [
                   {
-                    "name": {
-                      "name": {
-                        "originalName": "message",
-                        "camelCase": {
-                          "unsafeName": "message",
-                          "safeName": "message"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "message",
-                          "safeName": "message"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "MESSAGE",
-                          "safeName": "MESSAGE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Message",
-                          "safeName": "Message"
-                        }
-                      },
-                      "wireValue": "message"
-                    },
+                    "name": "message",
                     "value": {
                       "shape": {
                         "primitive": {
