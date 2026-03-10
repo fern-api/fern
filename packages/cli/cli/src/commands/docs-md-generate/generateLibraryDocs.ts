@@ -58,12 +58,12 @@ interface LibraryDocsClient {
  * Build a {@link LibraryDocsClient} backed by plain `fetch`.
  *
  * The base URL and auth mirror what `createFdrService` uses so that
- * env-var overrides (`DEFAULT_FDR_ORIGIN`, `OVERRIDE_FDR_ORIGIN`) keep
+ * env-var overrides (`DEFAULT_FDR_ORIGIN`, `FERN_FDR_ORIGIN`) keep
  * working.
  */
 function createLibraryDocsClient({ token }: { token: string }): LibraryDocsClient {
     const defaultOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
-    const baseUrl = process.env.OVERRIDE_FDR_ORIGIN ?? defaultOrigin;
+    const baseUrl = process.env.FERN_FDR_ORIGIN ?? process.env.OVERRIDE_FDR_ORIGIN ?? defaultOrigin;
     const docsBase = `${baseUrl}/v2/registry/docs`;
 
     async function request<T>(method: string, path: string, body?: unknown): Promise<T> {

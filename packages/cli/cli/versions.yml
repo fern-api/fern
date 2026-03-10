@@ -1,13 +1,140 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.15.5
+- version: 4.21.1
   changelogEntry:
     - summary: |
         Validation on request generation examples now correctly handles arrays on 
         query, header, and globalheader parameters and validates their elements.
       type: fix
-  createdAt: "2026-03-07"
+  createdAt: "2026-03-10"
   irVersion: 65
-      
+
+- version: 4.21.0
+  changelogEntry:
+    - summary: |
+        Remove the `FERN_SELF_HOSTED` environment variable from the CLI. The
+        three behaviors it controlled are now handled independently:
+        - **Auth bypass**: when `FERN_FDR_ORIGIN` (or legacy `OVERRIDE_FDR_ORIGIN`)
+          is set, the CLI reads `FERN_TOKEN` directly instead of triggering
+          interactive login.
+        - **Telemetry opt-out**: use the existing `FERN_DISABLE_TELEMETRY=true` to
+          disable PostHog telemetry.
+        - **ValidFileTypes skip**: removed entirely (no longer needed).
+
+        Also renames `OVERRIDE_FDR_ORIGIN` to `FERN_FDR_ORIGIN` (the old name
+        is still accepted for backward compatibility).
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.4
+  changelogEntry:
+    - summary: |
+        Fix JSON schema validation for `collapsed: open-by-default`. The
+        auto-generated JSON schemas now accept `boolean | "open-by-default"`
+        for the `collapsed` property, matching the Zod runtime schema.
+        Previously, `fern check` rejected valid configurations like
+        `collapsed: open-by-default` inside API reference section layouts
+        because the JSON schema only allowed `boolean | null`.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.20.3
+  changelogEntry:
+    - summary: |
+        Add support for the `collapsed` property on API reference section
+        configurations. Sections inside an API reference `layout` can now use
+        `collapsed: true` or `collapsed: open-by-default` to control sidebar
+        collapse behavior, matching the existing support on top-level sections
+        and folders.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.2
+  changelogEntry:
+    - summary: |
+        Fix `respect-readonly-schemas` handling for request bodies that reference
+        a wrapper schema (a `$ref`-only schema pointing to another schema with
+        `readOnly` properties). The wrapper schema name is now preserved as the
+        request name and the stale type alias to the `Read` variant is no longer
+        emitted.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.1
+  changelogEntry:
+    - summary: |
+        Revert treating JSON Schema `const` values as literal types regardless of
+        `coerceEnumsToLiterals`. This reverts the behavior introduced in 3.90.8 so
+        that `const` values are again converted to single-value enums when
+        `coerceEnumsToLiterals` is not enabled.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.0
+  changelogEntry:
+    - summary: |
+        Add `fern api enrich` CLI command that decomposes x-fern-examples from an
+        overrides file into native OpenAPI example fields per endpoint. Usage:
+        `fern api enrich openapi.yml -f overrides.yml -o output.yml`.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.19.0
+  changelogEntry:
+    - summary: |
+        Add support for `open-by-default` value on the `collapsed` property in
+        docs navigation configuration. Sections configured with
+        `collapsed: open-by-default` will start expanded but can be collapsed
+        by the user.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.18.0
+  changelogEntry:
+    - summary: |
+        Gzip-compress IR before uploading to Fiddle for remote generation. This
+        reduces upload size by ~85-90% on typical IR payloads, improving upload
+        speed and reducing bandwidth usage. The Fiddle receiver transparently
+        detects and decompresses gzip content, maintaining backward compatibility
+        with older CLI versions.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.17.0
+  changelogEntry:
+    - summary: |
+        Add `fern check` validation rule to detect component schema collisions
+        across multiple OpenAPI specs. When two specs define
+        `components/schemas` with the same name, one silently overwrites the
+        other during merge. The new `no-component-schema-collisions` rule now
+        reports this as a warning, unless `resolve-schema-collisions` is enabled.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.16.0
+  changelogEntry:
+    - summary: |
+        Auto-discover `.fernignore` for generators configured with local file system
+        output. When running `fern generate` without the `--fernignore` flag, the CLI
+        now automatically looks for a `.fernignore` file in the generator's configured
+        output directory and uses it if present. This eliminates the need to explicitly
+        pass `--fernignore` for the common case where the `.fernignore` lives alongside
+        the generated code.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.15.5
+  changelogEntry:
+    - summary: |
+        Fix GraphQL operations leaking into all API reference sections in docs.
+      type: fix
+  createdAt: "2026-03-08"
+  irVersion: 65
+
 - version: 4.15.4
   changelogEntry:
     - summary: |
