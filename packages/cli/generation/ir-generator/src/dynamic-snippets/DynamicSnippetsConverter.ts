@@ -1,4 +1,9 @@
-import { CasingsGenerator, constructCasingsGenerator, constructFullCasingsGenerator, FullCasingsGenerator } from "@fern-api/casings-generator";
+import {
+    CasingsGenerator,
+    constructCasingsGenerator,
+    constructFullCasingsGenerator,
+    FullCasingsGenerator
+} from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import {
@@ -9,8 +14,8 @@ import {
     dynamic as DynamicSnippets,
     dynamic,
     EndpointId,
-    EnvironmentsConfig,
     EnumTypeDeclaration,
+    EnvironmentsConfig,
     FernFilepath,
     FileProperty,
     FileUploadRequestProperty,
@@ -93,7 +98,9 @@ export class DynamicSnippetsConverter {
         return nameOrString;
     }
 
-    private inflateNameAndWireValue(nameAndWireValueOrString: NameAndWireValueOrString): DynamicSnippets.NameAndWireValue {
+    private inflateNameAndWireValue(
+        nameAndWireValueOrString: NameAndWireValueOrString
+    ): DynamicSnippets.NameAndWireValue {
         if (typeof nameAndWireValueOrString === "string") {
             return this.fullCasingsGenerator.generateNameAndWireValue(nameAndWireValueOrString);
         }
