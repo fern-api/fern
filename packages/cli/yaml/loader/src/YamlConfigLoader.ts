@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { type Sourced, SourceLocation } from "@fern-api/source";
 import { z } from "zod";
+import { deepStrict } from "./deepStrict.js";
 import { ReferenceResolver } from "./ReferenceResolver.js";
 import { ValidationIssue } from "./ValidationIssue.js";
 import type { YamlDocument } from "./YamlDocument.js";
@@ -61,11 +62,15 @@ export class YamlConfigLoader {
     public async load<S extends z.ZodSchema>({
         absoluteFilePath,
         schema,
-        resolveReferences = true
+        resolveReferences = true,
+        strict = false
     }: {
         absoluteFilePath: AbsoluteFilePath;
         schema: S;
         resolveReferences?: boolean;
+        /** When true, recursively applies `.strict()` to all objects in the schema,
+         *  causing validation errors for unrecognized keys at any depth. */
+        strict?: boolean;
     }): Promise<YamlConfigLoader.Result<z.infer<S>>> {
         const document = await this.parseDocument(absoluteFilePath);
 
@@ -81,7 +86,8 @@ export class YamlConfigLoader {
                 issues: resolved.issues
             };
         }
-        const parseResult = schema.safeParse(resolved.data);
+        const effectiveSchema = strict ? deepStrict(schema) : schema;
+        const parseResult = effectiveSchema.safeParse(resolved.data);
         if (!parseResult.success) {
             const issues = parseResult.error.issues.map((issue) => {
                 // Zod paths are PropertyKey[] but YAML paths are string | number

@@ -9,4 +9,5 @@ export { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst
 export * as Rules from "./rules/index.js";
 export { FrontmatterSchema } from "./rules/valid-markdown/valid-markdown.js";
 export { collectLinksAndSources } from "./rules/valid-markdown-link/collect-links.js";
+export { type ValidationViolation } from "./ValidationViolation.js";
 export { validateDocsWorkspace } from "./validateDocsWorkspace.js";

@@ -4984,6 +4984,12 @@ importers:
       '@fern-api/docs-preview':
         specifier: workspace:*
         version: link:../docs-preview
+      '@fern-api/docs-resolver':
+        specifier: workspace:*
+        version: link:../docs-resolver
+      '@fern-api/docs-validator':
+        specifier: workspace:*
+        version: link:../yaml/docs-validator
       '@fern-api/fern-definition-schema':
         specifier: workspace:*
         version: link:../fern-definition/schema
