@@ -3674,7 +3674,7 @@ importers:
         version: link:../../../../packages/configs
       '@fern-fern/ir-sdk':
         specifier: ^65.3.0
-        version: 65.4.0
+        version: 65.3.0
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
