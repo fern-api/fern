@@ -3,18 +3,18 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { Declaration } from "../../declaration/types/Declaration.js";
 
 export const EnumType: core.serialization.ObjectSchema<serializers.dynamic.EnumType.Raw, FernIr.dynamic.EnumType> =
     core.serialization.objectWithoutOptionalProperties({
         declaration: Declaration,
-        values: core.serialization.list(NameAndWireValue),
+        values: core.serialization.list(NameAndWireValueOrString),
     });
 
 export declare namespace EnumType {
     export interface Raw {
         declaration: Declaration.Raw;
-        values: NameAndWireValue.Raw[];
+        values: NameAndWireValueOrString.Raw[];
     }
 }

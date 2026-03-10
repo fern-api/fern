@@ -10,7 +10,7 @@ export interface VariableDeclaration {
     /** The unique identifier for the variable */
     id: string;
     /** The name of the variable */
-    name: FernIr.Name;
+    name: FernIr.NameOrString;
     /** The type of the variable */
     typeReference: FernIr.dynamic.TypeReference;
 }

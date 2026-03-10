@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../index.js";
 
 export interface HttpHeader extends FernIr.Declaration {
-    name: FernIr.NameAndWireValue;
+    name: FernIr.NameAndWireValueOrString;
     valueType: FernIr.TypeReference;
     env: string | undefined;
     v2Examples: FernIr.V2SchemaExamples | undefined;

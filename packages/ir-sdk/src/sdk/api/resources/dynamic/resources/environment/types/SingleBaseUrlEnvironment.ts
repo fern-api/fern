@@ -4,6 +4,6 @@ import type * as FernIr from "../../../../../index.js";
 
 export interface SingleBaseUrlEnvironment extends FernIr.dynamic.WithDocs {
     id: FernIr.dynamic.EnvironmentId;
-    name: FernIr.dynamic.Name;
+    name: FernIr.dynamic.NameOrString;
     url: FernIr.dynamic.EnvironmentUrl;
 }

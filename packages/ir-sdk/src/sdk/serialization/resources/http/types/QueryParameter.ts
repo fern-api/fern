@@ -4,13 +4,13 @@ import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { Declaration } from "../../commons/types/Declaration.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples.js";
 
 export const QueryParameter: core.serialization.ObjectSchema<serializers.QueryParameter.Raw, FernIr.QueryParameter> =
     core.serialization
         .objectWithoutOptionalProperties({
-            name: NameAndWireValue,
+            name: NameAndWireValueOrString,
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             allowMultiple: core.serialization.boolean(),
             v2Examples: V2SchemaExamples.optional(),
@@ -20,7 +20,7 @@ export const QueryParameter: core.serialization.ObjectSchema<serializers.QueryPa
 
 export declare namespace QueryParameter {
     export interface Raw extends Declaration.Raw {
-        name: NameAndWireValue.Raw;
+        name: NameAndWireValueOrString.Raw;
         valueType: serializers.TypeReference.Raw;
         allowMultiple: boolean;
         v2Examples?: V2SchemaExamples.Raw | null;

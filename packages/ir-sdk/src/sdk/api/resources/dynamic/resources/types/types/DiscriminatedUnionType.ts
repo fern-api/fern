@@ -4,7 +4,7 @@ import type * as FernIr from "../../../../../index.js";
 
 export interface DiscriminatedUnionType {
     declaration: FernIr.dynamic.Declaration;
-    discriminant: FernIr.dynamic.NameAndWireValue;
+    discriminant: FernIr.dynamic.NameAndWireValueOrString;
     /** Map from the discriminant value (e.g. "user") to the type (e.g. User). */
     types: Record<string, FernIr.dynamic.SingleDiscriminatedUnionType>;
 }

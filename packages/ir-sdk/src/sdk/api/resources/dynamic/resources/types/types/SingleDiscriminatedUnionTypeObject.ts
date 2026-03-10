@@ -4,7 +4,7 @@ import type * as FernIr from "../../../../../index.js";
 
 export interface SingleDiscriminatedUnionTypeObject {
     typeId: FernIr.dynamic.TypeId;
-    discriminantValue: FernIr.dynamic.NameAndWireValue;
+    discriminantValue: FernIr.dynamic.NameAndWireValueOrString;
     /** Any properties included here are the base and/or extended properties from the union. */
     properties: FernIr.dynamic.NamedParameter[];
 }

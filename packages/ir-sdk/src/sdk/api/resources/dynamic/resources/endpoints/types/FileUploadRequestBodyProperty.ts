@@ -8,12 +8,14 @@ export type FileUploadRequestBodyProperty =
     | FernIr.dynamic.FileUploadRequestBodyProperty.BodyProperty;
 
 export namespace FileUploadRequestBodyProperty {
-    export interface File_ extends FernIr.dynamic.NameAndWireValue, _Utils {
+    export interface File_ extends _Utils {
         type: "file";
+        value: FernIr.dynamic.NameAndWireValueOrString;
     }
 
-    export interface FileArray extends FernIr.dynamic.NameAndWireValue, _Utils {
+    export interface FileArray extends _Utils {
         type: "fileArray";
+        value: FernIr.dynamic.NameAndWireValueOrString;
     }
 
     export interface BodyProperty extends FernIr.dynamic.NamedParameter, _Utils {
@@ -25,17 +27,17 @@ export namespace FileUploadRequestBodyProperty {
     }
 
     export interface _Visitor<_Result> {
-        file: (value: FernIr.dynamic.NameAndWireValue) => _Result;
-        fileArray: (value: FernIr.dynamic.NameAndWireValue) => _Result;
+        file: (value: FernIr.dynamic.NameAndWireValueOrString) => _Result;
+        fileArray: (value: FernIr.dynamic.NameAndWireValueOrString) => _Result;
         bodyProperty: (value: FernIr.dynamic.NamedParameter) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const FileUploadRequestBodyProperty = {
-    file: (value: FernIr.dynamic.NameAndWireValue): FernIr.dynamic.FileUploadRequestBodyProperty.File_ => {
+    file: (value: FernIr.dynamic.NameAndWireValueOrString): FernIr.dynamic.FileUploadRequestBodyProperty.File_ => {
         return {
-            ...value,
+            value: value,
             type: "file",
             _visit: function <_Result>(
                 this: FernIr.dynamic.FileUploadRequestBodyProperty.File_,
@@ -46,9 +48,11 @@ export const FileUploadRequestBodyProperty = {
         };
     },
 
-    fileArray: (value: FernIr.dynamic.NameAndWireValue): FernIr.dynamic.FileUploadRequestBodyProperty.FileArray => {
+    fileArray: (
+        value: FernIr.dynamic.NameAndWireValueOrString,
+    ): FernIr.dynamic.FileUploadRequestBodyProperty.FileArray => {
         return {
-            ...value,
+            value: value,
             type: "fileArray",
             _visit: function <_Result>(
                 this: FernIr.dynamic.FileUploadRequestBodyProperty.FileArray,
@@ -78,9 +82,9 @@ export const FileUploadRequestBodyProperty = {
     ): _Result => {
         switch (value.type) {
             case "file":
-                return visitor.file(value);
+                return visitor.file(value.value);
             case "fileArray":
-                return visitor.fileArray(value);
+                return visitor.fileArray(value.value);
             case "bodyProperty":
                 return visitor.bodyProperty(value);
             default:

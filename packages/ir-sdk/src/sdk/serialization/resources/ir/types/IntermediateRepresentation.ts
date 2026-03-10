@@ -6,7 +6,7 @@ import type * as serializers from "../../../index.js";
 import { AudienceDefinition } from "../../audience/types/AudienceDefinition.js";
 import { ApiAuth } from "../../auth/types/ApiAuth.js";
 import { ErrorId } from "../../commons/types/ErrorId.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 import { ServiceId } from "../../commons/types/ServiceId.js";
 import { SubpackageId } from "../../commons/types/SubpackageId.js";
 import { TypeId } from "../../commons/types/TypeId.js";
@@ -41,7 +41,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     fdrApiDefinitionId: core.serialization.string().optional(),
     apiVersion: ApiVersionScheme.optional(),
-    apiName: Name,
+    apiName: NameOrString,
     apiDisplayName: core.serialization.string().optional(),
     apiDocs: core.serialization.string().optional(),
     auth: ApiAuth,
@@ -76,7 +76,7 @@ export declare namespace IntermediateRepresentation {
     export interface Raw {
         fdrApiDefinitionId?: string | null;
         apiVersion?: ApiVersionScheme.Raw | null;
-        apiName: Name.Raw;
+        apiName: NameOrString.Raw;
         apiDisplayName?: string | null;
         apiDocs?: string | null;
         auth: ApiAuth.Raw;

@@ -10,7 +10,7 @@ export interface IntermediateRepresentation {
     fdrApiDefinitionId: string | undefined;
     apiVersion: FernIr.ApiVersionScheme | undefined;
     /** This is the human readable unique id for the API. */
-    apiName: FernIr.Name;
+    apiName: FernIr.NameOrString;
     apiDisplayName: string | undefined;
     apiDocs: string | undefined;
     auth: FernIr.ApiAuth;

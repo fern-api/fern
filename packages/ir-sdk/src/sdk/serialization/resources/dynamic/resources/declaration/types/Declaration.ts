@@ -4,19 +4,19 @@ import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 import { FernFilepath } from "../../commons/types/FernFilepath.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 
 export const Declaration: core.serialization.ObjectSchema<
     serializers.dynamic.Declaration.Raw,
     FernIr.dynamic.Declaration
 > = core.serialization.objectWithoutOptionalProperties({
     fernFilepath: FernFilepath,
-    name: Name,
+    name: NameOrString,
 });
 
 export declare namespace Declaration {
     export interface Raw {
         fernFilepath: FernFilepath.Raw;
-        name: Name.Raw;
+        name: NameOrString.Raw;
     }
 }

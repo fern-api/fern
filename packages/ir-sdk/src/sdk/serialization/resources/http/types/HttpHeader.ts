@@ -4,13 +4,13 @@ import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { Declaration } from "../../commons/types/Declaration.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples.js";
 
 export const HttpHeader: core.serialization.ObjectSchema<serializers.HttpHeader.Raw, FernIr.HttpHeader> =
     core.serialization
         .objectWithoutOptionalProperties({
-            name: NameAndWireValue,
+            name: NameAndWireValueOrString,
             valueType: core.serialization.lazy(() => serializers.TypeReference),
             env: core.serialization.string().optional(),
             v2Examples: V2SchemaExamples.optional(),
@@ -19,7 +19,7 @@ export const HttpHeader: core.serialization.ObjectSchema<serializers.HttpHeader.
 
 export declare namespace HttpHeader {
     export interface Raw extends Declaration.Raw {
-        name: NameAndWireValue.Raw;
+        name: NameAndWireValueOrString.Raw;
         valueType: serializers.TypeReference.Raw;
         env?: string | null;
         v2Examples?: V2SchemaExamples.Raw | null;

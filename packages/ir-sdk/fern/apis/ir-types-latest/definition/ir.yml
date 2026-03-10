@@ -25,9 +25,9 @@ types:
         type: optional<string>
         docs: The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered.
       apiVersion: optional<ApiVersionScheme>
-        apiName:
-          type: commons.NameOrString
-          docs: This is the human readable unique id for the API.
+      apiName:
+        type: commons.NameOrString
+        docs: This is the human readable unique id for the API.
       apiDisplayName: optional<string>
       apiDocs: optional<string>
       auth: auth.ApiAuth

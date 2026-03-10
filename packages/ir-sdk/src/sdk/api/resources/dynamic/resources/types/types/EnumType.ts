@@ -4,5 +4,5 @@ import type * as FernIr from "../../../../../index.js";
 
 export interface EnumType {
     declaration: FernIr.dynamic.Declaration;
-    values: FernIr.dynamic.NameAndWireValue[];
+    values: FernIr.dynamic.NameAndWireValueOrString[];
 }

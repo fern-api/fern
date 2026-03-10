@@ -3,6 +3,6 @@
 import type * as FernIr from "../../../../../index.js";
 
 export interface BasicAuth {
-    username: FernIr.dynamic.Name;
-    password: FernIr.dynamic.Name;
+    username: FernIr.dynamic.NameOrString;
+    password: FernIr.dynamic.NameOrString;
 }

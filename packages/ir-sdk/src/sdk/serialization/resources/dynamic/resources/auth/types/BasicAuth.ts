@@ -3,17 +3,17 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { Name } from "../../commons/types/Name.js";
+import { NameOrString } from "../../commons/types/NameOrString.js";
 
 export const BasicAuth: core.serialization.ObjectSchema<serializers.dynamic.BasicAuth.Raw, FernIr.dynamic.BasicAuth> =
     core.serialization.objectWithoutOptionalProperties({
-        username: Name,
-        password: Name,
+        username: NameOrString,
+        password: NameOrString,
     });
 
 export declare namespace BasicAuth {
     export interface Raw {
-        username: Name.Raw;
-        password: Name.Raw;
+        username: NameOrString.Raw;
+        password: NameOrString.Raw;
     }
 }
