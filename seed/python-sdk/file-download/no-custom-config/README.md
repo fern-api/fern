@@ -39,6 +39,7 @@ from seed import SeedFileDownload
 client = SeedFileDownload(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.service.simple()
 ```
 
@@ -72,7 +73,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.service.simple(...)
+    client.service.simple()
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -88,10 +89,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedFileDownload
 
-client = SeedFileDownload(
-    ...,
-)
-response = client.service.with_raw_response.simple(...)
+client = SeedFileDownload(...)
+response = client.service.with_raw_response.simple()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -112,7 +111,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.service.simple(..., request_options={
+client.service.simple(request_options={
     "max_retries": 1
 })
 ```
@@ -122,17 +121,12 @@ client.service.simple(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedFileDownload
 
-client = SeedFileDownload(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedFileDownload(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.service.simple(..., request_options={
+client.service.simple(request_options={
     "timeout_in_seconds": 1
 })
 ```

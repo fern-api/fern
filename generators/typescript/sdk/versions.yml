@@ -1,4 +1,77 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.53.11
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md, reference.md, and CONTRIBUTING.md
+        generation failures. Documentation generation errors now break the generation flow
+        so they are treated as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 3.53.10
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 3.53.9
+  changelogEntry:
+    - summary: |
+        Fix README generation in Docker by adding `ca-certificates` to the Debian slim
+        base image. Since the switch from Alpine to Debian slim in v3.48.4, the container
+        was missing CA certificates, causing `git clone` over HTTPS to fail with
+        "server certificate verification failed". This resulted in empty README files
+        being generated.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 3.53.8
+  changelogEntry:
+    - summary: |
+        Improve error logging for README.md, reference.md, and CONTRIBUTING.md generation
+        failures. The generator now logs the actual error message and stack trace instead
+        of a generic "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 3.53.7
+  changelogEntry:
+    - summary: |
+        Revert union member interface naming from `safeName` back to `unsafeName`.
+        The v3.53.4 change to use `safeName` for union variant interface names (e.g.,
+        `Date_` instead of `Date`, `Error_` instead of `Error`) was a breaking change.
+        Union member interfaces are generated inside a namespace, so they do not
+        shadow global TypeScript types like `Date` or `Error`.
+      type: fix
+    - summary: |
+        Qualify global type references with `globalThis.` inside union namespaces
+        when a sibling interface would shadow them. For example, if a union has both
+        `Date` and `Datetime` variants, the `Datetime` interface's `value: Date`
+        property now generates `value: globalThis.Date` to correctly reference the
+        built-in Date type instead of the local `Date` interface.
+      type: fix
+  createdAt: "2026-03-08"
+  irVersion: 65
+
+- version: 3.53.6
+  changelogEntry:
+    - summary: |
+        Optimize SdkContextImpl by lazily initializing sub-contexts, external dependencies,
+        core utilities, and GeneratorNotificationService. Previously, every file generation
+        eagerly constructed all 19 sub-context objects plus utility instances regardless of
+        which were actually used. Now each sub-context is created on first access via lazy
+        getters, eliminating ~90% of unnecessary object allocations for large specs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 65
+
 - version: 3.53.5
   changelogEntry:
     - summary: |

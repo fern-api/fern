@@ -32,39 +32,140 @@ export interface RenderContext {
     meta: CompoundMeta;
 }
 
-/**
- * Determine the link path prefix for a fully qualified C++ name.
- *
- * Follows the per-namespace path convention:
- * - cub:: -> /library/api/
- * - thrust:: -> /library/api/
- * - thrust::mr:: -> /library/api/
- * - cuda:: -> /libcudacxx/api/
- * - cuda::mr:: -> /library/api/
- */
-export function getLinkPrefix(qualifiedName: string): string {
-    if (qualifiedName.startsWith("cuda::mr::")) {
-        return "/library/api/";
-    }
-    if (qualifiedName.startsWith("cuda::")) {
-        return "/libcudacxx/api/";
-    }
-    // cub::, thrust::, etc.
-    return "/library/api/";
+// ---------------------------------------------------------------------------
+// Entity registry (populated before rendering, used for cross-reference links)
+// ---------------------------------------------------------------------------
+
+let entityRegistry: Map<string, string> = new Map();
+let currentPageSlugPath: string | undefined;
+
+export function setEntityRegistry(registry: Map<string, string>): void {
+    entityRegistry = registry;
+}
+
+export function clearEntityRegistry(): void {
+    entityRegistry = new Map();
+}
+
+export function setCurrentPageSlugPath(slugPath: string | undefined): void {
+    currentPageSlugPath = slugPath;
 }
 
 /**
- * Build a link path for a qualified name.
- * Strips leading `::` before determining the prefix and building the path.
+ * Compute a relative path from one slug path to another.
+ *
+ * @param fromSlugPath - Current page slug path (e.g., "classes/blockreduce")
+ * @param toSlugPath - Target page slug path, possibly with anchor (e.g., "enums/blockreducealgorithm" or "classes/blockreduce#tempstorage")
  */
-export function buildLinkPath(qualifiedName: string): string {
-    // Strip leading :: (global scope qualifier) -- it breaks prefix matching
-    // and produces incorrect paths like /library/api/::cuda::stream_ref
-    const normalized = qualifiedName.startsWith("::") ? qualifiedName.substring(2) : qualifiedName;
-    const path = `${getLinkPrefix(normalized)}${normalized}`;
-    // URL-encode angle brackets so MDX doesn't parse them as JSX tags
-    return path.replace(/</g, "%3C").replace(/>/g, "%3E");
+function computeRelativePath(fromSlugPath: string, toSlugPath: string): string {
+    // Handle anchor
+    const anchorIdx = toSlugPath.indexOf("#");
+    const anchor = anchorIdx >= 0 ? toSlugPath.substring(anchorIdx) : "";
+    const toPath = anchorIdx >= 0 ? toSlugPath.substring(0, anchorIdx) : toSlugPath;
+
+    // Self-reference with anchor: just return the anchor fragment
+    if (toPath === fromSlugPath && anchor) {
+        return anchor;
+    }
+
+    // For index pages, Fern strips "/index" from the URL.
+    // URL resolution then treats the remaining path as a filename, not directory.
+    // Adjust the effective from location to match URL semantics.
+    let effectiveFrom = fromSlugPath;
+    if (effectiveFrom.endsWith("/index")) {
+        effectiveFrom = effectiveFrom.substring(0, effectiveFrom.length - "/index".length);
+    } else if (effectiveFrom === "index") {
+        effectiveFrom = "";
+    }
+
+    // The "directory" in URL terms is everything before the last segment
+    const fromDir = effectiveFrom.includes("/") ? effectiveFrom.substring(0, effectiveFrom.lastIndexOf("/")) : "";
+
+    const fromParts = fromDir ? fromDir.split("/") : [];
+    const toParts = toPath.split("/").filter((p) => p.length > 0);
+
+    // Find common prefix
+    let common = 0;
+    while (common < fromParts.length && common < toParts.length && fromParts[common] === toParts[common]) {
+        common++;
+    }
+
+    // Build relative path
+    const ups = fromParts.length - common;
+    const upParts = Array(ups).fill("..");
+    const downParts = toParts.slice(common);
+
+    const parts = [...upParts, ...downParts];
+    const relativePath = parts.length > 0 ? parts.join("/") : ".";
+
+    return relativePath + anchor;
 }
+
+/**
+ * Build a link path for a qualified name by looking it up in the entity registry.
+ * Strips leading `::` and template arguments before lookup.
+ * Returns a relative path from the current page to the target page.
+ */
+export function buildLinkPath(qualifiedName: string): string | undefined {
+    const normalized = qualifiedName.startsWith("::") ? qualifiedName.substring(2) : qualifiedName;
+    // Try full name first (handles template specializations)
+    let targetSlugPath = entityRegistry.get(normalized);
+    if (targetSlugPath == null) {
+        // Fall back to stripped template args (handles base templates and short refs)
+        const stripped = stripTemplateArgs(normalized);
+        targetSlugPath = entityRegistry.get(stripped);
+    }
+    if (targetSlugPath == null || currentPageSlugPath == null) {
+        return undefined;
+    }
+    return computeRelativePath(currentPageSlugPath, targetSlugPath);
+}
+
+// ---------------------------------------------------------------------------
+// Operator symbol map (shared between filename sanitization and anchor generation)
+// ---------------------------------------------------------------------------
+
+export const OPERATOR_SYMBOL_MAP: Array<[string, string]> = [
+    ["operator<<=", "operator_lshift_assign"],
+    ["operator>>=", "operator_rshift_assign"],
+    ["operator<=>", "operator_spaceship"],
+    ["operator<<", "operator_lshift"],
+    ["operator>>", "operator_rshift"],
+    ["operator->*", "operator_arrow_star"],
+    ["operator->", "operator_arrow"],
+    ["operator+=", "operator_plus_assign"],
+    ["operator-=", "operator_minus_assign"],
+    ["operator*=", "operator_mul_assign"],
+    ["operator/=", "operator_div_assign"],
+    ["operator%=", "operator_mod_assign"],
+    ["operator^=", "operator_xor_assign"],
+    ["operator&=", "operator_and_assign"],
+    ["operator|=", "operator_or_assign"],
+    ["operator&&", "operator_logical_and"],
+    ["operator||", "operator_logical_or"],
+    ["operator++", "operator_inc"],
+    ["operator--", "operator_dec"],
+    ["operator<=", "operator_le"],
+    ["operator>=", "operator_ge"],
+    ["operator==", "operator_eq"],
+    ["operator!=", "operator_ne"],
+    ["operator()", "operator_call"],
+    ["operator[]", "operator_subscript"],
+    ["operator<", "operator_lt"],
+    ["operator>", "operator_gt"],
+    ["operator+", "operator_plus"],
+    ["operator-", "operator_minus"],
+    ["operator*", "operator_mul"],
+    ["operator/", "operator_div"],
+    ["operator%", "operator_mod"],
+    ["operator^", "operator_xor"],
+    ["operator&", "operator_and"],
+    ["operator|", "operator_or"],
+    ["operator~", "operator_bitnot"],
+    ["operator!", "operator_not"],
+    ["operator=", "operator_assign"],
+    ["operator,", "operator_comma"]
+];
 
 // ---------------------------------------------------------------------------
 // Refid-to-path resolution map (for inner class links)

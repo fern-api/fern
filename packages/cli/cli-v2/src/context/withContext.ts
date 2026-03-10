@@ -1,4 +1,5 @@
 import { LogLevel } from "@fern-api/logger";
+import { FernCliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
 import { CliError } from "../errors/CliError.js";
@@ -36,7 +37,7 @@ export function withContext<T extends GlobalArgs>(
             });
             await context.telemetry.flush();
             context.finish();
-            process.exit(0);
+            await exitGracefully(0);
         } catch (error) {
             await context.telemetry.sendLifecycleEvent({
                 command: context.info.command,
@@ -47,7 +48,7 @@ export function withContext<T extends GlobalArgs>(
             await context.telemetry.flush();
             handleError(context, error);
             context.finish();
-            process.exit(1);
+            await exitGracefully(1);
         }
     };
 }
@@ -74,6 +75,12 @@ function handleError(context: Context, error: unknown): void {
 
     if (error instanceof KeyringUnavailableError) {
         context.stdout.error(`${Icons.error} ${error.message}`);
+        return;
+    }
+
+    if (error instanceof FernCliError) {
+        // FernCliError is thrown by failAndThrow() after logging the error
+        // message via the TaskContext logger. No additional output needed.
         return;
     }
 
@@ -116,6 +123,37 @@ function setupSignalHandler(context: Context): void {
     };
     process.on("SIGINT", () => onSignal(SIGINT_EXIT_CODE));
     process.on("SIGTERM", () => onSignal(SIGTERM_EXIT_CODE));
+}
+
+/**
+ * Exit gracefully by ending stdout and setting the exit code.
+ *
+ * When stdout is piped (not a TTY), Node buffers writes internally.
+ * Calling process.exit() kills the process before the pipe consumer
+ * (e.g. jq) reads all buffered data. Instead, we end stdout and set
+ * process.exitCode so Node exits naturally once all streams drain.
+ */
+function exitGracefully(code: number): Promise<never> {
+    process.exitCode = code;
+
+    // If stdout is a TTY (unbuffered), exit immediately.
+    if (process.stdout.isTTY) {
+        process.exit(code);
+    }
+
+    // End stdout so Node can drain it and exit naturally.
+    // We set process.exitCode above so the correct code is used.
+    process.stdout.end();
+
+    // Safety: force exit after 2s in case lingering handles prevent natural exit.
+    const timeout = setTimeout(() => process.exit(code), 2000);
+    timeout.unref();
+
+    // Return a never-resolving promise — the process will exit via
+    // natural drain or the safety timeout, not via this promise.
+    return new Promise<never>(() => {
+        /* no-op */
+    });
 }
 
 function parseLogLevel(level: string): LogLevel {
