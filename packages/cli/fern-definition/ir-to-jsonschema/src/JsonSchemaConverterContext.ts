@@ -1,6 +1,10 @@
-import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { IntermediateRepresentation, NameOrString, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { JSONSchema4 } from "json-schema";
+
+function getOriginalName(name: NameOrString): string {
+    return typeof name === "string" ? name : name.originalName;
+}
 
 export class JsonSchemaConverterContext {
     private readonly buildingTypeIds: Set<TypeId> = new Set();
@@ -54,8 +58,8 @@ export class JsonSchemaConverterContext {
 
     public getDefinitionKey(typeDeclaration: TypeDeclaration): string {
         return [
-            ...typeDeclaration.name.fernFilepath.allParts.map((part) => part.originalName),
-            typeDeclaration.name.name.originalName
+            ...typeDeclaration.name.fernFilepath.allParts.map((part) => getOriginalName(part)),
+            getOriginalName(typeDeclaration.name.name)
         ].join(".");
     }
 
