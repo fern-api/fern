@@ -508,8 +508,8 @@ catalogs:
       specifier: ^4.0.0
       version: 4.0.0
     simple-git:
-      specifier: ^3.24.0
-      version: 3.30.0
+      specifier: ^3.32.3
+      version: 3.33.0
     sort-package-json:
       specifier: 3.6.1
       version: 3.6.1
@@ -7763,7 +7763,7 @@ importers:
         version: 4.1.4
       simple-git:
         specifier: 'catalog:'
-        version: 3.30.0
+        version: 3.33.0
       tmp-promise:
         specifier: 'catalog:'
         version: 3.0.3
@@ -13762,6 +13762,9 @@ packages:
 
   simple-git@3.30.0:
     resolution: {integrity: sha512-q6lxyDsCmEal/MEGhP1aVyQ3oxnagGlBDOVSIB4XUVLl1iZh0Pah6ebC9V4xBap/RfgP2WlI8EKs0WS0rMEJHg==}
+
+  simple-git@3.33.0:
+    resolution: {integrity: sha512-D4V/tGC2sjsoNhoMybKyGoE+v8A60hRawKQ1iFRA1zwuDgGZCBJ4ByOzZ5J8joBbi4Oam0qiPH+GhzmSBwbJng==}
 
   simple-wcswidth@1.1.2:
     resolution: {integrity: sha512-j7piyCjAeTDSjzTSQ7DokZtMNwNlEAyxqSZeCS+CXH7fJ4jx3FuJ/mTW3mE+6JLs4VJBbcll0Kjn+KXI5t21Iw==}
@@ -20948,6 +20951,14 @@ snapshots:
   signal-exit@4.1.0: {}
 
   simple-git@3.30.0:
+    dependencies:
+      '@kwsites/file-exists': 1.1.1
+      '@kwsites/promise-deferred': 1.1.1
+      debug: 4.4.3
+    transitivePeerDependencies:
+      - supports-color
+
+  simple-git@3.33.0:
     dependencies:
       '@kwsites/file-exists': 1.1.1
       '@kwsites/promise-deferred': 1.1.1
