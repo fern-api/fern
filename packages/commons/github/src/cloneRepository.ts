@@ -127,7 +127,14 @@ export async function cloneRepository({
         // SSL certificate verification failure - retry with SSL verification disabled.
         // This commonly occurs in Docker containers that lack CA certificates.
         if (isSSLCertificateError(errorMessage)) {
-            const retryClonePath = targetDirectory ?? (await tmp.dir()).path;
+            console.warn(
+                `SSL certificate verification failed when cloning ${sanitizedUrl}. ` +
+                    `Retrying with SSL verification disabled. ` +
+                    `This commonly occurs in Docker containers that lack CA certificates.`
+            );
+            // Always use a fresh temp directory for the retry to avoid conflicts
+            // with any partial .git state left by the failed first clone attempt.
+            const retryClonePath = (await tmp.dir()).path;
             const gitWithoutSsl = simpleGit(retryClonePath, {
                 timeout: timeoutConfig,
                 config: ["http.sslVerify=false"]
