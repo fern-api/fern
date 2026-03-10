@@ -13,7 +13,8 @@ export function createBearerAuthScheme(opts?: {
     return {
         docs: opts?.docs,
         token: casingsGenerator.generateName(opts?.tokenName ?? "token"),
-        tokenEnvVar: opts?.tokenEnvVar
+        tokenEnvVar: opts?.tokenEnvVar,
+        key: opts?.tokenName ?? "Bearer"
     };
 }
 
@@ -31,8 +32,11 @@ export function createBasicAuthScheme(opts?: {
         docs: opts?.docs,
         username: casingsGenerator.generateName(opts?.username ?? "username"),
         usernameEnvVar: opts?.usernameEnvVar,
+        usernameOmit: undefined,
         password: casingsGenerator.generateName(opts?.password ?? "password"),
-        passwordEnvVar: opts?.passwordEnvVar
+        passwordEnvVar: opts?.passwordEnvVar,
+        passwordOmit: undefined,
+        key: "BasicAuth"
     };
 }
 
@@ -51,7 +55,8 @@ export function createHeaderAuthScheme(opts?: {
         name: createNameAndWireValue(opts?.name ?? "apiKey", opts?.wireValue ?? "X-API-Key"),
         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
         prefix: opts?.prefix,
-        headerEnvVar: opts?.headerEnvVar
+        headerEnvVar: opts?.headerEnvVar,
+        key: opts?.name ?? "ApiKey"
     };
 }
 
@@ -128,9 +133,6 @@ export function createQueryParameter(
 }
 
 /**
- * Creates an HttpHeader IR object for use in tests.
- */
-/**
  * Creates an AuthScheme union variant for use in IR auth configuration.
  * The returned object preserves reference identity with the input scheme object,
  * which is required because generators use identity comparison (=== this.authScheme)
@@ -160,6 +162,9 @@ export function createAuthScheme(
     return authScheme;
 }
 
+/**
+ * Creates an HttpHeader IR object for use in tests.
+ */
 export function createHttpHeader(
     name: string,
     valueType: FernIr.TypeReference,
