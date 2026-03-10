@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.20.5
+- version: 4.21.1
   changelogEntry:
     - summary: |
         Fix `fern check` rejecting `og:dynamic` and `og:background-image` keys in
@@ -9,6 +9,23 @@
         v4.3.0.
       type: fix
   createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.21.0
+  changelogEntry:
+    - summary: |
+        Remove the `FERN_SELF_HOSTED` environment variable from the CLI. The
+        three behaviors it controlled are now handled independently:
+        - **Auth bypass**: when `FERN_FDR_ORIGIN` (or legacy `OVERRIDE_FDR_ORIGIN`)
+          is set, the CLI reads `FERN_TOKEN` directly instead of triggering
+          interactive login.
+        - **Telemetry opt-out**: use the existing `FERN_DISABLE_TELEMETRY=true` to
+          disable PostHog telemetry.
+        - **ValidFileTypes skip**: removed entirely (no longer needed).
+
+        Also renames `OVERRIDE_FDR_ORIGIN` to `FERN_FDR_ORIGIN` (the old name
+        is still accepted for backward compatibility).
+      type: feat
+  createdAt: "2026-03-09"
   irVersion: 65
 
 - version: 4.20.4
@@ -23,7 +40,6 @@
       type: fix
   createdAt: "2026-03-09"
   irVersion: 65
-
 - version: 4.20.3
   changelogEntry:
     - summary: |
