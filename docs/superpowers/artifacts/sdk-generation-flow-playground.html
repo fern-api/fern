@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fern SDK Generation Pipeline — Interactive Playground</title>
+<style>
+  :root {
+    --fern-green: #2dd4a8;
+    --fern-green-dark: #1aab87;
+    --fern-green-glow: rgba(45, 212, 168, 0.3);
+    --fern-bg: #0a0e17;
+    --fern-surface: #131a2b;
+    --fern-surface-2: #1a2340;
+    --fern-border: #253050;
+    --fern-text: #e2e8f0;
+    --fern-text-muted: #8892a8;
+    --fern-accent: #6366f1;
+    --fern-accent-glow: rgba(99, 102, 241, 0.25);
+    --fern-warning: #f59e0b;
+    --fern-error: #ef4444;
+    --fern-cyan: #22d3ee;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+    background: var(--fern-bg);
+    color: var(--fern-text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(45, 212, 168, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(45, 212, 168, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 0;
+    animation: gridPulse 8s ease-in-out infinite;
+  }
+
+  @keyframes gridPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 20px;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--fern-green), var(--fern-cyan), var(--fern-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  header .subtitle {
+    color: var(--fern-text-muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+
+  /* Pipeline Track */
+  .pipeline-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    margin-bottom: 40px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .pipeline-track::-webkit-scrollbar { display: none; }
+
+  /* Connection line */
+  .pipeline-line {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    right: 30px;
+    height: 2px;
+    background: var(--fern-border);
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+
+  .pipeline-line-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--fern-green), var(--fern-cyan));
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 12px var(--fern-green-glow);
+  }
+
+  /* Pipeline nodes */
+  .pipeline-node {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    min-width: 90px;
+    transition: transform 0.2s;
+  }
+
+  .pipeline-node:hover { transform: translateY(-3px); }
+
+  .node-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--fern-surface);
+    border: 2px solid var(--fern-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    position: relative;
+  }
+
+  .pipeline-node.active .node-circle {
+    border-color: var(--fern-green);
+    background: var(--fern-surface-2);
+    box-shadow: 0 0 20px var(--fern-green-glow), 0 0 40px rgba(45, 212, 168, 0.1);
+  }
+
+  .pipeline-node.completed .node-circle {
+    border-color: var(--fern-green-dark);
+    background: rgba(45, 212, 168, 0.1);
+  }
+
+  .node-label {
+    margin-top: 8px;
+    font-size: 0.6rem;
+    color: var(--fern-text-muted);
+    text-align: center;
+    max-width: 90px;
+    line-height: 1.3;
+    transition: color 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .pipeline-node.active .node-label {
+    color: var(--fern-green);
+  }
+
+  .node-index {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--fern-surface);
+    border: 1px solid var(--fern-border);
+    font-size: 0.55rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--fern-text-muted);
+  }
+
+  .pipeline-node.active .node-index {
+    background: var(--fern-green);
+    border-color: var(--fern-green);
+    color: var(--fern-bg);
+    font-weight: 700;
+  }
+
+  .pipeline-node.completed .node-index {
+    background: var(--fern-green-dark);
+    border-color: var(--fern-green-dark);
+    color: var(--fern-bg);
+  }
+
+  /* Detail Panel */
+  .detail-panel {
+    background: var(--fern-surface);
+    border: 1px solid var(--fern-border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .detail-header {
+    padding: 24px 28px 16px;
+    border-bottom: 1px solid var(--fern-border);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .detail-header .stage-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--fern-green), var(--fern-cyan));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .detail-header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--fern-text);
+    letter-spacing: -0.01em;
+  }
+
+  .detail-header .stage-num {
+    font-size: 0.7rem;
+    color: var(--fern-green);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .detail-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    min-height: 380px;
+  }
+
+  @media (max-width: 900px) {
+    .detail-body { grid-template-columns: 1fr; }
+  }
+
+  .detail-left, .detail-right {
+    padding: 24px 28px;
+  }
+
+  .detail-right {
+    border-left: 1px solid var(--fern-border);
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  .detail-left p {
+    color: var(--fern-text-muted);
+    font-size: 0.82rem;
+    line-height: 1.7;
+    margin-bottom: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .detail-left h3, .detail-right h3 {
+    font-size: 0.7rem;
+    color: var(--fern-green);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+
+  /* Data flow indicator */
+  .data-flow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(45, 212, 168, 0.06);
+    border: 1px solid rgba(45, 212, 168, 0.15);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 0.72rem;
+  }
+
+  .data-flow .arrow {
+    color: var(--fern-green);
+    font-weight: bold;
+  }
+
+  .data-flow .from { color: var(--fern-text-muted); }
+  .data-flow .to { color: var(--fern-cyan); }
+
+  /* Code block */
+  .code-block {
+    background: var(--fern-bg);
+    border: 1px solid var(--fern-border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--fern-border);
+  }
+
+  .code-filename {
+    font-size: 0.68rem;
+    color: var(--fern-text-muted);
+  }
+
+  .code-lang {
+    font-size: 0.6rem;
+    color: var(--fern-green);
+    background: rgba(45, 212, 168, 0.1);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .code-content {
+    padding: 14px;
+    font-size: 0.72rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    white-space: pre;
+    color: var(--fern-text);
+    max-height: 280px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--fern-border) transparent;
+  }
+
+  .code-content::-webkit-scrollbar { width: 6px; }
+  .code-content::-webkit-scrollbar-track { background: transparent; }
+  .code-content::-webkit-scrollbar-thumb { background: var(--fern-border); border-radius: 3px; }
+
+  /* Syntax highlighting (simple) */
+  .syn-key { color: #c792ea; }
+  .syn-str { color: #c3e88d; }
+  .syn-num { color: #f78c6c; }
+  .syn-comment { color: #546e7a; font-style: italic; }
+  .syn-type { color: #82aaff; }
+  .syn-prop { color: #89ddff; }
+  .syn-bool { color: #f78c6c; }
+
+  /* Key points list */
+  .key-points {
+    list-style: none;
+    padding: 0;
+  }
+
+  .key-points li {
+    padding: 8px 0;
+    font-size: 0.78rem;
+    color: var(--fern-text);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+
+  .key-points li::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fern-green);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  /* Navigation */
+  .nav-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 0 4px;
+  }
+
+  .nav-btn {
+    background: var(--fern-surface);
+    border: 1px solid var(--fern-border);
+    color: var(--fern-text);
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-family: inherit;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-btn:hover {
+    border-color: var(--fern-green);
+    background: var(--fern-surface-2);
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .nav-btn:disabled:hover {
+    border-color: var(--fern-border);
+    background: var(--fern-surface);
+  }
+
+  .nav-btn.primary {
+    background: linear-gradient(135deg, var(--fern-green-dark), var(--fern-green));
+    border-color: var(--fern-green);
+    color: var(--fern-bg);
+    font-weight: 600;
+  }
+
+  .nav-btn.primary:hover {
+    box-shadow: 0 0 20px var(--fern-green-glow);
+  }
+
+  .progress-text {
+    font-size: 0.7rem;
+    color: var(--fern-text-muted);
+  }
+
+  /* Pulse animation for active node */
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(45, 212, 168, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(45, 212, 168, 0); }
+  }
+
+  .pipeline-node.active .node-circle {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* Slide in animation */
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .detail-panel.animating {
+    animation: slideIn 0.35s ease-out;
+  }
+
+  /* Tag chips */
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .tag {
+    font-size: 0.62rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(99, 102, 241, 0.12);
+    color: var(--fern-accent);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+  }
+
+  .tag.green {
+    background: rgba(45, 212, 168, 0.1);
+    color: var(--fern-green);
+    border-color: rgba(45, 212, 168, 0.2);
+  }
+
+  .tag.cyan {
+    background: rgba(34, 211, 238, 0.1);
+    color: var(--fern-cyan);
+    border-color: rgba(34, 211, 238, 0.2);
+  }
+
+  .tag.yellow {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--fern-warning);
+    border-color: rgba(245, 158, 11, 0.2);
+  }
+
+  /* Interactive tabs */
+  .tab-row {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 12px;
+  }
+
+  .tab-btn {
+    background: transparent;
+    border: none;
+    color: var(--fern-text-muted);
+    font-size: 0.68rem;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-family: inherit;
+    transition: all 0.2s;
+  }
+
+  .tab-btn.active {
+    color: var(--fern-green);
+    border-bottom-color: var(--fern-green);
+  }
+
+  .tab-btn:hover {
+    color: var(--fern-text);
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Fern SDK Generation Pipeline</h1>
+    <p class="subtitle">Click any stage to explore how Fern transforms API definitions into production SDKs</p>
+  </header>
+
+  <!-- Pipeline Visualization -->
+  <div class="pipeline-track" id="pipelineTrack">
+    <div class="pipeline-line">
+      <div class="pipeline-line-fill" id="pipelineFill"></div>
+    </div>
+    <!-- Nodes injected by JS -->
+  </div>
+
+  <!-- Detail Panel -->
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-header" id="detailHeader"></div>
+    <div class="detail-body" id="detailBody"></div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-controls">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">
+      <span>&larr;</span> Previous
+    </button>
+    <span class="progress-text" id="progressText"></span>
+    <button class="nav-btn primary" id="nextBtn" onclick="navigate(1)">
+      Next <span>&rarr;</span>
+    </button>
+  </div>
+</div>
+
+<script>
+const stages = [
+  {
+    icon: "\u270D\uFE0F",
+    label: "API Definition",
+    title: "API Definition",
+    description: `The pipeline begins with your API definition. Fern supports its own strongly-typed definition language (Fern Definition) as well as OpenAPI 3.x specs. Fern Definition files use YAML and provide features like built-in auth, environments, error discrimination, and audience filtering.`,
+    dataFlow: { from: "Developer", to: "Fern Definition / OpenAPI" },
+    keyPoints: [
+      "Fern Definition: purpose-built YAML format for API-first development",
+      "OpenAPI 3.x: import existing specs and Fern will normalize them",
+      "Supports multiple APIs in a single project via fern/apis/<name>/",
+      "Audiences filter which endpoints appear in each SDK"
+    ],
+    tags: [
+      { text: "YAML", cls: "green" },
+      { text: "OpenAPI 3.x", cls: "cyan" },
+      { text: "AsyncAPI", cls: "" },
+      { text: "gRPC / Protobuf", cls: "" }
+    ],
+    tabs: [
+      {
+        label: "api.yml",
+        filename: "fern/apis/public-api/definition/api.yml",
+        lang: "yaml",
+        code: `<span class="syn-key">name</span>: <span class="syn-str">fern</span>
+<span class="syn-key">auth</span>: <span class="syn-str">bearer</span>
+<span class="syn-key">environments</span>:
+  <span class="syn-key">Production</span>: <span class="syn-str">https://api.buildwithfern.com</span>
+<span class="syn-key">default-environment</span>: <span class="syn-str">Production</span>
+<span class="syn-key">error-discrimination</span>:
+  <span class="syn-key">strategy</span>: <span class="syn-str">property</span>
+  <span class="syn-key">property-name</span>: <span class="syn-str">error</span>
+<span class="syn-key">audiences</span>:
+  - <span class="syn-str">external</span>`
+      },
+      {
+        label: "sdk.yml",
+        filename: "fern/apis/public-api/definition/sdk.yml",
+        lang: "yaml",
+        code: `<span class="syn-comment"># Endpoint definitions</span>
+<span class="syn-key">service</span>:
+  <span class="syn-key">base-path</span>: <span class="syn-str">/api/v1</span>
+  <span class="syn-key">auth</span>: <span class="syn-bool">true</span>
+  <span class="syn-key">endpoints</span>:
+    <span class="syn-key">register</span>:
+      <span class="syn-key">docs</span>: <span class="syn-str">Register a new Fern organization</span>
+      <span class="syn-key">method</span>: <span class="syn-str">POST</span>
+      <span class="syn-key">path</span>: <span class="syn-str">/register</span>
+      <span class="syn-key">request</span>:
+        <span class="syn-key">name</span>: <span class="syn-str">RegisterRequest</span>
+        <span class="syn-key">body</span>:
+          <span class="syn-key">properties</span>:
+            <span class="syn-key">organization</span>: <span class="syn-type">string</span>`
+      },
+      {
+        label: "OpenAPI",
+        filename: "openapi.yml",
+        lang: "yaml",
+        code: `<span class="syn-key">openapi</span>: <span class="syn-str">"3.0.3"</span>
+<span class="syn-key">info</span>:
+  <span class="syn-key">title</span>: <span class="syn-str">My API</span>
+  <span class="syn-key">version</span>: <span class="syn-str">"1.0.0"</span>
+<span class="syn-key">paths</span>:
+  <span class="syn-key">/users</span>:
+    <span class="syn-key">get</span>:
+      <span class="syn-key">operationId</span>: <span class="syn-str">listUsers</span>
+      <span class="syn-key">responses</span>:
+        <span class="syn-str">"200"</span>:
+          <span class="syn-key">description</span>: <span class="syn-str">Success</span>
+          <span class="syn-key">content</span>:
+            <span class="syn-key">application/json</span>:
+              <span class="syn-key">schema</span>:
+                <span class="syn-key">type</span>: <span class="syn-str">array</span>`
+      }
+    ]
+  },
+  {
+    icon: "\u2705",
+    label: "CLI Version",
+    title: "CLI Version Check",
+    description: `Fern CLI reads fern.config.json to determine the required CLI version. If the locally installed version differs, it auto-downloads and re-executes with the correct version. This ensures every team member and CI run uses exactly the same CLI.`,
+    dataFlow: { from: "fern.config.json", to: "Correct CLI Binary" },
+    keyPoints: [
+      "Pinned CLI version guarantees reproducible builds across all environments",
+      "Auto-download mechanism means no manual CLI updates needed",
+      "Organization name scopes the project for remote generation",
+      "The version field controls which Fern CLI binary is invoked"
+    ],
+    tags: [
+      { text: "Version Pinning", cls: "green" },
+      { text: "Auto-Update", cls: "cyan" },
+      { text: "Reproducibility", cls: "" }
+    ],
+    tabs: [
+      {
+        label: "fern.config.json",
+        filename: "fern/fern.config.json",
+        lang: "json",
+        code: `{
+  <span class="syn-key">"organization"</span>: <span class="syn-str">"fern"</span>,
+  <span class="syn-key">"version"</span>: <span class="syn-str">"3.64.5"</span>
+}`
+      },
+      {
+        label: "Version Logic",
+        filename: "packages/cli/cli/src/cli.ts",
+        lang: "typescript",
+        code: `<span class="syn-comment">// Simplified version check flow</span>
+<span class="syn-key">const</span> config = <span class="syn-key">await</span> readFernConfig();
+<span class="syn-key">const</span> requiredVersion = config.version;
+<span class="syn-key">const</span> currentVersion = getCurrentCliVersion();
+
+<span class="syn-key">if</span> (requiredVersion !== currentVersion) {
+  <span class="syn-comment">// Download and exec the pinned version</span>
+  <span class="syn-key">await</span> downloadAndExec(requiredVersion);
+} <span class="syn-key">else</span> {
+  <span class="syn-comment">// Proceed with current version</span>
+  <span class="syn-key">await</span> runCli(args);
+}`
+      }
+    ]
+  },
+  {
+    icon: "\uD83D\uDD0D",
+    label: "Config Discovery",
+    title: "Configuration Discovery",
+    description: `The CLI locates generators.yml files that define which SDK generators to run and how to publish the output. Fern supports both single-API projects (one generators.yml) and multi-API projects (separate configs per API under fern/apis/).`,
+    dataFlow: { from: "Project Structure", to: "generators.yml" },
+    keyPoints: [
+      "Single API: fern/generators.yml at the root of the fern directory",
+      "Multi-API: fern/apis/<api-name>/generators.yml for each API",
+      "Each generators.yml defines groups of generators with output targets",
+      "Schema validation ensures config correctness before generation"
+    ],
+    tags: [
+      { text: "Single API", cls: "green" },
+      { text: "Multi API", cls: "cyan" },
+      { text: "Generator Groups", cls: "" }
+    ],
+    tabs: [
+      {
+        label: "generators.yml",
+        filename: "fern/apis/public-api/generators.yml",
+        lang: "yaml",
+        code: `<span class="syn-comment"># Real config from fern-api/fern</span>
+<span class="syn-key">groups</span>:
+  <span class="syn-key">node-sdk</span>:
+    <span class="syn-key">audiences</span>:
+      - <span class="syn-str">external</span>
+    <span class="syn-key">generators</span>:
+      - <span class="syn-key">name</span>: <span class="syn-str">fernapi/fern-typescript-sdk</span>
+        <span class="syn-key">version</span>: <span class="syn-str">0.9.2</span>
+        <span class="syn-key">output</span>:
+          <span class="syn-key">location</span>: <span class="syn-str">npm</span>
+          <span class="syn-key">package-name</span>: <span class="syn-str">"@fern-api/node-sdk"</span>
+          <span class="syn-key">token</span>: <span class="syn-str">\${NPM_TOKEN}</span>
+        <span class="syn-key">github</span>:
+          <span class="syn-key">repository</span>: <span class="syn-str">fern-api/node-sdk</span>
+          <span class="syn-key">license</span>: <span class="syn-str">MIT</span>
+        <span class="syn-key">config</span>:
+          <span class="syn-key">namespaceExport</span>: <span class="syn-str">Fern</span>`
+      },
+      {
+        label: "Python Group",
+        filename: "fern/apis/public-api/generators.yml",
+        lang: "yaml",
+        code: `  <span class="syn-key">python-sdk</span>:
+    <span class="syn-key">audiences</span>:
+      - <span class="syn-str">external</span>
+    <span class="syn-key">generators</span>:
+      - <span class="syn-key">name</span>: <span class="syn-str">fernapi/fern-python-sdk</span>
+        <span class="syn-key">version</span>: <span class="syn-str">0.12.1</span>
+        <span class="syn-key">output</span>:
+          <span class="syn-key">location</span>: <span class="syn-str">pypi</span>
+          <span class="syn-key">package-name</span>: <span class="syn-str">fern-api</span>
+          <span class="syn-key">token</span>: <span class="syn-str">\${PYPI_TOKEN}</span>
+        <span class="syn-key">github</span>:
+          <span class="syn-key">repository</span>: <span class="syn-str">fern-api/python-sdk</span>
+          <span class="syn-key">license</span>: <span class="syn-str">MIT</span>
+        <span class="syn-key">config</span>:
+          <span class="syn-key">client_class_name</span>: <span class="syn-str">Fern</span>`
+      },
+      {
+        label: "Java Group",
+        filename: "fern/apis/public-api/generators.yml",
+        lang: "yaml",
+        code: `  <span class="syn-key">java-sdk</span>:
+    <span class="syn-key">audiences</span>:
+      - <span class="syn-str">external</span>
+    <span class="syn-key">generators</span>:
+      - <span class="syn-key">name</span>: <span class="syn-str">fernapi/fern-java-sdk</span>
+        <span class="syn-key">version</span>: <span class="syn-str">0.10.1</span>
+        <span class="syn-key">output</span>:
+          <span class="syn-key">location</span>: <span class="syn-str">maven</span>
+          <span class="syn-key">coordinate</span>: <span class="syn-str">com.fern.api:fern-java-sdk</span>
+          <span class="syn-key">username</span>: <span class="syn-str">fernapi</span>
+          <span class="syn-key">password</span>: <span class="syn-str">\${MAVEN_PASSWORD}</span>
+        <span class="syn-key">github</span>:
+          <span class="syn-key">repository</span>: <span class="syn-str">fern-api/java-sdk</span>
+          <span class="syn-key">license</span>: <span class="syn-str">MIT</span>
+          <span class="syn-key">mode</span>: <span class="syn-str">pull-request</span>`
+      },
+      {
+        label: "Directory",
+        filename: "Project structure",
+        lang: "text",
+        code: `fern/
+\u251C\u2500\u2500 fern.config.json
+\u2514\u2500\u2500 apis/
+    \u251C\u2500\u2500 public-api/
+    \u2502   \u251C\u2500\u2500 definition/
+    \u2502   \u2502   \u251C\u2500\u2500 api.yml
+    \u2502   \u2502   \u2514\u2500\u2500 sdk.yml
+    \u2502   \u2514\u2500\u2500 generators.yml
+    \u251C\u2500\u2500 fern-definition/
+    \u2502   \u251C\u2500\u2500 definition/
+    \u2502   \u2514\u2500\u2500 generators.yml
+    \u2514\u2500\u2500 generators-yml/
+        \u251C\u2500\u2500 definition/
+        \u2514\u2500\u2500 generators.yml`
+      }
+    ]
+  },
+  {
+    icon: "\uD83C\uDFAF",
+    label: "Generator Select",
+    title: "Generator Selection",
+    description: `The --group parameter (or default-group in config) selects which generator group to execute. Each group can contain multiple generators that run in parallel, enabling simultaneous SDK generation for multiple languages from a single command.`,
+    dataFlow: { from: "--group flag", to: "Selected Generators" },
+    keyPoints: [
+      "Groups bundle related generators (e.g., all SDKs for one API)",
+      "Multiple generators in a group run in parallel",
+      "The --group flag selects which group to run",
+      "default-group field can set the default for 'fern generate'"
+    ],
+    tags: [
+      { text: "Parallel Execution", cls: "green" },
+      { text: "Multi-Language", cls: "cyan" },
+      { text: "9 Languages", cls: "yellow" }
+    ],
+    tabs: [
+      {
+        label: "CLI Command",
+        filename: "terminal",
+        lang: "bash",
+        code: `<span class="syn-comment"># Generate TypeScript SDK only</span>
+$ fern generate --group node-sdk
+
+<span class="syn-comment"># Generate Python SDK only</span>
+$ fern generate --group python-sdk
+
+<span class="syn-comment"># Generate all groups</span>
+$ fern generate
+
+<span class="syn-comment"># Generate locally (Docker, no remote)</span>
+$ fern generate --group node-sdk --local
+
+<span class="syn-comment"># Preview what would be generated</span>
+$ fern generate --group node-sdk --preview`
+      },
+      {
+        label: "Supported Generators",
+        filename: "Generator Registry",
+        lang: "text",
+        code: `<span class="syn-type">Language        Generator Name                    Registry</span>
+\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+TypeScript   fernapi/fern-typescript-sdk       npm
+Python       fernapi/fern-python-sdk           PyPI
+Java         fernapi/fern-java-sdk             Maven
+Go           fernapi/fern-go-sdk               Go modules
+C#           fernapi/fern-csharp-sdk           NuGet
+Ruby         fernapi/fern-ruby-sdk             RubyGems
+PHP          fernapi/fern-php-sdk              Packagist
+Rust         fernapi/fern-rust-sdk             crates.io
+Swift        fernapi/fern-swift-sdk            SPM`
+      }
+    ]
+  },
+  {
+    icon: "\u2699\uFE0F",
+    label: "IR Generation",
+    title: "IR Generation (Intermediate Representation)",
+    description: `This is the heart of Fern's architecture. The API definition (whether Fern YAML or OpenAPI) is compiled into the Fern IR -- a canonical, language-agnostic JSON structure containing every detail needed to generate an SDK. All generators consume IR, never raw definition files.`,
+    dataFlow: { from: "API Definition", to: "Fern IR (JSON)" },
+    keyPoints: [
+      "IR is the canonical contract between the CLI and all generators",
+      "Contains: types, endpoints, errors, auth, environments, webhooks",
+      "Language-agnostic: same IR feeds TypeScript, Python, Java, etc.",
+      "Always generated at the latest IR version first",
+      "Versioned schema (currently v65) with strict compatibility guarantees"
+    ],
+    tags: [
+      { text: "IR v65", cls: "green" },
+      { text: "Language-Agnostic", cls: "cyan" },
+      { text: "Canonical Format", cls: "" },
+      { text: "JSON", cls: "yellow" }
+    ],
+    tabs: [
+      {
+        label: "IR Structure",
+        filename: "packages/ir-sdk/src/sdk/ir.ts",
+        lang: "typescript",
+        code: `<span class="syn-comment">// Simplified view of the Fern IR structure</span>
+<span class="syn-key">interface</span> <span class="syn-type">IntermediateRepresentation</span> {
+  <span class="syn-prop">apiName</span>: <span class="syn-type">string</span>;
+  <span class="syn-prop">apiDisplayName</span>?: <span class="syn-type">string</span>;
+  <span class="syn-prop">auth</span>: <span class="syn-type">ApiAuth</span>;
+  <span class="syn-prop">headers</span>: <span class="syn-type">HttpHeader</span>[];
+  <span class="syn-prop">types</span>: <span class="syn-type">Record</span>&lt;<span class="syn-type">TypeId</span>, <span class="syn-type">TypeDeclaration</span>&gt;;
+  <span class="syn-prop">services</span>: <span class="syn-type">Record</span>&lt;<span class="syn-type">ServiceId</span>, <span class="syn-type">HttpService</span>&gt;;
+  <span class="syn-prop">errors</span>: <span class="syn-type">Record</span>&lt;<span class="syn-type">ErrorId</span>, <span class="syn-type">ErrorDeclaration</span>&gt;;
+  <span class="syn-prop">subpackages</span>: <span class="syn-type">Record</span>&lt;<span class="syn-type">SubpackageId</span>, <span class="syn-type">Subpackage</span>&gt;;
+  <span class="syn-prop">environments</span>?: <span class="syn-type">EnvironmentsConfig</span>;
+  <span class="syn-prop">webhookGroups</span>: <span class="syn-type">WebhookGroup</span>[];
+  <span class="syn-prop">websocketChannels</span>?: <span class="syn-type">WebSocketChannel</span>[];
+  <span class="syn-prop">sdkConfig</span>: <span class="syn-type">SdkConfig</span>;
+  <span class="syn-prop">variables</span>: <span class="syn-type">VariableDeclaration</span>[];
+  <span class="syn-prop">pathParameters</span>: <span class="syn-type">PathParameter</span>[];
+}`
+      },
+      {
+        label: "IR JSON Example",
+        filename: "ir-output.json",
+        lang: "json",
+        code: `{
+  <span class="syn-key">"apiName"</span>: {
+    <span class="syn-key">"originalName"</span>: <span class="syn-str">"fern"</span>,
+    <span class="syn-key">"camelCase"</span>: <span class="syn-str">"fern"</span>,
+    <span class="syn-key">"pascalCase"</span>: <span class="syn-str">"Fern"</span>,
+    <span class="syn-key">"snakeCase"</span>: <span class="syn-str">"fern"</span>,
+    <span class="syn-key">"screamingSnakeCase"</span>: <span class="syn-str">"FERN"</span>
+  },
+  <span class="syn-key">"auth"</span>: {
+    <span class="syn-key">"requirement"</span>: <span class="syn-str">"ALL"</span>,
+    <span class="syn-key">"schemes"</span>: [{
+      <span class="syn-key">"type"</span>: <span class="syn-str">"bearer"</span>,
+      <span class="syn-key">"token"</span>: { <span class="syn-key">"originalName"</span>: <span class="syn-str">"token"</span> }
+    }]
+  },
+  <span class="syn-key">"environments"</span>: {
+    <span class="syn-key">"type"</span>: <span class="syn-str">"singleBaseUrl"</span>,
+    <span class="syn-key">"defaultEnvironment"</span>: <span class="syn-str">"Production"</span>,
+    <span class="syn-key">"environments"</span>: [{
+      <span class="syn-key">"id"</span>: <span class="syn-str">"Production"</span>,
+      <span class="syn-key">"url"</span>: <span class="syn-str">"https://api.buildwithfern.com"</span>
+    }]
+  }
+}`
+      }
+    ]
+  },
+  {
+    icon: "\uD83D\uDD17",
+    label: "Version Compat",
+    title: "Version Compatibility Check",
+    description: `Each generator version declares which IR version it expects. The CLI checks the generator's versions.yml to find the required irVersion. If the generator expects an older IR format, migration is needed. This decouples generator release cycles from CLI releases.`,
+    dataFlow: { from: "Generator Version", to: "Required IR Version" },
+    keyPoints: [
+      "Each entry in versions.yml maps a generator version to an IR version",
+      "Generators can lag behind the latest IR without breaking",
+      "Enables independent release cadences for CLI and generators",
+      "Example: typescript-sdk v3.53.9 requires IR v65"
+    ],
+    tags: [
+      { text: "Backward Compatible", cls: "green" },
+      { text: "Decoupled Releases", cls: "cyan" },
+      { text: "versions.yml", cls: "" }
+    ],
+    tabs: [
+      {
+        label: "versions.yml",
+        filename: "generators/typescript/sdk/versions.yml",
+        lang: "yaml",
+        code: `<span class="syn-comment"># Real versions.yml from fern-typescript-sdk</span>
+- <span class="syn-key">version</span>: <span class="syn-str">3.53.9</span>
+  <span class="syn-key">changelogEntry</span>:
+    - <span class="syn-key">summary</span>: |
+        <span class="syn-str">Fix README generation in Docker by adding</span>
+        <span class="syn-str">ca-certificates to the Debian slim base image.</span>
+      <span class="syn-key">type</span>: <span class="syn-str">fix</span>
+  <span class="syn-key">createdAt</span>: <span class="syn-str">"2026-03-09"</span>
+  <span class="syn-key">irVersion</span>: <span class="syn-num">65</span>
+
+- <span class="syn-key">version</span>: <span class="syn-str">3.53.8</span>
+  <span class="syn-key">changelogEntry</span>:
+    - <span class="syn-key">summary</span>: |
+        <span class="syn-str">Improve error logging for README.md generation</span>
+      <span class="syn-key">type</span>: <span class="syn-str">chore</span>
+  <span class="syn-key">createdAt</span>: <span class="syn-str">"2026-03-09"</span>
+  <span class="syn-key">irVersion</span>: <span class="syn-num">65</span>
+
+- <span class="syn-key">version</span>: <span class="syn-str">3.53.7</span>
+  <span class="syn-key">changelogEntry</span>:
+    - <span class="syn-key">summary</span>: |
+        <span class="syn-str">Revert union member interface naming</span>
+      <span class="syn-key">type</span>: <span class="syn-str">fix</span>
+  <span class="syn-key">createdAt</span>: <span class="syn-str">"2026-03-08"</span>
+  <span class="syn-key">irVersion</span>: <span class="syn-num">65</span>`
+      },
+      {
+        label: "Compatibility Matrix",
+        filename: "Version Compatibility",
+        lang: "text",
+        code: `<span class="syn-type">Generator                    Version    IR Version</span>
+\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+fern-typescript-sdk          3.53.9     65 (latest)
+fern-python-sdk              4.x.x      65
+fern-java-sdk                2.x.x      65
+fern-go-sdk                  1.x.x      65
+fern-csharp-sdk              1.x.x      65
+fern-ruby-sdk                1.x.x      65
+
+<span class="syn-comment">An older generator version might require IR v53,
+while the CLI generates IR v65. The CLI must
+migrate the IR backward to match.</span>`
+      }
+    ]
+  },
+  {
+    icon: "\uD83D\uDD04",
+    label: "IR Migration",
+    title: "IR Migration",
+    description: `When a generator requires an older IR version than the latest, the CLI applies a chain of backward migrations to transform the IR. Each migration handles the diff between consecutive IR versions. This is how Fern maintains backward compatibility without forcing all generators to update simultaneously.`,
+    dataFlow: { from: "IR v65 (latest)", to: "IR vN (generator's version)" },
+    keyPoints: [
+      "Migrations transform IR backward: v65 -> v64 -> ... -> vN",
+      "Each migration handles one version step (e.g., v54 -> v53)",
+      "Allows old generator versions to work with the newest CLI",
+      "Migration chain is applied automatically, no user intervention",
+      "Located in packages/cli/generation/ir-migrations/"
+    ],
+    tags: [
+      { text: "Backward Migration", cls: "green" },
+      { text: "Chain of Transforms", cls: "cyan" },
+      { text: "Auto-Applied", cls: "" }
+    ],
+    tabs: [
+      {
+        label: "Migration Chain",
+        filename: "packages/cli/generation/ir-migrations/",
+        lang: "typescript",
+        code: `<span class="syn-comment">// Conceptual migration chain</span>
+<span class="syn-comment">// CLI generates IR at latest version (v65)</span>
+<span class="syn-comment">// Generator needs v58</span>
+
+<span class="syn-key">const</span> latestIR = generateIR(apiDefinition); <span class="syn-comment">// v65</span>
+
+<span class="syn-comment">// Apply migrations in reverse order</span>
+<span class="syn-key">let</span> ir = latestIR;
+ir = migrateV65ToV64(ir);  <span class="syn-comment">// Remove new fields</span>
+ir = migrateV64ToV63(ir);  <span class="syn-comment">// Convert types</span>
+ir = migrateV63ToV62(ir);  <span class="syn-comment">// Flatten structures</span>
+ir = migrateV62ToV61(ir);
+ir = migrateV61ToV60(ir);
+ir = migrateV60ToV59(ir);
+ir = migrateV59ToV58(ir);  <span class="syn-comment">// Final target</span>
+
+<span class="syn-comment">// Now ir is compatible with the generator</span>
+<span class="syn-key">return</span> ir; <span class="syn-comment">// v58 format</span>`
+      },
+      {
+        label: "Migration Example",
+        filename: "ir-migrations/v54-to-v53/migrateFromV54ToV53.ts",
+        lang: "typescript",
+        code: `<span class="syn-comment">// Example: a real migration might handle</span>
+<span class="syn-comment">// a new field added in v54</span>
+
+<span class="syn-key">export function</span> <span class="syn-type">migrateFromV54ToV53</span>(
+  ir: <span class="syn-type">IRv54</span>
+): <span class="syn-type">IRv53</span> {
+  <span class="syn-key">return</span> {
+    ...ir,
+    <span class="syn-comment">// Remove fields not in v53</span>
+    services: mapValues(ir.services, (service) => ({
+      ...service,
+      endpoints: service.endpoints.map((endpoint) => {
+        <span class="syn-key">const</span> { newFieldInV54, ...rest } = endpoint;
+        <span class="syn-key">return</span> rest;
+      }),
+    })),
+  };
+}`
+      }
+    ]
+  },
+  {
+    icon: "\uD83D\uDE80",
+    label: "Execution",
+    title: "Generation Execution",
+    description: `The generation runs in one of two modes. Local mode pulls a Docker image for the generator and runs it on your machine, giving you full control. Remote mode (via the Fiddle service, being deprecated) runs generation server-side. Both consume the migrated IR and produce SDK source code.`,
+    dataFlow: { from: "Migrated IR", to: "Generated SDK Code" },
+    keyPoints: [
+      "Local mode: Docker container runs the generator on your machine",
+      "Remote mode: Fiddle service runs generation server-side (deprecated)",
+      "Each generator is a Docker image implementing AbstractGeneratorCli",
+      "Generator reads IR JSON from stdin, writes SDK files to output directory",
+      "Generators run in isolation -- no cross-contamination between languages"
+    ],
+    tags: [
+      { text: "Docker", cls: "green" },
+      { text: "Local Mode", cls: "cyan" },
+      { text: "Remote Mode", cls: "yellow" },
+      { text: "Containerized", cls: "" }
+    ],
+    tabs: [
+      {
+        label: "Local Generation",
+        filename: "terminal",
+        lang: "bash",
+        code: `<span class="syn-comment"># What happens under the hood with --local:</span>
+
+<span class="syn-comment"># 1. Pull the generator Docker image</span>
+$ docker pull fernapi/fern-typescript-sdk:3.53.9
+
+<span class="syn-comment"># 2. Run the container with IR as input</span>
+$ docker run \\
+    -v /tmp/fern-ir.json:/ir.json \\
+    -v /tmp/output:/output \\
+    fernapi/fern-typescript-sdk:3.53.9 \\
+    --ir /ir.json \\
+    --output /output \\
+    --config '{"namespaceExport": "Fern"}'
+
+<span class="syn-comment"># 3. Generated files appear in /tmp/output/</span>
+$ ls /tmp/output/
+src/
+  Client.ts
+  api/
+  core/
+  serialization/
+package.json
+tsconfig.json`
+      },
+      {
+        label: "Generator Interface",
+        filename: "generators/base/AbstractGeneratorCli.ts",
+        lang: "typescript",
+        code: `<span class="syn-comment">// Every Fern generator implements this interface</span>
+<span class="syn-key">abstract class</span> <span class="syn-type">AbstractGeneratorCli</span> {
+
+  <span class="syn-comment">// Entry point called by the Docker container</span>
+  <span class="syn-key">async</span> <span class="syn-type">run</span>(args: <span class="syn-type">GeneratorArgs</span>): <span class="syn-type">Promise</span>&lt;<span class="syn-type">void</span>&gt; {
+    <span class="syn-key">const</span> ir = <span class="syn-key">await</span> readIR(args.irFilePath);
+    <span class="syn-key">const</span> config = parseConfig(args.config);
+
+    <span class="syn-comment">// Generate all files</span>
+    <span class="syn-key">const</span> files = <span class="syn-key">await</span> <span class="syn-key">this</span>.generate(ir, config);
+
+    <span class="syn-comment">// Write to output directory</span>
+    <span class="syn-key">await</span> writeFiles(args.outputDir, files);
+  }
+
+  <span class="syn-comment">// Each language implements this</span>
+  <span class="syn-key">abstract</span> <span class="syn-type">generate</span>(
+    ir: <span class="syn-type">IntermediateRepresentation</span>,
+    config: <span class="syn-type">GeneratorConfig</span>
+  ): <span class="syn-type">Promise</span>&lt;<span class="syn-type">GeneratedFile</span>[]&gt;;
+}`
+      }
+    ]
+  },
+  {
+    icon: "\uD83D\uDCE6",
+    label: "Output",
+    title: "Output Delivery",
+    description: `The final stage publishes or delivers the generated SDK. Fern supports three output modes: publishing to package registries (npm, PyPI, Maven, etc.), pushing to GitHub (as a release, PR, or direct push), or saving to a local directory. Multiple outputs can be configured per generator.`,
+    dataFlow: { from: "Generated SDK", to: "Published Package / GitHub / Local" },
+    keyPoints: [
+      "Package registries: npm, PyPI, Maven, NuGet, RubyGems, Packagist, crates.io",
+      "GitHub modes: release (tags), pull-request (review first), push (direct)",
+      "Local filesystem: saves generated code to a specified directory",
+      "Auto-versioning: Fern can manage SDK versions automatically",
+      "README, LICENSE, and CONTRIBUTING.md generated alongside the SDK"
+    ],
+    tags: [
+      { text: "npm", cls: "green" },
+      { text: "PyPI", cls: "cyan" },
+      { text: "Maven", cls: "" },
+      { text: "GitHub", cls: "yellow" },
+      { text: "NuGet", cls: "" },
+      { text: "RubyGems", cls: "green" }
+    ],
+    tabs: [
+      {
+        label: "npm Output",
+        filename: "generators.yml (npm)",
+        lang: "yaml",
+        code: `<span class="syn-key">output</span>:
+  <span class="syn-key">location</span>: <span class="syn-str">npm</span>
+  <span class="syn-key">package-name</span>: <span class="syn-str">"@fern-api/node-sdk"</span>
+  <span class="syn-key">token</span>: <span class="syn-str">\${NPM_TOKEN}</span>
+
+<span class="syn-comment"># This produces:</span>
+<span class="syn-comment"># - Published package on npmjs.com</span>
+<span class="syn-comment"># - README.md with usage examples</span>
+<span class="syn-comment"># - TypeScript types included</span>
+<span class="syn-comment"># - ESM + CJS dual format</span>
+
+<span class="syn-comment"># Install the generated SDK:</span>
+<span class="syn-comment"># npm install @fern-api/node-sdk</span>
+
+<span class="syn-comment"># Usage:</span>
+<span class="syn-comment"># import { Fern } from "@fern-api/node-sdk";</span>
+<span class="syn-comment"># const client = new Fern({ token: "..." });</span>`
+      },
+      {
+        label: "GitHub Output",
+        filename: "generators.yml (GitHub)",
+        lang: "yaml",
+        code: `<span class="syn-key">github</span>:
+  <span class="syn-key">repository</span>: <span class="syn-str">fern-api/node-sdk</span>
+  <span class="syn-key">license</span>: <span class="syn-str">MIT</span>
+  <span class="syn-key">mode</span>: <span class="syn-str">pull-request</span>  <span class="syn-comment"># or: release, push</span>
+
+<span class="syn-comment"># Modes:</span>
+<span class="syn-comment">#</span>
+<span class="syn-comment"># release:</span>
+<span class="syn-comment">#   Creates a GitHub release with the SDK</span>
+<span class="syn-comment">#   Tags the release with the version number</span>
+<span class="syn-comment">#</span>
+<span class="syn-comment"># pull-request:</span>
+<span class="syn-comment">#   Opens a PR with the generated changes</span>
+<span class="syn-comment">#   Allows review before merging</span>
+<span class="syn-comment">#   Best for teams wanting oversight</span>
+<span class="syn-comment">#</span>
+<span class="syn-comment"># push:</span>
+<span class="syn-comment">#   Pushes directly to the default branch</span>
+<span class="syn-comment">#   No review step -- use with caution</span>`
+      },
+      {
+        label: "Local Output",
+        filename: "generators.yml (local)",
+        lang: "yaml",
+        code: `<span class="syn-comment"># Save generated SDK to local filesystem</span>
+<span class="syn-key">output</span>:
+  <span class="syn-key">location</span>: <span class="syn-str">local-file-system</span>
+  <span class="syn-key">path</span>: <span class="syn-str">../generated/typescript-sdk</span>
+
+<span class="syn-comment"># Result:</span>
+generated/typescript-sdk/
+\u251C\u2500\u2500 src/
+\u2502   \u251C\u2500\u2500 Client.ts
+\u2502   \u251C\u2500\u2500 api/
+\u2502   \u2502   \u251C\u2500\u2500 types/
+\u2502   \u2502   \u2514\u2500\u2500 errors/
+\u2502   \u251C\u2500\u2500 core/
+\u2502   \u2502   \u251C\u2500\u2500 fetcher.ts
+\u2502   \u2502   \u2514\u2500\u2500 runtime.ts
+\u2502   \u2514\u2500\u2500 serialization/
+\u251C\u2500\u2500 package.json
+\u251C\u2500\u2500 tsconfig.json
+\u251C\u2500\u2500 README.md
+\u2514\u2500\u2500 LICENSE`
+      },
+      {
+        label: "Generated SDK",
+        filename: "src/Client.ts",
+        lang: "typescript",
+        code: `<span class="syn-comment">// Auto-generated by Fern</span>
+<span class="syn-key">import</span> * <span class="syn-key">as</span> core <span class="syn-key">from</span> <span class="syn-str">"./core"</span>;
+<span class="syn-key">import</span> * <span class="syn-key">as</span> <span class="syn-type">Fern</span> <span class="syn-key">from</span> <span class="syn-str">"./api"</span>;
+
+<span class="syn-key">export class</span> <span class="syn-type">FernClient</span> {
+  <span class="syn-key">constructor</span>(<span class="syn-key">private readonly</span> options: <span class="syn-type">Fern.ClientOptions</span>) {}
+
+  <span class="syn-key">public async</span> <span class="syn-type">register</span>(
+    request: <span class="syn-type">Fern.RegisterRequest</span>
+  ): <span class="syn-type">Promise</span>&lt;<span class="syn-type">void</span>&gt; {
+    <span class="syn-key">await</span> core.fetcher({
+      url: \`\${<span class="syn-key">this</span>.options.environment}/api/v1/register\`,
+      method: <span class="syn-str">"POST"</span>,
+      headers: {
+        Authorization: \`Bearer \${<span class="syn-key">this</span>.options.token}\`,
+      },
+      body: core.serialization.RegisterRequest
+        .jsonOrThrow(request),
+    });
+  }
+}`
+      }
+    ]
+  }
+];
+
+let currentStage = 0;
+
+function createPipelineNodes() {
+  const track = document.getElementById('pipelineTrack');
+  stages.forEach((stage, i) => {
+    const node = document.createElement('div');
+    node.className = 'pipeline-node' + (i === 0 ? ' active' : '');
+    node.dataset.index = i;
+    node.onclick = () => goToStage(i);
+    node.innerHTML = `
+      <div class="node-circle">
+        <span class="node-index">${i + 1}</span>
+        ${stage.icon}
+      </div>
+      <div class="node-label">${stage.label}</div>
+    `;
+    track.appendChild(node);
+  });
+}
+
+function updatePipeline() {
+  const nodes = document.querySelectorAll('.pipeline-node');
+  nodes.forEach((node, i) => {
+    node.classList.toggle('active', i === currentStage);
+    node.classList.toggle('completed', i < currentStage);
+  });
+
+  const fillPct = (currentStage / (stages.length - 1)) * 100;
+  document.getElementById('pipelineFill').style.width = fillPct + '%';
+
+  document.getElementById('prevBtn').disabled = currentStage === 0;
+  document.getElementById('nextBtn').disabled = currentStage === stages.length - 1;
+  document.getElementById('nextBtn').textContent = currentStage === stages.length - 1 ? 'Complete' : 'Next';
+  if (currentStage < stages.length - 1) {
+    document.getElementById('nextBtn').innerHTML = 'Next <span>&rarr;</span>';
+  }
+  document.getElementById('progressText').textContent = `Stage ${currentStage + 1} of ${stages.length}`;
+}
+
+function renderDetail() {
+  const stage = stages[currentStage];
+  const panel = document.getElementById('detailPanel');
+
+  panel.classList.remove('animating');
+  void panel.offsetWidth; // trigger reflow
+  panel.classList.add('animating');
+
+  document.getElementById('detailHeader').innerHTML = `
+    <div class="stage-icon">${stage.icon}</div>
+    <div>
+      <div class="stage-num">Stage ${currentStage + 1} of ${stages.length}</div>
+      <h2>${stage.title}</h2>
+    </div>
+  `;
+
+  const tagsHtml = stage.tags.map(t => `<span class="tag ${t.cls}">${t.text}</span>`).join('');
+
+  const tabButtons = stage.tabs.map((tab, i) =>
+    `<button class="tab-btn ${i === 0 ? 'active' : ''}" onclick="switchTab(${i}, this)">${tab.label}</button>`
+  ).join('');
+
+  const tabContents = stage.tabs.map((tab, i) => `
+    <div class="tab-content ${i === 0 ? 'active' : ''}" data-tab="${i}">
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-filename">${tab.filename}</span>
+          <span class="code-lang">${tab.lang}</span>
+        </div>
+        <div class="code-content">${tab.code}</div>
+      </div>
+    </div>
+  `).join('');
+
+  const keyPointsHtml = stage.keyPoints.map(p => `<li>${p}</li>`).join('');
+
+  document.getElementById('detailBody').innerHTML = `
+    <div class="detail-left">
+      <div class="data-flow">
+        <span class="from">${stage.dataFlow.from}</span>
+        <span class="arrow">&rarr;</span>
+        <span class="to">${stage.dataFlow.to}</span>
+      </div>
+      <p>${stage.description}</p>
+      <h3>Key Points</h3>
+      <ul class="key-points">${keyPointsHtml}</ul>
+      <div class="tag-row">${tagsHtml}</div>
+    </div>
+    <div class="detail-right">
+      <div class="tab-row">${tabButtons}</div>
+      ${tabContents}
+    </div>
+  `;
+}
+
+function switchTab(index, btn) {
+  const parent = btn.closest('.detail-right');
+  parent.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  parent.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  parent.querySelector(`.tab-content[data-tab="${index}"]`).classList.add('active');
+}
+
+function goToStage(index) {
+  currentStage = index;
+  updatePipeline();
+  renderDetail();
+}
+
+function navigate(dir) {
+  const next = currentStage + dir;
+  if (next >= 0 && next < stages.length) {
+    goToStage(next);
+  }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); navigate(1); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); navigate(-1); }
+});
+
+// Init
+createPipelineNodes();
+updatePipeline();
+renderDetail();
+</script>
+
+</body>
+</html>
