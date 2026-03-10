@@ -1,4 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractJavaGeneratorCli } from "@fern-api/java-base";
 import { DynamicSnippetsGenerator } from "@fern-api/java-dynamic-snippets";
@@ -66,8 +67,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 });
                 context.logger.debug("Successfully generated README.md");
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                throw new Error(`Failed to generate README.md: ${errorMessage}`);
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
@@ -75,8 +75,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 await this.generateReference({ context });
                 context.logger.debug("Successfully generated reference.md");
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                throw new Error(`Failed to generate reference.md: ${errorMessage}`);
+                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
 
             try {

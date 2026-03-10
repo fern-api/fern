@@ -1,4 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
@@ -117,16 +118,14 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 });
                 context.logger.debug("Generated readme!");
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                throw new Error(`Failed to generate README.md: ${errorMessage}`);
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
         }
 
         try {
             await this.generateReference({ context });
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
-            throw new Error(`Failed to generate reference.md: ${errorMessage}`);
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
 
         await this.generateWireTestFiles(context);

@@ -1,4 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbstractCsharpGeneratorCli, CsharpConfigSchema, TestFileGenerator } from "@fern-api/csharp-base";
 import {
     generateModels,
@@ -287,15 +288,13 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                     endpointSnippets: snippets.endpoints
                 });
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                throw new Error(`Failed to generate README.md: ${errorMessage}`);
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
                 await this.generateReference({ context });
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                throw new Error(`Failed to generate reference.md: ${errorMessage}`);
+                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
         }
         context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);

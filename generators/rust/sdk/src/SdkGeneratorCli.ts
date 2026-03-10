@@ -1,4 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AbstractRustGeneratorCli,
@@ -782,8 +783,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
             context.logger.debug("Successfully added README.md to project");
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
-            throw new Error(`Failed to generate README.md: ${errorMessage}`);
+            throw new Error(`Failed to generate README.md: ${extractErrorMessage(error)}`);
         }
     }
 
@@ -848,8 +848,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.project.addSourceFiles(referenceFile);
             context.logger.debug("Successfully added reference.md to project");
         } catch (error) {
-            const errorMessage = error instanceof Error ? error.message : String(error);
-            throw new Error(`Failed to generate reference.md: ${errorMessage}`);
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
     }
 
