@@ -256,6 +256,14 @@ export class DocsDefinitionResolver {
     private markdownFilesToAvailability: Map<AbsoluteFilePath, docsYml.RawSchemas.Availability> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
     private referencedMarkdownFiles: ReferencedMarkdownFile[] = [];
+    /**
+     * Tracks relative paths of pages generated from OpenAPI specs (e.g. tag
+     * description pages).  These pages must NOT receive an auto-injected
+     * `last-updated` date because a single openapi.yaml change regenerates N
+     * pages with the same timestamp, which causes Google to distrust
+     * `<lastmod>` domain-wide and wastes Bing crawl budget.
+     */
+    private apiGeneratedPagePaths = new Set<RelativeFilePath>();
     private pendingApiRegistrations: Array<{
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
@@ -504,14 +512,20 @@ export class DocsDefinitionResolver {
         const replaceTime = performance.now() - replaceStart;
         this.taskContext.logger.debug(`Replaced image paths in ${replaceTime.toFixed(0)}ms`);
 
-        // Inject `last-updated` frontmatter from git history for pages that don't already have it.
-        // This runs after image-path replacement (which doesn't touch frontmatter) so that the
-        // injected date is present in both the processed and raw markdown sent to FDR.
-        this.taskContext.logger.debug("Injecting last-updated dates from git history...");
+        // Inject `last-updated` frontmatter from git history for Markdown-sourced
+        // pages that don't already have it.  API-generated pages (OpenAPI tag
+        // descriptions) are excluded: a single spec change regenerates N pages
+        // with identical timestamps, causing Google to distrust <lastmod>
+        // domain-wide (binary trust model) and wasting Bing crawl budget.
+        // See: lastmod policy table in the XML sitemap research report.
+        this.taskContext.logger.debug(
+            `Injecting last-updated dates from git history (excluding ${this.apiGeneratedPagePaths.size} API-generated pages)...`
+        );
         const injectStart = performance.now();
         const pagesWithDates = await injectLastUpdatedDates(
             this.parsedDocsConfig.pages,
-            this.docsWorkspace.absoluteFilePath
+            this.docsWorkspace.absoluteFilePath,
+            this.apiGeneratedPagePaths
         );
         for (const [relativePath, processedMarkdown] of Object.entries(pagesWithDates)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = processedMarkdown;
@@ -1537,6 +1551,8 @@ export class DocsDefinitionResolver {
             // Add to both collections so the file appears in the final pages output
             this.rawMarkdownFiles[relativePath] = processedContent;
             this.parsedDocsConfig.pages[relativePath] = processedContent;
+            // Mark as API-generated so lastmod injection is skipped for this page.
+            this.apiGeneratedPagePaths.add(relativePath);
         }
 
         const apiReferenceNode = node.get();

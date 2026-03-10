@@ -78,6 +78,12 @@ describe("injectLastUpdatedIntoMarkdown", () => {
         const result = injectLastUpdatedIntoMarkdown(markdown, DATE);
         expect(result).toBe("---\ntitle: Foo\nlast-updated: March 9, 2026\n---");
     });
+
+    it("handles CRLF line endings in frontmatter", () => {
+        const markdown = "---\r\ntitle: Foo\r\n---\r\n\r\nContent";
+        const result = injectLastUpdatedIntoMarkdown(markdown, DATE);
+        expect(result).toBe("---\r\ntitle: Foo\nlast-updated: March 9, 2026\r\n---\r\n\r\nContent");
+    });
 });
 
 describe("injectLastUpdatedDates", () => {
@@ -119,5 +125,27 @@ describe("injectLastUpdatedDates", () => {
         expect(result[RelativeFilePath.of("with-date.mdx")]).toBe(pageWithDate);
         // Page without last-updated stays unchanged since git returns no date for non-git path
         expect(result[RelativeFilePath.of("without-date.mdx")]).toBe(pageWithoutDate);
+    });
+
+    it("skips API-generated pages listed in excludePaths", async () => {
+        const tagDescriptionPage = "---\ntitle: Users API\n---\n\nUser endpoints.";
+        const markdownPage = "---\ntitle: Guide\n---\n\nGuide content.";
+        const pages: Record<RelativeFilePath, string> = {
+            [RelativeFilePath.of("tag-users.md")]: tagDescriptionPage,
+            [RelativeFilePath.of("guide.mdx")]: markdownPage
+        };
+
+        // Exclude the OpenAPI tag description page from lastmod injection
+        const excludePaths = new Set([RelativeFilePath.of("tag-users.md")]);
+        const result = await injectLastUpdatedDates(
+            pages,
+            AbsoluteFilePath.of("/tmp/nonexistent-fern-test"),
+            excludePaths
+        );
+
+        // API-generated page is returned unchanged (no lastmod injection attempted)
+        expect(result[RelativeFilePath.of("tag-users.md")]).toBe(tagDescriptionPage);
+        // Markdown page is still processed (no git history in this test → unchanged)
+        expect(result[RelativeFilePath.of("guide.mdx")]).toBe(markdownPage);
     });
 });

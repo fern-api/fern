@@ -1,3 +1,27 @@
+/**
+ * Injects git-derived `last-updated` dates into markdown page frontmatter.
+ *
+ * lastmod policy by content type (per XML sitemap best-practice research):
+ *
+ * | Content type                          | lastmod recommendation          |
+ * |---------------------------------------|---------------------------------|
+ * | Markdown pages (guides, changelogs)   | ON — git file timestamp         |
+ * | API reference pages (from OpenAPI)    | OFF — omit entirely             |
+ * | Sitemap index entries                 | ON — section-level git timestamp|
+ *
+ * Rationale:
+ * - Google applies binary trust to `<lastmod>`: identical dates across pages
+ *   causes domain-wide ignore.  A single OpenAPI spec change regenerates N
+ *   endpoint pages with the same timestamp, triggering that heuristic.
+ * - Bing relies on `<lastmod>` as its *primary* crawl scheduling signal
+ *   (Bing Webmaster Blog, February 2023).
+ * - `<changefreq>` and `<priority>` are ignored by both Google and Bing and
+ *   should be omitted from sitemaps entirely.
+ *
+ * This module only injects dates into Markdown-sourced pages.  Pages that
+ * originate from OpenAPI specs (e.g. tag description pages) must be excluded
+ * by the caller via the `excludePaths` parameter.
+ */
 import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { execFile } from "child_process";
 import matter from "gray-matter";
@@ -51,10 +75,10 @@ export function injectLastUpdatedIntoMarkdown(markdown: string, date: string): s
     // The content group ([\s\S]*?\r?\n)? is optional to handle empty frontmatter (---\n---).
     const frontmatterMatch = /^---\r?\n([\s\S]*?\r?\n)?---(\r?\n|$)/.exec(markdown);
     if (frontmatterMatch != null) {
-        // Find the last occurrence of '\n---' within the match to locate the closing delimiter
+        // Find the closing '---' delimiter, handling both LF and CRLF line endings.
         const matchStr = frontmatterMatch[0];
-        const closingIdx = matchStr.lastIndexOf("\n---");
-        const insertPos = frontmatterMatch.index + closingIdx;
+        const closingMatch = /\r?\n---[\r\n]*$/.exec(matchStr);
+        const insertPos = frontmatterMatch.index + (closingMatch?.index ?? 0);
         return markdown.slice(0, insertPos) + `\nlast-updated: ${date}` + markdown.slice(insertPos);
     }
 
@@ -82,23 +106,39 @@ export async function getGitLastModifiedDate(absoluteFilePath: AbsoluteFilePath)
 }
 
 /**
- * For each page in `pages` that does not already have `last-updated` in its frontmatter,
- * looks up the file's last git commit date and injects it.
+ * For each Markdown-sourced page that does not already have `last-updated` in
+ * its frontmatter, looks up the file's last git commit date and injects it.
  *
- * Pages without a git history (untracked files) and pages in non-git environments
- * are left unchanged.
+ * Pages listed in `excludePaths` are never modified — use this to skip
+ * API-generated content (e.g. OpenAPI tag description pages) whose timestamps
+ * would be derived from a single spec file, producing identical dates across
+ * many pages.  Identical `<lastmod>` values cause Google to stop trusting
+ * the signal domain-wide and waste Bing crawl budget.
  *
- * Queries run in parallel for performance.
+ * Pages without git history (untracked files) and pages in non-git
+ * environments are also left unchanged.
+ *
+ * Git queries run in parallel for performance.
  */
 export async function injectLastUpdatedDates(
     pages: Record<RelativeFilePath, string>,
-    absolutePathToFernFolder: AbsoluteFilePath
+    absolutePathToFernFolder: AbsoluteFilePath,
+    excludePaths?: ReadonlySet<RelativeFilePath>
 ): Promise<Record<RelativeFilePath, string>> {
     const result: Record<RelativeFilePath, string> = {};
 
     await Promise.all(
         Object.entries(pages).map(async ([relativePath, markdown]) => {
             const key = RelativeFilePath.of(relativePath);
+
+            // Skip API-generated pages (e.g. OpenAPI tag descriptions).
+            // A single openapi.yaml change regenerates N pages with the same
+            // timestamp — omitting lastmod is safer than an inaccurate one.
+            if (excludePaths?.has(key)) {
+                result[key] = markdown;
+                return;
+            }
+
             if (hasLastUpdated(markdown)) {
                 result[key] = markdown;
                 return;

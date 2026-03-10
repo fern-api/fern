@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.17.1
+  changelogEntry:
+    - summary: |
+        Differentiate `last-updated` frontmatter injection by content type.
+        Markdown-sourced pages receive git-derived timestamps; API-generated
+        pages (e.g. OpenAPI tag descriptions) are excluded to avoid identical
+        `<lastmod>` values that cause Google to distrust the signal domain-wide
+        and waste Bing crawl budget. Also fixes CRLF line ending handling in
+        frontmatter injection.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
 - version: 4.17.0
   changelogEntry:
     - summary: |
