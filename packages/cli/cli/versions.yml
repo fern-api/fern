@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.21.2
+- version: 4.21.3
   changelogEntry:
     - summary: |
         Parallelize deferred API registrations when resolving docs definitions.
@@ -7,6 +7,18 @@
         registration sequentially, accumulating network latency. Registrations
         are now processed in parallel batches of 10, significantly reducing
         wall-clock time for docs publishing.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.21.2
+  changelogEntry:
+    - summary: |
+        Expand the docs validator allowlist to accept archive files
+        (`application/x-tar`, `application/gzip`, `application/zip`,
+        `application/x-bzip2`) and additional image formats (`image/bmp`,
+        `image/heif`). Previously, self-hosted users uploading `.tar` bundles
+        as docs assets were rejected with "The file type of application/x-tar
+        is not allowed".
       type: fix
   createdAt: "2026-03-10"
   irVersion: 65
