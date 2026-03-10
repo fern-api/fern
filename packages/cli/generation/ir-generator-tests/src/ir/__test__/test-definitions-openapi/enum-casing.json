@@ -117,7 +117,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "openEnded": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -450,7 +451,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "openEnded": null
             },
             "referencedTypes": [],
             "encoding": {

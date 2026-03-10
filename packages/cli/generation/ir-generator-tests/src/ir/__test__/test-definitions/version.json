@@ -151,7 +151,8 @@
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "openEnded": null
         }
     },
     "apiName": {
