@@ -13,6 +13,7 @@ import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDocker
 import { workspaceShouldGenerateDynamicSnippetTests } from "../../../workspaceShouldGenerateDynamicSnippetTests.js";
 import { ScriptRunner } from "../index.js";
 import { TaskContextFactory } from "../TaskContextFactory.js";
+import { WorkspaceCache } from "../WorkspaceCache.js";
 
 export declare namespace TestRunner {
     interface Args {
@@ -23,6 +24,7 @@ export declare namespace TestRunner {
         scriptRunner: ScriptRunner | undefined;
         keepContainer: boolean;
         inspect: boolean;
+        workspaceCache?: WorkspaceCache;
     }
 
     interface RunArgs {
@@ -113,17 +115,35 @@ export abstract class TestRunner {
     private readonly skipScripts: boolean;
     private readonly keepContainer: boolean;
     private scriptRunner: ScriptRunner | undefined;
+    private readonly workspaceCache: WorkspaceCache | undefined;
 
-    constructor({ generator, lock, taskContextFactory, skipScripts, keepContainer, scriptRunner }: TestRunner.Args) {
+    constructor({
+        generator,
+        lock,
+        taskContextFactory,
+        skipScripts,
+        keepContainer,
+        scriptRunner,
+        workspaceCache
+    }: TestRunner.Args) {
         this.generator = generator;
         this.lock = lock;
         this.taskContextFactory = taskContextFactory;
         this.skipScripts = skipScripts;
         this.keepContainer = keepContainer;
         this.scriptRunner = scriptRunner;
+        this.workspaceCache = workspaceCache;
     }
 
     public abstract build(): Promise<void>;
+
+    /**
+     * Cleans up any resources (e.g., long-lived containers) used by this runner.
+     * Override in subclasses that manage resources requiring explicit cleanup.
+     */
+    public async cleanup(): Promise<void> {
+        // Default no-op; subclasses like ContainerTestRunner override this.
+    }
 
     public async run({
         fixture,
@@ -133,6 +153,7 @@ export abstract class TestRunner {
         outputDir,
         generatorInvocation
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
+        let lockAcquired = false;
         try {
             if (this.buildInvocation == null) {
                 this.buildInvocation = this.build();
@@ -177,20 +198,34 @@ export abstract class TestRunner {
             const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
             const smartCasing = generatorInvocation?.smartCasing;
 
-            const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-                absolutePathToAPIDefinition: absolutePathToApiDefinition,
-                taskContext,
-                fixture
-            });
-            const workspaceSettings =
-                generatorInvocation != null
-                    ? getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                    : undefined;
-            const fernWorkspace = await apiWorkspace?.toFernWorkspace(
-                { context: taskContext },
-                workspaceSettings,
-                generatorInvocation?.apiOverride?.specs
-            );
+            let fernWorkspace: FernWorkspace | undefined;
+            if (this.workspaceCache != null && generatorInvocation == null) {
+                // Use cache when no generatorInvocation overrides are present.
+                // The cache is keyed by absolutePathToAPIDefinition (derived from fixture name),
+                // which is safe because all variants of the same fixture share the same API definition.
+                fernWorkspace = await this.workspaceCache.getOrConvertToFernWorkspace({
+                    fixture,
+                    absolutePathToAPIDefinition: absolutePathToApiDefinition,
+                    taskContext
+                });
+            } else {
+                // Fallback to uncached loading when generatorInvocation may provide
+                // custom workspaceSettings or apiOverride specs.
+                const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
+                    absolutePathToAPIDefinition: absolutePathToApiDefinition,
+                    taskContext,
+                    fixture
+                });
+                const workspaceSettings =
+                    generatorInvocation != null
+                        ? getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                        : undefined;
+                fernWorkspace = await apiWorkspace?.toFernWorkspace(
+                    { context: taskContext },
+                    workspaceSettings,
+                    generatorInvocation?.apiOverride?.specs
+                );
+            }
             if (fernWorkspace == null) {
                 return {
                     type: "failure",
@@ -204,6 +239,7 @@ export abstract class TestRunner {
 
             taskContext.logger.debug("Acquiring lock...");
             await this.lock.acquire();
+            lockAcquired = true;
             taskContext.logger.info("Running generator...");
             try {
                 const generationStopwatch = new Stopwatch();
@@ -260,6 +296,12 @@ export abstract class TestRunner {
                 };
             }
 
+            // Release the semaphore after generation completes but before scripts run.
+            // Scripts use their own separate containers (ContainerScriptRunner),
+            // so holding the generation lock during scripts unnecessarily limits parallelism.
+            this.lock.release();
+            lockAcquired = false;
+
             if (this.skipScripts) {
                 return {
                     type: "success",
@@ -297,7 +339,9 @@ export abstract class TestRunner {
                 metrics
             };
         } finally {
-            this.lock.release();
+            if (lockAcquired) {
+                this.lock.release();
+            }
         }
     }
 

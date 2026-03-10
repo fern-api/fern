@@ -590,6 +590,22 @@
         "cpp"
       ]
     },
+    "docs.LibraryConfig": {
+      "type": "object",
+      "properties": {
+        "doxyfile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.LibraryConfiguration": {
       "type": "object",
       "properties": {
@@ -601,6 +617,16 @@
         },
         "lang": {
           "$ref": "#/definitions/docs.LibraryLanguage"
+        },
+        "config": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LibraryConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1435,6 +1461,22 @@
       ],
       "additionalProperties": false
     },
+    "docs.CollapsedStringValue": {
+      "type": "string",
+      "enum": [
+        "open-by-default"
+      ]
+    },
+    "docs.CollapsedValue": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/docs.CollapsedStringValue"
+        }
+      ]
+    },
     "docs.SectionConfiguration": {
       "type": "object",
       "properties": {
@@ -1490,7 +1532,7 @@
         "collapsed": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.CollapsedValue"
             },
             {
               "type": "null"
@@ -2025,6 +2067,16 @@
             }
           ]
         },
+        "collapsed": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CollapsedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "collapsible": {
           "oneOf": [
             {
@@ -2453,7 +2505,7 @@
         "collapsed": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.CollapsedValue"
             },
             {
               "type": "null"
@@ -2809,7 +2861,7 @@
         "collapsed": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.CollapsedValue"
             },
             {
               "type": "null"

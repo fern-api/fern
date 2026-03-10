@@ -70,7 +70,7 @@ private func main() async throws {
             ]
         ),
         eventInfo: EventInfo.metadata(
-            .init(
+            Metadata(
                 id: "event-12345",
                 data: [
                     "key1": "val1", 

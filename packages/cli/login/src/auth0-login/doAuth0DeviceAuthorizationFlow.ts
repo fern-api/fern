@@ -7,6 +7,14 @@ import qs from "qs";
 
 import type { Auth0TokenResponse } from "./doAuth0LoginFlow.js";
 
+/**
+ * Returns the base URL for Auth0, using HTTP for localhost (local dev) and HTTPS otherwise.
+ */
+function getAuth0BaseUrl(auth0Domain: string): string {
+    const protocol = auth0Domain.startsWith("localhost") ? "http" : "https";
+    return `${protocol}://${auth0Domain}`;
+}
+
 interface DeviceCodeResponse {
     device_code: string;
     user_code: string;
@@ -29,7 +37,7 @@ export async function doAuth0DeviceAuthorizationFlow({
 }): Promise<Auth0TokenResponse> {
     const deviceCodeResponse = await axios.request<DeviceCodeResponse>({
         method: "POST",
-        url: `https://${auth0Domain}/oauth/device/code`,
+        url: `${getAuth0BaseUrl(auth0Domain)}/oauth/device/code`,
         headers: { "content-type": "application/x-www-form-urlencoded" },
         data: qs.stringify({
             client_id: auth0ClientId,
@@ -94,7 +102,7 @@ async function pollForToken({
 }): Promise<Auth0TokenResponse> {
     const response = await axios.request({
         method: "POST",
-        url: `https://${auth0Domain}/oauth/token`,
+        url: `${getAuth0BaseUrl(auth0Domain)}/oauth/token`,
         headers: { "content-type": "application/x-www-form-urlencoded" },
         data: qs.stringify({
             grant_type: "urn:ietf:params:oauth:grant-type:device_code",

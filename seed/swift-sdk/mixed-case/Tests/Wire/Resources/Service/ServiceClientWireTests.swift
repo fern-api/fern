@@ -28,7 +28,7 @@ import MixedCase
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = .user(
+        let expectedResponse = Resource.user(
             .init(
                 userName: "username",
                 metadataTags: [
@@ -38,6 +38,10 @@ import MixedCase
                 extraProperties: [
                     "foo": "bar", 
                     "baz": "qux"
+                ],
+                additionalProperties: [
+                    "status": JSONValue.string("ACTIVE"), 
+                    "resource_type": JSONValue.string("user")
                 ]
             )
         )
@@ -72,7 +76,7 @@ import MixedCase
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = .user(
+        let expectedResponse = Resource.user(
             .init(
                 userName: "userName",
                 metadataTags: [
@@ -81,6 +85,10 @@ import MixedCase
                 ],
                 extraProperties: [
                     "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
+                ],
+                additionalProperties: [
+                    "resource_type": JSONValue.string("user"), 
+                    "status": JSONValue.string("ACTIVE")
                 ]
             )
         )
@@ -119,7 +127,7 @@ import MixedCase
             urlSession: stub.urlSession
         )
         let expectedResponse = [
-            .user(
+            Resource.user(
                 .init(
                     userName: "username",
                     metadataTags: [
@@ -129,6 +137,10 @@ import MixedCase
                     extraProperties: [
                         "foo": "bar", 
                         "baz": "qux"
+                    ],
+                    additionalProperties: [
+                        "resource_type": JSONValue.string("user"), 
+                        "status": JSONValue.string("ACTIVE")
                     ]
                 )
             )
@@ -180,7 +192,7 @@ import MixedCase
             urlSession: stub.urlSession
         )
         let expectedResponse = [
-            .user(
+            Resource.user(
                 .init(
                     userName: "userName",
                     metadataTags: [
@@ -189,10 +201,14 @@ import MixedCase
                     ],
                     extraProperties: [
                         "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
+                    ],
+                    additionalProperties: [
+                        "resource_type": JSONValue.string("user"), 
+                        "status": JSONValue.string("ACTIVE")
                     ]
                 )
             ),
-            .user(
+            Resource.user(
                 .init(
                     userName: "userName",
                     metadataTags: [
@@ -201,6 +217,10 @@ import MixedCase
                     ],
                     extraProperties: [
                         "EXTRA_PROPERTIES": "EXTRA_PROPERTIES"
+                    ],
+                    additionalProperties: [
+                        "resource_type": JSONValue.string("user"), 
+                        "status": JSONValue.string("ACTIVE")
                     ]
                 )
             )

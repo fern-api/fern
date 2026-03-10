@@ -66,11 +66,8 @@
           "request": {
             "properties": {
               "type": {
-                "value": {
-                  "value": "pet",
-                  "type": "string"
-                },
-                "type": "literal"
+                "value": "pet",
+                "type": "enum"
               },
               "name": {
                 "value": {
@@ -93,11 +90,8 @@
                   "type": "primitive"
                 },
                 "type": {
-                  "value": {
-                    "value": "pet",
-                    "type": "string"
-                  },
-                  "type": "literal"
+                  "value": "pet",
+                  "type": "enum"
                 },
                 "name": {
                   "value": {
@@ -114,11 +108,8 @@
                   "type": "primitive"
                 },
                 "status": {
-                  "value": {
-                    "value": "active",
-                    "type": "string"
-                  },
-                  "type": "literal"
+                  "value": "active",
+                  "type": "enum"
                 }
               },
               "type": "object"
@@ -147,13 +138,20 @@
             "generatedName": "createPetRequestType",
             "key": "type",
             "schema": {
-              "value": {
-                "value": "pet",
-                "type": "string"
-              },
               "generatedName": "CreatePetRequestType",
+              "values": [
+                {
+                  "generatedName": "pet",
+                  "value": "pet",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },
@@ -226,13 +224,20 @@
             "generatedName": "petType",
             "key": "type",
             "schema": {
-              "value": {
-                "value": "pet",
-                "type": "string"
-              },
               "generatedName": "PetType",
+              "values": [
+                {
+                  "generatedName": "pet",
+                  "value": "pet",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },
@@ -276,13 +281,20 @@
             "generatedName": "petStatus",
             "key": "status",
             "schema": {
-              "value": {
-                "value": "active",
-                "type": "string"
-              },
               "generatedName": "PetStatus",
+              "values": [
+                {
+                  "generatedName": "active",
+                  "value": "active",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           }

@@ -1,13 +1,14 @@
 import { FernToken } from "@fern-api/auth";
 import { docsYml } from "@fern-api/configuration";
-import { createFdrService } from "@fern-api/core";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
-import { generate } from "@fern-api/library-docs-generator";
+import type { CppLibraryDocsIr } from "@fern-api/library-docs-generator";
+import { generate, generateCpp } from "@fern-api/library-docs-generator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { InteractiveTaskContext, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+import { readFile } from "fs/promises";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 
@@ -18,7 +19,83 @@ export interface GenerateLibraryDocsOptions {
     library: string | undefined;
 }
 
-type FdrService = ReturnType<typeof createFdrService>;
+/**
+ * Lightweight client interface for the library docs endpoints.
+ *
+ * Mirrors the oRPC contract in @fern-api/fdr-sdk so that callers are
+ * decoupled from the concrete HTTP transport. Once the published fdr-sdk
+ * includes `createLibraryDocsClient`, this interface and the fetch-based
+ * implementation below can be replaced with a direct import.
+ */
+interface LibraryDocsClient {
+    startLibraryDocsGeneration(input: {
+        orgId: string;
+        githubUrl: string;
+        language: "PYTHON" | "CPP";
+        config?: {
+            branch?: string | null;
+            packagePath?: string | null;
+            title?: string | null;
+            slug?: string | null;
+            doxyfileContent?: string | null;
+        } | null;
+    }): Promise<{ jobId: string }>;
+    getLibraryDocsGenerationStatus(input: { jobId: string }): Promise<{
+        jobId: string;
+        status: string;
+        progress: string;
+        error?: { code: string; message: string };
+        createdAt: string;
+        updatedAt: string;
+    }>;
+    getLibraryDocsResult(input: { jobId: string }): Promise<{
+        jobId: string;
+        resultUrl: string;
+    }>;
+}
+
+/**
+ * Build a {@link LibraryDocsClient} backed by plain `fetch`.
+ *
+ * The base URL and auth mirror what `createFdrService` uses so that
+ * env-var overrides (`DEFAULT_FDR_ORIGIN`, `OVERRIDE_FDR_ORIGIN`) keep
+ * working.
+ */
+function createLibraryDocsClient({ token }: { token: string }): LibraryDocsClient {
+    const defaultOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const baseUrl = process.env.OVERRIDE_FDR_ORIGIN ?? defaultOrigin;
+    const docsBase = `${baseUrl}/v2/registry/docs`;
+
+    async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
+        const response = await fetch(`${docsBase}${path}`, {
+            method,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: body != null ? JSON.stringify(body) : undefined
+        });
+
+        if (!response.ok) {
+            const text = await response.text().catch(() => "");
+            throw new Error(`HTTP ${response.status}: ${text}`);
+        }
+
+        return (await response.json()) as T;
+    }
+
+    return {
+        startLibraryDocsGeneration(input) {
+            return request("POST", "/library-docs/generate", input);
+        },
+        getLibraryDocsGenerationStatus(input) {
+            return request("GET", `/library-docs/status/${input.jobId}`);
+        },
+        getLibraryDocsResult(input) {
+            return request("GET", `/library-docs/result/${input.jobId}`);
+        }
+    };
+}
 
 function isGitLibraryInput(
     input: docsYml.RawSchemas.LibraryInputConfiguration
@@ -125,64 +202,115 @@ async function generateSingleLibrary({
     const gitInput = config.input as docsYml.RawSchemas.GitLibraryInputSchema;
 
     return context.runInteractiveTask({ name }, async (interactiveTaskContext) => {
-        const fdr = createFdrService({ token: token.value });
+        // Validate language-specific config
+        if (config.config?.doxyfile != null && config.lang !== "cpp") {
+            return interactiveTaskContext.failAndThrow(
+                `Library '${name}': 'doxyfile' config is only valid for lang: cpp`
+            );
+        }
+
+        // Read Doxyfile from disk if specified
+        let doxyfileContent: string | undefined;
+        if (config.lang === "cpp" && config.config?.doxyfile != null) {
+            const doxyfilePath = resolve(docsWorkspace.absoluteFilePath, config.config.doxyfile);
+            try {
+                doxyfileContent = await readFile(doxyfilePath, "utf-8");
+            } catch {
+                return interactiveTaskContext.failAndThrow(
+                    `Library '${name}': Could not read Doxyfile at '${config.config.doxyfile}' (resolved to ${doxyfilePath})`
+                );
+            }
+        }
+
+        const language = config.lang === "python" ? "PYTHON" : config.lang === "cpp" ? "CPP" : undefined;
+        if (language == null) {
+            return interactiveTaskContext.failAndThrow(`Library '${name}': unsupported language '${config.lang}'`);
+        }
+
+        const client = createLibraryDocsClient({ token: token.value });
 
         interactiveTaskContext.logger.debug(`Starting generation for library '${name}' from ${gitInput.git}`);
 
-        const jobId = await startGeneration(fdr, interactiveTaskContext, {
+        const jobId = await startGeneration(client, interactiveTaskContext, {
             orgId,
             githubUrl: gitInput.git,
-            language: config.lang === "python" ? "PYTHON" : "CPP",
+            language,
             packagePath: gitInput.subpath,
-            name
+            name,
+            doxyfileContent
         });
 
-        await pollForCompletion(fdr, jobId, name, interactiveTaskContext);
+        await pollForCompletion(client, jobId, name, interactiveTaskContext);
 
-        const ir = await downloadIr(fdr, jobId, name, interactiveTaskContext);
+        const ir = await downloadIr(client, jobId, name, language, interactiveTaskContext);
 
-        const generateResult = generate({
-            ir,
-            outputDir: resolvedOutputPath,
-            slug: name,
-            title: name
-        });
-
-        interactiveTaskContext.logger.debug(`Generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`);
+        if (config.lang === "cpp") {
+            const cppIr = ir as CppLibraryDocsIr;
+            const result = generateCpp({
+                ir: cppIr,
+                outputDir: resolvedOutputPath,
+                slug: name
+            });
+            interactiveTaskContext.logger.info(
+                chalk.green(`Generated ${result.pageCount} pages at ${resolvedOutputPath}`)
+            );
+            interactiveTaskContext.logger.info(
+                `\nTo include in your docs navigation, add to docs.yml:\n` +
+                    `  navigation:\n` +
+                    `    - folder: ${config.output.path}`
+            );
+        } else if (config.lang === "python") {
+            const pythonIr = ir as FdrAPI.libraryDocs.PythonLibraryDocsIr;
+            const generateResult = generate({
+                ir: pythonIr,
+                outputDir: resolvedOutputPath,
+                slug: name,
+                title: name
+            });
+            interactiveTaskContext.logger.debug(`Generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`);
+        } else {
+            return interactiveTaskContext.failAndThrow(`Library '${name}': unsupported language '${config.lang}'`);
+        }
     });
 }
 
 async function startGeneration(
-    fdr: FdrService,
+    client: LibraryDocsClient,
     context: InteractiveTaskContext,
-    opts: { orgId: string; githubUrl: string; language: "PYTHON" | "CPP"; packagePath?: string; name: string }
-): Promise<FdrAPI.docs.v2.write.LibraryDocsJobId> {
-    const startResponse = await fdr.docs.v2.write.startLibraryDocsGeneration({
-        orgId: FdrAPI.OrgId(opts.orgId),
-        githubUrl: FdrAPI.Url(opts.githubUrl),
-        language: opts.language,
-        config: {
-            branch: undefined,
-            packagePath: opts.packagePath,
-            title: opts.name,
-            slug: opts.name
-        }
-    });
-
-    if (!startResponse.ok) {
+    opts: {
+        orgId: string;
+        githubUrl: string;
+        language: "PYTHON" | "CPP";
+        packagePath?: string;
+        name: string;
+        doxyfileContent?: string;
+    }
+): Promise<string> {
+    try {
+        const result = await client.startLibraryDocsGeneration({
+            orgId: opts.orgId,
+            githubUrl: opts.githubUrl,
+            language: opts.language,
+            config: {
+                branch: undefined,
+                packagePath: opts.packagePath,
+                title: opts.name,
+                slug: opts.name,
+                doxyfileContent: opts.doxyfileContent
+            }
+        });
+        context.logger.debug(`Generation job started with ID: ${result.jobId}`);
+        return result.jobId;
+    } catch (error) {
         return context.failAndThrow(
-            `Failed to start generation for library '${opts.name}': ${JSON.stringify(startResponse.error)}`
+            `Failed to start generation for library '${opts.name}': ${error instanceof Error ? error.message : String(error)}`
         );
     }
-
-    const jobId = startResponse.body.jobId;
-    context.logger.debug(`Generation job started with ID: ${jobId}`);
-    return jobId;
 }
 
 async function pollForCompletion(
-    fdr: FdrService,
-    jobId: FdrAPI.docs.v2.write.LibraryDocsJobId,
+    client: LibraryDocsClient,
+    jobId: string,
     libraryName: string,
     context: InteractiveTaskContext
 ): Promise<void> {
@@ -191,15 +319,14 @@ async function pollForCompletion(
     while (Date.now() < deadline) {
         await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
 
-        const statusResponse = await fdr.docs.v2.write.getLibraryDocsGenerationStatus(jobId);
-
-        if (!statusResponse.ok) {
+        let status;
+        try {
+            status = await client.getLibraryDocsGenerationStatus({ jobId });
+        } catch (error) {
             return context.failAndThrow(
-                `Failed to check generation status for library '${libraryName}': ${JSON.stringify(statusResponse.error)}`
+                `Failed to check generation status for library '${libraryName}': ${error instanceof Error ? error.message : String(error)}`
             );
         }
-
-        const status = statusResponse.body;
 
         switch (status.status) {
             case "PENDING":
@@ -226,21 +353,24 @@ async function pollForCompletion(
 }
 
 async function downloadIr(
-    fdr: FdrService,
-    jobId: FdrAPI.docs.v2.write.LibraryDocsJobId,
+    client: LibraryDocsClient,
+    jobId: string,
     libraryName: string,
+    language: "PYTHON" | "CPP",
     context: InteractiveTaskContext
-): Promise<FdrAPI.libraryDocs.PythonLibraryDocsIr> {
-    const resultResponse = await fdr.docs.v2.write.getLibraryDocsResult(jobId);
-
-    if (!resultResponse.ok) {
+): Promise<unknown> {
+    let resultUrl: string;
+    try {
+        const result = await client.getLibraryDocsResult({ jobId });
+        resultUrl = result.resultUrl;
+    } catch (error) {
         return context.failAndThrow(
-            `Failed to fetch generation result for library '${libraryName}': ${JSON.stringify(resultResponse.error)}`
+            `Failed to fetch generation result for library '${libraryName}': ${error instanceof Error ? error.message : String(error)}`
         );
     }
 
-    context.logger.debug(`Fetching IR from ${resultResponse.body.resultUrl}`);
-    const irFetchResponse = await fetch(resultResponse.body.resultUrl);
+    context.logger.debug(`Fetching IR from ${resultUrl}`);
+    const irFetchResponse = await fetch(resultUrl);
     if (!irFetchResponse.ok) {
         return context.failAndThrow(
             `Failed to download IR for library '${libraryName}': HTTP ${irFetchResponse.status}`
@@ -253,10 +383,18 @@ async function downloadIr(
     if (ir == null) {
         return context.failAndThrow(`IR is empty for library '${libraryName}'`);
     }
-    if (ir.rootModule == null) {
-        return context.failAndThrow(`IR has no rootModule for library '${libraryName}'`);
+
+    if (language === "CPP") {
+        if (ir.rootNamespace == null) {
+            return context.failAndThrow(`IR has no rootNamespace for C++ library '${libraryName}'`);
+        }
+        context.logger.debug(`Downloaded C++ IR for '${libraryName}'`);
+    } else {
+        if (ir.rootModule == null) {
+            return context.failAndThrow(`IR has no rootModule for library '${libraryName}'`);
+        }
+        context.logger.debug(`Downloaded IR with ${Object.keys(ir.rootModule).length} top-level keys`);
     }
 
-    context.logger.debug(`Downloaded IR with ${Object.keys(ir.rootModule.submodules).length} submodules`);
     return ir;
 }

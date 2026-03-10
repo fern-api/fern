@@ -30,7 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\<%= projectName%>\<%= projectName%>.csproj" />
+        <ProjectReference Include="<%= projectReferencePath%>" />
     </ItemGroup>
 
     <Import Project="<%= testProjectName%>.Custom.props" Condition="Exists('<%= testProjectName%>.Custom.props')" />

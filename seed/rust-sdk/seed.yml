@@ -137,6 +137,14 @@ fixtures:
     - customConfig:
         enableWebsockets: true
       outputFolder: .
+  websocket-bearer-auth:
+    - customConfig:
+        enableWebsockets: true
+      outputFolder: .
+  websocket-inferred-auth:
+    - customConfig:
+        enableWebsockets: true
+      outputFolder: .
   license:
     - customConfig: null
       outputFolder: basic

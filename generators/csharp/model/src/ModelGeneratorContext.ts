@@ -13,7 +13,18 @@ type WellKnownProtobufType = FernIr.WellKnownProtobufType;
 const WellKnownProtobufType = FernIr.WellKnownProtobufType;
 
 export class ModelGeneratorContext extends GeneratorContext {
-    public readonly formatter: AbstractFormatter;
+    /**
+     * Lazily initializes the CsharpFormatter on first access.
+     * The formatter resolves the csharpier tool path and is only needed
+     * during code formatting, not during context construction.
+     */
+    public get formatter(): AbstractFormatter {
+        if (this._formatter === undefined) {
+            this._formatter = new CsharpFormatter();
+        }
+        return this._formatter;
+    }
+
     public constructor(
         ir: IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
@@ -37,7 +48,6 @@ export class ModelGeneratorContext extends GeneratorContext {
                 getChildNamespaceSegments: (fernFilepath: FernFilepath) => this.getChildNamespaceSegments(fernFilepath)
             })
         );
-        this.formatter = new CsharpFormatter();
     }
 
     override getAsyncCoreAsIsFiles(): string[] {

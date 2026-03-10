@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_union</a>() -&gt; AsyncHttpResponse[MyUnion]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get_union</a>() -> UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -17,6 +17,7 @@ from seed import SeedUndiscriminatedUnionWithResponseProperty
 client = SeedUndiscriminatedUnionWithResponseProperty(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.get_union()
 
 ```
@@ -45,7 +46,7 @@ client.get_union()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">list_unions</a>() -&gt; AsyncHttpResponse[typing.List[MyUnion]]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">list_unions</a>() -> UnionListResponse</code></summary>
 <dl>
 <dd>
 
@@ -63,6 +64,7 @@ from seed import SeedUndiscriminatedUnionWithResponseProperty
 client = SeedUndiscriminatedUnionWithResponseProperty(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.list_unions()
 
 ```

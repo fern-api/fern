@@ -3,6 +3,7 @@ from typing import Any, Callable, Optional
 from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
+from fern_python.external_dependencies.pydantic import Pydantic
 from fern_python.generators.sdk.client_generator.constants import CHUNK_VARIABLE, RESPONSE_VARIABLE
 from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
     PaginationSnippetConfig,
@@ -716,31 +717,46 @@ class EndpointResponseCodeWriter:
                 else:
                     writer.write_line("return")
             else:
-                self._response.body.visit(
-                    json=lambda json_response: self._handle_success_json(
-                        writer=writer, json_response=json_response, use_response_json=True
-                    ),
-                    streaming=lambda stream_response: self._handle_success_stream(
-                        writer=writer, stream_response=stream_response
-                    ),
-                    file_download=lambda _: self._handle_success_file_download(writer=writer),
-                    text=lambda _: self._handle_success_text(writer=writer),
-                    bytes=lambda _: self._handle_success_bytes(writer=writer),
-                    stream_parameter=lambda stream_param_response: (
-                        self._handle_success_stream(
-                            writer=writer, stream_response=stream_param_response.stream_response
+                writer.write_line("try:")
+                with writer.indent():
+                    self._response.body.visit(
+                        json=lambda json_response: self._handle_success_json(
+                            writer=writer, json_response=json_response, use_response_json=True
+                        ),
+                        streaming=lambda stream_response: self._handle_success_stream(
+                            writer=writer, stream_response=stream_response
+                        ),
+                        file_download=lambda _: self._handle_success_file_download(writer=writer),
+                        text=lambda _: self._handle_success_text(writer=writer),
+                        bytes=lambda _: self._handle_success_bytes(writer=writer),
+                        stream_parameter=lambda stream_param_response: (
+                            self._handle_success_stream(
+                                writer=writer, stream_response=stream_param_response.stream_response
+                            )
+                            if self._streaming_parameter == "streaming"
+                            else stream_param_response.non_stream_response.visit(
+                                json=lambda json_response: self._handle_success_json(
+                                    writer=writer, json_response=json_response, use_response_json=False
+                                ),
+                                file_download=lambda _: self._handle_success_file_download(writer=writer),
+                                text=lambda _: self._handle_success_text(writer=writer),
+                                bytes=lambda _: self._handle_success_bytes(writer=writer),
+                            )
+                        ),
+                    )
+                writer.write("except ")
+                writer.write_reference(Pydantic(self._context.custom_config.pydantic_config.version).ValidationError())
+                writer.write_line(" as e:")
+                with writer.indent():
+                    writer.write("raise ")
+                    writer.write_node(
+                        self._context.core_utilities.instantiate_parsing_error(
+                            headers=AST.Expression(f"{RESPONSE_VARIABLE}.headers"),
+                            body=AST.Expression(f"{RESPONSE_VARIABLE}.json()"),
+                            status_code=AST.Expression(f"{RESPONSE_VARIABLE}.status_code"),
                         )
-                        if self._streaming_parameter == "streaming"
-                        else stream_param_response.non_stream_response.visit(
-                            json=lambda json_response: self._handle_success_json(
-                                writer=writer, json_response=json_response, use_response_json=False
-                            ),
-                            file_download=lambda _: self._handle_success_file_download(writer=writer),
-                            text=lambda _: self._handle_success_text(writer=writer),
-                            bytes=lambda _: self._handle_success_bytes(writer=writer),
-                        )
-                    ),
-                )
+                    )
+                    writer.write_newline_if_last_line_not()
 
         if self._response is None or self._response.body is None:
             self._try_deserialize_json_response(writer=writer, response_handler=None)
@@ -813,6 +829,19 @@ class EndpointResponseCodeWriter:
                 self._context.core_utilities.instantiate_api_error(
                     headers=AST.Expression(f"{RESPONSE_VARIABLE}.headers"),
                     body=AST.Expression(f"{RESPONSE_VARIABLE}.text"),
+                    status_code=AST.Expression(f"{RESPONSE_VARIABLE}.status_code"),
+                )
+            )
+            writer.write_newline_if_last_line_not()
+        writer.write("except ")
+        writer.write_reference(Pydantic(self._context.custom_config.pydantic_config.version).ValidationError())
+        writer.write_line(" as e:")
+        with writer.indent():
+            writer.write("raise ")
+            writer.write_node(
+                self._context.core_utilities.instantiate_parsing_error(
+                    headers=AST.Expression(f"{RESPONSE_VARIABLE}.headers"),
+                    body=AST.Expression(f"{RESPONSE_VARIABLE}.json()"),
                     status_code=AST.Expression(f"{RESPONSE_VARIABLE}.status_code"),
                 )
             )

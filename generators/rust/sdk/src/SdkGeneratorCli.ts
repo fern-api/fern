@@ -1,5 +1,4 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AbstractRustGeneratorCli,
@@ -743,20 +742,24 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private async generateReadme(context: SdkGeneratorContext): Promise<void> {
         try {
             const snippetCount = context.ir.dynamic?.endpoints ? Object.keys(context.ir.dynamic.endpoints).length : 0;
-            context.logger.debug(`Generating README.md with ${snippetCount} endpoint example(s)...`);
+            const hasWebSocket = this.hasWebSocketChannels(context);
+            context.logger.debug(`Generating README.md with ${snippetCount} endpoint example(s), websocket=${hasWebSocket}...`);
 
-            // If there are no endpoints, generate a simplified README
-            if (!snippetCount) {
-                context.logger.debug(`Generated simplified README.md for SDK with no endpoints`);
+            // If there are no endpoints and no WebSocket channels, skip README generation
+            if (!snippetCount && !hasWebSocket) {
+                context.logger.debug(`Generated simplified README.md for SDK with no endpoints and no WebSocket channels`);
                 return;
             }
 
-            // Generate endpoint snippets
-            const endpointSnippets = this.generateSnippets(context);
+            // Generate endpoint snippets (may be empty for WebSocket-only SDKs)
+            let endpointSnippets: FernGeneratorExec.Endpoint[] = [];
+            if (snippetCount) {
+                endpointSnippets = this.generateSnippets(context);
+            }
 
-            // If there are no endpoint snippets (i.e., no examples defined), skip README generation
-            if (endpointSnippets.length === 0) {
-                context.logger.debug(`Skipping README.md generation - no endpoint examples defined`);
+            // If there are no endpoint snippets and no WebSocket channels, skip README generation
+            if (endpointSnippets.length === 0 && !hasWebSocket) {
+                context.logger.debug(`Skipping README.md generation - no endpoint examples defined and no WebSocket channels`);
                 return;
             }
 
@@ -779,9 +782,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
             context.logger.debug("Successfully added README.md to project");
         } catch (error) {
-            const errorMsg = extractErrorMessage(error);
-            context.logger.debug(`README generation failed: ${errorMsg}`);
-            throw new Error(`Failed to generate README.md: ${errorMsg}`);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
+            if (errorStack) {
+                context.logger.debug(`README.md generation error stack: ${errorStack}`);
+            }
         }
     }
 
@@ -846,9 +852,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.project.addSourceFiles(referenceFile);
             context.logger.debug("Successfully added reference.md to project");
         } catch (error) {
-            const errorMsg = extractErrorMessage(error);
-            context.logger.debug(`Reference generation failed: ${errorMsg}`);
-            throw new Error(`Failed to generate reference.md: ${errorMsg}`);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
+            if (errorStack) {
+                context.logger.debug(`reference.md generation error stack: ${errorStack}`);
+            }
         }
     }
 
@@ -981,6 +990,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private getResourceExports(context: SdkGeneratorContext): string[] {
         const exports: string[] = [];
+        const seen = new Set<string>();
 
         // Only export top-level subpackages from the root package
         const topLevelSubpackageIds = context.ir.rootPackage.subpackages;
@@ -989,8 +999,13 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const subpackage = context.ir.subpackages[subpackageId];
             if (subpackage) {
                 // Use registered client name from context
+                // Deduplicate - multiple subpackages can resolve to the same client name
+                // (e.g., HTTP and AsyncAPI sources both creating a "market_data" subpackage)
                 const subClientName = context.getUniqueClientNameForSubpackage(subpackage);
-                exports.push(subClientName);
+                if (!seen.has(subClientName)) {
+                    seen.add(subClientName);
+                    exports.push(subClientName);
+                }
             }
         });
 
