@@ -25,27 +25,12 @@ export function registerLiteralEnums({
         },
         union: (utd) => {
             utd.types.forEach((type) => {
-                const variantSymbol = registry.getDiscriminatedUnionVariantSymbolOrThrow(
-                    parentSymbol,
-                    type.discriminantValue.wireValue
-                );
                 type.shape._visit({
                     noProperties: noop,
-                    samePropertiesAsObject: (declaredTypeName) => {
-                        const variantProperties = context.getPropertiesOfDiscriminatedUnionVariant(
-                            declaredTypeName.typeId
-                        );
-                        variantProperties.forEach((property) => {
-                            registerLiteralEnumsForTypeReference({
-                                parentSymbol: variantSymbol,
-                                registry,
-                                typeReference: property.valueType
-                            });
-                        });
-                    },
+                    samePropertiesAsObject: noop,
                     singleProperty: (p) => {
                         registerLiteralEnumsForTypeReference({
-                            parentSymbol: variantSymbol,
+                            parentSymbol,
                             registry,
                             typeReference: p.type
                         });

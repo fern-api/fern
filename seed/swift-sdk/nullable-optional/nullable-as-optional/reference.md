@@ -492,28 +492,28 @@ private func main() async throws {
         optionalStatus: .active,
         optionalNullableStatus: .value(.active),
         nullableNotification: .value(NotificationMethod.email(
-            .init(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
         )),
         optionalNotification: NotificationMethod.email(
-            .init(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
         ),
         optionalNullableNotification: .value(NotificationMethod.email(
-            .init(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
         )),
         nullableSearchResult: .value(SearchResult.user(
-            .init(
+            UserResponse(
                 id: "id",
                 username: "username",
                 email: .value("email"),
@@ -532,7 +532,7 @@ private func main() async throws {
             )
         )),
         optionalSearchResult: SearchResult.user(
-            .init(
+            UserResponse(
                 id: "id",
                 username: "username",
                 email: .value("email"),
@@ -579,14 +579,14 @@ private func main() async throws {
         ]),
         nullableListOfUnions: .value([
             NotificationMethod.email(
-                .init(
+                EmailNotification(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: "htmlContent"
                 )
             ),
             NotificationMethod.email(
-                .init(
+                EmailNotification(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: "htmlContent"
@@ -744,14 +744,14 @@ private func main() async throws {
             nullableRole: .value(.admin),
             nullableStatus: .value(.active),
             nullableNotification: .value(NotificationMethod.email(
-                .init(
+                EmailNotification(
                     emailAddress: "emailAddress",
                     subject: "subject",
                     htmlContent: "htmlContent"
                 )
             )),
             nullableSearchResult: .value(SearchResult.user(
-                .init(
+                UserResponse(
                     id: "id",
                     username: "username",
                     email: .value("email"),
@@ -861,14 +861,14 @@ private func main() async throws {
         nullableEnum: .value(.admin),
         optionalEnum: .active,
         nullableUnion: .value(NotificationMethod.email(
-            .init(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
         )),
         optionalUnion: SearchResult.user(
-            .init(
+            UserResponse(
                 id: "id",
                 username: "username",
                 email: .value("email"),
