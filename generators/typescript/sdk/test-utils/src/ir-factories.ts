@@ -14,7 +14,7 @@ export function createBearerAuthScheme(opts?: {
         docs: opts?.docs,
         token: casingsGenerator.generateName(opts?.tokenName ?? "token"),
         tokenEnvVar: opts?.tokenEnvVar,
-        key: opts?.tokenName ?? "Bearer"
+        key: "Bearer"
     };
 }
 
@@ -49,6 +49,7 @@ export function createHeaderAuthScheme(opts?: {
     headerEnvVar?: string;
     docs?: string;
     prefix?: string;
+    key?: string;
 }): FernIr.HeaderAuthScheme {
     return {
         docs: opts?.docs,
@@ -56,7 +57,7 @@ export function createHeaderAuthScheme(opts?: {
         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
         prefix: opts?.prefix,
         headerEnvVar: opts?.headerEnvVar,
-        key: opts?.name ?? "ApiKey"
+        key: opts?.key ?? "ApiKey"
     };
 }
 
