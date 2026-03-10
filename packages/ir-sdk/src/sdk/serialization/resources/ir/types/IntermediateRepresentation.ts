@@ -26,6 +26,7 @@ import { VariableDeclaration } from "../../variables/types/VariableDeclaration.j
 import { WebhookGroup } from "../../webhooks/types/WebhookGroup.js";
 import { WebSocketChannel } from "../../websocket/types/WebSocketChannel.js";
 import { ApiVersionScheme } from "./ApiVersionScheme.js";
+import { CasingsConfig } from "./CasingsConfig.js";
 import { ErrorDiscriminationStrategy } from "./ErrorDiscriminationStrategy.js";
 import { GenerationMetadata } from "./GenerationMetadata.js";
 import { Package } from "./Package.js";
@@ -70,6 +71,7 @@ export const IntermediateRepresentation: core.serialization.ObjectSchema<
     audiences: core.serialization.list(AudienceDefinition).optional(),
     generationMetadata: GenerationMetadata.optional(),
     apiPlayground: core.serialization.boolean().optional(),
+    casingsConfig: CasingsConfig.optional(),
 });
 
 export declare namespace IntermediateRepresentation {
@@ -105,5 +107,6 @@ export declare namespace IntermediateRepresentation {
         audiences?: AudienceDefinition.Raw[] | null;
         generationMetadata?: GenerationMetadata.Raw | null;
         apiPlayground?: boolean | null;
+        casingsConfig?: CasingsConfig.Raw | null;
     }
 }

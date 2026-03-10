@@ -29,6 +29,11 @@
     "schemes": [],
   },
   "basePath": undefined,
+  "casingsConfig": {
+    "generationLanguage": undefined,
+    "keywords": undefined,
+    "smartCasing": true,
+  },
   "constants": {
     "errorInstanceIdKey": {
       "name": {

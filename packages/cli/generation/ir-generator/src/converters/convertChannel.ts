@@ -10,7 +10,7 @@ import {
     ExampleWebSocketMessageBody,
     ExampleWebSocketSession,
     FernIr,
-    Name,
+    NameOrString,
     WebSocketChannel,
     WebSocketMessage,
     WebSocketMessageBody
@@ -352,7 +352,7 @@ function convertChannelPathParameters({
         pathParameterDeclaration,
         examplePathParameter
     }: {
-        name: Name;
+        name: NameOrString;
         pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
         examplePathParameter: unknown;
     }) => {

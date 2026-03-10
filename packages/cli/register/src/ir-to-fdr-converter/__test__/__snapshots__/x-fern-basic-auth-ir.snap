@@ -78,6 +78,7 @@
     ],
   },
   "basePath": undefined,
+  "casingsConfig": undefined,
   "constants": {
     "errorInstanceIdKey": {
       "name": {

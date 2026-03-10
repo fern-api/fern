@@ -258,60 +258,6 @@ exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (m
 ]"
 `;
 
-exports[`snippets (default) > file-upload > 'POST /' 1`] = `
-"import Foundation
-import Acme
-
-private func main() async throws {
-    let client = AcmeClient()
-
-    _ = try await client.service.post(request: .init(
-        file: .init(data: Data("Hello, world!".utf8)),
-        fileList: [
-            .init(data: Data("First".utf8)),
-            .init(data: Data("Second".utf8))
-        ],
-        maybeFile: .init(data: Data("".utf8)),
-        maybeFileList: []
-    ))
-}
-
-try await main()
-"
-`;
-
-exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
-"import Foundation
-import Acme
-
-private func main() async throws {
-    let client = AcmeClient()
-
-    _ = try await client.service.justFile(request: .init(file: .init(data: Data("Hello, world!".utf8))))
-}
-
-try await main()
-"
-`;
-
-exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
-"import Foundation
-import Acme
-
-private func main() async throws {
-    let client = AcmeClient()
-
-    _ = try await client.service.justFileWithQueryParams(
-        maybeString: "exists",
-        integer: 42,
-        request: .init(file: .init(data: Data("Hello, world!".utf8)))
-    )
-}
-
-try await main()
-"
-`;
-
 exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "import Foundation
 import Acme

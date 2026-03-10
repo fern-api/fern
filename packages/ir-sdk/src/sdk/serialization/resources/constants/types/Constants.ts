@@ -3,15 +3,15 @@
 import type * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
+import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
 
 export const Constants: core.serialization.ObjectSchema<serializers.Constants.Raw, FernIr.Constants> =
     core.serialization.objectWithoutOptionalProperties({
-        errorInstanceIdKey: NameAndWireValue,
+        errorInstanceIdKey: NameAndWireValueOrString,
     });
 
 export declare namespace Constants {
     export interface Raw {
-        errorInstanceIdKey: NameAndWireValue.Raw;
+        errorInstanceIdKey: NameAndWireValueOrString.Raw;
     }
 }

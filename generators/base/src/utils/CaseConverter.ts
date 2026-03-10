@@ -1,4 +1,4 @@
-import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructFullCasingsGenerator, FullCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
 import { Name, NameAndWireValue, NameAndWireValueOrString, NameOrString, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 
@@ -20,14 +20,14 @@ export type NameInput = string | Name | NameAndWireValue;
  * with method calls like `caseConverter.camelCaseSafe(name)`.
  */
 export class CaseConverter {
-    private readonly casingsGenerator: CasingsGenerator;
+    private readonly casingsGenerator: FullCasingsGenerator;
 
     constructor(opts: {
         generationLanguage: generatorsYml.GenerationLanguage | undefined;
         keywords: string[] | undefined;
         smartCasing: boolean;
     }) {
-        this.casingsGenerator = constructCasingsGenerator(opts);
+        this.casingsGenerator = constructFullCasingsGenerator(opts);
     }
 
     // --- Name resolution ---
@@ -39,43 +39,15 @@ export class CaseConverter {
      * - NameAndWireValue: extracts and resolves the inner name
      */
     resolveName(input: NameInput): Name {
-        if (typeof input === "string") {
-            return this.casingsGenerator.generateName(input);
-        }
-        if (isNameAndWireValue(input)) {
-            return this.resolveNameOrString(input.name);
-        }
-        return input;
+        return this.casingsGenerator.generateName(input);
     }
 
-    /**
-     * Resolves a NameOrString to a full Name object.
-     * - string: generates Name via casings generator
-     * - Name: returns as-is
-     */
     resolveNameOrString(nameOrString: NameOrString): Name {
-        if (typeof nameOrString === "string") {
-            return this.casingsGenerator.generateName(nameOrString);
-        }
-        return nameOrString;
+        return this.casingsGenerator.generateName(nameOrString);
     }
 
-    /**
-     * Resolves a NameAndWireValueOrString to a full NameAndWireValue object.
-     * - string: wireValue and originalName are both the string
-     * - NameAndWireValue: returns with name resolved
-     */
     resolveNameAndWireValue(input: NameAndWireValueOrString): NameAndWireValue {
-        if (typeof input === "string") {
-            return {
-                wireValue: input,
-                name: this.casingsGenerator.generateName(input)
-            };
-        }
-        return {
-            wireValue: input.wireValue,
-            name: this.resolveNameOrString(input.name)
-        };
+        return this.casingsGenerator.generateNameAndWireValue(input);
     }
 
     // --- Original name ---

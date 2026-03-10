@@ -560,6 +560,9 @@
     }
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {
     "subpackage_testChannel": {
       "fernFilepath": {

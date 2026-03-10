@@ -200,7 +200,8 @@ export function generateIntermediateRepresentation({
         dynamic: undefined,
         audiences: workspace.definition.rootApiFile.contents.audiences,
         generationMetadata: generationMetadata,
-        apiPlayground: true
+        apiPlayground: true,
+        casingsConfig: { generationLanguage, keywords, smartCasing }
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();

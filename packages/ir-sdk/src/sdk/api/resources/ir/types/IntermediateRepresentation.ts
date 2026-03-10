@@ -46,4 +46,9 @@ export interface IntermediateRepresentation {
     generationMetadata: FernIr.GenerationMetadata | undefined;
     /** Whether the API playground should be enabled. Defaults to true. */
     apiPlayground: boolean | undefined;
+    /**
+     * Configuration used for generating names. Stored for backwards compatibility so that
+     * IR migrations can reconstruct the correct CasingsGenerator when inflating compressed names.
+     */
+    casingsConfig: FernIr.CasingsConfig | undefined;
 }

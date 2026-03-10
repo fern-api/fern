@@ -1,12 +1,14 @@
-import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
+import { constructFullCasingsGenerator, type FullCasingsGenerator } from "@fern-api/casings-generator";
+import { generatorsYml } from "@fern-api/configuration";
 import { GeneratorName } from "@fern-api/configuration-loader";
+import { assertNever } from "@fern-api/core-utils";
 import { IrMigrationContext } from "../../IrMigrationContext.js";
 import { IrSerialization } from "../../ir-serialization/index.js";
 import { IrVersions } from "../../ir-versions/index.js";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration.js";
 
 export const V66_TO_V65_MIGRATION: IrMigration<
-    IrVersions.V65.ir.IntermediateRepresentation,
+    IrVersions.V66.ir.IntermediateRepresentation,
     IrVersions.V65.ir.IntermediateRepresentation
 > = {
     laterVersion: "v66",
@@ -41,100 +43,110 @@ export const V66_TO_V65_MIGRATION: IrMigration<
         [GeneratorName.RUST_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
     },
     jsonifyEarlierVersion: (ir) =>
-        IrSerialization.V64.IntermediateRepresentation.jsonOrThrow(ir, {
+        IrSerialization.V65.IntermediateRepresentation.jsonOrThrow(ir, {
             unrecognizedObjectKeys: "passthrough",
             skipValidation: true
         }),
     migrateBackwards: (
-        v66: IrVersions.V65.ir.IntermediateRepresentation,
-        context: IrMigrationContext
+        v66: IrVersions.V66.ir.IntermediateRepresentation,
+        _context: IrMigrationContext
     ): IrVersions.V65.ir.IntermediateRepresentation => {
-        const casingsGenerator =
-            context.casingsGenerator ??
-            constructCasingsGenerator({
-                generationLanguage: undefined,
-                keywords: undefined,
-                smartCasing: false
-            });
+        const casingsGenerator = constructFullCasingsGenerator({
+            generationLanguage: sdkLanguageToGenerationLanguage(v66.casingsConfig?.generationLanguage),
+            keywords: v66.casingsConfig?.keywords,
+            smartCasing: v66.casingsConfig?.smartCasing ?? true
+        });
         return inflateIr(v66, casingsGenerator);
     }
 };
 
-/**
- * Inflates all NameOrString values back to full Name objects,
- * and all NameAndWireValueOrString values back to full NameAndWireValue objects.
- * Recursively traverses all example structures to ensure no string-form names remain.
- */
+// SupportedSdkLanguage is a superset of GenerationLanguage (adds "curl" and "javascript").
+// We only ever store a GenerationLanguage value in casingsConfig, so this mapping is exhaustive
+// for all values that can actually appear there.
+function sdkLanguageToGenerationLanguage(
+    language: IrVersions.V66.SupportedSdkLanguage | undefined
+): generatorsYml.GenerationLanguage | undefined {
+    if (language == null) {
+        return undefined;
+    }
+    switch (language) {
+        case "typescript":
+        case "java":
+        case "python":
+        case "go":
+        case "ruby":
+        case "csharp":
+        case "swift":
+        case "php":
+        case "rust":
+            return language;
+        case "curl":
+        case "javascript":
+            return undefined;
+        default:
+            return assertNever(language);
+    }
+}
+
 function inflateIr(
-    ir: IrVersions.V65.ir.IntermediateRepresentation,
-    casingsGenerator: CasingsGenerator
+    ir: IrVersions.V66.ir.IntermediateRepresentation,
+    casingsGenerator: FullCasingsGenerator
 ): IrVersions.V65.ir.IntermediateRepresentation {
     // ===== Core inflate helpers =====
 
-    const inflateName = (name: IrVersions.V65.NameOrString): IrVersions.V65.Name => {
-        if (typeof name === "string") {
-            return casingsGenerator.generateName(name);
-        }
-        return name;
+    const inflateName = (name: IrVersions.V66.NameOrString): IrVersions.V65.Name => {
+        return casingsGenerator.generateName(name);
     };
 
-    const inflateOptionalName = (name: IrVersions.V65.NameOrString | undefined): IrVersions.V65.Name | undefined => {
-        if (name == null) {
-            return undefined;
-        }
-        return inflateName(name);
+    const inflateOptionalName = (name: IrVersions.V66.NameOrString | undefined): IrVersions.V65.Name | undefined => {
+        return name != null ? inflateName(name) : undefined;
     };
 
     const inflateNameAndWireValue = (
-        nameAndWireValue: IrVersions.V65.NameAndWireValueOrString
+        nameAndWireValue: IrVersions.V66.NameAndWireValueOrString
     ): IrVersions.V65.NameAndWireValue => {
-        if (typeof nameAndWireValue === "string") {
-            return casingsGenerator.generateNameAndWireValue({
-                wireValue: nameAndWireValue,
-                name: nameAndWireValue
-            });
-        }
-        return {
-            ...nameAndWireValue,
-            name: inflateName(nameAndWireValue.name)
-        };
+        return casingsGenerator.generateNameAndWireValue(nameAndWireValue);
     };
 
     // ===== Structural inflate helpers =====
 
-    const inflateFernFilepath = (fp: IrVersions.V65.FernFilepath): IrVersions.V65.FernFilepath => ({
+    const inflateFernFilepath = (fp: IrVersions.V66.FernFilepath): IrVersions.V65.FernFilepath => ({
         allParts: fp.allParts.map(inflateName),
         packagePath: fp.packagePath.map(inflateName),
         file: fp.file != null ? inflateName(fp.file) : undefined
     });
 
-    const inflateDeclaredTypeName = (dtn: IrVersions.V65.DeclaredTypeName): IrVersions.V65.DeclaredTypeName => ({
+    const inflateDeclaredTypeName = (dtn: IrVersions.V66.DeclaredTypeName): IrVersions.V65.DeclaredTypeName => ({
         ...dtn,
         fernFilepath: inflateFernFilepath(dtn.fernFilepath),
         name: inflateName(dtn.name)
     });
 
-    const inflateObjectProperty = (prop: IrVersions.V65.ObjectProperty): IrVersions.V65.ObjectProperty => ({
+    const inflateObjectProperty = (prop: IrVersions.V66.ObjectProperty): IrVersions.V65.ObjectProperty => ({
         ...prop,
-        name: inflateNameAndWireValue(prop.name)
+        name: inflateNameAndWireValue(prop.name),
+        v2Examples: prop.v2Examples != null ? inflateV2SchemaExamples(prop.v2Examples) : undefined,
+        valueType: inflateTypeReference(prop.valueType)
     });
 
-    const inflatePropertyPathItem = (item: IrVersions.V65.PropertyPathItem): IrVersions.V65.PropertyPathItem => ({
+    const inflatePropertyPathItem = (item: IrVersions.V66.PropertyPathItem): IrVersions.V65.PropertyPathItem => ({
         ...item,
-        name: inflateName(item.name)
+        name: inflateName(item.name),
+        type: inflateTypeReference(item.type)
     });
 
     // ===== Type declaration inflate =====
 
-    const inflateTypeDeclaration = (td: IrVersions.V65.TypeDeclaration): IrVersions.V65.TypeDeclaration => ({
+    const inflateTypeDeclaration = (td: IrVersions.V66.TypeDeclaration): IrVersions.V65.TypeDeclaration => ({
         ...td,
         name: inflateDeclaredTypeName(td.name),
         shape: inflateTypeShape(td.shape),
         autogeneratedExamples: td.autogeneratedExamples.map(inflateExampleType),
-        userProvidedExamples: td.userProvidedExamples.map(inflateExampleType)
+        userProvidedExamples: td.userProvidedExamples.map(inflateExampleType),
+        v2Examples: td.v2Examples != null ? td.v2Examples.map(inflateV2SchemaExamples) : undefined
     });
 
-    const inflateTypeShape = (shape: IrVersions.V65.Type): IrVersions.V65.Type => {
+    const inflateTypeShape = (shape: IrVersions.V66.Type): IrVersions.V65.Type => {
         switch (shape.type) {
             case "object":
                 return IrVersions.V65.Type.object({
@@ -161,28 +173,28 @@ function inflateIr(
             case "enum":
                 return IrVersions.V65.Type.enum({
                     ...shape,
-                    values: shape.values.map((v) => ({
+                    values: shape.values.map<IrVersions.V65.EnumValue>((v) => ({
                         ...v,
-                        name: inflateNameAndWireValue(v.name)
-                    }))
+                        name: inflateNameAndWireValue(v.name),
+                    })),
                 });
             case "alias":
             case "undiscriminatedUnion":
                 return shape;
             default:
-                return shape;
+                assertNever(shape);
         }
     };
 
     const inflateSingleUnionTypeProperties = (
-        props: IrVersions.V65.SingleUnionTypeProperties
+        props: IrVersions.V66.SingleUnionTypeProperties
     ): IrVersions.V65.SingleUnionTypeProperties => {
         switch (props.propertiesType) {
             case "singleProperty":
-                return {
+                return IrVersions.V65.SingleUnionTypeProperties.singleProperty({
                     ...props,
                     name: inflateNameAndWireValue(props.name)
-                } as IrVersions.V65.SingleUnionTypeProperties;
+                });
             default:
                 return props;
         }
@@ -190,21 +202,21 @@ function inflateIr(
 
     // ===== Example type inflate (recursive) =====
 
-    const inflateExampleType = (ex: IrVersions.V65.ExampleType): IrVersions.V65.ExampleType => ({
+    const inflateExampleType = (ex: IrVersions.V66.ExampleType): IrVersions.V65.ExampleType => ({
         ...ex,
         name: inflateOptionalName(ex.name),
         shape: inflateExampleTypeShape(ex.shape)
     });
 
     const inflateExampleTypeReference = (
-        ref: IrVersions.V65.ExampleTypeReference
+        ref: IrVersions.V66.ExampleTypeReference
     ): IrVersions.V65.ExampleTypeReference => ({
         ...ref,
         shape: inflateExampleTypeReferenceShape(ref.shape)
     });
 
     const inflateExampleTypeReferenceShape = (
-        shape: IrVersions.V65.ExampleTypeReferenceShape
+        shape: IrVersions.V66.ExampleTypeReferenceShape
     ): IrVersions.V65.ExampleTypeReferenceShape => {
         switch (shape.type) {
             case "named":
@@ -223,7 +235,7 @@ function inflateIr(
         }
     };
 
-    const inflateExampleContainer = (container: IrVersions.V65.ExampleContainer): IrVersions.V65.ExampleContainer => {
+    const inflateExampleContainer = (container: IrVersions.V66.ExampleContainer): IrVersions.V65.ExampleContainer => {
         switch (container.type) {
             case "list":
                 return IrVersions.V65.ExampleContainer.list({
@@ -261,7 +273,7 @@ function inflateIr(
         }
     };
 
-    const inflateExampleTypeShape = (shape: IrVersions.V65.ExampleTypeShape): IrVersions.V65.ExampleTypeShape => {
+    const inflateExampleTypeShape = (shape: IrVersions.V66.ExampleTypeShape): IrVersions.V65.ExampleTypeShape => {
         switch (shape.type) {
             case "object":
                 return IrVersions.V65.ExampleTypeShape.object({
@@ -307,7 +319,7 @@ function inflateIr(
     };
 
     const inflateExampleObjectProperty = (
-        prop: IrVersions.V65.ExampleObjectProperty
+        prop: IrVersions.V66.ExampleObjectProperty
     ): IrVersions.V65.ExampleObjectProperty => ({
         ...prop,
         name: inflateNameAndWireValue(prop.name),
@@ -316,7 +328,7 @@ function inflateIr(
     });
 
     const inflateExampleExtraObjectProperty = (
-        prop: IrVersions.V65.ExampleExtraObjectProperty
+        prop: IrVersions.V66.ExampleExtraObjectProperty
     ): IrVersions.V65.ExampleExtraObjectProperty => ({
         ...prop,
         name: inflateNameAndWireValue(prop.name),
@@ -324,7 +336,7 @@ function inflateIr(
     });
 
     const inflateExampleUnionBaseProperty = (
-        prop: IrVersions.V65.ExampleUnionBaseProperty
+        prop: IrVersions.V66.ExampleUnionBaseProperty
     ): IrVersions.V65.ExampleUnionBaseProperty => ({
         ...prop,
         name: inflateNameAndWireValue(prop.name),
@@ -332,7 +344,7 @@ function inflateIr(
     });
 
     const inflateExampleSingleUnionType = (
-        sut: IrVersions.V65.ExampleSingleUnionType
+        sut: IrVersions.V66.ExampleSingleUnionType
     ): IrVersions.V65.ExampleSingleUnionType => ({
         ...sut,
         wireDiscriminantValue: inflateNameAndWireValue(sut.wireDiscriminantValue),
@@ -340,7 +352,7 @@ function inflateIr(
     });
 
     const inflateExampleSingleUnionTypeProperties = (
-        props: IrVersions.V65.ExampleSingleUnionTypeProperties
+        props: IrVersions.V66.ExampleSingleUnionTypeProperties
     ): IrVersions.V65.ExampleSingleUnionTypeProperties => {
         switch (props.type) {
             case "samePropertiesAsObject":
@@ -360,7 +372,7 @@ function inflateIr(
     };
 
     const inflateExampleObjectTypeInShape = (
-        obj: IrVersions.V65.ExampleObjectType
+        obj: IrVersions.V66.ExampleObjectType
     ): IrVersions.V65.ExampleObjectType => ({
         ...obj,
         properties: obj.properties.map(inflateExampleObjectProperty),
@@ -370,22 +382,22 @@ function inflateIr(
 
     // ===== HTTP endpoint inflate =====
 
-    const inflatePathParameter = (pp: IrVersions.V65.PathParameter): IrVersions.V65.PathParameter => ({
+    const inflatePathParameter = (pp: IrVersions.V66.PathParameter): IrVersions.V65.PathParameter => ({
         ...pp,
         name: inflateName(pp.name)
     });
 
-    const inflateQueryParameter = (qp: IrVersions.V65.QueryParameter): IrVersions.V65.QueryParameter => ({
+    const inflateQueryParameter = (qp: IrVersions.V66.QueryParameter): IrVersions.V65.QueryParameter => ({
         ...qp,
         name: inflateNameAndWireValue(qp.name)
     });
 
-    const inflateHeader = (h: IrVersions.V65.HttpHeader): IrVersions.V65.HttpHeader => ({
+    const inflateHeader = (h: IrVersions.V66.HttpHeader): IrVersions.V65.HttpHeader => ({
         ...h,
         name: inflateNameAndWireValue(h.name)
     });
 
-    const inflateFileProperty = (fp: IrVersions.V65.FileProperty): IrVersions.V65.FileProperty => {
+    const inflateFileProperty = (fp: IrVersions.V66.FileProperty): IrVersions.V65.FileProperty => {
         switch (fp.type) {
             case "file":
                 return IrVersions.V65.FileProperty.file({
@@ -402,7 +414,7 @@ function inflateIr(
         }
     };
 
-    const inflateEndpoint = (ep: IrVersions.V65.HttpEndpoint): IrVersions.V65.HttpEndpoint => ({
+    const inflateEndpoint = (ep: IrVersions.V66.HttpEndpoint): IrVersions.V65.HttpEndpoint => ({
         ...ep,
         name: inflateName(ep.name),
         allPathParameters: ep.allPathParameters.map(inflatePathParameter),
@@ -423,7 +435,7 @@ function inflateIr(
         }))
     });
 
-    const inflateHttpRequestBody = (rb: IrVersions.V65.HttpRequestBody): IrVersions.V65.HttpRequestBody => {
+    const inflateHttpRequestBody = (rb: IrVersions.V66.HttpRequestBody): IrVersions.V65.HttpRequestBody => {
         switch (rb.type) {
             case "inlinedRequestBody":
                 return IrVersions.V65.HttpRequestBody.inlinedRequestBody({
@@ -459,7 +471,7 @@ function inflateIr(
         }
     };
 
-    const inflateSdkRequestShape = (shape: IrVersions.V65.SdkRequestShape): IrVersions.V65.SdkRequestShape => {
+    const inflateSdkRequestShape = (shape: IrVersions.V66.SdkRequestShape): IrVersions.V65.SdkRequestShape => {
         switch (shape.type) {
             case "wrapper":
                 return IrVersions.V65.SdkRequestShape.wrapper({
@@ -472,7 +484,7 @@ function inflateIr(
         }
     };
 
-    const inflateSdkRequest = (req: IrVersions.V65.SdkRequest): IrVersions.V65.SdkRequest => ({
+    const inflateSdkRequest = (req: IrVersions.V66.SdkRequest): IrVersions.V65.SdkRequest => ({
         ...req,
         requestParameterName: inflateName(req.requestParameterName),
         shape: inflateSdkRequestShape(req.shape),
@@ -481,14 +493,14 @@ function inflateIr(
 
     // ===== Pagination inflate =====
 
-    const inflateRequestProperty = (rp: IrVersions.V65.RequestProperty): IrVersions.V65.RequestProperty => ({
+    const inflateRequestProperty = (rp: IrVersions.V66.RequestProperty): IrVersions.V65.RequestProperty => ({
         ...rp,
         propertyPath: rp.propertyPath != null ? rp.propertyPath.map(inflatePropertyPathItem) : undefined,
         property: inflateRequestPropertyValue(rp.property)
     });
 
     const inflateRequestPropertyValue = (
-        rpv: IrVersions.V65.RequestPropertyValue
+        rpv: IrVersions.V66.RequestPropertyValue
     ): IrVersions.V65.RequestPropertyValue => {
         switch (rpv.type) {
             case "query":
@@ -500,13 +512,13 @@ function inflateIr(
         }
     };
 
-    const inflateResponseProperty = (rp: IrVersions.V65.ResponseProperty): IrVersions.V65.ResponseProperty => ({
+    const inflateResponseProperty = (rp: IrVersions.V66.ResponseProperty): IrVersions.V65.ResponseProperty => ({
         ...rp,
         propertyPath: rp.propertyPath != null ? rp.propertyPath.map(inflatePropertyPathItem) : undefined,
         property: inflateObjectProperty(rp.property)
     });
 
-    const inflatePagination = (pagination: IrVersions.V65.Pagination): IrVersions.V65.Pagination => {
+    const inflatePagination = (pagination: IrVersions.V66.Pagination): IrVersions.V65.Pagination => {
         switch (pagination.type) {
             case "cursor":
                 return IrVersions.V65.Pagination.cursor({
@@ -532,7 +544,7 @@ function inflateIr(
     // ===== Example endpoint call inflate =====
 
     const inflateExampleEndpointCall = (
-        ex: IrVersions.V65.ExampleEndpointCall
+        ex: IrVersions.V66.ExampleEndpointCall
     ): IrVersions.V65.ExampleEndpointCall => ({
         ...ex,
         name: inflateOptionalName(ex.name),
@@ -547,7 +559,7 @@ function inflateIr(
     });
 
     const inflateExamplePathParameter = (
-        pp: IrVersions.V65.ExamplePathParameter
+        pp: IrVersions.V66.ExamplePathParameter
     ): IrVersions.V65.ExamplePathParameter => ({
         ...pp,
         name: inflateName(pp.name),
@@ -555,20 +567,20 @@ function inflateIr(
     });
 
     const inflateExampleQueryParameter = (
-        qp: IrVersions.V65.ExampleQueryParameter
+        qp: IrVersions.V66.ExampleQueryParameter
     ): IrVersions.V65.ExampleQueryParameter => ({
         ...qp,
         name: inflateNameAndWireValue(qp.name),
         value: inflateExampleTypeReference(qp.value)
     });
 
-    const inflateExampleHeader = (h: IrVersions.V65.ExampleHeader): IrVersions.V65.ExampleHeader => ({
+    const inflateExampleHeader = (h: IrVersions.V66.ExampleHeader): IrVersions.V65.ExampleHeader => ({
         ...h,
         name: inflateNameAndWireValue(h.name),
         value: inflateExampleTypeReference(h.value)
     });
 
-    const inflateExampleRequestBody = (rb: IrVersions.V65.ExampleRequestBody): IrVersions.V65.ExampleRequestBody => {
+    const inflateExampleRequestBody = (rb: IrVersions.V66.ExampleRequestBody): IrVersions.V65.ExampleRequestBody => {
         switch (rb.type) {
             case "inlinedRequestBody":
                 return IrVersions.V65.ExampleRequestBody.inlinedRequestBody({
@@ -587,7 +599,7 @@ function inflateIr(
     };
 
     const inflateExampleInlinedRequestBodyProperty = (
-        prop: IrVersions.V65.ExampleInlinedRequestBodyProperty
+        prop: IrVersions.V66.ExampleInlinedRequestBodyProperty
     ): IrVersions.V65.ExampleInlinedRequestBodyProperty => ({
         ...prop,
         name: inflateNameAndWireValue(prop.name),
@@ -597,14 +609,14 @@ function inflateIr(
     });
 
     const inflateExampleInlinedRequestBodyExtraProperty = (
-        prop: IrVersions.V65.ExampleInlinedRequestBodyExtraProperty
+        prop: IrVersions.V66.ExampleInlinedRequestBodyExtraProperty
     ): IrVersions.V65.ExampleInlinedRequestBodyExtraProperty => ({
         ...prop,
         name: inflateNameAndWireValue(prop.name),
         value: inflateExampleTypeReference(prop.value)
     });
 
-    const inflateExampleResponse = (response: IrVersions.V65.ExampleResponse): IrVersions.V65.ExampleResponse => {
+    const inflateExampleResponse = (response: IrVersions.V66.ExampleResponse): IrVersions.V65.ExampleResponse => {
         switch (response.type) {
             case "ok":
                 return IrVersions.V65.ExampleResponse.ok(inflateExampleEndpointSuccessResponse(response.value));
@@ -620,7 +632,7 @@ function inflateIr(
     };
 
     const inflateExampleEndpointSuccessResponse = (
-        response: IrVersions.V65.ExampleEndpointSuccessResponse
+        response: IrVersions.V66.ExampleEndpointSuccessResponse
     ): IrVersions.V65.ExampleEndpointSuccessResponse => {
         switch (response.type) {
             case "body":
@@ -645,7 +657,7 @@ function inflateIr(
 
     // ===== Service inflate =====
 
-    const inflateService = (svc: IrVersions.V65.HttpService): IrVersions.V65.HttpService => ({
+    const inflateService = (svc: IrVersions.V66.HttpService): IrVersions.V65.HttpService => ({
         ...svc,
         name: {
             ...svc.name,
@@ -659,20 +671,20 @@ function inflateIr(
 
     // ===== Error declaration inflate =====
 
-    const inflateDeclaredErrorName = (name: IrVersions.V65.DeclaredErrorName): IrVersions.V65.DeclaredErrorName => ({
+    const inflateDeclaredErrorName = (name: IrVersions.V66.DeclaredErrorName): IrVersions.V65.DeclaredErrorName => ({
         ...name,
         fernFilepath: inflateFernFilepath(name.fernFilepath),
         name: inflateName(name.name)
     });
 
-    const inflateErrorDeclaration = (err: IrVersions.V65.ErrorDeclaration): IrVersions.V65.ErrorDeclaration => ({
+    const inflateErrorDeclaration = (err: IrVersions.V66.ErrorDeclaration): IrVersions.V65.ErrorDeclaration => ({
         ...err,
         name: inflateDeclaredErrorName(err.name),
         discriminantValue: inflateNameAndWireValue(err.discriminantValue),
         examples: err.examples.map(inflateExampleError)
     });
 
-    const inflateExampleError = (ex: IrVersions.V65.ExampleError): IrVersions.V65.ExampleError => ({
+    const inflateExampleError = (ex: IrVersions.V66.ExampleError): IrVersions.V65.ExampleError => ({
         ...ex,
         name: inflateOptionalName(ex.name),
         shape: inflateExampleTypeReference(ex.shape)
@@ -680,7 +692,7 @@ function inflateIr(
 
     // ===== Webhook inflate =====
 
-    const inflateWebhook = (wh: IrVersions.V65.webhooks.Webhook): IrVersions.V65.webhooks.Webhook => ({
+    const inflateWebhook = (wh: IrVersions.V66.webhooks.Webhook): IrVersions.V65.webhooks.Webhook => ({
         ...wh,
         name: inflateName(wh.name),
         headers: wh.headers.map(inflateHeader),
@@ -688,7 +700,7 @@ function inflateIr(
     });
 
     const inflateWebhookPayload = (
-        payload: IrVersions.V65.webhooks.WebhookPayload
+        payload: IrVersions.V66.webhooks.WebhookPayload
     ): IrVersions.V65.webhooks.WebhookPayload => {
         switch (payload.type) {
             case "inlinedPayload":
@@ -708,7 +720,7 @@ function inflateIr(
 
     // ===== Auth inflate =====
 
-    const inflateAuthScheme = (scheme: IrVersions.V65.AuthScheme): IrVersions.V65.AuthScheme => {
+    const inflateAuthScheme = (scheme: IrVersions.V66.AuthScheme): IrVersions.V65.AuthScheme => {
         switch (scheme.type) {
             case "header":
                 return IrVersions.V65.AuthScheme.header({
@@ -737,7 +749,7 @@ function inflateIr(
     };
 
     const inflateOAuthConfiguration = (
-        config: IrVersions.V65.OAuthConfiguration
+        config: IrVersions.V66.OAuthConfiguration
     ): IrVersions.V65.OAuthConfiguration => {
         switch (config.type) {
             case "clientCredentials":
@@ -801,19 +813,19 @@ function inflateIr(
 
     // ===== Subpackage / Variable / Channel inflate =====
 
-    const inflateSubpackage = (sp: IrVersions.V65.Subpackage): IrVersions.V65.Subpackage => ({
+    const inflateSubpackage = (sp: IrVersions.V66.Subpackage): IrVersions.V65.Subpackage => ({
         ...sp,
         name: inflateName(sp.name),
         fernFilepath: inflateFernFilepath(sp.fernFilepath)
     });
 
-    const inflateVariable = (v: IrVersions.V65.VariableDeclaration): IrVersions.V65.VariableDeclaration => ({
+    const inflateVariable = (v: IrVersions.V66.VariableDeclaration): IrVersions.V65.VariableDeclaration => ({
         ...v,
         name: inflateName(v.name)
     });
 
     const inflateChannel = (
-        ch: IrVersions.V65.websocket.WebSocketChannel
+        ch: IrVersions.V66.websocket.WebSocketChannel
     ): IrVersions.V65.websocket.WebSocketChannel => ({
         ...ch,
         name: inflateName(ch.name),
@@ -823,7 +835,28 @@ function inflateIr(
         messages: ch.messages.map((msg) => ({
             ...msg,
             body: inflateWebSocketMessageBody(msg.body)
-        }))
+        })),
+        examples: ch.examples.map((ex) => ({
+            ...ex,
+            name: inflateOptionalName(ex.name),
+            messages: ex.messages.map((msg) => ({
+                ...msg,
+                body: inflateWebSocketMessageBody(msg.body)
+            }))
+        })),
+        v2Examples: ch.v2Examples != null
+            ? {
+                  ...ch.v2Examples,
+                  examples: ch.v2Examples.examples.map((ex) => ({
+                      ...ex,
+                      name: inflateOptionalName(ex.name),
+                      messages: ex.messages.map((msg) => ({
+                          ...msg,
+                          body: inflateWebSocketMessageBody(msg.body)
+                      }))
+                  }))
+              }
+            : undefined 
     });
 
     const inflateWebSocketMessageBody = (
@@ -848,7 +881,7 @@ function inflateIr(
     // ===== Environment inflate =====
 
     const inflateEnvironmentsConfig = (
-        config: IrVersions.V65.EnvironmentsConfig | undefined
+        config: IrVersions.V66.EnvironmentsConfig | undefined
     ): IrVersions.V65.EnvironmentsConfig | undefined => {
         if (config == null) {
             return undefined;
@@ -861,7 +894,14 @@ function inflateIr(
                         ...config.environments,
                         environments: config.environments.environments.map((env) => ({
                             ...env,
-                            name: inflateName(env.name)
+                            name: inflateName(env.name),
+                            urlVariables:
+                                env.urlVariables == null
+                                    ? undefined
+                                    : env.urlVariables.map((uv) => ({
+                                          ...uv,
+                                          name: inflateName(uv.name)
+                                      }))
                         }))
                     })
                 };
@@ -872,19 +912,31 @@ function inflateIr(
                         ...config.environments,
                         environments: config.environments.environments.map((env) => ({
                             ...env,
-                            name: inflateName(env.name)
+                            name: inflateName(env.name),
+                            urlVariables:
+                                env.urlVariables == null
+                                    ? undefined
+                                    : Object.fromEntries(
+                                          Object.entries(env.urlVariables).map(([baseUrlId, variables]) => [
+                                              baseUrlId,
+                                              variables.map((uv) => ({
+                                                  ...uv,
+                                                  name: inflateName(uv.name)
+                                              }))
+                                          ])
+                                      )
                         }))
                     })
                 };
             default:
-                return config;
+                return assertNever(config.environments);
         }
     };
 
     // ===== Error discrimination strategy inflate =====
 
     const inflateErrorDiscriminationStrategy = (
-        strategy: IrVersions.V65.ErrorDiscriminationStrategy
+        strategy: IrVersions.V66.ErrorDiscriminationStrategy
     ): IrVersions.V65.ErrorDiscriminationStrategy => {
         switch (strategy.type) {
             case "property":
@@ -893,8 +945,10 @@ function inflateIr(
                     discriminant: inflateNameAndWireValue(strategy.discriminant),
                     contentProperty: inflateNameAndWireValue(strategy.contentProperty)
                 });
+            case "statusCode":
+                return IrVersions.V65.ErrorDiscriminationStrategy.statusCode();
             default:
-                return strategy;
+                assertNever(strategy);
         }
     };
 
@@ -930,32 +984,49 @@ function inflateIr(
         inflatedSubpackages[id] = inflateSubpackage(sp);
     }
 
+    // Enumerate all fields explicitly so TypeScript can verify the return type matches V65.
+    // casingsConfig is V66-only and is intentionally omitted.
+    // apiName is inflated from NameOrString to Name to match the V65 schema.
     return {
-        ...ir,
+        fdrApiDefinitionId: ir.fdrApiDefinitionId,
+        apiVersion: ir.apiVersion,
         apiName: inflateName(ir.apiName),
+        apiDisplayName: ir.apiDisplayName,
+        apiDocs: ir.apiDocs,
+        auth: {
+            ...ir.auth,
+            schemes: ir.auth.schemes.map(inflateAuthScheme)
+        },
+        headers: ir.headers.map(inflateHeader),
+        idempotencyHeaders: ir.idempotencyHeaders.map(inflateHeader),
         types: inflatedTypes,
-        errors: inflatedErrors,
         services: inflatedServices,
         webhookGroups: inflatedWebhookGroups,
         websocketChannels: inflatedChannels,
+        errors: inflatedErrors,
         subpackages: inflatedSubpackages,
         rootPackage: {
             ...ir.rootPackage,
             fernFilepath: inflateFernFilepath(ir.rootPackage.fernFilepath)
-        },
-        headers: ir.headers.map(inflateHeader),
-        idempotencyHeaders: ir.idempotencyHeaders.map(inflateHeader),
-        pathParameters: ir.pathParameters.map(inflatePathParameter),
-        variables: ir.variables.map(inflateVariable),
-        auth: {
-            ...ir.auth,
-            schemes: ir.auth.schemes.map(inflateAuthScheme)
         },
         constants: {
             ...ir.constants,
             errorInstanceIdKey: inflateNameAndWireValue(ir.constants.errorInstanceIdKey)
         },
         environments: inflateEnvironmentsConfig(ir.environments),
-        errorDiscriminationStrategy: inflateErrorDiscriminationStrategy(ir.errorDiscriminationStrategy)
+        basePath: ir.basePath,
+        pathParameters: ir.pathParameters.map(inflatePathParameter),
+        errorDiscriminationStrategy: inflateErrorDiscriminationStrategy(ir.errorDiscriminationStrategy),
+        sdkConfig: ir.sdkConfig,
+        variables: ir.variables.map(inflateVariable),
+        serviceTypeReferenceInfo: ir.serviceTypeReferenceInfo,
+        readmeConfig: ir.readmeConfig,
+        sourceConfig: ir.sourceConfig,
+        publishConfig: ir.publishConfig,
+        dynamic: ir.dynamic,
+        selfHosted: ir.selfHosted,
+        audiences: ir.audiences,
+        generationMetadata: ir.generationMetadata,
+        apiPlayground: ir.apiPlayground
     };
 }

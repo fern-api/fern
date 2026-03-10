@@ -741,6 +741,9 @@
     }
   },
   "apiPlayground": true,
+  "casingsConfig": {
+    "smartCasing": true
+  },
   "subpackages": {
     "subpackage_generativelanguage": {
       "fernFilepath": {
