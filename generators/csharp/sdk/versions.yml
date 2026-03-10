@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.24.4
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for undiscriminated unions when `use-undiscriminated-unions: true`
+        is set. Previously, snippets always emitted `OneOf<A, B, C>` regardless of the config setting.
+        Now, when the setting is enabled, snippets use the SDK's generated union wrapper type (e.g.
+        `MixedType`) instead, matching the actual SDK types and producing compilable code.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
 - version: 2.24.3
   changelogEntry:
     - summary: |

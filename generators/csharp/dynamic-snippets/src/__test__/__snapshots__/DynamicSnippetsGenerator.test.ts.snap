@@ -698,3 +698,39 @@ exports[`snippets (default) > single-url-environment-default > 'invalid environm
   }
 ]"
 `;
+
+exports[`snippets (use-undiscriminated-unions) > POST /container/map-prim-to-union (mixed values) 1`] = `
+"using Acme;
+using System.Collections.Generic;
+using Acme.Types.Union;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    new Dictionary<string, MixedType>(){
+        ["test"] = 0,
+    }
+);
+"
+`;
+
+exports[`snippets (use-undiscriminated-unions) > POST /container/map-prim-to-union (numeric values) 1`] = `
+"using Acme;
+using System.Collections.Generic;
+using Acme.Types.Union;
+
+var client = new AcmeClient(
+    token: "<YOUR_API_KEY>"
+);
+
+await client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnionAsync(
+    new Dictionary<string, MixedType>(){
+        ["test"] = 0,
+        ["test2"] = 1.5,
+        ["test3"] = 42,
+    }
+);
+"
+`;
