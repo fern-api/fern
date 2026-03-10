@@ -3665,9 +3665,6 @@ importers:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../../../packages/commons/casings-generator
-      '@fern-fern/ir-sdk':
-        specifier: ^65.3.0
-        version: 65.4.0
       ts-morph:
         specifier: 'catalog:'
         version: 27.0.2
@@ -3675,6 +3672,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-fern/ir-sdk':
+        specifier: ^65.3.0
+        version: 65.4.0
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
