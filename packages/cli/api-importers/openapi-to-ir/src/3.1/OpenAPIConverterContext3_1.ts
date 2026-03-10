@@ -106,7 +106,7 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
     }
 
     public setGlobalHeaders(globalHeaders: FernIr.HttpHeader[]): void {
-        this.globalHeaderNames = globalHeaders.map((header) => header.name.wireValue);
+        this.globalHeaderNames = globalHeaders.map((header) => typeof header.name === "string" ? header.name : header.name.wireValue);
     }
 
     public getDisplayNameForTag(tag: string): string {

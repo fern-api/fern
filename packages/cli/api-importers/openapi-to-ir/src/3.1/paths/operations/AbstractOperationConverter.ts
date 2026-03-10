@@ -119,8 +119,8 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         queryParameters.push(convertedParameter.parameter);
                         break;
                     case "header": {
-                        const headerName = convertedParameter.parameter.name.name.originalName;
-                        const headerWireValue = convertedParameter.parameter.name.wireValue;
+                        const headerName = typeof convertedParameter.parameter.name === "string" ? convertedParameter.parameter.name : (typeof convertedParameter.parameter.name.name === "string" ? convertedParameter.parameter.name.name : convertedParameter.parameter.name.name.originalName);
+                        const headerWireValue = typeof convertedParameter.parameter.name === "string" ? convertedParameter.parameter.name : convertedParameter.parameter.name.wireValue;
 
                         let duplicateHeader = false;
                         const authSchemes = this.context.authOverrides?.["auth-schemes"];
@@ -162,7 +162,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
     protected checkMissingPathParameters(pathParameters: PathParameter[]): void {
         const pathParams = [...this.path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
         const missingPathParams = pathParams.filter(
-            (param) => !pathParameters.some((p) => p.name.originalName === param)
+            (param) => !pathParameters.some((p) => (typeof p.name === "string" ? p.name : p.name.originalName) === param)
         );
         for (const param of missingPathParams) {
             if (param == null) {

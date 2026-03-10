@@ -197,7 +197,7 @@ export class OperationConverter extends AbstractOperationConverter {
             pathParameters,
             queryParameters,
             headers: headers.filter(
-                (header, index, self) => index === self.findIndex((h) => h.name.wireValue === header.name.wireValue)
+                (header, index, self) => index === self.findIndex((h) => (typeof h.name === "string" ? h.name : h.name.wireValue) === (typeof header.name === "string" ? header.name : header.name.wireValue))
             ),
             responseHeaders: convertedResponseBody?.responseHeaders,
             sdkRequest: undefined,
