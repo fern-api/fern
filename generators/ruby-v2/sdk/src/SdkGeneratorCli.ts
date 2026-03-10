@@ -118,12 +118,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 context.logger.debug("Generated readme!");
             } catch (e) {
                 const errorMessage = e instanceof Error ? e.message : String(e);
-                const errorStack = e instanceof Error ? e.stack : undefined;
-                context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
-                if (errorStack) {
-                    context.logger.debug(`README.md generation error stack: ${errorStack}`);
-                }
-                throw e;
+                throw new Error(`Failed to generate README.md: ${errorMessage}`);
             }
         }
 
@@ -131,12 +126,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             await this.generateReference({ context });
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : String(error);
-            const errorStack = error instanceof Error ? error.stack : undefined;
-            context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
-            if (errorStack) {
-                context.logger.debug(`reference.md generation error stack: ${errorStack}`);
-            }
-            throw error;
+            throw new Error(`Failed to generate reference.md: ${errorMessage}`);
         }
 
         await this.generateWireTestFiles(context);
