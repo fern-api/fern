@@ -194,6 +194,7 @@ func newScannerStreamReader(
 	options *streamOptions,
 ) *ScannerStreamReader {
 	scanner := bufio.NewScanner(reader)
+	scanner.Buffer(make([]byte, slices.Min([]int{4096, options.maxBufSize})), options.maxBufSize)
 	stream := &ScannerStreamReader{
 		scanner: scanner,
 		options: options,
