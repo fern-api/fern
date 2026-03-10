@@ -7,8 +7,8 @@
         - **Auth bypass**: when `FERN_FDR_ORIGIN` (or legacy `OVERRIDE_FDR_ORIGIN`)
           is set, the CLI reads `FERN_TOKEN` directly instead of triggering
           interactive login.
-        - **PostHog opt-out**: set `FERN_POSTHOG=false` to disable telemetry
-          (in addition to the existing `FERN_DISABLE_TELEMETRY=true`).
+        - **Telemetry opt-out**: use the existing `FERN_DISABLE_TELEMETRY=true` to
+          disable PostHog telemetry.
         - **ValidFileTypes skip**: removed entirely (no longer needed).
 
         Also renames `OVERRIDE_FDR_ORIGIN` to `FERN_FDR_ORIGIN` (the old name
