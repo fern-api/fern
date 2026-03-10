@@ -347,6 +347,33 @@ client.create_user(
 "
 `;
 
+exports[`snippets (default) > required-headers > 'GET /plants (simple)' 1`] = `
+"require "acme"
+
+client = Acme::Client.new(
+  token: "<YOUR_API_KEY>",
+  tenant_id: "my-tenant-id"
+)
+
+client.plantstore.list
+"
+`;
+
+exports[`snippets (default) > required-headers > 'POST /plants (simple)' 1`] = `
+"require "acme"
+
+client = Acme::Client.new(
+  token: "<YOUR_API_KEY>",
+  tenant_id: "my-tenant-id"
+)
+
+client.plantstore.create(
+  name: "Fern",
+  price: 12.99
+)
+"
+`;
+
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "require "acme"
 
