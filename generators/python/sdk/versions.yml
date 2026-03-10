@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.62.3
+  changelogEntry:
+    - summary: |
+        Fix `TypeError` when sending multipart/form-data requests with non-primitive
+        data types (e.g., dicts) alongside files. The HTTP client runtime now automatically
+        JSON-serializes any `dict` values in the `data` parameter before passing them to
+        httpx, which only accepts primitive types in multipart encoding.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
 - version: 4.62.2
   changelogEntry:
     - summary: |

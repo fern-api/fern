@@ -1,5 +1,6 @@
 import asyncio
 import email.utils
+import json as _json
 import re
 import time
 import typing
@@ -177,12 +178,14 @@ def _maybe_filter_none_from_multipart_data(
     force_multipart: typing.Optional[bool],
 ) -> typing.Optional[typing.Any]:
     """
-    Filter None values from data body for multipart/form requests.
-    This prevents httpx from converting None to empty strings in multipart encoding.
+    Filter None values and JSON-serialize dict values from data body for multipart/form requests.
+    This prevents httpx from converting None to empty strings in multipart encoding,
+    and prevents TypeError when dict values are passed (httpx only accepts primitive types).
     Only applies when files are present or force_multipart is True.
     """
     if data is not None and isinstance(data, typing.Mapping) and (request_files or force_multipart):
-        return remove_none_from_dict(data)
+        filtered = remove_none_from_dict(data)
+        return {k: _json.dumps(v) if isinstance(v, dict) else v for k, v in filtered.items()}
     return data
 
 
