@@ -216,7 +216,10 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     docs: this.description,
                     name: this.context.casingsGenerator.generateName(this.schemaId),
                     properties: requestBodyTypeShape.properties.map((property) => {
-                        const encoding = mediaTypeObject.encoding?.[typeof property.name === "string" ? property.name : property.name.wireValue];
+                        const encoding =
+                            mediaTypeObject.encoding?.[
+                                typeof property.name === "string" ? property.name : property.name.wireValue
+                            ];
                         return this.convertRequestBodyProperty({ property, contentType, encoding });
                     }),
                     v2Examples: this.convertMediaTypeObjectExamples({
@@ -482,9 +485,17 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
             return false;
         }
 
-        const queryParameterNames = new Set(this.queryParameters.map((param) => (typeof param.name === "string" ? param.name : param.name.wireValue).toLowerCase()));
+        const queryParameterNames = new Set(
+            this.queryParameters.map((param) =>
+                (typeof param.name === "string" ? param.name : param.name.wireValue).toLowerCase()
+            )
+        );
 
-        return bodyProperties.some((property) => queryParameterNames.has((typeof property.name === "string" ? property.name : property.name.wireValue).toLowerCase()));
+        return bodyProperties.some((property) =>
+            queryParameterNames.has(
+                (typeof property.name === "string" ? property.name : property.name.wireValue).toLowerCase()
+            )
+        );
     }
 }
 
