@@ -8,8 +8,14 @@ import { generateHeaders } from "../endpoints/utils/generateHeaders.js";
 function createName(name: string): FernIr.Name {
     return {
         originalName: name,
-        camelCase: { unsafeName: name.charAt(0).toLowerCase() + name.slice(1), safeName: name.charAt(0).toLowerCase() + name.slice(1) },
-        pascalCase: { unsafeName: name.charAt(0).toUpperCase() + name.slice(1), safeName: name.charAt(0).toUpperCase() + name.slice(1) },
+        camelCase: {
+            unsafeName: name.charAt(0).toLowerCase() + name.slice(1),
+            safeName: name.charAt(0).toLowerCase() + name.slice(1)
+        },
+        pascalCase: {
+            unsafeName: name.charAt(0).toUpperCase() + name.slice(1),
+            safeName: name.charAt(0).toUpperCase() + name.slice(1)
+        },
         snakeCase: { unsafeName: name.toLowerCase(), safeName: name.toLowerCase() },
         screamingSnakeCase: { unsafeName: name.toUpperCase(), safeName: name.toUpperCase() }
     };
@@ -95,6 +101,7 @@ function createMockContext() {
         versionContext: {
             getGeneratedVersion: () => undefined
         }
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
 
@@ -104,6 +111,7 @@ function createMockGeneratedSdkClientClass(opts?: { hasAuthProvider?: boolean; g
         getGenerateEndpointMetadata: () => opts?.generateEndpointMetadata ?? false,
         getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
         getReferenceToMetadataForEndpointSupplier: () => ts.factory.createIdentifier("_metadata")
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
 
@@ -115,6 +123,7 @@ function createMockRequestParameter() {
                 ts.factory.createIdentifier(header.name.name.camelCase.unsafeName)
             );
         }
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
 
@@ -126,10 +135,13 @@ describe("generateHeaders", () => {
     it("generates headers with no service/endpoint headers and no auth", () => {
         const result = generateHeaders({
             context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             intermediateRepresentation: { headers: [] } as any,
             generatedSdkClientClass: createMockGeneratedSdkClientClass(),
             requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             service: { headers: [] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             endpoint: { headers: [], auth: false, idempotent: false } as any,
             idempotencyHeaders: []
         });
@@ -141,27 +153,26 @@ describe("generateHeaders", () => {
 
     it("generates headers with service and endpoint headers", () => {
         const serviceHeaders = [
-            createHttpHeader(
-                "X-API-Version",
-                FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
-                { wireValue: "X-API-Version" }
-            )
+            createHttpHeader("X-API-Version", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }), {
+                wireValue: "X-API-Version"
+            })
         ];
 
         const endpointHeaders = [
-            createHttpHeader(
-                "X-Request-Id",
-                FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
-                { wireValue: "X-Request-Id" }
-            )
+            createHttpHeader("X-Request-Id", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }), {
+                wireValue: "X-Request-Id"
+            })
         ];
 
         const result = generateHeaders({
             context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             intermediateRepresentation: { headers: [] } as any,
             generatedSdkClientClass: createMockGeneratedSdkClientClass(),
             requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             service: { headers: serviceHeaders } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             endpoint: { headers: endpointHeaders, auth: false, idempotent: false } as any,
             idempotencyHeaders: []
         });
@@ -172,19 +183,20 @@ describe("generateHeaders", () => {
 
     it("generates headers with idempotency headers when endpoint is idempotent", () => {
         const idempotencyHeaders = [
-            createHttpHeader(
-                "Idempotency-Key",
-                FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
-                { wireValue: "Idempotency-Key" }
-            )
+            createHttpHeader("Idempotency-Key", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }), {
+                wireValue: "Idempotency-Key"
+            })
         ];
 
         const result = generateHeaders({
             context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             intermediateRepresentation: { headers: [] } as any,
             generatedSdkClientClass: createMockGeneratedSdkClientClass(),
             requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             service: { headers: [] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             endpoint: { headers: [], auth: false, idempotent: true } as any,
             idempotencyHeaders
         });
@@ -195,19 +207,20 @@ describe("generateHeaders", () => {
 
     it("generates headers without idempotency headers when endpoint is not idempotent", () => {
         const idempotencyHeaders = [
-            createHttpHeader(
-                "Idempotency-Key",
-                FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
-                { wireValue: "Idempotency-Key" }
-            )
+            createHttpHeader("Idempotency-Key", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }), {
+                wireValue: "Idempotency-Key"
+            })
         ];
 
         const result = generateHeaders({
             context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             intermediateRepresentation: { headers: [] } as any,
             generatedSdkClientClass: createMockGeneratedSdkClientClass(),
             requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             service: { headers: [] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             endpoint: { headers: [], auth: false, idempotent: false } as any,
             idempotencyHeaders
         });
@@ -219,10 +232,13 @@ describe("generateHeaders", () => {
     it("generates auth headers when auth provider exists and endpoint requires auth", () => {
         const result = generateHeaders({
             context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             intermediateRepresentation: { headers: [] } as any,
             generatedSdkClientClass: createMockGeneratedSdkClientClass({ hasAuthProvider: true }),
             requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             service: { headers: [] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             endpoint: { headers: [], auth: true, idempotent: false } as any,
             idempotencyHeaders: []
         });
@@ -234,9 +250,7 @@ describe("generateHeaders", () => {
     it("generates headers with literal header value", () => {
         const literalHeader = createHttpHeader(
             "X-Fern-Language",
-            FernIr.TypeReference.container(
-                FernIr.ContainerType.literal(FernIr.Literal.string("JavaScript"))
-            ),
+            FernIr.TypeReference.container(FernIr.ContainerType.literal(FernIr.Literal.string("JavaScript"))),
             { wireValue: "X-Fern-Language" }
         );
 
@@ -246,10 +260,13 @@ describe("generateHeaders", () => {
 
         const result = generateHeaders({
             context: mockContext,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             intermediateRepresentation: { headers: [] } as any,
             generatedSdkClientClass: createMockGeneratedSdkClientClass(),
             requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             service: { headers: [literalHeader] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             endpoint: { headers: [], auth: false, idempotent: false } as any,
             idempotencyHeaders: []
         });
@@ -260,21 +277,22 @@ describe("generateHeaders", () => {
 
     it("generates headers with root-level overridable headers", () => {
         const rootHeaders = [
-            createHttpHeader(
-                "X-Custom-Header",
-                FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
-                { wireValue: "X-Custom-Header" }
-            )
+            createHttpHeader("X-Custom-Header", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }), {
+                wireValue: "X-Custom-Header"
+            })
         ];
 
         const mockContext = createMockContext();
 
         const result = generateHeaders({
             context: mockContext,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             intermediateRepresentation: { headers: rootHeaders } as any,
             generatedSdkClientClass: createMockGeneratedSdkClientClass(),
             requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             service: { headers: [] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             endpoint: { headers: [], auth: false, idempotent: false } as any,
             idempotencyHeaders: []
         });
@@ -293,10 +311,13 @@ describe("generateHeaders", () => {
 
         const result = generateHeaders({
             context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             intermediateRepresentation: { headers: [] } as any,
             generatedSdkClientClass: createMockGeneratedSdkClientClass(),
             requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             service: { headers: [] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
             endpoint: { headers: [], auth: false, idempotent: false } as any,
             idempotencyHeaders: [],
             additionalHeaders

@@ -9,10 +9,26 @@ import { GeneratedSingleUrlEnvironmentsImpl } from "../GeneratedSingleUrlEnviron
 function createName(name: string) {
     return {
         originalName: name,
-        camelCase: { unsafeName: name.charAt(0).toLowerCase() + name.slice(1), safeName: name.charAt(0).toLowerCase() + name.slice(1) },
-        pascalCase: { unsafeName: name.charAt(0).toUpperCase() + name.slice(1), safeName: name.charAt(0).toUpperCase() + name.slice(1) },
+        camelCase: {
+            unsafeName: name.charAt(0).toLowerCase() + name.slice(1),
+            safeName: name.charAt(0).toLowerCase() + name.slice(1)
+        },
+        pascalCase: {
+            unsafeName: name.charAt(0).toUpperCase() + name.slice(1),
+            safeName: name.charAt(0).toUpperCase() + name.slice(1)
+        },
         snakeCase: { unsafeName: name.toLowerCase(), safeName: name.toLowerCase() },
         screamingSnakeCase: { unsafeName: name.toUpperCase(), safeName: name.toUpperCase() }
+    };
+}
+
+function createMockEnvironmentsContext() {
+    return {
+        environments: {
+            getReferenceToEnvironmentsEnum: () => ({
+                getExpression: () => ts.factory.createIdentifier("MyEnvironment")
+            })
+        }
     };
 }
 
@@ -38,8 +54,7 @@ describe("EmptyGeneratedEnvironmentsImpl", () => {
         const impl = new EmptyGeneratedEnvironmentsImpl();
         const inputExpr = ts.factory.createIdentifier("myEnvironment");
         const result = impl.getReferenceToEnvironmentUrl({
-            referenceToEnvironmentValue: inputExpr,
-            baseUrlId: undefined
+            referenceToEnvironmentValue: inputExpr
         });
         expect(getTextOfTsNode(result)).toBe("myEnvironment");
     });
@@ -52,13 +67,21 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
                 id: "env-prod",
                 name: createName("Production"),
                 url: "https://api.example.com",
-                docs: undefined
+                docs: undefined,
+                audiences: undefined,
+                defaultUrl: undefined,
+                urlTemplate: undefined,
+                urlVariables: undefined
             },
             {
                 id: "env-staging",
                 name: createName("Staging"),
                 url: "https://staging.example.com",
-                docs: "Staging environment"
+                docs: "Staging environment",
+                audiences: undefined,
+                defaultUrl: undefined,
+                urlTemplate: undefined,
+                urlVariables: undefined
             }
         ]
     };
@@ -87,13 +110,8 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
             defaultEnvironmentId: undefined,
             environments: singleUrlEnvironments
         });
-        const mockContext = {
-            environments: {
-                getReferenceToEnvironmentsEnum: () => ({
-                    getExpression: () => ts.factory.createIdentifier("MyEnvironment")
-                })
-            }
-        } as any;
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+        const mockContext = createMockEnvironmentsContext() as any;
         expect(impl.getReferenceToDefaultEnvironment(mockContext)).toBeUndefined();
     });
 
@@ -103,16 +121,13 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
             defaultEnvironmentId: "env-prod",
             environments: singleUrlEnvironments
         });
-        const mockContext = {
-            environments: {
-                getReferenceToEnvironmentsEnum: () => ({
-                    getExpression: () => ts.factory.createIdentifier("MyEnvironment")
-                })
-            }
-        } as any;
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+        const mockContext = createMockEnvironmentsContext() as any;
         const result = impl.getReferenceToDefaultEnvironment(mockContext);
         expect(result).toBeDefined();
-        expect(getTextOfTsNode(result!)).toBe("MyEnvironment.Production");
+        if (result != null) {
+            expect(getTextOfTsNode(result)).toBe("MyEnvironment.Production");
+        }
     });
 
     it("getReferenceToEnvironmentUrl returns the input expression for single URL", () => {
@@ -154,9 +169,8 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
         const project = new Project({ useInMemoryFileSystem: true });
         const sourceFile = project.createSourceFile("environments.ts");
 
-        const mockContext = {
-            sourceFile
-        } as any;
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+        const mockContext = { sourceFile } as any;
 
         impl.writeToFile(mockContext);
 
@@ -185,7 +199,11 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
                     "base-url-api": "https://api.example.com",
                     "base-url-auth": "https://auth.example.com"
                 },
-                docs: undefined
+                docs: undefined,
+                audiences: undefined,
+                defaultUrls: undefined,
+                urlTemplates: undefined,
+                urlVariables: undefined
             },
             {
                 id: "env-staging",
@@ -194,7 +212,11 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
                     "base-url-api": "https://api-staging.example.com",
                     "base-url-auth": "https://auth-staging.example.com"
                 },
-                docs: "Staging environment"
+                docs: "Staging environment",
+                audiences: undefined,
+                defaultUrls: undefined,
+                urlTemplates: undefined,
+                urlVariables: undefined
             }
         ]
     };
@@ -226,16 +248,13 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
             defaultEnvironmentId: "env-prod",
             environments: multipleUrlsEnvironments
         });
-        const mockContext = {
-            environments: {
-                getReferenceToEnvironmentsEnum: () => ({
-                    getExpression: () => ts.factory.createIdentifier("MyEnvironment")
-                })
-            }
-        } as any;
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+        const mockContext = createMockEnvironmentsContext() as any;
         const result = impl.getReferenceToDefaultEnvironment(mockContext);
         expect(result).toBeDefined();
-        expect(getTextOfTsNode(result!)).toBe("MyEnvironment.Production");
+        if (result != null) {
+            expect(getTextOfTsNode(result)).toBe("MyEnvironment.Production");
+        }
     });
 
     it("getReferenceToEnvironmentUrl generates property access for baseUrl", () => {
@@ -296,9 +315,8 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
         const project = new Project({ useInMemoryFileSystem: true });
         const sourceFile = project.createSourceFile("environments.ts");
 
-        const mockContext = {
-            sourceFile
-        } as any;
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+        const mockContext = { sourceFile } as any;
 
         impl.writeToFile(mockContext);
 

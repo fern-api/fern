@@ -8,17 +8,20 @@ import { buildUrl } from "../endpoints/utils/buildUrl.js";
 function createName(name: string): FernIr.Name {
     return {
         originalName: name,
-        camelCase: { unsafeName: name.charAt(0).toLowerCase() + name.slice(1), safeName: name.charAt(0).toLowerCase() + name.slice(1) },
-        pascalCase: { unsafeName: name.charAt(0).toUpperCase() + name.slice(1), safeName: name.charAt(0).toUpperCase() + name.slice(1) },
+        camelCase: {
+            unsafeName: name.charAt(0).toLowerCase() + name.slice(1),
+            safeName: name.charAt(0).toLowerCase() + name.slice(1)
+        },
+        pascalCase: {
+            unsafeName: name.charAt(0).toUpperCase() + name.slice(1),
+            safeName: name.charAt(0).toUpperCase() + name.slice(1)
+        },
         snakeCase: { unsafeName: name.toLowerCase(), safeName: name.toLowerCase() },
         screamingSnakeCase: { unsafeName: name.toUpperCase(), safeName: name.toUpperCase() }
     };
 }
 
-function createPathParameter(
-    name: string,
-    location: FernIr.PathParameterLocation = "ENDPOINT"
-): FernIr.PathParameter {
+function createPathParameter(name: string, location: FernIr.PathParameterLocation = "ENDPOINT"): FernIr.PathParameter {
     return {
         name: createName(name),
         valueType: FernIr.TypeReference.primitive({
@@ -51,6 +54,7 @@ function createMockContext() {
                 jsonOrThrow: (expr: ts.Expression) => expr
             })
         }
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
 
@@ -62,6 +66,7 @@ function createMockGeneratedClientClass() {
                 ts.factory.createThis(),
                 ts.factory.createIdentifier(pathParam.name.camelCase.unsafeName)
             )
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
 
@@ -110,7 +115,9 @@ describe("buildUrl", () => {
         });
 
         expect(result).toBeDefined();
-        expect(getTextOfTsNode(result!)).toBe('"/api/v1/users"');
+        if (result != null) {
+            expect(getTextOfTsNode(result)).toBe('"/api/v1/users"');
+        }
     });
 
     it("generates template literal for path with one parameter", () => {
@@ -139,8 +146,10 @@ describe("buildUrl", () => {
         });
 
         expect(result).toBeDefined();
-        const text = getTextOfTsNode(result!);
-        expect(text).toMatchSnapshot();
+        if (result != null) {
+            const text = getTextOfTsNode(result);
+            expect(text).toMatchSnapshot();
+        }
     });
 
     it("generates template literal for path with multiple parameters", () => {
@@ -176,8 +185,10 @@ describe("buildUrl", () => {
         });
 
         expect(result).toBeDefined();
-        const text = getTextOfTsNode(result!);
-        expect(text).toMatchSnapshot();
+        if (result != null) {
+            const text = getTextOfTsNode(result);
+            expect(text).toMatchSnapshot();
+        }
     });
 
     it("generates template literal with trailing path after parameter", () => {
@@ -206,8 +217,10 @@ describe("buildUrl", () => {
         });
 
         expect(result).toBeDefined();
-        const text = getTextOfTsNode(result!);
-        expect(text).toMatchSnapshot();
+        if (result != null) {
+            const text = getTextOfTsNode(result);
+            expect(text).toMatchSnapshot();
+        }
     });
 
     it("uses root path parameter reference for ROOT location", () => {
@@ -236,8 +249,10 @@ describe("buildUrl", () => {
         });
 
         expect(result).toBeDefined();
-        const text = getTextOfTsNode(result!);
-        expect(text).toMatchSnapshot();
+        if (result != null) {
+            const text = getTextOfTsNode(result);
+            expect(text).toMatchSnapshot();
+        }
     });
 
     it("retains original casing when retainOriginalCasing is true", () => {
@@ -266,8 +281,10 @@ describe("buildUrl", () => {
         });
 
         expect(result).toBeDefined();
-        const text = getTextOfTsNode(result!);
-        expect(text).toMatchSnapshot();
+        if (result != null) {
+            const text = getTextOfTsNode(result);
+            expect(text).toMatchSnapshot();
+        }
     });
 
     it("throws when path parameter is not found in allPathParameters", () => {

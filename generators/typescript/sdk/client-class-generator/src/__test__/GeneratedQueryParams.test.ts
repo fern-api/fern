@@ -8,8 +8,14 @@ import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js
 function createName(name: string): FernIr.Name {
     return {
         originalName: name,
-        camelCase: { unsafeName: name.charAt(0).toLowerCase() + name.slice(1), safeName: name.charAt(0).toLowerCase() + name.slice(1) },
-        pascalCase: { unsafeName: name.charAt(0).toUpperCase() + name.slice(1), safeName: name.charAt(0).toUpperCase() + name.slice(1) },
+        camelCase: {
+            unsafeName: name.charAt(0).toLowerCase() + name.slice(1),
+            safeName: name.charAt(0).toLowerCase() + name.slice(1)
+        },
+        pascalCase: {
+            unsafeName: name.charAt(0).toUpperCase() + name.slice(1),
+            safeName: name.charAt(0).toUpperCase() + name.slice(1)
+        },
         snakeCase: { unsafeName: name.toLowerCase(), safeName: name.toLowerCase() },
         screamingSnakeCase: { unsafeName: name.toUpperCase(), safeName: name.toUpperCase() }
     };
@@ -38,18 +44,20 @@ function createQueryParameter(
     };
 }
 
-function createMockContext(opts?: { includeSerdeLayer?: boolean; retainOriginalCasing?: boolean; omitUndefined?: boolean }) {
+function createMockContext(opts?: {
+    includeSerdeLayer?: boolean;
+    retainOriginalCasing?: boolean;
+    omitUndefined?: boolean;
+}) {
     return {
         includeSerdeLayer: opts?.includeSerdeLayer ?? false,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
         type: {
+            // biome-ignore lint/suspicious/noExplicitAny: test mock callback signature
             stringify: (expr: ts.Expression, _typeRef: FernIr.TypeReference, _opts: any) => {
                 return ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        expr,
-                        ts.factory.createIdentifier("toString")
-                    ),
+                    ts.factory.createPropertyAccessExpression(expr, ts.factory.createIdentifier("toString")),
                     undefined,
                     []
                 );
@@ -75,6 +83,7 @@ function createMockContext(opts?: { includeSerdeLayer?: boolean; retainOriginalC
                 }
             })
         }
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
 
@@ -115,8 +124,11 @@ describe("GeneratedQueryParams", () => {
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
 
-            const text = getTextOfTsNode(statements[0]!);
-            expect(text).toMatchSnapshot();
+            const firstStatement = statements[0];
+            if (firstStatement != null) {
+                const text = getTextOfTsNode(firstStatement);
+                expect(text).toMatchSnapshot();
+            }
         });
 
         it("generates query params for multiple parameters", () => {
@@ -134,8 +146,11 @@ describe("GeneratedQueryParams", () => {
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
 
-            const text = getTextOfTsNode(statements[0]!);
-            expect(text).toMatchSnapshot();
+            const firstStatement = statements[0];
+            if (firstStatement != null) {
+                const text = getTextOfTsNode(firstStatement);
+                expect(text).toMatchSnapshot();
+            }
         });
 
         it("generates query params with wire value different from name", () => {
@@ -153,8 +168,11 @@ describe("GeneratedQueryParams", () => {
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
 
-            const text = getTextOfTsNode(statements[0]!);
-            expect(text).toMatchSnapshot();
+            const firstStatement = statements[0];
+            if (firstStatement != null) {
+                const text = getTextOfTsNode(firstStatement);
+                expect(text).toMatchSnapshot();
+            }
         });
 
         it("generates query params with allowMultiple and array check", () => {
@@ -162,9 +180,7 @@ describe("GeneratedQueryParams", () => {
                 createQueryParameter(
                     "tags",
                     FernIr.TypeReference.container(
-                        FernIr.ContainerType.list(
-                            FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-                        )
+                        FernIr.ContainerType.list(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                     ),
                     { allowMultiple: true }
                 )
@@ -178,8 +194,11 @@ describe("GeneratedQueryParams", () => {
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
 
-            const text = getTextOfTsNode(statements[0]!);
-            expect(text).toMatchSnapshot();
+            const firstStatement = statements[0];
+            if (firstStatement != null) {
+                const text = getTextOfTsNode(firstStatement);
+                expect(text).toMatchSnapshot();
+            }
         });
 
         it("generates query params with date-time type needing stringify", () => {
@@ -195,8 +214,11 @@ describe("GeneratedQueryParams", () => {
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
 
-            const text = getTextOfTsNode(statements[0]!);
-            expect(text).toMatchSnapshot();
+            const firstStatement = statements[0];
+            if (firstStatement != null) {
+                const text = getTextOfTsNode(firstStatement);
+                expect(text).toMatchSnapshot();
+            }
         });
 
         it("handles special characters in wire values", () => {
@@ -218,8 +240,11 @@ describe("GeneratedQueryParams", () => {
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
 
-            const text = getTextOfTsNode(statements[0]!);
-            expect(text).toMatchSnapshot();
+            const firstStatement = statements[0];
+            if (firstStatement != null) {
+                const text = getTextOfTsNode(firstStatement);
+                expect(text).toMatchSnapshot();
+            }
         });
     });
 
@@ -237,8 +262,10 @@ describe("GeneratedQueryParams", () => {
             const result = generator.getReferenceTo();
             expect(result).toBeDefined();
 
-            const text = getTextOfTsNode(result!);
-            expect(text).toMatchSnapshot();
+            if (result != null) {
+                const text = getTextOfTsNode(result);
+                expect(text).toMatchSnapshot();
+            }
         });
 
         it("returns only requestOptions queryParams when no parameters", () => {
@@ -250,8 +277,10 @@ describe("GeneratedQueryParams", () => {
             const result = generator.getReferenceTo();
             expect(result).toBeDefined();
 
-            const text = getTextOfTsNode(result!);
-            expect(text).toMatchSnapshot();
+            if (result != null) {
+                const text = getTextOfTsNode(result);
+                expect(text).toMatchSnapshot();
+            }
         });
     });
 });
