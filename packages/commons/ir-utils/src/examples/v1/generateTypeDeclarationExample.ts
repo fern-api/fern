@@ -10,6 +10,7 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 
+import { getWireValue } from "../../utils/namesUtils.js";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
 import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample.js";
@@ -99,7 +100,7 @@ export function generateTypeDeclarationExample({
                 example: ExampleTypeShape.enum({
                     value: enumValue.name
                 }),
-                jsonExample: enumValue.name.wireValue
+                jsonExample: getWireValue(enumValue.name)
             };
         }
         case "object": {
@@ -250,7 +251,7 @@ export function generateTypeDeclarationExample({
             if (typeDeclaration.shape.baseProperties != null) {
                 for (const baseProperty of typeDeclaration.shape.baseProperties) {
                     const basePropertyExample = generateTypeReferenceExample({
-                        fieldName: baseProperty.name.wireValue,
+                        fieldName: getWireValue(baseProperty.name),
                         typeReference: baseProperty.valueType,
                         typeDeclarations,
                         currentDepth: currentDepth + 1,
@@ -259,14 +260,14 @@ export function generateTypeDeclarationExample({
                         visitedTypes
                     });
                     if (basePropertyExample.type === "success") {
-                        basePropertyExamples[baseProperty.name.wireValue] = basePropertyExample.jsonExample;
+                        basePropertyExamples[getWireValue(baseProperty.name)] = basePropertyExample.jsonExample;
                     }
                 }
             }
 
             const baseProperties: ExampleUnionBaseProperty[] = typeDeclaration.shape.baseProperties.map((property) => {
                 const propertyExample = generateTypeReferenceExample({
-                    fieldName: property.name.wireValue,
+                    fieldName: getWireValue(property.name),
                     typeReference: property.valueType,
                     typeDeclarations,
                     currentDepth: currentDepth + 1,
@@ -275,7 +276,7 @@ export function generateTypeDeclarationExample({
                     visitedTypes
                 });
                 if (propertyExample.type === "failure") {
-                    throw new Error(`Failed to generate example for union base property ${property.name.wireValue}`);
+                    throw new Error(`Failed to generate example for union base property ${getWireValue(property.name)}`);
                 }
                 const { example } = propertyExample;
                 return {
@@ -328,7 +329,7 @@ export function generateTypeDeclarationExample({
                                 extendProperties
                             }),
                             jsonExample: {
-                                [discriminant.wireValue]: variant.discriminantValue.wireValue,
+                                [getWireValue(discriminant)]: getWireValue(variant.discriminantValue),
                                 ...basePropertyExamples
                             }
                         };
@@ -378,7 +379,7 @@ export function generateTypeDeclarationExample({
                                 extendProperties
                             }),
                             jsonExample: {
-                                [discriminant.wireValue]: variant.discriminantValue.wireValue,
+                                [getWireValue(discriminant)]: getWireValue(variant.discriminantValue),
                                 ...(typeof jsonExample === "object" ? jsonExample : {}),
                                 ...basePropertyExamples
                             }
@@ -410,8 +411,8 @@ export function generateTypeDeclarationExample({
                                 extendProperties
                             }),
                             jsonExample: {
-                                [discriminant.wireValue]: variant.discriminantValue.wireValue,
-                                [value.name.wireValue]: jsonExample,
+                                [getWireValue(discriminant)]: getWireValue(variant.discriminantValue),
+                                [getWireValue(value.name)]: jsonExample,
                                 ...basePropertyExamples
                             }
                         };
@@ -456,7 +457,7 @@ function generateObjectDeclarationExample({
         ...(objectTypeDeclaration.extendedProperties ?? [])
     ]) {
         const propertyExample = generateTypeReferenceExample({
-            fieldName: property.name.wireValue,
+            fieldName: getWireValue(property.name),
             typeReference: property.valueType,
             typeDeclarations,
             currentDepth: currentDepth + 1,
@@ -470,7 +471,7 @@ function generateObjectDeclarationExample({
         ) {
             return {
                 type: "failure",
-                message: `Failed to generate required property ${property.name.wireValue} b/c ${propertyExample.message}`
+                message: `Failed to generate required property ${getWireValue(property.name)} b/c ${propertyExample.message}`
             };
         } else if (propertyExample.type === "failure") {
             continue;
@@ -482,7 +483,7 @@ function generateObjectDeclarationExample({
             value: example,
             propertyAccess: property.propertyAccess
         });
-        jsonExample[property.name.wireValue] = propertyJsonExample;
+        jsonExample[getWireValue(property.name)] = propertyJsonExample;
     }
     return {
         type: "success",

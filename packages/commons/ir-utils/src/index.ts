@@ -18,4 +18,10 @@ export { IntermediateRepresentationChangeDetector } from "./IntermediateRepresen
 export { mergeIntermediateRepresentation } from "./mergeIntermediateRepresentation.js";
 export { IdGenerator } from "./utils/IdGenerator.js";
 export { isReferencedWebhookPayloadSchema } from "./utils/isReferencedWebhookPayloadSchema.js";
+export {
+    ensureNameAndWireValue,
+    getNameFromWireValue,
+    getOriginalName,
+    getWireValue
+} from "./utils/namesUtils.js";
 export { stringifyFernFilepath } from "./utils/stringifyFernFilepath.js";

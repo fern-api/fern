@@ -1,5 +1,6 @@
 import { HttpEndpoint, IntermediateRepresentation, TypeDeclaration, TypeId, V2ValueExamples } from "@fern-api/ir-sdk";
 
+import { getOriginalName, getWireValue, getNameFromWireValue } from "../../utils/namesUtils.js";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
 import { getFirstExamples } from "./getV2Examples.js";
 
@@ -31,9 +32,9 @@ export function getParameterExamples({
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
         if (userExample !== undefined) {
-            result.pathParameters[parameter.name.originalName] = userExample;
+            result.pathParameters[getOriginalName(parameter.name)] = userExample;
         } else if (autoExample !== undefined) {
-            result.pathParameters[parameter.name.originalName] = autoExample;
+            result.pathParameters[getOriginalName(parameter.name)] = autoExample;
         }
     }
 
@@ -41,7 +42,7 @@ export function getParameterExamples({
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
         if (userExample !== undefined) {
-            result.queryParameters[parameter.name.name.originalName] = userExample;
+            result.queryParameters[getOriginalName(getNameFromWireValue(parameter.name))] = userExample;
         } else if (autoExample !== undefined) {
             if (
                 skipOptionalRequestProperties &&
@@ -50,7 +51,7 @@ export function getParameterExamples({
                 continue;
             }
 
-            result.queryParameters[parameter.name.name.originalName] = autoExample;
+            result.queryParameters[getOriginalName(getNameFromWireValue(parameter.name))] = autoExample;
         }
     }
 
@@ -59,7 +60,7 @@ export function getParameterExamples({
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
         if (userExample !== undefined) {
-            result.headers[parameter.name.wireValue] = userExample;
+            result.headers[getWireValue(parameter.name)] = userExample;
         } else if (autoExample !== undefined) {
             if (
                 skipOptionalRequestProperties &&
@@ -68,7 +69,7 @@ export function getParameterExamples({
                 continue;
             }
 
-            result.headers[parameter.name.wireValue] = autoExample;
+            result.headers[getWireValue(parameter.name)] = autoExample;
         }
     }
 
