@@ -355,62 +355,86 @@ export class WireTestFunctionGenerator {
                         });
                     },
                     union: (exampleUnionType) => {
+                        const caseName =
+                            exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase.unsafeName;
                         return exampleUnionType.singleUnionType.shape._visit({
                             noProperties: () =>
-                                swift.Expression.contextualMethodCall({
-                                    methodName:
-                                        exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase
-                                            .unsafeName,
-                                    arguments_: [
+                                swift.Expression.memberAccess({
+                                    target: swift.Expression.reference(symbol.name),
+                                    memberName: caseName
+                                }),
+                            samePropertiesAsObject: (exampleObjectTypeWithId) => {
+                                const declaredWireNames = new Set(
+                                    exampleObjectTypeWithId.object.properties.map((p) => p.name.wireValue)
+                                );
+                                const jsonObj =
+                                    exampleTypeRef.jsonExample != null &&
+                                    typeof exampleTypeRef.jsonExample === "object" &&
+                                    !Array.isArray(exampleTypeRef.jsonExample)
+                                        ? (exampleTypeRef.jsonExample as Record<string, unknown>)
+                                        : {};
+                                const extraEntries = Object.entries(jsonObj).filter(
+                                    ([key]) => !declaredWireNames.has(key)
+                                );
+                                const propertyArgs: swift.FunctionArgument[] = exampleObjectTypeWithId.object.properties
+                                    .map((property) => {
+                                        if (
+                                            property.value.shape.type === "container" &&
+                                            property.value.shape.container.type === "optional" &&
+                                            property.value.jsonExample === undefined
+                                        ) {
+                                            return null;
+                                        }
+                                        const exampleResponse = this.generateExampleResponse(property.value, fromScope);
+                                        return swift.functionArgument({
+                                            label: property.name.name.camelCase.unsafeName,
+                                            value: exampleResponse
+                                        });
+                                    })
+                                    .filter((arg): arg is swift.FunctionArgument => arg != null);
+                                if (extraEntries.length > 0) {
+                                    propertyArgs.push(
                                         swift.functionArgument({
-                                            value: swift.Expression.contextualMethodCall({
-                                                methodName: "init",
-                                                arguments_: []
+                                            label: "additionalProperties",
+                                            value: swift.Expression.dictionaryLiteral({
+                                                entries: extraEntries.map(([key, value]) => [
+                                                    swift.Expression.stringLiteral(key),
+                                                    this.generateUnknownExampleResponse(value)
+                                                ]),
+                                                multiline: true
                                             })
                                         })
-                                    ]
-                                }),
-                            samePropertiesAsObject: (exampleObjectTypeWithId) =>
-                                swift.Expression.contextualMethodCall({
-                                    methodName:
-                                        exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase
-                                            .unsafeName,
+                                    );
+                                }
+                                return swift.Expression.methodCall({
+                                    target: swift.Expression.reference(symbol.name),
+                                    methodName: caseName,
                                     arguments_: [
                                         swift.functionArgument({
                                             value: swift.Expression.contextualMethodCall({
                                                 methodName: "init",
-                                                arguments_: exampleObjectTypeWithId.object.properties
-                                                    .map((property) => {
-                                                        if (
-                                                            property.value.shape.type === "container" &&
-                                                            property.value.shape.container.type === "optional" &&
-                                                            property.value.jsonExample === undefined
-                                                        ) {
-                                                            return null;
-                                                        }
-                                                        const exampleResponse = this.generateExampleResponse(
-                                                            property.value,
-                                                            fromScope
-                                                        );
-                                                        return swift.functionArgument({
-                                                            label: property.name.name.camelCase.unsafeName,
-                                                            value: exampleResponse
-                                                        });
-                                                    })
-                                                    .filter((arg) => arg != null),
+                                                arguments_: propertyArgs,
                                                 multiline: true
                                             })
                                         })
                                     ],
                                     multiline: true
+                                });
+                            },
+                            singleProperty: (exampleTypeRef) =>
+                                swift.Expression.methodCall({
+                                    target: swift.Expression.reference(symbol.name),
+                                    methodName: caseName,
+                                    arguments_: [
+                                        swift.functionArgument({
+                                            value: this.generateExampleResponse(exampleTypeRef, fromScope)
+                                        })
+                                    ]
                                 }),
-                            singleProperty: (exampleTypeRef) => this.generateExampleResponse(exampleTypeRef, fromScope),
                             _other: () =>
-                                swift.Expression.contextualMethodCall({
-                                    methodName:
-                                        exampleUnionType.singleUnionType.wireDiscriminantValue.name.camelCase
-                                            .unsafeName,
-                                    arguments_: []
+                                swift.Expression.memberAccess({
+                                    target: swift.Expression.reference(symbol.name),
+                                    memberName: caseName
                                 })
                         });
                     },

@@ -658,14 +658,14 @@ import Trace
                 problemId: "problemId",
                 problemDescription: ProblemDescription(
                     boards: [
-                        "boards",
-                        "boards"
+                        ProblemDescriptionBoard.html("boards"),
+                        ProblemDescriptionBoard.html("boards")
                     ]
                 ),
                 problemName: "problemName",
                 problemVersion: 1,
                 supportedLanguages: [],
-                customFiles: .basic(
+                customFiles: CustomFilesType.basic(
                     .init(
                         methodName: "methodName",
                         signature: NonVoidFunctionSignatureType(
@@ -673,15 +673,15 @@ import Trace
                                 ParameterType(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType(.init())
+                                    variableType: VariableType.integerType
                                 ),
                                 ParameterType(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType(.init())
+                                    variableType: VariableType.integerType
                                 )
                             ],
-                            returnType: .integerType(.init())
+                            returnType: VariableType.integerType
                         ),
                         additionalFiles: [
                             .java: FilesType(
@@ -706,12 +706,15 @@ import Trace
                             name: "name",
                             description: TestCaseImplementationDescriptionType(
                                 boards: [
-                                    "boards",
-                                    "boards"
+                                    TestCaseImplementationDescriptionBoardType.html("boards"),
+                                    TestCaseImplementationDescriptionBoardType.html("boards")
                                 ]
                             ),
                             expectedValueParameterId: "expectedValueParameterId"
-                        )
+                        ),
+                        additionalProperties: [
+                            "type": JSONValue.string("basic")
+                        ]
                     )
                 ),
                 generatedFiles: GeneratedFilesType(
@@ -777,11 +780,11 @@ import Trace
                         implementation: TestCaseImplementationType(
                             description: TestCaseImplementationDescriptionType(
                                 boards: [
-                                    "boards",
-                                    "boards"
+                                    TestCaseImplementationDescriptionBoardType.html("boards"),
+                                    TestCaseImplementationDescriptionBoardType.html("boards")
                                 ]
                             ),
-                            function: .withActualResult(
+                            function: TestCaseFunctionType.withActualResult(
                                 .init(
                                     getActualResult: NonVoidFunctionDefinitionType(
                                         signature: NonVoidFunctionSignatureType(
@@ -789,15 +792,15 @@ import Trace
                                                 ParameterType(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType(.init())
+                                                    variableType: VariableType.integerType
                                                 ),
                                                 ParameterType(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType(.init())
+                                                    variableType: VariableType.integerType
                                                 )
                                             ],
-                                            returnType: .integerType(.init())
+                                            returnType: VariableType.integerType
                                         ),
                                         code: FunctionImplementationForMultipleLanguagesType(
                                             codeByLanguage: [
@@ -807,11 +810,17 @@ import Trace
                                             ]
                                         )
                                     ),
-                                    assertCorrectnessCheck: .deepEquality(
+                                    assertCorrectnessCheck: AssertCorrectnessCheckType.deepEquality(
                                         .init(
-                                            expectedValueParameterId: "expectedValueParameterId"
+                                            expectedValueParameterId: "expectedValueParameterId",
+                                            additionalProperties: [
+                                                "type": JSONValue.string("deepEquality")
+                                            ]
                                         )
-                                    )
+                                    ),
+                                    additionalProperties: [
+                                        "type": JSONValue.string("withActualResult")
+                                    ]
                                 )
                             )
                         )
@@ -822,11 +831,11 @@ import Trace
                         implementation: TestCaseImplementationType(
                             description: TestCaseImplementationDescriptionType(
                                 boards: [
-                                    "boards",
-                                    "boards"
+                                    TestCaseImplementationDescriptionBoardType.html("boards"),
+                                    TestCaseImplementationDescriptionBoardType.html("boards")
                                 ]
                             ),
-                            function: .withActualResult(
+                            function: TestCaseFunctionType.withActualResult(
                                 .init(
                                     getActualResult: NonVoidFunctionDefinitionType(
                                         signature: NonVoidFunctionSignatureType(
@@ -834,15 +843,15 @@ import Trace
                                                 ParameterType(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType(.init())
+                                                    variableType: VariableType.integerType
                                                 ),
                                                 ParameterType(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType(.init())
+                                                    variableType: VariableType.integerType
                                                 )
                                             ],
-                                            returnType: .integerType(.init())
+                                            returnType: VariableType.integerType
                                         ),
                                         code: FunctionImplementationForMultipleLanguagesType(
                                             codeByLanguage: [
@@ -852,11 +861,17 @@ import Trace
                                             ]
                                         )
                                     ),
-                                    assertCorrectnessCheck: .deepEquality(
+                                    assertCorrectnessCheck: AssertCorrectnessCheckType.deepEquality(
                                         .init(
-                                            expectedValueParameterId: "expectedValueParameterId"
+                                            expectedValueParameterId: "expectedValueParameterId",
+                                            additionalProperties: [
+                                                "type": JSONValue.string("deepEquality")
+                                            ]
                                         )
-                                    )
+                                    ),
+                                    additionalProperties: [
+                                        "type": JSONValue.string("withActualResult")
+                                    ]
                                 )
                             )
                         )
@@ -869,9 +884,9 @@ import Trace
                             name: "name",
                             hidden: true
                         ),
-                        implementation: "implementation",
+                        implementation: TestCaseImplementationReferenceType.templateId("implementation"),
                         arguments: [
-                            "arguments": 1
+                            "arguments": VariableValue.integerValue(1)
                         ],
                         expects: Optional(TestCaseExpectsType(
                             expectedStdout: Optional("expectedStdout")
@@ -883,9 +898,9 @@ import Trace
                             name: "name",
                             hidden: true
                         ),
-                        implementation: "implementation",
+                        implementation: TestCaseImplementationReferenceType.templateId("implementation"),
                         arguments: [
-                            "arguments": 1
+                            "arguments": VariableValue.integerValue(1)
                         ],
                         expects: Optional(TestCaseExpectsType(
                             expectedStdout: Optional("expectedStdout")
@@ -898,14 +913,14 @@ import Trace
                 problemId: "problemId",
                 problemDescription: ProblemDescription(
                     boards: [
-                        "boards",
-                        "boards"
+                        ProblemDescriptionBoard.html("boards"),
+                        ProblemDescriptionBoard.html("boards")
                     ]
                 ),
                 problemName: "problemName",
                 problemVersion: 1,
                 supportedLanguages: [],
-                customFiles: .basic(
+                customFiles: CustomFilesType.basic(
                     .init(
                         methodName: "methodName",
                         signature: NonVoidFunctionSignatureType(
@@ -913,15 +928,15 @@ import Trace
                                 ParameterType(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType(.init())
+                                    variableType: VariableType.integerType
                                 ),
                                 ParameterType(
                                     parameterId: "parameterId",
                                     name: "name",
-                                    variableType: .integerType(.init())
+                                    variableType: VariableType.integerType
                                 )
                             ],
-                            returnType: .integerType(.init())
+                            returnType: VariableType.integerType
                         ),
                         additionalFiles: [
                             .java: FilesType(
@@ -946,12 +961,15 @@ import Trace
                             name: "name",
                             description: TestCaseImplementationDescriptionType(
                                 boards: [
-                                    "boards",
-                                    "boards"
+                                    TestCaseImplementationDescriptionBoardType.html("boards"),
+                                    TestCaseImplementationDescriptionBoardType.html("boards")
                                 ]
                             ),
                             expectedValueParameterId: "expectedValueParameterId"
-                        )
+                        ),
+                        additionalProperties: [
+                            "type": JSONValue.string("basic")
+                        ]
                     )
                 ),
                 generatedFiles: GeneratedFilesType(
@@ -1017,11 +1035,11 @@ import Trace
                         implementation: TestCaseImplementationType(
                             description: TestCaseImplementationDescriptionType(
                                 boards: [
-                                    "boards",
-                                    "boards"
+                                    TestCaseImplementationDescriptionBoardType.html("boards"),
+                                    TestCaseImplementationDescriptionBoardType.html("boards")
                                 ]
                             ),
-                            function: .withActualResult(
+                            function: TestCaseFunctionType.withActualResult(
                                 .init(
                                     getActualResult: NonVoidFunctionDefinitionType(
                                         signature: NonVoidFunctionSignatureType(
@@ -1029,15 +1047,15 @@ import Trace
                                                 ParameterType(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType(.init())
+                                                    variableType: VariableType.integerType
                                                 ),
                                                 ParameterType(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType(.init())
+                                                    variableType: VariableType.integerType
                                                 )
                                             ],
-                                            returnType: .integerType(.init())
+                                            returnType: VariableType.integerType
                                         ),
                                         code: FunctionImplementationForMultipleLanguagesType(
                                             codeByLanguage: [
@@ -1047,11 +1065,17 @@ import Trace
                                             ]
                                         )
                                     ),
-                                    assertCorrectnessCheck: .deepEquality(
+                                    assertCorrectnessCheck: AssertCorrectnessCheckType.deepEquality(
                                         .init(
-                                            expectedValueParameterId: "expectedValueParameterId"
+                                            expectedValueParameterId: "expectedValueParameterId",
+                                            additionalProperties: [
+                                                "type": JSONValue.string("deepEquality")
+                                            ]
                                         )
-                                    )
+                                    ),
+                                    additionalProperties: [
+                                        "type": JSONValue.string("withActualResult")
+                                    ]
                                 )
                             )
                         )
@@ -1062,11 +1086,11 @@ import Trace
                         implementation: TestCaseImplementationType(
                             description: TestCaseImplementationDescriptionType(
                                 boards: [
-                                    "boards",
-                                    "boards"
+                                    TestCaseImplementationDescriptionBoardType.html("boards"),
+                                    TestCaseImplementationDescriptionBoardType.html("boards")
                                 ]
                             ),
-                            function: .withActualResult(
+                            function: TestCaseFunctionType.withActualResult(
                                 .init(
                                     getActualResult: NonVoidFunctionDefinitionType(
                                         signature: NonVoidFunctionSignatureType(
@@ -1074,15 +1098,15 @@ import Trace
                                                 ParameterType(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType(.init())
+                                                    variableType: VariableType.integerType
                                                 ),
                                                 ParameterType(
                                                     parameterId: "parameterId",
                                                     name: "name",
-                                                    variableType: .integerType(.init())
+                                                    variableType: VariableType.integerType
                                                 )
                                             ],
-                                            returnType: .integerType(.init())
+                                            returnType: VariableType.integerType
                                         ),
                                         code: FunctionImplementationForMultipleLanguagesType(
                                             codeByLanguage: [
@@ -1092,11 +1116,17 @@ import Trace
                                             ]
                                         )
                                     ),
-                                    assertCorrectnessCheck: .deepEquality(
+                                    assertCorrectnessCheck: AssertCorrectnessCheckType.deepEquality(
                                         .init(
-                                            expectedValueParameterId: "expectedValueParameterId"
+                                            expectedValueParameterId: "expectedValueParameterId",
+                                            additionalProperties: [
+                                                "type": JSONValue.string("deepEquality")
+                                            ]
                                         )
-                                    )
+                                    ),
+                                    additionalProperties: [
+                                        "type": JSONValue.string("withActualResult")
+                                    ]
                                 )
                             )
                         )
@@ -1109,9 +1139,9 @@ import Trace
                             name: "name",
                             hidden: true
                         ),
-                        implementation: "implementation",
+                        implementation: TestCaseImplementationReferenceType.templateId("implementation"),
                         arguments: [
-                            "arguments": 1
+                            "arguments": VariableValue.integerValue(1)
                         ],
                         expects: Optional(TestCaseExpectsType(
                             expectedStdout: Optional("expectedStdout")
@@ -1123,9 +1153,9 @@ import Trace
                             name: "name",
                             hidden: true
                         ),
-                        implementation: "implementation",
+                        implementation: TestCaseImplementationReferenceType.templateId("implementation"),
                         arguments: [
-                            "arguments": 1
+                            "arguments": VariableValue.integerValue(1)
                         ],
                         expects: Optional(TestCaseExpectsType(
                             expectedStdout: Optional("expectedStdout")
@@ -1449,14 +1479,14 @@ import Trace
             problemId: "problemId",
             problemDescription: ProblemDescription(
                 boards: [
-                    "boards",
-                    "boards"
+                    ProblemDescriptionBoard.html("boards"),
+                    ProblemDescriptionBoard.html("boards")
                 ]
             ),
             problemName: "problemName",
             problemVersion: 1,
             supportedLanguages: [],
-            customFiles: .basic(
+            customFiles: CustomFilesType.basic(
                 .init(
                     methodName: "methodName",
                     signature: NonVoidFunctionSignatureType(
@@ -1464,15 +1494,15 @@ import Trace
                             ParameterType(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType(.init())
+                                variableType: VariableType.integerType
                             ),
                             ParameterType(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType(.init())
+                                variableType: VariableType.integerType
                             )
                         ],
-                        returnType: .integerType(.init())
+                        returnType: VariableType.integerType
                     ),
                     additionalFiles: [
                         .java: FilesType(
@@ -1497,12 +1527,15 @@ import Trace
                         name: "name",
                         description: TestCaseImplementationDescriptionType(
                             boards: [
-                                "boards",
-                                "boards"
+                                TestCaseImplementationDescriptionBoardType.html("boards"),
+                                TestCaseImplementationDescriptionBoardType.html("boards")
                             ]
                         ),
                         expectedValueParameterId: "expectedValueParameterId"
-                    )
+                    ),
+                    additionalProperties: [
+                        "type": JSONValue.string("basic")
+                    ]
                 )
             ),
             generatedFiles: GeneratedFilesType(
@@ -1568,11 +1601,11 @@ import Trace
                     implementation: TestCaseImplementationType(
                         description: TestCaseImplementationDescriptionType(
                             boards: [
-                                "boards",
-                                "boards"
+                                TestCaseImplementationDescriptionBoardType.html("boards"),
+                                TestCaseImplementationDescriptionBoardType.html("boards")
                             ]
                         ),
-                        function: .withActualResult(
+                        function: TestCaseFunctionType.withActualResult(
                             .init(
                                 getActualResult: NonVoidFunctionDefinitionType(
                                     signature: NonVoidFunctionSignatureType(
@@ -1580,15 +1613,15 @@ import Trace
                                             ParameterType(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType(.init())
+                                                variableType: VariableType.integerType
                                             ),
                                             ParameterType(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType(.init())
+                                                variableType: VariableType.integerType
                                             )
                                         ],
-                                        returnType: .integerType(.init())
+                                        returnType: VariableType.integerType
                                     ),
                                     code: FunctionImplementationForMultipleLanguagesType(
                                         codeByLanguage: [
@@ -1599,11 +1632,17 @@ import Trace
                                         ]
                                     )
                                 ),
-                                assertCorrectnessCheck: .deepEquality(
+                                assertCorrectnessCheck: AssertCorrectnessCheckType.deepEquality(
                                     .init(
-                                        expectedValueParameterId: "expectedValueParameterId"
+                                        expectedValueParameterId: "expectedValueParameterId",
+                                        additionalProperties: [
+                                            "type": JSONValue.string("deepEquality")
+                                        ]
                                     )
-                                )
+                                ),
+                                additionalProperties: [
+                                    "type": JSONValue.string("withActualResult")
+                                ]
                             )
                         )
                     )
@@ -1614,11 +1653,11 @@ import Trace
                     implementation: TestCaseImplementationType(
                         description: TestCaseImplementationDescriptionType(
                             boards: [
-                                "boards",
-                                "boards"
+                                TestCaseImplementationDescriptionBoardType.html("boards"),
+                                TestCaseImplementationDescriptionBoardType.html("boards")
                             ]
                         ),
-                        function: .withActualResult(
+                        function: TestCaseFunctionType.withActualResult(
                             .init(
                                 getActualResult: NonVoidFunctionDefinitionType(
                                     signature: NonVoidFunctionSignatureType(
@@ -1626,15 +1665,15 @@ import Trace
                                             ParameterType(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType(.init())
+                                                variableType: VariableType.integerType
                                             ),
                                             ParameterType(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType(.init())
+                                                variableType: VariableType.integerType
                                             )
                                         ],
-                                        returnType: .integerType(.init())
+                                        returnType: VariableType.integerType
                                     ),
                                     code: FunctionImplementationForMultipleLanguagesType(
                                         codeByLanguage: [
@@ -1645,11 +1684,17 @@ import Trace
                                         ]
                                     )
                                 ),
-                                assertCorrectnessCheck: .deepEquality(
+                                assertCorrectnessCheck: AssertCorrectnessCheckType.deepEquality(
                                     .init(
-                                        expectedValueParameterId: "expectedValueParameterId"
+                                        expectedValueParameterId: "expectedValueParameterId",
+                                        additionalProperties: [
+                                            "type": JSONValue.string("deepEquality")
+                                        ]
                                     )
-                                )
+                                ),
+                                additionalProperties: [
+                                    "type": JSONValue.string("withActualResult")
+                                ]
                             )
                         )
                     )
@@ -1662,9 +1707,9 @@ import Trace
                         name: "name",
                         hidden: true
                     ),
-                    implementation: "implementation",
+                    implementation: TestCaseImplementationReferenceType.templateId("implementation"),
                     arguments: [
-                        "arguments": 1
+                        "arguments": VariableValue.integerValue(1)
                     ],
                     expects: Optional(TestCaseExpectsType(
                         expectedStdout: Optional("expectedStdout")
@@ -1676,9 +1721,9 @@ import Trace
                         name: "name",
                         hidden: true
                     ),
-                    implementation: "implementation",
+                    implementation: TestCaseImplementationReferenceType.templateId("implementation"),
                     arguments: [
-                        "arguments": 1
+                        "arguments": VariableValue.integerValue(1)
                     ],
                     expects: Optional(TestCaseExpectsType(
                         expectedStdout: Optional("expectedStdout")
@@ -2004,14 +2049,14 @@ import Trace
             problemId: "problemId",
             problemDescription: ProblemDescription(
                 boards: [
-                    "boards",
-                    "boards"
+                    ProblemDescriptionBoard.html("boards"),
+                    ProblemDescriptionBoard.html("boards")
                 ]
             ),
             problemName: "problemName",
             problemVersion: 1,
             supportedLanguages: [],
-            customFiles: .basic(
+            customFiles: CustomFilesType.basic(
                 .init(
                     methodName: "methodName",
                     signature: NonVoidFunctionSignatureType(
@@ -2019,15 +2064,15 @@ import Trace
                             ParameterType(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType(.init())
+                                variableType: VariableType.integerType
                             ),
                             ParameterType(
                                 parameterId: "parameterId",
                                 name: "name",
-                                variableType: .integerType(.init())
+                                variableType: VariableType.integerType
                             )
                         ],
-                        returnType: .integerType(.init())
+                        returnType: VariableType.integerType
                     ),
                     additionalFiles: [
                         .java: FilesType(
@@ -2052,12 +2097,15 @@ import Trace
                         name: "name",
                         description: TestCaseImplementationDescriptionType(
                             boards: [
-                                "boards",
-                                "boards"
+                                TestCaseImplementationDescriptionBoardType.html("boards"),
+                                TestCaseImplementationDescriptionBoardType.html("boards")
                             ]
                         ),
                         expectedValueParameterId: "expectedValueParameterId"
-                    )
+                    ),
+                    additionalProperties: [
+                        "type": JSONValue.string("basic")
+                    ]
                 )
             ),
             generatedFiles: GeneratedFilesType(
@@ -2123,11 +2171,11 @@ import Trace
                     implementation: TestCaseImplementationType(
                         description: TestCaseImplementationDescriptionType(
                             boards: [
-                                "boards",
-                                "boards"
+                                TestCaseImplementationDescriptionBoardType.html("boards"),
+                                TestCaseImplementationDescriptionBoardType.html("boards")
                             ]
                         ),
-                        function: .withActualResult(
+                        function: TestCaseFunctionType.withActualResult(
                             .init(
                                 getActualResult: NonVoidFunctionDefinitionType(
                                     signature: NonVoidFunctionSignatureType(
@@ -2135,15 +2183,15 @@ import Trace
                                             ParameterType(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType(.init())
+                                                variableType: VariableType.integerType
                                             ),
                                             ParameterType(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType(.init())
+                                                variableType: VariableType.integerType
                                             )
                                         ],
-                                        returnType: .integerType(.init())
+                                        returnType: VariableType.integerType
                                     ),
                                     code: FunctionImplementationForMultipleLanguagesType(
                                         codeByLanguage: [
@@ -2154,11 +2202,17 @@ import Trace
                                         ]
                                     )
                                 ),
-                                assertCorrectnessCheck: .deepEquality(
+                                assertCorrectnessCheck: AssertCorrectnessCheckType.deepEquality(
                                     .init(
-                                        expectedValueParameterId: "expectedValueParameterId"
+                                        expectedValueParameterId: "expectedValueParameterId",
+                                        additionalProperties: [
+                                            "type": JSONValue.string("deepEquality")
+                                        ]
                                     )
-                                )
+                                ),
+                                additionalProperties: [
+                                    "type": JSONValue.string("withActualResult")
+                                ]
                             )
                         )
                     )
@@ -2169,11 +2223,11 @@ import Trace
                     implementation: TestCaseImplementationType(
                         description: TestCaseImplementationDescriptionType(
                             boards: [
-                                "boards",
-                                "boards"
+                                TestCaseImplementationDescriptionBoardType.html("boards"),
+                                TestCaseImplementationDescriptionBoardType.html("boards")
                             ]
                         ),
-                        function: .withActualResult(
+                        function: TestCaseFunctionType.withActualResult(
                             .init(
                                 getActualResult: NonVoidFunctionDefinitionType(
                                     signature: NonVoidFunctionSignatureType(
@@ -2181,15 +2235,15 @@ import Trace
                                             ParameterType(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType(.init())
+                                                variableType: VariableType.integerType
                                             ),
                                             ParameterType(
                                                 parameterId: "parameterId",
                                                 name: "name",
-                                                variableType: .integerType(.init())
+                                                variableType: VariableType.integerType
                                             )
                                         ],
-                                        returnType: .integerType(.init())
+                                        returnType: VariableType.integerType
                                     ),
                                     code: FunctionImplementationForMultipleLanguagesType(
                                         codeByLanguage: [
@@ -2200,11 +2254,17 @@ import Trace
                                         ]
                                     )
                                 ),
-                                assertCorrectnessCheck: .deepEquality(
+                                assertCorrectnessCheck: AssertCorrectnessCheckType.deepEquality(
                                     .init(
-                                        expectedValueParameterId: "expectedValueParameterId"
+                                        expectedValueParameterId: "expectedValueParameterId",
+                                        additionalProperties: [
+                                            "type": JSONValue.string("deepEquality")
+                                        ]
                                     )
-                                )
+                                ),
+                                additionalProperties: [
+                                    "type": JSONValue.string("withActualResult")
+                                ]
                             )
                         )
                     )
@@ -2217,9 +2277,9 @@ import Trace
                         name: "name",
                         hidden: true
                     ),
-                    implementation: "implementation",
+                    implementation: TestCaseImplementationReferenceType.templateId("implementation"),
                     arguments: [
-                        "arguments": 1
+                        "arguments": VariableValue.integerValue(1)
                     ],
                     expects: Optional(TestCaseExpectsType(
                         expectedStdout: Optional("expectedStdout")
@@ -2231,9 +2291,9 @@ import Trace
                         name: "name",
                         hidden: true
                     ),
-                    implementation: "implementation",
+                    implementation: TestCaseImplementationReferenceType.templateId("implementation"),
                     arguments: [
-                        "arguments": 1
+                        "arguments": VariableValue.integerValue(1)
                     ],
                     expects: Optional(TestCaseExpectsType(
                         expectedStdout: Optional("expectedStdout")

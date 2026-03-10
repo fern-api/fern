@@ -569,6 +569,7 @@ class ToProtoPropertyMapper extends WithGeneration {
             case "UUID":
             case "BASE_64":
             case "BIG_INTEGER":
+            case "DATE_TIME_RFC_2822":
                 return this.csharp.codeblock(propertyName);
             default:
                 assertNever(primitive.v1);
@@ -949,6 +950,7 @@ class FromProtoPropertyMapper extends WithGeneration {
             case "UUID":
             case "BASE_64":
             case "BIG_INTEGER":
+            case "DATE_TIME_RFC_2822":
                 return this.csharp.codeblock(propertyName);
             default:
                 assertNever(primitive.v1);

@@ -263,10 +263,8 @@ export class WireTestGenerator {
     ): python.PythonFile | null {
         const statements: python.AstNode[] = [];
 
-        // Add raw imports that the AST doesn't support (simple "import X" statements)
+        // Add raw imports for pytest (not supported by AST)
         statements.push(python.codeBlock("import pytest"));
-        statements.push(python.codeBlock("from datetime import datetime, date"));
-        statements.push(python.codeBlock("from uuid import UUID"));
 
         // Add an import registration statement (for "from X import Y" style imports)
         statements.push(this.createImportRegistration());

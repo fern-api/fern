@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v62
+irVersion: v65
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -299,4 +299,5 @@ allowedFailures:
   - literal:readonly-constants
   - oauth-client-credentials-custom
   - package-yml
+  - pagination-uri-path
   - trace

@@ -40,11 +40,10 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.completions.stream(
-    query="",
+
+client.completions.stream(
+    query="foo",
 )
-for chunk in response.data:
-    yield chunk
 ```
 
 ## Async Client
@@ -62,11 +61,9 @@ client = AsyncSeedServerSentEvents(
 
 
 async def main() -> None:
-    response = await client.completions.stream(
-        query="",
+    await client.completions.stream(
+        query="foo",
     )
-    async for chunk in response.data:
-        yield chunk
 
 
 asyncio.run(main())
@@ -97,11 +94,10 @@ from seed import SeedServerSentEvents
 client = SeedServerSentEvents(
     base_url="https://yourhost.com/path/to/api",
 )
-response = client.completions.stream(
-    query="",
+
+client.completions.stream(
+    query="foo",
 )
-for chunk in response.data:
-    yield chunk
 ```
 
 ## Advanced
@@ -114,15 +110,11 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedServerSentEvents
 
-client = SeedServerSentEvents(
-    ...,
-)
-with client.completions.with_raw_response.stream(...) as response:
-    print(
-        response.headers
-    )  # access the response headersprint(response.status_code)  # access the response status code
-    for chunk in response.data:
-        print(chunk)  # access the underlying object(s)
+client = SeedServerSentEvents(...)
+response = client.completions.with_raw_response.stream(...)
+print(response.headers)  # access the response headers
+print(response.status_code)  # access the response status code
+print(response.data)  # access the underlying object
 ```
 
 ### Retries
@@ -150,14 +142,9 @@ client.completions.stream(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedServerSentEvents
 
-client = SeedServerSentEvents(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedServerSentEvents(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.completions.stream(..., request_options={

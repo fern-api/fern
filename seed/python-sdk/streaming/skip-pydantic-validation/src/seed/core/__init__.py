@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import jsonable_encoder
     from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
+    from .parse_error import ParsingError
     from .pydantic_utilities import (
         IS_PYDANTIC_V2,
         UniversalBaseModel,
@@ -44,6 +45,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LogConfig": ".logging",
     "LogLevel": ".logging",
     "Logger": ".logging",
+    "ParsingError": ".parse_error",
     "RequestOptions": ".request_options",
     "Rfc2822DateTime": ".datetime_utils",
     "SyncClientWrapper": ".client_wrapper",
@@ -105,6 +107,7 @@ __all__ = [
     "LogConfig",
     "LogLevel",
     "Logger",
+    "ParsingError",
     "RequestOptions",
     "Rfc2822DateTime",
     "SyncClientWrapper",

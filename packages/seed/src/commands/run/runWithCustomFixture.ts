@@ -77,7 +77,8 @@ export async function runWithCustomFixture({
             skipScripts,
             keepContainer,
             scriptRunner,
-            inspect
+            inspect,
+            parallelism: 1
         });
     }
 
@@ -141,6 +142,7 @@ export async function runWithCustomFixture({
         if (!skipScripts) {
             await scriptRunner?.stop();
         }
+        await testRunner.cleanup();
     }
 }
 

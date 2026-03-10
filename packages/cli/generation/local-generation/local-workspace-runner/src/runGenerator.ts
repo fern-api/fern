@@ -167,8 +167,7 @@ export async function writeFilesToDiskAndRunGenerator({
             keepContainer: keepDocker
         });
 
-    const isContainer = environment instanceof ContainerExecutionEnvironment;
-    const paths = isContainer
+    const paths = environment.usesContainerPaths
         ? ({
               outputDirectory: AbsoluteFilePath.of(CONTAINER_CODEGEN_OUTPUT_DIRECTORY),
               irPath: AbsoluteFilePath.of(CONTAINER_PATH_TO_IR),
