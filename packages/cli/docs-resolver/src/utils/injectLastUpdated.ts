@@ -61,6 +61,42 @@ export function hasLastUpdated(markdown: string): boolean {
 }
 
 /**
+ * Extracts the existing `last-updated` value from frontmatter, or returns
+ * undefined if the field is not present.
+ */
+export function getExistingLastUpdated(markdown: string): string | undefined {
+    const parsed = matter(markdown);
+    const value = parsed.data["last-updated"];
+    return value != null ? String(value) : undefined;
+}
+
+/**
+ * Replaces an existing `last-updated` value in the frontmatter with a new one.
+ * If `last-updated` is not present, falls back to injection via
+ * `injectLastUpdatedIntoMarkdown`.
+ */
+export function replaceLastUpdatedInMarkdown(markdown: string, newDate: string): string {
+    if (!hasLastUpdated(markdown)) {
+        return injectLastUpdatedIntoMarkdown(markdown, newDate);
+    }
+    // Replace the existing last-updated line in the raw frontmatter string.
+    // Handles both `last-updated: VALUE` and `last-updated: "VALUE"` forms.
+    return markdown.replace(
+        /^(last-updated:\s*)["']?.*?["']?\s*$/m,
+        `$1${newDate}`
+    );
+}
+
+/**
+ * Parses a "Month Day, Year" formatted date string (e.g. "March 9, 2026")
+ * into a Date object.  Returns undefined if the string cannot be parsed.
+ */
+export function parseFormattedDate(formatted: string): Date | undefined {
+    const date = new Date(formatted);
+    return isNaN(date.getTime()) ? undefined : date;
+}
+
+/**
  * Injects `last-updated: <date>` into the frontmatter of a markdown string.
  * - If the file has frontmatter (starts with ---), adds the field before the closing ---.
  * - If the file has no frontmatter, prepends a new frontmatter block.
@@ -106,8 +142,33 @@ export async function getGitLastModifiedDate(absoluteFilePath: AbsoluteFilePath)
 }
 
 /**
- * For each Markdown-sourced page that does not already have `last-updated` in
- * its frontmatter, looks up the file's last git commit date and injects it.
+ * Returns the raw ISO 8601 date from `git log` for comparison purposes.
+ * Unlike `getGitLastModifiedDate`, this does NOT format the date — it
+ * returns the ISO string directly so callers can compare timestamps.
+ */
+export async function getGitLastModifiedISO(absoluteFilePath: AbsoluteFilePath): Promise<string | undefined> {
+    try {
+        const { stdout } = await execFileAsync("git", ["log", "-1", "--format=%aI", "--", absoluteFilePath]);
+        const isoDate = stdout.trim();
+        return isoDate === "" ? undefined : isoDate;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * For each Markdown-sourced page, ensures `last-updated` reflects the most
+ * recent change — either from git history or from a user-supplied value,
+ * whichever is newer.
+ *
+ * Behaviour per page:
+ *  1. API-generated pages (in `excludePaths`) → returned unchanged.
+ *  2. No existing `last-updated` → inject git timestamp (or leave unchanged
+ *     if there is no git history).
+ *  3. Has `last-updated` AND git timestamp is newer → **replace** with the
+ *     git timestamp so the value never goes stale.
+ *  4. Has `last-updated` AND git timestamp is older or equal → keep the
+ *     user-supplied value.
  *
  * Pages listed in `excludePaths` are never modified — use this to skip
  * API-generated content (e.g. OpenAPI tag description pages) whose timestamps
@@ -139,14 +200,33 @@ export async function injectLastUpdatedDates(
                 return;
             }
 
-            if (hasLastUpdated(markdown)) {
+            const absoluteFilePath = resolve(absolutePathToFernFolder, relativePath);
+
+            // Check for an existing user-supplied last-updated value.
+            const existingDate = getExistingLastUpdated(markdown);
+
+            if (existingDate != null) {
+                // The page already has a last-updated value.  Check whether
+                // git has a newer timestamp — if so, replace it to prevent
+                // the user-specified date from going stale.
+                const gitISO = await getGitLastModifiedISO(absoluteFilePath);
+                if (gitISO != null) {
+                    const gitDate = new Date(gitISO);
+                    const userDate = parseFormattedDate(existingDate);
+                    if (userDate != null && gitDate > userDate) {
+                        // Git timestamp is newer — override the stale value.
+                        const formatted = formatLastUpdatedDate(gitISO);
+                        result[key] = replaceLastUpdatedInMarkdown(markdown, formatted);
+                        return;
+                    }
+                }
+                // User-supplied date is still current (or no git history).
                 result[key] = markdown;
                 return;
             }
 
-            const absoluteFilePath = resolve(absolutePathToFernFolder, relativePath);
+            // No existing last-updated — inject from git.
             const date = await getGitLastModifiedDate(absoluteFilePath);
-
             result[key] = date != null ? injectLastUpdatedIntoMarkdown(markdown, date) : markdown;
         })
     );

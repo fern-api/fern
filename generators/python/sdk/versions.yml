@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.62.2
+  changelogEntry:
+    - summary: |
+        Improve error logging for reference.md generation failures. The generator
+        now logs the actual error message and stack trace instead of a generic
+        "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 65
+
 - version: 4.62.1
   changelogEntry:
     - summary: |

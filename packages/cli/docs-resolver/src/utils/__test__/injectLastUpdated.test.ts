@@ -2,9 +2,12 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
 import {
     formatLastUpdatedDate,
+    getExistingLastUpdated,
     hasLastUpdated,
     injectLastUpdatedDates,
-    injectLastUpdatedIntoMarkdown
+    injectLastUpdatedIntoMarkdown,
+    parseFormattedDate,
+    replaceLastUpdatedInMarkdown
 } from "../injectLastUpdated.js";
 
 describe("formatLastUpdatedDate", () => {
@@ -36,6 +39,46 @@ describe("hasLastUpdated", () => {
 
     it("returns true when last-updated is the only frontmatter field", () => {
         expect(hasLastUpdated("---\nlast-updated: January 1, 2024\n---\n\nContent")).toBe(true);
+    });
+});
+
+describe("getExistingLastUpdated", () => {
+    it("returns undefined when no frontmatter exists", () => {
+        expect(getExistingLastUpdated("# Hello\n\nContent.")).toBeUndefined();
+    });
+
+    it("returns undefined when frontmatter has no last-updated", () => {
+        expect(getExistingLastUpdated("---\ntitle: Foo\n---\n\nContent")).toBeUndefined();
+    });
+
+    it("returns the existing last-updated value as a string", () => {
+        expect(getExistingLastUpdated("---\nlast-updated: January 1, 2024\n---\n\nContent")).toBe("January 1, 2024");
+    });
+});
+
+describe("replaceLastUpdatedInMarkdown", () => {
+    it("replaces an existing last-updated value", () => {
+        const markdown = "---\ntitle: Foo\nlast-updated: January 1, 2024\n---\n\nContent";
+        const result = replaceLastUpdatedInMarkdown(markdown, "March 9, 2026");
+        expect(result).toBe("---\ntitle: Foo\nlast-updated: March 9, 2026\n---\n\nContent");
+    });
+
+    it("falls back to injection when no last-updated exists", () => {
+        const markdown = "---\ntitle: Foo\n---\n\nContent";
+        const result = replaceLastUpdatedInMarkdown(markdown, "March 9, 2026");
+        expect(result).toBe("---\ntitle: Foo\nlast-updated: March 9, 2026\n---\n\nContent");
+    });
+});
+
+describe("parseFormattedDate", () => {
+    it("parses a valid 'Month Day, Year' string", () => {
+        const date = parseFormattedDate("March 9, 2026");
+        expect(date).toBeInstanceOf(Date);
+        expect(date!.getFullYear()).toBe(2026);
+    });
+
+    it("returns undefined for an unparseable string", () => {
+        expect(parseFormattedDate("not-a-date")).toBeUndefined();
     });
 });
 
@@ -87,7 +130,7 @@ describe("injectLastUpdatedIntoMarkdown", () => {
 });
 
 describe("injectLastUpdatedDates", () => {
-    it("preserves pages that already have last-updated", async () => {
+    it("preserves pages that already have last-updated when no git history available", async () => {
         const original = "---\nlast-updated: January 1, 2024\n---\n\nContent";
         const pages: Record<RelativeFilePath, string> = {
             [RelativeFilePath.of("page.mdx")]: original
@@ -95,7 +138,7 @@ describe("injectLastUpdatedDates", () => {
 
         const result = await injectLastUpdatedDates(pages, AbsoluteFilePath.of("/some/nonexistent/path"));
 
-        // File doesn't exist in git (nonexistent path) → page is preserved unchanged
+        // No git history at nonexistent path → user-supplied date is kept
         expect(result[RelativeFilePath.of("page.mdx")]).toBe(original);
     });
 

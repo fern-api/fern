@@ -58,6 +58,100 @@ describe("docs.yml navigation collapsible config", () => {
         ).rejects.toBeInstanceOf(FernCliError);
     });
 
+    it("should throw if collapsible is used alongside deprecated collapsed: open-by-default", async () => {
+        const context = createMockTaskContext();
+
+        const rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration = {
+            instances: [],
+            title: "Test",
+            navigation: [
+                {
+                    section: "Section",
+                    contents: [],
+                    collapsible: true,
+                    collapsed: "open-by-default"
+                }
+            ]
+        };
+
+        await expect(
+            parseDocsConfiguration({
+                rawDocsConfiguration,
+                absolutePathToFernFolder: AbsoluteFilePath.of("/tmp"),
+                absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/tmp/docs.yml"),
+                context
+            })
+        ).rejects.toBeInstanceOf(FernCliError);
+    });
+
+    it("should accept open-by-default as a collapsed value on sections", async () => {
+        const context = createMockTaskContext();
+
+        const rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration = {
+            instances: [],
+            title: "Test",
+            navigation: [
+                {
+                    section: "Section",
+                    contents: [],
+                    collapsed: "open-by-default"
+                }
+            ]
+        };
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration,
+            absolutePathToFernFolder: AbsoluteFilePath.of("/tmp"),
+            absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/tmp/docs.yml"),
+            context
+        });
+
+        expect(parsed.navigation).toMatchObject({
+            type: "untabbed",
+            items: [
+                {
+                    type: "section",
+                    title: "Section",
+                    collapsed: "open-by-default"
+                }
+            ]
+        });
+    });
+
+    it("should accept collapsed: true on sections", async () => {
+        const context = createMockTaskContext();
+
+        const rawDocsConfiguration: docsYml.RawSchemas.DocsConfiguration = {
+            instances: [],
+            title: "Test",
+            navigation: [
+                {
+                    section: "Section",
+                    contents: [],
+                    collapsed: true
+                }
+            ]
+        };
+
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration,
+            absolutePathToFernFolder: AbsoluteFilePath.of("/tmp"),
+            absoluteFilepathToDocsConfig: AbsoluteFilePath.of("/tmp/docs.yml"),
+            context
+        });
+
+        expect(parsed.navigation).toMatchObject({
+            type: "untabbed",
+            items: [
+                {
+                    type: "section",
+                    title: "Section",
+                    collapsed: true
+                }
+            ]
+        });
+    });
+
     it("should pass through collapsible + collapsedByDefault on sections", async () => {
         const context = createMockTaskContext();
 

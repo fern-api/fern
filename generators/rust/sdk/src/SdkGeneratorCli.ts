@@ -1,5 +1,4 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
-import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AbstractRustGeneratorCli,
@@ -783,9 +782,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
             context.logger.debug("Successfully added README.md to project");
         } catch (error) {
-            const errorMsg = extractErrorMessage(error);
-            context.logger.debug(`README generation failed: ${errorMsg}`);
-            throw new Error(`Failed to generate README.md: ${errorMsg}`);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
+            if (errorStack) {
+                context.logger.debug(`README.md generation error stack: ${errorStack}`);
+            }
         }
     }
 
@@ -850,9 +852,12 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.project.addSourceFiles(referenceFile);
             context.logger.debug("Successfully added reference.md to project");
         } catch (error) {
-            const errorMsg = extractErrorMessage(error);
-            context.logger.debug(`Reference generation failed: ${errorMsg}`);
-            throw new Error(`Failed to generate reference.md: ${errorMsg}`);
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
+            if (errorStack) {
+                context.logger.debug(`reference.md generation error stack: ${errorStack}`);
+            }
         }
     }
 

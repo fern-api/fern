@@ -72,10 +72,11 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                     endpointSnippets
                 });
             } catch (e) {
-                context.logger.error("Failed to generate README.md");
-                if (e instanceof Error) {
-                    context.logger.debug(e.message);
-                    context.logger.debug(e.stack ?? "");
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                const errorStack = e instanceof Error ? e.stack : undefined;
+                context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
+                if (errorStack) {
+                    context.logger.debug(`README.md generation error stack: ${errorStack}`);
                 }
             }
         }
@@ -83,10 +84,11 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         try {
             await this.generateReference({ context });
         } catch (error) {
-            context.logger.warn("Failed to generate reference.md, this is OK.");
-            if (error instanceof Error) {
-                context.logger.warn((error as Error)?.message);
-                context.logger.warn((error as Error)?.stack ?? "");
+            const errorMessage = error instanceof Error ? error.message : String(error);
+            const errorStack = error instanceof Error ? error.stack : undefined;
+            context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
+            if (errorStack) {
+                context.logger.debug(`reference.md generation error stack: ${errorStack}`);
             }
         }
 

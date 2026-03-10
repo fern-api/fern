@@ -1339,6 +1339,11 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      collapsed:
+        type: optional<boolean>
+        docs: |
+          Deprecated. Use `collapsible` and `collapsed-by-default` instead.
+        availability: deprecated
       collapsible:
         type: optional<boolean>
         docs: Whether the section can be expanded/collapsed by the user in the sidebar.

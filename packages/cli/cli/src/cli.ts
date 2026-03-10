@@ -55,6 +55,7 @@ import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/g
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
+import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
@@ -215,7 +216,7 @@ async function tryRunCli(cliContext: CliContext) {
     addOverridesCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext); // Deprecated: use `fern overrides write` instead
     addTestCommand(cli, cliContext);
-    addUpdateApiSpecCommand(cli, cliContext);
+    addApiCommand(cli, cliContext);
     addSelfUpdateCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
@@ -1237,9 +1238,17 @@ function addDowngradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
     );
 }
 
+function addApiCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("api", "Commands for managing your API specs", (yargs) => {
+        addUpdateApiSpecCommand(yargs, cliContext);
+        addEnrichCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
 function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "api update",
+        "update",
         `Pulls the latest OpenAPI spec from the specified origin in ${GENERATORS_CONFIGURATION_FILENAME} and updates the local spec.`,
         (yargs) =>
             yargs
@@ -1969,6 +1978,46 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 cliContext,
                 outputPath: resolve(cwd(), argv.outputPath),
                 indent: argv.indent
+            });
+        }
+    );
+}
+
+function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "enrich <openapi>",
+        false, // Hidden from --help
+        (yargs) =>
+            yargs
+                .positional("openapi", {
+                    type: "string",
+                    description: "Path to the OpenAPI spec",
+                    demandOption: true
+                })
+                .option("file", {
+                    type: "string",
+                    alias: "f",
+                    description: "Path to the overrides file (e.g. ai_examples_overrides.yml)",
+                    demandOption: true
+                })
+                .option("output", {
+                    type: "string",
+                    alias: "o",
+                    description: "Path to write the enriched output file",
+                    demandOption: true
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern api enrich"
+            });
+            const openapiPath = resolve(cwd(), argv.openapi as string);
+            const overridesPath = resolve(cwd(), argv.file);
+            const outputPath = resolve(cwd(), argv.output);
+            await mergeOpenAPIWithOverrides({
+                openapiPath: AbsoluteFilePath.of(openapiPath),
+                overridesPath: AbsoluteFilePath.of(overridesPath),
+                outputPath: AbsoluteFilePath.of(outputPath),
+                cliContext
             });
         }
     );
