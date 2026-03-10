@@ -1461,6 +1461,22 @@
       ],
       "additionalProperties": false
     },
+    "docs.CollapsedStringValue": {
+      "type": "string",
+      "enum": [
+        "open-by-default"
+      ]
+    },
+    "docs.CollapsedValue": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/docs.CollapsedStringValue"
+        }
+      ]
+    },
     "docs.SectionConfiguration": {
       "type": "object",
       "properties": {
@@ -1516,7 +1532,7 @@
         "collapsed": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.CollapsedValue"
             },
             {
               "type": "null"
@@ -2054,7 +2070,7 @@
         "collapsed": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.CollapsedValue"
             },
             {
               "type": "null"
@@ -2489,7 +2505,7 @@
         "collapsed": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.CollapsedValue"
             },
             {
               "type": "null"
@@ -2845,7 +2861,7 @@
         "collapsed": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.CollapsedValue"
             },
             {
               "type": "null"

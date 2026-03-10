@@ -1094,7 +1094,7 @@ types:
           The relative path to the markdown file that will be displayed when the section is clicked.
       contents: list<NavigationItem>
       collapsed:
-        type: optional<boolean>
+        type: optional<CollapsedValue>
         docs: |
           Deprecated. Use `collapsible` and `collapsed-by-default` instead.
         availability: deprecated
@@ -1132,7 +1132,7 @@ types:
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       collapsed:
-        type: optional<boolean>
+        type: optional<CollapsedValue>
         docs: |
           Deprecated. Use `collapsible` and `collapsed-by-default` instead.
         availability: deprecated
@@ -1150,6 +1150,17 @@ types:
     enum:
       - frontmatter
       - filename
+
+  CollapsedValue:
+    discriminated: false
+    union:
+      - boolean
+      - CollapsedStringValue
+
+  CollapsedStringValue:
+    enum:
+      - name: OpenByDefault
+        value: open-by-default
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -1181,7 +1192,7 @@ types:
         docs: |
           Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
       collapsed:
-        type: optional<boolean>
+        type: optional<CollapsedValue>
         availability: deprecated
       icon: optional<string>
       slug: optional<string>
@@ -1340,7 +1351,7 @@ types:
       hidden: optional<boolean>
       skip-slug: optional<boolean>
       collapsed:
-        type: optional<boolean>
+        type: optional<CollapsedValue>
         docs: |
           Deprecated. Use `collapsible` and `collapsed-by-default` instead.
         availability: deprecated
