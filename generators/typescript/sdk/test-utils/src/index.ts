@@ -4,10 +4,15 @@ export {
     createBasicAuthScheme,
     createBearerAuthScheme,
     createHeaderAuthScheme,
+    createHttpEndpoint,
     createHttpHeader,
+    createHttpService,
+    createInlinedRequestBody,
+    createInlinedRequestBodyProperty,
     createMinimalIR,
     createPathParameter,
-    createQueryParameter
+    createQueryParameter,
+    createSdkRequestWrapper
 } from "./ir-factories.js";
 export {
     createMockCoreUtilities,

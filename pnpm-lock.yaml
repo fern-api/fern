@@ -3517,6 +3517,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-typescript/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
