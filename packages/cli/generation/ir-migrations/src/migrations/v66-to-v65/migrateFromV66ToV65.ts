@@ -214,7 +214,7 @@ function inflateIr(
                     shape: inflateExampleTypeShape(shape.shape)
                 });
             case "container":
-                return IrVersions.V65.ExampleTypeReferenceShape.container(inflateExampleContainer(shape));
+                return IrVersions.V65.ExampleTypeReferenceShape.container(inflateExampleContainer(shape.container));
             case "primitive":
             case "unknown":
                 return shape;
@@ -607,7 +607,7 @@ function inflateIr(
     const inflateExampleResponse = (response: IrVersions.V65.ExampleResponse): IrVersions.V65.ExampleResponse => {
         switch (response.type) {
             case "ok":
-                return IrVersions.V65.ExampleResponse.ok(inflateExampleEndpointSuccessResponse(response));
+                return IrVersions.V65.ExampleResponse.ok(inflateExampleEndpointSuccessResponse(response.value));
             case "error":
                 return IrVersions.V65.ExampleResponse.error({
                     ...response,
