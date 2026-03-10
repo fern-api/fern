@@ -46,9 +46,8 @@ function createFernFilepath(): FernIr.FernFilepath {
 function createEnumValue(name: string, opts?: { wireValue?: string; docs?: string }): FernIr.EnumValue {
     return {
         name: createNameAndWireValue(name, opts?.wireValue),
-        docs: opts?.docs ?? undefined,
-        availability: undefined,
-        v2Examples: undefined
+        docs: opts?.docs,
+        availability: undefined
     };
 }
 
@@ -320,7 +319,8 @@ describe("GeneratedEnumTypeImpl", () => {
 
             const context = createMockBaseContext();
             const example: FernIr.ExampleTypeShape = FernIr.ExampleTypeShape.object({
-                properties: []
+                properties: [],
+                extraProperties: undefined
             });
             expect(() => generator.buildExample(example, context, { isForComment: true })).toThrow(
                 "Example is not for an enum"
