@@ -164,14 +164,17 @@ export class EndpointSnippetGenerator {
         header: FernIr.dynamic.NamedParameter;
         value: unknown;
     }): swift.FunctionArgument | undefined {
+        if (header.typeReference.type === "literal") {
+            // Literal header values (e.g. "X-API-Version") are set automatically
+            // by the SDK and should not be included in the client constructor.
+            return undefined;
+        }
         const expression = this.context.dynamicTypeLiteralMapper.convert({
             fromSymbol: moduleSymbol,
             typeReference: header.typeReference,
             value
         });
         if (expression.isNop()) {
-            // Literal header values (e.g. "X-API-Version") should not be included in the
-            // client constructor.
             return undefined;
         }
         return swift.functionArgument({
