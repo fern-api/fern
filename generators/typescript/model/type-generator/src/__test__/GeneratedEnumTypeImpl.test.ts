@@ -59,6 +59,7 @@ function createEnumGenerator(opts: {
     values: FernIr.EnumValue[];
     includeEnumUtils?: boolean;
     enableForwardCompatibleEnums?: boolean;
+    retainOriginalCasing?: boolean;
     docs?: string;
     examples?: FernIr.ExampleType[];
     // biome-ignore lint/suspicious/noExplicitAny: test factory with generic type parameter
@@ -76,7 +77,7 @@ function createEnumGenerator(opts: {
         }),
         includeSerdeLayer: false,
         noOptionalProperties: false,
-        retainOriginalCasing: false,
+        retainOriginalCasing: opts.retainOriginalCasing ?? false,
         enableInlineTypes: false,
         generateReadWriteOnlyTypes: false,
         includeEnumUtils: opts.includeEnumUtils ?? false,
@@ -186,6 +187,83 @@ describe("GeneratedEnumTypeImpl", () => {
                     createEnumValue("WellDraining", { wireValue: "well-draining" }),
                     createEnumValue("MoistRetaining", { wireValue: "moist-retaining" }),
                     createEnumValue("Sandy", { wireValue: "SANDY" })
+                ]
+            });
+
+            const output = serializeStatements(generator);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates enum with retainOriginalCasing", () => {
+            const generator = createEnumGenerator({
+                typeName: "PlantType",
+                values: [
+                    createEnumValue("Succulent", { wireValue: "succulent" }),
+                    createEnumValue("Fern", { wireValue: "fern" })
+                ],
+                retainOriginalCasing: true
+            });
+
+            const output = serializeStatements(generator);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates enum with top-level type docs", () => {
+            const generator = createEnumGenerator({
+                typeName: "PlantType",
+                values: [
+                    createEnumValue("Succulent", { wireValue: "succulent" }),
+                    createEnumValue("Fern", { wireValue: "fern" })
+                ],
+                docs: "Represents different types of plants."
+            });
+
+            const output = serializeStatements(generator);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates enum with top-level docs and examples", () => {
+            const generator = createEnumGenerator({
+                typeName: "PlantType",
+                values: [
+                    createEnumValue("Succulent", { wireValue: "succulent" }),
+                    createEnumValue("Fern", { wireValue: "fern" })
+                ],
+                docs: "Represents different types of plants.",
+                examples: [
+                    {
+                        name: undefined,
+                        docs: undefined,
+                        jsonExample: "succulent",
+                        shape: FernIr.ExampleTypeShape.enum({
+                            value: createNameAndWireValue("Succulent", "succulent")
+                        })
+                    }
+                ]
+            });
+
+            const output = serializeStatements(generator);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates enum with top-level docs and utils", () => {
+            const generator = createEnumGenerator({
+                typeName: "PlantType",
+                values: [
+                    createEnumValue("Succulent", { wireValue: "succulent" }),
+                    createEnumValue("Fern", { wireValue: "fern" })
+                ],
+                docs: "Represents different types of plants.",
+                includeEnumUtils: true,
+                examples: [
+                    {
+                        name: undefined,
+                        docs: undefined,
+                        jsonExample: "succulent",
+                        shape: FernIr.ExampleTypeShape.enum({
+                            value: createNameAndWireValue("Succulent", "succulent")
+                        })
+                    }
                 ]
             });
 
