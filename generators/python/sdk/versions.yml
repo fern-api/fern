@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.62.3
+  changelogEntry:
+    - summary: |
+        Fix `serialize_datetime` to always include millisecond precision in ISO 8601
+        output (e.g., `2008-01-02T00:00:00.000Z` instead of `2008-01-02T00:00:00Z`).
+        Previously, Python's `isoformat()` would drop fractional seconds when they were
+        zero, causing WireMock stub mismatches and potential server-side validation failures
+        for APIs that expect a fixed datetime format.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
 - version: 4.62.2
   changelogEntry:
     - summary: |
