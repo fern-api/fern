@@ -152,7 +152,10 @@ export function filterIntermediateRepresentationForAudiences(
                                 requestBody: {
                                     ...httpEndpoint.requestBody,
                                     properties: httpEndpoint.requestBody.properties.filter((property) => {
-                                        return filteredIr.hasRequestProperty(httpEndpoint.id, getWireValue(property.name));
+                                        return filteredIr.hasRequestProperty(
+                                            httpEndpoint.id,
+                                            getWireValue(property.name)
+                                        );
                                     })
                                 }
                             };

@@ -157,7 +157,7 @@ export abstract class AbstractSpecConverter<
             hasFileDownloadEndpoints
         };
 
-        let ir = {
+        let ir: IntermediateRepresentation = {
             ...this.ir,
             apiName: this.context.casingsGenerator.generateName(this.ir.apiDisplayName ?? ""),
             constants: {

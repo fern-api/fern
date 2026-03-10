@@ -38,7 +38,9 @@ function filterExampleSingleUnionTypeProperties({
                       object: {
                           ...s.object,
                           properties: s.object.properties
-                              .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name)))
+                              .filter((p) =>
+                                  filteredIr.hasProperty(p.originalTypeDeclaration.typeId, getWireValue(p.name))
+                              )
                               .map((p) => ({
                                   ...p,
                                   value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })

@@ -19,8 +19,8 @@ import {
 } from "@fern-api/ir-sdk";
 
 import { hashJSON } from "../../hashJSON.js";
-import { getOriginalName, getWireValue } from "../../utils/namesUtils.js";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
+import { getOriginalName, getWireValue } from "../../utils/namesUtils.js";
 import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import {
     generateHeaderExamples,

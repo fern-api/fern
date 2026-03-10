@@ -9,9 +9,8 @@ import {
     TypeDeclaration,
     TypeId
 } from "@fern-api/ir-sdk";
-
-import { getOriginalName } from "../../utils/namesUtils.js";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
+import { getOriginalName } from "../../utils/namesUtils.js";
 import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample.js";
 

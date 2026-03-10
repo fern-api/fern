@@ -32,7 +32,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { hashJSON } from "./hashJSON.js";
 import { isMarkedUnstable } from "./utils/availabilityUtils.js";
-import { getOriginalName, getWireValue, getNameFromWireValue } from "./utils/namesUtils.js";
+import { getNameFromWireValue, getOriginalName, getWireValue } from "./utils/namesUtils.js";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {
@@ -809,7 +809,9 @@ export class IntermediateRepresentationChangeDetector {
             }
         }
 
-        const fromProperties = Object.fromEntries(from.baseProperties.map((value) => [getWireValue(value.name), value]));
+        const fromProperties = Object.fromEntries(
+            from.baseProperties.map((value) => [getWireValue(value.name), value])
+        );
         const toProperties = Object.fromEntries(to.baseProperties.map((value) => [getWireValue(value.name), value]));
         for (const property of Object.values(fromProperties)) {
             const toProperty = toProperties[getWireValue(property.name)];
@@ -1133,7 +1135,13 @@ export class IntermediateRepresentationChangeDetector {
         );
     }
 
-    private areNameAndWireValuesCompatible({ from, to }: { from: NameAndWireValueOrString; to: NameAndWireValueOrString }): boolean {
+    private areNameAndWireValuesCompatible({
+        from,
+        to
+    }: {
+        from: NameAndWireValueOrString;
+        to: NameAndWireValueOrString;
+    }): boolean {
         return (
             this.areNamesCompatible({
                 from: getNameFromWireValue(from),

@@ -19,9 +19,9 @@ import {
     InferredAuthScheme,
     IntermediateRepresentation,
     Literal,
-    Name,
-    NameAndWireValue,
+    NameAndWireValueOrString,
     NamedType,
+    NameOrString,
     ObjectProperty,
     ObjectTypeDeclaration,
     PathParameter,
@@ -378,7 +378,7 @@ export class DynamicSnippetsConverter {
     private convertWireValueParameters({
         wireValueParameters
     }: {
-        wireValueParameters: { name: NameAndWireValue; valueType: TypeReference }[];
+        wireValueParameters: { name: NameAndWireValueOrString; valueType: TypeReference }[];
     }): DynamicSnippets.NamedParameter[] {
         return wireValueParameters.map((parameter) => ({
             name:
@@ -586,7 +586,7 @@ export class DynamicSnippetsConverter {
         singleUnionTypeProperties
     }: {
         inheritedProperties: ObjectProperty[];
-        discriminantValue: NameAndWireValue;
+        discriminantValue: NameAndWireValueOrString;
         singleUnionTypeProperties: SingleUnionTypeProperties;
     }): DynamicSnippets.SingleDiscriminatedUnionType {
         switch (singleUnionTypeProperties.propertiesType) {
@@ -618,7 +618,7 @@ export class DynamicSnippetsConverter {
         declaredTypeName
     }: {
         inheritedProperties: ObjectProperty[];
-        discriminantValue: NameAndWireValue;
+        discriminantValue: NameAndWireValueOrString;
         declaredTypeName: DeclaredTypeName;
     }): DynamicSnippets.SingleDiscriminatedUnionType {
         return DynamicSnippets.SingleDiscriminatedUnionType.samePropertiesAsObject({
@@ -634,7 +634,7 @@ export class DynamicSnippetsConverter {
         singleUnionTypeProperty
     }: {
         inheritedProperties: ObjectProperty[];
-        discriminantValue: NameAndWireValue;
+        discriminantValue: NameAndWireValueOrString;
         singleUnionTypeProperty: SingleUnionTypeProperty;
     }): DynamicSnippets.SingleDiscriminatedUnionType {
         return DynamicSnippets.SingleDiscriminatedUnionType.singleProperty({
@@ -652,7 +652,7 @@ export class DynamicSnippetsConverter {
         discriminantValue
     }: {
         inheritedProperties: ObjectProperty[];
-        discriminantValue: NameAndWireValue;
+        discriminantValue: NameAndWireValueOrString;
     }): DynamicSnippets.SingleDiscriminatedUnionType {
         return DynamicSnippets.SingleDiscriminatedUnionType.noProperties({
             discriminantValue,
@@ -869,7 +869,7 @@ export class DynamicSnippetsConverter {
         name,
         fernFilepath
     }: {
-        name: Name;
+        name: NameOrString;
         fernFilepath: FernFilepath;
     }): DynamicSnippets.Declaration {
         return {

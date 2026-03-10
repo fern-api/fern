@@ -9,9 +9,8 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
-
-import { getWireValue } from "../../utils/namesUtils.js";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
+import { getWireValue } from "../../utils/namesUtils.js";
 import { ExampleGenerationResult } from "./ExampleGenerationResult.js";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample.js";
 
@@ -276,7 +275,9 @@ export function generateTypeDeclarationExample({
                     visitedTypes
                 });
                 if (propertyExample.type === "failure") {
-                    throw new Error(`Failed to generate example for union base property ${getWireValue(property.name)}`);
+                    throw new Error(
+                        `Failed to generate example for union base property ${getWireValue(property.name)}`
+                    );
                 }
                 const { example } = propertyExample;
                 return {

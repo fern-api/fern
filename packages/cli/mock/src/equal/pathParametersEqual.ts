@@ -17,7 +17,10 @@ export function pathParametersEqual({ request, example }: pathParametersEqual.Ar
         ...example.servicePathParameters,
         ...example.endpointPathParameters
     ]) {
-        const originalName = typeof examplePathParameter.name === "string" ? examplePathParameter.name : examplePathParameter.name.originalName;
+        const originalName =
+            typeof examplePathParameter.name === "string"
+                ? examplePathParameter.name
+                : examplePathParameter.name.originalName;
         const requestPathParameter = request.params[originalName];
         if (
             !isEqualWith(

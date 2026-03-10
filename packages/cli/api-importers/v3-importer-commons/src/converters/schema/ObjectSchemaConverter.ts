@@ -113,7 +113,9 @@ export class ObjectSchemaConverter extends AbstractConverter<
             // Extract properties from each variant as optional properties on the parent object.
             const variants = allOfSchema.oneOf ?? allOfSchema.anyOf;
             if (variants != null && allOfSchema.type == null && allOfSchema.properties == null) {
-                const seenKeys = new Set(properties.map((p) => p.name.wireValue));
+                const seenKeys = new Set(
+                    properties.map((p) => (typeof p.name === "string" ? p.name : p.name.wireValue))
+                );
                 for (const [variantIndex, variantSchemaOrRef] of variants.entries()) {
                     const variantBreadcrumbs = [
                         ...breadcrumbs,

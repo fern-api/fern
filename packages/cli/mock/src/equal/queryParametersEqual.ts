@@ -13,7 +13,10 @@ export declare namespace queryParametersEqual {
 
 export function queryParametersEqual({ request, example }: queryParametersEqual.Args): EqualResponse {
     for (const exampleQueryParameter of [...example.queryParameters]) {
-        const wireValue = typeof exampleQueryParameter.name === "string" ? exampleQueryParameter.name : exampleQueryParameter.name.wireValue;
+        const wireValue =
+            typeof exampleQueryParameter.name === "string"
+                ? exampleQueryParameter.name
+                : exampleQueryParameter.name.wireValue;
         const requestQueryParameter = request.query[wireValue];
         if (
             !isEqualWith(
