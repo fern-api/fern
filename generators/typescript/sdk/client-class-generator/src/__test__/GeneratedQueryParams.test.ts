@@ -162,7 +162,7 @@ describe("GeneratedQueryParams", () => {
 
             const generator = new GeneratedQueryParams({
                 queryParameters: queryParams,
-                referenceToQueryParameterProperty: (key) => ts.factory.createIdentifier("filterBy")
+                referenceToQueryParameterProperty: (_key) => ts.factory.createIdentifier("filterBy")
             });
 
             const statements = generator.getBuildStatements(createMockContext());
@@ -230,7 +230,7 @@ describe("GeneratedQueryParams", () => {
 
             const generator = new GeneratedQueryParams({
                 queryParameters: queryParams,
-                referenceToQueryParameterProperty: (key) =>
+                referenceToQueryParameterProperty: (_key) =>
                     ts.factory.createPropertyAccessExpression(
                         ts.factory.createIdentifier("request"),
                         ts.factory.createIdentifier("filterDate")
