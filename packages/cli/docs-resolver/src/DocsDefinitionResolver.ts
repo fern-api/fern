@@ -56,6 +56,7 @@ import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
+import { processInParallelBatches } from "./utils/processInParallelBatches.js";
 import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
 import { visitNavigationAst } from "./visitNavigationAst.js";
 import { wrapWithHttps } from "./wrapWithHttps.js";
@@ -465,33 +466,32 @@ export class DocsDefinitionResolver {
             );
             const deferredStart = performance.now();
             const API_REGISTRATION_BATCH_SIZE = 10;
-            for (let i = 0; i < this.pendingApiRegistrations.length; i += API_REGISTRATION_BATCH_SIZE) {
-                const batch = this.pendingApiRegistrations.slice(i, i + API_REGISTRATION_BATCH_SIZE);
-                await Promise.all(
-                    batch.map(async (pending) => {
-                        // Resolve .mdx/.md file path links in all IR description (docs) fields
-                        this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
+            await processInParallelBatches(
+                this.pendingApiRegistrations,
+                API_REGISTRATION_BATCH_SIZE,
+                async (pending) => {
+                    // Resolve .mdx/.md file path links in all IR description (docs) fields
+                    this.resolveLinksInIrDocs(pending.ir, markdownFilesToPathName);
 
-                        // Register the API with resolved descriptions
-                        const realApiDefinitionId = await this.registerApi({
-                            ir: pending.ir,
-                            snippetsConfig: pending.snippetsConfig,
-                            playgroundConfig: pending.playgroundConfig,
-                            apiName: pending.apiName,
-                            workspace: pending.workspace,
-                            graphqlOperations: pending.graphqlOperations,
-                            graphqlTypes: pending.graphqlTypes
-                        });
+                    // Register the API with resolved descriptions
+                    const realApiDefinitionId = await this.registerApi({
+                        ir: pending.ir,
+                        snippetsConfig: pending.snippetsConfig,
+                        playgroundConfig: pending.playgroundConfig,
+                        apiName: pending.apiName,
+                        workspace: pending.workspace,
+                        graphqlOperations: pending.graphqlOperations,
+                        graphqlTypes: pending.graphqlTypes
+                    });
 
-                        // Update all apiDefinitionId references in the navigation subtree
-                        updateApiDefinitionIdInTree(
-                            pending.apiReferenceNode,
-                            pending.tempApiDefinitionId,
-                            realApiDefinitionId
-                        );
-                    })
-                );
-            }
+                    // Update all apiDefinitionId references in the navigation subtree
+                    updateApiDefinitionIdInTree(
+                        pending.apiReferenceNode,
+                        pending.tempApiDefinitionId,
+                        realApiDefinitionId
+                    );
+                }
+            );
             const deferredTime = performance.now() - deferredStart;
             this.taskContext.logger.debug(`Processed deferred API registrations in ${deferredTime.toFixed(0)}ms`);
             this.pendingApiRegistrations = [];
