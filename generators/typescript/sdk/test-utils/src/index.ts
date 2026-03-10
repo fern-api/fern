@@ -1,5 +1,14 @@
 export { casingsGenerator, createNameAndWireValue } from "./casings.js";
-export { createHttpHeader, createPathParameter, createQueryParameter } from "./ir-factories.js";
+export {
+    createAuthScheme,
+    createBasicAuthScheme,
+    createBearerAuthScheme,
+    createHeaderAuthScheme,
+    createHttpHeader,
+    createMinimalIR,
+    createPathParameter,
+    createQueryParameter
+} from "./ir-factories.js";
 export {
     createMockCoreUtilities,
     createMockEnvironmentsContext,
