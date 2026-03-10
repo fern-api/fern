@@ -520,6 +520,43 @@ try await main()
 "
 `;
 
+exports[`snippets (default) > required-headers > 'GET /plants (simple)' 1`] = `
+"import Foundation
+import Acme
+
+private func main() async throws {
+    let client = AcmeClient(
+        token: "<YOUR_API_KEY>",
+        tenantId: "my-tenant-id"
+    )
+
+    _ = try await client.plantstore.list()
+}
+
+try await main()
+"
+`;
+
+exports[`snippets (default) > required-headers > 'POST /plants (simple)' 1`] = `
+"import Foundation
+import Acme
+
+private func main() async throws {
+    let client = AcmeClient(
+        token: "<YOUR_API_KEY>",
+        tenantId: "my-tenant-id"
+    )
+
+    _ = try await client.plantstore.create(request: CreatePlantRequest(
+        name: "Fern",
+        price: 12.99
+    ))
+}
+
+try await main()
+"
+`;
+
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "import Foundation
 import Acme
