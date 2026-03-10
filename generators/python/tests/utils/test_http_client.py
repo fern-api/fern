@@ -306,6 +306,7 @@ def test_multipart_data_serializes_dict_values() -> None:
     # Simulate having files present
     fake_files = [("file", ("test.txt", b"hello", "text/plain"))]
     result = _maybe_filter_none_from_multipart_data(data, fake_files, None)
+    assert result is not None
     assert result["name"] == "test"
     assert result["process_rule"] == json.dumps({"indexing": "high_quality"})
     assert isinstance(result["process_rule"], str)
@@ -324,6 +325,7 @@ def test_multipart_data_filters_none_and_serializes_dicts() -> None:
     data = {"name": "test", "optional": None, "config": {"key": "val"}}
     fake_files = [("file", ("test.txt", b"hello", "text/plain"))]
     result = _maybe_filter_none_from_multipart_data(data, fake_files, None)
+    assert result is not None
     assert "optional" not in result
     assert result["name"] == "test"
     assert result["config"] == json.dumps({"key": "val"})
@@ -341,6 +343,7 @@ def test_multipart_data_serializes_dicts_with_force_multipart() -> None:
     """Test that dict values are serialized when force_multipart is True even without files."""
     data = {"name": "test", "config": {"key": "val"}}
     result = _maybe_filter_none_from_multipart_data(data, None, True)
+    assert result is not None
     assert result["config"] == json.dumps({"key": "val"})
 
 
