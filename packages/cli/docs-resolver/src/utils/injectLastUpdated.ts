@@ -81,10 +81,7 @@ export function replaceLastUpdatedInMarkdown(markdown: string, newDate: string):
     }
     // Replace the existing last-updated line in the raw frontmatter string.
     // Handles both `last-updated: VALUE` and `last-updated: "VALUE"` forms.
-    return markdown.replace(
-        /^(last-updated:\s*)["']?.*?["']?\s*$/m,
-        `$1${newDate}`
-    );
+    return markdown.replace(/^(last-updated:\s*)["']?.*?["']?\s*$/m, `$1${newDate}`);
 }
 
 /**

@@ -74,7 +74,7 @@ describe("parseFormattedDate", () => {
     it("parses a valid 'Month Day, Year' string", () => {
         const date = parseFormattedDate("March 9, 2026");
         expect(date).toBeInstanceOf(Date);
-        expect(date!.getFullYear()).toBe(2026);
+        expect(date?.getFullYear()).toBe(2026);
     });
 
     it("returns undefined for an unparseable string", () => {
