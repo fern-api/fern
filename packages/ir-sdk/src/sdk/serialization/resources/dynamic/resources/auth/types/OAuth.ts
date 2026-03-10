@@ -3,17 +3,17 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { NameOrString } from "../../commons/types/NameOrString.js";
+import { Name } from "../../commons/types/Name.js";
 
 export const OAuth: core.serialization.ObjectSchema<serializers.dynamic.OAuth.Raw, FernIr.dynamic.OAuth> =
     core.serialization.objectWithoutOptionalProperties({
-        clientId: NameOrString,
-        clientSecret: NameOrString,
+        clientId: Name,
+        clientSecret: Name,
     });
 
 export declare namespace OAuth {
     export interface Raw {
-        clientId: NameOrString.Raw;
-        clientSecret: NameOrString.Raw;
+        clientId: Name.Raw;
+        clientSecret: Name.Raw;
     }
 }

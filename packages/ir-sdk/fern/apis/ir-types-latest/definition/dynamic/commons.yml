@@ -4,9 +4,9 @@ types:
       docs: optional<string>
   FernFilepath:
     properties:
-      allParts: list<NameOrString>
-      packagePath: list<NameOrString>
-      file: optional<NameOrString>
+      allParts: list<Name>
+      packagePath: list<Name>
+      file: optional<Name>
 
   # names
   Name:
@@ -24,7 +24,7 @@ types:
   NameAndWireValue:
     properties:
       wireValue: string
-      name: NameOrString
+      name: Name
   NameAndWireValueOrString:
     discriminated: false
     union:

@@ -3,20 +3,20 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { NameOrString } from "../../commons/types/NameOrString.js";
+import { Name } from "../../commons/types/Name.js";
 import { ReferencedRequestBodyType } from "./ReferencedRequestBodyType.js";
 
 export const ReferencedRequestBody: core.serialization.ObjectSchema<
     serializers.dynamic.ReferencedRequestBody.Raw,
     FernIr.dynamic.ReferencedRequestBody
 > = core.serialization.objectWithoutOptionalProperties({
-    bodyKey: NameOrString,
+    bodyKey: Name,
     bodyType: ReferencedRequestBodyType,
 });
 
 export declare namespace ReferencedRequestBody {
     export interface Raw {
-        bodyKey: NameOrString.Raw;
+        bodyKey: Name.Raw;
         bodyType: ReferencedRequestBodyType.Raw;
     }
 }

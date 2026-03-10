@@ -3,21 +3,21 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { NameOrString } from "./NameOrString.js";
+import { Name } from "./Name.js";
 
 export const FernFilepath: core.serialization.ObjectSchema<
     serializers.dynamic.FernFilepath.Raw,
     FernIr.dynamic.FernFilepath
 > = core.serialization.objectWithoutOptionalProperties({
-    allParts: core.serialization.list(NameOrString),
-    packagePath: core.serialization.list(NameOrString),
-    file: NameOrString.optional(),
+    allParts: core.serialization.list(Name),
+    packagePath: core.serialization.list(Name),
+    file: Name.optional(),
 });
 
 export declare namespace FernFilepath {
     export interface Raw {
-        allParts: NameOrString.Raw[];
-        packagePath: NameOrString.Raw[];
-        file?: NameOrString.Raw | null;
+        allParts: Name.Raw[];
+        packagePath: Name.Raw[];
+        file?: Name.Raw | null;
     }
 }

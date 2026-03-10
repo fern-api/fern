@@ -3,7 +3,7 @@
 import * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { NameAndWireValueOrString } from "../../commons/types/NameAndWireValueOrString.js";
+import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
 import { NamedParameter } from "../../types/types/NamedParameter.js";
 
 export const FileUploadRequestBodyProperty: core.serialization.Schema<
@@ -11,21 +11,17 @@ export const FileUploadRequestBodyProperty: core.serialization.Schema<
     FernIr.dynamic.FileUploadRequestBodyProperty
 > = core.serialization
     .union("type", {
-        file: core.serialization.object({
-            value: NameAndWireValueOrString,
-        }),
-        fileArray: core.serialization.object({
-            value: NameAndWireValueOrString,
-        }),
+        file: NameAndWireValue,
+        fileArray: NameAndWireValue,
         bodyProperty: NamedParameter,
     })
     .transform<FernIr.dynamic.FileUploadRequestBodyProperty>({
         transform: (value) => {
             switch (value.type) {
                 case "file":
-                    return FernIr.dynamic.FileUploadRequestBodyProperty.file(value.value);
+                    return FernIr.dynamic.FileUploadRequestBodyProperty.file(value);
                 case "fileArray":
-                    return FernIr.dynamic.FileUploadRequestBodyProperty.fileArray(value.value);
+                    return FernIr.dynamic.FileUploadRequestBodyProperty.fileArray(value);
                 case "bodyProperty":
                     return FernIr.dynamic.FileUploadRequestBodyProperty.bodyProperty(value);
                 default:
@@ -41,14 +37,12 @@ export declare namespace FileUploadRequestBodyProperty {
         | FileUploadRequestBodyProperty.FileArray
         | FileUploadRequestBodyProperty.BodyProperty;
 
-    export interface File {
+    export interface File extends NameAndWireValue.Raw {
         type: "file";
-        value: NameAndWireValueOrString.Raw;
     }
 
-    export interface FileArray {
+    export interface FileArray extends NameAndWireValue.Raw {
         type: "fileArray";
-        value: NameAndWireValueOrString.Raw;
     }
 
     export interface BodyProperty extends NamedParameter.Raw {

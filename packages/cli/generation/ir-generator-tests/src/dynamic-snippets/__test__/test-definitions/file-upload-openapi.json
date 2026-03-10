@@ -182,6 +182,7 @@
                         {
                             "type": "bodyProperty",
                             "name": {
+                                "wireValue": "name",
                                 "name": {
                                     "originalName": "name",
                                     "camelCase": {
@@ -200,8 +201,7 @@
                                         "unsafeName": "Name",
                                         "safeName": "Name"
                                     }
-                                },
-                                "wireValue": "name"
+                                }
                             },
                             "typeReference": {
                                 "type": "primitive",
@@ -212,27 +212,25 @@
                         },
                         {
                             "type": "file",
-                            "value": {
-                                "name": {
-                                    "originalName": "file",
-                                    "camelCase": {
-                                        "unsafeName": "file",
-                                        "safeName": "file"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "file",
-                                        "safeName": "file"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FILE",
-                                        "safeName": "FILE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "File",
-                                        "safeName": "File"
-                                    }
+                            "wireValue": "file",
+                            "name": {
+                                "originalName": "file",
+                                "camelCase": {
+                                    "unsafeName": "file",
+                                    "safeName": "file"
                                 },
-                                "wireValue": "file"
+                                "snakeCase": {
+                                    "unsafeName": "file",
+                                    "safeName": "file"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FILE",
+                                    "safeName": "FILE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "File",
+                                    "safeName": "File"
+                                }
                             }
                         }
                     ]

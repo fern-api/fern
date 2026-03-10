@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../../index.js";
 
 export interface FernFilepath {
-    allParts: FernIr.dynamic.NameOrString[];
-    packagePath: FernIr.dynamic.NameOrString[];
-    file: FernIr.dynamic.NameOrString | undefined;
+    allParts: FernIr.dynamic.Name[];
+    packagePath: FernIr.dynamic.Name[];
+    file: FernIr.dynamic.Name | undefined;
 }

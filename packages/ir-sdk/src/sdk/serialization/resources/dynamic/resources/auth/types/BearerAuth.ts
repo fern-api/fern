@@ -3,17 +3,17 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { NameOrString } from "../../commons/types/NameOrString.js";
+import { Name } from "../../commons/types/Name.js";
 
 export const BearerAuth: core.serialization.ObjectSchema<
     serializers.dynamic.BearerAuth.Raw,
     FernIr.dynamic.BearerAuth
 > = core.serialization.objectWithoutOptionalProperties({
-    token: NameOrString,
+    token: Name,
 });
 
 export declare namespace BearerAuth {
     export interface Raw {
-        token: NameOrString.Raw;
+        token: Name.Raw;
     }
 }

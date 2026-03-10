@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../../index.js";
 
 export interface NamedParameter {
-    name: FernIr.dynamic.NameAndWireValueOrString;
+    name: FernIr.dynamic.NameAndWireValue;
     typeReference: FernIr.dynamic.TypeReference;
     propertyAccess: FernIr.dynamic.ObjectPropertyAccess | undefined;
     /** If set, this parameter references a variable defined at the client level */

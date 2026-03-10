@@ -3,21 +3,21 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import * as serializers from "../../../../../index.js";
-import { NameOrString } from "../../../../commons/types/NameOrString.js";
+import { Name } from "../../../../commons/types/Name.js";
 
 export const VariableDeclaration: core.serialization.ObjectSchema<
     serializers.dynamic.VariableDeclaration.Raw,
     FernIr.dynamic.VariableDeclaration
 > = core.serialization.objectWithoutOptionalProperties({
     id: core.serialization.string(),
-    name: NameOrString,
+    name: Name,
     typeReference: core.serialization.lazy(() => serializers.dynamic.TypeReference),
 });
 
 export declare namespace VariableDeclaration {
     export interface Raw {
         id: string;
-        name: NameOrString.Raw;
+        name: Name.Raw;
         typeReference: serializers.dynamic.TypeReference.Raw;
     }
 }

@@ -4,5 +4,5 @@ import type * as FernIr from "../../../../../index.js";
 
 export interface EnvironmentBaseUrlWithId {
     id: FernIr.dynamic.EnvironmentBaseUrlId;
-    name: FernIr.dynamic.NameOrString;
+    name: FernIr.dynamic.Name;
 }

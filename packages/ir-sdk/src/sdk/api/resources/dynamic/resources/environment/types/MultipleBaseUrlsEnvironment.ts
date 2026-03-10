@@ -4,6 +4,6 @@ import type * as FernIr from "../../../../../index.js";
 
 export interface MultipleBaseUrlsEnvironment extends FernIr.dynamic.WithDocs {
     id: FernIr.dynamic.EnvironmentId;
-    name: FernIr.dynamic.NameOrString;
+    name: FernIr.dynamic.Name;
     urls: Record<FernIr.dynamic.EnvironmentBaseUrlId, FernIr.dynamic.EnvironmentUrl>;
 }

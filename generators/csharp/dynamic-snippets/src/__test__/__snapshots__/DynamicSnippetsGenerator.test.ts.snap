@@ -304,6 +304,82 @@ exports[`snippets (default) > exhaustive > 'POST /container/map-prim-to-union (m
 ]"
 `;
 
+exports[`snippets (default) > file-upload > 'POST /' 1`] = `
+"using Acme;
+using Acme.Service;
+using System.IO;
+using System.Text;
+using System.Collections.Generic;
+
+var client = new AcmeClient();
+
+await client.Service.PostAsync(
+    new MyRequest {
+        File = new FileParameter(){
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
+        },
+        FileList = new List<FileParameter>(){
+            new FileParameter(){
+                Stream = new MemoryStream(Encoding.UTF8.GetBytes("First"))
+            },
+            new FileParameter(){
+                Stream = new MemoryStream(Encoding.UTF8.GetBytes("Second"))
+            },
+        }
+        ,
+        MaybeFile = new FileParameter(){
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+        },
+        MaybeFileList = new List<FileParameter>(){
+            new FileParameter(){
+                Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+            },
+        }
+        ,
+        Integer = 123
+    }
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
+"using Acme;
+using Acme.Service;
+using System.IO;
+using System.Text;
+
+var client = new AcmeClient();
+
+await client.Service.JustFileAsync(
+    new JustFileRequest {
+        File = new FileParameter(){
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
+        }
+    }
+);
+"
+`;
+
+exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
+"using Acme;
+using Acme.Service;
+using System.IO;
+using System.Text;
+
+var client = new AcmeClient();
+
+await client.Service.JustFileWithQueryParamsAsync(
+    new JustFileWithQueryParamsRequest {
+        Integer = 42,
+        MaybeString = "exists",
+        File = new FileParameter(){
+            Stream = new MemoryStream(Encoding.UTF8.GetBytes("Hello, world!"))
+        }
+    }
+);
+"
+`;
+
 exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "using Acme;
 

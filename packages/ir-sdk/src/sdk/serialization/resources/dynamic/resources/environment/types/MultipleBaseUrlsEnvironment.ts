@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { NameOrString } from "../../commons/types/NameOrString.js";
+import { Name } from "../../commons/types/Name.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { EnvironmentBaseUrlId } from "./EnvironmentBaseUrlId.js";
 import { EnvironmentId } from "./EnvironmentId.js";
@@ -15,7 +15,7 @@ export const MultipleBaseUrlsEnvironment: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         id: EnvironmentId,
-        name: NameOrString,
+        name: Name,
         urls: core.serialization.record(EnvironmentBaseUrlId, EnvironmentUrl),
     })
     .extend(WithDocs);
@@ -23,7 +23,7 @@ export const MultipleBaseUrlsEnvironment: core.serialization.ObjectSchema<
 export declare namespace MultipleBaseUrlsEnvironment {
     export interface Raw extends WithDocs.Raw {
         id: EnvironmentId.Raw;
-        name: NameOrString.Raw;
+        name: Name.Raw;
         urls: Record<EnvironmentBaseUrlId.Raw, EnvironmentUrl.Raw>;
     }
 }

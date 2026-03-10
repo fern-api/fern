@@ -4,5 +4,5 @@ import type * as FernIr from "../../../../../index.js";
 
 export interface NameAndWireValue {
     wireValue: string;
-    name: FernIr.dynamic.NameOrString;
+    name: FernIr.dynamic.Name;
 }

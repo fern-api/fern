@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { NameOrString } from "../../commons/types/NameOrString.js";
+import { Name } from "../../commons/types/Name.js";
 import { WithDocs } from "../../commons/types/WithDocs.js";
 import { EnvironmentId } from "./EnvironmentId.js";
 import { EnvironmentUrl } from "./EnvironmentUrl.js";
@@ -14,7 +14,7 @@ export const SingleBaseUrlEnvironment: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         id: EnvironmentId,
-        name: NameOrString,
+        name: Name,
         url: EnvironmentUrl,
     })
     .extend(WithDocs);
@@ -22,7 +22,7 @@ export const SingleBaseUrlEnvironment: core.serialization.ObjectSchema<
 export declare namespace SingleBaseUrlEnvironment {
     export interface Raw extends WithDocs.Raw {
         id: EnvironmentId.Raw;
-        name: NameOrString.Raw;
+        name: Name.Raw;
         url: EnvironmentUrl.Raw;
     }
 }

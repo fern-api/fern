@@ -3,7 +3,7 @@
 import type * as FernIr from "../../../../../index.js";
 
 export interface SingleDiscriminatedUnionTypeNoProperties {
-    discriminantValue: FernIr.dynamic.NameAndWireValueOrString;
+    discriminantValue: FernIr.dynamic.NameAndWireValue;
     /** Any properties included here are the base and/or extended properties from the union. */
     properties: FernIr.dynamic.NamedParameter[] | undefined;
 }

@@ -4,7 +4,7 @@ imports:
 types:
   NamedParameter:
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       typeReference: TypeReference
       propertyAccess: optional<ObjectPropertyAccess>
       variable:
@@ -41,7 +41,7 @@ types:
   EnumType:
     properties:
       declaration: declaration.Declaration
-      values: list<commons.NameAndWireValueOrString>
+      values: list<commons.NameAndWireValue>
 
   MapType:
     properties:
@@ -64,7 +64,7 @@ types:
   DiscriminatedUnionType:
     properties:
       declaration: declaration.Declaration
-      discriminant: commons.NameAndWireValueOrString
+      discriminant: commons.NameAndWireValue
       types:
         docs: |
           Map from the discriminant value (e.g. "user") to the type (e.g. User).
@@ -79,7 +79,7 @@ types:
   SingleDiscriminatedUnionTypeObject:
     properties:
       typeId: commons.TypeId
-      discriminantValue: commons.NameAndWireValueOrString
+      discriminantValue: commons.NameAndWireValue
       properties:
         docs: |
           Any properties included here are the base and/or extended properties from the union.
@@ -88,7 +88,7 @@ types:
   SingleDiscriminatedUnionTypeSingleProperty:
     properties:
       typeReference: TypeReference
-      discriminantValue: commons.NameAndWireValueOrString
+      discriminantValue: commons.NameAndWireValue
       properties:
         docs: |
           Any properties included here are the base and/or extended properties from the union.
@@ -96,7 +96,7 @@ types:
 
   SingleDiscriminatedUnionTypeNoProperties:
     properties:
-      discriminantValue: commons.NameAndWireValueOrString
+      discriminantValue: commons.NameAndWireValue
       properties:
         docs: |
           Any properties included here are the base and/or extended properties from the union.

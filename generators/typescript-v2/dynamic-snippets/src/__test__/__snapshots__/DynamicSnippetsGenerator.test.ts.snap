@@ -266,6 +266,51 @@ main();
 "
 `;
 
+exports[`snippets > file-upload > 'POST /' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient();
+    await client.service.post({
+        file: new Blob(["Hello, world!"]),
+        fileList: [
+            new Blob(["First"]),
+            new Blob(["Second"]),
+        ],
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > file-upload > 'POST /just-file' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient();
+    await client.service.justFile({
+        file: new Blob(["Hello, world!"]),
+    });
+}
+main();
+"
+`;
+
+exports[`snippets > file-upload > 'POST /just-file-with-query-params' 1`] = `
+"import { AcmeClient } from "acme";
+
+async function main() {
+    const client = new AcmeClient();
+    await client.service.justFileWithQueryParams({
+        integer: 42,
+        maybeString: "exists",
+        file: new Blob(["Hello, world!"]),
+    });
+}
+main();
+"
+`;
+
 exports[`snippets > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "import { AcmeClient } from "acme";
 
