@@ -707,6 +707,12 @@ importers:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../browser-compatible-base
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../../packages/commons/casings-generator
+      '@fern-api/configuration':
+        specifier: workspace:*
+        version: link:../../packages/cli/configuration
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../packages/commons/core-utils
@@ -716,6 +722,9 @@ importers:
       '@fern-api/generator-cli':
         specifier: 'catalog:'
         version: 0.6.4
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../packages/ir-sdk
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../packages/cli/logger
