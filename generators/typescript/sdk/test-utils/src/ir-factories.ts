@@ -69,6 +69,8 @@ export function createMinimalIR(opts?: {
     authSchemes?: FernIr.AuthScheme[];
     isAuthMandatory?: boolean;
     services?: Record<string, FernIr.HttpService>;
+    headers?: FernIr.HttpHeader[];
+    idempotencyHeaders?: FernIr.HttpHeader[];
 }): FernIr.IntermediateRepresentation {
     return {
         auth: {
@@ -88,7 +90,9 @@ export function createMinimalIR(opts?: {
                 userAgent: undefined
             }
         },
-        services: opts?.services ?? {}
+        services: opts?.services ?? {},
+        headers: opts?.headers ?? [],
+        idempotencyHeaders: opts?.idempotencyHeaders ?? []
         // biome-ignore lint/suspicious/noExplicitAny: minimal IR mock for auth provider tests
     } as any;
 }
@@ -287,6 +291,28 @@ export function createHttpEndpoint(opts?: {
         apiPlayground: undefined,
         docs: undefined,
         availability: undefined
+    };
+}
+
+/**
+ * Creates an SdkRequest with justRequestBody shape for use in tests.
+ */
+export function createSdkRequestBody(opts?: {
+    requestBodyType?: FernIr.TypeReference;
+    contentType?: string;
+}): FernIr.SdkRequest {
+    return {
+        streamParameter: undefined,
+        requestParameterName: casingsGenerator.generateName("request"),
+        shape: FernIr.SdkRequestShape.justRequestBody(
+            FernIr.SdkRequestBodyType.typeReference({
+                requestBodyType:
+                    opts?.requestBodyType ?? FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                contentType: opts?.contentType,
+                docs: undefined,
+                v2Examples: undefined
+            })
+        )
     };
 }
 
