@@ -33,7 +33,15 @@ const ALLOWED_FILE_TYPES = new Set<MimeType>([
     "font/woff",
     "font/woff2",
     "font/otf",
-    "font/ttf"
+    "font/ttf",
+    // archive files
+    "application/x-tar",
+    "application/gzip",
+    "application/zip",
+    "application/x-bzip2",
+    // image files (additional)
+    "image/bmp",
+    "image/heif"
 ]);
 
 // allowed text encodings
