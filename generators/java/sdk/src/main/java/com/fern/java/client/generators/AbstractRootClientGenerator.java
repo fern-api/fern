@@ -1982,10 +1982,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
                     builderStageBuilder.addMethod(MethodSpec.methodBuilder("addInterceptor")
                             .addModifiers(Modifier.PUBLIC)
-                            .addJavadoc(
-                                    "Add a custom OkHttp interceptor to the client.\n"
-                                            + "Interceptors added here are forwarded to the auth builder when\n"
-                                            + "{@link #token(String)} or {@link #credentials(String, String)} is called.")
+                            .addJavadoc("Add a custom OkHttp interceptor to the client.\n"
+                                    + "Interceptors added here are forwarded to the auth builder when\n"
+                                    + "{@link #token(String)} or {@link #credentials(String, String)} is called.")
                             .addParameter(Interceptor.class, "interceptor")
                             .returns(builderStageClassName)
                             .addStatement("this.interceptors.add(interceptor)")
