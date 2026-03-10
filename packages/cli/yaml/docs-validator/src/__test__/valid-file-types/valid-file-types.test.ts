@@ -18,6 +18,16 @@ describe("isValidFileType", () => {
         expect(violations).toHaveLength(0);
     });
 
+    it("should return true for gzip files (.tar.gz)", async () => {
+        const violations = await getViolationsForFile(path.join(__dirname, "test.tar.gz"));
+        expect(violations).toHaveLength(0);
+    });
+
+    it("should return true for bzip2 files (.tar.bz2)", async () => {
+        const violations = await getViolationsForFile(path.join(__dirname, "test.tar.bz2"));
+        expect(violations).toHaveLength(0);
+    });
+
     it("should return false for invalid file types", async () => {
         const violations = await getViolationsForFile(path.join(__dirname, "test.exe"));
         expect(violations.length).toBeGreaterThan(0);
