@@ -2276,7 +2276,28 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                           "extraProperties": undefined,
                           "properties": [
                             {
-                              "name": "id",
+                              "name": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "id",
+                                    "unsafeName": "id",
+                                  },
+                                  "originalName": "id",
+                                  "pascalCase": {
+                                    "safeName": "Id",
+                                    "unsafeName": "Id",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "ID",
+                                    "unsafeName": "ID",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "id",
+                                    "unsafeName": "id",
+                                  },
+                                },
+                                "wireValue": "id",
+                              },
                               "originalTypeDeclaration": {
                                 "displayName": null,
                                 "fernFilepath": {
@@ -2358,7 +2379,28 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
                               },
                             },
                             {
-                              "name": "name",
+                              "name": {
+                                "name": {
+                                  "camelCase": {
+                                    "safeName": "name",
+                                    "unsafeName": "name",
+                                  },
+                                  "originalName": "name",
+                                  "pascalCase": {
+                                    "safeName": "Name",
+                                    "unsafeName": "Name",
+                                  },
+                                  "screamingSnakeCase": {
+                                    "safeName": "NAME",
+                                    "unsafeName": "NAME",
+                                  },
+                                  "snakeCase": {
+                                    "safeName": "name",
+                                    "unsafeName": "name",
+                                  },
+                                },
+                                "wireValue": "name",
+                              },
                               "originalTypeDeclaration": {
                                 "displayName": null,
                                 "fernFilepath": {
