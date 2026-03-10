@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.21.5
+  changelogEntry:
+    - summary: |
+        Propagate display names for `x-fern-sdk-group-name` hierarchy levels.
+        When group names contain human-readable strings with spaces (e.g.
+        "Tableau APIs"), the original names are now preserved as `displayName`
+        on each subpackage in the IR, so the generated API reference hierarchy
+        matches the source collection structure.
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 65
+
 - version: 4.21.4
   changelogEntry:
     - summary: |
