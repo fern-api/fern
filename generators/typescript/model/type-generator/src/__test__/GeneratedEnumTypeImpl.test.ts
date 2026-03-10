@@ -194,6 +194,9 @@ describe("GeneratedEnumTypeImpl", () => {
             expect(output).toMatchSnapshot();
         });
 
+        // retainOriginalCasing only affects object/union types, not enums.
+        // Enum keys always use pascalCase.unsafeName via getEnumValueName().
+        // This test documents that the flag has no effect on enum output.
         it("generates enum with retainOriginalCasing", () => {
             const generator = createEnumGenerator({
                 typeName: "PlantType",
