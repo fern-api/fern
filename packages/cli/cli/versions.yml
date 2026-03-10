@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.22.0
+  changelogEntry:
+    - summary: |
+        Auto-detect open-ended enums in OpenAPI specs. When an enum is expressed
+        as `oneOf: [enum, string]` or `anyOf: [enum, string]`, the parser now
+        lowers it to a single enum type with `openEnded: true` instead of an
+        undiscriminated union. This behavior is controlled by the new
+        `auto-detect-open-ended-enums` parser flag (enabled by default).
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 65
+
 - version: 4.21.4
   changelogEntry:
     - summary: |

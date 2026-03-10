@@ -93,6 +93,12 @@ types:
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
+      openEnded:
+        docs: |
+          If true, the enum is explicitly open-ended (i.e., the API may return values
+          not listed in `values`). This is auto-detected from OpenAPI specs that express
+          an enum as `oneOf: [enum, string]` or `anyOf: [enum, string]`.
+        type: optional<boolean>
 
   EnumValue:
     extends: commons.Declaration

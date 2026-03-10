@@ -32,7 +32,8 @@ export function convertEnumTypeDeclaration({
     }
     return {
         default: defaultValue,
-        values
+        values,
+        openEnded: undefined
     };
 }
 

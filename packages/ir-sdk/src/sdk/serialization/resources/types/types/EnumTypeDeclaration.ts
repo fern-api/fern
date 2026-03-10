@@ -11,11 +11,13 @@ export const EnumTypeDeclaration: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     default: EnumValue.optional(),
     values: core.serialization.list(EnumValue),
+    openEnded: core.serialization.boolean().optional(),
 });
 
 export declare namespace EnumTypeDeclaration {
     export interface Raw {
         default?: EnumValue.Raw | null;
         values: EnumValue.Raw[];
+        openEnded?: boolean | null;
     }
 }

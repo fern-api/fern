@@ -51,6 +51,7 @@ export const V65_TO_V63_MIGRATION: IrMigration<
     ): IrVersions.V63.ir.IntermediateRepresentation => {
         return {
             ...v65,
+            types: mapValues(v65.types, (typeDeclaration) => convertTypeDeclaration(typeDeclaration)),
             services: mapValues(v65.services, (service) => convertHttpService(service, context)),
             webhookGroups: mapValues(v65.webhookGroups, (webhookGroup) =>
                 webhookGroup.map((webhook) => {
@@ -61,6 +62,19 @@ export const V65_TO_V63_MIGRATION: IrMigration<
         } as unknown as IrVersions.V63.ir.IntermediateRepresentation;
     }
 };
+
+// V65 adds openEnded to EnumTypeDeclaration, which V63 does not have.
+// Strip the field when migrating backwards.
+function convertTypeDeclaration(typeDeclaration: IrVersions.V65.TypeDeclaration): IrVersions.V63.types.TypeDeclaration {
+    if (typeDeclaration.shape.type === "enum") {
+        const { openEnded: _, ...enumWithoutOpenEnded } = typeDeclaration.shape;
+        return {
+            ...typeDeclaration,
+            shape: IrVersions.V63.types.Type.enum(enumWithoutOpenEnded)
+        } as unknown as IrVersions.V63.types.TypeDeclaration;
+    }
+    return typeDeclaration as unknown as IrVersions.V63.types.TypeDeclaration;
+}
 
 // V65 adds DATE_TIME_RFC_2822 to PrimitiveTypeV1 and PrimitiveTypeV2.
 // V63 does not have this variant. The serializer uses skipValidation: true
