@@ -5,7 +5,7 @@ namespace SeedTrace;
 
 public partial class SyspropClient : ISyspropClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SyspropClient(RawClient client)
     {
@@ -37,7 +37,9 @@ public partial class SyspropClient : ISyspropClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<Dictionary<Language, int>>(responseBody)!;
@@ -63,7 +65,9 @@ public partial class SyspropClient : ISyspropClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -109,7 +113,9 @@ public partial class SyspropClient : ISyspropClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedTraceApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

@@ -87,7 +87,7 @@ export class BaseOptionsGenerator extends WithGeneration {
             init: true,
             type: optional ? type.asOptional() : type,
             initializer: includeInitializer ? this.csharp.codeblock("2") : undefined,
-            summary: "The http client used to make requests."
+            summary: "The max number of retries to attempt."
         });
     }
 

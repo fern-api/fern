@@ -5,7 +5,7 @@ namespace SeedErrorProperty;
 
 public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal PropertyBasedErrorClient(RawClient client)
     {
@@ -37,7 +37,9 @@ public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -63,7 +65,9 @@ public partial class PropertyBasedErrorClient : IPropertyBasedErrorClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedErrorPropertyApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

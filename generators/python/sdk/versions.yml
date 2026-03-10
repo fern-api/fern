@@ -1,5 +1,73 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.62.3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.62.2
+  changelogEntry:
+    - summary: |
+        Improve error logging for reference.md generation failures. The generator
+        now logs the actual error message and stack trace instead of a generic
+        "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.62.1
+  changelogEntry:
+    - summary: |
+        SDK clients now catch `pydantic.ValidationError` during response parsing and
+        wrap it in `ParsingError` with the response body, headers, status code and cause. Previously,
+        validation errors from `parse_obj_as` would bubble up raw, preventing users from
+        inspecting the actual API response.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.62.0
+  changelogEntry:
+    - summary: |
+        Add `README.md` and `reference.md` generation to the python-v2 SDK generator.
+        The v2 generator now produces README documentation with feature snippets
+        (installation, usage, timeouts, custom client, exception handling, raw responses,
+        websockets, custom sections) and endpoint reference documentation.
+      type: feat
+    - summary: |
+        Format AST output with trailing commas in multiline function calls and
+        inline list/dict formatting for improved code readability.
+      type: chore
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.61.5
+  changelogEntry:
+    - summary: |
+        Fix WebSocket client generation to respect `pydantic_config.skip_validation: true`.
+        Previously, socket clients always used `parse_obj_as` (full Pydantic validation)
+        regardless of the skip_validation flag. They now correctly use `construct_type`
+        (no validation) when the flag is enabled, matching the behavior of HTTP clients.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.61.4
+  changelogEntry:
+    - summary: |
+        WebSocket clients now gracefully handle unknown message types instead of crashing.
+        When the server sends a message type not yet in the SDK's union, the client logs a
+        warning and skips the message rather than killing the connection with a validation error.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
 - version: 4.61.3
   changelogEntry:
     - summary: |

@@ -1,3 +1,4 @@
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod service;
@@ -6,6 +7,7 @@ pub struct FolderDClient {
     pub http_client: HttpClient,
     pub service: ServiceClient2,
 }
+
 impl FolderDClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {

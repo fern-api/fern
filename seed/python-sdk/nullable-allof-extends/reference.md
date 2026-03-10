@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_test</a>() -&gt; AsyncHttpResponse[RootObject]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">get_test</a>() -> RootObject</code></summary>
 <dl>
 <dd>
 
@@ -27,8 +27,12 @@ Returns a RootObject which inherits from a nullable schema.
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedApi()
+client = SeedApi(
+    environment=SeedApiEnvironment.DEFAULT,
+)
+
 client.get_test()
 
 ```
@@ -57,7 +61,7 @@ client.get_test()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">create_test</a>(...) -&gt; AsyncHttpResponse[RootObject]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">create_test</a>(...) -> RootObject</code></summary>
 <dl>
 <dd>
 
@@ -85,8 +89,12 @@ Creates a test object with nullable allOf in request body.
 
 ```python
 from seed import SeedApi
+from seed.environment import SeedApiEnvironment
 
-client = SeedApi()
+client = SeedApi(
+    environment=SeedApiEnvironment.DEFAULT,
+)
+
 client.create_test()
 
 ```
@@ -103,15 +111,7 @@ client.create_test()
 <dl>
 <dd>
 
-**normal_field:** `typing.Optional[str]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**nullable_field:** `typing.Optional[str]` 
+**request:** `RootObject` 
     
 </dd>
 </dl>

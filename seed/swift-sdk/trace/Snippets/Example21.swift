@@ -14,14 +14,10 @@ private func main() async throws {
             problemDescription: ProblemDescription(
                 boards: [
                     ProblemDescriptionBoard.html(
-                        .init(
-                            html: 
-                        )
+
                     ),
                     ProblemDescriptionBoard.html(
-                        .init(
-                            html: 
-                        )
+
                     )
                 ]
             ),
@@ -45,48 +41,30 @@ private func main() async throws {
             ],
             inputParams: [
                 VariableTypeAndName(
-                    variableType: VariableType.integerType(
-                        .init(
-
-                        )
-                    ),
+                    variableType: VariableType.integerType,
                     name: "name"
                 ),
                 VariableTypeAndName(
-                    variableType: VariableType.integerType(
-                        .init(
-
-                        )
-                    ),
+                    variableType: VariableType.integerType,
                     name: "name"
                 )
             ],
-            outputType: VariableType.integerType(
-                .init(
-
-                )
-            ),
+            outputType: VariableType.integerType,
             testcases: [
                 TestCaseWithExpectedResult(
                     testCase: TestCase(
                         id: "id",
                         params: [
                             VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
+
                             ),
                             VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
+
                             )
                         ]
                     ),
                     expectedResult: VariableValue.integerValue(
-                        .init(
-                            integerValue: 
-                        )
+
                     )
                 ),
                 TestCaseWithExpectedResult(
@@ -94,21 +72,15 @@ private func main() async throws {
                         id: "id",
                         params: [
                             VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
+
                             ),
                             VariableValue.integerValue(
-                                .init(
-                                    integerValue: 
-                                )
+
                             )
                         ]
                     ),
                     expectedResult: VariableValue.integerValue(
-                        .init(
-                            integerValue: 
-                        )
+
                     )
                 )
             ],

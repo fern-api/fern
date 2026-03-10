@@ -57,6 +57,27 @@ export class FernDefinitionConverter {
     constructor(private readonly args: BaseOpenAPIWorkspace.Args) {}
 
     /**
+     * Builds the header overrides for a generator, merging top-level headers with
+     * per-generator headers (per-generator takes precedence for same-key headers).
+     */
+    private buildHeaderOverrides(
+        perGeneratorHeaders: Record<string, RawSchemas.HttpHeaderSchema> | undefined
+    ): RawSchemas.WithHeadersSchema | undefined {
+        const topLevelHeaders = this.args.generatorsConfiguration?.api?.headers;
+
+        const effectiveHeaders =
+            perGeneratorHeaders != null || topLevelHeaders != null
+                ? { ...topLevelHeaders, ...perGeneratorHeaders }
+                : undefined;
+
+        if (effectiveHeaders == null) {
+            return undefined;
+        }
+
+        return { headers: effectiveHeaders };
+    }
+
+    /**
      * Builds the auth overrides for a generator, filtering auth-schemes to only include
      * those referenced by the effective auth (per-generator override or top-level).
      */
@@ -112,10 +133,7 @@ export class FernDefinitionConverter {
                 this.args.generatorsConfiguration?.api?.environments != null
                     ? { ...this.args.generatorsConfiguration?.api }
                     : undefined,
-            globalHeaderOverrides:
-                this.args.generatorsConfiguration?.api?.headers != null
-                    ? { ...this.args.generatorsConfiguration?.api }
-                    : undefined
+            globalHeaderOverrides: this.buildHeaderOverrides(settings?.headers)
         });
 
         return {

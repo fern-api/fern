@@ -68,7 +68,9 @@ public partial class SeedExtendsClient : ISeedExtendsClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExtendsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

@@ -682,6 +682,43 @@ client.createUser(
 "
 `;
 
+exports[`snippets (default) > required-headers > 'GET /plants (simple)' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .tenantId("my-tenant-id")
+    .build();
+
+client.plantstore().list();
+"
+`;
+
+exports[`snippets (default) > required-headers > 'POST /plants (simple)' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.CreatePlantRequest;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .token("<YOUR_API_KEY>")
+    .tenantId("my-tenant-id")
+    .build();
+
+client.plantstore().create(
+    CreatePlantRequest
+        .builder()
+        .name("Fern")
+        .price(12.99)
+        .build()
+);
+"
+`;
+
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "package com.example.usage;
 

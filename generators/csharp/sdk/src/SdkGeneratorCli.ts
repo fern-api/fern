@@ -287,13 +287,23 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                     endpointSnippets: snippets.endpoints
                 });
             } catch (e) {
-                context.logger.warn("Failed to generate README.md, this is OK.");
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                const errorStack = e instanceof Error ? e.stack : undefined;
+                context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
+                if (errorStack) {
+                    context.logger.debug(`README.md generation error stack: ${errorStack}`);
+                }
             }
 
             try {
                 await this.generateReference({ context });
             } catch (e) {
-                context.logger.warn("Failed to generate reference.md, this is OK.");
+                const errorMessage = e instanceof Error ? e.message : String(e);
+                const errorStack = e instanceof Error ? e.stack : undefined;
+                context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
+                if (errorStack) {
+                    context.logger.debug(`reference.md generation error stack: ${errorStack}`);
+                }
             }
         }
         context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);

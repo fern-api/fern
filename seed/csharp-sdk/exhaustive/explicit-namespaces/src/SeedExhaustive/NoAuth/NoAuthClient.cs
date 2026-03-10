@@ -7,7 +7,7 @@ namespace SeedExhaustive.NoAuth;
 
 public partial class NoAuthClient : INoAuthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NoAuthClient(RawClient client)
     {
@@ -41,7 +41,9 @@ public partial class NoAuthClient : INoAuthClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -67,7 +69,9 @@ public partial class NoAuthClient : INoAuthClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 switch (response.StatusCode)

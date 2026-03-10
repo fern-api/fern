@@ -5,7 +5,7 @@ namespace SeedPagination;
 
 public partial class ComplexClient : IComplexClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ComplexClient(RawClient client)
     {
@@ -56,7 +56,9 @@ public partial class ComplexClient : IComplexClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<PaginatedConversationResponse>(
@@ -84,7 +86,9 @@ public partial class ComplexClient : IComplexClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedPaginationApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

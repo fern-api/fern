@@ -34,61 +34,88 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
+from seed import SeedApi, User, NestedUser
 import datetime
-
-from seed import NestedUser, SeedApi, User
 
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.search(
     limit=1,
     id="id",
-    date=datetime.date.fromisoformat(
-        "2023-01-15",
-    ),
-    deadline=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
+    date=datetime.date.fromisoformat("2023-01-15"),
+    deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
     bytes="bytes",
     user=User(
         name="name",
-        tags=["tags", "tags"],
+        tags=[
+            "tags",
+            "tags"
+        ],
     ),
-    user_list=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
-    optional_deadline=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    key_value={"keyValue": "keyValue"},
+    user_list=[
+        User(
+            name="name",
+            tags=[
+                "tags",
+                "tags"
+            ],
+        )
+    ],
+    optional_deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+    key_value={
+        "keyValue": "keyValue"
+    },
     optional_string="optionalString",
     nested_user=NestedUser(
         name="name",
         user=User(
             name="name",
-            tags=["tags", "tags"],
+            tags=[
+                "tags",
+                "tags"
+            ],
         ),
     ),
     optional_user=User(
         name="name",
-        tags=["tags", "tags"],
+        tags=[
+            "tags",
+            "tags"
+        ],
     ),
-    exclude_user=User(
-        name="name",
-        tags=["tags", "tags"],
-    ),
-    filter="filter",
-    tags="tags",
-    optional_tags="optionalTags",
+    exclude_user=[
+        User(
+            name="name",
+            tags=[
+                "tags",
+                "tags"
+            ],
+        )
+    ],
+    filter=[
+        "filter"
+    ],
+    tags=[
+        "tags"
+    ],
+    optional_tags=[
+        "optionalTags"
+    ],
     neighbor=User(
         name="name",
-        tags=["tags", "tags"],
+        tags=[
+            "tags",
+            "tags"
+        ],
     ),
     neighbor_required=User(
         name="name",
-        tags=["tags", "tags"],
+        tags=[
+            "tags",
+            "tags"
+        ],
     ),
 )
 ```
@@ -101,7 +128,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 import datetime
 
-from seed import AsyncSeedApi, NestedUser, User
+from seed import AsyncSeedApi
 
 client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",
@@ -112,51 +139,78 @@ async def main() -> None:
     await client.search(
         limit=1,
         id="id",
-        date=datetime.date.fromisoformat(
-            "2023-01-15",
-        ),
-        deadline=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
+        date=datetime.date.fromisoformat("2023-01-15"),
+        deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         bytes="bytes",
         user=User(
             name="name",
-            tags=["tags", "tags"],
+            tags=[
+                "tags",
+                "tags"
+            ],
         ),
-        user_list=User(
-            name="name",
-            tags=["tags", "tags"],
-        ),
-        optional_deadline=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
-        key_value={"keyValue": "keyValue"},
+        user_list=[
+            User(
+                name="name",
+                tags=[
+                    "tags",
+                    "tags"
+                ],
+            )
+        ],
+        optional_deadline=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        key_value={
+            "keyValue": "keyValue"
+        },
         optional_string="optionalString",
         nested_user=NestedUser(
             name="name",
             user=User(
                 name="name",
-                tags=["tags", "tags"],
+                tags=[
+                    "tags",
+                    "tags"
+                ],
             ),
         ),
         optional_user=User(
             name="name",
-            tags=["tags", "tags"],
+            tags=[
+                "tags",
+                "tags"
+            ],
         ),
-        exclude_user=User(
-            name="name",
-            tags=["tags", "tags"],
-        ),
-        filter="filter",
-        tags="tags",
-        optional_tags="optionalTags",
+        exclude_user=[
+            User(
+                name="name",
+                tags=[
+                    "tags",
+                    "tags"
+                ],
+            )
+        ],
+        filter=[
+            "filter"
+        ],
+        tags=[
+            "tags"
+        ],
+        optional_tags=[
+            "optionalTags"
+        ],
         neighbor=User(
             name="name",
-            tags=["tags", "tags"],
+            tags=[
+                "tags",
+                "tags"
+            ],
         ),
         neighbor_required=User(
             name="name",
-            tags=["tags", "tags"],
+            tags=[
+                "tags",
+                "tags"
+            ],
         ),
     )
 
@@ -173,7 +227,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.search()
+    client.search(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -189,10 +243,8 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedApi
 
-client = SeedApi(
-    ...,
-)
-response = client.with_raw_response.search()
+client = SeedApi(...)
+response = client.with_raw_response.search(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
 print(response.data)  # access the underlying object
@@ -213,7 +265,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.search(request_options={
+client.search(..., request_options={
     "max_retries": 1
 })
 ```
@@ -223,17 +275,12 @@ client.search(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedApi
 
-client = SeedApi(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedApi(..., timeout=20.0)
 
 # Override timeout for a specific method
-client.search(request_options={
+client.search(..., request_options={
     "timeout_in_seconds": 1
 })
 ```

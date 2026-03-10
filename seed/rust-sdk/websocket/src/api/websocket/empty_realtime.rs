@@ -22,3 +22,18 @@ impl EmptyRealtimeClient {
         self.ws.close().await
     }
 }
+/// Connector for the EmptyRealtime WebSocket channel.
+/// Provides access to the WebSocket channel through the root client.
+pub struct EmptyRealtimeConnector {
+    base_url: String,
+}
+
+impl EmptyRealtimeConnector {
+    pub fn new(base_url: String) -> Self {
+        Self { base_url }
+    }
+
+    pub async fn connect(&self) -> Result<EmptyRealtimeClient, ApiError> {
+        EmptyRealtimeClient::connect(&self.base_url).await
+    }
+}

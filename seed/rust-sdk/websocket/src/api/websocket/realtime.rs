@@ -87,3 +87,31 @@ impl RealtimeClient {
         self.ws.close().await
     }
 }
+/// Connector for the Realtime WebSocket channel.
+/// Provides access to the WebSocket channel through the root client.
+pub struct RealtimeConnector {
+    base_url: String,
+}
+
+impl RealtimeConnector {
+    pub fn new(base_url: String) -> Self {
+        Self { base_url }
+    }
+
+    pub async fn connect(
+        &self,
+        session_id: &str,
+        model: Option<&str>,
+        temperature: Option<&str>,
+        language_code: Option<&str>,
+    ) -> Result<RealtimeClient, ApiError> {
+        RealtimeClient::connect(
+            &self.base_url,
+            session_id,
+            model,
+            temperature,
+            language_code,
+        )
+        .await
+    }
+}

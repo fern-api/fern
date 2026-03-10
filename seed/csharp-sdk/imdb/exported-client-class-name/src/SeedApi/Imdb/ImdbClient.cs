@@ -5,7 +5,7 @@ namespace SeedApi;
 
 public partial class ImdbClient : IImdbClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ImdbClient(RawClient client)
     {
@@ -39,7 +39,9 @@ public partial class ImdbClient : IImdbClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<string>(responseBody)!;
@@ -65,7 +67,9 @@ public partial class ImdbClient : IImdbClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new CustomClientApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -103,7 +107,9 @@ public partial class ImdbClient : IImdbClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<Movie>(responseBody)!;
@@ -129,7 +135,9 @@ public partial class ImdbClient : IImdbClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 switch (response.StatusCode)

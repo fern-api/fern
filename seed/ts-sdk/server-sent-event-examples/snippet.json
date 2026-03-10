@@ -14,6 +14,18 @@
         },
         {
             "id": {
+                "path": "/stream",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedServerSentEventsClient } from \"@fern/server-sent-event-examples\";\n\nconst client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.completions.stream({\n    query: \"\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
+            },
+            "example_identifier": "Bad request"
+        },
+        {
+            "id": {
                 "path": "/stream-events",
                 "method": "POST",
                 "identifier_override": "endpoint_completions.streamEvents"
@@ -23,6 +35,18 @@
                 "client": "import { SeedServerSentEventsClient } from \"@fern/server-sent-event-examples\";\n\nconst client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.completions.streamEvents({\n    query: \"query\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
             },
             "example_identifier": "Stream events"
+        },
+        {
+            "id": {
+                "path": "/stream-events",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.streamEvents"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedServerSentEventsClient } from \"@fern/server-sent-event-examples\";\n\nconst client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\nconst response = await client.completions.streamEvents({\n    query: \"\"\n});\nfor await (const item of response) {\n    console.log(item);\n}\n"
+            },
+            "example_identifier": "Bad request"
         }
     ],
     "types": {}

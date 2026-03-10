@@ -5,7 +5,7 @@ namespace SeedOauthClientCredentialsDefault.NestedNoAuth;
 
 public partial class ApiClient : IApiClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ApiClient(RawClient client)
     {
@@ -43,7 +43,9 @@ public partial class ApiClient : IApiClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedOauthClientCredentialsDefaultApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

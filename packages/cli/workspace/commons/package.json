@@ -35,6 +35,7 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/github": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-fern/fiddle-sdk": "catalog:",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/openapi-ir": "workspace:*",
     "@fern-api/openapi-ir-parser": "workspace:*",

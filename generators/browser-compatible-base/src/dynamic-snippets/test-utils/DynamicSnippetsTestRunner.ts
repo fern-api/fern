@@ -39,6 +39,7 @@ export class DynamicSnippetsTestRunner {
         this.runMultiUrlEnvironmentTests(args);
         this.runNullableTests(args);
         this.runReadWriteOnlyTests(args);
+        this.runRequiredHeadersTests(args);
         this.runSingleUrlEnvironmentDefaultTests(args);
     }
 
@@ -752,6 +753,63 @@ export class DynamicSnippetsTestRunner {
                         headers: undefined,
                         requestBody: {
                             username: null
+                        }
+                    }
+                }
+            ]
+        });
+    }
+
+    private runRequiredHeadersTests(args: DynamicSnippetsTestRunner.Args): void {
+        const generator = args.buildGenerator({
+            irFilepath: AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "required-headers.json"))
+        });
+        this.runDynamicSnippetTests({
+            fixture: "required-headers",
+            generator,
+            testCases: [
+                {
+                    description: "GET /plants (simple)",
+                    giveRequest: {
+                        endpoint: {
+                            method: "GET",
+                            path: "/plants"
+                        },
+                        baseURL: undefined,
+                        environment: undefined,
+                        auth: {
+                            type: "bearer",
+                            token: "<YOUR_API_KEY>"
+                        },
+                        pathParameters: undefined,
+                        queryParameters: undefined,
+                        headers: {
+                            "X-Tenant-ID": "my-tenant-id"
+                        },
+                        requestBody: undefined
+                    }
+                },
+                {
+                    description: "POST /plants (simple)",
+                    giveRequest: {
+                        endpoint: {
+                            method: "POST",
+                            path: "/plants"
+                        },
+                        baseURL: undefined,
+                        environment: undefined,
+                        auth: {
+                            type: "bearer",
+                            token: "<YOUR_API_KEY>"
+                        },
+                        pathParameters: undefined,
+                        queryParameters: undefined,
+                        headers: {
+                            "X-Tenant-ID": "my-tenant-id"
+                        },
+                        requestBody: {
+                            name: "Fern",
+                            price: 12.99
                         }
                     }
                 }

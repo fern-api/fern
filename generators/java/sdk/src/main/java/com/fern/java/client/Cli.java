@@ -90,6 +90,7 @@ import com.fern.java.output.GeneratedResourcesJavaFile;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
+import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
@@ -116,6 +117,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
     private final List<String> subprojects = new ArrayList<>();
 
     private final List<AbstractGradleDependency> dependencies = new ArrayList<>();
+
+    private final List<GradlePlugin> customPlugins = new ArrayList<>();
 
     public Cli() {
         this.dependencies.addAll(List.of(
@@ -175,6 +178,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .useNullableAnnotation(customConfig.useNullableAnnotation())
                 .collapseOptionalNullable(customConfig.collapseOptionalNullable())
                 .gradleCentralDependencyManagement(customConfig.gradleCentralDependencyManagement())
+                .customInterceptors(customConfig.customInterceptors())
+                .customPlugins(customConfig.customPlugins())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
@@ -706,12 +711,27 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 dependencies.add(GradleDependency.of(dep));
             }
         });
+
+        context.getCustomConfig().customPlugins().ifPresent(plugins -> {
+            for (String plugin : plugins) {
+                try {
+                    customPlugins.add(GradlePlugin.of(plugin));
+                } catch (IllegalArgumentException e) {
+                    throw new RuntimeException("Failed to parse custom-plugins configuration: " + e.getMessage(), e);
+                }
+            }
+        });
         return generatedAsyncRootClient;
     }
 
     @Override
     public List<AbstractGradleDependency> getBuildGradleDependencies() {
         return dependencies;
+    }
+
+    @Override
+    public List<GradlePlugin> getCustomPlugins() {
+        return customPlugins;
     }
 
     @Override

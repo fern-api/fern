@@ -23,79 +23,14 @@ public enum Shape: Codable, Hashable, Sendable {
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
         case .circle(let data):
+            try container.encode("circle", forKey: .type)
             try data.encode(to: encoder)
         case .square(let data):
+            try container.encode("square", forKey: .type)
             try data.encode(to: encoder)
-        }
-    }
-
-    public struct Circle: Codable, Hashable, Sendable {
-        public let type: String = "circle"
-        public let radius: Double
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            radius: Double,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.radius = radius
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.radius = try container.decode(Double.self, forKey: .radius)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.radius, forKey: .radius)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case radius
-        }
-    }
-
-    public struct Square: Codable, Hashable, Sendable {
-        public let type: String = "square"
-        public let length: Double
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            length: Double,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.length = length
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.length = try container.decode(Double.self, forKey: .length)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.length, forKey: .length)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case length
         }
     }
 

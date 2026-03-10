@@ -1395,7 +1395,7 @@ describe("${serviceName}", () => {
             }.respondWith()
             .statusCode(${responseStatusCode})${
                 rawResponseBody
-                    ? isSSEStreaming
+                    ? isSSEStreaming && !willThrowError
                         ? code`.sseBody(rawResponseBody)
                 `
                         : code`.jsonBody(rawResponseBody)
@@ -1404,8 +1404,13 @@ describe("${serviceName}", () => {
             }.build();
 
         ${
-            isSSEStreaming
+            willThrowError
                 ? code`
+            await expect(async () => {
+                return ${getTextOfTsNode(generatedExample.endpointInvocation)}
+            }).rejects.toThrow(${literalOf(expected)});`
+                : isSSEStreaming
+                  ? code`
             const response = ${getTextOfTsNode(generatedExample.endpointInvocation)};
             const events: unknown[] = [];
             for await (const event of response) {
@@ -1416,11 +1421,6 @@ describe("${serviceName}", () => {
                     ? code`expect(events).toEqual(${sseExpectedEvents});`
                     : code`expect(events.length).toBeGreaterThan(0);`
             }`
-                : willThrowError
-                  ? code`
-            await expect(async () => {
-                return ${getTextOfTsNode(generatedExample.endpointInvocation)}
-            }).rejects.toThrow(${literalOf(expected)});`
                   : isHeadersResponse
                     ? code`const headers = ${getTextOfTsNode(generatedExample.endpointInvocation)};
         expect(headers).toBeInstanceOf(Headers);`

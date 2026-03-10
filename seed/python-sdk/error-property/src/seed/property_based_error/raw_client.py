@@ -6,10 +6,12 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.errors.property_based_error_test import PropertyBasedErrorTest
 from ..errors.types.property_based_error_test_body import PropertyBasedErrorTestBody
+from pydantic import ValidationError
 
 
 class RawPropertyBasedErrorClient:
@@ -38,15 +40,24 @@ class RawPropertyBasedErrorClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        if 200 <= _response.status_code < 300:
-            _data = typing.cast(
-                str,
-                parse_obj_as(
-                    type_=str,  # type: ignore
-                    object_=_response_json,
-                ),
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-            return HttpResponse(response=_response, data=_data)
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PropertyBasedErrorTest":
                 raise PropertyBasedErrorTest(
@@ -88,15 +99,24 @@ class AsyncRawPropertyBasedErrorClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        if 200 <= _response.status_code < 300:
-            _data = typing.cast(
-                str,
-                parse_obj_as(
-                    type_=str,  # type: ignore
-                    object_=_response_json,
-                ),
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-            return AsyncHttpResponse(response=_response, data=_data)
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    str,
+                    parse_obj_as(
+                        type_=str,  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PropertyBasedErrorTest":
                 raise PropertyBasedErrorTest(

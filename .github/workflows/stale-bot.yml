@@ -15,7 +15,7 @@ jobs:
   stale-prs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v9
+      - uses: actions/stale@v10
         with:
           stale-pr-message: "This PR is stale because it has been open 25 days with no activity. Remove stale label or comment or this will be closed in 5 days."
           close-pr-message: "This PR was closed because it has been inactive for 5 days after being marked stale."
@@ -23,7 +23,7 @@ jobs:
           days-before-issue-close: -1
           days-before-pr-stale: 25
           days-before-pr-close: 5
-          operations-per-run: 300
+          operations-per-run: 500
 
   stale-branch:
     runs-on: ubuntu-latest

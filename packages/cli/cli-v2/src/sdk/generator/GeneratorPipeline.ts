@@ -9,7 +9,7 @@ import type { Context } from "../../context/Context.js";
 import { CliError } from "../../errors/CliError.js";
 import type { Task } from "../../ui/Task.js";
 import type { Target } from "../config/Target.js";
-import { LegacyGenerationRunner } from "./LegacyGenerationRunner.js";
+import { LegacyLocalGenerationRunner } from "./LegacyLocalGenerationRunner.js";
 import { LegacyRemoteGenerationRunner } from "./LegacyRemoteGenerationRunner.js";
 
 /**
@@ -123,7 +123,7 @@ export class GeneratorPipeline {
     }
 
     private async runLocalGeneration(args: GeneratorPipeline.RunArgs): Promise<GeneratorPipeline.Result> {
-        const generationRunner = new LegacyGenerationRunner({
+        const generationRunner = new LegacyLocalGenerationRunner({
             context: this.context,
             cliVersion: this.cliVersion
         });

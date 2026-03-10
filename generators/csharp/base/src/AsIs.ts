@@ -29,6 +29,7 @@ export const AsIsFiles = {
     FormUrlEncoder: "FormUrlEncoder.Template.cs",
     Headers: "Headers.Template.cs",
     HeaderValue: "HeaderValue.Template.cs",
+    HttpContentExtensions: "HttpContentExtensions.Template.cs",
     HttpMethodExtensions: "HttpMethodExtensions.cs",
     IIsRetryableContent: "IIsRetryableContent.Template.cs",
     JsonRequest: "JsonRequest.Template.cs",

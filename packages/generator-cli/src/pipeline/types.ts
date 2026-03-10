@@ -42,6 +42,8 @@ export interface GithubStepConfig {
     branch?: string;
     /** Commit message for the generation */
     commitMessage?: string;
+    /** User-facing changelog entry for PR body. When present, used instead of commit message body. */
+    changelogEntry?: string;
     /** Skip push/PR creation, just prepare branches locally */
     previewMode?: boolean;
     /** Generator name for namespaced fern-generation-base tag */
@@ -52,8 +54,6 @@ export interface GithubStepConfig {
     replayConflictInfo?: {
         previousGenerationSha: string;
         currentGenerationSha: string;
-        hasConflicts: boolean;
-        baseBranchHead?: string;
     };
 }
 
@@ -80,28 +80,16 @@ export interface ReplayStepResult extends StepResult {
     previousGenerationSha?: string;
     currentGenerationSha?: string;
     baseBranchHead?: string;
-    conflicts?: ConflictInfo[];
-    conflictDetails?: Array<{
+    unresolvedPatches?: Array<{
         patchId: string;
         patchMessage: string;
-        reason?: string;
-        files: Array<{
+        files: string[];
+        conflictDetails: Array<{
             file: string;
-            status: string;
             conflictReason?: string;
         }>;
     }>;
     warnings?: string[];
-}
-
-export interface ConflictInfo {
-    filePath: string;
-    conflicts: Array<{
-        startLine: number;
-        endLine: number;
-        ours: string[];
-        theirs: string[];
-    }>;
 }
 
 export interface FernignoreStepResult extends StepResult {

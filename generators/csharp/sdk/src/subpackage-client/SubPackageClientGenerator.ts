@@ -84,14 +84,16 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
         class_.addField({
             origin: this.members.client,
             access: ast.Access.Private,
-            type: this.Types.RawClient
+            type: this.Types.RawClient,
+            readonly: true
         });
 
         if (this.grpcClientInfo != null) {
             class_.addField({
                 origin: this.members.grpcClient,
                 access: ast.Access.Private,
-                type: this.Types.RawGrpcClient
+                type: this.Types.RawGrpcClient,
+                readonly: true
             });
 
             class_.addField({

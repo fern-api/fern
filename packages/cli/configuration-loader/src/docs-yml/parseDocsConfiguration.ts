@@ -1248,7 +1248,7 @@ function parseApiReferenceLayoutItem(
             validateCollapsibleConfig({
                 context,
                 sectionTitle: item.section,
-                collapsed: undefined,
+                collapsed: item.collapsed ?? undefined,
                 collapsible: item.collapsible ?? undefined,
                 collapsedByDefault: item.collapsedByDefault ?? undefined
             });
@@ -1266,6 +1266,7 @@ function parseApiReferenceLayoutItem(
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
+                collapsed: item.collapsed ?? undefined,
                 collapsible: item.collapsible ?? undefined,
                 collapsedByDefault: item.collapsedByDefault ?? undefined,
                 availability: item.availability,
@@ -1613,6 +1614,8 @@ async function convertMetadata(
         "twitter:site": metadata.twitterSite,
         "twitter:url": metadata.twitterUrl,
         "twitter:card": metadata.twitterCard,
+        "og:dynamic": metadata.ogDynamic,
+        "og:background-image": await convertFilepathOrUrl(metadata.ogBackgroundImage, absoluteFilepathToDocsConfig),
         nofollow: undefined,
         noindex: undefined,
         canonicalHost: metadata.canonicalHost
@@ -1682,7 +1685,7 @@ function validateCollapsibleConfig({
 }: {
     context: TaskContext;
     sectionTitle: string;
-    collapsed: boolean | undefined;
+    collapsed: boolean | "open-by-default" | undefined;
     collapsible: boolean | undefined;
     collapsedByDefault: boolean | undefined;
 }): void {
