@@ -282,6 +282,9 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
+    - customConfig:
+        custom-interceptors: true
+      outputFolder: custom-interceptors
   oauth-client-credentials-mandatory-auth:
     - customConfig: null
       outputFolder: no-custom-config
@@ -363,6 +366,7 @@ allowedFailures:
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
   - oauth-client-credentials
+  - oauth-client-credentials:custom-interceptors
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables

@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.5
+  changelogEntry:
+    - summary: |
+        Fix `custom-interceptors` support for OAuth staged builders. When
+        `custom-interceptors: true` is enabled, the `_Builder` inner class now
+        generates an `interceptors` field, `addInterceptor(Interceptor)` method,
+        and forwards interceptors to `_TokenAuth` and `_CredentialsAuth` via
+        `token()` and `credentials()` methods. Previously, only the root builder
+        received interceptor support, causing OAuth staged builders to lose
+        interceptor configuration.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
 - version: 3.42.4
   changelogEntry:
     - summary: |
