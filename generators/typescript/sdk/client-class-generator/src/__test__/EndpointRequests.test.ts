@@ -282,9 +282,9 @@ function createMockGeneratedRequestWrapper() {
         areBodyPropertiesInlined: () => true,
         hasBodyProperty: () => false,
         getNonBodyKeys: () => [],
-        getNonBodyKeysWithData: () => [],
-        getAllQueryParameters: () => [],
-        getAllPathParameters: () => [],
+        getNonBodyKeysWithData: () => [] as { propertyName: string; safeName: string; originalParameter: unknown }[],
+        getAllQueryParameters: () => [] as FernIr.QueryParameter[],
+        getAllPathParameters: () => [] as FernIr.PathParameter[],
         getReferencedBodyPropertyName: () => "body",
         getPropertyNameOfQueryParameter: (qp: FernIr.QueryParameter) => ({
             propertyName: qp.name.name.camelCase.unsafeName,
@@ -339,7 +339,8 @@ function createFileUploadRequestBody(opts?: {
         name: casingsGenerator.generateName("TestUpload"),
         properties: opts?.properties ?? [],
         docs: undefined,
-        v2Examples: undefined
+        v2Examples: undefined,
+        contentType: undefined
     });
 }
 
@@ -663,7 +664,7 @@ describe("GeneratedDefaultEndpointRequest", () => {
             const mockRequestWrapper = createMockGeneratedRequestWrapper();
             mockRequestWrapper.getAllQueryParameters = () => [queryParam];
             mockRequestWrapper.getNonBodyKeysWithData = () => [
-                { propertyName: "limit", safeName: "limit", originalParameter: null }
+                { propertyName: "limit", safeName: "limit", originalParameter: null as unknown }
             ];
             mockRequestWrapper.areBodyPropertiesInlined = () => true;
 
