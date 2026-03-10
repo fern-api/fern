@@ -41,7 +41,7 @@
   "subpackages": {
     "subpackage_users": {
       "description": undefined,
-      "displayName": undefined,
+      "displayName": "users",
       "endpoints": [
         {
           "auth": true,

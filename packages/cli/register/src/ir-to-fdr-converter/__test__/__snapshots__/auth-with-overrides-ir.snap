@@ -899,7 +899,7 @@
   "sourceConfig": undefined,
   "subpackages": {
     "subpackage_users": {
-      "displayName": undefined,
+      "displayName": "users",
       "docs": undefined,
       "errors": [],
       "fernFilepath": {
