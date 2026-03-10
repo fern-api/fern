@@ -1248,7 +1248,7 @@ function parseApiReferenceLayoutItem(
             validateCollapsibleConfig({
                 context,
                 sectionTitle: item.section,
-                collapsed: undefined,
+                collapsed: item.collapsed ?? undefined,
                 collapsible: item.collapsible ?? undefined,
                 collapsedByDefault: item.collapsedByDefault ?? undefined
             });
@@ -1266,6 +1266,7 @@ function parseApiReferenceLayoutItem(
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
+                collapsed: item.collapsed ?? undefined,
                 collapsible: item.collapsible ?? undefined,
                 collapsedByDefault: item.collapsedByDefault ?? undefined,
                 availability: item.availability,
