@@ -619,17 +619,29 @@ export class WireTestGenerator {
     // =============================================================================
 
     private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
-        const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-        if (!dynamicEndpoint?.examples?.[0]?.queryParameters) {
+        // Use the WireMock mapping as the source of truth for expected query parameter values.
+        // This ensures the test verification matches exactly what WireMock expects (e.g., datetime
+        // values serialized via Date.toISOString() always include milliseconds like "2018-11-10T20:00:00.000Z").
+        const basePath = this.buildPathTemplate(endpoint);
+        const mappingKey = this.wiremockMappingKey({
+            requestMethod: endpoint.method,
+            requestUrlPathTemplate: basePath
+        });
+        const wiremockMapping = this.wireMockConfigContent[mappingKey];
+
+        if (!wiremockMapping?.request.queryParameters) {
             return "None";
         }
 
-        const queryParams = dynamicEndpoint.examples[0].queryParameters;
+        const queryParams = wiremockMapping.request.queryParameters;
         const entries: string[] = [];
 
         for (const [key, value] of Object.entries(queryParams)) {
-            if (value != null) {
-                entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(String(value))}"`);
+            const paramValue = value as { equalTo: string };
+            if (paramValue.equalTo != null) {
+                entries.push(
+                    `"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(paramValue.equalTo)}"`
+                );
             }
         }
 
