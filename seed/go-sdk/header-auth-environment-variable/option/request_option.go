@@ -63,6 +63,15 @@ func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 	}
 }
 
+// WithMaxStreamBufSize configures the maximum buffer size for streaming responses.
+// This controls the maximum size of a single message (in bytes) that the stream
+// can process. By default, this is set to 1MB.
+func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
+	return &core.MaxBufSizeOption{
+		MaxBufSize: size,
+	}
+}
+
 // WithHeaderTokenAuth sets the headerTokenAuth auth request header.
 func WithHeaderTokenAuth(headerTokenAuth string) *core.HeaderTokenAuthOption {
 	return &core.HeaderTokenAuthOption{
