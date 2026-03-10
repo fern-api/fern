@@ -8,5 +8,6 @@
       "Moq.Contrib.HttpClient": "1.4.0"
     }
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

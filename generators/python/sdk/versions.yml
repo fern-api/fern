@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.63.1
+  changelogEntry:
+    - summary: |
+        Fix socket client generation to use keyword arguments when calling `construct_type`.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
 - version: 4.63.0
   changelogEntry:
     - summary: |
