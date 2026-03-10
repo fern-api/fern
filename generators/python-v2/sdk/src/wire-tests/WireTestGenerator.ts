@@ -628,10 +628,7 @@ export class WireTestGenerator {
         if (this.context.customConfig.datetime_milliseconds) {
             // Use replace with a capture group to insert ".000" before the timezone suffix.
             // The regex matches the seconds portion followed by the timezone (Z or +/-offset).
-            return value.replace(
-                /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(Z|[+-]\d{2}:\d{2})$/,
-                "$1.000$2"
-            );
+            return value.replace(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(Z|[+-]\d{2}:\d{2})$/, "$1.000$2");
         }
         return value;
     }
