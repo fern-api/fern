@@ -90,7 +90,9 @@ func WithEventDiscriminator(field string) StreamOption {
 // responses contain messages larger than the default, increase this value.
 func WithMaxBufSize(size int) StreamOption {
 	return func(opts *streamOptions) {
-		opts.maxBufSize = size
+		if size > 0 {
+			opts.maxBufSize = size
+		}
 	}
 }
 
