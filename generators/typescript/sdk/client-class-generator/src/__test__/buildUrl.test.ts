@@ -1,3 +1,4 @@
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
@@ -5,25 +6,15 @@ import { assert, describe, expect, it } from "vitest";
 
 import { buildUrl } from "../endpoints/utils/buildUrl.js";
 
-function createName(name: string): FernIr.Name {
-    return {
-        originalName: name,
-        camelCase: {
-            unsafeName: name.charAt(0).toLowerCase() + name.slice(1),
-            safeName: name.charAt(0).toLowerCase() + name.slice(1)
-        },
-        pascalCase: {
-            unsafeName: name.charAt(0).toUpperCase() + name.slice(1),
-            safeName: name.charAt(0).toUpperCase() + name.slice(1)
-        },
-        snakeCase: { unsafeName: name.toLowerCase(), safeName: name.toLowerCase() },
-        screamingSnakeCase: { unsafeName: name.toUpperCase(), safeName: name.toUpperCase() }
-    };
-}
+const casingsGenerator = constructCasingsGenerator({
+    generationLanguage: undefined,
+    keywords: undefined,
+    smartCasing: false
+});
 
 function createPathParameter(name: string, location: FernIr.PathParameterLocation = "ENDPOINT"): FernIr.PathParameter {
     return {
-        name: createName(name),
+        name: casingsGenerator.generateName(name),
         valueType: FernIr.TypeReference.primitive({
             v1: "STRING",
             v2: undefined

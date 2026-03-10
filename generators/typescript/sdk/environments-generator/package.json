@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib",
     "compile": "tsc",
@@ -37,6 +39,7 @@
     "ts-morph": "catalog:"
   },
   "devDependencies": {
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",

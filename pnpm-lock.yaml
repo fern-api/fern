@@ -3278,6 +3278,9 @@ importers:
         specifier: 'catalog:'
         version: 6.12.0
     devDependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../../../../packages/commons/casings-generator
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
@@ -3343,6 +3346,9 @@ importers:
         specifier: 'catalog:'
         version: 27.0.2
     devDependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../../../../packages/commons/casings-generator
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs

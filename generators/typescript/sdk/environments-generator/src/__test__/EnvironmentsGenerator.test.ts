@@ -1,3 +1,4 @@
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Project, ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
@@ -6,21 +7,11 @@ import { EmptyGeneratedEnvironmentsImpl } from "../EmptyGeneratedEnvironmentsImp
 import { GeneratedMultipleUrlsEnvironmentsImpl } from "../GeneratedMultipleUrlsEnvironmentsImpl.js";
 import { GeneratedSingleUrlEnvironmentsImpl } from "../GeneratedSingleUrlEnvironmentsImpl.js";
 
-function createName(name: string) {
-    return {
-        originalName: name,
-        camelCase: {
-            unsafeName: name.charAt(0).toLowerCase() + name.slice(1),
-            safeName: name.charAt(0).toLowerCase() + name.slice(1)
-        },
-        pascalCase: {
-            unsafeName: name.charAt(0).toUpperCase() + name.slice(1),
-            safeName: name.charAt(0).toUpperCase() + name.slice(1)
-        },
-        snakeCase: { unsafeName: name.toLowerCase(), safeName: name.toLowerCase() },
-        screamingSnakeCase: { unsafeName: name.toUpperCase(), safeName: name.toUpperCase() }
-    };
-}
+const casingsGenerator = constructCasingsGenerator({
+    generationLanguage: undefined,
+    keywords: undefined,
+    smartCasing: false
+});
 
 function createMockEnvironmentsContext() {
     return {
@@ -65,7 +56,7 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
         environments: [
             {
                 id: "env-prod",
-                name: createName("Production"),
+                name: casingsGenerator.generateName("Production"),
                 url: "https://api.example.com",
                 docs: undefined,
                 audiences: undefined,
@@ -75,7 +66,7 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
             },
             {
                 id: "env-staging",
-                name: createName("Staging"),
+                name: casingsGenerator.generateName("Staging"),
                 url: "https://staging.example.com",
                 docs: "Staging environment",
                 audiences: undefined,
@@ -182,17 +173,17 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
         baseUrls: [
             {
                 id: "base-url-api",
-                name: createName("api")
+                name: casingsGenerator.generateName("api")
             },
             {
                 id: "base-url-auth",
-                name: createName("auth")
+                name: casingsGenerator.generateName("auth")
             }
         ],
         environments: [
             {
                 id: "env-prod",
-                name: createName("Production"),
+                name: casingsGenerator.generateName("Production"),
                 urls: {
                     "base-url-api": "https://api.example.com",
                     "base-url-auth": "https://auth.example.com"
@@ -205,7 +196,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
             },
             {
                 id: "env-staging",
-                name: createName("Staging"),
+                name: casingsGenerator.generateName("Staging"),
                 urls: {
                     "base-url-api": "https://api-staging.example.com",
                     "base-url-auth": "https://auth-staging.example.com"
