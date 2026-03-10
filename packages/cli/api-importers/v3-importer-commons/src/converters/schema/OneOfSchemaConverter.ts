@@ -110,7 +110,11 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 continue;
             }
 
-            if (resolved.enum != null && resolved.enum.length > 0 && (resolved.type === "string" || resolved.type == null)) {
+            if (
+                resolved.enum != null &&
+                resolved.enum.length > 0 &&
+                (resolved.type === "string" || resolved.type == null)
+            ) {
                 enumSchema = resolved;
             } else if (resolved.type === "string" && resolved.enum == null) {
                 hasStringSchema = true;
