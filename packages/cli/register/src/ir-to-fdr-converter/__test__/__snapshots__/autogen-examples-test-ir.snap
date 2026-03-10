@@ -2923,6 +2923,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "openEnded": undefined,
         "type": "enum",
         "values": [
           {
@@ -3415,6 +3416,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
+        "openEnded": undefined,
         "type": "enum",
         "values": [
           {
