@@ -27,6 +27,8 @@ import { execFile } from "child_process";
 import matter from "gray-matter";
 import { promisify } from "util";
 
+import { asyncPool } from "./asyncPool.js";
+
 const execFileAsync = promisify(execFile);
 
 const MONTH_NAMES = [
@@ -112,20 +114,28 @@ export function injectLastUpdatedIntoMarkdown(markdown: string, date: string): s
         const matchStr = frontmatterMatch[0];
         const closingMatch = /\r?\n---[\r\n]*$/.exec(matchStr);
         const insertPos = frontmatterMatch.index + (closingMatch?.index ?? 0);
-        return markdown.slice(0, insertPos) + `\nlast-updated: ${date}` + markdown.slice(insertPos);
+        // Detect whether the file uses CRLF or LF and match the existing style.
+        const lineEnding = markdown.includes("\r\n") ? "\r\n" : "\n";
+        return markdown.slice(0, insertPos) + `${lineEnding}last-updated: ${date}` + markdown.slice(insertPos);
     }
 
-    // No frontmatter — prepend a new block
+    // No frontmatter — prepend a new block (uses LF; CRLF files will have
+    // their new frontmatter block in LF, which is acceptable since parsers
+    // handle mixed endings and the rest of the file retains its style).
     return `---\nlast-updated: ${date}\n---\n${markdown}`;
 }
 
 /**
- * Runs `git log -1 --format=%aI -- <filepath>` to get the last commit date for a file.
+ * Runs `git log -1 --format=%cI -- <filepath>` to get the last commit date for a file.
+ * Uses `%cI` (committer date) rather than `%aI` (author date) because the committer
+ * date reflects when the change was actually applied to the branch — more accurate
+ * for crawl scheduling purposes (e.g. cherry-picked or rebased commits retain their
+ * original author date, but the committer date updates).
  * Returns undefined if the file is untracked, git is unavailable, or the directory is not a git repo.
  */
 export async function getGitLastModifiedDate(absoluteFilePath: AbsoluteFilePath): Promise<string | undefined> {
     try {
-        const { stdout } = await execFileAsync("git", ["log", "-1", "--format=%aI", "--", absoluteFilePath]);
+        const { stdout } = await execFileAsync("git", ["log", "-1", "--format=%cI", "--", absoluteFilePath]);
         const isoDate = stdout.trim();
         if (isoDate === "") {
             // File is not tracked by git
@@ -142,10 +152,11 @@ export async function getGitLastModifiedDate(absoluteFilePath: AbsoluteFilePath)
  * Returns the raw ISO 8601 date from `git log` for comparison purposes.
  * Unlike `getGitLastModifiedDate`, this does NOT format the date — it
  * returns the ISO string directly so callers can compare timestamps.
+ * Uses `%cI` (committer date) — see `getGitLastModifiedDate` for rationale.
  */
 export async function getGitLastModifiedISO(absoluteFilePath: AbsoluteFilePath): Promise<string | undefined> {
     try {
-        const { stdout } = await execFileAsync("git", ["log", "-1", "--format=%aI", "--", absoluteFilePath]);
+        const { stdout } = await execFileAsync("git", ["log", "-1", "--format=%cI", "--", absoluteFilePath]);
         const isoDate = stdout.trim();
         return isoDate === "" ? undefined : isoDate;
     } catch {
@@ -176,57 +187,62 @@ export async function getGitLastModifiedISO(absoluteFilePath: AbsoluteFilePath):
  * Pages without git history (untracked files) and pages in non-git
  * environments are also left unchanged.
  *
- * Git queries run in parallel for performance.
+ * Git queries run in parallel with a concurrency limit to avoid spawning
+ * too many child processes on large doc sites (500+ pages would otherwise
+ * hit OS limits like EMFILE).
  */
+
+/** Maximum number of concurrent `git log` child processes. */
+const GIT_CONCURRENCY_LIMIT = 50;
+
 export async function injectLastUpdatedDates(
     pages: Record<RelativeFilePath, string>,
     absolutePathToFernFolder: AbsoluteFilePath,
     excludePaths?: ReadonlySet<RelativeFilePath>
 ): Promise<Record<RelativeFilePath, string>> {
     const result: Record<RelativeFilePath, string> = {};
+    const entries = Object.entries(pages);
 
-    await Promise.all(
-        Object.entries(pages).map(async ([relativePath, markdown]) => {
-            const key = RelativeFilePath.of(relativePath);
+    await asyncPool(GIT_CONCURRENCY_LIMIT, entries, async ([relativePath, markdown]) => {
+        const key = RelativeFilePath.of(relativePath);
 
-            // Skip API-generated pages (e.g. OpenAPI tag descriptions).
-            // A single openapi.yaml change regenerates N pages with the same
-            // timestamp — omitting lastmod is safer than an inaccurate one.
-            if (excludePaths?.has(key)) {
-                result[key] = markdown;
-                return;
-            }
+        // Skip API-generated pages (e.g. OpenAPI tag descriptions).
+        // A single openapi.yaml change regenerates N pages with the same
+        // timestamp — omitting lastmod is safer than an inaccurate one.
+        if (excludePaths?.has(key)) {
+            result[key] = markdown;
+            return;
+        }
 
-            const absoluteFilePath = resolve(absolutePathToFernFolder, relativePath);
+        const absoluteFilePath = resolve(absolutePathToFernFolder, relativePath);
 
-            // Check for an existing user-supplied last-updated value.
-            const existingDate = getExistingLastUpdated(markdown);
+        // Check for an existing user-supplied last-updated value.
+        const existingDate = getExistingLastUpdated(markdown);
 
-            if (existingDate != null) {
-                // The page already has a last-updated value.  Check whether
-                // git has a newer timestamp — if so, replace it to prevent
-                // the user-specified date from going stale.
-                const gitISO = await getGitLastModifiedISO(absoluteFilePath);
-                if (gitISO != null) {
-                    const gitDate = new Date(gitISO);
-                    const userDate = parseFormattedDate(existingDate);
-                    if (userDate != null && gitDate > userDate) {
-                        // Git timestamp is newer — override the stale value.
-                        const formatted = formatLastUpdatedDate(gitISO);
-                        result[key] = replaceLastUpdatedInMarkdown(markdown, formatted);
-                        return;
-                    }
+        if (existingDate != null) {
+            // The page already has a last-updated value.  Check whether
+            // git has a newer timestamp — if so, replace it to prevent
+            // the user-specified date from going stale.
+            const gitISO = await getGitLastModifiedISO(absoluteFilePath);
+            if (gitISO != null) {
+                const gitDate = new Date(gitISO);
+                const userDate = parseFormattedDate(existingDate);
+                if (userDate != null && gitDate > userDate) {
+                    // Git timestamp is newer — override the stale value.
+                    const formatted = formatLastUpdatedDate(gitISO);
+                    result[key] = replaceLastUpdatedInMarkdown(markdown, formatted);
+                    return;
                 }
-                // User-supplied date is still current (or no git history).
-                result[key] = markdown;
-                return;
             }
+            // User-supplied date is still current (or no git history).
+            result[key] = markdown;
+            return;
+        }
 
-            // No existing last-updated — inject from git.
-            const date = await getGitLastModifiedDate(absoluteFilePath);
-            result[key] = date != null ? injectLastUpdatedIntoMarkdown(markdown, date) : markdown;
-        })
-    );
+        // No existing last-updated — inject from git.
+        const date = await getGitLastModifiedDate(absoluteFilePath);
+        result[key] = date != null ? injectLastUpdatedIntoMarkdown(markdown, date) : markdown;
+    });
 
     return result;
 }

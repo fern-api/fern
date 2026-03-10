@@ -125,7 +125,8 @@ describe("injectLastUpdatedIntoMarkdown", () => {
     it("handles CRLF line endings in frontmatter", () => {
         const markdown = "---\r\ntitle: Foo\r\n---\r\n\r\nContent";
         const result = injectLastUpdatedIntoMarkdown(markdown, DATE);
-        expect(result).toBe("---\r\ntitle: Foo\nlast-updated: March 9, 2026\r\n---\r\n\r\nContent");
+        // The injected line should use CRLF to match the file's existing line ending style.
+        expect(result).toBe("---\r\ntitle: Foo\r\nlast-updated: March 9, 2026\r\n---\r\n\r\nContent");
     });
 });
 
