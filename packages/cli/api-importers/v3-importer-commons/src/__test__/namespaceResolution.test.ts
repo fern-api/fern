@@ -1,5 +1,5 @@
 import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
-import { Name, NameOrString, TypeReference } from "@fern-api/ir-sdk";
+import { NameOrString, TypeReference } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { AbstractConverterContext } from "../AbstractConverterContext.js";
