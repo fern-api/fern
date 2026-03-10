@@ -24,7 +24,7 @@ export async function asyncPool<T, R>(
         const promise = (async () => {
             const result = await fn(item, i);
             results[i] = result;
-        })().then(() => {
+        })().finally(() => {
             executing.delete(promise);
         });
 
