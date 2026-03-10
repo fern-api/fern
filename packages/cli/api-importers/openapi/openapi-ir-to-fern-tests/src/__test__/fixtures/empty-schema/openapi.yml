@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  title: Empty Schema API
+  version: 1.0.0
+
+paths:
+  /entities:
+    get:
+      summary: Get entities
+      operationId: getEntities
+      tags:
+        - entities
+      responses:
+        "200":
+          description: Entities retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EntityResponse"
+
+    post:
+      summary: Create entity
+      operationId: createEntity
+      tags:
+        - entities
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateEntityRequest"
+      responses:
+        "200":
+          description: Entity created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EntityResponse"
+
+components:
+  schemas:
+    Component:
+      description: A valid component representing an unconstrained type.
+
+    Components:
+      type: object
+      additionalProperties:
+        $ref: "#/components/schemas/Component"
+
+    CreateEntityRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        maskedComponent:
+          allOf:
+            - $ref: "#/components/schemas/Component"
+          description: The json component value that contains the field being overridden.
+
+    EntityResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        components:
+          $ref: "#/components/schemas/Components"
+        maskedComponent:
+          allOf:
+            - $ref: "#/components/schemas/Component"
+          description: The component value.

@@ -1,0 +1,224 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "Component": "unknown",
+          "Components": "map<string, Component>",
+          "EntityResponse": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "components": "optional<Components>",
+              "id": "optional<string>",
+              "maskedComponent": {
+                "docs": "The component value.",
+                "type": "optional<Component>",
+              },
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  Component: unknown
+  Components: map<string, Component>
+  EntityResponse:
+    properties:
+      id: optional<string>
+      name: optional<string>
+      components: optional<Components>
+      maskedComponent:
+        type: optional<Component>
+        docs: The component value.
+    source:
+      openapi: ../openapi.yml
+",
+    },
+    "entities.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createEntity": {
+              "auth": undefined,
+              "display-name": "Create entity",
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {},
+                  "response": {
+                    "body": {
+                      "components": {
+                        "key": {
+                          "key": "value",
+                        },
+                      },
+                      "id": "id",
+                      "maskedComponent": {
+                        "key": "value",
+                      },
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/entities",
+              "request": {
+                "body": {
+                  "properties": {
+                    "maskedComponent": {
+                      "docs": "The json component value that contains the field being overridden.",
+                      "type": "optional<root.Component>",
+                    },
+                    "name": "optional<string>",
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreateEntityRequest",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Entity created successfully",
+                "status-code": 200,
+                "type": "root.EntityResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getEntities": {
+              "auth": undefined,
+              "display-name": "Get entities",
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "components": {
+                        "key": {
+                          "key": "value",
+                        },
+                      },
+                      "id": "id",
+                      "maskedComponent": {
+                        "key": "value",
+                      },
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/entities",
+              "response": {
+                "docs": "Entities retrieved successfully",
+                "status-code": 200,
+                "type": "root.EntityResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getEntities:
+      path: /entities
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      display-name: Get entities
+      response:
+        docs: Entities retrieved successfully
+        type: root.EntityResponse
+        status-code: 200
+      examples:
+        - response:
+            body:
+              id: id
+              name: name
+              components:
+                key:
+                  key: value
+              maskedComponent:
+                key: value
+    createEntity:
+      path: /entities
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      display-name: Create entity
+      request:
+        name: CreateEntityRequest
+        body:
+          properties:
+            name: optional<string>
+            maskedComponent:
+              type: optional<root.Component>
+              docs: >-
+                The json component value that contains the field being
+                overridden.
+        content-type: application/json
+      response:
+        docs: Entity created successfully
+        type: root.EntityResponse
+        status-code: 200
+      examples:
+        - request: {}
+          response:
+            body:
+              id: id
+              name: name
+              components:
+                key:
+                  key: value
+              maskedComponent:
+                key: value
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Empty Schema API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Empty Schema API
+",
+  },
+}

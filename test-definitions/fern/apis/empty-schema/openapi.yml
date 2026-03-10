@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: Empty Schema API
+  version: 1.0.0
+paths:
+  /entities:
+    get:
+      operationId: getEntities
+      tags:
+        - entities
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Components'
+    post:
+      operationId: addEntity
+      tags:
+        - entities
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddEntityOverrideRequest'
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    Component:
+      description: A valid v2 component in Lattice C2.
+    Components:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/Component'
+    AddEntityOverrideRequest:
+      type: object
+      properties:
+        maskedComponent:
+          allOf:
+            - $ref: '#/components/schemas/Component'
+          description: The json component value that contains the field being overridden.
+        overrideValue:
+          allOf:
+            - $ref: '#/components/schemas/OverrideValue'
+          description: The override value.
+    OverrideValue:
+      type: object
+      properties:
+        maskedComponent:
+          allOf:
+            - $ref: '#/components/schemas/Component'
+          description: The json component value that contains the field being overridden.

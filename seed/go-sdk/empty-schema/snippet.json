@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/entities",
+                "method": "GET",
+                "identifier_override": "endpoint_entities.getEntities"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/empty-schema/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Entities.GetEntities(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/entities",
+                "method": "POST",
+                "identifier_override": "endpoint_entities.addEntity"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/empty-schema/fern\"\n\tfernclient \"github.com/empty-schema/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Entities.AddEntity(\n\tcontext.TODO(),\n\t\u0026fern.AddEntityOverrideRequest{},\n)\n"
+            }
+        }
+    ]
+}

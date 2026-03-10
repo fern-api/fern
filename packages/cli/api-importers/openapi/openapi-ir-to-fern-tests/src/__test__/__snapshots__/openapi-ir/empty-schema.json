@@ -1,0 +1,459 @@
+{
+  "title": "Empty Schema API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Get entities",
+      "audiences": [],
+      "operationId": "getEntities",
+      "tags": [
+        "entities"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetEntitiesRequest",
+      "response": {
+        "description": "Entities retrieved successfully",
+        "schema": {
+          "generatedName": "GetEntitiesResponse",
+          "schema": "EntityResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/entities",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "components": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
+                      "value": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": "value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      }
+                    }
+                  ],
+                  "type": "map"
+                },
+                "maskedComponent": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
+                      "value": {
+                        "value": {
+                          "value": "value",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    }
+                  ],
+                  "type": "map"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Create entity",
+      "audiences": [],
+      "operationId": "createEntity",
+      "tags": [
+        "entities"
+      ],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateEntityRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateEntityRequest",
+          "schema": "CreateEntityRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Entity created successfully",
+        "schema": {
+          "generatedName": "CreateEntityResponse",
+          "schema": "EntityResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "POST",
+      "path": "/entities",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "components": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
+                      "value": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": "value",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      }
+                    }
+                  ],
+                  "type": "map"
+                },
+                "maskedComponent": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
+                      "value": {
+                        "value": {
+                          "value": "value",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    }
+                  ],
+                  "type": "map"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Component": {
+        "generatedName": "Component",
+        "type": "unknown"
+      },
+      "Components": {
+        "key": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "ComponentsKey",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "value": {
+          "generatedName": "ComponentsValue",
+          "schema": "Component",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "generatedName": "Components",
+        "groupName": [],
+        "type": "map"
+      },
+      "CreateEntityRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "createEntityRequestName",
+            "key": "name",
+            "schema": {
+              "generatedName": "CreateEntityRequestName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CreateEntityRequestName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "createEntityRequestMaskedComponent",
+            "key": "maskedComponent",
+            "schema": {
+              "generatedName": "CreateEntityRequestMaskedComponent",
+              "description": "The json component value that contains the field being overridden.",
+              "value": {
+                "description": "The json component value that contains the field being overridden.",
+                "generatedName": "CreateEntityRequestMaskedComponent",
+                "schema": "Component",
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "CreateEntityRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "EntityResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "entityResponseId",
+            "key": "id",
+            "schema": {
+              "generatedName": "EntityResponseId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "EntityResponseId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "entityResponseName",
+            "key": "name",
+            "schema": {
+              "generatedName": "EntityResponseName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "EntityResponseName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "entityResponseComponents",
+            "key": "components",
+            "schema": {
+              "generatedName": "EntityResponseComponents",
+              "value": {
+                "generatedName": "EntityResponseComponents",
+                "schema": "Components",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "entityResponseMaskedComponent",
+            "key": "maskedComponent",
+            "schema": {
+              "generatedName": "EntityResponseMaskedComponent",
+              "description": "The component value.",
+              "value": {
+                "description": "The component value.",
+                "generatedName": "EntityResponseMaskedComponent",
+                "schema": "Component",
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "EntityResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
