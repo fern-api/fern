@@ -13,8 +13,13 @@ describe("isValidFileType", () => {
         expect(violations).toHaveLength(0);
     });
 
+    it("should return true for zip files", async () => {
+        const violations = await getViolationsForFile(path.join(__dirname, "bird.zip"));
+        expect(violations).toHaveLength(0);
+    });
+
     it("should return false for invalid file types", async () => {
-        const isValid = await getViolationsForFile(path.join(__dirname, "bird.zip"));
-        expect(isValid.length).toBeGreaterThan(0);
+        const violations = await getViolationsForFile(path.join(__dirname, "test.exe"));
+        expect(violations.length).toBeGreaterThan(0);
     });
 });
