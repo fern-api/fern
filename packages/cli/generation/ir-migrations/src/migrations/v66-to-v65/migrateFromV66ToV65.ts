@@ -398,6 +398,17 @@ function inflateIr(
                     ...scheme,
                     name: inflateNameAndWireValue(scheme.name)
                 });
+            case "bearer":
+                return IrVersions.V65.AuthScheme.bearer({
+                    ...scheme,
+                    token: inflateName(scheme.token)
+                });
+            case "basic":
+                return IrVersions.V65.AuthScheme.basic({
+                    ...scheme,
+                    username: inflateName(scheme.username),
+                    password: inflateName(scheme.password)
+                });
             case "oauth":
                 return IrVersions.V65.AuthScheme.oauth({
                     ...scheme,
@@ -575,6 +586,7 @@ function inflateIr(
             fernFilepath: inflateFernFilepath(rootPackage.fernFilepath)
         },
         headers: ir.headers.map(inflateHeader),
+        idempotencyHeaders: ir.idempotencyHeaders.map(inflateHeader),
         pathParameters: ir.pathParameters.map(inflatePathParameter),
         variables: ir.variables.map(inflateVariable),
         auth: {
