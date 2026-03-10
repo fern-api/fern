@@ -108,21 +108,18 @@ export function getChangedFiles(baseRef: string, repoRoot: string): string[] {
             .filter((line) => line.length > 0);
     } catch (error) {
         console.error("git diff --merge-base failed, trying fallback:", error);
-        // Fallback: try without --merge-base (for cases where merge-base doesn't work)
-        try {
-            const output = execFileSync("git", ["diff", "--name-only", baseRef], {
-                cwd: repoRoot,
-                encoding: "utf-8",
-                timeout: 30000
-            });
-            return output
-                .trim()
-                .split("\n")
-                .filter((line) => line.length > 0);
-        } catch (innerError) {
-            console.error("Failed to get changed files from git.", innerError);
-            return [];
-        }
+        // Fallback: try without --merge-base (for cases where merge-base doesn't work,
+        // e.g. disconnected shallow commits). If this also fails, let the error propagate
+        // so the CLI exits non-zero and the workflow falls back to "run everything".
+        const output = execFileSync("git", ["diff", "--name-only", baseRef], {
+            cwd: repoRoot,
+            encoding: "utf-8",
+            timeout: 30000
+        });
+        return output
+            .trim()
+            .split("\n")
+            .filter((line) => line.length > 0);
     }
 }
 

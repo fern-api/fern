@@ -12,7 +12,7 @@ import { TypeReference } from "./TypeReference.js";
 export declare namespace EnumWithAssociatedValues {
     interface Case {
         unsafeName: string;
-        associatedValue: [TypeReference, ...TypeReference[]];
+        associatedValue?: [TypeReference, ...TypeReference[]];
         docs?: DocComment;
     }
 
@@ -96,14 +96,16 @@ export class EnumWithAssociatedValues extends AstNode {
             } else {
                 writer.write(case_.unsafeName);
             }
-            writer.write("(");
-            case_.associatedValue.forEach((type, index) => {
-                if (index > 0) {
-                    writer.write(", ");
-                }
-                type.write(writer);
-            });
-            writer.write(")");
+            if (case_.associatedValue != null) {
+                writer.write("(");
+                case_.associatedValue.forEach((type, index) => {
+                    if (index > 0) {
+                        writer.write(", ");
+                    }
+                    type.write(writer);
+                });
+                writer.write(")");
+            }
             writer.newLine();
         });
         if (this.initializers.length > 0) {

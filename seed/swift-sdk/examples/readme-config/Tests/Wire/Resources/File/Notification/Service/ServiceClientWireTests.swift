@@ -22,11 +22,14 @@ import Examples
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = .generic(
+        let expectedResponse = Exception.generic(
             .init(
                 exceptionType: "Unavailable",
                 exceptionMessage: "This component is unavailable!",
-                exceptionStacktrace: "<logs>"
+                exceptionStacktrace: "<logs>",
+                additionalProperties: [
+                    "type": JSONValue.string("generic")
+                ]
             )
         )
         let response = try await client.file.notification.service.getException(
@@ -55,11 +58,14 @@ import Examples
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = .generic(
+        let expectedResponse = Exception.generic(
             .init(
                 exceptionType: "exceptionType",
                 exceptionMessage: "exceptionMessage",
-                exceptionStacktrace: "exceptionStacktrace"
+                exceptionStacktrace: "exceptionStacktrace",
+                additionalProperties: [
+                    "type": JSONValue.string("generic")
+                ]
             )
         )
         let response = try await client.file.notification.service.getException(

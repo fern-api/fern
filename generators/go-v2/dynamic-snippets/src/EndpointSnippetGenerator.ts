@@ -537,7 +537,8 @@ export class EndpointSnippetGenerator {
     }): go.AstNode[] {
         const args: go.AstNode[] = [];
         for (const header of headers) {
-            const arg = this.getConstructorHeaderArg({ header, value: values.value });
+            const value = values[header.name.wireValue];
+            const arg = this.getConstructorHeaderArg({ header, value });
             if (arg != null) {
                 args.push(arg);
             }

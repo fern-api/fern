@@ -1896,6 +1896,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .initializer("new $T<>()", HashMap.class)
                         .build());
 
+                // Add interceptors field when custom-interceptors is enabled
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    builderStageBuilder.addField(FieldSpec.builder(
+                                    ParameterizedTypeName.get(
+                                            ClassName.get(List.class), ClassName.get(Interceptor.class)),
+                                    "interceptors")
+                            .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                            .initializer("new $T<>()", ArrayList.class)
+                            .build());
+                }
+
                 // Add environment() method if environments are present
                 if (generatedEnvironmentsClass.optionsPresent()) {
                     builderStageBuilder.addMethod(MethodSpec.methodBuilder("environment")
@@ -1967,6 +1978,20 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addStatement("return this")
                         .build());
 
+                // Add addInterceptor() method when custom-interceptors is enabled
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    builderStageBuilder.addMethod(MethodSpec.methodBuilder("addInterceptor")
+                            .addModifiers(Modifier.PUBLIC)
+                            .addJavadoc("Add a custom OkHttp interceptor to the client.\n"
+                                    + "Interceptors added here are forwarded to the auth builder when\n"
+                                    + "{@link #token(String)} or {@link #credentials(String, String)} is called.")
+                            .addParameter(Interceptor.class, "interceptor")
+                            .returns(builderStageClassName)
+                            .addStatement("this.interceptors.add(interceptor)")
+                            .addStatement("return this")
+                            .build());
+                }
+
                 // Add token() method that returns _TokenAuth with configuration copied using setter methods
                 MethodSpec.Builder tokenMethodBuilder = MethodSpec.methodBuilder("token")
                         .addModifiers(Modifier.PUBLIC)
@@ -1995,8 +2020,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("for ($T.Entry<String, String> header : this.headers.entrySet())", Map.class)
                         .addStatement("auth.addHeader(header.getKey(), header.getValue())")
-                        .endControlFlow()
-                        .addStatement("return auth");
+                        .endControlFlow();
+
+                // Forward interceptors from _Builder to _TokenAuth
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    tokenMethodBuilder
+                            .beginControlFlow("for ($T interceptor : this.interceptors)", Interceptor.class)
+                            .addStatement("auth.addInterceptor(interceptor)")
+                            .endControlFlow();
+                }
+
+                tokenMethodBuilder.addStatement("return auth");
                 builderStageBuilder.addMethod(tokenMethodBuilder.build());
 
                 // Add credentials() method that returns _CredentialsAuth with configuration copied using setter methods
@@ -2026,8 +2060,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("for ($T.Entry<String, String> header : this.headers.entrySet())", Map.class)
                         .addStatement("auth.addHeader(header.getKey(), header.getValue())")
-                        .endControlFlow()
-                        .addStatement("return auth");
+                        .endControlFlow();
+
+                // Forward interceptors from _Builder to _CredentialsAuth
+                if (clientGeneratorContext.getCustomConfig().customInterceptors()) {
+                    credentialsMethodBuilder
+                            .beginControlFlow("for ($T interceptor : this.interceptors)", Interceptor.class)
+                            .addStatement("auth.addInterceptor(interceptor)")
+                            .endControlFlow();
+                }
+
+                credentialsMethodBuilder.addStatement("return auth");
                 builderStageBuilder.addMethod(credentialsMethodBuilder.build());
 
                 clientBuilder.addType(builderStageBuilder.build());

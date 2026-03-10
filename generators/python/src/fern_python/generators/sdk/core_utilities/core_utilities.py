@@ -46,8 +46,17 @@ class CoreUtilities:
         self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
         self._use_str_enums = custom_config.pydantic_config.use_str_enums
         self._import_paths = custom_config.import_paths
+        self._datetime_milliseconds = custom_config.datetime_milliseconds
 
     def copy_to_project(self, *, project: Project) -> None:
+        datetime_replacements = (
+            {
+                "v.isoformat().replace": 'v.isoformat(timespec="milliseconds").replace',
+                "return v.isoformat()\n": 'return v.isoformat(timespec="milliseconds")\n',
+            }
+            if self._datetime_milliseconds
+            else None
+        )
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="datetime_utils.py",
@@ -58,6 +67,7 @@ class CoreUtilities:
             exports={"serialize_datetime", "parse_rfc2822_datetime", "Rfc2822DateTime"}
             if not self._exclude_types_from_init_exports
             else set(),
+            string_replacements=datetime_replacements,
         )
         # Only copy enum.py when generating actual enum classes (not string literals)
         if not self._use_str_enums:

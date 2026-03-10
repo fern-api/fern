@@ -12,9 +12,7 @@ private func main() async throws {
         request: TestSubmissionUpdate(
             updateTime: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
             updateInfo: TestSubmissionUpdateInfo.running(
-                .init(
-                    running: 
-                )
+
             )
         )
     )

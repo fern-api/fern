@@ -7,7 +7,7 @@ private func main() async throws {
         token: "<token>"
     )
 
-    _ = try await client.v2.problem.getLightweightProblems()
+    _ = try await client.v2.v3.problem.getLightweightProblems()
 }
 
 try await main()
