@@ -620,8 +620,8 @@ export class WireTestGenerator {
 
     private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
         // Use the WireMock mapping as the source of truth for expected query parameter values.
-        // This ensures the test verification matches exactly what WireMock expects (e.g., datetime
-        // values serialized via Date.toISOString() always include milliseconds like "2018-11-10T20:00:00.000Z").
+        // The mapping values are already normalized by getWireMockConfigContent() based on
+        // the datetime_milliseconds config, so they match what the SDK actually sends.
         const basePath = this.buildPathTemplate(endpoint);
         const mappingKey = this.wiremockMappingKey({
             requestMethod: endpoint.method,
@@ -700,6 +700,14 @@ export class WireTestGenerator {
     private getWireMockConfigContent(): Record<string, WireMockMapping> {
         const out: Record<string, WireMockMapping> = {};
         const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
+
+        // Normalize datetime values to match the SDK's serialization format.
+        // When datetime_milliseconds is false (default), strip ".000" milliseconds
+        // so test verification matches what the SDK actually sends.
+        if (!this.context.customConfig.datetime_milliseconds) {
+            WireTestSetupGenerator.stripDatetimeMilliseconds(wiremockStubMapping);
+        }
+
         for (const mapping of wiremockStubMapping.mappings) {
             const key = this.wiremockMappingKey({
                 requestMethod: mapping.request.method,
