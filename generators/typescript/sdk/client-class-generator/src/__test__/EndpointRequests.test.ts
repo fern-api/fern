@@ -33,18 +33,6 @@ function serializeStatements(statements: ts.Statement[]): string {
 }
 
 /**
- * Helper to serialize parameter declarations to a readable string.
- */
-function serializeParameters(params: { name: string; type?: string; hasQuestionToken?: boolean }[]): string {
-    return params
-        .map((p) => {
-            const optional = p.hasQuestionToken ? "?" : "";
-            return p.type ? `${p.name}${optional}: ${p.type}` : `${p.name}${optional}`;
-        })
-        .join(", ");
-}
-
-/**
  * Creates a mock SdkContext for endpoint request tests.
  * This is more comprehensive than the basic mock contexts because endpoint requests
  * exercise many more context properties (requestWrapper, sdkInlinedRequestBodySchema, etc.).
@@ -364,6 +352,67 @@ function createBodyPropertyForUpload(name: string, valueType: FernIr.TypeReferen
         ...createInlinedRequestBodyProperty(name, valueType),
         contentType: undefined,
         style: undefined
+    });
+}
+
+/**
+ * Creates a bytes request body and matching SDK request for use in GeneratedBytesEndpointRequest tests.
+ */
+function createBytesRequestBodyAndSdkRequest(opts?: { isOptional?: boolean; contentType?: string }): {
+    bytesBody: FernIr.HttpRequestBody.Bytes;
+    sdkRequest: FernIr.SdkRequest;
+} {
+    const isOptional = opts?.isOptional ?? false;
+    const contentType = opts?.contentType;
+    const bytesBody = FernIr.HttpRequestBody.bytes({
+        isOptional,
+        contentType,
+        v2Examples: undefined,
+        docs: undefined
+    });
+    const sdkRequest: FernIr.SdkRequest = {
+        streamParameter: undefined,
+        requestParameterName: casingsGenerator.generateName("request"),
+        shape: FernIr.SdkRequestShape.justRequestBody(
+            FernIr.SdkRequestBodyType.bytes({
+                isOptional,
+                contentType,
+                v2Examples: undefined,
+                docs: undefined
+            })
+        )
+    };
+    return { bytesBody, sdkRequest };
+}
+
+/**
+ * Creates a GeneratedBytesEndpointRequest instance for use in tests.
+ */
+function createBytesEndpointRequest(opts?: {
+    isOptional?: boolean;
+    contentType?: string;
+    pathParameters?: FernIr.PathParameter[];
+}): GeneratedBytesEndpointRequest {
+    const { bytesBody, sdkRequest } = createBytesRequestBodyAndSdkRequest({
+        isOptional: opts?.isOptional,
+        contentType: opts?.contentType
+    });
+    return new GeneratedBytesEndpointRequest({
+        ir: createMinimalIR(),
+        packageId: { isRoot: true },
+        service: createHttpService(),
+        endpoint: createHttpEndpoint({
+            pathParameters: opts?.pathParameters,
+            allPathParameters: opts?.pathParameters,
+            requestBody: bytesBody,
+            sdkRequest
+        }),
+        requestBody: bytesBody,
+        generatedSdkClientClass: createMockSdkClientClass(),
+        retainOriginalCasing: false,
+        parameterNaming: "default",
+        // biome-ignore lint/suspicious/noExplicitAny: test mock
+        exportsManager: {} as any
     });
 }
 
@@ -1072,36 +1121,7 @@ describe("GeneratedFileUploadEndpointRequest", () => {
 describe("GeneratedBytesEndpointRequest", () => {
     describe("getEndpointParameters", () => {
         it("includes uploadable parameter", () => {
-            const bytesBody = FernIr.HttpRequestBody.bytes({
-                isOptional: false,
-                contentType: undefined,
-                v2Examples: undefined,
-                docs: undefined
-            });
-            const sdkRequest: FernIr.SdkRequest = {
-                streamParameter: undefined,
-                requestParameterName: casingsGenerator.generateName("request"),
-                shape: FernIr.SdkRequestShape.justRequestBody(
-                    FernIr.SdkRequestBodyType.bytes({
-                        isOptional: false,
-                        contentType: undefined,
-                        v2Examples: undefined,
-                        docs: undefined
-                    })
-                )
-            };
-            const request = new GeneratedBytesEndpointRequest({
-                ir: createMinimalIR(),
-                packageId: { isRoot: true },
-                service: createHttpService(),
-                endpoint: createHttpEndpoint({ requestBody: bytesBody, sdkRequest }),
-                requestBody: bytesBody,
-                generatedSdkClientClass: createMockSdkClientClass(),
-                retainOriginalCasing: false,
-                parameterNaming: "default",
-                // biome-ignore lint/suspicious/noExplicitAny: test mock
-                exportsManager: {} as any
-            });
+            const request = createBytesEndpointRequest();
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
             expect(params.length).toBeGreaterThanOrEqual(1);
@@ -1110,36 +1130,7 @@ describe("GeneratedBytesEndpointRequest", () => {
         });
 
         it("includes optional uploadable with undefined type", () => {
-            const bytesBody = FernIr.HttpRequestBody.bytes({
-                isOptional: true,
-                contentType: undefined,
-                v2Examples: undefined,
-                docs: undefined
-            });
-            const sdkRequest: FernIr.SdkRequest = {
-                streamParameter: undefined,
-                requestParameterName: casingsGenerator.generateName("request"),
-                shape: FernIr.SdkRequestShape.justRequestBody(
-                    FernIr.SdkRequestBodyType.bytes({
-                        isOptional: true,
-                        contentType: undefined,
-                        v2Examples: undefined,
-                        docs: undefined
-                    })
-                )
-            };
-            const request = new GeneratedBytesEndpointRequest({
-                ir: createMinimalIR(),
-                packageId: { isRoot: true },
-                service: createHttpService(),
-                endpoint: createHttpEndpoint({ requestBody: bytesBody, sdkRequest }),
-                requestBody: bytesBody,
-                generatedSdkClientClass: createMockSdkClientClass(),
-                retainOriginalCasing: false,
-                parameterNaming: "default",
-                // biome-ignore lint/suspicious/noExplicitAny: test mock
-                exportsManager: {} as any
-            });
+            const request = createBytesEndpointRequest({ isOptional: true });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
             expect(params[0]?.type).toContain("undefined");
@@ -1147,40 +1138,9 @@ describe("GeneratedBytesEndpointRequest", () => {
 
         it("includes path params and uploadable together", () => {
             const pathParam = createPathParameter("fileId");
-            const bytesBody = FernIr.HttpRequestBody.bytes({
-                isOptional: false,
+            const request = createBytesEndpointRequest({
                 contentType: "application/octet-stream",
-                v2Examples: undefined,
-                docs: undefined
-            });
-            const sdkRequest: FernIr.SdkRequest = {
-                streamParameter: undefined,
-                requestParameterName: casingsGenerator.generateName("request"),
-                shape: FernIr.SdkRequestShape.justRequestBody(
-                    FernIr.SdkRequestBodyType.bytes({
-                        isOptional: false,
-                        contentType: "application/octet-stream",
-                        v2Examples: undefined,
-                        docs: undefined
-                    })
-                )
-            };
-            const request = new GeneratedBytesEndpointRequest({
-                ir: createMinimalIR(),
-                packageId: { isRoot: true },
-                service: createHttpService(),
-                endpoint: createHttpEndpoint({
-                    pathParameters: [pathParam],
-                    allPathParameters: [pathParam],
-                    requestBody: bytesBody,
-                    sdkRequest
-                }),
-                requestBody: bytesBody,
-                generatedSdkClientClass: createMockSdkClientClass(),
-                retainOriginalCasing: false,
-                parameterNaming: "default",
-                // biome-ignore lint/suspicious/noExplicitAny: test mock
-                exportsManager: {} as any
+                pathParameters: [pathParam]
             });
             const context = createEndpointRequestMockContext();
             const params = request.getEndpointParameters(context);
@@ -1192,36 +1152,7 @@ describe("GeneratedBytesEndpointRequest", () => {
 
     describe("getFetcherRequestArgs", () => {
         it("returns bytes request type with duplex half", () => {
-            const bytesBody = FernIr.HttpRequestBody.bytes({
-                isOptional: false,
-                contentType: "application/octet-stream",
-                v2Examples: undefined,
-                docs: undefined
-            });
-            const sdkRequest: FernIr.SdkRequest = {
-                streamParameter: undefined,
-                requestParameterName: casingsGenerator.generateName("request"),
-                shape: FernIr.SdkRequestShape.justRequestBody(
-                    FernIr.SdkRequestBodyType.bytes({
-                        isOptional: false,
-                        contentType: "application/octet-stream",
-                        v2Examples: undefined,
-                        docs: undefined
-                    })
-                )
-            };
-            const request = new GeneratedBytesEndpointRequest({
-                ir: createMinimalIR(),
-                packageId: { isRoot: true },
-                service: createHttpService(),
-                endpoint: createHttpEndpoint({ requestBody: bytesBody, sdkRequest }),
-                requestBody: bytesBody,
-                generatedSdkClientClass: createMockSdkClientClass(),
-                retainOriginalCasing: false,
-                parameterNaming: "default",
-                // biome-ignore lint/suspicious/noExplicitAny: test mock
-                exportsManager: {} as any
-            });
+            const request = createBytesEndpointRequest({ contentType: "application/octet-stream" });
             const context = createEndpointRequestMockContext();
             request.getBuildRequestStatements(context);
             const args = request.getFetcherRequestArgs(context);
@@ -1232,36 +1163,7 @@ describe("GeneratedBytesEndpointRequest", () => {
         });
 
         it("passes through content type from request body", () => {
-            const bytesBody = FernIr.HttpRequestBody.bytes({
-                isOptional: false,
-                contentType: "image/png",
-                v2Examples: undefined,
-                docs: undefined
-            });
-            const sdkRequest: FernIr.SdkRequest = {
-                streamParameter: undefined,
-                requestParameterName: casingsGenerator.generateName("request"),
-                shape: FernIr.SdkRequestShape.justRequestBody(
-                    FernIr.SdkRequestBodyType.bytes({
-                        isOptional: false,
-                        contentType: "image/png",
-                        v2Examples: undefined,
-                        docs: undefined
-                    })
-                )
-            };
-            const request = new GeneratedBytesEndpointRequest({
-                ir: createMinimalIR(),
-                packageId: { isRoot: true },
-                service: createHttpService(),
-                endpoint: createHttpEndpoint({ requestBody: bytesBody, sdkRequest }),
-                requestBody: bytesBody,
-                generatedSdkClientClass: createMockSdkClientClass(),
-                retainOriginalCasing: false,
-                parameterNaming: "default",
-                // biome-ignore lint/suspicious/noExplicitAny: test mock
-                exportsManager: {} as any
-            });
+            const request = createBytesEndpointRequest({ contentType: "image/png" });
             const context = createEndpointRequestMockContext();
             request.getBuildRequestStatements(context);
             const args = request.getFetcherRequestArgs(context);
@@ -1271,36 +1173,7 @@ describe("GeneratedBytesEndpointRequest", () => {
 
     describe("getBuildRequestStatements", () => {
         it("generates binary upload request construction", () => {
-            const bytesBody = FernIr.HttpRequestBody.bytes({
-                isOptional: false,
-                contentType: "application/octet-stream",
-                v2Examples: undefined,
-                docs: undefined
-            });
-            const sdkRequest: FernIr.SdkRequest = {
-                streamParameter: undefined,
-                requestParameterName: casingsGenerator.generateName("request"),
-                shape: FernIr.SdkRequestShape.justRequestBody(
-                    FernIr.SdkRequestBodyType.bytes({
-                        isOptional: false,
-                        contentType: "application/octet-stream",
-                        v2Examples: undefined,
-                        docs: undefined
-                    })
-                )
-            };
-            const request = new GeneratedBytesEndpointRequest({
-                ir: createMinimalIR(),
-                packageId: { isRoot: true },
-                service: createHttpService(),
-                endpoint: createHttpEndpoint({ requestBody: bytesBody, sdkRequest }),
-                requestBody: bytesBody,
-                generatedSdkClientClass: createMockSdkClientClass(),
-                retainOriginalCasing: false,
-                parameterNaming: "default",
-                // biome-ignore lint/suspicious/noExplicitAny: test mock
-                exportsManager: {} as any
-            });
+            const request = createBytesEndpointRequest({ contentType: "application/octet-stream" });
             const context = createEndpointRequestMockContext();
             const statements = request.getBuildRequestStatements(context);
             const serialized = serializeStatements(statements);
@@ -1310,36 +1183,7 @@ describe("GeneratedBytesEndpointRequest", () => {
 
     describe("getExampleEndpointImports", () => {
         it("returns fs createReadStream import", () => {
-            const bytesBody = FernIr.HttpRequestBody.bytes({
-                isOptional: false,
-                contentType: undefined,
-                v2Examples: undefined,
-                docs: undefined
-            });
-            const sdkRequest: FernIr.SdkRequest = {
-                streamParameter: undefined,
-                requestParameterName: casingsGenerator.generateName("request"),
-                shape: FernIr.SdkRequestShape.justRequestBody(
-                    FernIr.SdkRequestBodyType.bytes({
-                        isOptional: false,
-                        contentType: undefined,
-                        v2Examples: undefined,
-                        docs: undefined
-                    })
-                )
-            };
-            const request = new GeneratedBytesEndpointRequest({
-                ir: createMinimalIR(),
-                packageId: { isRoot: true },
-                service: createHttpService(),
-                endpoint: createHttpEndpoint({ requestBody: bytesBody, sdkRequest }),
-                requestBody: bytesBody,
-                generatedSdkClientClass: createMockSdkClientClass(),
-                retainOriginalCasing: false,
-                parameterNaming: "default",
-                // biome-ignore lint/suspicious/noExplicitAny: test mock
-                exportsManager: {} as any
-            });
+            const request = createBytesEndpointRequest();
             const imports = request.getExampleEndpointImports();
             expect(imports).toHaveLength(1);
             assert(imports[0] != null, "expected at least one import");
