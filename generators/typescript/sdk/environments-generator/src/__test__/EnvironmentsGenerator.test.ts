@@ -85,8 +85,7 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
             defaultEnvironmentId: undefined,
             environments: singleUrlEnvironments
         });
-        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
-        const mockContext = createMockEnvironmentsContext() as any;
+        const mockContext = createMockEnvironmentsContext();
         expect(impl.getReferenceToDefaultEnvironment(mockContext)).toBeUndefined();
     });
 
@@ -96,8 +95,7 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
             defaultEnvironmentId: "env-prod",
             environments: singleUrlEnvironments
         });
-        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
-        const mockContext = createMockEnvironmentsContext() as any;
+        const mockContext = createMockEnvironmentsContext();
         const result = impl.getReferenceToDefaultEnvironment(mockContext);
         assert(result != null, "expected getReferenceToDefaultEnvironment to return an expression");
         expect(getTextOfTsNode(result)).toBe("MyEnvironment.Production");
@@ -221,8 +219,7 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
             defaultEnvironmentId: "env-prod",
             environments: multipleUrlsEnvironments
         });
-        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
-        const mockContext = createMockEnvironmentsContext() as any;
+        const mockContext = createMockEnvironmentsContext();
         const result = impl.getReferenceToDefaultEnvironment(mockContext);
         assert(result != null, "expected getReferenceToDefaultEnvironment to return an expression for multiple URLs");
         expect(getTextOfTsNode(result)).toBe("MyEnvironment.Production");

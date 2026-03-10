@@ -143,5 +143,6 @@ export function createMockEnvironmentsContext() {
                 getExpression: () => ts.factory.createIdentifier("MyEnvironment")
             })
         }
-    };
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+    } as any;
 }

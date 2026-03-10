@@ -53,7 +53,7 @@ export function createHttpHeader(
     return {
         name: createNameAndWireValue(name, opts?.wireValue),
         valueType,
-        env: opts?.env ?? undefined,
+        env: opts?.env,
         v2Examples: undefined,
         docs: undefined,
         availability: undefined

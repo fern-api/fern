@@ -3,6 +3,7 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
     createMockCoreUtilities,
     createMockGeneratedClientClass,
+    createMockTypeSchemaContext,
     createPathParameter
 } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
@@ -17,11 +18,7 @@ function createMockContext() {
         requestWrapper: {
             shouldInlinePathParameters: () => false
         },
-        typeSchema: {
-            getSchemaOfNamedType: () => ({
-                jsonOrThrow: (expr: ts.Expression) => expr
-            })
-        }
+        typeSchema: createMockTypeSchemaContext()
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
