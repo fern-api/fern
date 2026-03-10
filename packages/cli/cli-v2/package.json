@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist",
     "compile": "tsc",
@@ -55,10 +57,10 @@
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fern-definition-validator": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/github": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
-    "@fern-api/github": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/logger": "workspace:*",
@@ -74,8 +76,8 @@
     "@fern-api/venus-api-sdk": "catalog:",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-loader": "workspace:*",
-    "@fern-fern/generators-sdk": "catalog:",
     "@fern-fern/fiddle-sdk": "catalog:",
+    "@fern-fern/generators-sdk": "catalog:",
     "@types/inquirer": "catalog:",
     "@types/is-ci": "catalog:",
     "@types/js-yaml": "catalog:",
@@ -101,5 +103,8 @@
     "vitest": "catalog:",
     "yaml": "catalog:",
     "yargs": "^17.4.1"
+  },
+  "dependencies": {
+    "@fern-api/casings-generator": "workspace:*"
   }
 }

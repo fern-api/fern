@@ -1,3 +1,4 @@
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -117,10 +118,16 @@ export class IrCompiler {
             return ir.dynamic;
         }
         if (options.irVersion != null) {
+            const casingsGenerator = constructCasingsGenerator({
+                generationLanguage: options.language,
+                keywords: undefined,
+                smartCasing: false
+            });
             return migrateIntermediateRepresentationThroughVersion({
                 intermediateRepresentation: ir,
                 context: taskContext,
-                version: options.irVersion
+                version: options.irVersion,
+                casingsGenerator
             });
         }
         return IrSerialization.IntermediateRepresentation.jsonOrThrow(ir, {

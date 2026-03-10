@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin, getIrVersionForGenerator } from "@fern-api/core";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
@@ -260,6 +261,11 @@ async function startJob({
         version == null ? undefined : "v" + version.toString()
     );
     const resolvedIrVersionOverride = irVersionOverride ?? irVersionFromFdr;
+    const casingsGenerator = constructCasingsGenerator({
+        generationLanguage: generatorInvocation.language,
+        keywords: generatorInvocation.keywords,
+        smartCasing: generatorInvocation.smartCasing
+    });
     const migratedIntermediateRepresentation =
         resolvedIrVersionOverride == null
             ? await migrateIntermediateRepresentationForGenerator({
@@ -268,7 +274,8 @@ async function startJob({
                   targetGenerator: {
                       name: generatorInvocation.name,
                       version: generatorInvocation.version
-                  }
+                  },
+                  casingsGenerator
               })
             : await migrateIntermediateRepresentationToVersionForGenerator({
                   intermediateRepresentation,
@@ -277,7 +284,8 @@ async function startJob({
                   targetGenerator: {
                       name: generatorInvocation.name,
                       version: generatorInvocation.version
-                  }
+                  },
+                  casingsGenerator
               });
 
     const formData = new FormData();

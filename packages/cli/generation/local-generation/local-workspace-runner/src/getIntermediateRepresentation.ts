@@ -1,4 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { getIrVersionForGenerator } from "@fern-api/core";
@@ -79,12 +80,18 @@ export async function getIntermediateRepresentation({
         version == null ? undefined : "v" + version.toString()
     );
     const resolvedIrVersionOverride = irVersionOverride ?? irVersionFromFdr;
+    const casingsGenerator = constructCasingsGenerator({
+        generationLanguage: generatorInvocation.language,
+        keywords: generatorInvocation.keywords,
+        smartCasing: generatorInvocation.smartCasing
+    });
     const migratedIntermediateRepresentation =
         resolvedIrVersionOverride != null
             ? await migrateIntermediateRepresentationThroughVersion({
                   intermediateRepresentation,
                   context,
-                  version: resolvedIrVersionOverride
+                  version: resolvedIrVersionOverride,
+                  casingsGenerator
               })
             : await migrateIntermediateRepresentationForGenerator({
                   intermediateRepresentation,
@@ -92,7 +99,8 @@ export async function getIntermediateRepresentation({
                   targetGenerator: {
                       name: generatorInvocation.name,
                       version: generatorInvocation.version
-                  }
+                  },
+                  casingsGenerator
               });
     return {
         latest: intermediateRepresentation,

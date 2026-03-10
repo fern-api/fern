@@ -21,7 +21,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf ./lib",
@@ -33,6 +35,7 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
     "@fern-api/core-utils": "workspace:*",

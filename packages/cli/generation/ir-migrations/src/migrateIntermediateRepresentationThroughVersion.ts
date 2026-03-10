@@ -1,3 +1,4 @@
+import { CasingsGenerator } from "@fern-api/casings-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 
@@ -6,16 +7,19 @@ import { getIntermediateRepresentationMigrator } from "./IntermediateRepresentat
 export function migrateIntermediateRepresentationThroughVersion({
     intermediateRepresentation,
     context,
-    version
+    version,
+    casingsGenerator
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
     version: string;
+    casingsGenerator?: CasingsGenerator;
 }): Promise<unknown> {
     const migrated = getIntermediateRepresentationMigrator().migrateThroughVersion({
         version,
         intermediateRepresentation,
-        context
+        context,
+        casingsGenerator
     });
     return migrated.jsonify();
 }
