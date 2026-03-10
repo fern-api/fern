@@ -3281,6 +3281,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-typescript/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@types/lodash-es':
         specifier: 'catalog:'
         version: 4.17.12
@@ -3346,6 +3349,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-typescript/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
@@ -3653,6 +3659,28 @@ importers:
       vitest:
         specifier: 'catalog:'
         version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
+
+  generators/typescript/sdk/test-utils:
+    dependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../../../../packages/commons/casings-generator
+      ts-morph:
+        specifier: 'catalog:'
+        version: 27.0.2
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../../packages/configs
+      '@fern-fern/ir-sdk':
+        specifier: ^65.3.0
+        version: 65.3.0
+      '@types/node':
+        specifier: 'catalog:'
+        version: 18.15.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
 
   generators/typescript/sdk/websocket-type-schema-generator:
     dependencies:

@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generateHeaders > generates auth headers when auth provider exists and endpoint requires auth 1`] = `
+"const _authRequest: AuthRequest = getAuthRequest(this._authProvider);
+let _headers: Fetcher.Args["headers"] = mergeHeaders(_authRequest.headers, this._options?.headers, requestOptions?.headers);"
+`;
+
+exports[`generateHeaders > generates headers with additional headers parameter 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Extra": "extra-value" }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with idempotency headers when endpoint is idempotent 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Idempotency-Key": requestOptions?.idempotencyKey }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with literal header value 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Fern-Language": "JavaScript" }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with no service/endpoint headers and no auth 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with root-level overridable headers 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Custom-Header": requestOptions?.xCustomHeader ?? this._options?.xCustomHeader }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers with service and endpoint headers 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-API-Version": request.xApiVersion, "X-Request-Id": request.xRequestId }), requestOptions?.headers);"`;
+
+exports[`generateHeaders > generates headers without idempotency headers when endpoint is not idempotent 1`] = `"let _headers: Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);"`;

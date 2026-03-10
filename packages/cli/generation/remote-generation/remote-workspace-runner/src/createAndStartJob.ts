@@ -196,6 +196,11 @@ async function createJob({
             },
             _other: (content) => {
                 context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);
+                // Try to extract a descriptive error message from the response body
+                const errorMessage = extractErrorMessage(content);
+                if (errorMessage != null) {
+                    return context.failAndThrow(errorMessage);
+                }
                 return context.failAndThrow(
                     "Failed to create job. Please try again or contact support@buildwithfern.com for assistance."
                 );
@@ -309,32 +314,52 @@ async function startJob({
     }
 }
 
-// Fiddle is on the old version of error serialization. Until we upgrade the
-// java generator to support the new implementation, we manually migrate
+/**
+ * Attempts to extract a human-readable error message from the raw error response body.
+ * Fiddle's ErrorBody serializes as { error: "...", content: { message: "..." } }.
+ * The SDK wraps this as { content: { reason: "status-code", body: <ErrorBody> } }.
+ * Returns undefined if no message could be extracted.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: the error shape from the SDK is not well-typed
+function extractErrorMessage(error: any): string | undefined {
+    const body = error?.content?.reason === "status-code" ? error.content.body : undefined;
+    if (typeof body?.content?.message === "string") {
+        return body.content.message;
+    }
+    // Direct message field on the body (fallback)
+    if (typeof body?.message === "string") {
+        return body.message;
+    }
+    return undefined;
+}
+
+// Fiddle's ErrorBody serializes as { error: "<ErrorType>", content: <TypedBody> }.
+// The SDK wraps this in { content: { reason: "status-code", body: <ErrorBody> } }.
+// We manually convert to typed errors so the _visit handlers can provide specific messages.
 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
 function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Error {
     if (error?.content?.reason === "status-code") {
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
         const body = error.content.body as any;
-        switch (body?._error) {
+        switch (body?.error) {
             case "IllegalApiNameError":
                 return FernFiddle.remoteGen.createJobV3.Error.illegalApiNameError();
             case "IllegalApiVersionError":
-                return FernFiddle.remoteGen.createJobV3.Error.illegalApiVersionError(body.body);
+                return FernFiddle.remoteGen.createJobV3.Error.illegalApiVersionError(body.content);
             case "GeneratorsDoNotExistError":
-                return FernFiddle.remoteGen.createJobV3.Error.generatorsDoNotExistError(body.body);
+                return FernFiddle.remoteGen.createJobV3.Error.generatorsDoNotExistError(body.content);
             case "CannotPublishToNpmScope":
-                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToNpmScope(body.body);
+                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToNpmScope(body.content);
             case "CannotPublishToMavenScope":
-                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToMavenGroup(body.body);
+                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToMavenGroup(body.content);
             case "CannotPublishPypiPackage":
-                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishPypiPackage(body.body);
+                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishPypiPackage(body.content);
             case "InsufficientPermissions":
-                return FernFiddle.remoteGen.createJobV3.Error.insufficientPermissions(body.body);
+                return FernFiddle.remoteGen.createJobV3.Error.insufficientPermissions(body.content);
             case "OrgNotConfiguredForWhitelabel":
-                return FernFiddle.remoteGen.createJobV3.Error.orgNotConfiguredForWhitelabel(body.body);
+                return FernFiddle.remoteGen.createJobV3.Error.orgNotConfiguredForWhitelabel(body.content);
             case "BranchDoesNotExist":
-                return FernFiddle.remoteGen.createJobV3.Error.branchDoesNotExist(body.body);
+                return FernFiddle.remoteGen.createJobV3.Error.branchDoesNotExist(body.content);
         }
     }
     return error;
