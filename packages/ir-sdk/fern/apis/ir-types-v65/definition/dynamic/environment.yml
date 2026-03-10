@@ -19,7 +19,7 @@ types:
     extends: commons.WithDocs
     properties:
       id: EnvironmentId
-      name: commons.NameOrString
+      name: commons.Name
       url: EnvironmentUrl
   MultipleBaseUrlsEnvironments:
     properties:
@@ -29,12 +29,12 @@ types:
     extends: commons.WithDocs
     properties:
       id: EnvironmentId
-      name: commons.NameOrString
+      name: commons.Name
       urls: map<EnvironmentBaseUrlId, EnvironmentUrl>
   EnvironmentBaseUrlWithId:
     properties:
       id: EnvironmentBaseUrlId
-      name: commons.NameOrString
+      name: commons.Name
 
   EnvironmentValues:
     docs: |

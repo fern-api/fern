@@ -9,5 +9,5 @@ types:
     extends: commons.WithDocs
     properties:
       id: VariableId
-      name: commons.NameOrString
+      name: commons.Name
       type: types.TypeReference

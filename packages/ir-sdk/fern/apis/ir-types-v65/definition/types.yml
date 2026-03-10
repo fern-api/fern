@@ -44,7 +44,7 @@ types:
     properties:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
-      name: commons.NameOrString
+      name: commons.Name
       displayName: optional<commons.DisplayName>
 
   Type:
@@ -97,7 +97,7 @@ types:
   EnumValue:
     extends: commons.Declaration
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
 
   ObjectTypeDeclaration:
     properties:
@@ -115,7 +115,7 @@ types:
   ObjectProperty:
     extends: commons.Declaration
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       valueType: TypeReference
       propertyAccess: optional<ObjectPropertyAccess>
       v2Examples: optional<examples.V2SchemaExamples>
@@ -127,7 +127,7 @@ types:
 
   UnionTypeDeclaration:
     properties:
-      discriminant: commons.NameAndWireValueOrString
+      discriminant: commons.NameAndWireValue
       extends:
         docs: "A list of other types to inherit from"
         type: list<DeclaredTypeName>
@@ -144,7 +144,7 @@ types:
   SingleUnionType:
     extends: commons.WithDocs
     properties:
-      discriminantValue: commons.NameAndWireValueOrString
+      discriminantValue: commons.NameAndWireValue
       shape: SingleUnionTypeProperties
       displayName: optional<string>
       availability: optional<commons.Availability>
@@ -160,7 +160,7 @@ types:
 
   SingleUnionTypeProperty:
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       type: TypeReference
 
   UnionDiscriminatorContext:
@@ -201,7 +201,7 @@ types:
     properties:
       typeId: commons.TypeId
       fernFilepath: commons.FernFilepath
-      name: commons.NameOrString
+      name: commons.Name
       displayName: optional<commons.DisplayName>
       default: optional<NamedTypeDefault>
       inline:
@@ -414,7 +414,7 @@ types:
       - commons.WithJsonExample
       - commons.WithDocs
     properties:
-      name: optional<commons.NameOrString>
+      name: optional<commons.Name>
       shape: ExampleTypeShape
 
   ExampleTypeShape:
@@ -431,7 +431,7 @@ types:
 
   ExampleEnumType:
     properties:
-      value: commons.NameAndWireValueOrString
+      value: commons.NameAndWireValue
 
   ExampleObjectType:
     properties:
@@ -440,7 +440,7 @@ types:
 
   ExampleObjectProperty:
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       value: ExampleTypeReference
       propertyAccess: optional<ObjectPropertyAccess>
       originalTypeDeclaration:
@@ -451,12 +451,12 @@ types:
 
   ExampleExtraObjectProperty:
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       value: ExampleTypeReference
 
   ExampleUnionType:
     properties:
-      discriminant: commons.NameAndWireValueOrString
+      discriminant: commons.NameAndWireValue
       singleUnionType: ExampleSingleUnionType
       extendProperties:
         docs: A list of properties inherited from other types
@@ -467,7 +467,7 @@ types:
 
   ExampleUnionBaseProperty:
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       value: ExampleTypeReference
 
   ExampleUndiscriminatedUnionType:
@@ -490,7 +490,7 @@ types:
 
   ExampleSingleUnionType:
     properties:
-      wireDiscriminantValue: commons.NameAndWireValueOrString
+      wireDiscriminantValue: commons.NameAndWireValue
       shape: ExampleSingleUnionTypeProperties
 
   ExampleSingleUnionTypeProperties:

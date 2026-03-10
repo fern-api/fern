@@ -4,9 +4,9 @@ types:
       docs: optional<string>
   FernFilepath:
     properties:
-      allParts: list<NameOrString>
-      packagePath: list<NameOrString>
-      file: optional<NameOrString>
+      allParts: list<Name>
+      packagePath: list<Name>
+      file: optional<Name>
 
   # names
   Name:
@@ -16,20 +16,10 @@ types:
       pascalCase: SafeAndUnsafeString
       snakeCase: SafeAndUnsafeString
       screamingSnakeCase: SafeAndUnsafeString
-  NameOrString:
-    discriminated: false
-    union:
-      - string
-      - Name
   NameAndWireValue:
     properties:
       wireValue: string
-      name: NameOrString
-  NameAndWireValueOrString:
-    discriminated: false
-    union:
-      - string
-      - NameAndWireValue
+      name: Name
   SafeAndUnsafeString:
     properties:
       unsafeName:

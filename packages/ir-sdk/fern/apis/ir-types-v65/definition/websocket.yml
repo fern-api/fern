@@ -26,7 +26,7 @@ types:
       examples: list<ExampleWebSocketSession>
       v2Examples: optional<examples.V2WebSocketSessionExamples>
 
-  WebSocketName: commons.NameOrString
+  WebSocketName: commons.Name
 
   WebSocketMessage:
     extends: commons.Declaration
@@ -49,14 +49,14 @@ types:
 
   InlinedWebSocketMessageBody:
     properties:
-      name: commons.NameOrString
+      name: commons.Name
       extends: list<types.DeclaredTypeName>
       properties: list<InlinedWebSocketMessageBodyProperty>
 
   InlinedWebSocketMessageBodyProperty:
     extends: commons.WithDocsAndAvailability
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       valueType: types.TypeReference
 
   WebSocketMessageBodyReference:
@@ -67,7 +67,7 @@ types:
   ExampleWebSocketSession:
     extends: commons.WithDocs
     properties:
-      name: optional<commons.NameOrString>
+      name: optional<commons.Name>
       url: string
       pathParameters: list<http.ExamplePathParameter>
       headers: list<http.ExampleHeader>

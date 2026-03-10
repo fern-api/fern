@@ -107,7 +107,7 @@ types:
     properties:
       methodType: optional<proto.ProtobufMethodType>
 
-  EndpointName: commons.NameOrString
+  EndpointName: commons.Name
 
   HttpPath:
     properties:
@@ -131,7 +131,7 @@ types:
   HttpHeader:
     extends: commons.Declaration
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       valueType: types.TypeReference
       env: optional<string>
       v2Examples: optional<examples.V2SchemaExamples>
@@ -139,7 +139,7 @@ types:
   PathParameter:
     extends: commons.WithDocs
     properties:
-      name: commons.NameOrString
+      name: commons.Name
       valueType: types.TypeReference
       location: PathParameterLocation
       variable: optional<variables.VariableId>
@@ -155,7 +155,7 @@ types:
   QueryParameter:
     extends: commons.Declaration
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       valueType: types.TypeReference
       allowMultiple: boolean
       v2Examples: optional<examples.V2SchemaExamples>
@@ -178,7 +178,7 @@ types:
       - examples.WithV2Examples
       - commons.WithContentType
     properties:
-      name: commons.NameOrString
+      name: commons.Name
       extends: list<types.DeclaredTypeName>
       properties: list<InlinedRequestBodyProperty>
       extendedProperties:
@@ -191,7 +191,7 @@ types:
   InlinedRequestBodyProperty:
     extends: commons.WithDocsAndAvailability
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       valueType: types.TypeReference
       v2Examples: optional<examples.V2SchemaExamples>
       propertyAccess: optional<types.ObjectPropertyAccess>
@@ -202,7 +202,7 @@ types:
       - examples.WithV2Examples
       - commons.WithContentType
     properties:
-      name: commons.NameOrString
+      name: commons.Name
       properties: list<FileUploadRequestProperty>
 
   BytesRequest:
@@ -239,14 +239,14 @@ types:
   FilePropertySingle:
     extends: commons.WithDocs
     properties:
-      key: commons.NameAndWireValueOrString
+      key: commons.NameAndWireValue
       isOptional: boolean
       contentType: optional<string>
 
   FilePropertyArray:
     extends: commons.WithDocs
     properties:
-      key: commons.NameAndWireValueOrString
+      key: commons.NameAndWireValue
       isOptional: boolean
       contentType: optional<string>
 
@@ -269,7 +269,7 @@ types:
         type: optional<RequestProperty>
         docs: |
           The request property that controls whether or not the response is streamed.
-      requestParameterName: commons.NameOrString
+      requestParameterName: commons.Name
       shape: SdkRequestShape
 
   SdkRequestShape:
@@ -279,8 +279,8 @@ types:
 
   SdkRequestWrapper:
     properties:
-      wrapperName: commons.NameOrString
-      bodyKey: commons.NameOrString
+      wrapperName: commons.Name
+      bodyKey: commons.Name
       includePathParameters: optional<boolean>
       onlyPathParameters: optional<boolean>
 
@@ -479,7 +479,7 @@ types:
 
   PropertyPathItem:
     properties:
-      name: commons.NameOrString
+      name: commons.Name
       type: types.TypeReference
 
   RequestProperty:
@@ -524,7 +524,7 @@ types:
     extends: commons.WithDocs
     properties:
       id: optional<string>
-      name: optional<commons.NameOrString>
+      name: optional<commons.Name>
       url: string
       rootPathParameters: list<ExamplePathParameter>
       servicePathParameters: list<ExamplePathParameter>
@@ -547,7 +547,7 @@ types:
     extends: commons.WithDocs
     properties:
       name:
-        type: optional<commons.NameOrString>
+        type: optional<commons.Name>
         docs: Override the example name.
       language: string
       code: string
@@ -563,7 +563,7 @@ types:
     extends: commons.WithDocs
     properties:
       name:
-        type: optional<commons.NameOrString>
+        type: optional<commons.Name>
         docs: Override the example name.
       sdk: SupportedSdkLanguage
       code: string
@@ -585,12 +585,12 @@ types:
 
   ExamplePathParameter:
     properties:
-      name: commons.NameOrString
+      name: commons.Name
       value: types.ExampleTypeReference
 
   ExampleQueryParameter:
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       value: types.ExampleTypeReference
       shape: optional<ExampleQueryParameterShape>
 
@@ -602,7 +602,7 @@ types:
 
   ExampleHeader:
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       value: types.ExampleTypeReference
 
   ExampleRequestBody:
@@ -618,12 +618,12 @@ types:
 
   ExampleInlinedRequestBodyExtraProperty:
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       value: types.ExampleTypeReference
 
   ExampleInlinedRequestBodyProperty:
     properties:
-      name: commons.NameAndWireValueOrString
+      name: commons.NameAndWireValue
       value: types.ExampleTypeReference
       originalTypeDeclaration:
         docs: |

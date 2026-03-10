@@ -25,9 +25,9 @@ types:
         type: optional<string>
         docs: The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered.
       apiVersion: optional<ApiVersionScheme>
-        apiName:
-          type: commons.NameOrString
-          docs: This is the human readable unique id for the API.
+      apiName:
+        type: commons.Name
+        docs: This is the human readable unique id for the API.
       apiDisplayName: optional<string>
       apiDocs: optional<string>
       auth: auth.ApiAuth
@@ -199,8 +199,8 @@ types:
       property: ErrorDiscriminationByPropertyStrategy
   ErrorDiscriminationByPropertyStrategy:
     properties:
-      discriminant: commons.NameAndWireValueOrString
-      contentProperty: commons.NameAndWireValueOrString
+      discriminant: commons.NameAndWireValue
+      contentProperty: commons.NameAndWireValue
   Package:
     extends: commons.WithDocs
     properties:
@@ -216,7 +216,7 @@ types:
   Subpackage:
     extends: Package
     properties:
-      name: commons.NameOrString
+      name: commons.Name
       displayName: optional<commons.DisplayName>
   PackageNavigationConfig:
     properties:

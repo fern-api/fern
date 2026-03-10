@@ -86,7 +86,7 @@ types:
 
   ReferencedRequestBody:
     properties:
-      bodyKey: commons.NameOrString
+      bodyKey: commons.Name
       bodyType: ReferencedRequestBodyType
 
   ReferencedRequestBodyType:
@@ -100,8 +100,8 @@ types:
 
   FileUploadRequestBodyProperty:
     union:
-      file: commons.NameAndWireValueOrString
-      fileArray: commons.NameAndWireValueOrString
+      file: commons.NameAndWireValue
+      fileArray: commons.NameAndWireValue
       bodyProperty: types.NamedParameter
 
   EndpointExample:
