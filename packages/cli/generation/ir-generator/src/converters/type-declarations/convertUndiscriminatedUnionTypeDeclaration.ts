@@ -35,8 +35,17 @@ export function convertUndiscriminatedUnionTypeDeclaration({
                           ...parsedType,
                           displayName:
                               typeof member === "string"
-                                  ? titleCase(typeof parsedType.name === "string" ? parsedType.name : parsedType.name.originalName)
-                                  : (member["display-name"] ?? titleCase(typeof parsedType.name === "string" ? parsedType.name : parsedType.name.originalName))
+                                  ? titleCase(
+                                        typeof parsedType.name === "string"
+                                            ? parsedType.name
+                                            : parsedType.name.originalName
+                                    )
+                                  : (member["display-name"] ??
+                                    titleCase(
+                                        typeof parsedType.name === "string"
+                                            ? parsedType.name
+                                            : parsedType.name.originalName
+                                    ))
                       }
                     : parsedType;
 

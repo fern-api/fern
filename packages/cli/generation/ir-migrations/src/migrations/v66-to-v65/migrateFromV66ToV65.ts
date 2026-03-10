@@ -284,9 +284,7 @@ function inflateIr(
                                     name: inflateNameAndWireValue(p.name)
                                 });
                             case "file":
-                                return IrVersions.V65.FileUploadRequestProperty.file(
-                                    inflateFileProperty(p.value)
-                                );
+                                return IrVersions.V65.FileUploadRequestProperty.file(inflateFileProperty(p.value));
                             default:
                                 return p;
                         }
