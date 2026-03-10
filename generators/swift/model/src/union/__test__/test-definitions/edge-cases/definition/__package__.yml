@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 types:
-  UnionWithSpecialCharacters:
+  # Discriminant values containing special characters that need sanitization
+  SpecialCharacterDiscriminantsUnion:
     union:
       # Simple valid case
       abc: UnionVariant
@@ -25,6 +26,24 @@ types:
       "camelCase": UnionVariant
       "PascalCase": UnionVariant
       "mixed123Values456": UnionVariant
+
+  # singleProperty where the key wire value equals the discriminant wire value,
+  # causing the variant to collapse to noProperties (no associated value)
+  DiscriminantKeyCollisionUnion:
+    discriminant: type
+    union:
+      foo:
+        type: string
+        key: type
+
+  # Multiple variants wrapping the same underlying primitive type
+  DuplicatePrimitiveVariantsUnion:
+    discriminant: type
+    union:
+      width: integer
+      height: integer
+      label: string
+      description: string
 
   UnionVariant:
     properties:
