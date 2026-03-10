@@ -1,6 +1,6 @@
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { Project, ts } from "ts-morph";
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 
 import { EmptyGeneratedEnvironmentsImpl } from "../EmptyGeneratedEnvironmentsImpl.js";
 import { GeneratedMultipleUrlsEnvironmentsImpl } from "../GeneratedMultipleUrlsEnvironmentsImpl.js";
@@ -124,10 +124,8 @@ describe("GeneratedSingleUrlEnvironmentsImpl", () => {
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
         const mockContext = createMockEnvironmentsContext() as any;
         const result = impl.getReferenceToDefaultEnvironment(mockContext);
-        expect(result).toBeDefined();
-        if (result != null) {
-            expect(getTextOfTsNode(result)).toBe("MyEnvironment.Production");
-        }
+        assert(result != null, "expected getReferenceToDefaultEnvironment to return an expression");
+        expect(getTextOfTsNode(result)).toBe("MyEnvironment.Production");
     });
 
     it("getReferenceToEnvironmentUrl returns the input expression for single URL", () => {
@@ -251,10 +249,8 @@ describe("GeneratedMultipleUrlsEnvironmentsImpl", () => {
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
         const mockContext = createMockEnvironmentsContext() as any;
         const result = impl.getReferenceToDefaultEnvironment(mockContext);
-        expect(result).toBeDefined();
-        if (result != null) {
-            expect(getTextOfTsNode(result)).toBe("MyEnvironment.Production");
-        }
+        assert(result != null, "expected getReferenceToDefaultEnvironment to return an expression for multiple URLs");
+        expect(getTextOfTsNode(result)).toBe("MyEnvironment.Production");
     });
 
     it("getReferenceToEnvironmentUrl generates property access for baseUrl", () => {

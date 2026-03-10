@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 
 import { buildUrl } from "../endpoints/utils/buildUrl.js";
 
@@ -114,10 +114,8 @@ describe("buildUrl", () => {
             getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
         });
 
-        expect(result).toBeDefined();
-        if (result != null) {
-            expect(getTextOfTsNode(result)).toBe('"/api/v1/users"');
-        }
+        assert(result != null, "expected buildUrl to return an expression for static path");
+        expect(getTextOfTsNode(result)).toBe('"/api/v1/users"');
     });
 
     it("generates template literal for path with one parameter", () => {
@@ -145,11 +143,9 @@ describe("buildUrl", () => {
             getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
         });
 
-        expect(result).toBeDefined();
-        if (result != null) {
-            const text = getTextOfTsNode(result);
-            expect(text).toMatchSnapshot();
-        }
+        assert(result != null, "expected buildUrl to return an expression for single parameter path");
+        const text = getTextOfTsNode(result);
+        expect(text).toMatchSnapshot();
     });
 
     it("generates template literal for path with multiple parameters", () => {
@@ -184,11 +180,9 @@ describe("buildUrl", () => {
             getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
         });
 
-        expect(result).toBeDefined();
-        if (result != null) {
-            const text = getTextOfTsNode(result);
-            expect(text).toMatchSnapshot();
-        }
+        assert(result != null, "expected buildUrl to return an expression for multiple parameter path");
+        const text = getTextOfTsNode(result);
+        expect(text).toMatchSnapshot();
     });
 
     it("generates template literal with trailing path after parameter", () => {
@@ -216,11 +210,9 @@ describe("buildUrl", () => {
             getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
         });
 
-        expect(result).toBeDefined();
-        if (result != null) {
-            const text = getTextOfTsNode(result);
-            expect(text).toMatchSnapshot();
-        }
+        assert(result != null, "expected buildUrl to return an expression for trailing path");
+        const text = getTextOfTsNode(result);
+        expect(text).toMatchSnapshot();
     });
 
     it("uses root path parameter reference for ROOT location", () => {
@@ -248,11 +240,9 @@ describe("buildUrl", () => {
             getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
         });
 
-        expect(result).toBeDefined();
-        if (result != null) {
-            const text = getTextOfTsNode(result);
-            expect(text).toMatchSnapshot();
-        }
+        assert(result != null, "expected buildUrl to return an expression for ROOT location parameter");
+        const text = getTextOfTsNode(result);
+        expect(text).toMatchSnapshot();
     });
 
     it("retains original casing when retainOriginalCasing is true", () => {
@@ -280,11 +270,9 @@ describe("buildUrl", () => {
             getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
         });
 
-        expect(result).toBeDefined();
-        if (result != null) {
-            const text = getTextOfTsNode(result);
-            expect(text).toMatchSnapshot();
-        }
+        assert(result != null, "expected buildUrl to return an expression with original casing");
+        const text = getTextOfTsNode(result);
+        expect(text).toMatchSnapshot();
     });
 
     it("throws when path parameter is not found in allPathParameters", () => {

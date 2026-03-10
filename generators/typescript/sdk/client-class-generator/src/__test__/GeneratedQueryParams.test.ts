@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
 
@@ -125,10 +125,9 @@ describe("GeneratedQueryParams", () => {
             expect(statements).toHaveLength(1);
 
             const firstStatement = statements[0];
-            if (firstStatement != null) {
-                const text = getTextOfTsNode(firstStatement);
-                expect(text).toMatchSnapshot();
-            }
+            assert(firstStatement != null, "expected at least one build statement for single parameter");
+            const text = getTextOfTsNode(firstStatement);
+            expect(text).toMatchSnapshot();
         });
 
         it("generates query params for multiple parameters", () => {
@@ -147,10 +146,9 @@ describe("GeneratedQueryParams", () => {
             expect(statements).toHaveLength(1);
 
             const firstStatement = statements[0];
-            if (firstStatement != null) {
-                const text = getTextOfTsNode(firstStatement);
-                expect(text).toMatchSnapshot();
-            }
+            assert(firstStatement != null, "expected at least one build statement for multiple parameters");
+            const text = getTextOfTsNode(firstStatement);
+            expect(text).toMatchSnapshot();
         });
 
         it("generates query params with wire value different from name", () => {
@@ -169,10 +167,9 @@ describe("GeneratedQueryParams", () => {
             expect(statements).toHaveLength(1);
 
             const firstStatement = statements[0];
-            if (firstStatement != null) {
-                const text = getTextOfTsNode(firstStatement);
-                expect(text).toMatchSnapshot();
-            }
+            assert(firstStatement != null, "expected at least one build statement for wire value mismatch");
+            const text = getTextOfTsNode(firstStatement);
+            expect(text).toMatchSnapshot();
         });
 
         it("generates query params with allowMultiple and array check", () => {
@@ -195,10 +192,9 @@ describe("GeneratedQueryParams", () => {
             expect(statements).toHaveLength(1);
 
             const firstStatement = statements[0];
-            if (firstStatement != null) {
-                const text = getTextOfTsNode(firstStatement);
-                expect(text).toMatchSnapshot();
-            }
+            assert(firstStatement != null, "expected at least one build statement for allowMultiple");
+            const text = getTextOfTsNode(firstStatement);
+            expect(text).toMatchSnapshot();
         });
 
         it("generates query params with date-time type needing stringify", () => {
@@ -215,10 +211,9 @@ describe("GeneratedQueryParams", () => {
             expect(statements).toHaveLength(1);
 
             const firstStatement = statements[0];
-            if (firstStatement != null) {
-                const text = getTextOfTsNode(firstStatement);
-                expect(text).toMatchSnapshot();
-            }
+            assert(firstStatement != null, "expected at least one build statement for date-time stringify");
+            const text = getTextOfTsNode(firstStatement);
+            expect(text).toMatchSnapshot();
         });
 
         it("handles special characters in wire values", () => {
@@ -241,10 +236,9 @@ describe("GeneratedQueryParams", () => {
             expect(statements).toHaveLength(1);
 
             const firstStatement = statements[0];
-            if (firstStatement != null) {
-                const text = getTextOfTsNode(firstStatement);
-                expect(text).toMatchSnapshot();
-            }
+            assert(firstStatement != null, "expected at least one build statement for special characters");
+            const text = getTextOfTsNode(firstStatement);
+            expect(text).toMatchSnapshot();
         });
     });
 
@@ -260,12 +254,9 @@ describe("GeneratedQueryParams", () => {
             });
 
             const result = generator.getReferenceTo();
-            expect(result).toBeDefined();
-
-            if (result != null) {
-                const text = getTextOfTsNode(result);
-                expect(text).toMatchSnapshot();
-            }
+            assert(result != null, "expected getReferenceTo to return an expression when parameters exist");
+            const text = getTextOfTsNode(result);
+            expect(text).toMatchSnapshot();
         });
 
         it("returns only requestOptions queryParams when no parameters", () => {
@@ -275,12 +266,9 @@ describe("GeneratedQueryParams", () => {
             });
 
             const result = generator.getReferenceTo();
-            expect(result).toBeDefined();
-
-            if (result != null) {
-                const text = getTextOfTsNode(result);
-                expect(text).toMatchSnapshot();
-            }
+            assert(result != null, "expected getReferenceTo to return an expression when no parameters");
+            const text = getTextOfTsNode(result);
+            expect(text).toMatchSnapshot();
         });
     });
 });
