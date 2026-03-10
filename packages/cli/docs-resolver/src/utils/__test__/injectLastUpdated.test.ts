@@ -6,6 +6,7 @@ import {
     hasLastUpdated,
     injectLastUpdatedDates,
     injectLastUpdatedIntoMarkdown,
+    parseFormattedDate,
     replaceLastUpdatedInMarkdown
 } from "../injectLastUpdated.js";
 
@@ -73,6 +74,18 @@ describe("replaceLastUpdatedInMarkdown", () => {
     });
 });
 
+describe("parseFormattedDate", () => {
+    it("parses a valid 'Month Day, Year' string", () => {
+        const date = parseFormattedDate("March 9, 2026");
+        expect(date).toBeInstanceOf(Date);
+        expect(date?.getFullYear()).toBe(2026);
+    });
+
+    it("returns undefined for an unparseable string", () => {
+        expect(parseFormattedDate("not-a-date")).toBeUndefined();
+    });
+});
+
 describe("injectLastUpdatedIntoMarkdown", () => {
     const DATE = "March 9, 2026";
 
@@ -134,6 +147,36 @@ describe("injectLastUpdatedDates", () => {
         expect(result[RelativeFilePath.of("page.mdx")]).toBe(original);
     });
 
+    it("preserves a recent user-specified last-updated (within 30 days)", async () => {
+        // Use a date that is within 30 days of now
+        const recentDate = new Date();
+        recentDate.setDate(recentDate.getDate() - 5);
+        const monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+        const recentFormatted = `${monthNames[recentDate.getMonth()]} ${recentDate.getDate()}, ${recentDate.getFullYear()}`;
+        const original = `---\nlast-updated: ${recentFormatted}\n---\n\nContent`;
+        const pages: Record<RelativeFilePath, string> = {
+            [RelativeFilePath.of("page.mdx")]: original
+        };
+
+        // Even though git might return a date, the recent user date should be preserved.
+        // Using a non-git path so git returns nothing — page stays unchanged.
+        const result = await injectLastUpdatedDates(pages, AbsoluteFilePath.of("/tmp/nonexistent-fern-test"));
+        expect(result[RelativeFilePath.of("page.mdx")]).toBe(original);
+    });
+
     it("leaves pages unchanged when git returns no history (untracked / non-git path)", async () => {
         const original = "# No Frontmatter\n\nContent.";
         const pages: Record<RelativeFilePath, string> = {
@@ -147,7 +190,25 @@ describe("injectLastUpdatedDates", () => {
     });
 
     it("returns all pages even if some have last-updated and others do not", async () => {
-        const pageWithDate = "---\nlast-updated: March 9, 2026\n---\n\nAlready set.";
+        // Use a recent date so the 30-day window preserves it
+        const recentDate = new Date();
+        recentDate.setDate(recentDate.getDate() - 2);
+        const monthNames = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ];
+        const recentFormatted = `${monthNames[recentDate.getMonth()]} ${recentDate.getDate()}, ${recentDate.getFullYear()}`;
+        const pageWithDate = `---\nlast-updated: ${recentFormatted}\n---\n\nAlready set.`;
         const pageWithoutDate = "---\ntitle: No Date\n---\n\nContent.";
         const pages: Record<RelativeFilePath, string> = {
             [RelativeFilePath.of("with-date.mdx")]: pageWithDate,
@@ -156,7 +217,7 @@ describe("injectLastUpdatedDates", () => {
 
         const result = await injectLastUpdatedDates(pages, AbsoluteFilePath.of("/tmp/nonexistent-fern-test"));
 
-        // Page with existing last-updated is unchanged
+        // Page with recent existing last-updated is preserved
         expect(result[RelativeFilePath.of("with-date.mdx")]).toBe(pageWithDate);
         // Page without last-updated stays unchanged since git returns no date for non-git path
         expect(result[RelativeFilePath.of("without-date.mdx")]).toBe(pageWithoutDate);

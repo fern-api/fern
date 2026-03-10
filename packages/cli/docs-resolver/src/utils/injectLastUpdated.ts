@@ -95,6 +95,18 @@ export function replaceLastUpdatedInMarkdown(markdown: string, newDate: string):
 }
 
 /**
+ * Parses a "Month Day, Year" formatted date string (e.g. "March 9, 2026")
+ * into a Date object.  Returns undefined if the string cannot be parsed.
+ */
+export function parseFormattedDate(formatted: string): Date | undefined {
+    const date = new Date(formatted);
+    return isNaN(date.getTime()) ? undefined : date;
+}
+
+/** Number of days a user-specified `last-updated` is honoured before git overrides it. */
+const USER_OVERRIDE_EXPIRY_DAYS = 30;
+
+/**
  * Injects `last-updated: <date>` into the frontmatter of a markdown string.
  * - If the file has frontmatter (starts with ---), adds the field before the closing ---.
  * - If the file has no frontmatter, prepends a new frontmatter block.
@@ -160,18 +172,23 @@ export async function getGitLastModifiedDate(absoluteFilePath: AbsoluteFilePath)
 }
 
 /**
- * For each Markdown-sourced page, sets `last-updated` to the date of the
- * most recent non-whitespace git commit (`-G'[^\s]'`).
+ * For each Markdown-sourced page, sets `last-updated` using git history
+ * with a user-override escape hatch.
  *
  * Behaviour per page:
  *  1. API-generated pages (in `excludePaths`) → returned unchanged.
  *  2. No git history for non-whitespace changes → returned unchanged.
- *  3. Has git history → `last-updated` is set (injected or replaced)
- *     to the date of the last meaningful change.
+ *  3. Page has a user-specified `last-updated` that is less than 30 days
+ *     old → preserved as-is (escape hatch for manual overrides).
+ *  4. Page has a user-specified `last-updated` that is 30+ days old →
+ *     overridden with the git-derived date, and a warning is emitted.
+ *  5. Page has no `last-updated` → injected from git.
  *
- * Because the git query already filters out whitespace-only commits,
- * trivial edits (indentation fixes, trailing-space cleanup) do not
- * bump the date — preventing SEO noise from formatting changes.
+ * The 30-day window lets authors pin a meaningful date (e.g. after a
+ * major content rewrite) without it going permanently stale.  After the
+ * window expires, git takes over automatically.
+ *
+ * Git queries use `-G'[^\s]'` to skip whitespace-only commits.
  *
  * Pages listed in `excludePaths` are never modified — use this to skip
  * API-generated content (e.g. OpenAPI tag description pages) whose
@@ -189,10 +206,12 @@ const GIT_CONCURRENCY_LIMIT = 50;
 export async function injectLastUpdatedDates(
     pages: Record<RelativeFilePath, string>,
     absolutePathToFernFolder: AbsoluteFilePath,
-    excludePaths?: ReadonlySet<RelativeFilePath>
+    excludePaths?: ReadonlySet<RelativeFilePath>,
+    onWarning?: (message: string) => void
 ): Promise<Record<RelativeFilePath, string>> {
     const result: Record<RelativeFilePath, string> = {};
     const entries = Object.entries(pages);
+    const now = new Date();
 
     await asyncPool(GIT_CONCURRENCY_LIMIT, entries, async ([relativePath, markdown]) => {
         const key = RelativeFilePath.of(relativePath);
@@ -210,12 +229,26 @@ export async function injectLastUpdatedDates(
             return;
         }
 
-        // Set (or overwrite) last-updated with the git-derived date.
-        if (hasLastUpdated(markdown)) {
+        const existingValue = getExistingLastUpdated(markdown);
+        if (existingValue != null) {
+            const userDate = parseFormattedDate(existingValue);
+            if (userDate != null) {
+                const daysSinceUserDate = (now.getTime() - userDate.getTime()) / (1000 * 60 * 60 * 24);
+                if (daysSinceUserDate < USER_OVERRIDE_EXPIRY_DAYS) {
+                    // User-specified date is recent — honour the manual override.
+                    result[key] = markdown;
+                    return;
+                }
+                // User-specified date has expired — override with git.
+                onWarning?.(
+                    `${relativePath}: manually set last-updated (${existingValue}) is older than ${USER_OVERRIDE_EXPIRY_DAYS} days; reverting to git-derived date (${date}).`
+                );
+            }
             result[key] = replaceLastUpdatedInMarkdown(markdown, date);
-        } else {
-            result[key] = injectLastUpdatedIntoMarkdown(markdown, date);
+            return;
         }
+
+        result[key] = injectLastUpdatedIntoMarkdown(markdown, date);
     });
 
     return result;
