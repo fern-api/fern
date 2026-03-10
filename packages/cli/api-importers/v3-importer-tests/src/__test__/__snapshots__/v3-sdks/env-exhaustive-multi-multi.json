@@ -1072,6 +1072,7 @@
           "safeName": "Alpha"
         }
       },
+      "displayName": "alpha",
       "fernFilepath": {
         "allParts": [
           {
@@ -1279,6 +1280,7 @@
           "safeName": "Beta"
         }
       },
+      "displayName": "beta",
       "fernFilepath": {
         "allParts": [
           {

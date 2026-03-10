@@ -2881,6 +2881,7 @@
           "safeName": "Auth"
         }
       },
+      "displayName": "auth",
       "fernFilepath": {
         "allParts": [
           {

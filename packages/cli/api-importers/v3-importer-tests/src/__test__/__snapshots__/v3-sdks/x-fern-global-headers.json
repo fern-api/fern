@@ -2147,6 +2147,7 @@
           "safeName": "User"
         }
       },
+      "displayName": "user",
       "fernFilepath": {
         "allParts": [
           {

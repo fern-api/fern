@@ -87,8 +87,9 @@ export class OperationConverter extends AbstractOperationConverter {
             return undefined;
         }
 
-        const { group, method } =
+        const groupNameAndLocation =
             this.computeGroupNameAndLocationFromExtensions() ?? this.computeGroupNameFromTagAndOperationId();
+        const { group, method, groupDisplayNames } = groupNameAndLocation;
         const groupDisplayName = this.getGroupDisplayName(group);
 
         const { headers, pathParameters, queryParameters } = this.convertParameters({
@@ -230,6 +231,7 @@ export class OperationConverter extends AbstractOperationConverter {
             audiences,
             group,
             groupDisplayName,
+            groupDisplayNames,
             errors: topLevelErrors,
             endpoint: {
                 ...baseEndpoint,

@@ -261,7 +261,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                             endpoint: endpoint.streamEndpoint,
                             audiences: endpoint.audiences,
                             endpointGroup: endpoint.group,
-                            endpointGroupDisplayName: endpoint.groupDisplayName
+                            endpointGroupDisplayName: endpoint.groupDisplayName,
+                            endpointGroupDisplayNames: endpoint.groupDisplayNames
                         });
                     }
 
@@ -269,7 +270,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                         endpoint: endpoint.endpoint,
                         audiences: endpoint.audiences,
                         endpointGroup: endpoint.group,
-                        endpointGroupDisplayName: endpoint.groupDisplayName
+                        endpointGroupDisplayName: endpoint.groupDisplayName,
+                        endpointGroupDisplayNames: endpoint.groupDisplayNames
                     });
 
                     if (endpoint.servers) {

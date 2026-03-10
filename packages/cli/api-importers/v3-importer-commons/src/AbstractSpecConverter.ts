@@ -301,19 +301,21 @@ export abstract class AbstractSpecConverter<
         audiences,
         endpointGroup,
         endpointGroupDisplayName,
+        endpointGroupDisplayNames,
         serviceName
     }: {
         endpoint: FernIr.HttpEndpoint;
         audiences: string[];
         endpointGroup?: string[];
         endpointGroupDisplayName?: string;
+        endpointGroupDisplayNames?: string[];
         serviceName?: string;
     }): void {
         const group = this.context.getGroup({
             groupParts: endpointGroup,
             namespace: this.context.namespace
         });
-        const pkg = this.getOrCreatePackage({ group: endpointGroup });
+        const pkg = this.getOrCreatePackage({ group: endpointGroup, groupDisplayNames: endpointGroupDisplayNames });
 
         const allParts = [...group].map((part) => this.context.casingsGenerator.generateName(part));
         const finalpart = allParts[allParts.length - 1];
@@ -557,12 +559,24 @@ export abstract class AbstractSpecConverter<
      * @param context The converter context
      * @returns The package object
      */
-    protected getOrCreatePackage({ group }: { group?: string[] }): Package {
+    protected getOrCreatePackage({
+        group,
+        groupDisplayNames
+    }: {
+        group?: string[];
+        groupDisplayNames?: string[];
+    }): Package {
         const groupParts = [];
+        const displayNameParts: (string | undefined)[] = [];
         if (this.context.namespace != null) {
             groupParts.push(this.context.namespace);
+            displayNameParts.push(undefined);
         }
-        groupParts.push(...(group ?? []).map((part) => camelCase(part)));
+        const originalGroupParts = group ?? [];
+        groupParts.push(...originalGroupParts.map((part) => camelCase(part)));
+        for (let i = 0; i < originalGroupParts.length; i++) {
+            displayNameParts.push(groupDisplayNames?.[i]);
+        }
 
         if (groupParts.length == 0) {
             return this.ir.rootPackage;
@@ -576,9 +590,12 @@ export abstract class AbstractSpecConverter<
             if (this.ir.subpackages[subpackageId] == null) {
                 this.ir.subpackages[subpackageId] = {
                     name: this.context.casingsGenerator.generateName(name),
-                    displayName: undefined,
+                    displayName: displayNameParts[i],
                     ...this.createPackage({ name })
                 };
+            } else if (displayNameParts[i] != null && this.ir.subpackages[subpackageId].displayName == null) {
+                // Update display name if it was not set before
+                this.ir.subpackages[subpackageId].displayName = displayNameParts[i];
             }
             const curr = this.ir.subpackages[subpackageId];
             if (!pkg.subpackages.includes(subpackageId)) {

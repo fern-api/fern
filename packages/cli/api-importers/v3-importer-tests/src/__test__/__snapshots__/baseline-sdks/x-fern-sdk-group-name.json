@@ -797,6 +797,187 @@
           "responseHeaders": []
         }
       ]
+    },
+    "service_tableauApIs/tableauRestApi/analyticsExtensionsSettingsMethods": {
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "tableauApIs",
+              "camelCase": {
+                "unsafeName": "tableauApIs",
+                "safeName": "tableauApIs"
+              },
+              "snakeCase": {
+                "unsafeName": "tableau_ap_is",
+                "safeName": "tableau_ap_is"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "TABLEAU_AP_IS",
+                "safeName": "TABLEAU_AP_IS"
+              },
+              "pascalCase": {
+                "unsafeName": "TableauApIs",
+                "safeName": "TableauApIs"
+              }
+            },
+            {
+              "originalName": "tableauRestApi",
+              "camelCase": {
+                "unsafeName": "tableauRestAPI",
+                "safeName": "tableauRestAPI"
+              },
+              "snakeCase": {
+                "unsafeName": "tableau_rest_api",
+                "safeName": "tableau_rest_api"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "TABLEAU_REST_API",
+                "safeName": "TABLEAU_REST_API"
+              },
+              "pascalCase": {
+                "unsafeName": "TableauRestAPI",
+                "safeName": "TableauRestAPI"
+              }
+            },
+            {
+              "originalName": "analyticsExtensionsSettingsMethods",
+              "camelCase": {
+                "unsafeName": "analyticsExtensionsSettingsMethods",
+                "safeName": "analyticsExtensionsSettingsMethods"
+              },
+              "snakeCase": {
+                "unsafeName": "analytics_extensions_settings_methods",
+                "safeName": "analytics_extensions_settings_methods"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS",
+                "safeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS"
+              },
+              "pascalCase": {
+                "unsafeName": "AnalyticsExtensionsSettingsMethods",
+                "safeName": "AnalyticsExtensionsSettingsMethods"
+              }
+            }
+          ],
+          "packagePath": [
+            {
+              "originalName": "tableauApIs",
+              "camelCase": {
+                "unsafeName": "tableauApIs",
+                "safeName": "tableauApIs"
+              },
+              "snakeCase": {
+                "unsafeName": "tableau_ap_is",
+                "safeName": "tableau_ap_is"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "TABLEAU_AP_IS",
+                "safeName": "TABLEAU_AP_IS"
+              },
+              "pascalCase": {
+                "unsafeName": "TableauApIs",
+                "safeName": "TableauApIs"
+              }
+            },
+            {
+              "originalName": "tableauRestApi",
+              "camelCase": {
+                "unsafeName": "tableauRestAPI",
+                "safeName": "tableauRestAPI"
+              },
+              "snakeCase": {
+                "unsafeName": "tableau_rest_api",
+                "safeName": "tableau_rest_api"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "TABLEAU_REST_API",
+                "safeName": "TABLEAU_REST_API"
+              },
+              "pascalCase": {
+                "unsafeName": "TableauRestAPI",
+                "safeName": "TableauRestAPI"
+              }
+            }
+          ],
+          "file": {
+            "originalName": "analyticsExtensionsSettingsMethods",
+            "camelCase": {
+              "unsafeName": "analyticsExtensionsSettingsMethods",
+              "safeName": "analyticsExtensionsSettingsMethods"
+            },
+            "snakeCase": {
+              "unsafeName": "analytics_extensions_settings_methods",
+              "safeName": "analytics_extensions_settings_methods"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS",
+              "safeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS"
+            },
+            "pascalCase": {
+              "unsafeName": "AnalyticsExtensionsSettingsMethods",
+              "safeName": "AnalyticsExtensionsSettingsMethods"
+            }
+          }
+        }
+      },
+      "basePath": {
+        "head": "",
+        "parts": []
+      },
+      "headers": [],
+      "pathParameters": [],
+      "encoding": {
+        "json": {}
+      },
+      "transport": {
+        "type": "http"
+      },
+      "endpoints": [
+        {
+          "docs": "Test hierarchical display names with spaces",
+          "id": "endpoint_tableauApIs/tableauRestApi/analyticsExtensionsSettingsMethods.listSettings",
+          "name": {
+            "originalName": "listSettings",
+            "camelCase": {
+              "unsafeName": "listSettings",
+              "safeName": "listSettings"
+            },
+            "snakeCase": {
+              "unsafeName": "list_settings",
+              "safeName": "list_settings"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_SETTINGS",
+              "safeName": "LIST_SETTINGS"
+            },
+            "pascalCase": {
+              "unsafeName": "ListSettings",
+              "safeName": "ListSettings"
+            }
+          },
+          "auth": false,
+          "idempotent": false,
+          "method": "GET",
+          "path": {
+            "head": "/settings",
+            "parts": []
+          },
+          "fullPath": {
+            "head": "settings",
+            "parts": []
+          },
+          "pathParameters": [],
+          "allPathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {},
+          "errors": [],
+          "userSpecifiedExamples": [],
+          "autogeneratedExamples": [],
+          "responseHeaders": []
+        }
+      ]
     }
   },
   "constants": {
@@ -1381,6 +1562,161 @@
           "type": "json"
         },
         "examples": []
+      },
+      "endpoint_tableauApIs/tableauRestApi/analyticsExtensionsSettingsMethods.listSettings": {
+        "declaration": {
+          "name": {
+            "originalName": "listSettings",
+            "camelCase": {
+              "unsafeName": "listSettings",
+              "safeName": "listSettings"
+            },
+            "snakeCase": {
+              "unsafeName": "list_settings",
+              "safeName": "list_settings"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_SETTINGS",
+              "safeName": "LIST_SETTINGS"
+            },
+            "pascalCase": {
+              "unsafeName": "ListSettings",
+              "safeName": "ListSettings"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "tableauApIs",
+                "camelCase": {
+                  "unsafeName": "tableauApIs",
+                  "safeName": "tableauApIs"
+                },
+                "snakeCase": {
+                  "unsafeName": "tableau_ap_is",
+                  "safeName": "tableau_ap_is"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TABLEAU_AP_IS",
+                  "safeName": "TABLEAU_AP_IS"
+                },
+                "pascalCase": {
+                  "unsafeName": "TableauApIs",
+                  "safeName": "TableauApIs"
+                }
+              },
+              {
+                "originalName": "tableauRestApi",
+                "camelCase": {
+                  "unsafeName": "tableauRestAPI",
+                  "safeName": "tableauRestAPI"
+                },
+                "snakeCase": {
+                  "unsafeName": "tableau_rest_api",
+                  "safeName": "tableau_rest_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TABLEAU_REST_API",
+                  "safeName": "TABLEAU_REST_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "TableauRestAPI",
+                  "safeName": "TableauRestAPI"
+                }
+              },
+              {
+                "originalName": "analyticsExtensionsSettingsMethods",
+                "camelCase": {
+                  "unsafeName": "analyticsExtensionsSettingsMethods",
+                  "safeName": "analyticsExtensionsSettingsMethods"
+                },
+                "snakeCase": {
+                  "unsafeName": "analytics_extensions_settings_methods",
+                  "safeName": "analytics_extensions_settings_methods"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS",
+                  "safeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS"
+                },
+                "pascalCase": {
+                  "unsafeName": "AnalyticsExtensionsSettingsMethods",
+                  "safeName": "AnalyticsExtensionsSettingsMethods"
+                }
+              }
+            ],
+            "packagePath": [
+              {
+                "originalName": "tableauApIs",
+                "camelCase": {
+                  "unsafeName": "tableauApIs",
+                  "safeName": "tableauApIs"
+                },
+                "snakeCase": {
+                  "unsafeName": "tableau_ap_is",
+                  "safeName": "tableau_ap_is"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TABLEAU_AP_IS",
+                  "safeName": "TABLEAU_AP_IS"
+                },
+                "pascalCase": {
+                  "unsafeName": "TableauApIs",
+                  "safeName": "TableauApIs"
+                }
+              },
+              {
+                "originalName": "tableauRestApi",
+                "camelCase": {
+                  "unsafeName": "tableauRestAPI",
+                  "safeName": "tableauRestAPI"
+                },
+                "snakeCase": {
+                  "unsafeName": "tableau_rest_api",
+                  "safeName": "tableau_rest_api"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TABLEAU_REST_API",
+                  "safeName": "TABLEAU_REST_API"
+                },
+                "pascalCase": {
+                  "unsafeName": "TableauRestAPI",
+                  "safeName": "TableauRestAPI"
+                }
+              }
+            ],
+            "file": {
+              "originalName": "analyticsExtensionsSettingsMethods",
+              "camelCase": {
+                "unsafeName": "analyticsExtensionsSettingsMethods",
+                "safeName": "analyticsExtensionsSettingsMethods"
+              },
+              "snakeCase": {
+                "unsafeName": "analytics_extensions_settings_methods",
+                "safeName": "analytics_extensions_settings_methods"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS",
+                "safeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS"
+              },
+              "pascalCase": {
+                "unsafeName": "AnalyticsExtensionsSettingsMethods",
+                "safeName": "AnalyticsExtensionsSettingsMethods"
+              }
+            }
+          }
+        },
+        "location": {
+          "method": "GET",
+          "path": "/settings"
+        },
+        "request": {
+          "pathParameters": [],
+          "type": "body"
+        },
+        "response": {
+          "type": "json"
+        },
+        "examples": []
       }
     },
     "pathParameters": []
@@ -1925,6 +2261,332 @@
       "errors": [],
       "subpackages": [],
       "hasEndpointsInTree": false
+    },
+    "subpackage_tableauApIs": {
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "tableauApIs",
+            "camelCase": {
+              "unsafeName": "tableauApIs",
+              "safeName": "tableauApIs"
+            },
+            "snakeCase": {
+              "unsafeName": "tableau_ap_is",
+              "safeName": "tableau_ap_is"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TABLEAU_AP_IS",
+              "safeName": "TABLEAU_AP_IS"
+            },
+            "pascalCase": {
+              "unsafeName": "TableauApIs",
+              "safeName": "TableauApIs"
+            }
+          }
+        ],
+        "packagePath": [
+          {
+            "originalName": "tableauApIs",
+            "camelCase": {
+              "unsafeName": "tableauApIs",
+              "safeName": "tableauApIs"
+            },
+            "snakeCase": {
+              "unsafeName": "tableau_ap_is",
+              "safeName": "tableau_ap_is"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TABLEAU_AP_IS",
+              "safeName": "TABLEAU_AP_IS"
+            },
+            "pascalCase": {
+              "unsafeName": "TableauApIs",
+              "safeName": "TableauApIs"
+            }
+          }
+        ]
+      },
+      "name": {
+        "originalName": "tableauApIs",
+        "camelCase": {
+          "unsafeName": "tableauApIs",
+          "safeName": "tableauApIs"
+        },
+        "snakeCase": {
+          "unsafeName": "tableau_ap_is",
+          "safeName": "tableau_ap_is"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "TABLEAU_AP_IS",
+          "safeName": "TABLEAU_AP_IS"
+        },
+        "pascalCase": {
+          "unsafeName": "TableauApIs",
+          "safeName": "TableauApIs"
+        }
+      },
+      "types": [],
+      "errors": [],
+      "subpackages": [
+        "subpackage_tableauApIs/tableauRestApi"
+      ],
+      "hasEndpointsInTree": true
+    },
+    "subpackage_tableauApIs/tableauRestApi": {
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "tableauApIs",
+            "camelCase": {
+              "unsafeName": "tableauApIs",
+              "safeName": "tableauApIs"
+            },
+            "snakeCase": {
+              "unsafeName": "tableau_ap_is",
+              "safeName": "tableau_ap_is"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TABLEAU_AP_IS",
+              "safeName": "TABLEAU_AP_IS"
+            },
+            "pascalCase": {
+              "unsafeName": "TableauApIs",
+              "safeName": "TableauApIs"
+            }
+          },
+          {
+            "originalName": "tableauRestApi",
+            "camelCase": {
+              "unsafeName": "tableauRestAPI",
+              "safeName": "tableauRestAPI"
+            },
+            "snakeCase": {
+              "unsafeName": "tableau_rest_api",
+              "safeName": "tableau_rest_api"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TABLEAU_REST_API",
+              "safeName": "TABLEAU_REST_API"
+            },
+            "pascalCase": {
+              "unsafeName": "TableauRestAPI",
+              "safeName": "TableauRestAPI"
+            }
+          }
+        ],
+        "packagePath": [
+          {
+            "originalName": "tableauApIs",
+            "camelCase": {
+              "unsafeName": "tableauApIs",
+              "safeName": "tableauApIs"
+            },
+            "snakeCase": {
+              "unsafeName": "tableau_ap_is",
+              "safeName": "tableau_ap_is"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TABLEAU_AP_IS",
+              "safeName": "TABLEAU_AP_IS"
+            },
+            "pascalCase": {
+              "unsafeName": "TableauApIs",
+              "safeName": "TableauApIs"
+            }
+          },
+          {
+            "originalName": "tableauRestApi",
+            "camelCase": {
+              "unsafeName": "tableauRestAPI",
+              "safeName": "tableauRestAPI"
+            },
+            "snakeCase": {
+              "unsafeName": "tableau_rest_api",
+              "safeName": "tableau_rest_api"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TABLEAU_REST_API",
+              "safeName": "TABLEAU_REST_API"
+            },
+            "pascalCase": {
+              "unsafeName": "TableauRestAPI",
+              "safeName": "TableauRestAPI"
+            }
+          }
+        ]
+      },
+      "name": {
+        "originalName": "tableauRestApi",
+        "camelCase": {
+          "unsafeName": "tableauRestAPI",
+          "safeName": "tableauRestAPI"
+        },
+        "snakeCase": {
+          "unsafeName": "tableau_rest_api",
+          "safeName": "tableau_rest_api"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "TABLEAU_REST_API",
+          "safeName": "TABLEAU_REST_API"
+        },
+        "pascalCase": {
+          "unsafeName": "TableauRestAPI",
+          "safeName": "TableauRestAPI"
+        }
+      },
+      "types": [],
+      "errors": [],
+      "subpackages": [
+        "subpackage_tableauApIs/tableauRestApi/analyticsExtensionsSettingsMethods"
+      ],
+      "hasEndpointsInTree": true
+    },
+    "subpackage_tableauApIs/tableauRestApi/analyticsExtensionsSettingsMethods": {
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "tableauApIs",
+            "camelCase": {
+              "unsafeName": "tableauApIs",
+              "safeName": "tableauApIs"
+            },
+            "snakeCase": {
+              "unsafeName": "tableau_ap_is",
+              "safeName": "tableau_ap_is"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TABLEAU_AP_IS",
+              "safeName": "TABLEAU_AP_IS"
+            },
+            "pascalCase": {
+              "unsafeName": "TableauApIs",
+              "safeName": "TableauApIs"
+            }
+          },
+          {
+            "originalName": "tableauRestApi",
+            "camelCase": {
+              "unsafeName": "tableauRestAPI",
+              "safeName": "tableauRestAPI"
+            },
+            "snakeCase": {
+              "unsafeName": "tableau_rest_api",
+              "safeName": "tableau_rest_api"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TABLEAU_REST_API",
+              "safeName": "TABLEAU_REST_API"
+            },
+            "pascalCase": {
+              "unsafeName": "TableauRestAPI",
+              "safeName": "TableauRestAPI"
+            }
+          },
+          {
+            "originalName": "analyticsExtensionsSettingsMethods",
+            "camelCase": {
+              "unsafeName": "analyticsExtensionsSettingsMethods",
+              "safeName": "analyticsExtensionsSettingsMethods"
+            },
+            "snakeCase": {
+              "unsafeName": "analytics_extensions_settings_methods",
+              "safeName": "analytics_extensions_settings_methods"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS",
+              "safeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS"
+            },
+            "pascalCase": {
+              "unsafeName": "AnalyticsExtensionsSettingsMethods",
+              "safeName": "AnalyticsExtensionsSettingsMethods"
+            }
+          }
+        ],
+        "packagePath": [
+          {
+            "originalName": "tableauApIs",
+            "camelCase": {
+              "unsafeName": "tableauApIs",
+              "safeName": "tableauApIs"
+            },
+            "snakeCase": {
+              "unsafeName": "tableau_ap_is",
+              "safeName": "tableau_ap_is"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TABLEAU_AP_IS",
+              "safeName": "TABLEAU_AP_IS"
+            },
+            "pascalCase": {
+              "unsafeName": "TableauApIs",
+              "safeName": "TableauApIs"
+            }
+          },
+          {
+            "originalName": "tableauRestApi",
+            "camelCase": {
+              "unsafeName": "tableauRestAPI",
+              "safeName": "tableauRestAPI"
+            },
+            "snakeCase": {
+              "unsafeName": "tableau_rest_api",
+              "safeName": "tableau_rest_api"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TABLEAU_REST_API",
+              "safeName": "TABLEAU_REST_API"
+            },
+            "pascalCase": {
+              "unsafeName": "TableauRestAPI",
+              "safeName": "TableauRestAPI"
+            }
+          }
+        ],
+        "file": {
+          "originalName": "analyticsExtensionsSettingsMethods",
+          "camelCase": {
+            "unsafeName": "analyticsExtensionsSettingsMethods",
+            "safeName": "analyticsExtensionsSettingsMethods"
+          },
+          "snakeCase": {
+            "unsafeName": "analytics_extensions_settings_methods",
+            "safeName": "analytics_extensions_settings_methods"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS",
+            "safeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS"
+          },
+          "pascalCase": {
+            "unsafeName": "AnalyticsExtensionsSettingsMethods",
+            "safeName": "AnalyticsExtensionsSettingsMethods"
+          }
+        }
+      },
+      "name": {
+        "originalName": "analyticsExtensionsSettingsMethods",
+        "camelCase": {
+          "unsafeName": "analyticsExtensionsSettingsMethods",
+          "safeName": "analyticsExtensionsSettingsMethods"
+        },
+        "snakeCase": {
+          "unsafeName": "analytics_extensions_settings_methods",
+          "safeName": "analytics_extensions_settings_methods"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS",
+          "safeName": "ANALYTICS_EXTENSIONS_SETTINGS_METHODS"
+        },
+        "pascalCase": {
+          "unsafeName": "AnalyticsExtensionsSettingsMethods",
+          "safeName": "AnalyticsExtensionsSettingsMethods"
+        }
+      },
+      "service": "service_tableauApIs/tableauRestApi/analyticsExtensionsSettingsMethods",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": true
     }
   },
   "rootPackage": {
@@ -1939,7 +2601,8 @@
     "subpackages": [
       "subpackage_user",
       "subpackage_auth",
-      "subpackage_ids"
+      "subpackage_ids",
+      "subpackage_tableauApIs"
     ],
     "hasEndpointsInTree": true
   },

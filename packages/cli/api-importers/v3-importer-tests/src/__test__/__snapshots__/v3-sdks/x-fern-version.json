@@ -933,6 +933,7 @@
           "safeName": "ChatCompletions"
         }
       },
+      "displayName": "chatCompletions",
       "fernFilepath": {
         "allParts": [
           {

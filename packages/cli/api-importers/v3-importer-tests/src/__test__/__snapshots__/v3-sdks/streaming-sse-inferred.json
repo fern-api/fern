@@ -1876,6 +1876,7 @@
           "safeName": "Completions"
         }
       },
+      "displayName": "completions",
       "fernFilepath": {
         "allParts": [
           {

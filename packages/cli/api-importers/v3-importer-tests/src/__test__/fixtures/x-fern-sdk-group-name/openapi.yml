@@ -15,6 +15,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
+  /settings:
+    get:
+      description: Test hierarchical display names with spaces
+      x-fern-sdk-group-name:
+        - "Tableau APIs"
+        - "Tableau REST API"
+        - "Analytics Extensions Settings Methods"
+      x-fern-sdk-method-name: listSettings
+      responses:
+        "200":
+          description: "Success"
 
 components:
   schemas:

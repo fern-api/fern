@@ -33,6 +33,7 @@ export declare namespace AbstractOperationConverter {
     export interface Output {
         group?: string[];
         groupDisplayName?: string;
+        groupDisplayNames?: string[];
         inlinedTypes: Record<string, Converters.SchemaConverters.SchemaConverter.ConvertedSchema>;
     }
 }
@@ -260,7 +261,9 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
         const group = groupNameExtension.convert()?.groups ?? [];
 
         if (method != null) {
-            return { group, method };
+            // Use the original group names as display names when they differ from their camelCased versions
+            const groupDisplayNames = group.length > 0 ? group : undefined;
+            return { group, groupDisplayNames, method };
         }
 
         return undefined;
