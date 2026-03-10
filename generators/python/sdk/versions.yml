@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.62.3
+- version: 4.63.0
   changelogEntry:
     - summary: |
         Add `datetime_milliseconds` custom config option. When set to `true`,
