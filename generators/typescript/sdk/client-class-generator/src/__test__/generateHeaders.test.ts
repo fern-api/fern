@@ -1,118 +1,32 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
+import {
+    createHttpHeader,
+    createMockCoreUtilities,
+    createMockGeneratedSdkClientClass,
+    createMockRequestParameter,
+    createMockTypeContext
+} from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
 import { generateHeaders } from "../endpoints/utils/generateHeaders.js";
 
-const casingsGenerator = constructCasingsGenerator({
-    generationLanguage: undefined,
-    keywords: undefined,
-    smartCasing: false
-});
-
-function createNameAndWireValue(name: string, wireValue?: string): FernIr.NameAndWireValue {
-    return {
-        wireValue: wireValue ?? name,
-        name: casingsGenerator.generateName(name)
-    };
-}
-
-function createHttpHeader(
-    name: string,
-    valueType: FernIr.TypeReference,
-    opts?: { wireValue?: string; env?: string }
-): FernIr.HttpHeader {
-    return {
-        name: createNameAndWireValue(name, opts?.wireValue),
-        valueType,
-        env: opts?.env ?? undefined,
-        v2Examples: undefined,
-        docs: undefined,
-        availability: undefined
-    };
-}
-
 function createMockContext() {
+    const coreUtilities = createMockCoreUtilities();
     return {
-        type: {
-            resolveTypeReference: (typeRef: FernIr.TypeReference) => typeRef,
-            stringify: (expr: ts.Expression) => {
-                return ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(expr, ts.factory.createIdentifier("toString")),
-                    undefined,
-                    []
-                );
-            },
-            getTypeDeclaration: () => ({
-                shape: FernIr.Type.object({
-                    properties: [],
-                    extends: [],
-                    extraProperties: false,
-                    extendedProperties: undefined
-                })
-            }),
-            getReferenceToType: () => ({ isOptional: false })
-        },
+        type: createMockTypeContext(),
         importsManager: {
             addImportFromRoot: () => {
                 // no-op for test
             }
         },
-        coreUtilities: {
-            fetcher: {
-                Fetcher: {
-                    Args: {
-                        _getReferenceToType: () => ts.factory.createTypeReferenceNode("Fetcher.Args")
-                    }
-                }
-            },
-            auth: {
-                AuthRequest: {
-                    _getReferenceToType: () => ts.factory.createTypeReferenceNode("AuthRequest")
-                },
-                AuthProvider: {
-                    getAuthRequest: {
-                        invoke: (ref: ts.Expression, metadata?: ts.Expression) => {
-                            const args = metadata != null ? [ref, metadata] : [ref];
-                            return ts.factory.createCallExpression(
-                                ts.factory.createIdentifier("getAuthRequest"),
-                                undefined,
-                                args
-                            );
-                        }
-                    }
-                }
-            }
-        },
+        coreUtilities,
         authProvider: {
             isAuthEndpoint: () => false
         },
         versionContext: {
             getGeneratedVersion: () => undefined
-        }
-        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
-    } as any;
-}
-
-function createMockGeneratedSdkClientClass(opts?: { hasAuthProvider?: boolean; generateEndpointMetadata?: boolean }) {
-    return {
-        hasAuthProvider: () => opts?.hasAuthProvider ?? false,
-        getGenerateEndpointMetadata: () => opts?.generateEndpointMetadata ?? false,
-        getReferenceToAuthProviderOrThrow: () => ts.factory.createIdentifier("this._authProvider"),
-        getReferenceToMetadataForEndpointSupplier: () => ts.factory.createIdentifier("_metadata")
-        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
-    } as any;
-}
-
-function createMockRequestParameter() {
-    return {
-        getReferenceToNonLiteralHeader: (header: FernIr.HttpHeader) => {
-            return ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier("request"),
-                ts.factory.createIdentifier(header.name.name.camelCase.unsafeName)
-            );
         }
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;

@@ -1,42 +1,19 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
+import {
+    createMockCoreUtilities,
+    createMockGeneratedClientClass,
+    createPathParameter
+} from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
 import { buildUrl } from "../endpoints/utils/buildUrl.js";
 
-const casingsGenerator = constructCasingsGenerator({
-    generationLanguage: undefined,
-    keywords: undefined,
-    smartCasing: false
-});
-
-function createPathParameter(name: string, location: FernIr.PathParameterLocation = "ENDPOINT"): FernIr.PathParameter {
-    return {
-        name: casingsGenerator.generateName(name),
-        valueType: FernIr.TypeReference.primitive({
-            v1: "STRING",
-            v2: undefined
-        }),
-        location,
-        variable: undefined,
-        v2Examples: undefined,
-        docs: undefined,
-        explode: undefined
-    };
-}
-
-// Minimal mock that returns the expression as-is (no encoding wrapper)
 function createMockContext() {
+    const coreUtilities = createMockCoreUtilities();
     return {
-        coreUtilities: {
-            urlUtils: {
-                encodePathParam: {
-                    _invoke: (expr: ts.Expression) => expr
-                }
-            }
-        },
+        coreUtilities,
         requestWrapper: {
             shouldInlinePathParameters: () => false
         },
@@ -45,18 +22,6 @@ function createMockContext() {
                 jsonOrThrow: (expr: ts.Expression) => expr
             })
         }
-        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
-    } as any;
-}
-
-function createMockGeneratedClientClass() {
-    return {
-        getReferenceToVariable: (variableId: string) => ts.factory.createIdentifier(`this._${variableId}`),
-        getReferenceToRootPathParameter: (pathParam: FernIr.PathParameter) =>
-            ts.factory.createPropertyAccessExpression(
-                ts.factory.createThis(),
-                ts.factory.createIdentifier(pathParam.name.camelCase.unsafeName)
-            )
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }

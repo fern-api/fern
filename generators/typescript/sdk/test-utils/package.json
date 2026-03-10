@@ -1,10 +1,11 @@
 {
-  "name": "@fern-typescript/environments-generator",
+  "name": "@fern-typescript/test-utils",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "generators/typescript/sdk/environments-generator"
+    "directory": "generators/typescript/sdk/test-utils"
   },
   "sideEffects": false,
   "type": "module",
@@ -25,22 +26,16 @@
     "clean": "rm -rf ./lib",
     "compile": "tsc",
     "compile:debug": "tsc --sourceMap",
-    "depcheck": "knip --config ../../../../knip.json --no-config-hints",
-    "test": "vitest --passWithNoTests --run",
-    "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --passWithNoTests --run -u"
+    "depcheck": "knip --config ../../../../knip.json --no-config-hints"
   },
   "dependencies": {
+    "@fern-api/casings-generator": "workspace:*",
     "@fern-fern/ir-sdk": "^65.3.0",
-    "@fern-typescript/commons": "workspace:*",
-    "@fern-typescript/contexts": "workspace:*",
     "ts-morph": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@fern-typescript/test-utils": "workspace:*",
     "@types/node": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
+    "typescript": "catalog:"
   }
 }

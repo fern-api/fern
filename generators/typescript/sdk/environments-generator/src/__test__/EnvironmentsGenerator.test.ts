@@ -1,27 +1,11 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { getTextOfTsNode } from "@fern-typescript/commons";
+import { casingsGenerator, createMockEnvironmentsContext } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
 import { EmptyGeneratedEnvironmentsImpl } from "../EmptyGeneratedEnvironmentsImpl.js";
 import { GeneratedMultipleUrlsEnvironmentsImpl } from "../GeneratedMultipleUrlsEnvironmentsImpl.js";
 import { GeneratedSingleUrlEnvironmentsImpl } from "../GeneratedSingleUrlEnvironmentsImpl.js";
-
-const casingsGenerator = constructCasingsGenerator({
-    generationLanguage: undefined,
-    keywords: undefined,
-    smartCasing: false
-});
-
-function createMockEnvironmentsContext() {
-    return {
-        environments: {
-            getReferenceToEnvironmentsEnum: () => ({
-                getExpression: () => ts.factory.createIdentifier("MyEnvironment")
-            })
-        }
-    };
-}
 
 describe("EmptyGeneratedEnvironmentsImpl", () => {
     it("hasDefaultEnvironment returns false", () => {

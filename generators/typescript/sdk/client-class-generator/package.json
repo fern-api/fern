@@ -41,8 +41,8 @@
     "ts-poet": "catalog:"
   },
   "devDependencies": {
-    "@fern-api/casings-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-typescript/test-utils": "workspace:*",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
     "typescript": "catalog:",

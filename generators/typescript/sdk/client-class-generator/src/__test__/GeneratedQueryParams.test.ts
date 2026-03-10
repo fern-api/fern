@@ -1,39 +1,10 @@
-import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
+import { createMockTypeContext, createMockTypeSchemaContext, createQueryParameter } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
 import { GeneratedQueryParams } from "../endpoints/utils/GeneratedQueryParams.js";
-
-const casingsGenerator = constructCasingsGenerator({
-    generationLanguage: undefined,
-    keywords: undefined,
-    smartCasing: false
-});
-
-function createNameAndWireValue(name: string, wireValue?: string): FernIr.NameAndWireValue {
-    return {
-        wireValue: wireValue ?? name,
-        name: casingsGenerator.generateName(name)
-    };
-}
-
-function createQueryParameter(
-    name: string,
-    valueType: FernIr.TypeReference,
-    opts?: { allowMultiple?: boolean; wireValue?: string }
-): FernIr.QueryParameter {
-    return {
-        name: createNameAndWireValue(name, opts?.wireValue),
-        valueType,
-        allowMultiple: opts?.allowMultiple ?? false,
-        v2Examples: undefined,
-        docs: undefined,
-        availability: undefined,
-        explode: undefined
-    };
-}
 
 function createMockContext(opts?: {
     includeSerdeLayer?: boolean;
@@ -44,36 +15,8 @@ function createMockContext(opts?: {
         includeSerdeLayer: opts?.includeSerdeLayer ?? false,
         retainOriginalCasing: opts?.retainOriginalCasing ?? false,
         omitUndefined: opts?.omitUndefined ?? false,
-        type: {
-            // biome-ignore lint/suspicious/noExplicitAny: test mock callback signature
-            stringify: (expr: ts.Expression, _typeRef: FernIr.TypeReference, _opts: any) => {
-                return ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(expr, ts.factory.createIdentifier("toString")),
-                    undefined,
-                    []
-                );
-            },
-            getTypeDeclaration: () => ({
-                shape: FernIr.Type.object({
-                    properties: [],
-                    extends: [],
-                    extraProperties: false,
-                    extendedProperties: undefined
-                })
-            }),
-            getReferenceToType: () => ({ isOptional: false })
-        },
-        typeSchema: {
-            getSchemaOfNamedType: () => ({
-                jsonOrThrow: (expr: ts.Expression) => {
-                    return ts.factory.createCallExpression(
-                        ts.factory.createIdentifier("serializer.jsonOrThrow"),
-                        undefined,
-                        [expr]
-                    );
-                }
-            })
-        }
+        type: createMockTypeContext(),
+        typeSchema: createMockTypeSchemaContext({ useSerializerPrefix: true })
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
