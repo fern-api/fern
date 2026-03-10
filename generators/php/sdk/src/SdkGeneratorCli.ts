@@ -85,6 +85,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                 if (errorStack) {
                     context.logger.debug(`README.md generation error stack: ${errorStack}`);
                 }
+                throw e;
             }
 
             try {
@@ -97,6 +98,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                 if (errorStack) {
                     context.logger.debug(`reference.md generation error stack: ${errorStack}`);
                 }
+                throw e;
             }
         }
 

@@ -675,6 +675,7 @@ export class SdkGenerator {
                 if (errorStack) {
                     this.context.logger.debug(`README.md generation error stack: ${errorStack}`);
                 }
+                throw e;
             }
 
             try {
@@ -686,6 +687,7 @@ export class SdkGenerator {
                 if (errorStack) {
                     this.context.logger.debug(`reference.md generation error stack: ${errorStack}`);
                 }
+                throw e;
             }
 
             if (!this.config.whitelabel) {
@@ -698,6 +700,7 @@ export class SdkGenerator {
                     if (errorStack) {
                         this.context.logger.debug(`CONTRIBUTING.md generation error stack: ${errorStack}`);
                     }
+                    throw e;
                 }
             }
         }

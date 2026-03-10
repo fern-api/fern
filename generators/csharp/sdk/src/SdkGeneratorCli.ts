@@ -293,6 +293,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 if (errorStack) {
                     context.logger.debug(`README.md generation error stack: ${errorStack}`);
                 }
+                throw e;
             }
 
             try {
@@ -304,6 +305,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 if (errorStack) {
                     context.logger.debug(`reference.md generation error stack: ${errorStack}`);
                 }
+                throw e;
             }
         }
         context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);

@@ -72,6 +72,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 if (errorStack) {
                     context.logger.debug(`README.md generation error stack: ${errorStack}`);
                 }
+                throw e;
             }
 
             try {
@@ -85,6 +86,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
                 if (errorStack) {
                     context.logger.debug(`reference.md generation error stack: ${errorStack}`);
                 }
+                throw e;
             }
 
             try {

@@ -104,6 +104,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             if (errorStack) {
                 context.logger.debug(`README.md generation error stack: ${errorStack}`);
             }
+            throw e;
         }
     }
 
@@ -119,6 +120,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             if (errorStack) {
                 context.logger.debug(`reference.md generation error stack: ${errorStack}`);
             }
+            throw e;
         }
     }
 

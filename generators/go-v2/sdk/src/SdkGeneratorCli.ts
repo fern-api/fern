@@ -78,6 +78,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                 if (errorStack) {
                     context.logger.debug(`README.md generation error stack: ${errorStack}`);
                 }
+                throw e;
             }
         }
 
@@ -90,6 +91,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             if (errorStack) {
                 context.logger.debug(`reference.md generation error stack: ${errorStack}`);
             }
+            throw error;
         }
 
         await context.project.persist({ tidy: true });

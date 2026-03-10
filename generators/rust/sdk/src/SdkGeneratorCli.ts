@@ -788,6 +788,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             if (errorStack) {
                 context.logger.debug(`README.md generation error stack: ${errorStack}`);
             }
+            throw error;
         }
     }
 
@@ -858,6 +859,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             if (errorStack) {
                 context.logger.debug(`reference.md generation error stack: ${errorStack}`);
             }
+            throw error;
         }
     }
 
