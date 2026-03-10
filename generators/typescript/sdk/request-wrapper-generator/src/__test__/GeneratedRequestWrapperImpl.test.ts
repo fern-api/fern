@@ -21,7 +21,6 @@ import { GeneratedRequestWrapperImpl } from "../GeneratedRequestWrapperImpl.js";
 
 const STRING_TYPE = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined });
 const INTEGER_TYPE = FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined });
-const BOOLEAN_TYPE = FernIr.TypeReference.primitive({ v1: "BOOLEAN", v2: undefined });
 const OPTIONAL_STRING_TYPE = FernIr.TypeReference.container(
     FernIr.ContainerType.optional(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
 );

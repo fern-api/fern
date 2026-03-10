@@ -293,13 +293,19 @@ export function createHttpEndpoint(opts?: {
 /**
  * Creates an SdkRequest with wrapper shape for use in tests.
  */
-export function createSdkRequestWrapper(opts?: { bodyKey?: string }): FernIr.SdkRequest {
+export function createSdkRequestWrapper(opts?: {
+    bodyKey?: string;
+    includePathParameters?: boolean;
+    onlyPathParameters?: boolean;
+}): FernIr.SdkRequest {
     return {
         streamParameter: undefined,
         requestParameterName: casingsGenerator.generateName("request"),
         shape: FernIr.SdkRequestShape.wrapper({
             wrapperName: casingsGenerator.generateName("Request"),
-            bodyKey: casingsGenerator.generateName(opts?.bodyKey ?? "body")
+            bodyKey: casingsGenerator.generateName(opts?.bodyKey ?? "body"),
+            includePathParameters: opts?.includePathParameters,
+            onlyPathParameters: opts?.onlyPathParameters
         })
     };
 }
