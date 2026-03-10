@@ -83,18 +83,90 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
     "endpoints": {
       "endpoint_service.createUser": {
         "auth": {
-          "token": "token",
+          "token": {
+            "camelCase": {
+              "safeName": "token",
+              "unsafeName": "token",
+            },
+            "originalName": "token",
+            "pascalCase": {
+              "safeName": "Token",
+              "unsafeName": "Token",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TOKEN",
+              "unsafeName": "TOKEN",
+            },
+            "snakeCase": {
+              "safeName": "token",
+              "unsafeName": "token",
+            },
+          },
           "type": "bearer",
         },
         "declaration": {
           "fernFilepath": {
             "allParts": [
-              "service",
+              {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
             ],
-            "file": "service",
+            "file": {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
             "packagePath": [],
           },
-          "name": "createUser",
+          "name": {
+            "camelCase": {
+              "safeName": "createUser",
+              "unsafeName": "createUser",
+            },
+            "originalName": "createUser",
+            "pascalCase": {
+              "safeName": "CreateUser",
+              "unsafeName": "CreateUser",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_USER",
+              "unsafeName": "CREATE_USER",
+            },
+            "snakeCase": {
+              "safeName": "create_user",
+              "unsafeName": "create_user",
+            },
+          },
         },
         "location": {
           "method": "POST",
@@ -105,14 +177,56 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
             "type": "properties",
             "value": [
               {
-                "name": "name",
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "name",
+                      "unsafeName": "name",
+                    },
+                    "originalName": "name",
+                    "pascalCase": {
+                      "safeName": "Name",
+                      "unsafeName": "Name",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NAME",
+                      "unsafeName": "NAME",
+                    },
+                    "snakeCase": {
+                      "safeName": "name",
+                      "unsafeName": "name",
+                    },
+                  },
+                  "wireValue": "name",
+                },
                 "typeReference": {
                   "type": "primitive",
                   "value": "STRING",
                 },
               },
               {
-                "name": "email",
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "email",
+                      "unsafeName": "email",
+                    },
+                    "originalName": "email",
+                    "pascalCase": {
+                      "safeName": "Email",
+                      "unsafeName": "Email",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EMAIL",
+                      "unsafeName": "EMAIL",
+                    },
+                    "snakeCase": {
+                      "safeName": "email",
+                      "unsafeName": "email",
+                    },
+                  },
+                  "wireValue": "email",
+                },
                 "typeReference": {
                   "type": "optional",
                   "value": {
@@ -126,12 +240,66 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
           "declaration": {
             "fernFilepath": {
               "allParts": [
-                "service",
+                {
+                  "camelCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                  "originalName": "service",
+                  "pascalCase": {
+                    "safeName": "Service",
+                    "unsafeName": "Service",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SERVICE",
+                    "unsafeName": "SERVICE",
+                  },
+                  "snakeCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                },
               ],
-              "file": "service",
+              "file": {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
               "packagePath": [],
             },
-            "name": "CreateUserRequest",
+            "name": {
+              "camelCase": {
+                "safeName": "createUserRequest",
+                "unsafeName": "createUserRequest",
+              },
+              "originalName": "CreateUserRequest",
+              "pascalCase": {
+                "safeName": "CreateUserRequest",
+                "unsafeName": "CreateUserRequest",
+              },
+              "screamingSnakeCase": {
+                "safeName": "CREATE_USER_REQUEST",
+                "unsafeName": "CREATE_USER_REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "create_user_request",
+                "unsafeName": "create_user_request",
+              },
+            },
           },
           "headers": [],
           "metadata": {
@@ -154,23 +322,119 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
         "declaration": {
           "fernFilepath": {
             "allParts": [
-              "service",
+              {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
             ],
-            "file": "service",
+            "file": {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
             "packagePath": [],
           },
-          "name": "User",
+          "name": {
+            "camelCase": {
+              "safeName": "user",
+              "unsafeName": "user",
+            },
+            "originalName": "User",
+            "pascalCase": {
+              "safeName": "User",
+              "unsafeName": "User",
+            },
+            "screamingSnakeCase": {
+              "safeName": "USER",
+              "unsafeName": "USER",
+            },
+            "snakeCase": {
+              "safeName": "user",
+              "unsafeName": "user",
+            },
+          },
         },
         "properties": [
           {
-            "name": "name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
             "typeReference": {
               "type": "primitive",
               "value": "STRING",
             },
           },
           {
-            "name": "email",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "email",
+                  "unsafeName": "email",
+                },
+                "originalName": "email",
+                "pascalCase": {
+                  "safeName": "Email",
+                  "unsafeName": "Email",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EMAIL",
+                  "unsafeName": "EMAIL",
+                },
+                "snakeCase": {
+                  "safeName": "email",
+                  "unsafeName": "email",
+                },
+              },
+              "wireValue": "email",
+            },
             "typeReference": {
               "type": "optional",
               "value": {
@@ -180,7 +444,28 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
             },
           },
           {
-            "name": "createdAt",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "createdAt",
+                  "unsafeName": "createdAt",
+                },
+                "originalName": "createdAt",
+                "pascalCase": {
+                  "safeName": "CreatedAt",
+                  "unsafeName": "CreatedAt",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATED_AT",
+                  "unsafeName": "CREATED_AT",
+                },
+                "snakeCase": {
+                  "safeName": "created_at",
+                  "unsafeName": "created_at",
+                },
+              },
+              "wireValue": "createdAt",
+            },
             "typeReference": {
               "type": "optional",
               "value": {
@@ -190,7 +475,28 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
             },
           },
           {
-            "name": "updatedAt",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "updatedAt",
+                  "unsafeName": "updatedAt",
+                },
+                "originalName": "updatedAt",
+                "pascalCase": {
+                  "safeName": "UpdatedAt",
+                  "unsafeName": "UpdatedAt",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "UPDATED_AT",
+                  "unsafeName": "UPDATED_AT",
+                },
+                "snakeCase": {
+                  "safeName": "updated_at",
+                  "unsafeName": "updated_at",
+                },
+              },
+              "wireValue": "updatedAt",
+            },
             "typeReference": {
               "type": "optional",
               "value": {
@@ -200,7 +506,28 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
             },
           },
           {
-            "name": "metadata",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "wireValue": "metadata",
+            },
             "typeReference": {
               "type": "optional",
               "value": {
@@ -968,7 +1295,11 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
                                             "shape": {
                                               "type": "unknown",
                                               "unknown": {
-                                                "key": "value",
+                                                "_visit": [Function],
+                                                "type": "unknown",
+                                                "unknown": {
+                                                  "key": "value",
+                                                },
                                               },
                                             },
                                           },
@@ -1234,13 +1565,67 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
                   "default": null,
                   "fernFilepath": {
                     "allParts": [
-                      "service",
+                      {
+                        "camelCase": {
+                          "safeName": "service",
+                          "unsafeName": "service",
+                        },
+                        "originalName": "service",
+                        "pascalCase": {
+                          "safeName": "Service",
+                          "unsafeName": "Service",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "SERVICE",
+                          "unsafeName": "SERVICE",
+                        },
+                        "snakeCase": {
+                          "safeName": "service",
+                          "unsafeName": "service",
+                        },
+                      },
                     ],
-                    "file": "service",
+                    "file": {
+                      "camelCase": {
+                        "safeName": "service",
+                        "unsafeName": "service",
+                      },
+                      "originalName": "service",
+                      "pascalCase": {
+                        "safeName": "Service",
+                        "unsafeName": "Service",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "SERVICE",
+                        "unsafeName": "SERVICE",
+                      },
+                      "snakeCase": {
+                        "safeName": "service",
+                        "unsafeName": "service",
+                      },
+                    },
                     "packagePath": [],
                   },
                   "inline": null,
-                  "name": "User",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "user",
+                      "unsafeName": "user",
+                    },
+                    "originalName": "User",
+                    "pascalCase": {
+                      "safeName": "User",
+                      "unsafeName": "User",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "USER",
+                      "unsafeName": "USER",
+                    },
+                    "snakeCase": {
+                      "safeName": "user",
+                      "unsafeName": "user",
+                    },
+                  },
                   "typeId": "type_service:User",
                 },
                 "type": "response",

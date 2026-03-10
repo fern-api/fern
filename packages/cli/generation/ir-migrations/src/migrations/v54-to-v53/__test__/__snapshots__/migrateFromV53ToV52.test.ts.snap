@@ -83,18 +83,90 @@ exports[`migrateFromV54ToV53 > simple 1`] = `
     "endpoints": {
       "endpoint_service.getAudioFile": {
         "auth": {
-          "token": "token",
+          "token": {
+            "camelCase": {
+              "safeName": "token",
+              "unsafeName": "token",
+            },
+            "originalName": "token",
+            "pascalCase": {
+              "safeName": "Token",
+              "unsafeName": "Token",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TOKEN",
+              "unsafeName": "TOKEN",
+            },
+            "snakeCase": {
+              "safeName": "token",
+              "unsafeName": "token",
+            },
+          },
           "type": "bearer",
         },
         "declaration": {
           "fernFilepath": {
             "allParts": [
-              "service",
+              {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
             ],
-            "file": "service",
+            "file": {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
             "packagePath": [],
           },
-          "name": "getAudioFile",
+          "name": {
+            "camelCase": {
+              "safeName": "getAudioFile",
+              "unsafeName": "getAudioFile",
+            },
+            "originalName": "getAudioFile",
+            "pascalCase": {
+              "safeName": "GetAudioFile",
+              "unsafeName": "GetAudioFile",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_AUDIO_FILE",
+              "unsafeName": "GET_AUDIO_FILE",
+            },
+            "snakeCase": {
+              "safeName": "get_audio_file",
+              "unsafeName": "get_audio_file",
+            },
+          },
         },
         "location": {
           "method": "GET",
@@ -105,12 +177,66 @@ exports[`migrateFromV54ToV53 > simple 1`] = `
           "declaration": {
             "fernFilepath": {
               "allParts": [
-                "service",
+                {
+                  "camelCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                  "originalName": "service",
+                  "pascalCase": {
+                    "safeName": "Service",
+                    "unsafeName": "Service",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SERVICE",
+                    "unsafeName": "SERVICE",
+                  },
+                  "snakeCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                },
               ],
-              "file": "service",
+              "file": {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
               "packagePath": [],
             },
-            "name": "GetAudioRequest",
+            "name": {
+              "camelCase": {
+                "safeName": "getAudioRequest",
+                "unsafeName": "getAudioRequest",
+              },
+              "originalName": "GetAudioRequest",
+              "pascalCase": {
+                "safeName": "GetAudioRequest",
+                "unsafeName": "GetAudioRequest",
+              },
+              "screamingSnakeCase": {
+                "safeName": "GET_AUDIO_REQUEST",
+                "unsafeName": "GET_AUDIO_REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "get_audio_request",
+                "unsafeName": "get_audio_request",
+              },
+            },
           },
           "headers": [],
           "metadata": {
@@ -120,7 +246,28 @@ exports[`migrateFromV54ToV53 > simple 1`] = `
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "format",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "format",
+                    "unsafeName": "format",
+                  },
+                  "originalName": "format",
+                  "pascalCase": {
+                    "safeName": "Format",
+                    "unsafeName": "Format",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "FORMAT",
+                    "unsafeName": "FORMAT",
+                  },
+                  "snakeCase": {
+                    "safeName": "format",
+                    "unsafeName": "format",
+                  },
+                },
+                "wireValue": "format",
+              },
               "typeReference": {
                 "type": "named",
                 "value": "type_service:AudioFormat",
@@ -140,18 +287,135 @@ exports[`migrateFromV54ToV53 > simple 1`] = `
         "declaration": {
           "fernFilepath": {
             "allParts": [
-              "service",
+              {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
             ],
-            "file": "service",
+            "file": {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
             "packagePath": [],
           },
-          "name": "AudioFormat",
+          "name": {
+            "camelCase": {
+              "safeName": "audioFormat",
+              "unsafeName": "audioFormat",
+            },
+            "originalName": "AudioFormat",
+            "pascalCase": {
+              "safeName": "AudioFormat",
+              "unsafeName": "AudioFormat",
+            },
+            "screamingSnakeCase": {
+              "safeName": "AUDIO_FORMAT",
+              "unsafeName": "AUDIO_FORMAT",
+            },
+            "snakeCase": {
+              "safeName": "audio_format",
+              "unsafeName": "audio_format",
+            },
+          },
         },
         "type": "enum",
         "values": [
-          "MP3",
-          "WAV",
-          "OGG",
+          {
+            "name": {
+              "camelCase": {
+                "safeName": "mp3",
+                "unsafeName": "mp3",
+              },
+              "originalName": "MP3",
+              "pascalCase": {
+                "safeName": "Mp3",
+                "unsafeName": "Mp3",
+              },
+              "screamingSnakeCase": {
+                "safeName": "MP3",
+                "unsafeName": "MP3",
+              },
+              "snakeCase": {
+                "safeName": "mp3",
+                "unsafeName": "mp3",
+              },
+            },
+            "wireValue": "MP3",
+          },
+          {
+            "name": {
+              "camelCase": {
+                "safeName": "wav",
+                "unsafeName": "wav",
+              },
+              "originalName": "WAV",
+              "pascalCase": {
+                "safeName": "Wav",
+                "unsafeName": "Wav",
+              },
+              "screamingSnakeCase": {
+                "safeName": "WAV",
+                "unsafeName": "WAV",
+              },
+              "snakeCase": {
+                "safeName": "wav",
+                "unsafeName": "wav",
+              },
+            },
+            "wireValue": "WAV",
+          },
+          {
+            "name": {
+              "camelCase": {
+                "safeName": "ogg",
+                "unsafeName": "ogg",
+              },
+              "originalName": "OGG",
+              "pascalCase": {
+                "safeName": "Ogg",
+                "unsafeName": "Ogg",
+              },
+              "screamingSnakeCase": {
+                "safeName": "OGG",
+                "unsafeName": "OGG",
+              },
+              "snakeCase": {
+                "safeName": "ogg",
+                "unsafeName": "ogg",
+              },
+            },
+            "wireValue": "OGG",
+          },
         ],
       },
     },
@@ -294,13 +558,67 @@ exports[`migrateFromV54ToV53 > simple 1`] = `
                 "default": null,
                 "fernFilepath": {
                   "allParts": [
-                    "service",
+                    {
+                      "camelCase": {
+                        "safeName": "service",
+                        "unsafeName": "service",
+                      },
+                      "originalName": "service",
+                      "pascalCase": {
+                        "safeName": "Service",
+                        "unsafeName": "Service",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "SERVICE",
+                        "unsafeName": "SERVICE",
+                      },
+                      "snakeCase": {
+                        "safeName": "service",
+                        "unsafeName": "service",
+                      },
+                    },
                   ],
-                  "file": "service",
+                  "file": {
+                    "camelCase": {
+                      "safeName": "service",
+                      "unsafeName": "service",
+                    },
+                    "originalName": "service",
+                    "pascalCase": {
+                      "safeName": "Service",
+                      "unsafeName": "Service",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "SERVICE",
+                      "unsafeName": "SERVICE",
+                    },
+                    "snakeCase": {
+                      "safeName": "service",
+                      "unsafeName": "service",
+                    },
+                  },
                   "packagePath": [],
                 },
                 "inline": null,
-                "name": "AudioFormat",
+                "name": {
+                  "camelCase": {
+                    "safeName": "audioFormat",
+                    "unsafeName": "audioFormat",
+                  },
+                  "originalName": "AudioFormat",
+                  "pascalCase": {
+                    "safeName": "AudioFormat",
+                    "unsafeName": "AudioFormat",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "AUDIO_FORMAT",
+                    "unsafeName": "AUDIO_FORMAT",
+                  },
+                  "snakeCase": {
+                    "safeName": "audio_format",
+                    "unsafeName": "audio_format",
+                  },
+                },
                 "typeId": "type_service:AudioFormat",
               },
             },
