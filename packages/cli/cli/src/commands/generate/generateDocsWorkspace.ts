@@ -36,7 +36,7 @@ export async function generateDocsWorkspace({
         cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.");
         return;
     }
-    const hasFdrOriginOverride = process.env["FERN_FDR_ORIGIN"] != null || process.env["OVERRIDE_FDR_ORIGIN"] != null;
+    const hasFdrOriginOverride = !!process.env["FERN_FDR_ORIGIN"] || !!process.env["OVERRIDE_FDR_ORIGIN"];
 
     if (!preview && !isCI() && !noPrompt) {
         const productionUrl = instance ?? docsWorkspace.config.instances[0]?.url;
