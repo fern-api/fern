@@ -1,9 +1,11 @@
+import { CasingsGenerator } from "@fern-api/casings-generator";
 import { Constants } from "@fern-api/ir-sdk";
 
-import { createNameAndWireValueObj } from "../utils/namesUtils.js";
-
-export function generateFernConstants(): Constants {
+export function generateFernConstants(casingsGenerator: CasingsGenerator): Constants {
     return {
-        errorInstanceIdKey: createNameAndWireValueObj("errorInstanceId", "errorInstanceId")
+        errorInstanceIdKey: casingsGenerator.generateNameAndWireValue({
+            wireValue: "errorInstanceId",
+            name: "errorInstanceId"
+        })
     };
 }

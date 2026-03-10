@@ -36,12 +36,7 @@ function filterExampleSingleUnionTypeProperties({
                       object: {
                           ...s.object,
                           properties: s.object.properties
-                              .filter((p) =>
-                                  filteredIr.hasProperty(
-                                      p.originalTypeDeclaration.typeId,
-                                      typeof p.name === "string" ? p.name : p.name.wireValue
-                                  )
-                              )
+                              .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, typeof p.name === "string" ? p.name : p.name.wireValue))
                               .map((p) => ({
                                   ...p,
                                   value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })
@@ -195,10 +190,7 @@ function filterExampleTypeReference({
                                   ...o,
                                   properties: o.properties
                                       .filter((p) =>
-                                          filteredIr.hasProperty(
-                                              p.originalTypeDeclaration.typeId,
-                                              typeof p.name === "string" ? p.name : p.name.wireValue
-                                          )
+                                          filteredIr.hasProperty(p.originalTypeDeclaration.typeId, typeof p.name === "string" ? p.name : p.name.wireValue)
                                       )
                                       .map((p) => ({
                                           ...p,
@@ -334,10 +326,7 @@ function filterExampleRequestBody({
                 properties: inlined.properties
                     .filter((p) =>
                         p.originalTypeDeclaration
-                            ? filteredIr.hasProperty(
-                                  p.originalTypeDeclaration.typeId,
-                                  typeof p.name === "string" ? p.name : p.name.wireValue
-                              )
+                            ? filteredIr.hasProperty(p.originalTypeDeclaration.typeId, typeof p.name === "string" ? p.name : p.name.wireValue)
                             : true
                     )
                     .map((property) => {
@@ -471,12 +460,7 @@ export function filterExampleType({
             shape: ExampleTypeShape.object({
                 ...o,
                 properties: o.properties
-                    .filter((p) =>
-                        filteredIr.hasProperty(
-                            p.originalTypeDeclaration.typeId,
-                            typeof p.name === "string" ? p.name : p.name.wireValue
-                        )
-                    )
+                    .filter((p) => filteredIr.hasProperty(p.originalTypeDeclaration.typeId, typeof p.name === "string" ? p.name : p.name.wireValue))
                     .map((p) => ({
                         ...p,
                         value: filterExampleTypeReference({ filteredIr, exampleTypeReference: p.value })

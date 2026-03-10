@@ -139,7 +139,7 @@ export function generateIntermediateRepresentation({
             file: rootApiFileContext,
             rawApiFileSchema: workspace.definition.rootApiFile.contents
         }),
-        apiName: workspace.definition.rootApiFile.contents.name,
+        apiName: casingsGenerator.generateName(workspace.definition.rootApiFile.contents.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
         apiDocs: formatDocs(workspace.definition.rootApiFile.contents.docs),
         auth: convertApiAuth({
@@ -163,7 +163,7 @@ export function generateIntermediateRepresentation({
         types: {},
         errors: {},
         services: {},
-        constants: generateFernConstants(),
+        constants: generateFernConstants(casingsGenerator),
         environments,
         errorDiscriminationStrategy: convertErrorDiscriminationStrategy(
             workspace.definition.rootApiFile.contents["error-discrimination"],
@@ -184,7 +184,7 @@ export function generateIntermediateRepresentation({
                 ? Object.entries(workspace.definition.rootApiFile.contents.variables).map(([key, variable]) => ({
                       docs: typeof variable !== "string" ? variable.docs : undefined,
                       id: key,
-                      name: key,
+                      name: rootApiFileContext.casingsGenerator.generateName(key),
                       type: rootApiFileContext.parseTypeReference(variable)
                   }))
                 : [],

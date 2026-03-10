@@ -821,28 +821,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "decimal",
-                                        "camelCase": {
-                                            "unsafeName": "decimal",
-                                            "safeName": "decimal"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "decimal",
-                                            "safeName": "decimal"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "DECIMAL",
-                                            "safeName": "DECIMAL"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Decimal",
-                                            "safeName": "Decimal"
-                                        }
-                                    },
-                                    "wireValue": "decimal"
-                                },
+                                "name": "decimal",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -884,28 +863,7 @@
                                 "propertyAccess": null
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "even",
-                                        "camelCase": {
-                                            "unsafeName": "even",
-                                            "safeName": "even"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "even",
-                                            "safeName": "even"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "EVEN",
-                                            "safeName": "EVEN"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Even",
-                                            "safeName": "Even"
-                                        }
-                                    },
-                                    "wireValue": "even"
-                                },
+                                "name": "even",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -947,28 +905,7 @@
                                 "propertyAccess": null
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -1012,28 +949,7 @@
                                 "propertyAccess": null
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "shape",
-                                        "camelCase": {
-                                            "unsafeName": "shape",
-                                            "safeName": "shape"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "shape",
-                                            "safeName": "shape"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "SHAPE",
-                                            "safeName": "SHAPE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Shape",
-                                            "safeName": "Shape"
-                                        }
-                                    },
-                                    "wireValue": "shape"
-                                },
+                                "name": "shape",
                                 "value": {
                                     "shape": {
                                         "type": "named",
@@ -1067,28 +983,7 @@
                                         },
                                         "shape": {
                                             "type": "enum",
-                                            "value": {
-                                                "name": {
-                                                    "originalName": "SQUARE",
-                                                    "camelCase": {
-                                                        "unsafeName": "square",
-                                                        "safeName": "square"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "square",
-                                                        "safeName": "square"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "SQUARE",
-                                                        "safeName": "SQUARE"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Square",
-                                                        "safeName": "Square"
-                                                    }
-                                                },
-                                                "wireValue": "SQUARE"
-                                            }
+                                            "value": "SQUARE"
                                         }
                                     },
                                     "jsonExample": "SQUARE"

@@ -16,7 +16,7 @@ export function parseErrorName({ errorName, file }: { errorName: string; file: F
     }
 
     const nameWithoutId = {
-        name: reference.typeName,
+        name: file.casingsGenerator.generateName(reference.typeName),
         fernFilepath: convertToFernFilepath({
             relativeFilepath: reference.relativeFilepath,
             casingsGenerator: file.casingsGenerator

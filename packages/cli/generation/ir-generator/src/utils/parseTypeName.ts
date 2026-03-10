@@ -16,7 +16,7 @@ export function parseTypeName({ typeName, file }: { typeName: string; file: Fern
     }
 
     const nameWithoutId = {
-        name: reference.typeName,
+        name: file.casingsGenerator.generateName(reference.typeName),
         fernFilepath: convertToFernFilepath({
             relativeFilepath: reference.relativeFilepath,
             casingsGenerator: file.casingsGenerator

@@ -1886,28 +1886,7 @@
                                                         "type": "object",
                                                         "properties": [
                                                             {
-                                                                "name": {
-                                                                    "name": {
-                                                                        "originalName": "identifier",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "identifier",
-                                                                            "safeName": "identifier"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "identifier",
-                                                                            "safeName": "identifier"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "IDENTIFIER",
-                                                                            "safeName": "IDENTIFIER"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Identifier",
-                                                                            "safeName": "Identifier"
-                                                                        }
-                                                                    },
-                                                                    "wireValue": "identifier"
-                                                                },
+                                                                "name": "identifier",
                                                                 "value": {
                                                                     "shape": {
                                                                         "type": "named",
@@ -1943,28 +1922,7 @@
                                                                             "type": "object",
                                                                             "properties": [
                                                                                 {
-                                                                                    "name": {
-                                                                                        "name": {
-                                                                                            "originalName": "isin",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "isin",
-                                                                                                "safeName": "isin"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "isin",
-                                                                                                "safeName": "isin"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "ISIN",
-                                                                                                "safeName": "ISIN"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "Isin",
-                                                                                                "safeName": "Isin"
-                                                                                            }
-                                                                                        },
-                                                                                        "wireValue": "isin"
-                                                                                    },
+                                                                                    "name": "isin",
                                                                                     "value": {
                                                                                         "shape": {
                                                                                             "type": "primitive",
@@ -2046,28 +2004,7 @@
                                                                 "propertyAccess": null
                                                             },
                                                             {
-                                                                "name": {
-                                                                    "name": {
-                                                                        "originalName": "quantity",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "quantity",
-                                                                            "safeName": "quantity"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "quantity",
-                                                                            "safeName": "quantity"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "QUANTITY",
-                                                                            "safeName": "QUANTITY"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Quantity",
-                                                                            "safeName": "Quantity"
-                                                                        }
-                                                                    },
-                                                                    "wireValue": "quantity"
-                                                                },
+                                                                "name": "quantity",
                                                                 "value": {
                                                                     "shape": {
                                                                         "type": "named",
@@ -2103,28 +2040,7 @@
                                                                             "type": "object",
                                                                             "properties": [
                                                                                 {
-                                                                                    "name": {
-                                                                                        "name": {
-                                                                                            "originalName": "quantity",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "quantity",
-                                                                                                "safeName": "quantity"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "quantity",
-                                                                                                "safeName": "quantity"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "QUANTITY",
-                                                                                                "safeName": "QUANTITY"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "Quantity",
-                                                                                                "safeName": "Quantity"
-                                                                                            }
-                                                                                        },
-                                                                                        "wireValue": "quantity"
-                                                                                    },
+                                                                                    "name": "quantity",
                                                                                     "value": {
                                                                                         "shape": {
                                                                                             "type": "primitive",
@@ -2166,28 +2082,7 @@
                                                                                     "propertyAccess": null
                                                                                 },
                                                                                 {
-                                                                                    "name": {
-                                                                                        "name": {
-                                                                                            "originalName": "type",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "type",
-                                                                                                "safeName": "type"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "type",
-                                                                                                "safeName": "type"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "TYPE",
-                                                                                                "safeName": "TYPE"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "Type",
-                                                                                                "safeName": "Type"
-                                                                                            }
-                                                                                        },
-                                                                                        "wireValue": "type"
-                                                                                    },
+                                                                                    "name": "type",
                                                                                     "value": {
                                                                                         "shape": {
                                                                                             "type": "container",
@@ -2346,28 +2241,7 @@
                                                         "type": "object",
                                                         "properties": [
                                                             {
-                                                                "name": {
-                                                                    "name": {
-                                                                        "originalName": "trader",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "trader",
-                                                                            "safeName": "trader"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "trader",
-                                                                            "safeName": "trader"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "TRADER",
-                                                                            "safeName": "TRADER"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Trader",
-                                                                            "safeName": "Trader"
-                                                                        }
-                                                                    },
-                                                                    "wireValue": "trader"
-                                                                },
+                                                                "name": "trader",
                                                                 "value": {
                                                                     "shape": {
                                                                         "type": "named",
@@ -2403,28 +2277,7 @@
                                                                             "type": "object",
                                                                             "properties": [
                                                                                 {
-                                                                                    "name": {
-                                                                                        "name": {
-                                                                                            "originalName": "uuid_",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "uuid",
-                                                                                                "safeName": "uuid"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "uuid",
-                                                                                                "safeName": "uuid"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "UUID",
-                                                                                                "safeName": "UUID"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "UUID",
-                                                                                                "safeName": "UUID"
-                                                                                            }
-                                                                                        },
-                                                                                        "wireValue": "uuid_"
-                                                                                    },
+                                                                                    "name": "uuid_",
                                                                                     "value": {
                                                                                         "shape": {
                                                                                             "type": "primitive",

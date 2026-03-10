@@ -65,7 +65,7 @@ export function convertWebhookGroup({
             displayName: webhook["display-name"],
             docs: webhook.docs,
             method: webhook.method,
-            name: webhookId,
+            name: file.casingsGenerator.generateName(webhookId),
             headers:
                 webhook.headers != null
                     ? Object.entries(webhook.headers).map(([headerKey, header]) =>
@@ -115,7 +115,7 @@ function convertWebhookPayloadSchema({
         });
     } else {
         return WebhookPayload.inlinedPayload({
-            name: payload.name,
+            name: file.casingsGenerator.generateName(payload.name),
             extends: getExtensionsAsList(payload.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
@@ -154,10 +154,10 @@ function convertInlinedRequestProperty({
     return {
         docs,
         availability,
-        name: (() => {
-            const propName = getPropertyName({ propertyKey, property: propertyDefinition }).name;
-            return propertyKey === propName ? propertyKey : { wireValue: propertyKey, name: propName };
-        })(),
+        name: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: propertyKey,
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+        }),
         valueType: file.parseTypeReference(propertyDefinition)
     };
 }
@@ -186,7 +186,7 @@ function convertWebhookExamples({
     if (typeName != null) {
         return examples.map((example) => ({
             docs: webhook.docs,
-            name: example.name != null ? example.name : undefined,
+            name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
             payload: convertTypeReferenceExample({
                 example: example.payload,
                 rawTypeBeingExemplified: typeName,
@@ -206,7 +206,7 @@ function convertWebhookExamples({
     // SDKs, we'll need to revisit this.
     return examples.map((example) => ({
         docs: webhook.docs,
-        name: example.name != null ? example.name : undefined,
+        name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         payload: convertTypeReferenceExample({
             example: example.payload,
             rawTypeBeingExemplified: "map<string, unknown>",
@@ -407,7 +407,10 @@ function convertHmacSignature({
     file: FernFileContext;
 }): HmacSignatureVerification {
     return {
-        signatureHeaderName: hmac.header,
+        signatureHeaderName: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: hmac.header,
+            name: hmac.header
+        }),
         algorithm: convertHmacAlgorithm(hmac.algorithm),
         encoding: convertSignatureEncoding(hmac.encoding),
         signaturePrefix: hmac["signature-prefix"],
@@ -424,7 +427,10 @@ function convertAsymmetricSignature({
     file: FernFileContext;
 }): AsymmetricKeySignatureVerification {
     return {
-        signatureHeaderName: asymmetric.header,
+        signatureHeaderName: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: asymmetric.header,
+            name: asymmetric.header
+        }),
         algorithm: convertAsymmetricAlgorithm(asymmetric["asymmetric-algorithm"]),
         encoding: convertSignatureEncoding(asymmetric.encoding),
         signaturePrefix: asymmetric["signature-prefix"],
@@ -488,7 +494,13 @@ function convertKeySource({
     if (asymmetric["jwks-url"] != null) {
         return AsymmetricKeySource.jwks({
             url: asymmetric["jwks-url"],
-            keyIdHeader: asymmetric["key-id-header"] != null ? asymmetric["key-id-header"] : undefined
+            keyIdHeader:
+                asymmetric["key-id-header"] != null
+                    ? file.casingsGenerator.generateNameAndWireValue({
+                          wireValue: asymmetric["key-id-header"],
+                          name: asymmetric["key-id-header"]
+                      })
+                    : undefined
         });
     }
     return AsymmetricKeySource.static({});
@@ -531,7 +543,10 @@ function convertTimestampConfig({
         return undefined;
     }
     return {
-        headerName: timestamp.header,
+        headerName: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: timestamp.header,
+            name: timestamp.header
+        }),
         format: convertTimestampFormat(timestamp.format),
         tolerance: timestamp.tolerance
     };

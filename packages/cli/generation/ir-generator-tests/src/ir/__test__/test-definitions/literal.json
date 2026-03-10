@@ -3061,28 +3061,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
-                                                            },
+                                                            "name": "message",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -3126,28 +3105,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "status",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "STATUS",
-                                                                        "safeName": "STATUS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Status",
-                                                                        "safeName": "Status"
-                                                                    }
-                                                                },
-                                                                "wireValue": "status"
-                                                            },
+                                                            "name": "status",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -3189,28 +3147,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
-                                                                },
-                                                                "wireValue": "success"
-                                                            },
+                                                            "name": "success",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -5011,28 +4948,7 @@
                                                         "type": "object",
                                                         "properties": [
                                                             {
-                                                                "name": {
-                                                                    "name": {
-                                                                        "originalName": "nestedLiteral",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "nestedLiteral",
-                                                                            "safeName": "nestedLiteral"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "nested_literal",
-                                                                            "safeName": "nested_literal"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "NESTED_LITERAL",
-                                                                            "safeName": "NESTED_LITERAL"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "NestedLiteral",
-                                                                            "safeName": "NestedLiteral"
-                                                                        }
-                                                                    },
-                                                                    "wireValue": "nestedLiteral"
-                                                                },
+                                                                "name": "nestedLiteral",
                                                                 "value": {
                                                                     "shape": {
                                                                         "type": "named",
@@ -5106,28 +5022,7 @@
                                                                             "type": "object",
                                                                             "properties": [
                                                                                 {
-                                                                                    "name": {
-                                                                                        "name": {
-                                                                                            "originalName": "myLiteral",
-                                                                                            "camelCase": {
-                                                                                                "unsafeName": "myLiteral",
-                                                                                                "safeName": "myLiteral"
-                                                                                            },
-                                                                                            "snakeCase": {
-                                                                                                "unsafeName": "my_literal",
-                                                                                                "safeName": "my_literal"
-                                                                                            },
-                                                                                            "screamingSnakeCase": {
-                                                                                                "unsafeName": "MY_LITERAL",
-                                                                                                "safeName": "MY_LITERAL"
-                                                                                            },
-                                                                                            "pascalCase": {
-                                                                                                "unsafeName": "MyLiteral",
-                                                                                                "safeName": "MyLiteral"
-                                                                                            }
-                                                                                        },
-                                                                                        "wireValue": "myLiteral"
-                                                                                    },
+                                                                                    "name": "myLiteral",
                                                                                     "value": {
                                                                                         "shape": {
                                                                                             "type": "container",
@@ -5430,28 +5325,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
-                                                            },
+                                                            "name": "message",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -5495,28 +5369,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "status",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "STATUS",
-                                                                        "safeName": "STATUS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Status",
-                                                                        "safeName": "Status"
-                                                                    }
-                                                                },
-                                                                "wireValue": "status"
-                                                            },
+                                                            "name": "status",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -5558,28 +5411,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
-                                                                },
-                                                                "wireValue": "success"
-                                                            },
+                                                            "name": "success",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -7068,28 +6900,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
-                                                            },
+                                                            "name": "message",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -7133,28 +6944,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "status",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "STATUS",
-                                                                        "safeName": "STATUS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Status",
-                                                                        "safeName": "Status"
-                                                                    }
-                                                                },
-                                                                "wireValue": "status"
-                                                            },
+                                                            "name": "status",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -7196,28 +6986,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
-                                                                },
-                                                                "wireValue": "success"
-                                                            },
+                                                            "name": "success",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -9360,28 +9129,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
-                                                            },
+                                                            "name": "message",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -9425,28 +9173,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "status",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "STATUS",
-                                                                        "safeName": "STATUS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Status",
-                                                                        "safeName": "Status"
-                                                                    }
-                                                                },
-                                                                "wireValue": "status"
-                                                            },
+                                                            "name": "status",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -9488,28 +9215,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
-                                                                },
-                                                                "wireValue": "success"
-                                                            },
+                                                            "name": "success",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -10610,28 +10316,7 @@
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "prompt",
-                                                            "camelCase": {
-                                                                "unsafeName": "prompt",
-                                                                "safeName": "prompt"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "prompt",
-                                                                "safeName": "prompt"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "PROMPT",
-                                                                "safeName": "PROMPT"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Prompt",
-                                                                "safeName": "Prompt"
-                                                            }
-                                                        },
-                                                        "wireValue": "prompt"
-                                                    },
+                                                    "name": "prompt",
                                                     "value": {
                                                         "shape": {
                                                             "type": "container",
@@ -10716,28 +10401,7 @@
                                                     "propertyAccess": null
                                                 },
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "stream",
-                                                            "camelCase": {
-                                                                "unsafeName": "stream",
-                                                                "safeName": "stream"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "stream",
-                                                                "safeName": "stream"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "STREAM",
-                                                                "safeName": "STREAM"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Stream",
-                                                                "safeName": "Stream"
-                                                            }
-                                                        },
-                                                        "wireValue": "stream"
-                                                    },
+                                                    "name": "stream",
                                                     "value": {
                                                         "shape": {
                                                             "type": "container",
@@ -10820,28 +10484,7 @@
                                                     "propertyAccess": null
                                                 },
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "context",
-                                                            "camelCase": {
-                                                                "unsafeName": "context",
-                                                                "safeName": "context"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "context",
-                                                                "safeName": "context"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "CONTEXT",
-                                                                "safeName": "CONTEXT"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Context",
-                                                                "safeName": "Context"
-                                                            }
-                                                        },
-                                                        "wireValue": "context"
-                                                    },
+                                                    "name": "context",
                                                     "value": {
                                                         "shape": {
                                                             "type": "named",
@@ -11001,28 +10644,7 @@
                                                     "propertyAccess": null
                                                 },
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "query",
-                                                            "camelCase": {
-                                                                "unsafeName": "query",
-                                                                "safeName": "query"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "query",
-                                                                "safeName": "query"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "QUERY",
-                                                                "safeName": "QUERY"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Query",
-                                                                "safeName": "Query"
-                                                            }
-                                                        },
-                                                        "wireValue": "query"
-                                                    },
+                                                    "name": "query",
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",
@@ -11104,28 +10726,7 @@
                                                     "propertyAccess": null
                                                 },
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "containerObject",
-                                                            "camelCase": {
-                                                                "unsafeName": "containerObject",
-                                                                "safeName": "containerObject"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "container_object",
-                                                                "safeName": "container_object"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "CONTAINER_OBJECT",
-                                                                "safeName": "CONTAINER_OBJECT"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "ContainerObject",
-                                                                "safeName": "ContainerObject"
-                                                            }
-                                                        },
-                                                        "wireValue": "containerObject"
-                                                    },
+                                                    "name": "containerObject",
                                                     "value": {
                                                         "shape": {
                                                             "type": "named",
@@ -11199,28 +10800,7 @@
                                                                 "type": "object",
                                                                 "properties": [
                                                                     {
-                                                                        "name": {
-                                                                            "name": {
-                                                                                "originalName": "nestedObjects",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "nestedObjects",
-                                                                                    "safeName": "nestedObjects"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "nested_objects",
-                                                                                    "safeName": "nested_objects"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "NESTED_OBJECTS",
-                                                                                    "safeName": "NESTED_OBJECTS"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "NestedObjects",
-                                                                                    "safeName": "NestedObjects"
-                                                                                }
-                                                                            },
-                                                                            "wireValue": "nestedObjects"
-                                                                        },
+                                                                        "name": "nestedObjects",
                                                                         "value": {
                                                                             "shape": {
                                                                                 "type": "container",
@@ -11300,28 +10880,7 @@
                                                                                                     "type": "object",
                                                                                                     "properties": [
                                                                                                         {
-                                                                                                            "name": {
-                                                                                                                "name": {
-                                                                                                                    "originalName": "literal1",
-                                                                                                                    "camelCase": {
-                                                                                                                        "unsafeName": "literal1",
-                                                                                                                        "safeName": "literal1"
-                                                                                                                    },
-                                                                                                                    "snakeCase": {
-                                                                                                                        "unsafeName": "literal1",
-                                                                                                                        "safeName": "literal1"
-                                                                                                                    },
-                                                                                                                    "screamingSnakeCase": {
-                                                                                                                        "unsafeName": "LITERAL1",
-                                                                                                                        "safeName": "LITERAL1"
-                                                                                                                    },
-                                                                                                                    "pascalCase": {
-                                                                                                                        "unsafeName": "Literal1",
-                                                                                                                        "safeName": "Literal1"
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "wireValue": "literal1"
-                                                                                                            },
+                                                                                                            "name": "literal1",
                                                                                                             "value": {
                                                                                                                 "shape": {
                                                                                                                     "type": "container",
@@ -11406,28 +10965,7 @@
                                                                                                             "propertyAccess": null
                                                                                                         },
                                                                                                         {
-                                                                                                            "name": {
-                                                                                                                "name": {
-                                                                                                                    "originalName": "literal2",
-                                                                                                                    "camelCase": {
-                                                                                                                        "unsafeName": "literal2",
-                                                                                                                        "safeName": "literal2"
-                                                                                                                    },
-                                                                                                                    "snakeCase": {
-                                                                                                                        "unsafeName": "literal2",
-                                                                                                                        "safeName": "literal2"
-                                                                                                                    },
-                                                                                                                    "screamingSnakeCase": {
-                                                                                                                        "unsafeName": "LITERAL2",
-                                                                                                                        "safeName": "LITERAL2"
-                                                                                                                    },
-                                                                                                                    "pascalCase": {
-                                                                                                                        "unsafeName": "Literal2",
-                                                                                                                        "safeName": "Literal2"
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "wireValue": "literal2"
-                                                                                                            },
+                                                                                                            "name": "literal2",
                                                                                                             "value": {
                                                                                                                 "shape": {
                                                                                                                     "type": "container",
@@ -11512,28 +11050,7 @@
                                                                                                             "propertyAccess": null
                                                                                                         },
                                                                                                         {
-                                                                                                            "name": {
-                                                                                                                "name": {
-                                                                                                                    "originalName": "strProp",
-                                                                                                                    "camelCase": {
-                                                                                                                        "unsafeName": "strProp",
-                                                                                                                        "safeName": "strProp"
-                                                                                                                    },
-                                                                                                                    "snakeCase": {
-                                                                                                                        "unsafeName": "str_prop",
-                                                                                                                        "safeName": "str_prop"
-                                                                                                                    },
-                                                                                                                    "screamingSnakeCase": {
-                                                                                                                        "unsafeName": "STR_PROP",
-                                                                                                                        "safeName": "STR_PROP"
-                                                                                                                    },
-                                                                                                                    "pascalCase": {
-                                                                                                                        "unsafeName": "StrProp",
-                                                                                                                        "safeName": "StrProp"
-                                                                                                                    }
-                                                                                                                },
-                                                                                                                "wireValue": "strProp"
-                                                                                                            },
+                                                                                                            "name": "strProp",
                                                                                                             "value": {
                                                                                                                 "shape": {
                                                                                                                     "type": "primitive",
@@ -11913,28 +11430,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "message",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "message",
-                                                                        "safeName": "message"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "MESSAGE",
-                                                                        "safeName": "MESSAGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Message",
-                                                                        "safeName": "Message"
-                                                                    }
-                                                                },
-                                                                "wireValue": "message"
-                                                            },
+                                                            "name": "message",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -11978,28 +11474,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "status",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "status",
-                                                                        "safeName": "status"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "STATUS",
-                                                                        "safeName": "STATUS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Status",
-                                                                        "safeName": "Status"
-                                                                    }
-                                                                },
-                                                                "wireValue": "status"
-                                                            },
+                                                            "name": "status",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -12041,28 +11516,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
-                                                                },
-                                                                "wireValue": "success"
-                                                            },
+                                                            "name": "success",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",

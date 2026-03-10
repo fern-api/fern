@@ -612,28 +612,7 @@
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "sortField",
-                                                            "camelCase": {
-                                                                "unsafeName": "sortField",
-                                                                "safeName": "sortField"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "sort_field",
-                                                                "safeName": "sort_field"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "SORT_FIELD",
-                                                                "safeName": "SORT_FIELD"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "SortField",
-                                                                "safeName": "SortField"
-                                                            }
-                                                        },
-                                                        "wireValue": "sortField"
-                                                    },
+                                                    "name": "sortField",
                                                     "value": {
                                                         "shape": {
                                                             "type": "container",
@@ -757,28 +736,7 @@
                                                     "propertyAccess": null
                                                 },
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "query",
-                                                            "camelCase": {
-                                                                "unsafeName": "query",
-                                                                "safeName": "query"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "query",
-                                                                "safeName": "query"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "QUERY",
-                                                                "safeName": "QUERY"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Query",
-                                                                "safeName": "Query"
-                                                            }
-                                                        },
-                                                        "wireValue": "query"
-                                                    },
+                                                    "name": "query",
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",
@@ -869,28 +827,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "result",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "result",
-                                                                        "safeName": "result"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "result",
-                                                                        "safeName": "result"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "RESULT",
-                                                                        "safeName": "RESULT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Result",
-                                                                        "safeName": "Result"
-                                                                    }
-                                                                },
-                                                                "wireValue": "result"
-                                                            },
+                                                            "name": "result",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",

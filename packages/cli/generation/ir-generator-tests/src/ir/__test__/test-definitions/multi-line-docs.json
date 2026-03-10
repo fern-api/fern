@@ -175,26 +175,8 @@
                     "shape": {
                         "type": "enum",
                         "value": {
-                            "name": {
-                                "originalName": "GREATER_THAN",
-                                "camelCase": {
-                                    "unsafeName": "greaterThan",
-                                    "safeName": "greaterThan"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "greater_than",
-                                    "safeName": "greater_than"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "GREATER_THAN",
-                                    "safeName": "GREATER_THAN"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "GreaterThan",
-                                    "safeName": "GreaterThan"
-                                }
-                            },
-                            "wireValue": ">"
+                            "wireValue": ">",
+                            "name": "GREATER_THAN"
                         }
                     },
                     "jsonExample": ">",
@@ -222,28 +204,7 @@
                     },
                     "shape": {
                         "type": "enum",
-                        "value": {
-                            "name": {
-                                "originalName": "less_than",
-                                "camelCase": {
-                                    "unsafeName": "lessThan",
-                                    "safeName": "lessThan"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "less_than",
-                                    "safeName": "less_than"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "LESS_THAN",
-                                    "safeName": "LESS_THAN"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "LessThan",
-                                    "safeName": "LessThan"
-                                }
-                            },
-                            "wireValue": "less_than"
-                        }
+                        "value": "less_than"
                     },
                     "jsonExample": "less_than",
                     "docs": null

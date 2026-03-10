@@ -487,28 +487,7 @@
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "name",
-                                                            "camelCase": {
-                                                                "unsafeName": "name",
-                                                                "safeName": "name"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "name",
-                                                                "safeName": "name"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "NAME",
-                                                                "safeName": "NAME"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Name",
-                                                                "safeName": "Name"
-                                                            }
-                                                        },
-                                                        "wireValue": "name"
-                                                    },
+                                                    "name": "name",
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",
@@ -552,28 +531,7 @@
                                                     "propertyAccess": null
                                                 },
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "size",
-                                                            "camelCase": {
-                                                                "unsafeName": "size",
-                                                                "safeName": "size"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "size",
-                                                                "safeName": "size"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "SIZE",
-                                                                "safeName": "SIZE"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Size",
-                                                                "safeName": "Size"
-                                                            }
-                                                        },
-                                                        "wireValue": "size"
-                                                    },
+                                                    "name": "size",
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",

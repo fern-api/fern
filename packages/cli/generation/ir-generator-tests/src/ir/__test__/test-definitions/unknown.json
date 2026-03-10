@@ -261,28 +261,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "unknown",
-                                        "camelCase": {
-                                            "unsafeName": "unknown",
-                                            "safeName": "unknown"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "unknown",
-                                            "safeName": "unknown"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "UNKNOWN",
-                                            "safeName": "UNKNOWN"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Unknown",
-                                            "safeName": "Unknown"
-                                        }
-                                    },
-                                    "wireValue": "unknown"
-                                },
+                                "name": "unknown",
                                 "value": {
                                     "shape": {
                                         "type": "unknown",

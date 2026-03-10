@@ -761,28 +761,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "id",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "id",
-                                                                        "safeName": "id"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "id",
-                                                                        "safeName": "id"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "ID",
-                                                                        "safeName": "ID"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ID",
-                                                                        "safeName": "ID"
-                                                                    }
-                                                                },
-                                                                "wireValue": "id"
-                                                            },
+                                                            "name": "id",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -826,28 +805,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "data",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "data",
-                                                                        "safeName": "data"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "data",
-                                                                        "safeName": "data"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "DATA",
-                                                                        "safeName": "DATA"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Data",
-                                                                        "safeName": "Data"
-                                                                    }
-                                                                },
-                                                                "wireValue": "data"
-                                                            },
+                                                            "name": "data",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",

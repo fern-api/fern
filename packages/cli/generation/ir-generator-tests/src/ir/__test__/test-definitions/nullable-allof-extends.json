@@ -602,28 +602,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "normalField",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "normalField",
-                                                                        "safeName": "normalField"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "normal_field",
-                                                                        "safeName": "normal_field"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NORMAL_FIELD",
-                                                                        "safeName": "NORMAL_FIELD"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NormalField",
-                                                                        "safeName": "NormalField"
-                                                                    }
-                                                                },
-                                                                "wireValue": "normalField"
-                                                            },
+                                                            "name": "normalField",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -1226,28 +1205,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "normalField",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "normalField",
-                                                                        "safeName": "normalField"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "normal_field",
-                                                                        "safeName": "normal_field"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NORMAL_FIELD",
-                                                                        "safeName": "NORMAL_FIELD"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NormalField",
-                                                                        "safeName": "NormalField"
-                                                                    }
-                                                                },
-                                                                "wireValue": "normalField"
-                                                            },
+                                                            "name": "normalField",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",

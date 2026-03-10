@@ -10,7 +10,7 @@ import {
     ExampleWebSocketMessageBody,
     ExampleWebSocketSession,
     FernIr,
-    NameOrString,
+    Name,
     WebSocketChannel,
     WebSocketMessage,
     WebSocketMessageBody
@@ -69,7 +69,7 @@ export function convertChannel({
         baseUrl: channel.url,
         auth: channel.auth,
         // since there's only 1 channel per file, we can use the file name as the channel's name
-        name: file.fernFilepath.file ?? channel["display-name"] ?? channel.path,
+        name: file.fernFilepath.file ?? file.casingsGenerator.generateName(channel["display-name"] ?? channel.path),
         displayName: channel["display-name"],
         connectMethodName: channel["connect-method-name"],
         headers:
@@ -95,7 +95,10 @@ export function convertChannel({
                       const valueType = file.parseTypeReference(queryParameter);
                       return {
                           ...convertDeclaration(queryParameter),
-                          name: queryParameterKey === name ? queryParameterKey : { wireValue: queryParameterKey, name },
+                          name: file.casingsGenerator.generateNameAndWireValue({
+                              wireValue: queryParameterKey,
+                              name
+                          }),
                           valueType,
                           allowMultiple:
                               typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
@@ -121,7 +124,7 @@ export function convertChannel({
                 workspace
             });
             return {
-                name: example.name != null ? example.name : undefined,
+                name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
                 docs: example.docs,
                 url: buildUrl({ channel, example, pathParams: convertedPathParameters }),
                 ...convertedPathParameters,
@@ -134,13 +137,13 @@ export function convertChannel({
                                   throw new Error(`Query parameter ${wireKey} does not exist`);
                               }
                               return {
-                                  name: (() => {
-                                      const qpName = getQueryParameterName({
+                                  name: file.casingsGenerator.generateNameAndWireValue({
+                                      name: getQueryParameterName({
                                           queryParameterKey: wireKey,
                                           queryParameter: queryParameterDeclaration
-                                      }).name;
-                                      return wireKey === qpName ? wireKey : { wireValue: wireKey, name: qpName };
-                                  })(),
+                                      }).name,
+                                      wireValue: wireKey
+                                  }),
                                   value: convertTypeReferenceExample({
                                       example: value,
                                       rawTypeBeingExemplified:
@@ -229,13 +232,10 @@ function convertExampleWebSocketMessageBody({
         const inlinedRequestPropertyDeclaration = message.body.properties?.[wireKey];
         if (inlinedRequestPropertyDeclaration != null) {
             exampleProperties.push({
-                name: (() => {
-                    const pName = getPropertyName({
-                        propertyKey: wireKey,
-                        property: inlinedRequestPropertyDeclaration
-                    }).name;
-                    return wireKey === pName ? wireKey : { wireValue: wireKey, name: pName };
-                })(),
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
+                    wireValue: wireKey
+                }),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
@@ -261,13 +261,11 @@ function convertExampleWebSocketMessageBody({
                 throw new Error("Could not find original type declaration for property: " + wireKey);
             }
             exampleProperties.push({
-                name: (() => {
-                    const pName = getPropertyName({
-                        propertyKey: wireKey,
-                        property: originalTypeDeclaration.rawPropertyType
-                    }).name;
-                    return wireKey === pName ? wireKey : { wireValue: wireKey, name: pName };
-                })(),
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    name: getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType })
+                        .name,
+                    wireValue: wireKey
+                }),
                 value: convertTypeReferenceExample({
                     example: propertyExample,
                     rawTypeBeingExemplified:
@@ -306,15 +304,15 @@ function convertMessageSchema({
         });
     } else {
         return WebSocketMessageBody.inlinedBody({
-            name: body.name,
+            name: file.casingsGenerator.generateName(body.name),
             extends: getExtensionsAsList(body.extends ?? []).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
             properties: Object.entries(body.properties ?? {}).map(([key, property]) => ({
-                name: (() => {
-                    const pName = getPropertyName({ propertyKey: key, property }).name;
-                    return key === pName ? key : { wireValue: key, name: pName };
-                })(),
+                name: file.casingsGenerator.generateNameAndWireValue({
+                    name: getPropertyName({ propertyKey: key, property }).name,
+                    wireValue: key
+                }),
                 value: file.parseTypeReference(property),
                 valueType: file.parseTypeReference(property),
                 availability: undefined,
@@ -354,7 +352,7 @@ function convertChannelPathParameters({
         pathParameterDeclaration,
         examplePathParameter
     }: {
-        name: NameOrString;
+        name: Name;
         pathParameterDeclaration: RawSchemas.HttpPathParameterSchema;
         examplePathParameter: unknown;
     }) => {
@@ -386,7 +384,7 @@ function convertChannelPathParameters({
             if (pathParameterDeclaration != null) {
                 pathParameters.push(
                     buildExamplePathParameter({
-                        name: key,
+                        name: file.casingsGenerator.generateName(key),
                         pathParameterDeclaration,
                         examplePathParameter
                     })
@@ -422,10 +420,10 @@ function convertHeaders({
             const headerDeclaration = channel.headers?.[wireKey];
             if (headerDeclaration != null) {
                 headers.push({
-                    name: (() => {
-                        const hName = getHeaderName({ headerKey: wireKey, header: headerDeclaration }).name;
-                        return wireKey === hName ? wireKey : { wireValue: wireKey, name: hName };
-                    })(),
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: getHeaderName({ headerKey: wireKey, header: headerDeclaration }).name,
+                        wireValue: wireKey
+                    }),
                     value: convertTypeReferenceExample({
                         example: exampleHeader,
                         rawTypeBeingExemplified:

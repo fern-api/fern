@@ -802,28 +802,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "bar",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "bar",
-                                                                        "safeName": "bar"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "bar",
-                                                                        "safeName": "bar"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "BAR",
-                                                                        "safeName": "BAR"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Bar",
-                                                                        "safeName": "Bar"
-                                                                    }
-                                                                },
-                                                                "wireValue": "bar"
-                                                            },
+                                                            "name": "bar",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -887,28 +866,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "nullable_bar",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "nullableBar",
-                                                                        "safeName": "nullableBar"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "nullable_bar",
-                                                                        "safeName": "nullable_bar"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NULLABLE_BAR",
-                                                                        "safeName": "NULLABLE_BAR"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NullableBar",
-                                                                        "safeName": "NullableBar"
-                                                                    }
-                                                                },
-                                                                "wireValue": "nullable_bar"
-                                                            },
+                                                            "name": "nullable_bar",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -998,28 +956,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "nullable_required_bar",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "nullableRequiredBar",
-                                                                        "safeName": "nullableRequiredBar"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "nullable_required_bar",
-                                                                        "safeName": "nullable_required_bar"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NULLABLE_REQUIRED_BAR",
-                                                                        "safeName": "NULLABLE_REQUIRED_BAR"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "NullableRequiredBar",
-                                                                        "safeName": "NullableRequiredBar"
-                                                                    }
-                                                                },
-                                                                "wireValue": "nullable_required_bar"
-                                                            },
+                                                            "name": "nullable_required_bar",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -1083,28 +1020,7 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "required_bar",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "requiredBar",
-                                                                        "safeName": "requiredBar"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "required_bar",
-                                                                        "safeName": "required_bar"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "REQUIRED_BAR",
-                                                                        "safeName": "REQUIRED_BAR"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "RequiredBar",
-                                                                        "safeName": "RequiredBar"
-                                                                    }
-                                                                },
-                                                                "wireValue": "required_bar"
-                                                            },
+                                                            "name": "required_bar",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",

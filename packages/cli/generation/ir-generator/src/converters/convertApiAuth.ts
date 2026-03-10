@@ -104,12 +104,10 @@ function convertSchemeReference({
                 AuthScheme.header({
                     key: reference,
                     docs,
-                    name: (() => {
-                        const headerName = rawHeader.name ?? reference;
-                        return rawHeader.header === headerName
-                            ? rawHeader.header
-                            : { wireValue: rawHeader.header, name: headerName };
-                    })(),
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: rawHeader.name ?? reference,
+                        wireValue: rawHeader.header
+                    }),
                     valueType: file.parseTypeReference(rawHeader.type ?? "string"),
                     prefix: rawHeader.prefix,
                     headerEnvVar: rawHeader.env
@@ -194,7 +192,7 @@ function generateBearerAuth({
     return AuthScheme.bearer({
         key,
         docs,
-        token: rawScheme?.token?.name ?? "token",
+        token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
         tokenEnvVar: rawScheme?.token?.env
     });
 }
@@ -213,10 +211,10 @@ function generateBasicAuth({
     return AuthScheme.basic({
         key,
         docs,
-        username: rawScheme?.username?.name ?? "username",
+        username: file.casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
         usernameEnvVar: rawScheme?.username?.env,
         usernameOmit: rawScheme?.username?.omit,
-        password: rawScheme?.password?.name ?? "password",
+        password: file.casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
         passwordEnvVar: rawScheme?.password?.env,
         passwordOmit: rawScheme?.password?.omit
     });

@@ -13,9 +13,11 @@ export function convertToFernFilepath({
     const pathToPackage = dirname(relativeFilepath);
     const filename = basename(relativeFilepath, { stripExtension: true });
 
-    const packagePath = pathToPackage === "." ? [] : pathToPackage.split(sep);
+    const packagePath =
+        pathToPackage === "." ? [] : pathToPackage.split(sep).map((part) => casingsGenerator.generateName(part));
 
-    const file = filename !== FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION ? filename : undefined;
+    const file =
+        filename !== FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION ? casingsGenerator.generateName(filename) : undefined;
 
     const allParts = [];
     allParts.push(...packagePath);

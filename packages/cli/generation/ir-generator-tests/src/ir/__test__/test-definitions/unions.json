@@ -3039,79 +3039,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "normalSweet",
-                                    "camelCase": {
-                                        "unsafeName": "normalSweet",
-                                        "safeName": "normalSweet"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "normal_sweet",
-                                        "safeName": "normal_sweet"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NORMAL_SWEET",
-                                        "safeName": "NORMAL_SWEET"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "NormalSweet",
-                                        "safeName": "NormalSweet"
-                                    }
-                                },
-                                "wireValue": "normalSweet"
-                            },
+                            "wireDiscriminantValue": "normalSweet",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_bigunion:NormalSweet",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "value",
-                                                    "camelCase": {
-                                                        "unsafeName": "value",
-                                                        "safeName": "value"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "value",
-                                                        "safeName": "value"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "VALUE",
-                                                        "safeName": "VALUE"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Value",
-                                                        "safeName": "Value"
-                                                    }
-                                                },
-                                                "wireValue": "value"
-                                            },
+                                            "name": "value",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -3199,28 +3136,7 @@
                         },
                         "baseProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "id",
-                                        "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        }
-                                    },
-                                    "wireValue": "id"
-                                },
+                                "name": "id",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -3235,28 +3151,7 @@
                                 }
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "created-at",
-                                        "camelCase": {
-                                            "unsafeName": "createdAt",
-                                            "safeName": "createdAt"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "created_at",
-                                            "safeName": "created_at"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "CREATED_AT",
-                                            "safeName": "CREATED_AT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "CreatedAt",
-                                            "safeName": "CreatedAt"
-                                        }
-                                    },
-                                    "wireValue": "created-at"
-                                },
+                                "name": "created-at",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -3270,28 +3165,7 @@
                                 }
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "archived-at",
-                                        "camelCase": {
-                                            "unsafeName": "archivedAt",
-                                            "safeName": "archivedAt"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "archived_at",
-                                            "safeName": "archived_at"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ARCHIVED_AT",
-                                            "safeName": "ARCHIVED_AT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ArchivedAt",
-                                            "safeName": "ArchivedAt"
-                                        }
-                                    },
-                                    "wireValue": "archived-at"
-                                },
+                                "name": "archived-at",
                                 "value": {
                                     "shape": {
                                         "type": "container",
@@ -3354,79 +3228,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "thankfulFactor",
-                                    "camelCase": {
-                                        "unsafeName": "thankfulFactor",
-                                        "safeName": "thankfulFactor"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "thankful_factor",
-                                        "safeName": "thankful_factor"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "THANKFUL_FACTOR",
-                                        "safeName": "THANKFUL_FACTOR"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "ThankfulFactor",
-                                        "safeName": "ThankfulFactor"
-                                    }
-                                },
-                                "wireValue": "thankfulFactor"
-                            },
+                            "wireDiscriminantValue": "thankfulFactor",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_bigunion:ThankfulFactor",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "value",
-                                                    "camelCase": {
-                                                        "unsafeName": "value",
-                                                        "safeName": "value"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "value",
-                                                        "safeName": "value"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "VALUE",
-                                                        "safeName": "VALUE"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Value",
-                                                        "safeName": "Value"
-                                                    }
-                                                },
-                                                "wireValue": "value"
-                                            },
+                                            "name": "value",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -3514,28 +3325,7 @@
                         },
                         "baseProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "id",
-                                        "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        }
-                                    },
-                                    "wireValue": "id"
-                                },
+                                "name": "id",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -3550,28 +3340,7 @@
                                 }
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "created-at",
-                                        "camelCase": {
-                                            "unsafeName": "createdAt",
-                                            "safeName": "createdAt"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "created_at",
-                                            "safeName": "created_at"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "CREATED_AT",
-                                            "safeName": "CREATED_AT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "CreatedAt",
-                                            "safeName": "CreatedAt"
-                                        }
-                                    },
-                                    "wireValue": "created-at"
-                                },
+                                "name": "created-at",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -3585,28 +3354,7 @@
                                 }
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "archived-at",
-                                        "camelCase": {
-                                            "unsafeName": "archivedAt",
-                                            "safeName": "archivedAt"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "archived_at",
-                                            "safeName": "archived_at"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ARCHIVED_AT",
-                                            "safeName": "ARCHIVED_AT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ArchivedAt",
-                                            "safeName": "ArchivedAt"
-                                        }
-                                    },
-                                    "wireValue": "archived-at"
-                                },
+                                "name": "archived-at",
                                 "value": {
                                     "shape": {
                                         "type": "container",
@@ -3669,79 +3417,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "jumboEnd",
-                                    "camelCase": {
-                                        "unsafeName": "jumboEnd",
-                                        "safeName": "jumboEnd"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "jumbo_end",
-                                        "safeName": "jumbo_end"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "JUMBO_END",
-                                        "safeName": "JUMBO_END"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "JumboEnd",
-                                        "safeName": "JumboEnd"
-                                    }
-                                },
-                                "wireValue": "jumboEnd"
-                            },
+                            "wireDiscriminantValue": "jumboEnd",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_bigunion:JumboEnd",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "value",
-                                                    "camelCase": {
-                                                        "unsafeName": "value",
-                                                        "safeName": "value"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "value",
-                                                        "safeName": "value"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "VALUE",
-                                                        "safeName": "VALUE"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Value",
-                                                        "safeName": "Value"
-                                                    }
-                                                },
-                                                "wireValue": "value"
-                                            },
+                                            "name": "value",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -3829,28 +3514,7 @@
                         },
                         "baseProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "id",
-                                        "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        }
-                                    },
-                                    "wireValue": "id"
-                                },
+                                "name": "id",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -3865,28 +3529,7 @@
                                 }
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "created-at",
-                                        "camelCase": {
-                                            "unsafeName": "createdAt",
-                                            "safeName": "createdAt"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "created_at",
-                                            "safeName": "created_at"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "CREATED_AT",
-                                            "safeName": "CREATED_AT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "CreatedAt",
-                                            "safeName": "CreatedAt"
-                                        }
-                                    },
-                                    "wireValue": "created-at"
-                                },
+                                "name": "created-at",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -3900,28 +3543,7 @@
                                 }
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "archived-at",
-                                        "camelCase": {
-                                            "unsafeName": "archivedAt",
-                                            "safeName": "archivedAt"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "archived_at",
-                                            "safeName": "archived_at"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ARCHIVED_AT",
-                                            "safeName": "ARCHIVED_AT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ArchivedAt",
-                                            "safeName": "ArchivedAt"
-                                        }
-                                    },
-                                    "wireValue": "archived-at"
-                                },
+                                "name": "archived-at",
                                 "value": {
                                     "shape": {
                                         "type": "container",
@@ -4117,28 +3739,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "value",
-                                        "camelCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "VALUE",
-                                            "safeName": "VALUE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Value",
-                                            "safeName": "Value"
-                                        }
-                                    },
-                                    "wireValue": "value"
-                                },
+                                "name": "value",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -4251,28 +3852,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "value",
-                                        "camelCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "VALUE",
-                                            "safeName": "VALUE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Value",
-                                            "safeName": "Value"
-                                        }
-                                    },
-                                    "wireValue": "value"
-                                },
+                                "name": "value",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -4385,28 +3965,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "value",
-                                        "camelCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "VALUE",
-                                            "safeName": "VALUE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Value",
-                                            "safeName": "Value"
-                                        }
-                                    },
-                                    "wireValue": "value"
-                                },
+                                "name": "value",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -4650,28 +4209,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "value",
-                                        "camelCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "VALUE",
-                                            "safeName": "VALUE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Value",
-                                            "safeName": "Value"
-                                        }
-                                    },
-                                    "wireValue": "value"
-                                },
+                                "name": "value",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -4784,28 +4322,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "value",
-                                        "camelCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "VALUE",
-                                            "safeName": "VALUE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Value",
-                                            "safeName": "Value"
-                                        }
-                                    },
-                                    "wireValue": "value"
-                                },
+                                "name": "value",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -4918,28 +4435,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "value",
-                                        "camelCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "value",
-                                            "safeName": "value"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "VALUE",
-                                            "safeName": "VALUE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Value",
-                                            "safeName": "Value"
-                                        }
-                                    },
-                                    "wireValue": "value"
-                                },
+                                "name": "value",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -10241,51 +9737,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "integer",
-                                    "camelCase": {
-                                        "unsafeName": "integer",
-                                        "safeName": "integer"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "integer",
-                                        "safeName": "integer"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "INTEGER",
-                                        "safeName": "INTEGER"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Integer",
-                                        "safeName": "Integer"
-                                    }
-                                },
-                                "wireValue": "integer"
-                            },
+                            "wireDiscriminantValue": "integer",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -10329,51 +9783,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "string",
-                                    "camelCase": {
-                                        "unsafeName": "string",
-                                        "safeName": "string"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "string",
-                                        "safeName": "string"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "STRING",
-                                        "safeName": "STRING"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "String",
-                                        "safeName": "String"
-                                    }
-                                },
-                                "wireValue": "string"
-                            },
+                            "wireDiscriminantValue": "string",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -10782,51 +10194,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "integer1",
-                                    "camelCase": {
-                                        "unsafeName": "integer1",
-                                        "safeName": "integer1"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "integer1",
-                                        "safeName": "integer1"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "INTEGER1",
-                                        "safeName": "INTEGER1"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Integer1",
-                                        "safeName": "Integer1"
-                                    }
-                                },
-                                "wireValue": "integer1"
-                            },
+                            "wireDiscriminantValue": "integer1",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -10870,51 +10240,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "integer2",
-                                    "camelCase": {
-                                        "unsafeName": "integer2",
-                                        "safeName": "integer2"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "integer2",
-                                        "safeName": "integer2"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "INTEGER2",
-                                        "safeName": "INTEGER2"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Integer2",
-                                        "safeName": "Integer2"
-                                    }
-                                },
-                                "wireValue": "integer2"
-                            },
+                            "wireDiscriminantValue": "integer2",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -10958,51 +10286,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "string1",
-                                    "camelCase": {
-                                        "unsafeName": "string1",
-                                        "safeName": "string1"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "string1",
-                                        "safeName": "string1"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "STRING1",
-                                        "safeName": "STRING1"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "String1",
-                                        "safeName": "String1"
-                                    }
-                                },
-                                "wireValue": "string1"
-                            },
+                            "wireDiscriminantValue": "string1",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -11048,51 +10334,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "string1",
-                                    "camelCase": {
-                                        "unsafeName": "string1",
-                                        "safeName": "string1"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "string1",
-                                        "safeName": "string1"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "STRING1",
-                                        "safeName": "STRING1"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "String1",
-                                        "safeName": "String1"
-                                    }
-                                },
-                                "wireValue": "string1"
-                            },
+                            "wireDiscriminantValue": "string1",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -11440,79 +10684,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "foo",
-                                    "camelCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO",
-                                        "safeName": "FOO"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo",
-                                        "safeName": "Foo"
-                                    }
-                                },
-                                "wireValue": "foo"
-                            },
+                            "wireDiscriminantValue": "foo",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_types:Foo",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -11629,79 +10810,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "bar",
-                                    "camelCase": {
-                                        "unsafeName": "bar",
-                                        "safeName": "bar"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "bar",
-                                        "safeName": "bar"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "BAR",
-                                        "safeName": "BAR"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Bar",
-                                        "safeName": "Bar"
-                                    }
-                                },
-                                "wireValue": "bar"
-                            },
+                            "wireDiscriminantValue": "bar",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_types:Bar",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -12055,79 +11173,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "foo",
-                                    "camelCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO",
-                                        "safeName": "FOO"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo",
-                                        "safeName": "Foo"
-                                    }
-                                },
-                                "wireValue": "foo"
-                            },
+                            "wireDiscriminantValue": "foo",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_types:Foo",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -12244,51 +11299,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "empty",
-                                    "camelCase": {
-                                        "unsafeName": "empty",
-                                        "safeName": "empty"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "empty",
-                                        "safeName": "empty"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "EMPTY",
-                                        "safeName": "EMPTY"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Empty",
-                                        "safeName": "Empty"
-                                    }
-                                },
-                                "wireValue": "empty"
-                            },
+                            "wireDiscriminantValue": "empty",
                             "shape": {
                                 "type": "noProperties"
                             }
@@ -12590,79 +11603,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "foo",
-                                    "camelCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO",
-                                        "safeName": "FOO"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo",
-                                        "safeName": "Foo"
-                                    }
-                                },
-                                "wireValue": "foo"
-                            },
+                            "wireDiscriminantValue": "foo",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_types:Foo",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -12779,51 +11729,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "empty1",
-                                    "camelCase": {
-                                        "unsafeName": "empty1",
-                                        "safeName": "empty1"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "empty1",
-                                        "safeName": "empty1"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "EMPTY1",
-                                        "safeName": "EMPTY1"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Empty1",
-                                        "safeName": "Empty1"
-                                    }
-                                },
-                                "wireValue": "empty1"
-                            },
+                            "wireDiscriminantValue": "empty1",
                             "shape": {
                                 "type": "noProperties"
                             }
@@ -12858,51 +11766,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "empty2",
-                                    "camelCase": {
-                                        "unsafeName": "empty2",
-                                        "safeName": "empty2"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "empty2",
-                                        "safeName": "empty2"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "EMPTY2",
-                                        "safeName": "EMPTY2"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Empty2",
-                                        "safeName": "Empty2"
-                                    }
-                                },
-                                "wireValue": "empty2"
-                            },
+                            "wireDiscriminantValue": "empty2",
                             "shape": {
                                 "type": "noProperties"
                             }
@@ -13152,51 +12018,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "fern",
-                                    "camelCase": {
-                                        "unsafeName": "fern",
-                                        "safeName": "fern"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "fern",
-                                        "safeName": "fern"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FERN",
-                                        "safeName": "FERN"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Fern",
-                                        "safeName": "Fern"
-                                    }
-                                },
-                                "wireValue": "fern"
-                            },
+                            "wireDiscriminantValue": "fern",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -13215,28 +12039,7 @@
                         },
                         "baseProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "base",
-                                        "camelCase": {
-                                            "unsafeName": "base",
-                                            "safeName": "base"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "base",
-                                            "safeName": "base"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "BASE",
-                                            "safeName": "BASE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Base",
-                                            "safeName": "Base"
-                                        }
-                                    },
-                                    "wireValue": "base"
-                                },
+                                "name": "base",
                                 "value": {
                                     "shape": {
                                         "type": "container",
@@ -13661,51 +12464,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "integer",
-                                    "camelCase": {
-                                        "unsafeName": "integer",
-                                        "safeName": "integer"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "integer",
-                                        "safeName": "integer"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "INTEGER",
-                                        "safeName": "INTEGER"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Integer",
-                                        "safeName": "Integer"
-                                    }
-                                },
-                                "wireValue": "integer"
-                            },
+                            "wireDiscriminantValue": "integer",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -13720,28 +12481,7 @@
                         },
                         "baseProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "id",
-                                        "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        }
-                                    },
-                                    "wireValue": "id"
-                                },
+                                "name": "id",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -13787,51 +12527,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "string",
-                                    "camelCase": {
-                                        "unsafeName": "string",
-                                        "safeName": "string"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "string",
-                                        "safeName": "string"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "STRING",
-                                        "safeName": "STRING"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "String",
-                                        "safeName": "String"
-                                    }
-                                },
-                                "wireValue": "string"
-                            },
+                            "wireDiscriminantValue": "string",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -13848,28 +12546,7 @@
                         },
                         "baseProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "id",
-                                        "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        }
-                                    },
-                                    "wireValue": "id"
-                                },
+                                "name": "id",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -13915,79 +12592,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "foo",
-                                    "camelCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO",
-                                        "safeName": "FOO"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo",
-                                        "safeName": "Foo"
-                                    }
-                                },
-                                "wireValue": "foo"
-                            },
+                            "wireDiscriminantValue": "foo",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_types:Foo",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -14075,28 +12689,7 @@
                         },
                         "baseProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "id",
-                                        "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        }
-                                    },
-                                    "wireValue": "id"
-                                },
+                                "name": "id",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -14434,51 +13027,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "value",
-                                    "camelCase": {
-                                        "unsafeName": "value",
-                                        "safeName": "value"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "value",
-                                        "safeName": "value"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "VALUE",
-                                        "safeName": "VALUE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Value",
-                                        "safeName": "Value"
-                                    }
-                                },
-                                "wireValue": "value"
-                            },
+                            "wireDiscriminantValue": "value",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -14522,51 +13073,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "date",
-                                    "camelCase": {
-                                        "unsafeName": "date",
-                                        "safeName": "date"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "date",
-                                        "safeName": "date"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "DATE",
-                                        "safeName": "DATE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Date",
-                                        "safeName": "Date"
-                                    }
-                                },
-                                "wireValue": "date"
-                            },
+                            "wireDiscriminantValue": "date",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -14610,51 +13119,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "datetime",
-                                    "camelCase": {
-                                        "unsafeName": "datetime",
-                                        "safeName": "datetime"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "datetime",
-                                        "safeName": "datetime"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "DATETIME",
-                                        "safeName": "DATETIME"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Datetime",
-                                        "safeName": "Datetime"
-                                    }
-                                },
-                                "wireValue": "datetime"
-                            },
+                            "wireDiscriminantValue": "datetime",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -14940,51 +13407,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "date",
-                                    "camelCase": {
-                                        "unsafeName": "date",
-                                        "safeName": "date"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "date",
-                                        "safeName": "date"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "DATE",
-                                        "safeName": "DATE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Date",
-                                        "safeName": "Date"
-                                    }
-                                },
-                                "wireValue": "date"
-                            },
+                            "wireDiscriminantValue": "date",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -15044,51 +13469,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "datetime",
-                                    "camelCase": {
-                                        "unsafeName": "datetime",
-                                        "safeName": "datetime"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "datetime",
-                                        "safeName": "datetime"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "DATETIME",
-                                        "safeName": "DATETIME"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Datetime",
-                                        "safeName": "Datetime"
-                                    }
-                                },
-                                "wireValue": "datetime"
-                            },
+                            "wireDiscriminantValue": "datetime",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -15149,51 +13532,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "date",
-                                    "camelCase": {
-                                        "unsafeName": "date",
-                                        "safeName": "date"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "date",
-                                        "safeName": "date"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "DATE",
-                                        "safeName": "DATE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Date",
-                                        "safeName": "Date"
-                                    }
-                                },
-                                "wireValue": "date"
-                            },
+                            "wireDiscriminantValue": "date",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -15244,51 +13585,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "datetime",
-                                    "camelCase": {
-                                        "unsafeName": "datetime",
-                                        "safeName": "datetime"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "datetime",
-                                        "safeName": "datetime"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "DATETIME",
-                                        "safeName": "DATETIME"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Datetime",
-                                        "safeName": "Datetime"
-                                    }
-                                },
-                                "wireValue": "datetime"
-                            },
+                            "wireDiscriminantValue": "datetime",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -15546,79 +13845,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "foo",
-                                    "camelCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO",
-                                        "safeName": "FOO"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo",
-                                        "safeName": "Foo"
-                                    }
-                                },
-                                "wireValue": "foo"
-                            },
+                            "wireDiscriminantValue": "foo",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_types:Foo",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -16036,79 +14272,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "foo1",
-                                    "camelCase": {
-                                        "unsafeName": "foo1",
-                                        "safeName": "foo1"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo1",
-                                        "safeName": "foo1"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO1",
-                                        "safeName": "FOO1"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo1",
-                                        "safeName": "Foo1"
-                                    }
-                                },
-                                "wireValue": "foo1"
-                            },
+                            "wireDiscriminantValue": "foo1",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_types:Foo",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -16225,79 +14398,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "foo2",
-                                    "camelCase": {
-                                        "unsafeName": "foo2",
-                                        "safeName": "foo2"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo2",
-                                        "safeName": "foo2"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO2",
-                                        "safeName": "FOO2"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo2",
-                                        "safeName": "Foo2"
-                                    }
-                                },
-                                "wireValue": "foo2"
-                            },
+                            "wireDiscriminantValue": "foo2",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_types:Foo",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -16716,79 +14826,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "foo",
-                                    "camelCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo",
-                                        "safeName": "foo"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO",
-                                        "safeName": "FOO"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Foo",
-                                        "safeName": "Foo"
-                                    }
-                                },
-                                "wireValue": "foo"
-                            },
+                            "wireDiscriminantValue": "foo",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_types:Foo",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -16905,79 +14952,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "fooExtended",
-                                    "camelCase": {
-                                        "unsafeName": "fooExtended",
-                                        "safeName": "fooExtended"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "foo_extended",
-                                        "safeName": "foo_extended"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FOO_EXTENDED",
-                                        "safeName": "FOO_EXTENDED"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "FooExtended",
-                                        "safeName": "FooExtended"
-                                    }
-                                },
-                                "wireValue": "fooExtended"
-                            },
+                            "wireDiscriminantValue": "fooExtended",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_types:FooExtended",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "name",
-                                                    "camelCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "name",
-                                                        "safeName": "name"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NAME",
-                                                        "safeName": "NAME"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Name",
-                                                        "safeName": "Name"
-                                                    }
-                                                },
-                                                "wireValue": "name"
-                                            },
+                                            "name": "name",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -17059,28 +15043,7 @@
                                             "propertyAccess": null
                                         },
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "age",
-                                                    "camelCase": {
-                                                        "unsafeName": "age",
-                                                        "safeName": "age"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "age",
-                                                        "safeName": "age"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "AGE",
-                                                        "safeName": "AGE"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Age",
-                                                        "safeName": "Age"
-                                                    }
-                                                },
-                                                "wireValue": "age"
-                                            },
+                                            "name": "age",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -17984,28 +15947,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -18118,28 +16060,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -18495,28 +16416,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -18598,28 +16498,7 @@
                                 "propertyAccess": null
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "age",
-                                        "camelCase": {
-                                            "unsafeName": "age",
-                                            "safeName": "age"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "age",
-                                            "safeName": "age"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "AGE",
-                                            "safeName": "AGE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Age",
-                                            "safeName": "Age"
-                                        }
-                                    },
-                                    "wireValue": "age"
-                                },
+                                "name": "age",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -18731,28 +16610,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -18834,28 +16692,7 @@
                                 "propertyAccess": null
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "age",
-                                        "camelCase": {
-                                            "unsafeName": "age",
-                                            "safeName": "age"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "age",
-                                            "safeName": "age"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "AGE",
-                                            "safeName": "AGE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Age",
-                                            "safeName": "Age"
-                                        }
-                                    },
-                                    "wireValue": "age"
-                                },
+                                "name": "age",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -19098,28 +16935,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -19232,28 +17048,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -19664,51 +17459,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "customFormat",
-                                    "camelCase": {
-                                        "unsafeName": "customFormat",
-                                        "safeName": "customFormat"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "custom_format",
-                                        "safeName": "custom_format"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "CUSTOM_FORMAT",
-                                        "safeName": "CUSTOM_FORMAT"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "CustomFormat",
-                                        "safeName": "CustomFormat"
-                                    }
-                                },
-                                "wireValue": "customFormat"
-                            },
+                            "wireDiscriminantValue": "customFormat",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -19754,51 +17507,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "regularString",
-                                    "camelCase": {
-                                        "unsafeName": "regularString",
-                                        "safeName": "regularString"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "regular_string",
-                                        "safeName": "regular_string"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "REGULAR_STRING",
-                                        "safeName": "REGULAR_STRING"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "RegularString",
-                                        "safeName": "RegularString"
-                                    }
-                                },
-                                "wireValue": "regularString"
-                            },
+                            "wireDiscriminantValue": "regularString",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -19844,51 +17555,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "patternString",
-                                    "camelCase": {
-                                        "unsafeName": "patternString",
-                                        "safeName": "patternString"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "pattern_string",
-                                        "safeName": "pattern_string"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "PATTERN_STRING",
-                                        "safeName": "PATTERN_STRING"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "PatternString",
-                                        "safeName": "PatternString"
-                                    }
-                                },
-                                "wireValue": "patternString"
-                            },
+                            "wireDiscriminantValue": "patternString",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -20234,51 +17903,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "positiveInt",
-                                    "camelCase": {
-                                        "unsafeName": "positiveInt",
-                                        "safeName": "positiveInt"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "positive_int",
-                                        "safeName": "positive_int"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "POSITIVE_INT",
-                                        "safeName": "POSITIVE_INT"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "PositiveInt",
-                                        "safeName": "PositiveInt"
-                                    }
-                                },
-                                "wireValue": "positiveInt"
-                            },
+                            "wireDiscriminantValue": "positiveInt",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -20322,51 +17949,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "negativeInt",
-                                    "camelCase": {
-                                        "unsafeName": "negativeInt",
-                                        "safeName": "negativeInt"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "negative_int",
-                                        "safeName": "negative_int"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NEGATIVE_INT",
-                                        "safeName": "NEGATIVE_INT"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "NegativeInt",
-                                        "safeName": "NegativeInt"
-                                    }
-                                },
-                                "wireValue": "negativeInt"
-                            },
+                            "wireDiscriminantValue": "negativeInt",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -20410,51 +17995,9 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "anyNumber",
-                                    "camelCase": {
-                                        "unsafeName": "anyNumber",
-                                        "safeName": "anyNumber"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "any_number",
-                                        "safeName": "any_number"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "ANY_NUMBER",
-                                        "safeName": "ANY_NUMBER"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "AnyNumber",
-                                        "safeName": "AnyNumber"
-                                    }
-                                },
-                                "wireValue": "anyNumber"
-                            },
+                            "wireDiscriminantValue": "anyNumber",
                             "shape": {
                                 "type": "singleProperty",
                                 "shape": {
@@ -20613,28 +18156,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "id",
-                                        "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        }
-                                    },
-                                    "wireValue": "id"
-                                },
+                                "name": "id",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -21287,79 +18809,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "circle",
-                                    "camelCase": {
-                                        "unsafeName": "circle",
-                                        "safeName": "circle"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "circle",
-                                        "safeName": "circle"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "CIRCLE",
-                                        "safeName": "CIRCLE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Circle",
-                                        "safeName": "Circle"
-                                    }
-                                },
-                                "wireValue": "circle"
-                            },
+                            "wireDiscriminantValue": "circle",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_union:Circle",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "radius",
-                                                    "camelCase": {
-                                                        "unsafeName": "radius",
-                                                        "safeName": "radius"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "radius",
-                                                        "safeName": "radius"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "RADIUS",
-                                                        "safeName": "RADIUS"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Radius",
-                                                        "safeName": "Radius"
-                                                    }
-                                                },
-                                                "wireValue": "radius"
-                                            },
+                                            "name": "radius",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -21445,28 +18904,7 @@
                         },
                         "baseProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "id",
-                                        "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        }
-                                    },
-                                    "wireValue": "id"
-                                },
+                                "name": "id",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -21483,28 +18921,7 @@
                         ],
                         "extendProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -21617,79 +19034,16 @@
                     },
                     "shape": {
                         "type": "union",
-                        "discriminant": {
-                            "name": {
-                                "originalName": "type",
-                                "camelCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "type",
-                                    "safeName": "type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TYPE",
-                                    "safeName": "TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Type",
-                                    "safeName": "Type"
-                                }
-                            },
-                            "wireValue": "type"
-                        },
+                        "discriminant": "type",
                         "singleUnionType": {
-                            "wireDiscriminantValue": {
-                                "name": {
-                                    "originalName": "square",
-                                    "camelCase": {
-                                        "unsafeName": "square",
-                                        "safeName": "square"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "square",
-                                        "safeName": "square"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SQUARE",
-                                        "safeName": "SQUARE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Square",
-                                        "safeName": "Square"
-                                    }
-                                },
-                                "wireValue": "square"
-                            },
+                            "wireDiscriminantValue": "square",
                             "shape": {
                                 "type": "samePropertiesAsObject",
                                 "typeId": "type_union:Square",
                                 "object": {
                                     "properties": [
                                         {
-                                            "name": {
-                                                "name": {
-                                                    "originalName": "length",
-                                                    "camelCase": {
-                                                        "unsafeName": "length",
-                                                        "safeName": "length"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "length",
-                                                        "safeName": "length"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "LENGTH",
-                                                        "safeName": "LENGTH"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Length",
-                                                        "safeName": "Length"
-                                                    }
-                                                },
-                                                "wireValue": "length"
-                                            },
+                                            "name": "length",
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -21775,28 +19129,7 @@
                         },
                         "baseProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "id",
-                                        "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        }
-                                    },
-                                    "wireValue": "id"
-                                },
+                                "name": "id",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -21813,28 +19146,7 @@
                         ],
                         "extendProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",

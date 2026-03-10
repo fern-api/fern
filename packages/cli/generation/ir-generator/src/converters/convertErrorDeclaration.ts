@@ -27,7 +27,7 @@ export function convertErrorDeclaration({
     if (errorDeclaration.type != null && errorDeclaration.examples != null) {
         for (const example of errorDeclaration.examples) {
             examples.push({
-                name: example.name != null ? example.name : undefined,
+                name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
                 docs: example.docs,
                 jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
                     example: example.value,
@@ -51,7 +51,10 @@ export function convertErrorDeclaration({
             errorName,
             file
         }),
-        discriminantValue: errorName,
+        discriminantValue: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: errorName,
+            name: errorName
+        }),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         statusCode: errorDeclaration["status-code"],
         isWildcardStatusCode: undefined,

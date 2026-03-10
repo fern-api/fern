@@ -222,6 +222,23 @@ function inflateIr(
         name: inflateNameAndWireValue(h.name)
     });
 
+    const inflateFileProperty = (fp: IrVersions.V65.FileProperty): IrVersions.V65.FileProperty => {
+        switch (fp.type) {
+            case "file":
+                return IrVersions.V65.FileProperty.file({
+                    ...fp,
+                    key: inflateNameAndWireValue(fp.key)
+                });
+            case "fileArray":
+                return IrVersions.V65.FileProperty.fileArray({
+                    ...fp,
+                    key: inflateNameAndWireValue(fp.key)
+                });
+            default:
+                return fp;
+        }
+    };
+
     const inflateEndpoint = (ep: IrVersions.V65.HttpEndpoint): IrVersions.V65.HttpEndpoint => ({
         ...ep,
         name: inflateName(ep.name),
@@ -266,6 +283,10 @@ function inflateIr(
                                     ...p,
                                     name: inflateNameAndWireValue(p.name)
                                 });
+                            case "file":
+                                return IrVersions.V65.FileUploadRequestProperty.file(
+                                    inflateFileProperty(p.value)
+                                );
                             default:
                                 return p;
                         }

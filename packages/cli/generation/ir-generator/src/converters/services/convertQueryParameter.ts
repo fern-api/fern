@@ -17,7 +17,10 @@ export function convertQueryParameter({
     const valueType = file.parseTypeReference(queryParameter);
     return {
         ...convertDeclaration(queryParameter),
-        name: queryParameterKey === name ? queryParameterKey : { wireValue: queryParameterKey, name },
+        name: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: queryParameterKey,
+            name
+        }),
         valueType,
         allowMultiple:
             typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null

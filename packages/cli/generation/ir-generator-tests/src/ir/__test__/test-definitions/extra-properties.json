@@ -271,28 +271,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -376,28 +355,7 @@
                         ],
                         "extraProperties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "age",
-                                        "camelCase": {
-                                            "unsafeName": "age",
-                                            "safeName": "age"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "age",
-                                            "safeName": "age"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "AGE",
-                                            "safeName": "AGE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Age",
-                                            "safeName": "Age"
-                                        }
-                                    },
-                                    "wireValue": "age"
-                                },
+                                "name": "age",
                                 "value": {
                                     "shape": {
                                         "type": "unknown",
@@ -407,28 +365,7 @@
                                 }
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "location",
-                                        "camelCase": {
-                                            "unsafeName": "location",
-                                            "safeName": "location"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "location",
-                                            "safeName": "location"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "LOCATION",
-                                            "safeName": "LOCATION"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Location",
-                                            "safeName": "Location"
-                                        }
-                                    },
-                                    "wireValue": "location"
-                                },
+                                "name": "location",
                                 "value": {
                                     "shape": {
                                         "type": "unknown",
@@ -1144,28 +1081,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "name",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "name",
-                                                                        "safeName": "name"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "name",
-                                                                        "safeName": "name"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "NAME",
-                                                                        "safeName": "NAME"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Name",
-                                                                        "safeName": "Name"
-                                                                    }
-                                                                },
-                                                                "wireValue": "name"
-                                                            },
+                                                            "name": "name",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -1249,28 +1165,7 @@
                                                     ],
                                                     "extraProperties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "age",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "age",
-                                                                        "safeName": "age"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "age",
-                                                                        "safeName": "age"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "AGE",
-                                                                        "safeName": "AGE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Age",
-                                                                        "safeName": "Age"
-                                                                    }
-                                                                },
-                                                                "wireValue": "age"
-                                                            },
+                                                            "name": "age",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "unknown",
@@ -1280,28 +1175,7 @@
                                                             }
                                                         },
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "location",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "location",
-                                                                        "safeName": "location"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "location",
-                                                                        "safeName": "location"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "LOCATION",
-                                                                        "safeName": "LOCATION"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Location",
-                                                                        "safeName": "Location"
-                                                                    }
-                                                                },
-                                                                "wireValue": "location"
-                                                            },
+                                                            "name": "location",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "unknown",

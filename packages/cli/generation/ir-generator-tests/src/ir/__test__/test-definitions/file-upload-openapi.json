@@ -811,26 +811,28 @@
                             },
                             {
                                 "type": "file",
-                                "name": {
-                                    "originalName": "file",
-                                    "camelCase": {
-                                        "unsafeName": "file",
-                                        "safeName": "file"
+                                "value": {
+                                    "name": {
+                                        "originalName": "file",
+                                        "camelCase": {
+                                            "unsafeName": "file",
+                                            "safeName": "file"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "file",
+                                            "safeName": "file"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FILE",
+                                            "safeName": "FILE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "File",
+                                            "safeName": "File"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "file",
-                                        "safeName": "file"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "FILE",
-                                        "safeName": "FILE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "File",
-                                        "safeName": "File"
-                                    }
-                                },
-                                "wireValue": "file"
+                                    "wireValue": "file"
+                                }
                             }
                         ]
                     },

@@ -75,7 +75,7 @@ export function convertTypeDeclaration({
                 typeof typeDeclaration !== "string" && typeDeclaration.examples != null
                     ? typeDeclaration.examples.map(
                           (example): ExampleType => ({
-                              name: example.name != null ? example.name : undefined,
+                              name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
                               docs: example.docs,
                               jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
                                   example: example.value,

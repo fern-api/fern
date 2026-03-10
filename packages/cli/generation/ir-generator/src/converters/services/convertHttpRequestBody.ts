@@ -53,13 +53,16 @@ export function convertHttpRequestBody({
     if (fileUploadRequest != null) {
         return HttpRequestBody.fileUpload({
             contentType: request["content-type"],
-            name: fileUploadRequest.name,
+            name: file.casingsGenerator.generateName(fileUploadRequest.name),
             properties: fileUploadRequest.properties.map((property) => {
                 if (property.isFile) {
                     if (property.isArray) {
                         return FileUploadRequestProperty.file(
                             FileProperty.fileArray({
-                                key: property.key,
+                                key: file.casingsGenerator.generateNameAndWireValue({
+                                    wireValue: property.key,
+                                    name: property.key
+                                }),
                                 isOptional: property.isOptional,
                                 contentType: property.contentType,
                                 docs: property.docs
@@ -68,7 +71,10 @@ export function convertHttpRequestBody({
                     } else {
                         return FileUploadRequestProperty.file(
                             FileProperty.file({
-                                key: property.key,
+                                key: file.casingsGenerator.generateNameAndWireValue({
+                                    wireValue: property.key,
+                                    name: property.key
+                                }),
                                 isOptional: property.isOptional,
                                 contentType: property.contentType,
                                 docs: property.docs
@@ -100,7 +106,7 @@ export function convertHttpRequestBody({
         }
 
         return HttpRequestBody.inlinedRequestBody({
-            name: request.name,
+            name: file.casingsGenerator.generateName(request.name),
             extends: getExtensionsAsList(request.body.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
@@ -182,10 +188,10 @@ function convertInlinedRequestProperty({
     return {
         docs,
         availability,
-        name: (() => {
-            const propName = getPropertyName({ propertyKey, property: propertyDefinition }).name;
-            return propertyKey === propName ? propertyKey : { wireValue: propertyKey, name: propName };
-        })(),
+        name: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: propertyKey,
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name
+        }),
         valueType: file.parseTypeReference(propertyDefinition),
         v2Examples: {
             userSpecifiedExamples: {},

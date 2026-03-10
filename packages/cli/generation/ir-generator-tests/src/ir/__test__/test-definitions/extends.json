@@ -216,28 +216,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "docs",
-                                        "camelCase": {
-                                            "unsafeName": "docs",
-                                            "safeName": "docs"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "docs",
-                                            "safeName": "docs"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "DOCS",
-                                            "safeName": "DOCS"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Docs",
-                                            "safeName": "Docs"
-                                        }
-                                    },
-                                    "wireValue": "docs"
-                                },
+                                "name": "docs",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -281,28 +260,7 @@
                                 "propertyAccess": null
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -588,28 +546,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "docs",
-                                        "camelCase": {
-                                            "unsafeName": "docs",
-                                            "safeName": "docs"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "docs",
-                                            "safeName": "docs"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "DOCS",
-                                            "safeName": "DOCS"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Docs",
-                                            "safeName": "Docs"
-                                        }
-                                    },
-                                    "wireValue": "docs"
-                                },
+                                "name": "docs",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -653,28 +590,7 @@
                                 "propertyAccess": null
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "name",
-                                        "camelCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "name",
-                                            "safeName": "name"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NAME",
-                                            "safeName": "NAME"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Name",
-                                            "safeName": "Name"
-                                        }
-                                    },
-                                    "wireValue": "name"
-                                },
+                                "name": "name",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -718,28 +634,7 @@
                                 "propertyAccess": null
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "raw",
-                                        "camelCase": {
-                                            "unsafeName": "raw",
-                                            "safeName": "raw"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "raw",
-                                            "safeName": "raw"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "RAW",
-                                            "safeName": "RAW"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Raw",
-                                            "safeName": "Raw"
-                                        }
-                                    },
-                                    "wireValue": "raw"
-                                },
+                                "name": "raw",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -909,28 +804,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "docs",
-                                        "camelCase": {
-                                            "unsafeName": "docs",
-                                            "safeName": "docs"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "docs",
-                                            "safeName": "docs"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "DOCS",
-                                            "safeName": "DOCS"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Docs",
-                                            "safeName": "Docs"
-                                        }
-                                    },
-                                    "wireValue": "docs"
-                                },
+                                "name": "docs",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -1172,28 +1046,7 @@
                         "type": "object",
                         "properties": [
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "docs",
-                                        "camelCase": {
-                                            "unsafeName": "docs",
-                                            "safeName": "docs"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "docs",
-                                            "safeName": "docs"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "DOCS",
-                                            "safeName": "DOCS"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Docs",
-                                            "safeName": "Docs"
-                                        }
-                                    },
-                                    "wireValue": "docs"
-                                },
+                                "name": "docs",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",
@@ -1237,28 +1090,7 @@
                                 "propertyAccess": null
                             },
                             {
-                                "name": {
-                                    "name": {
-                                        "originalName": "raw",
-                                        "camelCase": {
-                                            "unsafeName": "raw",
-                                            "safeName": "raw"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "raw",
-                                            "safeName": "raw"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "RAW",
-                                            "safeName": "RAW"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Raw",
-                                            "safeName": "Raw"
-                                        }
-                                    },
-                                    "wireValue": "raw"
-                                },
+                                "name": "raw",
                                 "value": {
                                     "shape": {
                                         "type": "primitive",

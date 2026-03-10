@@ -802,28 +802,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
-                                                                },
-                                                                "wireValue": "success"
-                                                            },
+                                                            "name": "success",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -1640,28 +1619,7 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "success",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "success",
-                                                                        "safeName": "success"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "SUCCESS",
-                                                                        "safeName": "SUCCESS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Success",
-                                                                        "safeName": "Success"
-                                                                    }
-                                                                },
-                                                                "wireValue": "success"
-                                                            },
+                                                            "name": "success",
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",

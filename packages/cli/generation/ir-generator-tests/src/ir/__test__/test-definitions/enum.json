@@ -175,26 +175,8 @@
                     "shape": {
                         "type": "enum",
                         "value": {
-                            "name": {
-                                "originalName": "GREATER_THAN",
-                                "camelCase": {
-                                    "unsafeName": "greaterThan",
-                                    "safeName": "greaterThan"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "greater_than",
-                                    "safeName": "greater_than"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "GREATER_THAN",
-                                    "safeName": "GREATER_THAN"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "GreaterThan",
-                                    "safeName": "GreaterThan"
-                                }
-                            },
-                            "wireValue": ">"
+                            "wireValue": ">",
+                            "name": "GREATER_THAN"
                         }
                     },
                     "jsonExample": ">",
@@ -222,28 +204,7 @@
                     },
                     "shape": {
                         "type": "enum",
-                        "value": {
-                            "name": {
-                                "originalName": "less_than",
-                                "camelCase": {
-                                    "unsafeName": "lessThan",
-                                    "safeName": "lessThan"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "less_than",
-                                    "safeName": "less_than"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "LESS_THAN",
-                                    "safeName": "LESS_THAN"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "LessThan",
-                                    "safeName": "LessThan"
-                                }
-                            },
-                            "wireValue": "less_than"
-                        }
+                        "value": "less_than"
                     },
                     "jsonExample": "less_than",
                     "docs": null
@@ -372,26 +333,8 @@
                     "shape": {
                         "type": "enum",
                         "value": {
-                            "name": {
-                                "originalName": "RED",
-                                "camelCase": {
-                                    "unsafeName": "red",
-                                    "safeName": "red"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "red",
-                                    "safeName": "red"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "RED",
-                                    "safeName": "RED"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Red",
-                                    "safeName": "Red"
-                                }
-                            },
-                            "wireValue": "red"
+                            "wireValue": "red",
+                            "name": "RED"
                         }
                     },
                     "jsonExample": "red",
@@ -573,26 +516,8 @@
                                 "shape": {
                                     "type": "enum",
                                     "value": {
-                                        "name": {
-                                            "originalName": "RED",
-                                            "camelCase": {
-                                                "unsafeName": "red",
-                                                "safeName": "red"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "red",
-                                                "safeName": "red"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "RED",
-                                                "safeName": "RED"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Red",
-                                                "safeName": "Red"
-                                            }
-                                        },
-                                        "wireValue": "red"
+                                        "wireValue": "red",
+                                        "name": "RED"
                                     }
                                 }
                             },
@@ -826,26 +751,8 @@
                     "shape": {
                         "type": "enum",
                         "value": {
-                            "name": {
-                                "originalName": "SAFE",
-                                "camelCase": {
-                                    "unsafeName": "safe",
-                                    "safeName": "safe"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "safe",
-                                    "safeName": "safe"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SAFE",
-                                    "safeName": "SAFE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Safe",
-                                    "safeName": "Safe"
-                                }
-                            },
-                            "wireValue": "safe"
+                            "wireValue": "safe",
+                            "name": "SAFE"
                         }
                     },
                     "jsonExample": "safe",
@@ -874,26 +781,8 @@
                     "shape": {
                         "type": "enum",
                         "value": {
-                            "name": {
-                                "originalName": "CUSTOM",
-                                "camelCase": {
-                                    "unsafeName": "custom",
-                                    "safeName": "custom"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "custom",
-                                    "safeName": "custom"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "CUSTOM",
-                                    "safeName": "CUSTOM"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Custom",
-                                    "safeName": "Custom"
-                                }
-                            },
-                            "wireValue": "Custom"
+                            "wireValue": "Custom",
+                            "name": "CUSTOM"
                         }
                     },
                     "jsonExample": "Custom",
@@ -3148,26 +3037,8 @@
                                                     "shape": {
                                                         "type": "enum",
                                                         "value": {
-                                                            "name": {
-                                                                "originalName": "GREATER_THAN",
-                                                                "camelCase": {
-                                                                    "unsafeName": "greaterThan",
-                                                                    "safeName": "greaterThan"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "greater_than",
-                                                                    "safeName": "greater_than"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "GREATER_THAN",
-                                                                    "safeName": "GREATER_THAN"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "GreaterThan",
-                                                                    "safeName": "GreaterThan"
-                                                                }
-                                                            },
-                                                            "wireValue": ">"
+                                                            "wireValue": ">",
+                                                            "name": "GREATER_THAN"
                                                         }
                                                     }
                                                 },
@@ -3266,26 +3137,8 @@
                                                                 "shape": {
                                                                     "type": "enum",
                                                                     "value": {
-                                                                        "name": {
-                                                                            "originalName": "RED",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "red",
-                                                                                "safeName": "red"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "red",
-                                                                                "safeName": "red"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "RED",
-                                                                                "safeName": "RED"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Red",
-                                                                                "safeName": "Red"
-                                                                            }
-                                                                        },
-                                                                        "wireValue": "red"
+                                                                        "wireValue": "red",
+                                                                        "name": "RED"
                                                                     }
                                                                 }
                                                             },
@@ -4639,26 +4492,8 @@
                                                 "shape": {
                                                     "type": "enum",
                                                     "value": {
-                                                        "name": {
-                                                            "originalName": "GREATER_THAN",
-                                                            "camelCase": {
-                                                                "unsafeName": "greaterThan",
-                                                                "safeName": "greaterThan"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "greater_than",
-                                                                "safeName": "greater_than"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "GREATER_THAN",
-                                                                "safeName": "GREATER_THAN"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "GreaterThan",
-                                                                "safeName": "GreaterThan"
-                                                            }
-                                                        },
-                                                        "wireValue": ">"
+                                                        "wireValue": ">",
+                                                        "name": "GREATER_THAN"
                                                     }
                                                 }
                                             },
@@ -4753,26 +4588,8 @@
                                                             "shape": {
                                                                 "type": "enum",
                                                                 "value": {
-                                                                    "name": {
-                                                                        "originalName": "RED",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "red",
-                                                                            "safeName": "red"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "red",
-                                                                            "safeName": "red"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "RED",
-                                                                            "safeName": "RED"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Red",
-                                                                            "safeName": "Red"
-                                                                        }
-                                                                    },
-                                                                    "wireValue": "red"
+                                                                    "wireValue": "red",
+                                                                    "name": "RED"
                                                                 }
                                                             }
                                                         },
@@ -5550,26 +5367,8 @@
                                                 "shape": {
                                                     "type": "enum",
                                                     "value": {
-                                                        "name": {
-                                                            "originalName": "GREATER_THAN",
-                                                            "camelCase": {
-                                                                "unsafeName": "greaterThan",
-                                                                "safeName": "greaterThan"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "greater_than",
-                                                                "safeName": "greater_than"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "GREATER_THAN",
-                                                                "safeName": "GREATER_THAN"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "GreaterThan",
-                                                                "safeName": "GreaterThan"
-                                                            }
-                                                        },
-                                                        "wireValue": ">"
+                                                        "wireValue": ">",
+                                                        "name": "GREATER_THAN"
                                                     }
                                                 }
                                             },
@@ -5670,26 +5469,8 @@
                                                             "shape": {
                                                                 "type": "enum",
                                                                 "value": {
-                                                                    "name": {
-                                                                        "originalName": "RED",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "red",
-                                                                            "safeName": "red"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "red",
-                                                                            "safeName": "red"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "RED",
-                                                                            "safeName": "RED"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Red",
-                                                                            "safeName": "Red"
-                                                                        }
-                                                                    },
-                                                                    "wireValue": "red"
+                                                                    "wireValue": "red",
+                                                                    "name": "RED"
                                                                 }
                                                             }
                                                         },
