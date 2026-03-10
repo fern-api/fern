@@ -60,6 +60,7 @@ func (c *Client) GenerateStream(
 			BodyProperties:  options.BodyProperties,
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
+			MaxBufSize:      options.MaxBufSize,
 			Request:         request,
 			ErrorDecoder:    internal.NewErrorDecoder(stream.ErrorCodes),
 		},

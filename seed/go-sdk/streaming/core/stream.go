@@ -25,7 +25,7 @@ const (
 )
 
 const (
-	defaultMaxBufSize = 64 * 1024 // 64KB
+	defaultMaxBufSize = 1024 * 1024 // 1MB
 )
 
 // Stream represents a stream of messages sent from a server.
@@ -80,6 +80,17 @@ func WithFormat(format StreamFormat) StreamOption {
 func WithEventDiscriminator(field string) StreamOption {
 	return func(opts *streamOptions) {
 		opts.eventDiscriminator = field
+	}
+}
+
+// WithMaxBufSize overrides the maximum buffer size for the Stream.
+//
+// This controls the maximum size of a single message (in bytes) that the
+// stream can process. By default, this is set to 1MB. If your streaming
+// responses contain messages larger than the default, increase this value.
+func WithMaxBufSize(size int) StreamOption {
+	return func(opts *streamOptions) {
+		opts.maxBufSize = size
 	}
 }
 
@@ -333,6 +344,9 @@ func (s *SseStreamReader) nextEvent() (*SseEvent, error) {
 			return nil, errors.New("SseStreamReader.ReadFromStream: buffer limit exceeded")
 		}
 		return &event, nil
+	}
+	if err := s.scanner.Err(); err != nil {
+		return nil, err
 	}
 	return &event, io.EOF
 }
