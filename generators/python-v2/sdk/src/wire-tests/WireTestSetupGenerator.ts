@@ -65,16 +65,105 @@ export class WireTestSetupGenerator {
         }
     }
 
+    /**
+     * Strips ".000" milliseconds only from string-typed query parameters in WireMock stub mappings.
+     * When datetime_milliseconds is true, datetime-typed params should keep ".000" (because
+     * serialize_datetime will output milliseconds), but string-typed params should have ".000"
+     * stripped (because the SDK passes strings through as-is without millisecond normalization).
+     *
+     * Mutates the input in-place for efficiency.
+     */
+    private stripDatetimeMillisecondsForStringParams(
+        stubMapping: WireMockStubMapping,
+        ir: FernIr.IntermediateRepresentation
+    ): void {
+        // Build a lookup: mapping key -> set of datetime-typed query param wire names
+        const datetimeParamsByEndpoint = new Map<string, Set<string>>();
+        for (const service of Object.values(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                let path = endpoint.fullPath.head;
+                for (const part of endpoint.fullPath.parts) {
+                    path += `{${part.pathParameter}}${part.tail}`;
+                }
+                if (!path.startsWith("/")) {
+                    path = "/" + path;
+                }
+                // Strip URL fragments (mock-utils strips them too)
+                const fragmentIndex = path.indexOf("#");
+                if (fragmentIndex !== -1) {
+                    path = path.substring(0, fragmentIndex);
+                }
+                const key = `${endpoint.method} - ${path}`;
+                const datetimeParams = new Set<string>();
+                for (const qp of endpoint.queryParameters) {
+                    if (WireTestSetupGenerator.isDatetimeTypeReference(qp.valueType)) {
+                        datetimeParams.add(qp.name.wireValue);
+                    }
+                }
+                datetimeParamsByEndpoint.set(key, datetimeParams);
+            }
+        }
+
+        for (const mapping of stubMapping.mappings) {
+            if (!mapping.request.queryParameters) {
+                continue;
+            }
+            const mappingKey = `${mapping.request.method} - ${mapping.request.urlPathTemplate}`;
+            const datetimeParams = datetimeParamsByEndpoint.get(mappingKey) ?? new Set<string>();
+
+            for (const [paramName, value] of Object.entries(mapping.request.queryParameters)) {
+                // Skip datetime-typed params — they should keep .000 when datetime_milliseconds is true
+                if (datetimeParams.has(paramName)) {
+                    continue;
+                }
+                const paramValue = value as { equalTo: string };
+                if (
+                    paramValue.equalTo != null &&
+                    WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
+                ) {
+                    paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                }
+            }
+        }
+    }
+
+    /**
+     * Recursively checks if a TypeReference resolves to a datetime primitive.
+     * Unwraps optional/nullable containers to check the inner type.
+     */
+    private static isDatetimeTypeReference(typeRef: FernIr.TypeReference): boolean {
+        if (typeRef.type === "primitive") {
+            return typeRef.primitive.v1 === "DATE_TIME";
+        }
+        if (typeRef.type === "container") {
+            if (typeRef.container.type === "optional") {
+                return WireTestSetupGenerator.isDatetimeTypeReference(typeRef.container.optional);
+            }
+            if (typeRef.container.type === "nullable") {
+                return WireTestSetupGenerator.isDatetimeTypeReference(typeRef.container.nullable);
+            }
+        }
+        return false;
+    }
+
     private generateWireMockConfigFile(): void {
         const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
 
-        // When datetime_milliseconds is not enabled (default), strip milliseconds from datetime
-        // values in WireMock stubs. mock-utils always generates datetime values using
-        // Date.toISOString() which includes ".000Z", but the Python SDK's default
-        // serialize_datetime (isoformat()) omits zero fractional seconds. Stripping here
-        // ensures the stubs match what the SDK actually sends.
+        // mock-utils always generates datetime values using Date.toISOString() which includes
+        // ".000Z". We need to normalize these based on the datetime_milliseconds config and
+        // the actual parameter types:
+        //
+        // When datetime_milliseconds is false (default): strip ".000" from ALL datetime query
+        // param values, since the SDK's default serialize_datetime (isoformat()) omits zero
+        // fractional seconds.
+        //
+        // When datetime_milliseconds is true: keep ".000" for datetime-typed params (because
+        // serialize_datetime will output milliseconds), but strip ".000" for string-typed params
+        // (because the SDK passes strings through as-is without calling serialize_datetime).
         if (!this.context.customConfig.datetime_milliseconds) {
             WireTestSetupGenerator.stripDatetimeMilliseconds(wireMockConfigContent);
+        } else {
+            this.stripDatetimeMillisecondsForStringParams(wireMockConfigContent, this.ir);
         }
 
         const wireMockConfigFile = new File(
