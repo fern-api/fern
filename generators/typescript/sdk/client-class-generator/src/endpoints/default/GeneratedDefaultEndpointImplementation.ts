@@ -561,6 +561,32 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }
 
             // Initial call: list(endpointUrl)
+            // For path pagination, reuse the already-emitted _baseUrl identifier instead of
+            // re-evaluating getBaseUrl() (which would produce a duplicate Supplier.get call).
+            const initialUrl =
+                paginationInfo.type === "path"
+                    ? (() => {
+                          const endpointPath = buildUrl({
+                              endpoint: this.endpoint,
+                              generatedClientClass: this.generatedSdkClientClass,
+                              context,
+                              includeSerdeLayer: this.includeSerdeLayer,
+                              retainOriginalCasing: this.retainOriginalCasing,
+                              omitUndefined: this.omitUndefined,
+                              getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                                  return this.request.getReferenceToPathParameter(
+                                      pathParameter.name.originalName,
+                                      context
+                                  );
+                              },
+                              parameterNaming: this.parameterNaming
+                          });
+                          const baseUrlIdentifier = ts.factory.createIdentifier("_baseUrl");
+                          return endpointPath != null
+                              ? context.coreUtilities.urlUtils.join._invoke([baseUrlIdentifier, endpointPath])
+                              : baseUrlIdentifier;
+                      })()
+                    : this.getReferenceToBaseUrl(context);
             const initialResponseVar = ts.factory.createIdentifier("dataWithRawResponse");
             statements.push(
                 ts.factory.createVariableStatement(
@@ -577,7 +603,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                                             ts.factory.createCallExpression(
                                                 ts.factory.createIdentifier("list"),
                                                 undefined,
-                                                [this.getReferenceToBaseUrl(context)]
+                                                [initialUrl]
                                             ),
                                             ts.factory.createIdentifier("withRawResponse")
                                         ),

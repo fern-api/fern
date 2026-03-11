@@ -586,46 +586,28 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             )
         );
 
-        // hasNextPage: check that next property is not null and not empty string
-        const nextPropertyAccess = context.type.generateGetterForResponseProperty({
-            property: nextProperty,
-            variable: "response",
-            isVariableOptional: true
-        });
-
-        const nextPropertyIsNonNull = ts.factory.createBinaryExpression(
-            nextPropertyAccess,
-            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-            ts.factory.createNull()
-        );
-
-        const nextPropertyIsStringType = ts.factory.createBinaryExpression(
-            ts.factory.createTypeOfExpression(nextPropertyAccess),
-            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
-            ts.factory.createStringLiteral("string")
-        );
-
-        const nextPropertyIsEmptyString = ts.factory.createBinaryExpression(
-            nextPropertyAccess,
-            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
-            ts.factory.createStringLiteral("")
-        );
-
-        const nextPropertyIsStringAndEmpty = ts.factory.createBinaryExpression(
-            nextPropertyIsStringType,
-            ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
-            nextPropertyIsEmptyString
-        );
-
-        const nextPropertyIsNotEmptyString = ts.factory.createPrefixUnaryExpression(
-            ts.SyntaxKind.ExclamationToken,
-            nextPropertyIsStringAndEmpty
-        );
-
+        // hasNextPage: check that next property is not null and not empty string.
+        // Each call to generateGetterForResponseProperty creates a fresh AST node (nodes cannot be shared).
         const hasNextPage = ts.factory.createBinaryExpression(
-            nextPropertyIsNonNull,
+            ts.factory.createBinaryExpression(
+                context.type.generateGetterForResponseProperty({
+                    property: nextProperty,
+                    variable: "response",
+                    isVariableOptional: true
+                }),
+                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                ts.factory.createNull()
+            ),
             ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
-            nextPropertyIsNotEmptyString
+            ts.factory.createBinaryExpression(
+                context.type.generateGetterForResponseProperty({
+                    property: nextProperty,
+                    variable: "response",
+                    isVariableOptional: true
+                }),
+                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                ts.factory.createStringLiteral("")
+            )
         );
 
         // getItems: extract items from response
@@ -642,14 +624,21 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         // loadPage: make a direct fetch to the next URI/path
         // For URI pagination: use the full URL directly
         // For path pagination: combine the next path with the base URL
-        // Use non-null assertion since loadPage is only called when hasNextPage is true
-        const nextPropertyNonNull = ts.factory.createNonNullExpression(nextPropertyAccess);
+        // Use non-null assertion since loadPage is only called when hasNextPage is true.
+        // A fresh AST node is required here since nodes cannot be shared across parents.
+        const nextPropertyForLoadPage = ts.factory.createNonNullExpression(
+            context.type.generateGetterForResponseProperty({
+                property: nextProperty,
+                variable: "response",
+                isVariableOptional: true
+            })
+        );
         const nextUrlExpression =
             type === "uri"
-                ? nextPropertyNonNull
+                ? nextPropertyForLoadPage
                 : context.coreUtilities.urlUtils.join._invoke([
                       ts.factory.createIdentifier("_baseUrl"),
-                      nextPropertyNonNull
+                      nextPropertyForLoadPage
                   ]);
 
         const loadPage = [

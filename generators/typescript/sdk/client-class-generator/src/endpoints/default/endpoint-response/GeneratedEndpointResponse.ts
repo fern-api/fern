@@ -5,8 +5,7 @@ export type PaginationResponseInfo =
     | CursorPaginationResponseInfo
     | OffsetPaginationResponseInfo
     | CustomPaginationResponseInfo
-    | UriPaginationResponseInfo
-    | PathPaginationResponseInfo;
+    | UriOrPathPaginationResponseInfo;
 
 export interface CursorPaginationResponseInfo {
     type: "cursor";
@@ -36,17 +35,8 @@ export interface CustomPaginationResponseInfo {
     loadPage: ts.Statement[];
 }
 
-export interface UriPaginationResponseInfo {
-    type: "uri";
-    responseType: ts.TypeNode;
-    itemType: ts.TypeNode;
-    getItems: ts.Expression;
-    hasNextPage: ts.Expression;
-    loadPage: ts.Statement[];
-}
-
-export interface PathPaginationResponseInfo {
-    type: "path";
+export interface UriOrPathPaginationResponseInfo {
+    type: "uri" | "path";
     responseType: ts.TypeNode;
     itemType: ts.TypeNode;
     getItems: ts.Expression;

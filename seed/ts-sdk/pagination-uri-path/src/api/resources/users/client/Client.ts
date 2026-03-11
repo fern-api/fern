@@ -75,8 +75,7 @@ export class UsersClient {
         return new core.Page<SeedPaginationUriPath.User, SeedPaginationUriPath.ListUsersUriPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
+            hasNextPage: (response) => response?.next != null && response?.next !== "",
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 return list(response?.next!);
@@ -130,18 +129,11 @@ export class UsersClient {
         );
         const _baseUrl =
             (await core.Supplier.get(this._options.baseUrl)) ?? (await core.Supplier.get(this._options.environment));
-        const dataWithRawResponse = await list(
-            core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users/path",
-            ),
-        ).withRawResponse();
+        const dataWithRawResponse = await list(core.url.join(_baseUrl, "/users/path")).withRawResponse();
         return new core.Page<SeedPaginationUriPath.User, SeedPaginationUriPath.ListUsersPathPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
+            hasNextPage: (response) => response?.next != null && response?.next !== "",
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 return list(core.url.join(_baseUrl, response?.next!));
