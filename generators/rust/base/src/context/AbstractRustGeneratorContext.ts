@@ -1,5 +1,5 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { getCamelCaseSafe, getOriginalName, getPascalCaseSafe, getPascalCaseUnsafe, getSnakeCaseSafe, getSnakeCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
+import { type NameInput, getCamelCaseSafe, getOriginalName, getPascalCaseSafe, getPascalCaseUnsafe, getSnakeCaseSafe, getSnakeCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AsIsFileDefinition } from "../AsIs.js";
@@ -754,8 +754,8 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique module path (fernFilepath parts + type name joined with underscores)
      */
     public getModulePathForDeclaredType(declaredTypeName: {
-        fernFilepath: { allParts: FernIr.NameOrString[] };
-        name: FernIr.NameOrString;
+        fernFilepath: { allParts: NameInput[] };
+        name: NameInput;
     }): string {
         // Extract the type name
         const typeName = getSnakeCaseUnsafe(declaredTypeName.name) || getOriginalName(declaredTypeName.name) || getPascalCaseSafe(declaredTypeName.name) || "";
@@ -803,8 +803,8 @@ export abstract class AbstractRustGeneratorContext<
      */
     public getUniqueFilenameForType(typeDeclaration: {
         name: {
-            fernFilepath: { allParts: FernIr.NameOrString[] };
-            name: FernIr.NameOrString;
+            fernFilepath: { allParts: NameInput[] };
+            name: NameInput;
         };
     }): string {
         // Find typeId in IR by matching the typeDeclaration reference
@@ -829,8 +829,8 @@ export abstract class AbstractRustGeneratorContext<
      */
     public getUniqueTypeNameForDeclaration(typeDeclaration: {
         name: {
-            fernFilepath: { allParts: FernIr.NameOrString[] };
-            name: FernIr.NameOrString;
+            fernFilepath: { allParts: NameInput[] };
+            name: NameInput;
         };
     }): string {
         // Find typeId in IR by matching the typeDeclaration reference
@@ -854,8 +854,8 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique type name, or the base name if not found in IR
      */
     public getUniqueTypeNameForReference(declaredTypeName: {
-        fernFilepath: { allParts: FernIr.NameOrString[] };
-        name: FernIr.NameOrString;
+        fernFilepath: { allParts: NameInput[] };
+        name: NameInput;
     }): string {
         const baseTypeName = getPascalCaseSafe(declaredTypeName.name);
 
@@ -1050,7 +1050,7 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique filename (e.g., "nested_no_auth_api.rs")
      */
     public getUniqueFilenameForSubpackage(subpackage: {
-        fernFilepath: { allParts: FernIr.NameOrString[] };
+        fernFilepath: { allParts: NameInput[] };
     }): string {
         // Use the full fernFilepath to create unique filenames to prevent collisions
         // E.g., "nested-no-auth/api" becomes "nested_no_auth_api.rs"
@@ -1066,7 +1066,7 @@ export abstract class AbstractRustGeneratorContext<
      * @returns The unique client name (e.g., "NestedNoAuthApiClient" or "BasicAuthClient2" if collision)
      */
     public getUniqueClientNameForSubpackage(subpackage: {
-        fernFilepath: { allParts: FernIr.NameOrString[] };
+        fernFilepath: { allParts: NameInput[] };
     }): string {
         // Find the subpackage ID by matching fernFilepath
         const subpackageId = Object.entries(this.ir.subpackages).find(([, sp]) => {

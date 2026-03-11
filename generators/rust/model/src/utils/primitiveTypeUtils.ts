@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getOriginalName, getPascalCaseUnsafe, getSnakeCaseUnsafe } from "@fern-api/ir-utils";
+import { type NameInput, getOriginalName, getPascalCaseUnsafe, getSnakeCaseUnsafe } from "@fern-api/ir-utils";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 /**
@@ -491,7 +491,7 @@ export function namedTypeSupportsHashAndEq(
 
 export function extractNamedTypesFromTypeReference(
     typeRef: FernIr.TypeReference,
-    typeNames: FernIr.NameOrString[],
+    typeNames: NameInput[],
     visited: Set<string>
 ): void {
     if (typeRef.type === "named") {

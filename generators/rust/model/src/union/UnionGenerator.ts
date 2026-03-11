@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { getOriginalName, getPascalCaseUnsafe, getSnakeCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
+import { type NameInput, getOriginalName, getPascalCaseUnsafe, getSnakeCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
@@ -470,8 +470,8 @@ export class UnionGenerator {
         });
     }
 
-    private getVariantTypesUsedInUnion(): FernIr.NameOrString[] {
-        const variantTypeNames: FernIr.NameOrString[] = [];
+    private getVariantTypesUsedInUnion(): NameInput[] {
+        const variantTypeNames: NameInput[] = [];
         const visited = new Set<string>();
 
         this.unionTypeDeclaration.types.forEach((unionType) => {

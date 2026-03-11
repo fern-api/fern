@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getPascalCaseUnsafe, getSnakeCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
+import { type NameInput, getPascalCaseUnsafe, getSnakeCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -183,8 +183,8 @@ export function hasFloatingPointSets(properties: (FernIr.ObjectProperty | FernIr
 export function getCustomTypesUsedInFields(
     properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[],
     currentTypeName?: string
-): FernIr.NameOrString[] {
-    const customTypeNames: FernIr.NameOrString[] = [];
+): NameInput[] {
+    const customTypeNames: NameInput[] = [];
     const visited = new Set<string>();
 
     properties.forEach((property) => {
