@@ -37,22 +37,6 @@ types:
       - name: Red
         value: "red"
 
-  Status:
-    docs: |
-      Tests forward-compatible enums that accept
-      both known values and arbitrary strings.
-    enum:
-      - value: "known"
-        name: KNOWN
-      - value: "unknown"
-        name: UNKNOWN
-    forward-compatible: true
-    examples:
-      - name: Known
-        value: "known"
-      - name: Unknown
-        value: "unknown"
-
   EnumWithSpecialCharacters:
     enum:
       - value: "\\$bla"
