@@ -1,0 +1,62 @@
+import type { Argv } from "yargs";
+import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
+import type { Context } from "../../../context/Context.js";
+import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { CliError } from "../../../errors/CliError.js";
+import { command } from "../../_internal/command.js";
+import { PublishCommand } from "../publish/command.js";
+
+export declare namespace PreviewCommand {
+    export interface Args extends GlobalArgs {
+        instance?: string;
+        strict: boolean;
+        "skip-upload": boolean;
+    }
+}
+
+export class PreviewCommand {
+    private readonly publishCommand = new PublishCommand();
+
+    public async handle(context: Context, args: PreviewCommand.Args): Promise<void> {
+        await this.publishCommand.handle(context, {
+            ...args,
+            preview: true,
+            force: true
+        });
+    }
+}
+
+export function addPreviewCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
+    const cmd = new PreviewCommand();
+    command(
+        cli,
+        "preview",
+        "Generate a preview of your documentation site",
+        async (context, args) => {
+            const timeout = new Promise<never>((_, reject) => {
+                setTimeout(
+                    () => reject(new CliError({ message: "Docs preview timed out after 10 minutes." })),
+                    GENERATE_COMMAND_TIMEOUT_MS
+                ).unref();
+            });
+            await Promise.race([cmd.handle(context, args as PreviewCommand.Args), timeout]);
+        },
+        (yargs) =>
+            yargs
+                .option("instance", {
+                    type: "string",
+                    description: "Select which docs instance to preview"
+                })
+                .option("strict", {
+                    type: "boolean",
+                    default: false,
+                    description: "Treat all validation warnings as errors"
+                })
+                .option("skip-upload", {
+                    type: "boolean",
+                    default: false,
+                    description: "Skip uploading assets during preview generation"
+                }),
+        parentPath
+    );
+}

@@ -1597,7 +1597,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("docs", "Commands for managing your docs", (yargs) => {
         addDocsDevCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
-        addDocsPreviewCommand(yargs, cliContext);
+        addPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
         return yargs;
@@ -1686,7 +1686,7 @@ function addDocsDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
     );
 }
 
-function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("preview", "Commands for managing preview deployments", (yargs) => {
         addDocsPreviewListCommand(yargs, cliContext);
         addDocsPreviewDeleteCommand(yargs, cliContext);
