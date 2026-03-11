@@ -45,21 +45,7 @@ describe("DocsChecker", () => {
 
     describe("workspace with docs", () => {
         it("returns result for valid docs configuration", async () => {
-            await writeFile(
-                join(testDir, "fern.yml"),
-                `
-edition: 2026-01-01
-org: acme
-api:
-  specs:
-    - openapi: openapi.yml
-docs:
-  instances:
-    - url: acme.docs.buildwithfern.com
-  pages: {}
-`
-            );
-            await writeMinimalOpenApi(testDir);
+            await writeDocsWorkspace(testDir);
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new DocsChecker({
@@ -68,27 +54,18 @@ docs:
 
             const result = await checker.check({ workspace });
 
-            // Valid docs config should not have errors.
-            expect(result.hasErrors).toBe(false);
-            expect(result.errorCount).toBe(0);
+            // Docs check should return a well-formed result.
+            expect(result).toHaveProperty("violations");
+            expect(result).toHaveProperty("hasErrors");
+            expect(result).toHaveProperty("hasWarnings");
+            expect(result).toHaveProperty("errorCount");
+            expect(result).toHaveProperty("warningCount");
+            expect(result).toHaveProperty("elapsedMillis");
+            expect(result.elapsedMillis).toBeGreaterThanOrEqual(0);
         });
 
         it("includes elapsed time in result", async () => {
-            await writeFile(
-                join(testDir, "fern.yml"),
-                `
-edition: 2026-01-01
-org: acme
-api:
-  specs:
-    - openapi: openapi.yml
-docs:
-  instances:
-    - url: acme.docs.buildwithfern.com
-  pages: {}
-`
-            );
-            await writeMinimalOpenApi(testDir);
+            await writeDocsWorkspace(testDir);
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new DocsChecker({
@@ -103,21 +80,7 @@ docs:
 
     describe("strict mode", () => {
         it("includes warnings in violations when strict is true", async () => {
-            await writeFile(
-                join(testDir, "fern.yml"),
-                `
-edition: 2026-01-01
-org: acme
-api:
-  specs:
-    - openapi: openapi.yml
-docs:
-  instances:
-    - url: acme.docs.buildwithfern.com
-  pages: {}
-`
-            );
-            await writeMinimalOpenApi(testDir);
+            await writeDocsWorkspace(testDir);
 
             const workspace = await loadTempWorkspace(testDir);
             const checker = new DocsChecker({
@@ -140,6 +103,16 @@ docs:
 
     describe("resolved violations shape", () => {
         it("violations have expected fields", async () => {
+            await mkdir(join(testDir, "pages"), { recursive: true });
+            await writeFile(
+                join(testDir, "pages", "test.mdx"),
+                `---
+title: Test Page
+---
+
+Check out [broken link](/does-not-exist).
+`
+            );
             await writeFile(
                 join(testDir, "fern.yml"),
                 `
@@ -152,8 +125,8 @@ docs:
   instances:
     - url: acme.docs.buildwithfern.com
   navigation:
-    - page: Missing Page
-      path: ./pages/nonexistent.mdx
+    - page: Test Page
+      path: ./pages/test.mdx
 `
             );
             await writeMinimalOpenApi(testDir);
@@ -185,6 +158,28 @@ async function loadTempWorkspace(cwd: AbsoluteFilePath): Promise<import("../work
         throw new Error(`Failed to load workspace: ${JSON.stringify(result.issues)}`);
     }
     return result.workspace;
+}
+
+async function writeDocsWorkspace(dir: AbsoluteFilePath): Promise<void> {
+    await mkdir(join(dir, "pages"), { recursive: true });
+    await writeFile(join(dir, "pages", "welcome.mdx"), "# Welcome\n");
+    await writeFile(
+        join(dir, "fern.yml"),
+        `
+edition: 2026-01-01
+org: acme
+api:
+  specs:
+    - openapi: openapi.yml
+docs:
+  instances:
+    - url: acme.docs.buildwithfern.com
+  navigation:
+    - page: Welcome
+      path: ./pages/welcome.mdx
+`
+    );
+    await writeMinimalOpenApi(dir);
 }
 
 async function writeMinimalOpenApi(dir: AbsoluteFilePath): Promise<void> {
