@@ -524,8 +524,7 @@ export class DocsDefinitionResolver {
         const pagesWithDates = await injectLastUpdatedDates(
             this.parsedDocsConfig.pages,
             this.docsWorkspace.absoluteFilePath,
-            this.apiGeneratedPagePaths,
-            (msg) => this.taskContext.logger.warn(msg)
+            this.apiGeneratedPagePaths
         );
         for (const [relativePath, processedMarkdown] of Object.entries(pagesWithDates)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = processedMarkdown;
