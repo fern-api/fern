@@ -1,4 +1,53 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.10
+  changelogEntry:
+    - summary: |
+        Fix serialization and deserialization of boolean values in union types.
+        (Matches existing fix for floats.)
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+
+- version: 2.1.9
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+
+- version: 2.1.8
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+- version: 2.1.7
+  changelogEntry:
+    - summary: |
+        Improve error logging for README.md and reference.md generation failures.
+        The generator now logs the actual error message and stack trace instead
+        of a generic message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 62
+
+- version: 2.1.6
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
 - version: 2.1.5
   changelogEntry:
     - summary: |

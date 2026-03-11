@@ -39,6 +39,7 @@ from seed import SeedNoRetries
 client = SeedNoRetries(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.retries.get_users()
 ```
 
@@ -88,9 +89,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedNoRetries
 
-client = SeedNoRetries(
-    ...,
-)
+client = SeedNoRetries(...)
 response = client.retries.with_raw_response.get_users()
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -122,14 +121,9 @@ client.retries.get_users(request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedNoRetries
 
-client = SeedNoRetries(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedNoRetries(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.retries.get_users(request_options={

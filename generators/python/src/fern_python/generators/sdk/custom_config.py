@@ -163,6 +163,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     # "page-index": offset increments by 1 each page.
     offset_semantics: Literal["item-index", "page-index"] = "item-index"
 
+    # If true, serialize_datetime always includes millisecond precision
+    # (e.g. "2024-01-01T00:00:00.000Z" instead of "2024-01-01T00:00:00Z").
+    # Useful for APIs that require fixed-width datetime formats with fractional seconds.
+    datetime_milliseconds: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 

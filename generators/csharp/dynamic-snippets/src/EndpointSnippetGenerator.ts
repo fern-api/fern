@@ -456,7 +456,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): NamedArgument[] {
         const args: NamedArgument[] = [];
         for (const header of headers) {
-            const arg = this.getConstructorHeaderArg({ header, value: values.value });
+            const value = values[header.name.wireValue];
+            const arg = this.getConstructorHeaderArg({ header, value });
             if (arg != null) {
                 args.push({
                     name: this.context.getParameterName(header.name.name),

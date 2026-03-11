@@ -131,7 +131,10 @@ function extractLinksFromTypeInfo(typeInfo: CppTypeInfo | undefined): Map<string
         if (isTypeRef(part) && part.kindref === "compound") {
             const shortName = getShortName(part.text);
             const qualifiedName = resolveCompoundRef(part.text, part.refid);
-            links.set(shortName, buildLinkPath(qualifiedName));
+            const linkPath = buildLinkPath(qualifiedName);
+            if (linkPath) {
+                links.set(shortName, linkPath);
+            }
         }
     }
     return links;
@@ -151,7 +154,10 @@ export function buildFunctionLinks(
     // Add the owning class link
     if (ownerClass) {
         const shortName = getShortName(ownerClass.path);
-        links[shortName] = buildLinkPath(ownerClass.path);
+        const ownerLinkPath = buildLinkPath(ownerClass.path);
+        if (ownerLinkPath) {
+            links[shortName] = ownerLinkPath;
+        }
     }
 
     // Extract links from parameter types
@@ -202,7 +208,10 @@ export function buildInheritedMethodLinks(
             const shortBaseName = getShortName(baseName);
             if (!links[shortBaseName]) {
                 // URL also uses qualified name without template args
-                links[shortBaseName] = buildLinkPath(baseName);
+                const baseLinkPath = buildLinkPath(baseName);
+                if (baseLinkPath) {
+                    links[shortBaseName] = baseLinkPath;
+                }
             }
         }
     }
@@ -601,7 +610,10 @@ function extractClassTemplateLinks(cls: CppClassIr, ctx: RenderContext): Record<
 
     // Add link for the class itself
     const className = getShortName(cls.path);
-    links[className] = buildLinkPath(cls.path);
+    const classLinkPath = buildLinkPath(cls.path);
+    if (classLinkPath) {
+        links[className] = classLinkPath;
+    }
 
     // Extract links from template parameters
     for (const param of cls.templateParams) {

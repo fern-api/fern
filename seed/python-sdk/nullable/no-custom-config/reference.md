@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">get_users</a>(...) -&gt; AsyncHttpResponse[typing.List[User]]</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">get_users</a>(...) -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -18,11 +18,18 @@ from seed import SeedNullable
 client = SeedNullable(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.nullable.get_users(
-    usernames="usernames",
+    usernames=[
+        "usernames"
+    ],
     avatar="avatar",
-    activated=True,
-    tags="tags",
+    activated=[
+        True
+    ],
+    tags=[
+        "tags"
+    ],
     extra=True,
 )
 
@@ -64,7 +71,7 @@ client.nullable.get_users(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Union[str, typing.Sequence[str]]]` 
+**tags:** `typing.Optional[typing.Union[typing.Optional[str], typing.Sequence[typing.Optional[str]]]]` 
     
 </dd>
 </dl>
@@ -92,7 +99,7 @@ client.nullable.get_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">create_user</a>(...) -&gt; AsyncHttpResponse[User]</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -105,28 +112,31 @@ client.nullable.get_users(
 <dd>
 
 ```python
-import datetime
-
 from seed import SeedNullable
-from seed.nullable import Metadata, Status
+from seed.nullable import Metadata
+import datetime
 
 client = SeedNullable(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.nullable.create_user(
     username="username",
-    tags=["tags", "tags"],
+    tags=[
+        "tags",
+        "tags"
+    ],
     metadata=Metadata(
-        created_at=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
-        updated_at=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         avatar="avatar",
         activated=True,
-        status=Status(),
-        values={"values": "values"},
+        status={
+            "type": "active"
+        },
+        values={
+            "values": "values"
+        },
     ),
     avatar="avatar",
 )
@@ -153,7 +163,7 @@ client.nullable.create_user(
 <dl>
 <dd>
 
-**tags:** `typing.Optional[typing.Sequence[str]]` 
+**tags:** `typing.Optional[typing.List[str]]` 
     
 </dd>
 </dl>
@@ -189,7 +199,7 @@ client.nullable.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">delete_user</a>(...) -&gt; AsyncHttpResponse[bool]</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">delete_user</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -207,6 +217,7 @@ from seed import SeedNullable
 client = SeedNullable(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.nullable.delete_user(
     username="xy",
 )

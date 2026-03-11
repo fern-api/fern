@@ -6,5 +6,6 @@
     "linter": "none",
     "formatter": "none"
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

@@ -8,7 +8,7 @@ exports[`TypeInstantiation > bytes 1`] = `"b"world""`;
 
 exports[`TypeInstantiation > dict > should correctly write a dict with primitives 1`] = `"{"one": 1, "two": True}"`;
 
-exports[`TypeInstantiation > dict > should correctly write a dict with references 1`] = `"{"one": MyClass, "two": UUID("abc")}"`;
+exports[`TypeInstantiation > dict > should correctly write a dict with references 1`] = `"{"one": MyClass, "two": uuid.UUID("abc")}"`;
 
 exports[`TypeInstantiation > dict > should support trailing comma 1`] = `"{"one": 1, "two": True,}"`;
 
@@ -54,4 +54,4 @@ exports[`TypeInstantiation > tuple > should handle single-element tuple 1`] = `"
 
 exports[`TypeInstantiation > tuple > should support trailing comma 1`] = `"(1, "two", True,)"`;
 
-exports[`TypeInstantiation > uuid 1`] = `"UUID("123e4567-e89b-12d3-a456-426614174000")"`;
+exports[`TypeInstantiation > uuid 1`] = `"uuid.UUID("123e4567-e89b-12d3-a456-426614174000")"`;

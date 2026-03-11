@@ -165,7 +165,9 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
             const displayText = bc.typeInfo?.display ?? bc.name;
             if (bc.typeInfo?.resolvedPath) {
                 const linkUrl = buildLinkPath(stripTemplateArgs(bc.typeInfo.resolvedPath));
-                return `[\`${displayText}\`](${linkUrl}) ${access}`;
+                if (linkUrl) {
+                    return `[\`${displayText}\`](${linkUrl}) ${access}`;
+                }
             }
             // No resolved path -- render as plain inline code (no broken link)
             return `\`${displayText}\` ${access}`;

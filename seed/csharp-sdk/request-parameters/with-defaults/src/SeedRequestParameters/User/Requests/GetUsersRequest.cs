@@ -52,7 +52,7 @@ public record GetUsersRequest
     public required long LongParam { get; set; }
 
     [JsonIgnore]
-    public required string BigIntParam { get; set; }
+    public string BigIntParam { get; set; } = "18446744073709551615";
 
     /// <inheritdoc />
     public override string ToString()

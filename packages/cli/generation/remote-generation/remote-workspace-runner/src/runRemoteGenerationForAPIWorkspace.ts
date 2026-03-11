@@ -12,6 +12,7 @@ import {
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask.js";
+import { resolveAutoDiscoveredFernignorePath } from "./resolveAutoDiscoveredFernignorePath.js";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator.js";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
@@ -79,6 +80,15 @@ export async function runRemoteGenerationForAPIWorkspace({
                     });
                 }
 
+                // Auto-discover .fernignore from the generator's local output directory
+                // if not explicitly provided via --fernignore
+                const effectiveFernignorePath =
+                    fernignorePath ??
+                    (await resolveAutoDiscoveredFernignorePath({
+                        generatorInvocation,
+                        context: interactiveTaskContext
+                    }));
+
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
                     organization,
@@ -115,7 +125,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     readme: generatorInvocation.readme,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview,
-                    fernignorePath,
+                    fernignorePath: effectiveFernignorePath,
                     dynamicIrOnly,
                     retryRateLimited
                 });
