@@ -244,13 +244,12 @@ export class Wizard {
 
                 case "not-found": {
                     const taskContext = new TaskContextAdapter({ context: this.context });
-                    const created = await withSpinner("Creating organization...", () =>
-                        createOrganizationIfDoesNotExist({
-                            organization,
-                            token,
-                            context: taskContext
-                        })
-                    );
+                    const created = await withSpinner({
+                        message: `Creating organization "${organization}"`,
+                        operation: () =>
+                            createOrganizationIfDoesNotExist({ organization, token, context: taskContext }),
+                        indent: 2
+                    });
                     if (created) {
                         this.context.stderr.info(`  ${Icons.success} Created organization "${organization}"\n`);
                     }

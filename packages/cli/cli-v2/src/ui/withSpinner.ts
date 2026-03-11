@@ -1,9 +1,17 @@
 import ora from "ora";
 
-export async function withSpinner<T>(message: string, operation: () => Promise<T>): Promise<T> {
+export async function withSpinner<T>({
+    message,
+    operation,
+    indent
+}: {
+    message: string;
+    operation: () => Promise<T>;
+    indent?: number;
+}): Promise<T> {
     const spinner = ora({
         text: message,
-        indent: 2,
+        indent: indent ?? 0,
         color: "cyan"
     }).start();
     try {

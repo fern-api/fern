@@ -64,6 +64,7 @@ export class PublishCommand {
 
         const ossWorkspaces = await filterOssWorkspaces(project);
         const token = await this.getToken(context);
+        await context.verifyOrgAccess({ organization: workspace.org, token });
 
         const taskGroup = await this.setupTaskGroup({ context, instanceUrl, org: workspace.org });
         const docsTask = taskGroup.getTask("publish");
