@@ -1,5 +1,6 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractPythonGeneratorCli } from "@fern-api/python-base";
 import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
@@ -64,11 +65,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
             try {
                 await this.generateReadme({ context, endpointSnippets });
             } catch (error) {
-                context.logger.error("Failed to generate README.md");
-                if (error instanceof Error) {
-                    context.logger.debug(error.message);
-                    context.logger.debug(error.stack ?? "");
-                }
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(error)}`);
             }
         }
 
@@ -76,11 +73,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
         try {
             await this.generateReference({ context, endpointSnippets });
         } catch (error) {
-            context.logger.warn("Failed to generate reference.md, this is OK.");
-            if (error instanceof Error) {
-                context.logger.debug(error.message);
-                context.logger.debug(error.stack ?? "");
-            }
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
 
         await context.project.persist();

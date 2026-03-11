@@ -522,6 +522,9 @@ function getRequest({
         // When respectReadonlySchemas is enabled and the schema has readOnly properties on a write endpoint,
         // inline the properties so readOnly ones can be filtered out
         let shouldInlineForReadonly = false;
+        // When the request schema is a $ref wrapper (e.g., UpdateOrgDetailsRequest -> OrgDetails),
+        // track the wrapper's name so we can use it instead of the underlying schema's name
+        let readonlyWrapperSchemaName: string | undefined;
         if (context.options.respectReadonlySchemas && isWriteMethod(endpoint.method)) {
             let effectiveSchema = resolvedSchema;
             while (effectiveSchema?.type === "reference") {
@@ -529,6 +532,11 @@ function getRequest({
             }
             if (effectiveSchema?.type === "object" && effectiveSchema.properties.some((p) => p.readonly)) {
                 shouldInlineForReadonly = true;
+                // If the resolved schema was a $ref wrapper pointing to the object with readonly props,
+                // preserve the wrapper's name for the request type
+                if (resolvedSchema?.type === "reference") {
+                    readonlyWrapperSchemaName = resolvedSchema.nameOverride ?? resolvedSchema.generatedName;
+                }
                 resolvedSchema = effectiveSchema;
             }
         }
@@ -767,7 +775,11 @@ function getRequest({
         }
 
         const convertedRequestValue: RawSchemas.HttpRequestSchema = {
-            name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
+            name:
+                requestNameOverride ??
+                readonlyWrapperSchemaName ??
+                resolvedSchema.nameOverride ??
+                resolvedSchema.generatedName,
             "path-parameters": pathParameters,
             "query-parameters": queryParameters,
             headers,
@@ -780,7 +792,10 @@ function getRequest({
             convertedRequestValue.docs = request.description;
         }
         return {
-            schemaIdsToExclude: maybeSchemaId != null && !shouldInlineForReadonly ? [maybeSchemaId] : [],
+            schemaIdsToExclude:
+                maybeSchemaId != null && (!shouldInlineForReadonly || readonlyWrapperSchemaName != null)
+                    ? [maybeSchemaId]
+                    : [],
             value: convertedRequestValue
         };
     } else if (request.type === "octetStream") {

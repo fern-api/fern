@@ -8,10 +8,12 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from .types.execution_session_response import ExecutionSessionResponse
 from .types.get_execution_session_state_response import GetExecutionSessionStateResponse
+from pydantic import ValidationError
 
 
 class RawSubmissionClient:
@@ -44,15 +46,24 @@ class RawSubmissionClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        if 200 <= _response.status_code < 300:
-            _data = typing.cast(
-                ExecutionSessionResponse,
-                parse_obj_as(
-                    type_=ExecutionSessionResponse,  # type: ignore
-                    object_=_response_json,
-                ),
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-            return HttpResponse(response=_response, data=_data)
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    ExecutionSessionResponse,
+                    parse_obj_as(
+                        type_=ExecutionSessionResponse,  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_execution_session(
@@ -81,15 +92,24 @@ class RawSubmissionClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        if 200 <= _response.status_code < 300:
-            _data = typing.cast(
-                typing.Optional[ExecutionSessionResponse],
-                parse_obj_as(
-                    type_=typing.Optional[ExecutionSessionResponse],  # type: ignore
-                    object_=_response_json,
-                ),
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-            return HttpResponse(response=_response, data=_data)
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    typing.Optional[ExecutionSessionResponse],
+                    parse_obj_as(
+                        type_=typing.Optional[ExecutionSessionResponse],  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def stop_execution_session(
@@ -120,6 +140,10 @@ class RawSubmissionClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get_execution_sessions_state(
@@ -144,15 +168,24 @@ class RawSubmissionClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        if 200 <= _response.status_code < 300:
-            _data = typing.cast(
-                GetExecutionSessionStateResponse,
-                parse_obj_as(
-                    type_=GetExecutionSessionStateResponse,  # type: ignore
-                    object_=_response_json,
-                ),
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-            return HttpResponse(response=_response, data=_data)
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    GetExecutionSessionStateResponse,
+                    parse_obj_as(
+                        type_=GetExecutionSessionStateResponse,  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -186,15 +219,24 @@ class AsyncRawSubmissionClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        if 200 <= _response.status_code < 300:
-            _data = typing.cast(
-                ExecutionSessionResponse,
-                parse_obj_as(
-                    type_=ExecutionSessionResponse,  # type: ignore
-                    object_=_response_json,
-                ),
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-            return AsyncHttpResponse(response=_response, data=_data)
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    ExecutionSessionResponse,
+                    parse_obj_as(
+                        type_=ExecutionSessionResponse,  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_execution_session(
@@ -223,15 +265,24 @@ class AsyncRawSubmissionClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        if 200 <= _response.status_code < 300:
-            _data = typing.cast(
-                typing.Optional[ExecutionSessionResponse],
-                parse_obj_as(
-                    type_=typing.Optional[ExecutionSessionResponse],  # type: ignore
-                    object_=_response_json,
-                ),
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-            return AsyncHttpResponse(response=_response, data=_data)
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    typing.Optional[ExecutionSessionResponse],
+                    parse_obj_as(
+                        type_=typing.Optional[ExecutionSessionResponse],  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def stop_execution_session(
@@ -262,6 +313,10 @@ class AsyncRawSubmissionClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get_execution_sessions_state(
@@ -286,13 +341,22 @@ class AsyncRawSubmissionClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        if 200 <= _response.status_code < 300:
-            _data = typing.cast(
-                GetExecutionSessionStateResponse,
-                parse_obj_as(
-                    type_=GetExecutionSessionStateResponse,  # type: ignore
-                    object_=_response_json,
-                ),
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
-            return AsyncHttpResponse(response=_response, data=_data)
+        if 200 <= _response.status_code < 300:
+            try:
+                _data = typing.cast(
+                    GetExecutionSessionStateResponse,
+                    parse_obj_as(
+                        type_=GetExecutionSessionStateResponse,  # type: ignore
+                        object_=_response_json,
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            except ValidationError as e:
+                raise ParsingError(
+                    status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+                )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

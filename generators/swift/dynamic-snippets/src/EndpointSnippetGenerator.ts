@@ -118,6 +118,11 @@ export class EndpointSnippetGenerator {
         }
         const authArgs = auth ? this.getRootClientAuthArgs({ auth, snippet }) : [];
         rootClientArgs.push(...authArgs);
+        if (this.context.ir.headers != null && snippet.headers != null) {
+            rootClientArgs.push(
+                ...this.getRootClientHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers })
+            );
+        }
         rootClientArgs.push(...additionalArgs);
         const nonNopRootClientArgs = rootClientArgs.filter((arg) => !arg.value.isNop());
         const rootClientSymbol = this.context.nameRegistry.getRootClientSymbolOrThrow();
@@ -128,6 +133,53 @@ export class EndpointSnippetGenerator {
                 arguments_: nonNopRootClientArgs,
                 multiline: nonNopRootClientArgs.length > 1 ? true : undefined
             })
+        });
+    }
+
+    private getRootClientHeaderArgs({
+        headers,
+        values
+    }: {
+        headers: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
+    }): swift.FunctionArgument[] {
+        const moduleSymbol = this.context.nameRegistry.getRegisteredSourceModuleSymbolOrThrow();
+        const args: swift.FunctionArgument[] = [];
+        for (const header of headers) {
+            const value = values[header.name.wireValue];
+            const arg = this.getRootClientHeaderArg({ moduleSymbol, header, value });
+            if (arg != null) {
+                args.push(arg);
+            }
+        }
+        return args;
+    }
+
+    private getRootClientHeaderArg({
+        moduleSymbol,
+        header,
+        value
+    }: {
+        moduleSymbol: swift.Symbol;
+        header: FernIr.dynamic.NamedParameter;
+        value: unknown;
+    }): swift.FunctionArgument | undefined {
+        if (header.typeReference.type === "literal") {
+            // Literal header values (e.g. "X-API-Version") are set automatically
+            // by the SDK and should not be included in the client constructor.
+            return undefined;
+        }
+        const expression = this.context.dynamicTypeLiteralMapper.convert({
+            fromSymbol: moduleSymbol,
+            typeReference: header.typeReference,
+            value
+        });
+        if (expression.isNop()) {
+            return undefined;
+        }
+        return swift.functionArgument({
+            label: header.name.name.camelCase.unsafeName,
+            value: expression
         });
     }
 

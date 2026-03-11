@@ -70,7 +70,7 @@ export class CheckCommand {
             context,
             cliVersion: workspace.cliVersion
         });
-        const apiCheckResult = await apiChecker.check({ workspace });
+        const apiCheckResult = await apiChecker.check({ workspace, strict: args.strict });
 
         const sdkChecker = new SdkChecker({ context });
         const sdkCheckResult = await sdkChecker.check({ workspace });
@@ -90,10 +90,17 @@ export class CheckCommand {
     }
 
     private displayViolations(
-        violations: Array<{ displayRelativeFilepath: string; line: number; column: number; message: string }>
+        violations: Array<{
+            displayRelativeFilepath: string;
+            line: number;
+            column: number;
+            message: string;
+            severity: string;
+        }>
     ): void {
         for (const v of violations) {
-            process.stderr.write(`${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`);
+            const color = v.severity === "warning" ? chalk.yellow : chalk.red;
+            process.stderr.write(`${color(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`);
         }
     }
 

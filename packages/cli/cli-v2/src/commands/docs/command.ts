@@ -2,7 +2,11 @@ import type { Argv } from "yargs";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
 import { commandGroup } from "../_internal/commandGroup.js";
 import { addDevCommand } from "./dev/index.js";
+import { addPublishCommand } from "./publish/index.js";
 
 export function addDocsCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "docs", "Manage documentation", [addDevCommand]);
+    commandGroup(cli, "docs", "Configure, edit, preview, and publish your documentation.", [
+        addDevCommand,
+        addPublishCommand
+    ]);
 }

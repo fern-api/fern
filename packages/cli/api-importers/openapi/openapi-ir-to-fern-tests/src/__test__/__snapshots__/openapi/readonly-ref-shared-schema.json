@@ -70,7 +70,7 @@
                 },
                 "content-type": "application/json",
                 "headers": undefined,
-                "name": "OrgDetails",
+                "name": "UpdateOrgDetailsRequest",
                 "path-parameters": undefined,
                 "query-parameters": undefined,
               },
@@ -121,7 +121,6 @@
               "pattern": "^org_[A-Za-z0-9]{16}$",
             },
           },
-          "UpdateOrgDetailsRequest": "OrgDetailsRead",
           "UpdateOrgDetailsResponse": "OrgDetailsRead",
         },
       },
@@ -152,7 +151,7 @@
         openapi: ../openapi.yml
       display-name: Update organization details
       request:
-        name: OrgDetails
+        name: UpdateOrgDetailsRequest
         body:
           properties:
             name:
@@ -195,7 +194,6 @@ types:
     source:
       openapi: ../openapi.yml
   GetOrgDetailsResponse: OrgDetailsRead
-  UpdateOrgDetailsRequest: OrgDetailsRead
   UpdateOrgDetailsResponse: OrgDetailsRead
 ",
     },

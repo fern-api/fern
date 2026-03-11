@@ -8,7 +8,7 @@ private func main() async throws {
     )
 
     _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
-        .init(
+        Dog(
             name: "name",
             likesToWoof: true
         )
