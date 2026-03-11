@@ -507,9 +507,6 @@ catalogs:
     semver-diff:
       specifier: ^4.0.0
       version: 4.0.0
-    simple-git:
-      specifier: ^3.32.3
-      version: 3.33.0
     sort-package-json:
       specifier: 3.6.1
       version: 3.6.1
@@ -623,6 +620,7 @@ overrides:
   ts-essentials: ^10.1.1
   form-data: ^4.0.4
   '@fern-api/ui-core-utils': 0.145.12-b50d999d1
+  simple-git: '>=3.32.3'
 
 importers:
 
@@ -7774,7 +7772,7 @@ importers:
         specifier: ^4.1.4
         version: 4.1.4
       simple-git:
-        specifier: 'catalog:'
+        specifier: '>=3.32.3'
         version: 3.33.0
       tmp-promise:
         specifier: 'catalog:'
@@ -13772,9 +13770,6 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
-  simple-git@3.30.0:
-    resolution: {integrity: sha512-q6lxyDsCmEal/MEGhP1aVyQ3oxnagGlBDOVSIB4XUVLl1iZh0Pah6ebC9V4xBap/RfgP2WlI8EKs0WS0rMEJHg==}
-
   simple-git@3.33.0:
     resolution: {integrity: sha512-D4V/tGC2sjsoNhoMybKyGoE+v8A60hRawKQ1iFRA1zwuDgGZCBJ4ByOzZ5J8joBbi4Oam0qiPH+GhzmSBwbJng==}
 
@@ -16019,7 +16014,7 @@ snapshots:
     dependencies:
       minimatch: 10.2.4
       node-diff3: 3.2.0
-      simple-git: 3.30.0
+      simple-git: 3.33.0
       yaml: 2.3.3
     transitivePeerDependencies:
       - supports-color
@@ -16028,7 +16023,7 @@ snapshots:
     dependencies:
       minimatch: 10.2.4
       node-diff3: 3.2.0
-      simple-git: 3.30.0
+      simple-git: 3.33.0
       yaml: 2.3.3
     transitivePeerDependencies:
       - supports-color
@@ -20961,14 +20956,6 @@ snapshots:
   signal-exit@3.0.7: {}
 
   signal-exit@4.1.0: {}
-
-  simple-git@3.30.0:
-    dependencies:
-      '@kwsites/file-exists': 1.1.1
-      '@kwsites/promise-deferred': 1.1.1
-      debug: 4.4.3
-    transitivePeerDependencies:
-      - supports-color
 
   simple-git@3.33.0:
     dependencies:
