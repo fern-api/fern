@@ -305,7 +305,7 @@ describe("GeneratedAliasTypeImpl", () => {
                 typeName: "TypeId",
                 aliasOf: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                 docs: "An alias for type IDs.",
-                examples: [{ shape: exampleShape, docs: undefined }]
+                examples: [{ shape: exampleShape, docs: undefined, name: undefined, jsonExample: "type-kaljhv87" }]
             });
 
             const output = serializeStatements(generator);
@@ -574,7 +574,7 @@ describe("GeneratedBrandedStringAliasImpl", () => {
             const generator = createBrandedGenerator({
                 typeName: "UserId",
                 docs: "A unique user identifier.",
-                examples: [{ shape: exampleShape, docs: undefined }]
+                examples: [{ shape: exampleShape, docs: undefined, name: undefined, jsonExample: "user-abc123" }]
             });
 
             const output = serializeStatements(generator);
