@@ -31,32 +31,50 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "CLASSIFICATION_LEVELS_INVALID",
+            "name": {
+              "name": "CLASSIFICATION_LEVELS_INVALID",
+              "wireValue": "CLASSIFICATION_LEVELS_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CLASSIFICATION_LEVELS_UNCLASSIFIED",
+            "name": {
+              "name": "CLASSIFICATION_LEVELS_UNCLASSIFIED",
+              "wireValue": "CLASSIFICATION_LEVELS_UNCLASSIFIED"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CLASSIFICATION_LEVELS_CONTROLLED_UNCLASSIFIED",
+            "name": {
+              "name": "CLASSIFICATION_LEVELS_CONTROLLED_UNCLASSIFIED",
+              "wireValue": "CLASSIFICATION_LEVELS_CONTROLLED_UNCLASSIFIED"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CLASSIFICATION_LEVELS_CONFIDENTIAL",
+            "name": {
+              "name": "CLASSIFICATION_LEVELS_CONFIDENTIAL",
+              "wireValue": "CLASSIFICATION_LEVELS_CONFIDENTIAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CLASSIFICATION_LEVELS_SECRET",
+            "name": {
+              "name": "CLASSIFICATION_LEVELS_SECRET",
+              "wireValue": "CLASSIFICATION_LEVELS_SECRET"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CLASSIFICATION_LEVELS_TOP_SECRET",
+            "name": {
+              "name": "CLASSIFICATION_LEVELS_TOP_SECRET",
+              "wireValue": "CLASSIFICATION_LEVELS_TOP_SECRET"
+            },
             "availability": null,
             "docs": null
           }
@@ -496,37 +514,58 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "ALTITUDE_REFERENCE_INVALID",
+            "name": {
+              "name": "ALTITUDE_REFERENCE_INVALID",
+              "wireValue": "ALTITUDE_REFERENCE_INVALID"
+            },
             "availability": null,
             "docs": "Depending on the context its possible INVALID just means that it is\\n clear from the context (e.g. this is LLA is named lla_hae).\\n This also might mean AGL which would depend on what height map you are\\n using."
           },
           {
-            "name": "ALTITUDE_REFERENCE_HEIGHT_ABOVE_WGS84",
+            "name": {
+              "name": "ALTITUDE_REFERENCE_HEIGHT_ABOVE_WGS84",
+              "wireValue": "ALTITUDE_REFERENCE_HEIGHT_ABOVE_WGS84"
+            },
             "availability": null,
             "docs": "commonly called height above ellipsoid (HAE)"
           },
           {
-            "name": "ALTITUDE_REFERENCE_HEIGHT_ABOVE_EGM96",
+            "name": {
+              "name": "ALTITUDE_REFERENCE_HEIGHT_ABOVE_EGM96",
+              "wireValue": "ALTITUDE_REFERENCE_HEIGHT_ABOVE_EGM96"
+            },
             "availability": null,
             "docs": "commonly called mean sea level (MSL)"
           },
           {
-            "name": "ALTITUDE_REFERENCE_UNKNOWN",
+            "name": {
+              "name": "ALTITUDE_REFERENCE_UNKNOWN",
+              "wireValue": "ALTITUDE_REFERENCE_UNKNOWN"
+            },
             "availability": null,
             "docs": "Publishing an altitude with an unkown reference"
           },
           {
-            "name": "ALTITUDE_REFERENCE_BAROMETRIC",
+            "name": {
+              "name": "ALTITUDE_REFERENCE_BAROMETRIC",
+              "wireValue": "ALTITUDE_REFERENCE_BAROMETRIC"
+            },
             "availability": null,
             "docs": "ADSB sometimes published barometrically-measured alt"
           },
           {
-            "name": "ALTITUDE_REFERENCE_ABOVE_SEA_FLOOR",
+            "name": {
+              "name": "ALTITUDE_REFERENCE_ABOVE_SEA_FLOOR",
+              "wireValue": "ALTITUDE_REFERENCE_ABOVE_SEA_FLOOR"
+            },
             "availability": null,
             "docs": "Positive distance above sea floor (ASF) at a specific lat/lon"
           },
           {
-            "name": "ALTITUDE_REFERENCE_BELOW_SEA_SURFACE",
+            "name": {
+              "name": "ALTITUDE_REFERENCE_BELOW_SEA_SURFACE",
+              "wireValue": "ALTITUDE_REFERENCE_BELOW_SEA_SURFACE"
+            },
             "availability": null,
             "docs": "Positive distance below surface at a specific lat/lon"
           }
@@ -4163,37 +4202,58 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "GEO_TYPE_INVALID",
+            "name": {
+              "name": "GEO_TYPE_INVALID",
+              "wireValue": "GEO_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "GEO_TYPE_GENERAL",
+            "name": {
+              "name": "GEO_TYPE_GENERAL",
+              "wireValue": "GEO_TYPE_GENERAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "GEO_TYPE_HAZARD",
+            "name": {
+              "name": "GEO_TYPE_HAZARD",
+              "wireValue": "GEO_TYPE_HAZARD"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "GEO_TYPE_EMERGENCY",
+            "name": {
+              "name": "GEO_TYPE_EMERGENCY",
+              "wireValue": "GEO_TYPE_EMERGENCY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "GEO_TYPE_ENGAGEMENT_ZONE",
+            "name": {
+              "name": "GEO_TYPE_ENGAGEMENT_ZONE",
+              "wireValue": "GEO_TYPE_ENGAGEMENT_ZONE"
+            },
             "availability": null,
             "docs": "Engagement zones allow for engaging an entity if it comes within the zone of another entity."
           },
           {
-            "name": "GEO_TYPE_CONTROL_AREA",
+            "name": {
+              "name": "GEO_TYPE_CONTROL_AREA",
+              "wireValue": "GEO_TYPE_CONTROL_AREA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "GEO_TYPE_BULLSEYE",
+            "name": {
+              "name": "GEO_TYPE_BULLSEYE",
+              "wireValue": "GEO_TYPE_BULLSEYE"
+            },
             "availability": null,
             "docs": null
           }
@@ -5065,57 +5125,90 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "ARMY_ECHELON_INVALID",
+            "name": {
+              "name": "ARMY_ECHELON_INVALID",
+              "wireValue": "ARMY_ECHELON_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ARMY_ECHELON_FIRE_TEAM",
+            "name": {
+              "name": "ARMY_ECHELON_FIRE_TEAM",
+              "wireValue": "ARMY_ECHELON_FIRE_TEAM"
+            },
             "availability": null,
             "docs": "Smallest unit group, e.g., a few soldiers"
           },
           {
-            "name": "ARMY_ECHELON_SQUAD",
+            "name": {
+              "name": "ARMY_ECHELON_SQUAD",
+              "wireValue": "ARMY_ECHELON_SQUAD"
+            },
             "availability": null,
             "docs": "E.g., a group of fire teams"
           },
           {
-            "name": "ARMY_ECHELON_PLATOON",
+            "name": {
+              "name": "ARMY_ECHELON_PLATOON",
+              "wireValue": "ARMY_ECHELON_PLATOON"
+            },
             "availability": null,
             "docs": "E.g., several squads"
           },
           {
-            "name": "ARMY_ECHELON_COMPANY",
+            "name": {
+              "name": "ARMY_ECHELON_COMPANY",
+              "wireValue": "ARMY_ECHELON_COMPANY"
+            },
             "availability": null,
             "docs": "E.g., several platoons"
           },
           {
-            "name": "ARMY_ECHELON_BATTALION",
+            "name": {
+              "name": "ARMY_ECHELON_BATTALION",
+              "wireValue": "ARMY_ECHELON_BATTALION"
+            },
             "availability": null,
             "docs": "E.g., several companies"
           },
           {
-            "name": "ARMY_ECHELON_REGIMENT",
+            "name": {
+              "name": "ARMY_ECHELON_REGIMENT",
+              "wireValue": "ARMY_ECHELON_REGIMENT"
+            },
             "availability": null,
             "docs": "E.g., several battalions"
           },
           {
-            "name": "ARMY_ECHELON_BRIGADE",
+            "name": {
+              "name": "ARMY_ECHELON_BRIGADE",
+              "wireValue": "ARMY_ECHELON_BRIGADE"
+            },
             "availability": null,
             "docs": "E.g., several regiments or battalions"
           },
           {
-            "name": "ARMY_ECHELON_DIVISION",
+            "name": {
+              "name": "ARMY_ECHELON_DIVISION",
+              "wireValue": "ARMY_ECHELON_DIVISION"
+            },
             "availability": null,
             "docs": "E.g., several brigades"
           },
           {
-            "name": "ARMY_ECHELON_CORPS",
+            "name": {
+              "name": "ARMY_ECHELON_CORPS",
+              "wireValue": "ARMY_ECHELON_CORPS"
+            },
             "availability": null,
             "docs": "E.g., several divisions"
           },
           {
-            "name": "ARMY_ECHELON_ARMY",
+            "name": {
+              "name": "ARMY_ECHELON_ARMY",
+              "wireValue": "ARMY_ECHELON_ARMY"
+            },
             "availability": null,
             "docs": "E.g., several corps"
           }
@@ -5468,17 +5561,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "CONNECTION_STATUS_INVALID",
+            "name": {
+              "name": "CONNECTION_STATUS_INVALID",
+              "wireValue": "CONNECTION_STATUS_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CONNECTION_STATUS_ONLINE",
+            "name": {
+              "name": "CONNECTION_STATUS_ONLINE",
+              "wireValue": "CONNECTION_STATUS_ONLINE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CONNECTION_STATUS_OFFLINE",
+            "name": {
+              "name": "CONNECTION_STATUS_OFFLINE",
+              "wireValue": "CONNECTION_STATUS_OFFLINE"
+            },
             "availability": null,
             "docs": null
           }
@@ -5510,32 +5612,50 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "HEALTH_STATUS_INVALID",
+            "name": {
+              "name": "HEALTH_STATUS_INVALID",
+              "wireValue": "HEALTH_STATUS_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "HEALTH_STATUS_HEALTHY",
+            "name": {
+              "name": "HEALTH_STATUS_HEALTHY",
+              "wireValue": "HEALTH_STATUS_HEALTHY"
+            },
             "availability": null,
             "docs": "Indicates that the component is operating as intended."
           },
           {
-            "name": "HEALTH_STATUS_WARN",
+            "name": {
+              "name": "HEALTH_STATUS_WARN",
+              "wireValue": "HEALTH_STATUS_WARN"
+            },
             "availability": null,
             "docs": "Indicates that the component is at risk of transitioning into a HEALTH_STATUS_FAIL\\n state or that the component is operating in a degraded state."
           },
           {
-            "name": "HEALTH_STATUS_FAIL",
+            "name": {
+              "name": "HEALTH_STATUS_FAIL",
+              "wireValue": "HEALTH_STATUS_FAIL"
+            },
             "availability": null,
             "docs": "Indicates that the component is not functioning as intended."
           },
           {
-            "name": "HEALTH_STATUS_OFFLINE",
+            "name": {
+              "name": "HEALTH_STATUS_OFFLINE",
+              "wireValue": "HEALTH_STATUS_OFFLINE"
+            },
             "availability": null,
             "docs": "Indicates that the component is offline."
           },
           {
-            "name": "HEALTH_STATUS_NOT_READY",
+            "name": {
+              "name": "HEALTH_STATUS_NOT_READY",
+              "wireValue": "HEALTH_STATUS_NOT_READY"
+            },
             "availability": null,
             "docs": "Indicates that the component is not yet functioning, but it is transitioning into a\\n HEALTH_STATUS_HEALTHY state. A component should only report this state temporarily."
           }
@@ -5567,22 +5687,34 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "ALERT_LEVEL_INVALID",
+            "name": {
+              "name": "ALERT_LEVEL_INVALID",
+              "wireValue": "ALERT_LEVEL_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ALERT_LEVEL_ADVISORY",
+            "name": {
+              "name": "ALERT_LEVEL_ADVISORY",
+              "wireValue": "ALERT_LEVEL_ADVISORY"
+            },
             "availability": null,
             "docs": "For conditions that require awareness and may require subsequent response."
           },
           {
-            "name": "ALERT_LEVEL_CAUTION",
+            "name": {
+              "name": "ALERT_LEVEL_CAUTION",
+              "wireValue": "ALERT_LEVEL_CAUTION"
+            },
             "availability": null,
             "docs": "For conditions that require immediate awareness and subsequent response."
           },
           {
-            "name": "ALERT_LEVEL_WARNING",
+            "name": {
+              "name": "ALERT_LEVEL_WARNING",
+              "wireValue": "ALERT_LEVEL_WARNING"
+            },
             "availability": null,
             "docs": "For conditions that require immediate awareness and response."
           }
@@ -6302,62 +6434,98 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "EDITION_UNKNOWN",
+            "name": {
+              "name": "EDITION_UNKNOWN",
+              "wireValue": "EDITION_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_LEGACY",
+            "name": {
+              "name": "EDITION_LEGACY",
+              "wireValue": "EDITION_LEGACY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_PROTO2",
+            "name": {
+              "name": "EDITION_PROTO2",
+              "wireValue": "EDITION_PROTO2"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_PROTO3",
+            "name": {
+              "name": "EDITION_PROTO3",
+              "wireValue": "EDITION_PROTO3"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_2023",
+            "name": {
+              "name": "EDITION_2023",
+              "wireValue": "EDITION_2023"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_2024",
+            "name": {
+              "name": "EDITION_2024",
+              "wireValue": "EDITION_2024"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_1_TEST_ONLY",
+            "name": {
+              "name": "EDITION_1_TEST_ONLY",
+              "wireValue": "EDITION_1_TEST_ONLY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_2_TEST_ONLY",
+            "name": {
+              "name": "EDITION_2_TEST_ONLY",
+              "wireValue": "EDITION_2_TEST_ONLY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_99997_TEST_ONLY",
+            "name": {
+              "name": "EDITION_99997_TEST_ONLY",
+              "wireValue": "EDITION_99997_TEST_ONLY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_99998_TEST_ONLY",
+            "name": {
+              "name": "EDITION_99998_TEST_ONLY",
+              "wireValue": "EDITION_99998_TEST_ONLY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_99999_TEST_ONLY",
+            "name": {
+              "name": "EDITION_99999_TEST_ONLY",
+              "wireValue": "EDITION_99999_TEST_ONLY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EDITION_MAX",
+            "name": {
+              "name": "EDITION_MAX",
+              "wireValue": "EDITION_MAX"
+            },
             "availability": null,
             "docs": null
           }
@@ -7621,12 +7789,18 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "DECLARATION",
+            "name": {
+              "name": "DECLARATION",
+              "wireValue": "DECLARATION"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "UNVERIFIED",
+            "name": {
+              "name": "UNVERIFIED",
+              "wireValue": "UNVERIFIED"
+            },
             "availability": null,
             "docs": null
           }
@@ -7818,92 +7992,146 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "TYPE_DOUBLE",
+            "name": {
+              "name": "TYPE_DOUBLE",
+              "wireValue": "TYPE_DOUBLE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_FLOAT",
+            "name": {
+              "name": "TYPE_FLOAT",
+              "wireValue": "TYPE_FLOAT"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_INT64",
+            "name": {
+              "name": "TYPE_INT64",
+              "wireValue": "TYPE_INT64"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_UINT64",
+            "name": {
+              "name": "TYPE_UINT64",
+              "wireValue": "TYPE_UINT64"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_INT32",
+            "name": {
+              "name": "TYPE_INT32",
+              "wireValue": "TYPE_INT32"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_FIXED64",
+            "name": {
+              "name": "TYPE_FIXED64",
+              "wireValue": "TYPE_FIXED64"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_FIXED32",
+            "name": {
+              "name": "TYPE_FIXED32",
+              "wireValue": "TYPE_FIXED32"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_BOOL",
+            "name": {
+              "name": "TYPE_BOOL",
+              "wireValue": "TYPE_BOOL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_STRING",
+            "name": {
+              "name": "TYPE_STRING",
+              "wireValue": "TYPE_STRING"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_GROUP",
+            "name": {
+              "name": "TYPE_GROUP",
+              "wireValue": "TYPE_GROUP"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_MESSAGE",
+            "name": {
+              "name": "TYPE_MESSAGE",
+              "wireValue": "TYPE_MESSAGE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_BYTES",
+            "name": {
+              "name": "TYPE_BYTES",
+              "wireValue": "TYPE_BYTES"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_UINT32",
+            "name": {
+              "name": "TYPE_UINT32",
+              "wireValue": "TYPE_UINT32"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_ENUM",
+            "name": {
+              "name": "TYPE_ENUM",
+              "wireValue": "TYPE_ENUM"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_SFIXED32",
+            "name": {
+              "name": "TYPE_SFIXED32",
+              "wireValue": "TYPE_SFIXED32"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_SFIXED64",
+            "name": {
+              "name": "TYPE_SFIXED64",
+              "wireValue": "TYPE_SFIXED64"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_SINT32",
+            "name": {
+              "name": "TYPE_SINT32",
+              "wireValue": "TYPE_SINT32"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TYPE_SINT64",
+            "name": {
+              "name": "TYPE_SINT64",
+              "wireValue": "TYPE_SINT64"
+            },
             "availability": null,
             "docs": null
           }
@@ -7935,17 +8163,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "LABEL_OPTIONAL",
+            "name": {
+              "name": "LABEL_OPTIONAL",
+              "wireValue": "LABEL_OPTIONAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "LABEL_REPEATED",
+            "name": {
+              "name": "LABEL_REPEATED",
+              "wireValue": "LABEL_REPEATED"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "LABEL_REQUIRED",
+            "name": {
+              "name": "LABEL_REQUIRED",
+              "wireValue": "LABEL_REQUIRED"
+            },
             "availability": null,
             "docs": null
           }
@@ -9036,17 +9273,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "SPEED",
+            "name": {
+              "name": "SPEED",
+              "wireValue": "SPEED"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CODE_SIZE",
+            "name": {
+              "name": "CODE_SIZE",
+              "wireValue": "CODE_SIZE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "LITE_RUNTIME",
+            "name": {
+              "name": "LITE_RUNTIME",
+              "wireValue": "LITE_RUNTIME"
+            },
             "availability": null,
             "docs": null
           }
@@ -10057,17 +10303,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "STRING",
+            "name": {
+              "name": "STRING",
+              "wireValue": "STRING"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CORD",
+            "name": {
+              "name": "CORD",
+              "wireValue": "CORD"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "STRING_PIECE",
+            "name": {
+              "name": "STRING_PIECE",
+              "wireValue": "STRING_PIECE"
+            },
             "availability": null,
             "docs": null
           }
@@ -10099,17 +10354,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "JS_NORMAL",
+            "name": {
+              "name": "JS_NORMAL",
+              "wireValue": "JS_NORMAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "JS_STRING",
+            "name": {
+              "name": "JS_STRING",
+              "wireValue": "JS_STRING"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "JS_NUMBER",
+            "name": {
+              "name": "JS_NUMBER",
+              "wireValue": "JS_NUMBER"
+            },
             "availability": null,
             "docs": null
           }
@@ -10141,17 +10405,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "RETENTION_UNKNOWN",
+            "name": {
+              "name": "RETENTION_UNKNOWN",
+              "wireValue": "RETENTION_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "RETENTION_RUNTIME",
+            "name": {
+              "name": "RETENTION_RUNTIME",
+              "wireValue": "RETENTION_RUNTIME"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "RETENTION_SOURCE",
+            "name": {
+              "name": "RETENTION_SOURCE",
+              "wireValue": "RETENTION_SOURCE"
+            },
             "availability": null,
             "docs": null
           }
@@ -10183,52 +10456,82 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "TARGET_TYPE_UNKNOWN",
+            "name": {
+              "name": "TARGET_TYPE_UNKNOWN",
+              "wireValue": "TARGET_TYPE_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TARGET_TYPE_FILE",
+            "name": {
+              "name": "TARGET_TYPE_FILE",
+              "wireValue": "TARGET_TYPE_FILE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TARGET_TYPE_EXTENSION_RANGE",
+            "name": {
+              "name": "TARGET_TYPE_EXTENSION_RANGE",
+              "wireValue": "TARGET_TYPE_EXTENSION_RANGE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TARGET_TYPE_MESSAGE",
+            "name": {
+              "name": "TARGET_TYPE_MESSAGE",
+              "wireValue": "TARGET_TYPE_MESSAGE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TARGET_TYPE_FIELD",
+            "name": {
+              "name": "TARGET_TYPE_FIELD",
+              "wireValue": "TARGET_TYPE_FIELD"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TARGET_TYPE_ONEOF",
+            "name": {
+              "name": "TARGET_TYPE_ONEOF",
+              "wireValue": "TARGET_TYPE_ONEOF"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TARGET_TYPE_ENUM",
+            "name": {
+              "name": "TARGET_TYPE_ENUM",
+              "wireValue": "TARGET_TYPE_ENUM"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TARGET_TYPE_ENUM_ENTRY",
+            "name": {
+              "name": "TARGET_TYPE_ENUM_ENTRY",
+              "wireValue": "TARGET_TYPE_ENUM_ENTRY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TARGET_TYPE_SERVICE",
+            "name": {
+              "name": "TARGET_TYPE_SERVICE",
+              "wireValue": "TARGET_TYPE_SERVICE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TARGET_TYPE_METHOD",
+            "name": {
+              "name": "TARGET_TYPE_METHOD",
+              "wireValue": "TARGET_TYPE_METHOD"
+            },
             "availability": null,
             "docs": null
           }
@@ -11225,17 +11528,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "IDEMPOTENCY_UNKNOWN",
+            "name": {
+              "name": "IDEMPOTENCY_UNKNOWN",
+              "wireValue": "IDEMPOTENCY_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NO_SIDE_EFFECTS",
+            "name": {
+              "name": "NO_SIDE_EFFECTS",
+              "wireValue": "NO_SIDE_EFFECTS"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "IDEMPOTENT",
+            "name": {
+              "name": "IDEMPOTENT",
+              "wireValue": "IDEMPOTENT"
+            },
             "availability": null,
             "docs": null
           }
@@ -11697,22 +12009,34 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "FIELD_PRESENCE_UNKNOWN",
+            "name": {
+              "name": "FIELD_PRESENCE_UNKNOWN",
+              "wireValue": "FIELD_PRESENCE_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EXPLICIT",
+            "name": {
+              "name": "EXPLICIT",
+              "wireValue": "EXPLICIT"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "IMPLICIT",
+            "name": {
+              "name": "IMPLICIT",
+              "wireValue": "IMPLICIT"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "LEGACY_REQUIRED",
+            "name": {
+              "name": "LEGACY_REQUIRED",
+              "wireValue": "LEGACY_REQUIRED"
+            },
             "availability": null,
             "docs": null
           }
@@ -11744,17 +12068,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "ENUM_TYPE_UNKNOWN",
+            "name": {
+              "name": "ENUM_TYPE_UNKNOWN",
+              "wireValue": "ENUM_TYPE_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "OPEN",
+            "name": {
+              "name": "OPEN",
+              "wireValue": "OPEN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CLOSED",
+            "name": {
+              "name": "CLOSED",
+              "wireValue": "CLOSED"
+            },
             "availability": null,
             "docs": null
           }
@@ -11786,17 +12119,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "REPEATED_FIELD_ENCODING_UNKNOWN",
+            "name": {
+              "name": "REPEATED_FIELD_ENCODING_UNKNOWN",
+              "wireValue": "REPEATED_FIELD_ENCODING_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "PACKED",
+            "name": {
+              "name": "PACKED",
+              "wireValue": "PACKED"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EXPANDED",
+            "name": {
+              "name": "EXPANDED",
+              "wireValue": "EXPANDED"
+            },
             "availability": null,
             "docs": null
           }
@@ -11828,17 +12170,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "UTF8_VALIDATION_UNKNOWN",
+            "name": {
+              "name": "UTF8_VALIDATION_UNKNOWN",
+              "wireValue": "UTF8_VALIDATION_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "VERIFY",
+            "name": {
+              "name": "VERIFY",
+              "wireValue": "VERIFY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NONE",
+            "name": {
+              "name": "NONE",
+              "wireValue": "NONE"
+            },
             "availability": null,
             "docs": null
           }
@@ -11870,17 +12221,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "MESSAGE_ENCODING_UNKNOWN",
+            "name": {
+              "name": "MESSAGE_ENCODING_UNKNOWN",
+              "wireValue": "MESSAGE_ENCODING_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "LENGTH_PREFIXED",
+            "name": {
+              "name": "LENGTH_PREFIXED",
+              "wireValue": "LENGTH_PREFIXED"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "DELIMITED",
+            "name": {
+              "name": "DELIMITED",
+              "wireValue": "DELIMITED"
+            },
             "availability": null,
             "docs": null
           }
@@ -11912,17 +12272,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "JSON_FORMAT_UNKNOWN",
+            "name": {
+              "name": "JSON_FORMAT_UNKNOWN",
+              "wireValue": "JSON_FORMAT_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ALLOW",
+            "name": {
+              "name": "ALLOW",
+              "wireValue": "ALLOW"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "LEGACY_BEST_EFFORT",
+            "name": {
+              "name": "LEGACY_BEST_EFFORT",
+              "wireValue": "LEGACY_BEST_EFFORT"
+            },
             "availability": null,
             "docs": null
           }
@@ -12632,17 +13001,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "NONE",
+            "name": {
+              "name": "NONE",
+              "wireValue": "NONE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SET",
+            "name": {
+              "name": "SET",
+              "wireValue": "SET"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ALIAS",
+            "name": {
+              "name": "ALIAS",
+              "wireValue": "ALIAS"
+            },
             "availability": null,
             "docs": null
           }
@@ -12910,117 +13288,186 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "ALT_ID_TYPE_INVALID",
+            "name": {
+              "name": "ALT_ID_TYPE_INVALID",
+              "wireValue": "ALT_ID_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ALT_ID_TYPE_TRACK_ID_2",
+            "name": {
+              "name": "ALT_ID_TYPE_TRACK_ID_2",
+              "wireValue": "ALT_ID_TYPE_TRACK_ID_2"
+            },
             "availability": null,
             "docs": "an Anduril trackId_2"
           },
           {
-            "name": "ALT_ID_TYPE_TRACK_ID_1",
+            "name": {
+              "name": "ALT_ID_TYPE_TRACK_ID_1",
+              "wireValue": "ALT_ID_TYPE_TRACK_ID_1"
+            },
             "availability": null,
             "docs": "an Anduril trackId_1"
           },
           {
-            "name": "ALT_ID_TYPE_SPI_ID",
+            "name": {
+              "name": "ALT_ID_TYPE_SPI_ID",
+              "wireValue": "ALT_ID_TYPE_SPI_ID"
+            },
             "availability": null,
             "docs": "an Anduril Sensor Point of Interest ID"
           },
           {
-            "name": "ALT_ID_TYPE_NITF_FILE_TITLE",
+            "name": {
+              "name": "ALT_ID_TYPE_NITF_FILE_TITLE",
+              "wireValue": "ALT_ID_TYPE_NITF_FILE_TITLE"
+            },
             "availability": null,
             "docs": "NITF file title"
           },
           {
-            "name": "ALT_ID_TYPE_TRACK_REPO_ALERT_ID",
+            "name": {
+              "name": "ALT_ID_TYPE_TRACK_REPO_ALERT_ID",
+              "wireValue": "ALT_ID_TYPE_TRACK_REPO_ALERT_ID"
+            },
             "availability": null,
             "docs": "Track repo alert ID"
           },
           {
-            "name": "ALT_ID_TYPE_ASSET_ID",
+            "name": {
+              "name": "ALT_ID_TYPE_ASSET_ID",
+              "wireValue": "ALT_ID_TYPE_ASSET_ID"
+            },
             "availability": null,
             "docs": "an Anduril AssetId"
           },
           {
-            "name": "ALT_ID_TYPE_LINK16_TRACK_NUMBER",
+            "name": {
+              "name": "ALT_ID_TYPE_LINK16_TRACK_NUMBER",
+              "wireValue": "ALT_ID_TYPE_LINK16_TRACK_NUMBER"
+            },
             "availability": null,
             "docs": "Use for Link 16 track identifiers for non-JTIDS Unit entities."
           },
           {
-            "name": "ALT_ID_TYPE_LINK16_JU",
+            "name": {
+              "name": "ALT_ID_TYPE_LINK16_JU",
+              "wireValue": "ALT_ID_TYPE_LINK16_JU"
+            },
             "availability": null,
             "docs": "Use for Link 16 JTIDS Unit identifiers."
           },
           {
-            "name": "ALT_ID_TYPE_NCCT_MESSAGE_ID",
+            "name": {
+              "name": "ALT_ID_TYPE_NCCT_MESSAGE_ID",
+              "wireValue": "ALT_ID_TYPE_NCCT_MESSAGE_ID"
+            },
             "availability": null,
             "docs": "an NCCT message ID"
           },
           {
-            "name": "ALT_ID_TYPE_CALLSIGN",
+            "name": {
+              "name": "ALT_ID_TYPE_CALLSIGN",
+              "wireValue": "ALT_ID_TYPE_CALLSIGN"
+            },
             "availability": null,
             "docs": "callsign for the entity. e.g. a TAK callsign or an aircraft callsign"
           },
           {
-            "name": "ALT_ID_TYPE_MMSI_ID",
+            "name": {
+              "name": "ALT_ID_TYPE_MMSI_ID",
+              "wireValue": "ALT_ID_TYPE_MMSI_ID"
+            },
             "availability": null,
             "docs": "the Maritime Mobile Service Identity for a maritime object (vessel, offshore installation, etc.)"
           },
           {
-            "name": "ALT_ID_TYPE_VMF_URN",
+            "name": {
+              "name": "ALT_ID_TYPE_VMF_URN",
+              "wireValue": "ALT_ID_TYPE_VMF_URN"
+            },
             "availability": null,
             "docs": "A VMF URN that uniquely identifies the URN on the VMF network."
           },
           {
-            "name": "ALT_ID_TYPE_IMO_ID",
+            "name": {
+              "name": "ALT_ID_TYPE_IMO_ID",
+              "wireValue": "ALT_ID_TYPE_IMO_ID"
+            },
             "availability": null,
             "docs": "the International Maritime Organization number for identifying maritime objects (vessel, offshore installation, etc.)"
           },
           {
-            "name": "ALT_ID_TYPE_VMF_TARGET_NUMBER",
+            "name": {
+              "name": "ALT_ID_TYPE_VMF_TARGET_NUMBER",
+              "wireValue": "ALT_ID_TYPE_VMF_TARGET_NUMBER"
+            },
             "availability": null,
             "docs": "A VMF target number that uniquely identifies the target on the VMF network"
           },
           {
-            "name": "ALT_ID_TYPE_SERIAL_NUMBER",
+            "name": {
+              "name": "ALT_ID_TYPE_SERIAL_NUMBER",
+              "wireValue": "ALT_ID_TYPE_SERIAL_NUMBER"
+            },
             "availability": null,
             "docs": "A serial number that uniquely identifies the entity and is permanently associated with only one entity. This\\n identifier is assigned by some authority and only ever identifies a single thing. Examples include a\\n Vehicle Identification Number (VIN) or ship hull identification number (hull number). This is a generalized\\n component and should not be used if a more specific registration type is already defined (i.e., ALT_ID_TYPE_VMF_URN)."
           },
           {
-            "name": "ALT_ID_TYPE_REGISTRATION_ID",
+            "name": {
+              "name": "ALT_ID_TYPE_REGISTRATION_ID",
+              "wireValue": "ALT_ID_TYPE_REGISTRATION_ID"
+            },
             "availability": null,
             "docs": "A registration identifier assigned by a local or national authority. This identifier is not permanently fixed\\n to one specific entity and may be reassigned on change of ownership, destruction, or other conditions set\\n forth by the authority. Examples include a vehicle license plate or aircraft tail number. This is a generalized\\n component and should not be used if a more specific registration type is already defined (i.e., ALT_ID_TYPE_IMO_ID)."
           },
           {
-            "name": "ALT_ID_TYPE_IBS_GID",
+            "name": {
+              "name": "ALT_ID_TYPE_IBS_GID",
+              "wireValue": "ALT_ID_TYPE_IBS_GID"
+            },
             "availability": null,
             "docs": "Integrated Broadcast Service Common Message Format Global Identifier"
           },
           {
-            "name": "ALT_ID_TYPE_DODAAC",
+            "name": {
+              "name": "ALT_ID_TYPE_DODAAC",
+              "wireValue": "ALT_ID_TYPE_DODAAC"
+            },
             "availability": null,
             "docs": "Department of Defense Activity Address Code."
           },
           {
-            "name": "ALT_ID_TYPE_UIC",
+            "name": {
+              "name": "ALT_ID_TYPE_UIC",
+              "wireValue": "ALT_ID_TYPE_UIC"
+            },
             "availability": null,
             "docs": "Unit Identification Code uniquely identifies each US Department of Defense entity"
           },
           {
-            "name": "ALT_ID_TYPE_NORAD_CAT_ID",
+            "name": {
+              "name": "ALT_ID_TYPE_NORAD_CAT_ID",
+              "wireValue": "ALT_ID_TYPE_NORAD_CAT_ID"
+            },
             "availability": null,
             "docs": "A NORAD Satellite Catalog Number, a 9-digit number uniquely representing orbital objects around Earth.\\n of strictly numeric."
           },
           {
-            "name": "ALT_ID_TYPE_UNOOSA_NAME",
+            "name": {
+              "name": "ALT_ID_TYPE_UNOOSA_NAME",
+              "wireValue": "ALT_ID_TYPE_UNOOSA_NAME"
+            },
             "availability": null,
             "docs": "Space object name. If populated, use names from the UN Office\\n of Outer Space Affairs designator index, otherwise set field to UNKNOWN."
           },
           {
-            "name": "ALT_ID_TYPE_UNOOSA_ID",
+            "name": {
+              "name": "ALT_ID_TYPE_UNOOSA_ID",
+              "wireValue": "ALT_ID_TYPE_UNOOSA_ID"
+            },
             "availability": null,
             "docs": "Space object identifier. If populated, use the international spacecraft designator\\n as published in the UN Office of Outer Space Affairs designator index, otherwise set to UNKNOWN.\\n Recommended values have the format YYYYNNNP{PP}, where:\\n  YYYY = Year of launch.\\n  NNN = Three-digit serial number of launch\\n  in year YYYY (with leading zeros).\\n  P{PP} = At least one capital letter for the\\n  identification of the part brought\\n  into space by the launch."
           }
@@ -13052,32 +13499,50 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "TEMPLATE_INVALID",
+            "name": {
+              "name": "TEMPLATE_INVALID",
+              "wireValue": "TEMPLATE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TEMPLATE_TRACK",
+            "name": {
+              "name": "TEMPLATE_TRACK",
+              "wireValue": "TEMPLATE_TRACK"
+            },
             "availability": null,
             "docs": "additional track required components:\\n   * location\\n   * mil_view"
           },
           {
-            "name": "TEMPLATE_SENSOR_POINT_OF_INTEREST",
+            "name": {
+              "name": "TEMPLATE_SENSOR_POINT_OF_INTEREST",
+              "wireValue": "TEMPLATE_SENSOR_POINT_OF_INTEREST"
+            },
             "availability": null,
             "docs": "additional SPI required components:\\n   * location\\n   * mil_view\\n   * produced_by"
           },
           {
-            "name": "TEMPLATE_ASSET",
+            "name": {
+              "name": "TEMPLATE_ASSET",
+              "wireValue": "TEMPLATE_ASSET"
+            },
             "availability": null,
             "docs": "additional asset required components:\\n   * location\\n   * mil_view\\n   * ontology"
           },
           {
-            "name": "TEMPLATE_GEO",
+            "name": {
+              "name": "TEMPLATE_GEO",
+              "wireValue": "TEMPLATE_GEO"
+            },
             "availability": null,
             "docs": "additional geo required components:\\n   * geo_shape\\n   * geo_details"
           },
           {
-            "name": "TEMPLATE_SIGNAL_OF_INTEREST",
+            "name": {
+              "name": "TEMPLATE_SIGNAL_OF_INTEREST",
+              "wireValue": "TEMPLATE_SIGNAL_OF_INTEREST"
+            },
             "availability": null,
             "docs": "additional SOI required components:\\n   * signal\\n   * location field should be populated if there is a fix.\\n   * mil_view\\n   * ontology"
           }
@@ -13109,32 +13574,50 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "OVERRIDE_STATUS_INVALID",
+            "name": {
+              "name": "OVERRIDE_STATUS_INVALID",
+              "wireValue": "OVERRIDE_STATUS_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "OVERRIDE_STATUS_APPLIED",
+            "name": {
+              "name": "OVERRIDE_STATUS_APPLIED",
+              "wireValue": "OVERRIDE_STATUS_APPLIED"
+            },
             "availability": null,
             "docs": "the override was applied to the entity."
           },
           {
-            "name": "OVERRIDE_STATUS_PENDING",
+            "name": {
+              "name": "OVERRIDE_STATUS_PENDING",
+              "wireValue": "OVERRIDE_STATUS_PENDING"
+            },
             "availability": null,
             "docs": "the override is pending action."
           },
           {
-            "name": "OVERRIDE_STATUS_TIMEOUT",
+            "name": {
+              "name": "OVERRIDE_STATUS_TIMEOUT",
+              "wireValue": "OVERRIDE_STATUS_TIMEOUT"
+            },
             "availability": null,
             "docs": "the override has been timed out."
           },
           {
-            "name": "OVERRIDE_STATUS_REJECTED",
+            "name": {
+              "name": "OVERRIDE_STATUS_REJECTED",
+              "wireValue": "OVERRIDE_STATUS_REJECTED"
+            },
             "availability": null,
             "docs": "the override has been rejected"
           },
           {
-            "name": "OVERRIDE_STATUS_DELETION_PENDING",
+            "name": {
+              "name": "OVERRIDE_STATUS_DELETION_PENDING",
+              "wireValue": "OVERRIDE_STATUS_DELETION_PENDING"
+            },
             "availability": null,
             "docs": "The override is pending deletion."
           }
@@ -13166,17 +13649,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "OVERRIDE_TYPE_INVALID",
+            "name": {
+              "name": "OVERRIDE_TYPE_INVALID",
+              "wireValue": "OVERRIDE_TYPE_INVALID"
+            },
             "availability": null,
             "docs": "The override type value was not set. This value is interpreted as OVERRIDE_TYPE_LIVE for backward compatibility."
           },
           {
-            "name": "OVERRIDE_TYPE_LIVE",
+            "name": {
+              "name": "OVERRIDE_TYPE_LIVE",
+              "wireValue": "OVERRIDE_TYPE_LIVE"
+            },
             "availability": null,
             "docs": "Override was requested when the entity was live according to the Entity Manager instance that handled the request."
           },
           {
-            "name": "OVERRIDE_TYPE_POST_EXPIRY",
+            "name": {
+              "name": "OVERRIDE_TYPE_POST_EXPIRY",
+              "wireValue": "OVERRIDE_TYPE_POST_EXPIRY"
+            },
             "availability": null,
             "docs": "Override was requested after the entity expired according to the Entity Manager instance that handled the request."
           }
@@ -13368,37 +13860,58 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "DISPOSITION_UNKNOWN",
+            "name": {
+              "name": "DISPOSITION_UNKNOWN",
+              "wireValue": "DISPOSITION_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "DISPOSITION_FRIENDLY",
+            "name": {
+              "name": "DISPOSITION_FRIENDLY",
+              "wireValue": "DISPOSITION_FRIENDLY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "DISPOSITION_HOSTILE",
+            "name": {
+              "name": "DISPOSITION_HOSTILE",
+              "wireValue": "DISPOSITION_HOSTILE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "DISPOSITION_SUSPICIOUS",
+            "name": {
+              "name": "DISPOSITION_SUSPICIOUS",
+              "wireValue": "DISPOSITION_SUSPICIOUS"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "DISPOSITION_ASSUMED_FRIENDLY",
+            "name": {
+              "name": "DISPOSITION_ASSUMED_FRIENDLY",
+              "wireValue": "DISPOSITION_ASSUMED_FRIENDLY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "DISPOSITION_NEUTRAL",
+            "name": {
+              "name": "DISPOSITION_NEUTRAL",
+              "wireValue": "DISPOSITION_NEUTRAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "DISPOSITION_PENDING",
+            "name": {
+              "name": "DISPOSITION_PENDING",
+              "wireValue": "DISPOSITION_PENDING"
+            },
             "availability": null,
             "docs": null
           }
@@ -13430,32 +13943,50 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "ENVIRONMENT_UNKNOWN",
+            "name": {
+              "name": "ENVIRONMENT_UNKNOWN",
+              "wireValue": "ENVIRONMENT_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ENVIRONMENT_AIR",
+            "name": {
+              "name": "ENVIRONMENT_AIR",
+              "wireValue": "ENVIRONMENT_AIR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ENVIRONMENT_SURFACE",
+            "name": {
+              "name": "ENVIRONMENT_SURFACE",
+              "wireValue": "ENVIRONMENT_SURFACE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ENVIRONMENT_SUB_SURFACE",
+            "name": {
+              "name": "ENVIRONMENT_SUB_SURFACE",
+              "wireValue": "ENVIRONMENT_SUB_SURFACE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ENVIRONMENT_LAND",
+            "name": {
+              "name": "ENVIRONMENT_LAND",
+              "wireValue": "ENVIRONMENT_LAND"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ENVIRONMENT_SPACE",
+            "name": {
+              "name": "ENVIRONMENT_SPACE",
+              "wireValue": "ENVIRONMENT_SPACE"
+            },
             "availability": null,
             "docs": null
           }
@@ -13487,572 +14018,914 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "NATIONALITY_INVALID",
+            "name": {
+              "name": "NATIONALITY_INVALID",
+              "wireValue": "NATIONALITY_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ALBANIA",
+            "name": {
+              "name": "NATIONALITY_ALBANIA",
+              "wireValue": "NATIONALITY_ALBANIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ALGERIA",
+            "name": {
+              "name": "NATIONALITY_ALGERIA",
+              "wireValue": "NATIONALITY_ALGERIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ARGENTINA",
+            "name": {
+              "name": "NATIONALITY_ARGENTINA",
+              "wireValue": "NATIONALITY_ARGENTINA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ARMENIA",
+            "name": {
+              "name": "NATIONALITY_ARMENIA",
+              "wireValue": "NATIONALITY_ARMENIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_AUSTRALIA",
+            "name": {
+              "name": "NATIONALITY_AUSTRALIA",
+              "wireValue": "NATIONALITY_AUSTRALIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_AUSTRIA",
+            "name": {
+              "name": "NATIONALITY_AUSTRIA",
+              "wireValue": "NATIONALITY_AUSTRIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_AZERBAIJAN",
+            "name": {
+              "name": "NATIONALITY_AZERBAIJAN",
+              "wireValue": "NATIONALITY_AZERBAIJAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_BELARUS",
+            "name": {
+              "name": "NATIONALITY_BELARUS",
+              "wireValue": "NATIONALITY_BELARUS"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_BELGIUM",
+            "name": {
+              "name": "NATIONALITY_BELGIUM",
+              "wireValue": "NATIONALITY_BELGIUM"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_BOLIVIA",
+            "name": {
+              "name": "NATIONALITY_BOLIVIA",
+              "wireValue": "NATIONALITY_BOLIVIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_BOSNIA_AND_HERZEGOVINA",
+            "name": {
+              "name": "NATIONALITY_BOSNIA_AND_HERZEGOVINA",
+              "wireValue": "NATIONALITY_BOSNIA_AND_HERZEGOVINA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_BRAZIL",
+            "name": {
+              "name": "NATIONALITY_BRAZIL",
+              "wireValue": "NATIONALITY_BRAZIL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_BULGARIA",
+            "name": {
+              "name": "NATIONALITY_BULGARIA",
+              "wireValue": "NATIONALITY_BULGARIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_CAMBODIA",
+            "name": {
+              "name": "NATIONALITY_CAMBODIA",
+              "wireValue": "NATIONALITY_CAMBODIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_CANADA",
+            "name": {
+              "name": "NATIONALITY_CANADA",
+              "wireValue": "NATIONALITY_CANADA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_CHILE",
+            "name": {
+              "name": "NATIONALITY_CHILE",
+              "wireValue": "NATIONALITY_CHILE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_CHINA",
+            "name": {
+              "name": "NATIONALITY_CHINA",
+              "wireValue": "NATIONALITY_CHINA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_COLOMBIA",
+            "name": {
+              "name": "NATIONALITY_COLOMBIA",
+              "wireValue": "NATIONALITY_COLOMBIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_CROATIA",
+            "name": {
+              "name": "NATIONALITY_CROATIA",
+              "wireValue": "NATIONALITY_CROATIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_CUBA",
+            "name": {
+              "name": "NATIONALITY_CUBA",
+              "wireValue": "NATIONALITY_CUBA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_CYPRUS",
+            "name": {
+              "name": "NATIONALITY_CYPRUS",
+              "wireValue": "NATIONALITY_CYPRUS"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_CZECH_REPUBLIC",
+            "name": {
+              "name": "NATIONALITY_CZECH_REPUBLIC",
+              "wireValue": "NATIONALITY_CZECH_REPUBLIC"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_DEMOCRATIC_PEOPLES_REPUBLIC_OF_KOREA",
+            "name": {
+              "name": "NATIONALITY_DEMOCRATIC_PEOPLES_REPUBLIC_OF_KOREA",
+              "wireValue": "NATIONALITY_DEMOCRATIC_PEOPLES_REPUBLIC_OF_KOREA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_DENMARK",
+            "name": {
+              "name": "NATIONALITY_DENMARK",
+              "wireValue": "NATIONALITY_DENMARK"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_DOMINICAN_REPUBLIC",
+            "name": {
+              "name": "NATIONALITY_DOMINICAN_REPUBLIC",
+              "wireValue": "NATIONALITY_DOMINICAN_REPUBLIC"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ECUADOR",
+            "name": {
+              "name": "NATIONALITY_ECUADOR",
+              "wireValue": "NATIONALITY_ECUADOR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_EGYPT",
+            "name": {
+              "name": "NATIONALITY_EGYPT",
+              "wireValue": "NATIONALITY_EGYPT"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ESTONIA",
+            "name": {
+              "name": "NATIONALITY_ESTONIA",
+              "wireValue": "NATIONALITY_ESTONIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ETHIOPIA",
+            "name": {
+              "name": "NATIONALITY_ETHIOPIA",
+              "wireValue": "NATIONALITY_ETHIOPIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_FINLAND",
+            "name": {
+              "name": "NATIONALITY_FINLAND",
+              "wireValue": "NATIONALITY_FINLAND"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_FRANCE",
+            "name": {
+              "name": "NATIONALITY_FRANCE",
+              "wireValue": "NATIONALITY_FRANCE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_GEORGIA",
+            "name": {
+              "name": "NATIONALITY_GEORGIA",
+              "wireValue": "NATIONALITY_GEORGIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_GERMANY",
+            "name": {
+              "name": "NATIONALITY_GERMANY",
+              "wireValue": "NATIONALITY_GERMANY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_GREECE",
+            "name": {
+              "name": "NATIONALITY_GREECE",
+              "wireValue": "NATIONALITY_GREECE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_GUATEMALA",
+            "name": {
+              "name": "NATIONALITY_GUATEMALA",
+              "wireValue": "NATIONALITY_GUATEMALA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_GUINEA",
+            "name": {
+              "name": "NATIONALITY_GUINEA",
+              "wireValue": "NATIONALITY_GUINEA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_HUNGARY",
+            "name": {
+              "name": "NATIONALITY_HUNGARY",
+              "wireValue": "NATIONALITY_HUNGARY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ICELAND",
+            "name": {
+              "name": "NATIONALITY_ICELAND",
+              "wireValue": "NATIONALITY_ICELAND"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_INDIA",
+            "name": {
+              "name": "NATIONALITY_INDIA",
+              "wireValue": "NATIONALITY_INDIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_INDONESIA",
+            "name": {
+              "name": "NATIONALITY_INDONESIA",
+              "wireValue": "NATIONALITY_INDONESIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_INTERNATIONAL_RED_CROSS",
+            "name": {
+              "name": "NATIONALITY_INTERNATIONAL_RED_CROSS",
+              "wireValue": "NATIONALITY_INTERNATIONAL_RED_CROSS"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_IRAQ",
+            "name": {
+              "name": "NATIONALITY_IRAQ",
+              "wireValue": "NATIONALITY_IRAQ"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_IRELAND",
+            "name": {
+              "name": "NATIONALITY_IRELAND",
+              "wireValue": "NATIONALITY_IRELAND"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ISLAMIC_REPUBLIC_OF_IRAN",
+            "name": {
+              "name": "NATIONALITY_ISLAMIC_REPUBLIC_OF_IRAN",
+              "wireValue": "NATIONALITY_ISLAMIC_REPUBLIC_OF_IRAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ISRAEL",
+            "name": {
+              "name": "NATIONALITY_ISRAEL",
+              "wireValue": "NATIONALITY_ISRAEL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ITALY",
+            "name": {
+              "name": "NATIONALITY_ITALY",
+              "wireValue": "NATIONALITY_ITALY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_JAMAICA",
+            "name": {
+              "name": "NATIONALITY_JAMAICA",
+              "wireValue": "NATIONALITY_JAMAICA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_JAPAN",
+            "name": {
+              "name": "NATIONALITY_JAPAN",
+              "wireValue": "NATIONALITY_JAPAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_JORDAN",
+            "name": {
+              "name": "NATIONALITY_JORDAN",
+              "wireValue": "NATIONALITY_JORDAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_KAZAKHSTAN",
+            "name": {
+              "name": "NATIONALITY_KAZAKHSTAN",
+              "wireValue": "NATIONALITY_KAZAKHSTAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_KUWAIT",
+            "name": {
+              "name": "NATIONALITY_KUWAIT",
+              "wireValue": "NATIONALITY_KUWAIT"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_KYRGHYZ_REPUBLIC",
+            "name": {
+              "name": "NATIONALITY_KYRGHYZ_REPUBLIC",
+              "wireValue": "NATIONALITY_KYRGHYZ_REPUBLIC"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_LAO_PEOPLES_DEMOCRATIC_REPUBLIC",
+            "name": {
+              "name": "NATIONALITY_LAO_PEOPLES_DEMOCRATIC_REPUBLIC",
+              "wireValue": "NATIONALITY_LAO_PEOPLES_DEMOCRATIC_REPUBLIC"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_LATVIA",
+            "name": {
+              "name": "NATIONALITY_LATVIA",
+              "wireValue": "NATIONALITY_LATVIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_LEBANON",
+            "name": {
+              "name": "NATIONALITY_LEBANON",
+              "wireValue": "NATIONALITY_LEBANON"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_LIBERIA",
+            "name": {
+              "name": "NATIONALITY_LIBERIA",
+              "wireValue": "NATIONALITY_LIBERIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_LITHUANIA",
+            "name": {
+              "name": "NATIONALITY_LITHUANIA",
+              "wireValue": "NATIONALITY_LITHUANIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_LUXEMBOURG",
+            "name": {
+              "name": "NATIONALITY_LUXEMBOURG",
+              "wireValue": "NATIONALITY_LUXEMBOURG"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_MADAGASCAR",
+            "name": {
+              "name": "NATIONALITY_MADAGASCAR",
+              "wireValue": "NATIONALITY_MADAGASCAR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_MALAYSIA",
+            "name": {
+              "name": "NATIONALITY_MALAYSIA",
+              "wireValue": "NATIONALITY_MALAYSIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_MALTA",
+            "name": {
+              "name": "NATIONALITY_MALTA",
+              "wireValue": "NATIONALITY_MALTA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_MEXICO",
+            "name": {
+              "name": "NATIONALITY_MEXICO",
+              "wireValue": "NATIONALITY_MEXICO"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_MOLDOVA",
+            "name": {
+              "name": "NATIONALITY_MOLDOVA",
+              "wireValue": "NATIONALITY_MOLDOVA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_MONTENEGRO",
+            "name": {
+              "name": "NATIONALITY_MONTENEGRO",
+              "wireValue": "NATIONALITY_MONTENEGRO"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_MOROCCO",
+            "name": {
+              "name": "NATIONALITY_MOROCCO",
+              "wireValue": "NATIONALITY_MOROCCO"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_MYANMAR",
+            "name": {
+              "name": "NATIONALITY_MYANMAR",
+              "wireValue": "NATIONALITY_MYANMAR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_NATO",
+            "name": {
+              "name": "NATIONALITY_NATO",
+              "wireValue": "NATIONALITY_NATO"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_NETHERLANDS",
+            "name": {
+              "name": "NATIONALITY_NETHERLANDS",
+              "wireValue": "NATIONALITY_NETHERLANDS"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_NEW_ZEALAND",
+            "name": {
+              "name": "NATIONALITY_NEW_ZEALAND",
+              "wireValue": "NATIONALITY_NEW_ZEALAND"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_NICARAGUA",
+            "name": {
+              "name": "NATIONALITY_NICARAGUA",
+              "wireValue": "NATIONALITY_NICARAGUA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_NIGERIA",
+            "name": {
+              "name": "NATIONALITY_NIGERIA",
+              "wireValue": "NATIONALITY_NIGERIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_NORWAY",
+            "name": {
+              "name": "NATIONALITY_NORWAY",
+              "wireValue": "NATIONALITY_NORWAY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_PAKISTAN",
+            "name": {
+              "name": "NATIONALITY_PAKISTAN",
+              "wireValue": "NATIONALITY_PAKISTAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_PANAMA",
+            "name": {
+              "name": "NATIONALITY_PANAMA",
+              "wireValue": "NATIONALITY_PANAMA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_PARAGUAY",
+            "name": {
+              "name": "NATIONALITY_PARAGUAY",
+              "wireValue": "NATIONALITY_PARAGUAY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_PERU",
+            "name": {
+              "name": "NATIONALITY_PERU",
+              "wireValue": "NATIONALITY_PERU"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_PHILIPPINES",
+            "name": {
+              "name": "NATIONALITY_PHILIPPINES",
+              "wireValue": "NATIONALITY_PHILIPPINES"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_POLAND",
+            "name": {
+              "name": "NATIONALITY_POLAND",
+              "wireValue": "NATIONALITY_POLAND"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_PORTUGAL",
+            "name": {
+              "name": "NATIONALITY_PORTUGAL",
+              "wireValue": "NATIONALITY_PORTUGAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_REPUBLIC_OF_KOREA",
+            "name": {
+              "name": "NATIONALITY_REPUBLIC_OF_KOREA",
+              "wireValue": "NATIONALITY_REPUBLIC_OF_KOREA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ROMANIA",
+            "name": {
+              "name": "NATIONALITY_ROMANIA",
+              "wireValue": "NATIONALITY_ROMANIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_RUSSIA",
+            "name": {
+              "name": "NATIONALITY_RUSSIA",
+              "wireValue": "NATIONALITY_RUSSIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SAUDI_ARABIA",
+            "name": {
+              "name": "NATIONALITY_SAUDI_ARABIA",
+              "wireValue": "NATIONALITY_SAUDI_ARABIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SENEGAL",
+            "name": {
+              "name": "NATIONALITY_SENEGAL",
+              "wireValue": "NATIONALITY_SENEGAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SERBIA",
+            "name": {
+              "name": "NATIONALITY_SERBIA",
+              "wireValue": "NATIONALITY_SERBIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SINGAPORE",
+            "name": {
+              "name": "NATIONALITY_SINGAPORE",
+              "wireValue": "NATIONALITY_SINGAPORE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SLOVAKIA",
+            "name": {
+              "name": "NATIONALITY_SLOVAKIA",
+              "wireValue": "NATIONALITY_SLOVAKIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SLOVENIA",
+            "name": {
+              "name": "NATIONALITY_SLOVENIA",
+              "wireValue": "NATIONALITY_SLOVENIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SOUTH_AFRICA",
+            "name": {
+              "name": "NATIONALITY_SOUTH_AFRICA",
+              "wireValue": "NATIONALITY_SOUTH_AFRICA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SPAIN",
+            "name": {
+              "name": "NATIONALITY_SPAIN",
+              "wireValue": "NATIONALITY_SPAIN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SUDAN",
+            "name": {
+              "name": "NATIONALITY_SUDAN",
+              "wireValue": "NATIONALITY_SUDAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SWEDEN",
+            "name": {
+              "name": "NATIONALITY_SWEDEN",
+              "wireValue": "NATIONALITY_SWEDEN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SWITZERLAND",
+            "name": {
+              "name": "NATIONALITY_SWITZERLAND",
+              "wireValue": "NATIONALITY_SWITZERLAND"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_SYRIAN_ARAB_REPUBLIC",
+            "name": {
+              "name": "NATIONALITY_SYRIAN_ARAB_REPUBLIC",
+              "wireValue": "NATIONALITY_SYRIAN_ARAB_REPUBLIC"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_TAIWAN",
+            "name": {
+              "name": "NATIONALITY_TAIWAN",
+              "wireValue": "NATIONALITY_TAIWAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_TAJIKISTAN",
+            "name": {
+              "name": "NATIONALITY_TAJIKISTAN",
+              "wireValue": "NATIONALITY_TAJIKISTAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_THAILAND",
+            "name": {
+              "name": "NATIONALITY_THAILAND",
+              "wireValue": "NATIONALITY_THAILAND"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_THE_FORMER_YUGOSLAV_REPUBLIC_OF_MACEDONIA",
+            "name": {
+              "name": "NATIONALITY_THE_FORMER_YUGOSLAV_REPUBLIC_OF_MACEDONIA",
+              "wireValue": "NATIONALITY_THE_FORMER_YUGOSLAV_REPUBLIC_OF_MACEDONIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_TUNISIA",
+            "name": {
+              "name": "NATIONALITY_TUNISIA",
+              "wireValue": "NATIONALITY_TUNISIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_TURKEY",
+            "name": {
+              "name": "NATIONALITY_TURKEY",
+              "wireValue": "NATIONALITY_TURKEY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_TURKMENISTAN",
+            "name": {
+              "name": "NATIONALITY_TURKMENISTAN",
+              "wireValue": "NATIONALITY_TURKMENISTAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_UGANDA",
+            "name": {
+              "name": "NATIONALITY_UGANDA",
+              "wireValue": "NATIONALITY_UGANDA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_UKRAINE",
+            "name": {
+              "name": "NATIONALITY_UKRAINE",
+              "wireValue": "NATIONALITY_UKRAINE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_UNITED_KINGDOM",
+            "name": {
+              "name": "NATIONALITY_UNITED_KINGDOM",
+              "wireValue": "NATIONALITY_UNITED_KINGDOM"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_UNITED_NATIONS",
+            "name": {
+              "name": "NATIONALITY_UNITED_NATIONS",
+              "wireValue": "NATIONALITY_UNITED_NATIONS"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_UNITED_REPUBLIC_OF_TANZANIA",
+            "name": {
+              "name": "NATIONALITY_UNITED_REPUBLIC_OF_TANZANIA",
+              "wireValue": "NATIONALITY_UNITED_REPUBLIC_OF_TANZANIA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_UNITED_STATES_OF_AMERICA",
+            "name": {
+              "name": "NATIONALITY_UNITED_STATES_OF_AMERICA",
+              "wireValue": "NATIONALITY_UNITED_STATES_OF_AMERICA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_URUGUAY",
+            "name": {
+              "name": "NATIONALITY_URUGUAY",
+              "wireValue": "NATIONALITY_URUGUAY"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_UZBEKISTAN",
+            "name": {
+              "name": "NATIONALITY_UZBEKISTAN",
+              "wireValue": "NATIONALITY_UZBEKISTAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_VENEZUELA",
+            "name": {
+              "name": "NATIONALITY_VENEZUELA",
+              "wireValue": "NATIONALITY_VENEZUELA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_VIETNAM",
+            "name": {
+              "name": "NATIONALITY_VIETNAM",
+              "wireValue": "NATIONALITY_VIETNAM"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_YEMEN",
+            "name": {
+              "name": "NATIONALITY_YEMEN",
+              "wireValue": "NATIONALITY_YEMEN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "NATIONALITY_ZIMBABWE",
+            "name": {
+              "name": "NATIONALITY_ZIMBABWE",
+              "wireValue": "NATIONALITY_ZIMBABWE"
+            },
             "availability": null,
             "docs": null
           }
@@ -14300,12 +15173,18 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "MEAN_ELEMENT_THEORY_INVALID",
+            "name": {
+              "name": "MEAN_ELEMENT_THEORY_INVALID",
+              "wireValue": "MEAN_ELEMENT_THEORY_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "MEAN_ELEMENT_THEORY_SGP4",
+            "name": {
+              "name": "MEAN_ELEMENT_THEORY_SGP4",
+              "wireValue": "MEAN_ELEMENT_THEORY_SGP4"
+            },
             "availability": null,
             "docs": null
           }
@@ -14337,12 +15216,18 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "ECI_REFERENCE_FRAME_INVALID",
+            "name": {
+              "name": "ECI_REFERENCE_FRAME_INVALID",
+              "wireValue": "ECI_REFERENCE_FRAME_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ECI_REFERENCE_FRAME_TEME",
+            "name": {
+              "name": "ECI_REFERENCE_FRAME_TEME",
+              "wireValue": "ECI_REFERENCE_FRAME_TEME"
+            },
             "availability": null,
             "docs": null
           }
@@ -15353,37 +16238,58 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "PAYLOAD_OPERATIONAL_STATE_INVALID",
+            "name": {
+              "name": "PAYLOAD_OPERATIONAL_STATE_INVALID",
+              "wireValue": "PAYLOAD_OPERATIONAL_STATE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "PAYLOAD_OPERATIONAL_STATE_OFF",
+            "name": {
+              "name": "PAYLOAD_OPERATIONAL_STATE_OFF",
+              "wireValue": "PAYLOAD_OPERATIONAL_STATE_OFF"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "PAYLOAD_OPERATIONAL_STATE_NON_OPERATIONAL",
+            "name": {
+              "name": "PAYLOAD_OPERATIONAL_STATE_NON_OPERATIONAL",
+              "wireValue": "PAYLOAD_OPERATIONAL_STATE_NON_OPERATIONAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "PAYLOAD_OPERATIONAL_STATE_DEGRADED",
+            "name": {
+              "name": "PAYLOAD_OPERATIONAL_STATE_DEGRADED",
+              "wireValue": "PAYLOAD_OPERATIONAL_STATE_DEGRADED"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "PAYLOAD_OPERATIONAL_STATE_OPERATIONAL",
+            "name": {
+              "name": "PAYLOAD_OPERATIONAL_STATE_OPERATIONAL",
+              "wireValue": "PAYLOAD_OPERATIONAL_STATE_OPERATIONAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "PAYLOAD_OPERATIONAL_STATE_OUT_OF_SERVICE",
+            "name": {
+              "name": "PAYLOAD_OPERATIONAL_STATE_OUT_OF_SERVICE",
+              "wireValue": "PAYLOAD_OPERATIONAL_STATE_OUT_OF_SERVICE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "PAYLOAD_OPERATIONAL_STATE_UNKNOWN",
+            "name": {
+              "name": "PAYLOAD_OPERATIONAL_STATE_UNKNOWN",
+              "wireValue": "PAYLOAD_OPERATIONAL_STATE_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           }
@@ -15711,32 +16617,50 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "POWER_STATUS_INVALID",
+            "name": {
+              "name": "POWER_STATUS_INVALID",
+              "wireValue": "POWER_STATUS_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "POWER_STATUS_UNKNOWN",
+            "name": {
+              "name": "POWER_STATUS_UNKNOWN",
+              "wireValue": "POWER_STATUS_UNKNOWN"
+            },
             "availability": null,
             "docs": "Indeterminate condition of whether the power system is present or absent."
           },
           {
-            "name": "POWER_STATUS_NOT_PRESENT",
+            "name": {
+              "name": "POWER_STATUS_NOT_PRESENT",
+              "wireValue": "POWER_STATUS_NOT_PRESENT"
+            },
             "availability": null,
             "docs": "Power system is not configured/present. This is considered a normal/expected condition, as opposed to the\\n system is expected to be present but is missing."
           },
           {
-            "name": "POWER_STATUS_OPERATING",
+            "name": {
+              "name": "POWER_STATUS_OPERATING",
+              "wireValue": "POWER_STATUS_OPERATING"
+            },
             "availability": null,
             "docs": "Power system is present and operating normally."
           },
           {
-            "name": "POWER_STATUS_DISABLED",
+            "name": {
+              "name": "POWER_STATUS_DISABLED",
+              "wireValue": "POWER_STATUS_DISABLED"
+            },
             "availability": null,
             "docs": "Power system is present and is in an expected disabled state. For example, if the generator was shut off for\\n operational reasons."
           },
           {
-            "name": "POWER_STATUS_ERROR",
+            "name": {
+              "name": "POWER_STATUS_ERROR",
+              "wireValue": "POWER_STATUS_ERROR"
+            },
             "availability": null,
             "docs": "Power system is non-functional."
           }
@@ -15768,22 +16692,34 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "POWER_TYPE_INVALID",
+            "name": {
+              "name": "POWER_TYPE_INVALID",
+              "wireValue": "POWER_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "POWER_TYPE_UNKNOWN",
+            "name": {
+              "name": "POWER_TYPE_UNKNOWN",
+              "wireValue": "POWER_TYPE_UNKNOWN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "POWER_TYPE_GAS",
+            "name": {
+              "name": "POWER_TYPE_GAS",
+              "wireValue": "POWER_TYPE_GAS"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "POWER_TYPE_BATTERY",
+            "name": {
+              "name": "POWER_TYPE_BATTERY",
+              "wireValue": "POWER_TYPE_BATTERY"
+            },
             "availability": null,
             "docs": null
           }
@@ -16347,87 +17283,138 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "SCAN_TYPE_INVALID",
+            "name": {
+              "name": "SCAN_TYPE_INVALID",
+              "wireValue": "SCAN_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_CIRCULAR",
+            "name": {
+              "name": "SCAN_TYPE_CIRCULAR",
+              "wireValue": "SCAN_TYPE_CIRCULAR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_BIDIRECTIONAL_HORIZONTAL_SECTOR",
+            "name": {
+              "name": "SCAN_TYPE_BIDIRECTIONAL_HORIZONTAL_SECTOR",
+              "wireValue": "SCAN_TYPE_BIDIRECTIONAL_HORIZONTAL_SECTOR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_BIDIRECTIONAL_VERTICAL_SECTOR",
+            "name": {
+              "name": "SCAN_TYPE_BIDIRECTIONAL_VERTICAL_SECTOR",
+              "wireValue": "SCAN_TYPE_BIDIRECTIONAL_VERTICAL_SECTOR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_NON_SCANNING",
+            "name": {
+              "name": "SCAN_TYPE_NON_SCANNING",
+              "wireValue": "SCAN_TYPE_NON_SCANNING"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_IRREGULAR",
+            "name": {
+              "name": "SCAN_TYPE_IRREGULAR",
+              "wireValue": "SCAN_TYPE_IRREGULAR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_CONICAL",
+            "name": {
+              "name": "SCAN_TYPE_CONICAL",
+              "wireValue": "SCAN_TYPE_CONICAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_LOBE_SWITCHING",
+            "name": {
+              "name": "SCAN_TYPE_LOBE_SWITCHING",
+              "wireValue": "SCAN_TYPE_LOBE_SWITCHING"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_RASTER",
+            "name": {
+              "name": "SCAN_TYPE_RASTER",
+              "wireValue": "SCAN_TYPE_RASTER"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_CIRCULAR_VERTICAL_SECTOR",
+            "name": {
+              "name": "SCAN_TYPE_CIRCULAR_VERTICAL_SECTOR",
+              "wireValue": "SCAN_TYPE_CIRCULAR_VERTICAL_SECTOR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_CIRCULAR_CONICAL",
+            "name": {
+              "name": "SCAN_TYPE_CIRCULAR_CONICAL",
+              "wireValue": "SCAN_TYPE_CIRCULAR_CONICAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_SECTOR_CONICAL",
+            "name": {
+              "name": "SCAN_TYPE_SECTOR_CONICAL",
+              "wireValue": "SCAN_TYPE_SECTOR_CONICAL"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_AGILE_BEAM",
+            "name": {
+              "name": "SCAN_TYPE_AGILE_BEAM",
+              "wireValue": "SCAN_TYPE_AGILE_BEAM"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_UNIDIRECTIONAL_VERTICAL_SECTOR",
+            "name": {
+              "name": "SCAN_TYPE_UNIDIRECTIONAL_VERTICAL_SECTOR",
+              "wireValue": "SCAN_TYPE_UNIDIRECTIONAL_VERTICAL_SECTOR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_UNIDIRECTIONAL_HORIZONTAL_SECTOR",
+            "name": {
+              "name": "SCAN_TYPE_UNIDIRECTIONAL_HORIZONTAL_SECTOR",
+              "wireValue": "SCAN_TYPE_UNIDIRECTIONAL_HORIZONTAL_SECTOR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_UNIDIRECTIONAL_SECTOR",
+            "name": {
+              "name": "SCAN_TYPE_UNIDIRECTIONAL_SECTOR",
+              "wireValue": "SCAN_TYPE_UNIDIRECTIONAL_SECTOR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCAN_TYPE_BIDIRECTIONAL_SECTOR",
+            "name": {
+              "name": "SCAN_TYPE_BIDIRECTIONAL_SECTOR",
+              "wireValue": "SCAN_TYPE_BIDIRECTIONAL_SECTOR"
+            },
             "availability": null,
             "docs": null
           }
@@ -17525,32 +18512,50 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "OPERATIONAL_STATE_INVALID",
+            "name": {
+              "name": "OPERATIONAL_STATE_INVALID",
+              "wireValue": "OPERATIONAL_STATE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "OPERATIONAL_STATE_OFF",
+            "name": {
+              "name": "OPERATIONAL_STATE_OFF",
+              "wireValue": "OPERATIONAL_STATE_OFF"
+            },
             "availability": null,
             "docs": "sensor exists but is deliberately turned off"
           },
           {
-            "name": "OPERATIONAL_STATE_NON_OPERATIONAL",
+            "name": {
+              "name": "OPERATIONAL_STATE_NON_OPERATIONAL",
+              "wireValue": "OPERATIONAL_STATE_NON_OPERATIONAL"
+            },
             "availability": null,
             "docs": "sensor is not operational but some reason other than being \\"Off\\" (e.g., equipment malfunction)"
           },
           {
-            "name": "OPERATIONAL_STATE_DEGRADED",
+            "name": {
+              "name": "OPERATIONAL_STATE_DEGRADED",
+              "wireValue": "OPERATIONAL_STATE_DEGRADED"
+            },
             "availability": null,
             "docs": "sensor is receiving information but in some reduced status (e.g., off calibration)"
           },
           {
-            "name": "OPERATIONAL_STATE_OPERATIONAL",
+            "name": {
+              "name": "OPERATIONAL_STATE_OPERATIONAL",
+              "wireValue": "OPERATIONAL_STATE_OPERATIONAL"
+            },
             "availability": null,
             "docs": "fully functional"
           },
           {
-            "name": "OPERATIONAL_STATE_DENIED",
+            "name": {
+              "name": "OPERATIONAL_STATE_DENIED",
+              "wireValue": "OPERATIONAL_STATE_DENIED"
+            },
             "availability": null,
             "docs": "sensor is being actively denied"
           }
@@ -17582,32 +18587,50 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "SENSOR_MODE_INVALID",
+            "name": {
+              "name": "SENSOR_MODE_INVALID",
+              "wireValue": "SENSOR_MODE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_MODE_SEARCH",
+            "name": {
+              "name": "SENSOR_MODE_SEARCH",
+              "wireValue": "SENSOR_MODE_SEARCH"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_MODE_TRACK",
+            "name": {
+              "name": "SENSOR_MODE_TRACK",
+              "wireValue": "SENSOR_MODE_TRACK"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_MODE_WEAPON_SUPPORT",
+            "name": {
+              "name": "SENSOR_MODE_WEAPON_SUPPORT",
+              "wireValue": "SENSOR_MODE_WEAPON_SUPPORT"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_MODE_AUTO",
+            "name": {
+              "name": "SENSOR_MODE_AUTO",
+              "wireValue": "SENSOR_MODE_AUTO"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_MODE_MUTE",
+            "name": {
+              "name": "SENSOR_MODE_MUTE",
+              "wireValue": "SENSOR_MODE_MUTE"
+            },
             "availability": null,
             "docs": null
           }
@@ -17639,47 +18662,74 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "SENSOR_TYPE_INVALID",
+            "name": {
+              "name": "SENSOR_TYPE_INVALID",
+              "wireValue": "SENSOR_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_TYPE_RADAR",
+            "name": {
+              "name": "SENSOR_TYPE_RADAR",
+              "wireValue": "SENSOR_TYPE_RADAR"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_TYPE_CAMERA",
+            "name": {
+              "name": "SENSOR_TYPE_CAMERA",
+              "wireValue": "SENSOR_TYPE_CAMERA"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_TYPE_TRANSPONDER",
+            "name": {
+              "name": "SENSOR_TYPE_TRANSPONDER",
+              "wireValue": "SENSOR_TYPE_TRANSPONDER"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_TYPE_RF",
+            "name": {
+              "name": "SENSOR_TYPE_RF",
+              "wireValue": "SENSOR_TYPE_RF"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_TYPE_GPS",
+            "name": {
+              "name": "SENSOR_TYPE_GPS",
+              "wireValue": "SENSOR_TYPE_GPS"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_TYPE_PTU_POS",
+            "name": {
+              "name": "SENSOR_TYPE_PTU_POS",
+              "wireValue": "SENSOR_TYPE_PTU_POS"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_TYPE_PERIMETER",
+            "name": {
+              "name": "SENSOR_TYPE_PERIMETER",
+              "wireValue": "SENSOR_TYPE_PERIMETER"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SENSOR_TYPE_SONAR",
+            "name": {
+              "name": "SENSOR_TYPE_SONAR",
+              "wireValue": "SENSOR_TYPE_SONAR"
+            },
             "availability": null,
             "docs": null
           }
@@ -19274,17 +20324,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "SCHEDULE_TYPE_INVALID",
+            "name": {
+              "name": "SCHEDULE_TYPE_INVALID",
+              "wireValue": "SCHEDULE_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCHEDULE_TYPE_ZONE_ENABLED",
+            "name": {
+              "name": "SCHEDULE_TYPE_ZONE_ENABLED",
+              "wireValue": "SCHEDULE_TYPE_ZONE_ENABLED"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SCHEDULE_TYPE_ZONE_TEMP_ENABLED",
+            "name": {
+              "name": "SCHEDULE_TYPE_ZONE_TEMP_ENABLED",
+              "wireValue": "SCHEDULE_TYPE_ZONE_TEMP_ENABLED"
+            },
             "availability": null,
             "docs": null
           }
@@ -20243,22 +21302,34 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "INTERROGATION_RESPONSE_INVALID",
+            "name": {
+              "name": "INTERROGATION_RESPONSE_INVALID",
+              "wireValue": "INTERROGATION_RESPONSE_INVALID"
+            },
             "availability": null,
             "docs": "Note that INTERROGATION_INVALID indicates that the target has not been interrogated."
           },
           {
-            "name": "INTERROGATION_RESPONSE_CORRECT",
+            "name": {
+              "name": "INTERROGATION_RESPONSE_CORRECT",
+              "wireValue": "INTERROGATION_RESPONSE_CORRECT"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "INTERROGATION_RESPONSE_INCORRECT",
+            "name": {
+              "name": "INTERROGATION_RESPONSE_INCORRECT",
+              "wireValue": "INTERROGATION_RESPONSE_INCORRECT"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "INTERROGATION_RESPONSE_NO_RESPONSE",
+            "name": {
+              "name": "INTERROGATION_RESPONSE_NO_RESPONSE",
+              "wireValue": "INTERROGATION_RESPONSE_NO_RESPONSE"
+            },
             "availability": null,
             "docs": null
           }
@@ -20914,17 +21985,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "CORRELATION_TYPE_INVALID",
+            "name": {
+              "name": "CORRELATION_TYPE_INVALID",
+              "wireValue": "CORRELATION_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CORRELATION_TYPE_MANUAL",
+            "name": {
+              "name": "CORRELATION_TYPE_MANUAL",
+              "wireValue": "CORRELATION_TYPE_MANUAL"
+            },
             "availability": null,
             "docs": "The correlation was made manually by a human.\\n Manual is higher precedence than automated assuming the same replication mode."
           },
           {
-            "name": "CORRELATION_TYPE_AUTOMATED",
+            "name": {
+              "name": "CORRELATION_TYPE_AUTOMATED",
+              "wireValue": "CORRELATION_TYPE_AUTOMATED"
+            },
             "availability": null,
             "docs": "The correlation was automatically made by a service or some other automated process.\\n Automated is lower precedence than manual assuming the same replication mode."
           }
@@ -20956,17 +22036,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "CORRELATION_REPLICATION_MODE_INVALID",
+            "name": {
+              "name": "CORRELATION_REPLICATION_MODE_INVALID",
+              "wireValue": "CORRELATION_REPLICATION_MODE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CORRELATION_REPLICATION_MODE_LOCAL",
+            "name": {
+              "name": "CORRELATION_REPLICATION_MODE_LOCAL",
+              "wireValue": "CORRELATION_REPLICATION_MODE_LOCAL"
+            },
             "availability": null,
             "docs": "The correlation is local only to the originating node and will not be distributed to other\\n nodes in the mesh. In the case of conflicts, this correlation will override ones coming from\\n other nodes. Local is always higher precedence than global regardless of the correlation type."
           },
           {
-            "name": "CORRELATION_REPLICATION_MODE_GLOBAL",
+            "name": {
+              "name": "CORRELATION_REPLICATION_MODE_GLOBAL",
+              "wireValue": "CORRELATION_REPLICATION_MODE_GLOBAL"
+            },
             "availability": null,
             "docs": "The correlation is distributed globally across all nodes in the mesh. Because an entity can\\n only be part of one correlation, this is based on last-write-wins semantics, however, the\\n correlation will also be stored locally in the originating node preventing any overrides.\\n Global is always lower precedence than local regardless of the correlation type."
           }
@@ -24077,67 +25166,106 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "COMPARATOR_INVALID",
+            "name": {
+              "name": "COMPARATOR_INVALID",
+              "wireValue": "COMPARATOR_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "COMPARATOR_MATCH_ALL",
+            "name": {
+              "name": "COMPARATOR_MATCH_ALL",
+              "wireValue": "COMPARATOR_MATCH_ALL"
+            },
             "availability": null,
             "docs": "Comparators for: boolean, numeric, string, enum, position, timestamp, positions, and bounded shapes."
           },
           {
-            "name": "COMPARATOR_EQUALITY",
+            "name": {
+              "name": "COMPARATOR_EQUALITY",
+              "wireValue": "COMPARATOR_EQUALITY"
+            },
             "availability": null,
             "docs": "Comparators for: boolean, numeric, string, enum, position, and timestamp."
           },
           {
-            "name": "COMPARATOR_IN",
+            "name": {
+              "name": "COMPARATOR_IN",
+              "wireValue": "COMPARATOR_IN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "COMPARATOR_LESS_THAN",
+            "name": {
+              "name": "COMPARATOR_LESS_THAN",
+              "wireValue": "COMPARATOR_LESS_THAN"
+            },
             "availability": null,
             "docs": "Comparators for: numeric, string, and timestamp."
           },
           {
-            "name": "COMPARATOR_GREATER_THAN",
+            "name": {
+              "name": "COMPARATOR_GREATER_THAN",
+              "wireValue": "COMPARATOR_GREATER_THAN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "COMPARATOR_LESS_THAN_EQUAL_TO",
+            "name": {
+              "name": "COMPARATOR_LESS_THAN_EQUAL_TO",
+              "wireValue": "COMPARATOR_LESS_THAN_EQUAL_TO"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "COMPARATOR_GREATER_THAN_EQUAL_TO",
+            "name": {
+              "name": "COMPARATOR_GREATER_THAN_EQUAL_TO",
+              "wireValue": "COMPARATOR_GREATER_THAN_EQUAL_TO"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "COMPARATOR_WITHIN",
+            "name": {
+              "name": "COMPARATOR_WITHIN",
+              "wireValue": "COMPARATOR_WITHIN"
+            },
             "availability": null,
             "docs": "Comparators for: positions and bounded shapes."
           },
           {
-            "name": "COMPARATOR_EXISTS",
+            "name": {
+              "name": "COMPARATOR_EXISTS",
+              "wireValue": "COMPARATOR_EXISTS"
+            },
             "availability": null,
             "docs": "Comparators for: existential checks.\\n TRUE if path to field exists (parent message is present), and either:\\n   1. the field is a primitive: all values including default pass check.\\n   2. the field is a message and set/present.\\n   3. the field is repeated or map with size > 0.\\n FALSE unless path exists and one of the above 3 conditions is met"
           },
           {
-            "name": "COMPARATOR_CASE_INSENSITIVE_EQUALITY",
+            "name": {
+              "name": "COMPARATOR_CASE_INSENSITIVE_EQUALITY",
+              "wireValue": "COMPARATOR_CASE_INSENSITIVE_EQUALITY"
+            },
             "availability": null,
             "docs": "Comparator for string type only."
           },
           {
-            "name": "COMPARATOR_CASE_INSENSITIVE_EQUALITY_IN",
+            "name": {
+              "name": "COMPARATOR_CASE_INSENSITIVE_EQUALITY_IN",
+              "wireValue": "COMPARATOR_CASE_INSENSITIVE_EQUALITY_IN"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "COMPARATOR_RANGE_CLOSED",
+            "name": {
+              "name": "COMPARATOR_RANGE_CLOSED",
+              "wireValue": "COMPARATOR_RANGE_CLOSED"
+            },
             "availability": null,
             "docs": "Comparators for range types only.\\n Closed (inclusive endpoints) [a, b]"
           }
@@ -24169,12 +25297,18 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "LIST_COMPARATOR_INVALID",
+            "name": {
+              "name": "LIST_COMPARATOR_INVALID",
+              "wireValue": "LIST_COMPARATOR_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "LIST_COMPARATOR_ANY_OF",
+            "name": {
+              "name": "LIST_COMPARATOR_ANY_OF",
+              "wireValue": "LIST_COMPARATOR_ANY_OF"
+            },
             "availability": null,
             "docs": null
           }
@@ -26114,32 +27248,50 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "EVENT_TYPE_INVALID",
+            "name": {
+              "name": "EVENT_TYPE_INVALID",
+              "wireValue": "EVENT_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EVENT_TYPE_CREATED",
+            "name": {
+              "name": "EVENT_TYPE_CREATED",
+              "wireValue": "EVENT_TYPE_CREATED"
+            },
             "availability": null,
             "docs": "entity was created."
           },
           {
-            "name": "EVENT_TYPE_UPDATE",
+            "name": {
+              "name": "EVENT_TYPE_UPDATE",
+              "wireValue": "EVENT_TYPE_UPDATE"
+            },
             "availability": null,
             "docs": "entity was updated."
           },
           {
-            "name": "EVENT_TYPE_DELETED",
+            "name": {
+              "name": "EVENT_TYPE_DELETED",
+              "wireValue": "EVENT_TYPE_DELETED"
+            },
             "availability": null,
             "docs": "entity was deleted."
           },
           {
-            "name": "EVENT_TYPE_PREEXISTING",
+            "name": {
+              "name": "EVENT_TYPE_PREEXISTING",
+              "wireValue": "EVENT_TYPE_PREEXISTING"
+            },
             "availability": null,
             "docs": "entity already existed, but sent on a new stream connection."
           },
           {
-            "name": "EVENT_TYPE_POST_EXPIRY_OVERRIDE",
+            "name": {
+              "name": "EVENT_TYPE_POST_EXPIRY_OVERRIDE",
+              "wireValue": "EVENT_TYPE_POST_EXPIRY_OVERRIDE"
+            },
             "availability": null,
             "docs": "entity override was set after the entity expiration."
           }
@@ -27516,77 +28668,122 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "STATUS_INVALID",
+            "name": {
+              "name": "STATUS_INVALID",
+              "wireValue": "STATUS_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "STATUS_CREATED",
+            "name": {
+              "name": "STATUS_CREATED",
+              "wireValue": "STATUS_CREATED"
+            },
             "availability": null,
             "docs": "Initial creation Status."
           },
           {
-            "name": "STATUS_SCHEDULED_IN_MANAGER",
+            "name": {
+              "name": "STATUS_SCHEDULED_IN_MANAGER",
+              "wireValue": "STATUS_SCHEDULED_IN_MANAGER"
+            },
             "availability": null,
             "docs": "Scheduled within Task Manager to be sent at a future time."
           },
           {
-            "name": "STATUS_SENT",
+            "name": {
+              "name": "STATUS_SENT",
+              "wireValue": "STATUS_SENT"
+            },
             "availability": null,
             "docs": "Sent to another system (Asset), no receipt yet."
           },
           {
-            "name": "STATUS_MACHINE_RECEIPT",
+            "name": {
+              "name": "STATUS_MACHINE_RECEIPT",
+              "wireValue": "STATUS_MACHINE_RECEIPT"
+            },
             "availability": null,
             "docs": "Task was sent to Assignee, and some system was reachable and responded.\\n However, the system responsible for execution on the Assignee has not yet acknowledged the Task."
           },
           {
-            "name": "STATUS_ACK",
+            "name": {
+              "name": "STATUS_ACK",
+              "wireValue": "STATUS_ACK"
+            },
             "availability": null,
             "docs": "System responsible for execution on the Assignee has acknowledged the Task."
           },
           {
-            "name": "STATUS_WILCO",
+            "name": {
+              "name": "STATUS_WILCO",
+              "wireValue": "STATUS_WILCO"
+            },
             "availability": null,
             "docs": "Assignee confirmed they \\"will comply\\" / intend to execute Task."
           },
           {
-            "name": "STATUS_EXECUTING",
+            "name": {
+              "name": "STATUS_EXECUTING",
+              "wireValue": "STATUS_EXECUTING"
+            },
             "availability": null,
             "docs": "Task was started and is actively executing."
           },
           {
-            "name": "STATUS_WAITING_FOR_UPDATE",
+            "name": {
+              "name": "STATUS_WAITING_FOR_UPDATE",
+              "wireValue": "STATUS_WAITING_FOR_UPDATE"
+            },
             "availability": null,
             "docs": "Task is on hold, waiting for additional updates/information before proceeding."
           },
           {
-            "name": "STATUS_DONE_OK",
+            "name": {
+              "name": "STATUS_DONE_OK",
+              "wireValue": "STATUS_DONE_OK"
+            },
             "availability": null,
             "docs": "Task was completed successfully."
           },
           {
-            "name": "STATUS_DONE_NOT_OK",
+            "name": {
+              "name": "STATUS_DONE_NOT_OK",
+              "wireValue": "STATUS_DONE_NOT_OK"
+            },
             "availability": null,
             "docs": "Task has reached a terminal state but did not complete successfully, see error code/message."
           },
           {
-            "name": "STATUS_REPLACED",
+            "name": {
+              "name": "STATUS_REPLACED",
+              "wireValue": "STATUS_REPLACED"
+            },
             "availability": null,
             "docs": "This definition version was replaced."
           },
           {
-            "name": "STATUS_CANCEL_REQUESTED",
+            "name": {
+              "name": "STATUS_CANCEL_REQUESTED",
+              "wireValue": "STATUS_CANCEL_REQUESTED"
+            },
             "availability": null,
             "docs": "A Task was requested to be cancelled but not yet confirmed, will eventually move to DONE_NOT_OK."
           },
           {
-            "name": "STATUS_COMPLETE_REQUESTED",
+            "name": {
+              "name": "STATUS_COMPLETE_REQUESTED",
+              "wireValue": "STATUS_COMPLETE_REQUESTED"
+            },
             "availability": null,
             "docs": "A Task was requested to be completed successfully but not yet confirmed, will eventually move to DONE_NOT_OK / DONE_OK."
           },
           {
-            "name": "STATUS_VERSION_REJECTED",
+            "name": {
+              "name": "STATUS_VERSION_REJECTED",
+              "wireValue": "STATUS_VERSION_REJECTED"
+            },
             "availability": null,
             "docs": "This definition version was rejected, intended to be used when an Agent does not accept a new version of a task\\n and continues using previous version"
           }
@@ -27618,27 +28815,42 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "ERROR_CODE_INVALID",
+            "name": {
+              "name": "ERROR_CODE_INVALID",
+              "wireValue": "ERROR_CODE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ERROR_CODE_CANCELLED",
+            "name": {
+              "name": "ERROR_CODE_CANCELLED",
+              "wireValue": "ERROR_CODE_CANCELLED"
+            },
             "availability": null,
             "docs": "Task was cancelled by requester."
           },
           {
-            "name": "ERROR_CODE_REJECTED",
+            "name": {
+              "name": "ERROR_CODE_REJECTED",
+              "wireValue": "ERROR_CODE_REJECTED"
+            },
             "availability": null,
             "docs": "Task was rejected by assignee, see message for details."
           },
           {
-            "name": "ERROR_CODE_TIMEOUT",
+            "name": {
+              "name": "ERROR_CODE_TIMEOUT",
+              "wireValue": "ERROR_CODE_TIMEOUT"
+            },
             "availability": null,
             "docs": "Task Manager gave up waiting for a receipt/ack from assignee."
           },
           {
-            "name": "ERROR_CODE_FAILED",
+            "name": {
+              "name": "ERROR_CODE_FAILED",
+              "wireValue": "ERROR_CODE_FAILED"
+            },
             "availability": null,
             "docs": "Task attempted to execute, but failed."
           }
@@ -27670,22 +28882,34 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "EVENT_TYPE_INVALID",
+            "name": {
+              "name": "EVENT_TYPE_INVALID",
+              "wireValue": "EVENT_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EVENT_TYPE_CREATED",
+            "name": {
+              "name": "EVENT_TYPE_CREATED",
+              "wireValue": "EVENT_TYPE_CREATED"
+            },
             "availability": null,
             "docs": "Task was created."
           },
           {
-            "name": "EVENT_TYPE_UPDATE",
+            "name": {
+              "name": "EVENT_TYPE_UPDATE",
+              "wireValue": "EVENT_TYPE_UPDATE"
+            },
             "availability": null,
             "docs": "Task was updated."
           },
           {
-            "name": "EVENT_TYPE_PREEXISTING",
+            "name": {
+              "name": "EVENT_TYPE_PREEXISTING",
+              "wireValue": "EVENT_TYPE_PREEXISTING"
+            },
             "availability": null,
             "docs": "Task already existed, but sent on a new stream connection."
           }
@@ -27717,17 +28941,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "TASK_VIEW_INVALID",
+            "name": {
+              "name": "TASK_VIEW_INVALID",
+              "wireValue": "TASK_VIEW_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TASK_VIEW_MANAGER",
+            "name": {
+              "name": "TASK_VIEW_MANAGER",
+              "wireValue": "TASK_VIEW_MANAGER"
+            },
             "availability": null,
             "docs": "Represents the most recent version of the Task known to Task Manager"
           },
           {
-            "name": "TASK_VIEW_AGENT",
+            "name": {
+              "name": "TASK_VIEW_AGENT",
+              "wireValue": "TASK_VIEW_AGENT"
+            },
             "availability": null,
             "docs": "Represents the most recent version of the Task acknowledged or updated by an Agent"
           }
@@ -30597,17 +31830,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "FILTER_TYPE_INVALID",
+            "name": {
+              "name": "FILTER_TYPE_INVALID",
+              "wireValue": "FILTER_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "FILTER_TYPE_INCLUSIVE",
+            "name": {
+              "name": "FILTER_TYPE_INCLUSIVE",
+              "wireValue": "FILTER_TYPE_INCLUSIVE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "FILTER_TYPE_EXCLUSIVE",
+            "name": {
+              "name": "FILTER_TYPE_EXCLUSIVE",
+              "wireValue": "FILTER_TYPE_EXCLUSIVE"
+            },
             "availability": null,
             "docs": null
           }
@@ -31415,17 +32657,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "POWER_STATE_INVALID",
+            "name": {
+              "name": "POWER_STATE_INVALID",
+              "wireValue": "POWER_STATE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "POWER_STATE_ON",
+            "name": {
+              "name": "POWER_STATE_ON",
+              "wireValue": "POWER_STATE_ON"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "POWER_STATE_OFF",
+            "name": {
+              "name": "POWER_STATE_OFF",
+              "wireValue": "POWER_STATE_OFF"
+            },
             "availability": null,
             "docs": null
           }
@@ -31683,17 +32934,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "TRANSMIT_STATE_INVALID",
+            "name": {
+              "name": "TRANSMIT_STATE_INVALID",
+              "wireValue": "TRANSMIT_STATE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TRANSMIT_STATE_TRANSMITTING",
+            "name": {
+              "name": "TRANSMIT_STATE_TRANSMITTING",
+              "wireValue": "TRANSMIT_STATE_TRANSMITTING"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "TRANSMIT_STATE_NOT_TRANSMITTING",
+            "name": {
+              "name": "TRANSMIT_STATE_NOT_TRANSMITTING",
+              "wireValue": "TRANSMIT_STATE_NOT_TRANSMITTING"
+            },
             "availability": null,
             "docs": null
           }
@@ -31725,17 +32985,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "SURVEILLANCE_STATE_INVALID",
+            "name": {
+              "name": "SURVEILLANCE_STATE_INVALID",
+              "wireValue": "SURVEILLANCE_STATE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SURVEILLANCE_STATE_SURVEILLING",
+            "name": {
+              "name": "SURVEILLANCE_STATE_SURVEILLING",
+              "wireValue": "SURVEILLANCE_STATE_SURVEILLING"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "SURVEILLANCE_STATE_NOT_SURVEILLING",
+            "name": {
+              "name": "SURVEILLANCE_STATE_NOT_SURVEILLING",
+              "wireValue": "SURVEILLANCE_STATE_NOT_SURVEILLING"
+            },
             "availability": null,
             "docs": null
           }
@@ -31767,17 +33036,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "EMISSION_CONTROL_STATE_INVALID",
+            "name": {
+              "name": "EMISSION_CONTROL_STATE_INVALID",
+              "wireValue": "EMISSION_CONTROL_STATE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EMISSION_CONTROL_STATE_ALLOWED",
+            "name": {
+              "name": "EMISSION_CONTROL_STATE_ALLOWED",
+              "wireValue": "EMISSION_CONTROL_STATE_ALLOWED"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "EMISSION_CONTROL_STATE_NOT_ALLOWED",
+            "name": {
+              "name": "EMISSION_CONTROL_STATE_NOT_ALLOWED",
+              "wireValue": "EMISSION_CONTROL_STATE_NOT_ALLOWED"
+            },
             "availability": null,
             "docs": null
           }
@@ -32394,17 +33672,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "POWER_STATE_INVALID",
+            "name": {
+              "name": "POWER_STATE_INVALID",
+              "wireValue": "POWER_STATE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "POWER_STATE_ON",
+            "name": {
+              "name": "POWER_STATE_ON",
+              "wireValue": "POWER_STATE_ON"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "POWER_STATE_OFF",
+            "name": {
+              "name": "POWER_STATE_OFF",
+              "wireValue": "POWER_STATE_OFF"
+            },
             "availability": null,
             "docs": null
           }
@@ -32810,22 +34097,34 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "CONTROL_AREA_TYPE_INVALID",
+            "name": {
+              "name": "CONTROL_AREA_TYPE_INVALID",
+              "wireValue": "CONTROL_AREA_TYPE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CONTROL_AREA_TYPE_KEEP_IN_ZONE",
+            "name": {
+              "name": "CONTROL_AREA_TYPE_KEEP_IN_ZONE",
+              "wireValue": "CONTROL_AREA_TYPE_KEEP_IN_ZONE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CONTROL_AREA_TYPE_KEEP_OUT_ZONE",
+            "name": {
+              "name": "CONTROL_AREA_TYPE_KEEP_OUT_ZONE",
+              "wireValue": "CONTROL_AREA_TYPE_KEEP_OUT_ZONE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "CONTROL_AREA_TYPE_DITCH_ZONE",
+            "name": {
+              "name": "CONTROL_AREA_TYPE_DITCH_ZONE",
+              "wireValue": "CONTROL_AREA_TYPE_DITCH_ZONE"
+            },
             "availability": null,
             "docs": "Zone for an autonomous asset to nose-dive into\\n when its assignment has been concluded"
           }
@@ -33297,17 +34596,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "ORBIT_DIRECTION_DIRECTION_INVALID",
+            "name": {
+              "name": "ORBIT_DIRECTION_DIRECTION_INVALID",
+              "wireValue": "ORBIT_DIRECTION_DIRECTION_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ORBIT_DIRECTION_RIGHT",
+            "name": {
+              "name": "ORBIT_DIRECTION_RIGHT",
+              "wireValue": "ORBIT_DIRECTION_RIGHT"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ORBIT_DIRECTION_LEFT",
+            "name": {
+              "name": "ORBIT_DIRECTION_LEFT",
+              "wireValue": "ORBIT_DIRECTION_LEFT"
+            },
             "availability": null,
             "docs": null
           }
@@ -33339,22 +34647,34 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "ORBIT_PATTERN_INVALID",
+            "name": {
+              "name": "ORBIT_PATTERN_INVALID",
+              "wireValue": "ORBIT_PATTERN_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ORBIT_PATTERN_CIRCLE",
+            "name": {
+              "name": "ORBIT_PATTERN_CIRCLE",
+              "wireValue": "ORBIT_PATTERN_CIRCLE"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ORBIT_PATTERN_RACETRACK",
+            "name": {
+              "name": "ORBIT_PATTERN_RACETRACK",
+              "wireValue": "ORBIT_PATTERN_RACETRACK"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "ORBIT_PATTERN_FIGURE_EIGHT",
+            "name": {
+              "name": "ORBIT_PATTERN_FIGURE_EIGHT",
+              "wireValue": "ORBIT_PATTERN_FIGURE_EIGHT"
+            },
             "availability": null,
             "docs": null
           }
@@ -35529,17 +36849,26 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
         "default": null,
         "values": [
           {
-            "name": "LAUNCH_TRACKING_MODE_INVALID",
+            "name": {
+              "name": "LAUNCH_TRACKING_MODE_INVALID",
+              "wireValue": "LAUNCH_TRACKING_MODE_INVALID"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "LAUNCH_TRACKING_MODE_GO_TO_WAYPOINT",
+            "name": {
+              "name": "LAUNCH_TRACKING_MODE_GO_TO_WAYPOINT",
+              "wireValue": "LAUNCH_TRACKING_MODE_GO_TO_WAYPOINT"
+            },
             "availability": null,
             "docs": null
           },
           {
-            "name": "LAUNCH_TRACKING_MODE_TRACK_TO_WAYPOINT",
+            "name": {
+              "name": "LAUNCH_TRACKING_MODE_TRACK_TO_WAYPOINT",
+              "wireValue": "LAUNCH_TRACKING_MODE_TRACK_TO_WAYPOINT"
+            },
             "availability": null,
             "docs": null
           }
@@ -50093,6 +51422,7 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
   },
   "audiences": [],
   "generationMetadata": null,
-  "apiPlayground": null
+  "apiPlayground": null,
+  "casingsConfig": null
 }"
 `;
