@@ -135,8 +135,8 @@ export function generateField(
 
         fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue));
     }
-    // if we are using readonly constants, we need to generate the accessors and initializer
-    // so that deserialization works correctly  (ie, throws deserializing an incorrect value to a readonly constant)
+    // if we are using readonly constants, we generate a getter-only expression-bodied property
+    // System.Text.Json ignores properties with no setter during deserialization
 
     let accessors: ast.Field.Accessors | undefined;
     let initializer: ast.CodeBlock | undefined = maybeLiteralInitializer;
@@ -148,19 +148,11 @@ export function generateField(
     }
 
     if (context.generation.settings.enableReadonlyConstants && maybeLiteralInitializer) {
-        accessors = {
-            get: (writer: Writer) => {
-                writer.writeNode(maybeLiteralInitializer);
-            },
-            set: (writer: Writer) => {
-                writer.write("value.Assert(value == ");
-                writer.writeNode(maybeLiteralInitializer);
-                writer.write(`, string.Format("'${property.name.name.pascalCase.safeName}' must be {0}", `);
-                writer.writeNode(maybeLiteralInitializer);
-                writer.write("))");
-            }
-        };
-        initializer = undefined;
+        // Getter-only expression-bodied property: `public string Type => "usage";`
+        // System.Text.Json ignores the JSON field on deserialization (no setter to call)
+        // and serializes the literal value normally on the way out.
+        accessors = undefined;
+        initializer = maybeLiteralInitializer;
         useRequired = false;
     }
 
@@ -172,12 +164,14 @@ export function generateField(
         useRequired = useRequiredOverride;
     }
 
+    const isReadonlyLiteral = context.generation.settings.enableReadonlyConstants && maybeLiteralInitializer != null;
+
     return cls.addField({
         origin: property,
         type: fieldType,
         access: ast.Access.Public,
         get: true,
-        set: true,
+        set: !isReadonlyLiteral,
         summary: property.docs,
         useRequired,
         initializer,

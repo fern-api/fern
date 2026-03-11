@@ -467,7 +467,22 @@ export function convertSchemaObject(
         // NOTE(patrickthornton): This is an attribute of OpenAPIV3_1.SchemaObject;
         // at some point we should probably migrate to that object altogether.
         if ("const" in schema) {
-            schema.enum = [schema.const];
+            const constValue = schema.const;
+            if (typeof constValue === "string" && context.options.coerceConstToLiteral) {
+                return convertLiteral({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    value: constValue,
+                    description,
+                    availability,
+                    namespace,
+                    groupName
+                });
+            }
+            schema.enum = [constValue];
         }
 
         // enums

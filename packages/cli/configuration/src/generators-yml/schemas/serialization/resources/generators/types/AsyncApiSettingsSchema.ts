@@ -12,11 +12,13 @@ export const AsyncApiSettingsSchema: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         "message-naming": MessageNamingSettingsSchema.optional(),
+        "coerce-const-to-literal": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
 export declare namespace AsyncApiSettingsSchema {
     export interface Raw extends BaseApiSettingsSchema.Raw {
         "message-naming"?: MessageNamingSettingsSchema.Raw | null;
+        "coerce-const-to-literal"?: boolean | null;
     }
 }

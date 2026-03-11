@@ -12,7 +12,7 @@ export interface OpenAPISpec {
     absoluteFilepathToOverlays: AbsoluteFilePath | undefined;
     source: Source;
     namespace?: string;
-    settings?: ParseOpenAPIOptions;
+    settings?: Partial<ParseOpenAPIOptions>;
 }
 
 export interface OpenRPCSpec {
@@ -31,7 +31,7 @@ export interface ProtobufSpec {
     generateLocally: boolean;
     fromOpenAPI: boolean;
     dependencies: string[];
-    settings?: ParseOpenAPIOptions;
+    settings?: Partial<ParseOpenAPIOptions>;
 }
 
 export interface GraphQLSpec {

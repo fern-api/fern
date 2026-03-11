@@ -53,7 +53,7 @@ export declare namespace OSSWorkspace {
  */
 function collapseSpecBooleanSetting(
     specs: (OpenAPISpec | ProtobufSpec)[],
-    getter: (settings: ParseOpenAPIOptions | undefined) => boolean | undefined
+    getter: (settings: Partial<ParseOpenAPIOptions> | undefined) => boolean | undefined
 ): boolean | undefined {
     const values = specs.map((spec) => getter(spec.settings));
     const hasAnyExplicit = values.some((v) => v != null);
@@ -110,6 +110,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 (s) => s?.coerceOptionalSchemasToNullable
             ),
             coerceEnumsToLiterals: collapseSpecBooleanSetting(specs, (s) => s?.coerceEnumsToLiterals),
+            coerceConstToLiteral: collapseSpecBooleanSetting(specs, (s) => s?.coerceConstToLiteral),
             onlyIncludeReferencedSchemas: collapseSpecBooleanSetting(specs, (s) => s?.onlyIncludeReferencedSchemas),
             inlinePathParameters: collapseSpecBooleanSetting(specs, (s) => s?.inlinePathParameters),
             objectQueryParameters: collapseSpecBooleanSetting(specs, (s) => s?.objectQueryParameters),
@@ -154,6 +155,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             wrapReferencesToNullableInOptional: this.wrapReferencesToNullableInOptional,
             coerceOptionalSchemasToNullable: this.coerceOptionalSchemasToNullable,
             coerceEnumsToLiterals: this.coerceEnumsToLiterals,
+            coerceConstToLiteral: this.coerceConstToLiteral,
             inlinePathParameters: this.inlinePathParameters,
             objectQueryParameters: this.objectQueryParameters,
             exampleGeneration: this.exampleGeneration,

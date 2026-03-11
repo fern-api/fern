@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -34,15 +34,41 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             interfaces.push(this.System.Text.Json.Serialization.IJsonOnSerializing);
         }
 
+        const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
+
+        // Determine if we need a custom JsonConverter for literal properties
+        const enableReadonlyConstants = this.context.generation.settings.enableReadonlyConstants;
+        const literalProperties = enableReadonlyConstants
+            ? properties.filter((property) => {
+                  const literalValue = this.context.getLiteralValue(property.valueType);
+                  return literalValue !== undefined;
+              })
+            : [];
+        const needsJsonConverter = literalProperties.length > 0;
+
+        const annotations: (ast.Annotation | ast.ClassReference)[] = [];
+        if (needsJsonConverter) {
+            annotations.push(
+                this.csharp.annotation({
+                    reference: this.System.Text.Json.Serialization.JsonConverter(),
+                    argument: this.csharp.codeblock((writer: Writer) => {
+                        writer.write("typeof(");
+                        writer.writeNode(this.classReference);
+                        writer.write(".JsonConverter)");
+                    })
+                })
+            );
+        }
+        annotations.push(this.System.Serializable);
+
         const class_ = this.csharp.class_({
             reference: this.classReference,
             summary: this.typeDeclaration.docs,
             access: ast.Access.Public,
             type: ast.Class.ClassType.Record,
             interfaceReferences: interfaces,
-            annotations: [this.System.Serializable]
+            annotations
         });
-        const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
         generateFields(class_, { properties, className: this.classReference.name, context: this.context });
 
         this.addExtensionDataField(class_);
@@ -58,6 +84,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             });
         }
 
+        if (needsJsonConverter) {
+            this.addJsonConverterNestedClass(class_, literalProperties);
+        }
+
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId),
@@ -66,6 +96,105 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             namespace: this.namespaces.root,
             generation: this.generation
         });
+    }
+
+    private addJsonConverterNestedClass(enclosingClass: ast.Class, literalProperties: FernIr.ObjectProperty[]): void {
+        const unionReference = this.classReference;
+        const converterClass = this.csharp.class_({
+            origin: enclosingClass.explicit("JsonConverter"),
+            access: ast.Access.Internal,
+            namespace: this.classReference.namespace,
+            enclosingType: this.classReference,
+            sealed: true,
+            parentClassReference: this.System.Text.Json.Serialization.JsonConverter(unionReference)
+        });
+
+        converterClass.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            return_: unionReference.asOptional(),
+            name: "Read",
+            parameters: [
+                this.csharp.parameter({
+                    ref: true,
+                    name: "reader",
+                    type: this.System.Text.Json.Utf8JsonReader
+                }),
+                this.csharp.parameter({
+                    name: "typeToConvert",
+                    type: this.System.Type
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.System.Text.Json.JsonSerializerOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeTextStatement("var document = JsonDocument.ParseValue(ref reader)");
+                for (const property of literalProperties) {
+                    const wireValue = property.name.wireValue;
+                    const literalValue = this.context.getLiteralValue(property.valueType);
+                    if (typeof literalValue === "string") {
+                        writer.writeLine(
+                            `if (document.RootElement.TryGetProperty("${wireValue}", out var ${this.toLocalVarName(wireValue)}Element)`
+                        );
+                        writer.writeLine(
+                            `    && ${this.toLocalVarName(wireValue)}Element.GetString() != "${literalValue}")`
+                        );
+                        writer.pushScope();
+                        writer.writeTextStatement(
+                            `throw new JsonException($"Expected literal '${wireValue}' to be '${literalValue}', got '{${this.toLocalVarName(wireValue)}Element.GetString()}'")`
+                        );
+                        writer.popScope();
+                    }
+                }
+                writer.write("return document.Deserialize<");
+                writer.writeNode(unionReference);
+                writer.write(">(");
+                writer.writeNode(this.Types.JsonOptions);
+                writer.writeTextStatement(".JsonSerializerOptions)");
+            })
+        });
+
+        converterClass.addMethod({
+            access: ast.Access.Public,
+            override: true,
+            name: "Write",
+            parameters: [
+                this.csharp.parameter({
+                    name: "writer",
+                    type: this.System.Text.Json.Utf8JsonWriter
+                }),
+                this.csharp.parameter({
+                    name: "value",
+                    type: unionReference
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.System.Text.Json.JsonSerializerOptions
+                })
+            ],
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.write("JsonSerializer.Serialize(writer, value, ");
+                writer.writeNode(this.Types.JsonOptions);
+                writer.writeTextStatement(".JsonSerializerOptions)");
+            })
+        });
+
+        enclosingClass.addNestedClass(converterClass);
+    }
+
+    /**
+     * Converts a wire value (e.g. "myProp") to a camelCase local variable name (e.g. "myProp").
+     * Strips non-alphanumeric characters and lowercases the first letter for valid C# identifiers.
+     */
+    private toLocalVarName(wireValue: string): string {
+        // Replace non-identifier characters, ensure camelCase start
+        const cleaned = wireValue.replace(/[^a-zA-Z0-9]/g, "_");
+        if (cleaned.length === 0) {
+            return "value";
+        }
+        return cleaned.charAt(0).toLowerCase() + cleaned.slice(1);
     }
 
     private addExtensionDataField(class_: ast.Class): void {

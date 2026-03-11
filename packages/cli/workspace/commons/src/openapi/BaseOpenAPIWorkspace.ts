@@ -16,6 +16,7 @@ export declare namespace BaseOpenAPIWorkspace {
         wrapReferencesToNullableInOptional: boolean | undefined;
         coerceOptionalSchemasToNullable: boolean | undefined;
         coerceEnumsToLiterals: boolean | undefined;
+        coerceConstToLiteral: boolean | undefined;
         exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
         useBytesForBinaryResponse: boolean | undefined;
         respectForwardCompatibleEnums: boolean | undefined;
@@ -39,6 +40,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public readonly wrapReferencesToNullableInOptional: boolean | undefined;
     public readonly coerceOptionalSchemasToNullable: boolean | undefined;
     public readonly coerceEnumsToLiterals: boolean | undefined;
+    public readonly coerceConstToLiteral: boolean | undefined;
     public readonly exampleGeneration: generatorsYml.OpenApiExampleGenerationSchema | undefined;
     public readonly useBytesForBinaryResponse: boolean | undefined;
     public readonly respectForwardCompatibleEnums: boolean | undefined;
@@ -60,6 +62,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.wrapReferencesToNullableInOptional = args.wrapReferencesToNullableInOptional;
         this.coerceOptionalSchemasToNullable = args.coerceOptionalSchemasToNullable;
         this.coerceEnumsToLiterals = args.coerceEnumsToLiterals;
+        this.coerceConstToLiteral = args.coerceConstToLiteral;
         this.exampleGeneration = args.exampleGeneration;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
@@ -137,6 +140,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public defaultIntegerFormat: generatorsYml.DefaultIntegerFormat | undefined;
     public pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
     public coerceEnumsToLiterals: boolean | undefined;
+    public coerceConstToLiteral: boolean | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -151,6 +155,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.groupEnvironmentsByHost = args.groupEnvironmentsByHost;
         this.defaultIntegerFormat = args.defaultIntegerFormat;
         this.coerceEnumsToLiterals = args.coerceEnumsToLiterals;
+        this.coerceConstToLiteral = args.coerceConstToLiteral;
         this.pathParameterOrder = args.pathParameterOrder;
         this.converter = new FernDefinitionConverter(args);
     }

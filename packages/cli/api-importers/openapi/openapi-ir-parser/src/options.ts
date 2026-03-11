@@ -16,6 +16,8 @@ export interface ParseOpenAPIOptions {
     optionalAdditionalProperties: boolean;
     /* Whether or not to coerce enums as literals */
     coerceEnumsToLiterals: boolean;
+    /* Whether or not to coerce `const` string schemas to literals */
+    coerceConstToLiteral: boolean;
     /* Whether or not to respect readonly properties in schemas */
     respectReadonlySchemas: boolean;
     /* Whether or not to respect nullable properties in schemas */
@@ -118,6 +120,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     audiences: undefined,
     optionalAdditionalProperties: true,
     coerceEnumsToLiterals: false,
+    coerceConstToLiteral: false,
     respectReadonlySchemas: false,
     respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,

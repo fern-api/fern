@@ -366,11 +366,6 @@ export class WebSocketClientGenerator extends WithGeneration {
                 summary: "The Environment for the API connection.",
                 get: true,
                 set: true,
-                initializer: this.defaultEnvironment
-                    ? this.csharp.codeblock((writer) => {
-                          writer.write(`"${this.defaultEnvironment}"`);
-                      })
-                    : undefined,
                 accessors: {
                     set: (writer: Writer) => {
                         writer.write(`_baseUrl = value`);
@@ -792,11 +787,11 @@ export class WebSocketClientGenerator extends WithGeneration {
     }
 
     /**
+    /**
      * Creates the JsonConverter for the IncomingMessage undiscriminated union.
      *
-     * The Read method tries each server event type in order, returning the first
-     * successful deserialization. This follows the same pattern as the existing
-     * UndiscriminatedUnionGenerator's object parsing logic.
+     * Uses a uniform try/catch loop over all event types to attempt deserialization
+     * in order, falling back to an unknown message if none match.
      */
     private createIncomingMessageJsonConverter(parentClass: ast.Class, parentRef: ast.ClassReference): void {
         const converterClass = this.csharp.class_({
@@ -819,18 +814,21 @@ export class WebSocketClientGenerator extends WithGeneration {
                 this.csharp.parameter({ name: "options", type: this.System.Text.Json.JsonSerializerOptions })
             ],
             body: this.csharp.codeblock((writer) => {
+                const namedEvents = this.events.filter(
+                    (event): event is typeof event & { name: string } => event.name != null
+                );
+
                 writeObjectDeserializationLoop(writer, {
-                    entries: this.events
-                        .filter((event): event is typeof event & { name: string } => event.name != null)
-                        .map((event) => ({
-                            key: event.name,
-                            writeType: (w) => w.writeNode(event.type)
-                        })),
+                    entries: namedEvents.map((event) => ({
+                        key: event.name,
+                        writeType: (w) => w.writeNode(event.type)
+                    })),
                     onMatch: (w) => {
                         w.writeTextStatement("return new IncomingMessage(key, value)");
                     }
                 });
                 writer.writeLine();
+
                 writer.writeTextStatement("return new IncomingMessage(_unknownType, document.RootElement.Clone())");
             })
         });

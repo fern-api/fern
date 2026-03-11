@@ -4,6 +4,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
+[JsonConverter(typeof(SendResponse.JsonConverter))]
 [Serializable]
 public record SendResponse : IJsonOnDeserialized
 {
@@ -18,11 +19,7 @@ public record SendResponse : IJsonOnDeserialized
     public required int Status { get; set; }
 
     [JsonPropertyName("success")]
-    public bool Success
-    {
-        get => true;
-        set => value.Assert(value == true, string.Format("'Success' must be {0}", true));
-    }
+    public bool Success => true;
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -34,5 +31,27 @@ public record SendResponse : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    internal sealed class JsonConverter : JsonConverter<SendResponse>
+    {
+        public override SendResponse? Read(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var document = JsonDocument.ParseValue(ref reader);
+            return document.Deserialize<SendResponse>(JsonOptions.JsonSerializerOptions);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            SendResponse value,
+            JsonSerializerOptions options
+        )
+        {
+            JsonSerializer.Serialize(writer, value, JsonOptions.JsonSerializerOptions);
+        }
     }
 }

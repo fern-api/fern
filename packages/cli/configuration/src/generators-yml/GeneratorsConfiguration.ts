@@ -70,6 +70,7 @@ export interface APIDefinitionSettings {
     asyncApiMessageNaming: "v1" | "v2" | undefined;
     shouldUseOptionalAdditionalProperties: boolean | undefined;
     coerceEnumsToLiterals: boolean | undefined;
+    coerceConstToLiteral: boolean | undefined;
     objectQueryParameters: boolean | undefined;
     respectReadonlySchemas: boolean | undefined;
     respectNullableSchemas: boolean | undefined;

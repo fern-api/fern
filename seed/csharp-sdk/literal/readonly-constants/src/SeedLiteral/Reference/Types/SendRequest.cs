@@ -4,6 +4,7 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
+[JsonConverter(typeof(SendRequest.JsonConverter))]
 [Serializable]
 public record SendRequest : IJsonOnDeserialized
 {
@@ -12,43 +13,19 @@ public record SendRequest : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("prompt")]
-    public string Prompt
-    {
-        get => "You are a helpful assistant";
-        set =>
-            value.Assert(
-                value == "You are a helpful assistant",
-                string.Format("'Prompt' must be {0}", "You are a helpful assistant")
-            );
-    }
+    public string Prompt => "You are a helpful assistant";
 
     [JsonPropertyName("query")]
     public required string Query { get; set; }
 
     [JsonPropertyName("stream")]
-    public bool Stream
-    {
-        get => false;
-        set => value.Assert(value == false, string.Format("'Stream' must be {0}", false));
-    }
+    public bool Stream => false;
 
     [JsonPropertyName("ending")]
-    public string Ending
-    {
-        get => "$ending";
-        set => value.Assert(value == "$ending", string.Format("'Ending' must be {0}", "$ending"));
-    }
+    public string Ending => "$ending";
 
     [JsonPropertyName("context")]
-    public string Context
-    {
-        get => "You're super wise";
-        set =>
-            value.Assert(
-                value == "You're super wise",
-                string.Format("'Context' must be {0}", "You're super wise")
-            );
-    }
+    public string Context => "You're super wise";
 
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }
@@ -66,5 +43,54 @@ public record SendRequest : IJsonOnDeserialized
     public override string ToString()
     {
         return JsonUtils.Serialize(this);
+    }
+
+    internal sealed class JsonConverter : JsonConverter<SendRequest>
+    {
+        public override SendRequest? Read(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var document = JsonDocument.ParseValue(ref reader);
+            if (
+                document.RootElement.TryGetProperty("prompt", out var promptElement)
+                && promptElement.GetString() != "You are a helpful assistant"
+            )
+            {
+                throw new JsonException(
+                    $"Expected literal 'prompt' to be 'You are a helpful assistant', got '{promptElement.GetString()}'"
+                );
+            }
+            if (
+                document.RootElement.TryGetProperty("ending", out var endingElement)
+                && endingElement.GetString() != "$ending"
+            )
+            {
+                throw new JsonException(
+                    $"Expected literal 'ending' to be '$ending', got '{endingElement.GetString()}'"
+                );
+            }
+            if (
+                document.RootElement.TryGetProperty("context", out var contextElement)
+                && contextElement.GetString() != "You're super wise"
+            )
+            {
+                throw new JsonException(
+                    $"Expected literal 'context' to be 'You're super wise', got '{contextElement.GetString()}'"
+                );
+            }
+            return document.Deserialize<SendRequest>(JsonOptions.JsonSerializerOptions);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            SendRequest value,
+            JsonSerializerOptions options
+        )
+        {
+            JsonSerializer.Serialize(writer, value, JsonOptions.JsonSerializerOptions);
+        }
     }
 }

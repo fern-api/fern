@@ -49,6 +49,7 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             wrapReferencesToNullableInOptional: spec.settings?.wrapReferencesToNullableInOptional,
             coerceOptionalSchemasToNullable: spec.settings?.coerceOptionalSchemasToNullable,
             coerceEnumsToLiterals: spec.settings?.coerceEnumsToLiterals,
+            coerceConstToLiteral: spec.settings?.coerceConstToLiteral,
             onlyIncludeReferencedSchemas: spec.settings?.onlyIncludeReferencedSchemas,
             inlinePathParameters: spec.settings?.inlinePathParameters,
             objectQueryParameters: spec.settings?.objectQueryParameters,
@@ -74,7 +75,8 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             resolveAliases: this.resolveAliases,
             groupEnvironmentsByHost: this.groupEnvironmentsByHost,
             defaultIntegerFormat: this.defaultIntegerFormat,
-            pathParameterOrder: this.pathParameterOrder
+            pathParameterOrder: this.pathParameterOrder,
+            coerceConstToLiteral: this.coerceConstToLiteral
         };
     }
 

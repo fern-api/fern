@@ -48,7 +48,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     removeDiscriminantsFromSchemas: undefined,
     pathParameterOrder: undefined,
     defaultIntegerFormat: undefined,
-    resolveSchemaCollisions: undefined
+    resolveSchemaCollisions: undefined,
+    coerceConstToLiteral: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -126,6 +127,7 @@ function parseOpenApiDefinitionSettingsSchema(
     return {
         ...parseBaseApiDefinitionSettingsSchema(settings),
         shouldUseUndiscriminatedUnionsWithLiterals: settings?.["prefer-undiscriminated-unions-with-literals"],
+        coerceConstToLiteral: settings?.["coerce-const-to-literal"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         objectQueryParameters: settings?.["object-query-parameters"],
         respectReadonlySchemas: settings?.["respect-readonly-schemas"],
@@ -152,7 +154,8 @@ function parseAsyncApiDefinitionSettingsSchema(
 ): generatorsYml.APIDefinitionSettings {
     return {
         ...parseBaseApiDefinitionSettingsSchema(settings),
-        asyncApiMessageNaming: settings?.["message-naming"]
+        asyncApiMessageNaming: settings?.["message-naming"],
+        coerceConstToLiteral: settings?.["coerce-const-to-literal"]
     };
 }
 

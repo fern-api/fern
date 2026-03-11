@@ -653,7 +653,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return undefined;
     }
 
-    private getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
+    public getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             const literal = typeReference.container.literal;
             switch (literal.type) {
