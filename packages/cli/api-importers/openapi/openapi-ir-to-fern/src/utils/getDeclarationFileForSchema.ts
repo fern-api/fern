@@ -7,7 +7,7 @@ import { convertSdkGroupNameToFile } from "./convertSdkGroupName.js";
 
 const PACKAGE_MARKER_RELATIVE_FILEPATH = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
 
-export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
+export function getDeclarationFileForSchema(schema: Schema, namespace?: string): RelativeFilePath {
     switch (schema.type) {
         case "object":
         case "primitive":
@@ -28,7 +28,10 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
                 groupName: schema.value.groupName
             });
         case "unknown":
-            return PACKAGE_MARKER_RELATIVE_FILEPATH;
+            return getDeclarationFileFromGroupName({
+                namespace,
+                groupName: undefined
+            });
         default:
             assertNever(schema);
     }

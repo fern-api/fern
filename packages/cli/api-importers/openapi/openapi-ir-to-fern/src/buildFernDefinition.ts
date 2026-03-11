@@ -58,7 +58,7 @@ function addSchemas({
             continue;
         }
 
-        const declarationFile = getDeclarationFileForSchema(schema);
+        const declarationFile = getDeclarationFileForSchema(schema, namespace);
         const typeDeclaration = buildTypeDeclaration({
             schema,
             context,
