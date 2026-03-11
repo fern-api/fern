@@ -1,4 +1,27 @@
-import { NameAndWireValue, NameAndWireValueOrString, NameOrString } from "@fern-api/ir-sdk";
+import { constructFullCasingsGenerator } from "@fern-api/casings-generator";
+import { Name, NameAndWireValue, NameAndWireValueOrString, NameOrString } from "@fern-api/ir-sdk";
+
+/**
+ * A unified input type that accepts any name-like value:
+ * - string (compressed NameOrString or NameAndWireValueOrString)
+ * - Name (full casing object)
+ * - NameAndWireValue (wireValue + name pair)
+ */
+export type NameInput = NameOrString | NameAndWireValueOrString;
+
+function isNameAndWireValue(value: Name | NameAndWireValue): value is NameAndWireValue {
+    return "wireValue" in value;
+}
+
+function extractNameOrString(input: NameInput): NameOrString {
+    if (typeof input === "string") {
+        return input;
+    }
+    if (isNameAndWireValue(input)) {
+        return input.name;
+    }
+    return input;
+}
 
 /**
  * Extract the original name from a NameOrString value.
@@ -36,4 +59,48 @@ export function ensureNameAndWireValue(nameAndWireValue: NameAndWireValueOrStrin
         return { wireValue: nameAndWireValue, name: nameAndWireValue };
     }
     return nameAndWireValue;
+}
+
+// Lazy-initialized default casings generator for fallback casing computation.
+// Used only when a NameOrString is a plain string and we need to compute casings.
+let _defaultCasingsGenerator: ReturnType<typeof constructFullCasingsGenerator> | undefined;
+function getDefaultCasingsGenerator(): ReturnType<typeof constructFullCasingsGenerator> {
+    if (_defaultCasingsGenerator == null) {
+        _defaultCasingsGenerator = constructFullCasingsGenerator({
+            generationLanguage: undefined,
+            keywords: undefined,
+            smartCasing: true
+        });
+    }
+    return _defaultCasingsGenerator;
+}
+
+/**
+ * Get the camelCase unsafe name from any name-like input.
+ * Accepts NameOrString, NameAndWireValueOrString, or any combination.
+ * If given a NameAndWireValue, extracts the inner name first.
+ * If the value is a string, computes casing via the casings generator.
+ * If it's a Name object, returns the pre-computed camelCase.unsafeName.
+ */
+export function getCamelCaseUnsafe(input: NameInput): string {
+    const name = extractNameOrString(input);
+    if (typeof name === "string") {
+        return getDefaultCasingsGenerator().generateName(name).camelCase.unsafeName;
+    }
+    return name.camelCase.unsafeName;
+}
+
+/**
+ * Get the PascalCase unsafe name from any name-like input.
+ * Accepts NameOrString, NameAndWireValueOrString, or any combination.
+ * If given a NameAndWireValue, extracts the inner name first.
+ * If the value is a string, computes casing via the casings generator.
+ * If it's a Name object, returns the pre-computed pascalCase.unsafeName.
+ */
+export function getPascalCaseUnsafe(input: NameInput): string {
+    const name = extractNameOrString(input);
+    if (typeof name === "string") {
+        return getDefaultCasingsGenerator().generateName(name).pascalCase.unsafeName;
+    }
+    return name.pascalCase.unsafeName;
 }

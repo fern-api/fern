@@ -28,7 +28,7 @@ import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
 import { getDeclaredTypeNameKey, getErrorTypeNameKey, Mode } from "../convertIrToOpenApi.js";
-import { getCamelCaseUnsafe, getOriginalName, getPascalCaseUnsafe, getWireValue } from "../nameHelpers.js";
+import { getCamelCaseUnsafe, getOriginalName, getPascalCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
 import { convertObject } from "./convertObject.js";
 import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter.js";
 

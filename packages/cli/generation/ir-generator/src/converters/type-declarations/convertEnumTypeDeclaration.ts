@@ -2,7 +2,7 @@ import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { EnumTypeDeclaration, EnumValue } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext.js";
-import { getWireValue } from "../../utils/namesUtils.js";
+import { getWireValue } from "@fern-api/ir-utils";
 import { convertDeclaration } from "../convertDeclaration.js";
 
 export function convertEnumTypeDeclaration({

@@ -120,8 +120,8 @@ export class IrCompiler {
         if (options.irVersion != null) {
             const casingsGenerator = constructCasingsGenerator({
                 generationLanguage: options.language,
-                keywords: undefined,
-                smartCasing: false
+                keywords: ir.casingsConfig?.keywords,
+                smartCasing: ir.casingsConfig?.smartCasing ?? true
             });
             return migrateIntermediateRepresentationThroughVersion({
                 intermediateRepresentation: ir,

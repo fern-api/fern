@@ -13,7 +13,7 @@ import {
     WebhookGroupId,
     WebSocketChannelId
 } from "@fern-api/ir-sdk";
-import { FilteredIr, IdGenerator } from "@fern-api/ir-utils";
+import { FilteredIr, getOriginalName, IdGenerator } from "@fern-api/ir-utils";
 import { mapValues } from "lodash-es";
 
 type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">;
@@ -211,11 +211,9 @@ export class PackageTreeGenerator {
             packagePath: fernFilepath.packagePath.slice(0, nextIndex),
             file: nextIndex === fernFilepath.allParts.length ? fernFilepath.file : undefined
         };
-        const nextPartOriginalName = typeof nextPart === "string" ? nextPart : nextPart.originalName;
+        const nextPartOriginalName = getOriginalName(nextPart);
         let nextParent = subpackagesInParent.find(
-            (subpackage) =>
-                (typeof subpackage.name === "string" ? subpackage.name : subpackage.name.originalName) ===
-                nextPartOriginalName
+            (subpackage) => getOriginalName(subpackage.name) === nextPartOriginalName
         );
         if (nextParent == null) {
             const newParentId = IdGenerator.generateSubpackageId(fernFilepathForNextParent);

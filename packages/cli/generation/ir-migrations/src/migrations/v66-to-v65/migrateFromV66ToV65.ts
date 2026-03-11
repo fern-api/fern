@@ -315,7 +315,7 @@ function inflateIr(
             case "UNDISCRIMINATED_UNION":
                 return IrVersions.V65.ShapeType.UndiscriminatedUnion;
             default:
-                return shape;
+                assertNever(shape);
         }
     };
 

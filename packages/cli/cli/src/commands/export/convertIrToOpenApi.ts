@@ -9,7 +9,7 @@ import { OpenAPIV3 } from "openapi-types";
 
 import { convertServices } from "./converters/servicesConverter.js";
 import { convertType } from "./converters/typeConverter.js";
-import { getOriginalName } from "./nameHelpers.js";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { constructEndpointSecurity, constructSecuritySchemes } from "./security.js";
 
 export type Mode = "stoplight" | "openapi";

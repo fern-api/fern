@@ -1,7 +1,7 @@
 import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-api/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
-import { getInnerNamePascalCaseUnsafe, getWireValue } from "./nameHelpers.js";
+import { getPascalCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
 
 export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityRequirementObject[] {
     return AuthSchemesRequirement._visit<OpenAPIV3.SecurityRequirementObject[]>(apiAuth.requirement, {
@@ -71,7 +71,7 @@ function getNameForAuthScheme(authScheme: AuthScheme): string {
         inferred: () => "InferredAuth",
         basic: () => "BasicAuth",
         oauth: () => "BearerAuth",
-        header: (header) => `${getInnerNamePascalCaseUnsafe(header.name)}Auth`,
+        header: (header) => `${getPascalCaseUnsafe(header.name)}Auth`,
         _other: () => {
             throw new Error("Unknown auth scheme: " + authScheme.type);
         }
