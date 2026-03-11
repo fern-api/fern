@@ -130,9 +130,15 @@ export class ListCommand {
             if (!pagerStdin.destroyed) {
                 pagerStdin.end();
             }
+
             await new Promise<void>((resolve) => {
-                pager.on("close", resolve);
+                if (pager.exitCode !== null || pager.signalCode !== null) {
+                    resolve();
+                } else {
+                    pager.once("close", resolve);
+                }
             });
+
         }
     }
 
