@@ -13,6 +13,7 @@ import { writeFile } from "fs/promises";
 import { produce } from "immer";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { getLatestVersionOfCli } from "../../cli-context/upgrade-utils/getLatestVersionOfCli.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
@@ -174,11 +175,15 @@ async function resolveSourceVersion({
     isLocalDev: boolean;
 }): Promise<string> {
     // If config version is "latest" or "*", these aren't valid semver for migrations.
-    // Use the current CLI version as the source version instead.
-    const effectiveConfigVersion =
-        projectConfig.version === "latest" || projectConfig.version === "*"
-            ? cliContext.environment.packageVersion
-            : projectConfig.version;
+    // Resolve "latest" to the actual latest published npm version; "*" uses the current CLI version.
+    let effectiveConfigVersion: string;
+    if (projectConfig.version === "latest") {
+        effectiveConfigVersion = await getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
+    } else if (projectConfig.version === "*") {
+        effectiveConfigVersion = cliContext.environment.packageVersion;
+    } else {
+        effectiveConfigVersion = projectConfig.version;
+    }
 
     let resolvedFromVersion = fromVersion?.trim();
     const envVersion = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim();
