@@ -3,6 +3,20 @@ import { defaultConfig, defineConfig, mergeConfig } from "@fern-api/configs/vite
 export default mergeConfig(
     defineConfig(defaultConfig),
     defineConfig({
+        plugins: [
+            {
+                name: "suppress-sourcemap-warnings",
+                configResolved(config) {
+                    const originalWarnOnce = config.logger.warnOnce.bind(config.logger);
+                    config.logger.warnOnce = (msg, options) => {
+                        if (typeof msg === "string" && msg.includes("points to missing source files")) {
+                            return;
+                        }
+                        originalWarnOnce(msg, options);
+                    };
+                }
+            }
+        ],
         test: {
             server: {
                 deps: {
