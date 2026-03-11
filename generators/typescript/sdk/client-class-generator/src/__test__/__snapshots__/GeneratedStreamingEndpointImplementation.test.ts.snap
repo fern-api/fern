@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedStreamingEndpointImplementation > SSE response type > uses sse response type for SSE streaming endpoints 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedStreamingEndpointImplementation > SSE response type > uses sse response type for streamParameter SSE endpoints 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedStreamingEndpointImplementation > getDocs > combines availability and endpoint docs 1`] = `
+"@deprecated
+
+Stream events."
+`;
+
+exports[`GeneratedStreamingEndpointImplementation > getExample > returns endpoint invocation example 1`] = `"await client.service.testEndpoint("example-arg")"`;
+
+exports[`GeneratedStreamingEndpointImplementation > getSignature > returns parameters and streaming return type 1`] = `"AsyncIterable<ChatEvent>"`;
+
+exports[`GeneratedStreamingEndpointImplementation > getStatements > generates streaming endpoint body 1`] = `
+"const _response = await this._options.fetcher.fetch({});
+return _response;"
+`;
+
+exports[`GeneratedStreamingEndpointImplementation > getStatements > generates streaming endpoint body with endpoint metadata 1`] = `
+"const _metadata: core.EndpointMetadata = { security: undefined };
+const _response = await this._options.fetcher.fetch({});
+return _response;"
+`;
+
+exports[`GeneratedStreamingEndpointImplementation > invokeFetcher > generates fetcher invocation with streaming response type 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedStreamingEndpointImplementation > invokeFetcher > includes withCredentials when enabled 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedStreamingEndpointImplementation > invokeFetcher > uses web stream type when streamType is web 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedStreamingEndpointImplementation > maybeLeverageInvocation > returns for-await-of pattern for streaming 1`] = `
+"const response = result;
+for await (const item of response) {
+    console.log(item);
+}"
+`;

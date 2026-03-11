@@ -408,7 +408,8 @@ export class EndpointSnippetGenerator {
     }): python.NamedValue[] {
         const fields: python.NamedValue[] = [];
         for (const header of headers) {
-            const field = this.getConstructorHeaderArg({ header, value: values.value });
+            const value = values[header.name.wireValue];
+            const field = this.getConstructorHeaderArg({ header, value });
             if (field != null) {
                 fields.push(field);
             }

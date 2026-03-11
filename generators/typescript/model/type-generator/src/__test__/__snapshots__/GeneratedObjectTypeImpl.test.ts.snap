@@ -1,0 +1,203 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedObjectTypeImpl > buildExample > builds example for object type 1`] = `
+"{
+    name: "example-value"
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > buildExample > filters out read-only properties when isForRequest is true 1`] = `
+"{
+    writeProp: "example-value",
+    normalProp: "example-value"
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > buildExample > filters out read-only properties when isForRequest is true 2`] = `
+"{
+    readProp: "example-value",
+    normalProp: "example-value"
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > buildExample > includes extra properties in example 1`] = `
+"{
+    name: "example-value",
+    extra_field: "example-value"
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateForInlineUnion > generates request/response type nodes when generateReadWriteOnlyTypes is true 1`] = `
+"{
+    readProp: string;
+    writeProp: string;
+    bothProp: string;
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateForInlineUnion > generates request/response type nodes when generateReadWriteOnlyTypes is true 2`] = `
+"{
+    writeProp: string;
+    bothProp: string;
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateForInlineUnion > generates request/response type nodes when generateReadWriteOnlyTypes is true 3`] = `
+"{
+    readProp: string;
+    bothProp: string;
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateForInlineUnion > generates type literal for inline union with required properties 1`] = `
+"{
+    field: string;
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateForInlineUnion > generates type literal with optional properties for inline union 1`] = `
+"{
+    required: string;
+    optional?: string;
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateModule > generates inline type module statements when enableInlineTypes is true 1`] = `
+"export interface ParentObject {
+    child: string;
+}
+
+export namespace ParentObject {
+    export interface InlineChild { value: string; }
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateModule > generates namespace module with Request type using separate request type variant 1`] = `
+"export namespace TypedObject {
+    export type Request = Omit<TypedObject, "typedProp" | "plainProp"> & {
+        typedProp: RequestSharedType;
+        plainProp: string;
+    };
+    export type Response = Omit<TypedObject, "typedProp" | "plainProp"> & {
+        typedProp: SharedType;
+        plainProp: string;
+    };
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateModule > generates namespace module with Request/Response types when generateReadWriteOnlyTypes is true 1`] = `
+"export namespace ReadWriteObject {
+    export type Request = Omit<ReadWriteObject, "readProp" | "writeProp" | "normalProp"> & {
+        readProp: string;
+        writeProp: string;
+        normalProp: string;
+    };
+    export type Response = Omit<ReadWriteObject, "readProp" | "writeProp" | "normalProp"> & {
+        readProp: string;
+        writeProp: string;
+        normalProp: string;
+    };
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with a single required string property 1`] = `
+"export interface MyObject {
+    name: string;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with docs on properties 1`] = `
+"export interface DocumentedObject {
+    /** The name of the object. */
+    name: string;
+    /** The numeric value. */
+    value: number;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with extends clause 1`] = `
+"export interface ChildObject extends ParentType {
+    childProp: string;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with extra properties (index signature) 1`] = `
+"export interface FlexibleObject {
+    name: string;
+    /** Accepts any additional properties */
+    [key: string]: any;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with includeSerdeLayer=true (uses camelCase property keys) 1`] = `
+"export interface CasedObject {
+    myProperty: string;
+    anotherField: number;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with multiple extends 1`] = `
+"export interface Combined extends BaseA, BaseB {
+    ownProp: string;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with multiple required properties of different types 1`] = `
+"export interface UserProfile {
+    name: string;
+    age: number;
+    active: boolean;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with noOptionalProperties (optional types become required with full union) 1`] = `
+"export interface StrictObject {
+    optionalField: string | undefined;
+    requiredField: string;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with optional properties (includeSerdeLayer=false adds | undefined) 1`] = `
+"export interface ObjectWithOptionalField {
+    optionalField?: string | undefined;
+    requiredField: string;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with optional properties (includeSerdeLayer=true) 1`] = `
+"export interface ObjectWithOptionalField {
+    optionalField?: string;
+    requiredField: string;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with retainOriginalCasing (uses wire values as property keys) 1`] = `
+"export interface CasedObject {
+    my_property: string;
+    "another-field": number;
+}
+"
+`;
+
+exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with top-level docs 1`] = `
+"/**
+ * Represents a custom object type.
+ */
+export interface MyObject {
+    id: string;
+}
+"
+`;

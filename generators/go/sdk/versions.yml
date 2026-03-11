@@ -1,4 +1,80 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.29.3
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.29.2
+  changelogEntry:
+    - summary: |
+        Fix datetime query parameter serialization to always include milliseconds.
+        The `valueString` function in `internal/query.go` now formats `time.Time`
+        values with `"2006-01-02T15:04:05.000Z07:00"` instead of `time.RFC3339`,
+        ensuring the Go SDK sends timestamps with millisecond precision (e.g.,
+        `2024-07-01T15:30:00.000Z`) that match the WireMock stub mappings.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.29.1
+  changelogEntry:
+    - summary: |
+        Remove redundant `req.WithContext(ctx)` call in the generated HTTP caller.
+        `http.NewRequestWithContext` already sets the context on the request, so
+        the subsequent `req.WithContext(ctx)` was creating an unnecessary shallow
+        copy of the request with the same context.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.29.0
+  changelogEntry:
+    - summary: |
+        Bump the default streaming buffer size from 64KB to 1MB and add a new
+        `WithMaxStreamBufSize` request option so SDK users can configure the
+        maximum buffer size for streaming responses at runtime. This controls
+        the maximum size of a single SSE event (in bytes) that the stream can
+        process. Also fixes a bug where `SseStreamReader` would return a
+        misleading `io.EOF` error instead of the underlying `bufio.ErrTooLong`
+        when a message exceeded the buffer limit.
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.28.7
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.28.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+- version: 1.28.5
+  changelogEntry:
+    - summary: |
+        Improve error logging for reference.md generation failures. The generator
+        now logs the actual error message and stack trace instead of a generic
+        "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 61
+
 - version: 1.28.4
   changelogEntry:
     - summary: |

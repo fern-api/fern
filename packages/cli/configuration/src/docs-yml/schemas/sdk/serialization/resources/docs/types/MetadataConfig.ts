@@ -25,6 +25,8 @@ export const MetadataConfig: core.serialization.ObjectSchema<
     twitterSite: core.serialization.property("twitter:site", core.serialization.string().optional()),
     twitterUrl: core.serialization.property("twitter:url", core.serialization.string().optional()),
     twitterCard: core.serialization.property("twitter:card", TwitterCardSetting.optional()),
+    ogDynamic: core.serialization.property("og:dynamic", core.serialization.boolean().optional()),
+    ogBackgroundImage: core.serialization.property("og:background-image", core.serialization.string().optional()),
     canonicalHost: core.serialization.property("canonical-host", core.serialization.string().optional()),
 });
 
@@ -46,6 +48,8 @@ export declare namespace MetadataConfig {
         "twitter:site"?: string | null;
         "twitter:url"?: string | null;
         "twitter:card"?: TwitterCardSetting.Raw | null;
+        "og:dynamic"?: boolean | null;
+        "og:background-image"?: string | null;
         "canonical-host"?: string | null;
     }
 }

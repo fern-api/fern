@@ -783,9 +783,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
             context.logger.debug("Successfully added README.md to project");
         } catch (error) {
-            const errorMsg = extractErrorMessage(error);
-            context.logger.debug(`README generation failed: ${errorMsg}`);
-            throw new Error(`Failed to generate README.md: ${errorMsg}`);
+            throw new Error(`Failed to generate README.md: ${extractErrorMessage(error)}`);
         }
     }
 
@@ -850,9 +848,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.project.addSourceFiles(referenceFile);
             context.logger.debug("Successfully added reference.md to project");
         } catch (error) {
-            const errorMsg = extractErrorMessage(error);
-            context.logger.debug(`Reference generation failed: ${errorMsg}`);
-            throw new Error(`Failed to generate reference.md: ${errorMsg}`);
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
         }
     }
 

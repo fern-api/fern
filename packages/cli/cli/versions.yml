@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.15.5
+- version: 4.23.1
   changelogEntry:
     - summary: |
         Validation on request generation examples now correctly handles arrays on 
@@ -8,6 +8,205 @@
   createdAt: "2026-03-07"
   irVersion: 65
       
+- version: 4.23.0
+  changelogEntry:
+    - summary: |
+        Infer forward-compatible enums in OpenAPI specs. When an enum is expressed
+        as `oneOf: [enum, string]` or `anyOf: [enum, string]`, the parser now
+        lowers it to a single enum type with `forwardCompatible: true` instead of an
+        undiscriminated union. Fern Definition enums can also be marked with
+        `forward-compatible: true`. This behavior is controlled by the new
+        `infer-forward-compatible` parser flag (disabled by default).
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.22.0
+  changelogEntry:
+    - summary: |
+        Include the origin git commit hash in `.fern/metadata.json` when generating SDKs.
+        The new `originGitCommit` field is populated with the HEAD commit of the repo where
+        `fern generate` is run. If the working directory is not a git repo or git is unavailable,
+        the field is omitted.
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.21.4
+  changelogEntry:
+    - summary: |
+        Include required global headers in dynamic snippet examples. Also
+        fixes header value lookup in all generator snippet generators (Python,
+        TypeScript, Go, Java, C#, PHP, Ruby, Swift) to correctly resolve values
+        by wire name.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.21.3
+  changelogEntry:
+    - summary: |
+        Surface descriptive error messages from Fiddle when remote generation
+        fails due to configuration issues (e.g. missing GitHub App installation).
+        Previously, unrecognized Fiddle errors were shown as a generic "Failed to
+        create job" message. Now the CLI extracts and displays the server-provided
+        error message when available. Also fixes existing error type matching
+        in `convertCreateJobError` to use the correct Fiddle `ErrorBody` field
+        names (`error`/`content`), so known errors like `InsufficientPermissions`
+        and `BranchDoesNotExist` now properly match their handlers instead of
+        falling through to the generic error.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.21.2
+  changelogEntry:
+    - summary: |
+        Expand the docs validator allowlist to accept archive files
+        (`application/x-tar`, `application/gzip`, `application/zip`,
+        `application/x-bzip2`) and additional image formats (`image/bmp`,
+        `image/heif`). Previously, self-hosted users uploading `.tar` bundles
+        as docs assets were rejected with "The file type of application/x-tar
+        is not allowed".
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.21.1
+  changelogEntry:
+    - summary: |
+        Fix `fern check` rejecting `og:dynamic` and `og:background-image` keys in
+        `docs.yml` metadata. These fields were added to the MetadataConfig API types
+        but the serialization schema was not updated, causing validation to fail with
+        "Unexpected key" errors when using the dynamic OG image feature introduced in
+        v4.3.0.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.21.0
+  changelogEntry:
+    - summary: |
+        Remove the `FERN_SELF_HOSTED` environment variable from the CLI. The
+        three behaviors it controlled are now handled independently:
+        - **Auth bypass**: when `FERN_FDR_ORIGIN` (or legacy `OVERRIDE_FDR_ORIGIN`)
+          is set, the CLI reads `FERN_TOKEN` directly instead of triggering
+          interactive login.
+        - **Telemetry opt-out**: use the existing `FERN_DISABLE_TELEMETRY=true` to
+          disable PostHog telemetry.
+        - **ValidFileTypes skip**: removed entirely (no longer needed).
+
+        Also renames `OVERRIDE_FDR_ORIGIN` to `FERN_FDR_ORIGIN` (the old name
+        is still accepted for backward compatibility).
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.20.4
+  changelogEntry:
+    - summary: |
+        Fix JSON schema validation for `collapsed: open-by-default`. The
+        auto-generated JSON schemas now accept `boolean | "open-by-default"`
+        for the `collapsed` property, matching the Zod runtime schema.
+        Previously, `fern check` rejected valid configurations like
+        `collapsed: open-by-default` inside API reference section layouts
+        because the JSON schema only allowed `boolean | null`.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.20.3
+  changelogEntry:
+    - summary: |
+        Add support for the `collapsed` property on API reference section
+        configurations. Sections inside an API reference `layout` can now use
+        `collapsed: true` or `collapsed: open-by-default` to control sidebar
+        collapse behavior, matching the existing support on top-level sections
+        and folders.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.2
+  changelogEntry:
+    - summary: |
+        Fix `respect-readonly-schemas` handling for request bodies that reference
+        a wrapper schema (a `$ref`-only schema pointing to another schema with
+        `readOnly` properties). The wrapper schema name is now preserved as the
+        request name and the stale type alias to the `Read` variant is no longer
+        emitted.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.1
+  changelogEntry:
+    - summary: |
+        Revert treating JSON Schema `const` values as literal types regardless of
+        `coerceEnumsToLiterals`. This reverts the behavior introduced in 3.90.8 so
+        that `const` values are again converted to single-value enums when
+        `coerceEnumsToLiterals` is not enabled.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.20.0
+  changelogEntry:
+    - summary: |
+        Add `fern api enrich` CLI command that decomposes x-fern-examples from an
+        overrides file into native OpenAPI example fields per endpoint. Usage:
+        `fern api enrich openapi.yml -f overrides.yml -o output.yml`.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.19.0
+  changelogEntry:
+    - summary: |
+        Add support for `open-by-default` value on the `collapsed` property in
+        docs navigation configuration. Sections configured with
+        `collapsed: open-by-default` will start expanded but can be collapsed
+        by the user.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.18.0
+  changelogEntry:
+    - summary: |
+        Gzip-compress IR before uploading to Fiddle for remote generation. This
+        reduces upload size by ~85-90% on typical IR payloads, improving upload
+        speed and reducing bandwidth usage. The Fiddle receiver transparently
+        detects and decompresses gzip content, maintaining backward compatibility
+        with older CLI versions.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.17.0
+  changelogEntry:
+    - summary: |
+        Add `fern check` validation rule to detect component schema collisions
+        across multiple OpenAPI specs. When two specs define
+        `components/schemas` with the same name, one silently overwrites the
+        other during merge. The new `no-component-schema-collisions` rule now
+        reports this as a warning, unless `resolve-schema-collisions` is enabled.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.16.0
+  changelogEntry:
+    - summary: |
+        Auto-discover `.fernignore` for generators configured with local file system
+        output. When running `fern generate` without the `--fernignore` flag, the CLI
+        now automatically looks for a `.fernignore` file in the generator's configured
+        output directory and uses it if present. This eliminates the need to explicitly
+        pass `--fernignore` for the common case where the `.fernignore` lives alongside
+        the generated code.
+      type: feat
+  createdAt: "2026-03-09"
+  irVersion: 65
+- version: 4.15.5
+  changelogEntry:
+    - summary: |
+        Fix GraphQL operations leaking into all API reference sections in docs.
+      type: fix
+  createdAt: "2026-03-08"
+  irVersion: 65
+
 - version: 4.15.4
   changelogEntry:
     - summary: |
@@ -50,7 +249,6 @@
       type: fix
   createdAt: "2026-03-06"
   irVersion: 65
-
 - version: 4.15.0
   changelogEntry:
     - summary: |

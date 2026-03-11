@@ -6,7 +6,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs.js";
 import { SwiftProject } from "../project/index.js";
 import { CycleDetector } from "./cycle-detector.js";
-import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions.js";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums.js";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions.js";
 
@@ -103,12 +102,6 @@ export abstract class AbstractSwiftGeneratorContext<
         });
 
         registeredSchemaTypes.forEach(({ typeDeclaration, registeredSymbol }) => {
-            registerDiscriminatedUnionVariants({
-                parentSymbol: registeredSymbol,
-                registry: nameRegistry,
-                typeDeclaration,
-                context: this
-            });
             registerLiteralEnums({
                 parentSymbol: registeredSymbol,
                 registry: nameRegistry,

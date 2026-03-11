@@ -62,7 +62,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     }
 
     public getTypeName(): string {
-        return sanitizeIdentifier(this.errorDeclaration.discriminantValue.name.pascalCase.safeName);
+        return sanitizeIdentifier(this.errorDeclaration.discriminantValue.name.pascalCase.unsafeName);
     }
 
     public getDiscriminantValue(): string | number {

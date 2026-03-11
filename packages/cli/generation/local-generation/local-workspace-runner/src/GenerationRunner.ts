@@ -1,4 +1,4 @@
-import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { FernWorkspace, getOriginGitCommit } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -163,7 +163,8 @@ export class GenerationRunner {
                 cliVersion: workspace.cliVersion,
                 generatorName: generatorInvocation.name,
                 generatorVersion: generatorInvocation.version,
-                generatorConfig: generatorInvocation.config
+                generatorConfig: generatorInvocation.config,
+                originGitCommit: getOriginGitCommit()
             }
         });
 
