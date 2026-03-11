@@ -24,12 +24,32 @@ function createMockReference(name: string): Reference {
 function createMockZurgSchema(name: string): Zurg.Schema {
     return {
         toExpression: () => ts.factory.createIdentifier(name),
-        parse: (ref: ts.Expression, opts?: Record<string, unknown>) =>
-            ts.factory.createCallExpression(
+        parse: (ref: ts.Expression, opts?: Record<string, unknown>) => {
+            const args: ts.Expression[] = [ref];
+            if (opts && Object.keys(opts).length > 0) {
+                args.push(
+                    ts.factory.createObjectLiteralExpression(
+                        Object.entries(opts)
+                            .filter(([, v]) => v !== undefined)
+                            .map(([k, v]) =>
+                                ts.factory.createPropertyAssignment(
+                                    k,
+                                    typeof v === "boolean"
+                                        ? v
+                                            ? ts.factory.createTrue()
+                                            : ts.factory.createFalse()
+                                        : ts.factory.createStringLiteral(String(v))
+                                )
+                            )
+                    )
+                );
+            }
+            return ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(name), "parse"),
                 undefined,
-                [ref]
-            ),
+                args
+            );
+        },
         json: (ref: ts.Expression) =>
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(name), "json"),
@@ -102,7 +122,7 @@ function createMockChannel(name = "testChannel"): FernIr.WebSocketChannel {
     } as any;
 }
 
-function createMockReceiveMessage(bodyTypeName = "ChatMessage"): FernIr.WebSocketMessageBodyReference {
+function createMockReceiveMessage(): FernIr.WebSocketMessageBodyReference {
     return {
         bodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
         // biome-ignore lint/suspicious/noExplicitAny: test mock
