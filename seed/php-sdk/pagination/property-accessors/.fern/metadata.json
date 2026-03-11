@@ -5,5 +5,6 @@
   "generatorConfig": {
     "propertyAccess": "private"
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

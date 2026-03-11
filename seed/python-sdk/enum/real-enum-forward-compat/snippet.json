@@ -3,6 +3,7 @@
         "type_:Operand": "from seed import Operand\n\nOperand.GREATER_THAN\n",
         "type_:Color": "from seed import Color\n\nColor.RED\n",
         "type_:ColorOrOperand": "from seed import Color\n\nColor.RED\n",
+        "type_:ForwardCompatibleEnum": "from seed import ForwardCompatibleEnum\n\nForwardCompatibleEnum.ACTIVE\n",
         "type_:EnumWithCustom": "from seed import EnumWithCustom\n\nEnumWithCustom.SAFE\n"
     },
     "endpoints": [

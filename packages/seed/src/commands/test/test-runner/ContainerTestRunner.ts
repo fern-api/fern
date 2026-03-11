@@ -98,7 +98,9 @@ export class ContainerTestRunner extends TestRunner {
         shouldGenerateDynamicSnippetTests,
         inspect = false,
         license,
-        smartCasing
+        smartCasing,
+        organization,
+        absolutePathToFernConfig
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
@@ -122,8 +124,8 @@ export class ContainerTestRunner extends TestRunner {
             ]
         };
         await runContainerizedGenerationForSeed({
-            organization: DUMMY_ORGANIZATION,
-            absolutePathToFernConfig: absolutePathToFernDefinition,
+            organization: organization ?? DUMMY_ORGANIZATION,
+            absolutePathToFernConfig: absolutePathToFernConfig ?? absolutePathToFernDefinition,
             workspace: fernWorkspace,
             generatorGroup,
             context: taskContext,

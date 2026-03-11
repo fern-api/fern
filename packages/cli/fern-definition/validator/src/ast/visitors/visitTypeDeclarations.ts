@@ -228,7 +228,8 @@ export function visitTypeDeclaration({
                 encoding: noop,
                 source: noop,
                 examples: visitExamples,
-                inline: noop
+                inline: noop,
+                "forward-compatible": noop
             });
         }
     });

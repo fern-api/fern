@@ -4,5 +4,6 @@
   "generatorVersion": "latest",
   "generatorConfig": {
     "package-prefix": "com.test.sdk"
-  }
+  },
+  "originGitCommit": "DUMMY"
 }

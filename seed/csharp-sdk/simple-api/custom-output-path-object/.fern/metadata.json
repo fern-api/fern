@@ -10,5 +10,6 @@
       "other": "lib/SeedApi"
     }
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

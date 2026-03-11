@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params for multiple parameters 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    name,
+    age,
+    active
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params for single string parameter 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    name
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with allowMultiple and array check 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    tags: Array.isArray(tags) ? tags : tags.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with date-time type needing stringify 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    createdAfter: createdAfter.toString()
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > generates query params with wire value different from name 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    filter_by: filterBy
+};"
+`;
+
+exports[`GeneratedQueryParams > getBuildStatements > handles special characters in wire values 1`] = `
+"const _queryParams: Record<string, unknown> = {
+    "filter.date": request.filterDate
+};"
+`;
+
+exports[`GeneratedQueryParams > getReferenceTo > returns only requestOptions queryParams when no parameters 1`] = `"requestOptions?.queryParams"`;
+
+exports[`GeneratedQueryParams > getReferenceTo > returns spread with query params when parameters exist 1`] = `"{ ..._queryParams, ...requestOptions?.queryParams }"`;

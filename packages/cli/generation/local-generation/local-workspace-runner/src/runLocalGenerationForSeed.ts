@@ -12,6 +12,7 @@ export async function runContainerizedGenerationForSeed(
         executionEnvironment?: ExecutionEnvironment;
     }
 ): Promise<void> {
+    process.env.IGNORE_GIT_IN_METADATA = "true";
     const executionEnv =
         args.executionEnvironment ??
         new ContainerExecutionEnvironment({
@@ -29,6 +30,7 @@ export async function runNativeGenerationForSeed(
     workingDirectory?: string,
     env?: Record<string, string>
 ): Promise<void> {
+    process.env.IGNORE_GIT_IN_METADATA = "true";
     const executionEnv = new NativeExecutionEnvironment({ commands, workingDirectory, env });
     const runner = new GenerationRunner(executionEnv);
     await runner.run(args);

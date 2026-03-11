@@ -62,6 +62,30 @@ type ColorOrOperand struct {
 	Operand *Operand
 }
 
+// Tests forward-compatible enums that accept
+// both known values and arbitrary strings.
+type ForwardCompatibleEnum string
+
+const (
+	ForwardCompatibleEnumActive   = "active"
+	ForwardCompatibleEnumInactive = "inactive"
+)
+
+func NewForwardCompatibleEnumFromString(s string) (ForwardCompatibleEnum, error) {
+	switch s {
+	case "active":
+		return ForwardCompatibleEnumActive, nil
+	case "inactive":
+		return ForwardCompatibleEnumInactive, nil
+	}
+	var t ForwardCompatibleEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f ForwardCompatibleEnum) Ptr() *ForwardCompatibleEnum {
+	return &f
+}
+
 type EnumWithSpecialCharacters string
 
 const (

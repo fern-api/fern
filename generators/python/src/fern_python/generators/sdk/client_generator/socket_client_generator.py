@@ -180,6 +180,14 @@ class SocketClientGenerator:
             body=AST.CodeWriter(self._get_iterator_method_body(is_async=is_async)),
         )
 
+    def _write_construct_or_parse_call(self, writer: AST.NodeWriter, type_name: str, object_expr: str) -> None:
+        """Write a construct_type or parse_obj_as call with the correct argument syntax."""
+        writer.write_reference(self._context.core_utilities.get_construct_or_parse_ref())
+        if self._context.core_utilities._allow_skipping_validation:
+            writer.write(f"(type_={type_name}, object_={object_expr})  # type: ignore")
+        else:
+            writer.write(f"({type_name}, {object_expr})  # type: ignore")
+
     def _get_iterator_method_body(self, is_async: bool) -> CodeWriterFunction:
         def _get_iterator_method_body(writer: AST.NodeWriter) -> None:
             writer.write_line(f"{'async ' if is_async else ''}for message in self.{self.WEBSOCKET_MEMBER_NAME}:")
@@ -192,8 +200,9 @@ class SocketClientGenerator:
                     writer.write_line("try:")
                     with writer.indent():
                         writer.write("yield ")
-                        writer.write_reference(self._context.core_utilities.get_construct_or_parse_ref())
-                        writer.write(f"({self._get_response_type_name()}, json.loads(message))  # type: ignore")
+                        self._write_construct_or_parse_call(
+                            writer, self._get_response_type_name(), "json.loads(message)"
+                        )
                         writer.write_line()
                     writer.write_line("except Exception:")
                     with writer.indent():
@@ -247,8 +256,7 @@ class SocketClientGenerator:
                         writer.write_line("try:")
                         with writer.indent():
                             writer.write("parsed = ")
-                            writer.write_reference(self._context.core_utilities.get_construct_or_parse_ref())
-                            writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
+                            self._write_construct_or_parse_call(writer, self._get_response_type_name(), "json_data")
                             writer.write_line()
                         writer.write_line("except Exception:")
                         with writer.indent():
@@ -376,8 +384,7 @@ class SocketClientGenerator:
             writer.write_line("try:")
             with writer.indent():
                 writer.write("return ")
-                writer.write_reference(self._context.core_utilities.get_construct_or_parse_ref())
-                writer.write(f"({self._get_response_type_name()}, json_data)  # type: ignore")
+                self._write_construct_or_parse_call(writer, self._get_response_type_name(), "json_data")
                 writer.write_line()
             writer.write_line("except Exception:")
             with writer.indent():

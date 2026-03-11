@@ -51,6 +51,18 @@ export const V65_TO_V63_MIGRATION: IrMigration<
     ): IrVersions.V63.ir.IntermediateRepresentation => {
         return {
             ...v65,
+            types: mapValues(v65.types, (typeDeclaration) => {
+                if (typeDeclaration.shape.type === "enum") {
+                    return {
+                        ...typeDeclaration,
+                        shape: IrVersions.V63.types.Type.enum({
+                            default: typeDeclaration.shape.default,
+                            values: typeDeclaration.shape.values
+                        })
+                    };
+                }
+                return typeDeclaration;
+            }),
             services: mapValues(v65.services, (service) => convertHttpService(service, context)),
             webhookGroups: mapValues(v65.webhookGroups, (webhookGroup) =>
                 webhookGroup.map((webhook) => {
