@@ -37,6 +37,8 @@ export declare namespace TestRunner {
         outputDir?: AbsoluteFilePath;
         /** Generator invocation with per-generator API overrides **/
         generatorInvocation?: GeneratorInvocation;
+        /** Organization name override (e.g. from customer's fern.config.json) **/
+        organization?: string;
     }
 
     interface DoRunArgs {
@@ -62,6 +64,8 @@ export declare namespace TestRunner {
         inspect: boolean | undefined;
         license?: unknown;
         smartCasing?: boolean;
+        /** Organization name override (e.g. from customer's fern.config.json) **/
+        organization?: string;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -151,7 +155,8 @@ export abstract class TestRunner {
         inspect,
         absolutePathToApiDefinition,
         outputDir,
-        generatorInvocation
+        generatorInvocation,
+        organization
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         let lockAcquired = false;
         try {
@@ -268,7 +273,8 @@ export abstract class TestRunner {
                         !disableDynamicSnippetTests && workspaceShouldGenerateDynamicSnippetTests(this.generator),
                     inspect,
                     license,
-                    smartCasing
+                    smartCasing,
+                    organization
                 });
 
                 generationStopwatch.stop();
