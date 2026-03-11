@@ -37,21 +37,21 @@ types:
       - name: Red
         value: "red"
 
-  Status:
+  ForwardCompatibleEnum:
     docs: |
       Tests forward-compatible enums that accept
       both known values and arbitrary strings.
     enum:
-      - value: "known"
-        name: KNOWN
-      - value: "unknown"
-        name: UNKNOWN
+      - value: "active"
+        name: ACTIVE
+      - value: "inactive"
+        name: INACTIVE
     forward-compatible: true
     examples:
-      - name: Known
-        value: "known"
-      - name: Unknown
-        value: "unknown"
+      - name: Active
+        value: "active"
+      - name: Inactive
+        value: "inactive"
 
   EnumWithSpecialCharacters:
     enum:
