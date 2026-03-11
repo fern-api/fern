@@ -165,9 +165,9 @@ export async function getGitLastModifiedDate(absoluteFilePath: AbsoluteFilePath)
  *
  * Behaviour per page:
  *  1. API-generated pages (in `excludePaths`) → returned unchanged.
- *  2. No git history for non-whitespace changes → returned unchanged.
- *  3. Has git history → `last-updated` is set (injected or replaced)
- *     to the date of the last meaningful change.
+ *  2. Page already has `last-updated` in frontmatter → respected as-is.
+ *  3. No git history for non-whitespace changes → returned unchanged.
+ *  4. Has git history and no existing `last-updated` → injected from git.
  *
  * Because the git query already filters out whitespace-only commits,
  * trivial edits (indentation fixes, trailing-space cleanup) do not
@@ -210,12 +210,13 @@ export async function injectLastUpdatedDates(
             return;
         }
 
-        // Set (or overwrite) last-updated with the git-derived date.
+        // If the page already has a user-specified last-updated, respect it.
         if (hasLastUpdated(markdown)) {
-            result[key] = replaceLastUpdatedInMarkdown(markdown, date);
-        } else {
-            result[key] = injectLastUpdatedIntoMarkdown(markdown, date);
+            result[key] = markdown;
+            return;
         }
+
+        result[key] = injectLastUpdatedIntoMarkdown(markdown, date);
     });
 
     return result;
