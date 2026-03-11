@@ -3,8 +3,9 @@ import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
-import { command } from "../../_internal/command.js";
+import { commandWithSubcommands } from "../../_internal/commandWithSubcommands.js";
 import { PublishCommand } from "../publish/command.js";
+import { addDeleteCommand } from "./delete/index.js";
 
 export declare namespace PreviewCommand {
     export interface Args extends GlobalArgs {
@@ -28,7 +29,7 @@ export class PreviewCommand {
 
 export function addPreviewCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new PreviewCommand();
-    command(
+    commandWithSubcommands(
         cli,
         "preview",
         "Generate a preview of your documentation site",
@@ -57,6 +58,6 @@ export function addPreviewCommand(cli: Argv<GlobalArgs>, parentPath?: string): v
                     default: false,
                     description: "Skip uploading assets during preview generation"
                 }),
-        parentPath
+        [addDeleteCommand]
     );
 }
