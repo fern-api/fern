@@ -1,7 +1,12 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
-import { casingsGenerator, createHttpEndpoint, createMinimalIR, createNameAndWireValue } from "@fern-typescript/test-utils";
+import {
+    casingsGenerator,
+    createHttpEndpoint,
+    createMinimalIR,
+    createNameAndWireValue
+} from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -831,7 +836,7 @@ function createMinimalExampleEndpointCall(): FernIr.ExampleEndpointCall {
         serviceHeaders: [],
         queryParameters: [],
         request: undefined,
-        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body({ jsonExample: undefined, docs: undefined })),
+        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body(undefined)),
         docs: undefined
     };
 }

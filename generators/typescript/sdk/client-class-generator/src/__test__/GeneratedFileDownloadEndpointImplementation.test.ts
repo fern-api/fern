@@ -2,7 +2,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { createHttpEndpoint } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 import type { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest.js";
 import type { GeneratedEndpointResponse } from "../endpoints/default/endpoint-response/GeneratedEndpointResponse.js";
 import { GeneratedFileDownloadEndpointImplementation } from "../endpoints/GeneratedFileDownloadEndpointImplementation.js";
@@ -399,7 +399,8 @@ describe("GeneratedFileDownloadEndpointImplementation", () => {
                 clientReference: ts.factory.createIdentifier("client")
             });
             expect(example).toBeDefined();
-            expect(getTextOfTsNode(example?.endpointInvocation)).toMatchSnapshot();
+            assert(example?.endpointInvocation != null, "Expected endpointInvocation to be defined");
+            expect(getTextOfTsNode(example.endpointInvocation)).toMatchSnapshot();
         });
 
         it("returns undefined when example parameters are null", () => {
@@ -449,7 +450,7 @@ function createMinimalExampleEndpointCall(): FernIr.ExampleEndpointCall {
         serviceHeaders: [],
         queryParameters: [],
         request: undefined,
-        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body({ jsonExample: undefined, docs: undefined })),
+        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body(undefined)),
         docs: undefined
     };
 }

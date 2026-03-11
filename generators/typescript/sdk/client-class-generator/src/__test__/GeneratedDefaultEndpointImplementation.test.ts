@@ -2,7 +2,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import { createHttpEndpoint, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
-import { describe, expect, it } from "vitest";
+import { assert, describe, expect, it } from "vitest";
 import type { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest.js";
 import type { GeneratedEndpointResponse } from "../endpoints/default/endpoint-response/GeneratedEndpointResponse.js";
 import { GeneratedDefaultEndpointImplementation } from "../endpoints/default/GeneratedDefaultEndpointImplementation.js";
@@ -389,7 +389,8 @@ describe("GeneratedDefaultEndpointImplementation", () => {
                 clientReference: ts.factory.createIdentifier("client")
             });
             expect(example).toBeDefined();
-            expect(getTextOfTsNode(example?.endpointInvocation)).toMatchSnapshot();
+            assert(example?.endpointInvocation != null, "Expected endpointInvocation to be defined");
+            expect(getTextOfTsNode(example.endpointInvocation)).toMatchSnapshot();
         });
 
         it("returns undefined when example parameters are null", () => {
@@ -554,40 +555,37 @@ function createCursorPagination(): FernIr.Pagination {
     return FernIr.Pagination.cursor({
         page: {
             propertyPath: undefined,
-            property: {
+            property: FernIr.RequestPropertyValue.body({
                 name: createNameAndWireValue("cursor"),
                 valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                 docs: undefined,
                 availability: undefined,
-                v2Examples: undefined,
-                propertyAccess: undefined
-            }
+                v2Examples: undefined
+            })
         },
         next: {
             propertyPath: undefined,
-            property: {
+            property: FernIr.RequestPropertyValue.body({
                 name: createNameAndWireValue("nextCursor"),
                 valueType: FernIr.TypeReference.container(
                     FernIr.ContainerType.optional(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                 ),
                 docs: undefined,
                 availability: undefined,
-                v2Examples: undefined,
-                propertyAccess: undefined
-            }
+                v2Examples: undefined
+            })
         },
         results: {
             propertyPath: undefined,
-            property: {
+            property: FernIr.RequestPropertyValue.body({
                 name: createNameAndWireValue("items"),
                 valueType: FernIr.TypeReference.container(
                     FernIr.ContainerType.list(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                 ),
                 docs: undefined,
                 availability: undefined,
-                v2Examples: undefined,
-                propertyAccess: undefined
-            }
+                v2Examples: undefined
+            })
         },
         extendedResults: undefined
     });
@@ -605,7 +603,7 @@ function createMinimalExampleEndpointCall(): FernIr.ExampleEndpointCall {
         serviceHeaders: [],
         queryParameters: [],
         request: undefined,
-        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body({ jsonExample: undefined, docs: undefined })),
+        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body(undefined)),
         docs: undefined
     };
 }
