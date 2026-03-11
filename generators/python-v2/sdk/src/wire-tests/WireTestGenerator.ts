@@ -619,13 +619,46 @@ export class WireTestGenerator {
     // =============================================================================
 
     /**
-     * Normalizes a query parameter value for datetime_milliseconds config.
-     * When datetime_milliseconds is true, adds ".000" to datetime values that lack fractional seconds
-     * so the test verification matches the SDK's millisecond-precision output.
-     * When false (default), values are left as-is (dynamic IR already has no milliseconds).
+     * Checks if a query parameter is typed as datetime (DATE_TIME) in the IR.
+     * Handles optional/nullable wrappers by unwrapping to the inner type.
+     * String-typed parameters that happen to contain datetime-looking values return false.
      */
-    private normalizeDatetimeQueryParamValue(value: string): string {
-        if (this.context.customConfig.datetime_milliseconds) {
+    private isDatetimeTypedQueryParam(endpoint: FernIr.HttpEndpoint, wireKey: string): boolean {
+        const queryParam = endpoint.queryParameters.find((qp) => qp.name.wireValue === wireKey);
+        if (!queryParam) {
+            return false;
+        }
+        return this.isDatetimeTypeReference(queryParam.valueType);
+    }
+
+    /**
+     * Recursively checks if a TypeReference resolves to a datetime primitive.
+     * Unwraps optional/nullable containers to check the inner type.
+     */
+    private isDatetimeTypeReference(typeRef: FernIr.TypeReference): boolean {
+        if (typeRef.type === "primitive") {
+            return typeRef.primitive.v1 === "DATE_TIME";
+        }
+        if (typeRef.type === "container") {
+            if (typeRef.container.type === "optional") {
+                return this.isDatetimeTypeReference(typeRef.container.optional);
+            }
+            if (typeRef.container.type === "nullable") {
+                return this.isDatetimeTypeReference(typeRef.container.nullable);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Normalizes a query parameter value for datetime_milliseconds config.
+     * When datetime_milliseconds is true AND the parameter is datetime-typed, adds ".000" to
+     * datetime values that lack fractional seconds so the test verification matches the SDK's
+     * millisecond-precision output from serialize_datetime.
+     * String-typed parameters are never normalized because the SDK passes them through as-is.
+     */
+    private normalizeDatetimeQueryParamValue(value: string, isDatetimeTyped: boolean): string {
+        if (this.context.customConfig.datetime_milliseconds && isDatetimeTyped) {
             // Use replace with a capture group to insert ".000" before the timezone suffix.
             // The regex matches the seconds portion followed by the timezone (Z or +/-offset).
             return value.replace(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(Z|[+-]\d{2}:\d{2})$/, "$1.000$2");
@@ -644,7 +677,8 @@ export class WireTestGenerator {
 
         for (const [key, value] of Object.entries(queryParams)) {
             if (value != null) {
-                const normalized = this.normalizeDatetimeQueryParamValue(String(value));
+                const isDatetimeTyped = this.isDatetimeTypedQueryParam(endpoint, key);
+                const normalized = this.normalizeDatetimeQueryParamValue(String(value), isDatetimeTyped);
                 entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(normalized)}"`);
             }
         }

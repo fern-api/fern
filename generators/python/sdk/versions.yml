@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.63.3
+  changelogEntry:
+    - summary: |
+        Make wire test datetime normalization type-aware. String-typed query parameters
+        that look like datetimes (e.g., `created_after: str`) are no longer incorrectly
+        normalized with `.000` milliseconds. Only `DATE_TIME`-typed parameters are affected
+        by the `datetime_milliseconds` config.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
 - version: 4.63.2
   changelogEntry:
     - summary: |
