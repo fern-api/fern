@@ -3,7 +3,6 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    endpoints "github.com/exhaustive/fern/endpoints"
     context "context"
 )
 
@@ -16,10 +15,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.PutRequest{
-        Id: "id",
+    request := map[string]any{
+        "key": "value",
     }
-    client.Endpoints.Put.Add(
+    client.NoAuth.PostWithNoAuth(
         context.TODO(),
         request,
     )

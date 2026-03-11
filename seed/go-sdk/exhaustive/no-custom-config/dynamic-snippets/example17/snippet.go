@@ -3,8 +3,7 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    endpoints "github.com/exhaustive/fern/endpoints"
-    fern "github.com/exhaustive/fern"
+    types "github.com/exhaustive/fern/types"
     context "context"
 )
 
@@ -17,13 +16,10 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetRequestC{
-        Id: "id",
-        Verbose: fern.Bool(
-            true,
-        ),
+    request := &types.ObjectWithRequiredField{
+        FieldString: "string",
     }
-    client.Endpoints.DuplicateNamesC.Get(
+    client.Endpoints.Object.GetAndReturnWithRequiredField(
         context.TODO(),
         request,
     )

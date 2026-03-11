@@ -3,8 +3,6 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    endpoints "github.com/exhaustive/fern/endpoints"
-    fern "github.com/exhaustive/fern"
     context "context"
 )
 
@@ -17,16 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.ListRequestB{
-        Cursor: fern.String(
-            "cursor",
-        ),
-        Size: fern.Int(
-            1,
-        ),
-    }
-    client.Endpoints.DuplicateNamesB.List(
+    client.Endpoints.HttpMethods.TestDelete(
         context.TODO(),
-        request,
+        "id",
     )
 }
