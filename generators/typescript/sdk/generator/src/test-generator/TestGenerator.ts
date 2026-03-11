@@ -1127,6 +1127,28 @@ describe("${serviceName}", () => {
             example.response,
             isSSEStreaming ? { endpoint, context } : undefined
         );
+        // For URI/path pagination, compute a next-page URL override so that getNextPage()
+        // actually hits the mock server (which listens at server.baseUrl).
+        // uri: full URL = server.baseUrl + endpoint path
+        // path: just the endpoint path
+        let uriPathNextOverride: { wireKey: string; nextValueCode: Code } | undefined;
+        if (rawResponseBody != null && endpoint.pagination != null) {
+            const pagination = endpoint.pagination;
+            if (pagination.type === "uri" || pagination.type === "path") {
+                const nextProperty = pagination.type === "uri" ? pagination.nextUri : pagination.nextPath;
+                // Only override if the next property is top-level; nested paths would require
+                // deep-merging the response body which is not worth the complexity.
+                // If nested, isCursorMissing is forced to true below to skip getNextPage().
+                if (nextProperty.propertyPath == null || nextProperty.propertyPath.length === 0) {
+                    const wireKey = nextProperty.property.name.wireValue;
+                    const nextValueCode =
+                        pagination.type === "uri"
+                            ? code`\`\${server.baseUrl}${example.url}\``
+                            : code`${literalOf(example.url)}`;
+                    uriPathNextOverride = { wireKey, nextValueCode };
+                }
+            }
+        }
         const responseStatusCode = getExampleResponseStatusCode({
             response: example.response,
             ir: this.ir
@@ -1305,12 +1327,22 @@ describe("${serviceName}", () => {
                 endpoint
             });
 
-        const isCursorMissing =
+        let isCursorMissing =
             endpoint.pagination !== undefined &&
             isPaginationCursorMissingInExample({
                 example,
                 endpoint
             });
+
+        // For URI/path pagination: if the next property is nested we can't safely override it in the
+        // mock response body, so fall back to skipping getNextPage() (same as missing cursor).
+        if (
+            !isCursorMissing &&
+            (endpoint.pagination?.type === "uri" || endpoint.pagination?.type === "path") &&
+            uriPathNextOverride == null
+        ) {
+            isCursorMissing = true;
+        }
 
         // If cursor is missing, we won't be making getNextPage() calls, so don't need { once: false }
         if (isCursorMissing) {
@@ -1376,6 +1408,7 @@ describe("${serviceName}", () => {
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
+        ${uriPathNextOverride != null ? code`const mockResponseBody = { ...rawResponseBody, ${uriPathNextOverride.wireKey}: ${uriPathNextOverride.nextValueCode} };` : ""}
         server
             .mockEndpoint(${hasPagination ? "{ once: false }" : ""})
             .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders
@@ -1402,7 +1435,10 @@ describe("${serviceName}", () => {
                     ? isSSEStreaming && !willThrowError
                         ? code`.sseBody(rawResponseBody)
                 `
-                        : code`.jsonBody(rawResponseBody)
+                        : uriPathNextOverride != null
+                          ? code`.jsonBody(mockResponseBody)
+                `
+                          : code`.jsonBody(rawResponseBody)
                 `
                     : ""
             }.build();
@@ -2242,12 +2278,11 @@ function isPaginationCursorMissingInExample({
             }
             break;
         case "uri":
+            cursorProperty = pagination.nextUri;
+            break;
         case "path":
-            // URI/path pagination uses URLs from the response body to fetch the next page.
-            // Wire test mocks can't handle URL-based pagination redirects since the auto-generated
-            // example value for 'next' is a placeholder string, not a valid URL the mock server serves.
-            // Treat cursor as "missing" so the test skips getNextPage().
-            return true;
+            cursorProperty = pagination.nextPath;
+            break;
         case "custom":
             return false;
         default:
