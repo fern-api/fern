@@ -868,7 +868,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                             tokenEndpoint: {
                                 endpointReference: {
                                     endpointId: "endpoint_getToken",
-                                    serviceId: "service_auth"
+                                    serviceId: "service_auth",
+                                    subpackageId: undefined
                                 },
                                 requestProperties: {
                                     clientId: {
@@ -893,7 +894,8 @@ describe("GeneratedSdkClientClassImpl", () => {
                                             v2Examples: undefined
                                         })
                                     },
-                                    scopes: undefined
+                                    scopes: undefined,
+                                    customProperties: undefined
                                 },
                                 responseProperties: {
                                     accessToken: {

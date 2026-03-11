@@ -423,11 +423,13 @@ describe("GeneratedStreamingEndpointImplementation", () => {
                         docs: undefined,
                         v2Examples: undefined
                     }),
-                    nonStreamResponse: FernIr.NonStreamHttpResponseBody.json({
-                        responseBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
-                        docs: undefined,
-                        v2Examples: undefined
-                    })
+                    nonStreamResponse: FernIr.NonStreamHttpResponseBody.json(
+                        FernIr.JsonResponse.response({
+                            responseBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                            docs: undefined,
+                            v2Examples: undefined
+                        })
+                    )
                 }),
                 statusCode: undefined,
                 isWildcardStatusCode: undefined,
