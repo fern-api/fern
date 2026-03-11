@@ -194,7 +194,7 @@ catalog:
   stylelint-config-prettier-scss: ^0.0.1
   stylelint-config-standard-scss: ^5.0.0
   swagger2openapi: 7.0.8
-  tar: ^7.5.10
+  tar: ^7.5.11
   terminal-link: ^3.0.0
   tinycolor2: ^1.6.0
   title: ^3.5.3
