@@ -15,7 +15,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithMixedCase(
+    client.NoReqBody.PostWithNoRequestBody(
         context.TODO(),
     )
 }

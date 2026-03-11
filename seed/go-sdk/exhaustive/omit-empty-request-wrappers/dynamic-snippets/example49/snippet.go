@@ -15,9 +15,7 @@ func do() {
             "<token>",
         ),
     )
-    request := true
-    client.Endpoints.Primitive.GetAndReturnBool(
+    client.Endpoints.Urls.WithEndingSlash(
         context.TODO(),
-        request,
     )
 }

@@ -16,12 +16,13 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithRequiredField{
-        FieldString: "string",
+    request := &types.ObjectWithUnknownField{
+        Unknown: map[string]any{
+            "$ref": "https://example.com/schema",
+        },
     }
-    client.Endpoints.HttpMethods.TestPut(
+    client.Endpoints.Object.GetAndReturnWithUnknownField(
         context.TODO(),
-        "id",
         request,
     )
 }
