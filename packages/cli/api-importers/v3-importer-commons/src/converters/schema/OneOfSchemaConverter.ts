@@ -60,20 +60,20 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return this.convertAsUndiscriminatedUnion();
         }
 
-        // Infer open-ended enums: oneOf/anyOf with [enum, string] pattern
-        // This runs after the x-fern-discriminated check so explicit overrides take precedence
-        if (this.context.settings.inferForwardCompatible) {
-            const openEndedEnum = this.convertAsOpenEndedEnum();
-            if (openEndedEnum != null) {
-                return openEndedEnum;
-            }
-        }
-
         // If a discriminator is present, always convert as discriminated union
         // This properly handles OpenAPI oneOf with discriminator where the discriminant
         // property is defined in each variant schema
         if (this.schema.discriminator != null) {
             return this.convertAsDiscriminatedUnion();
+        }
+
+        // Infer open-ended enums: oneOf/anyOf with [enum, string] pattern
+        // This runs after both x-fern-discriminated and discriminator checks so explicit overrides take precedence
+        if (this.context.settings.inferForwardCompatible) {
+            const openEndedEnum = this.convertAsOpenEndedEnum();
+            if (openEndedEnum != null) {
+                return openEndedEnum;
+            }
         }
 
         return this.convertAsUndiscriminatedUnion();
