@@ -178,10 +178,12 @@ async function readFernProjectConfig(startPath: AbsoluteFilePath): Promise<FernP
         if (await doesPathExist(configPath)) {
             try {
                 const configContents = await readFile(configPath, "utf-8");
-                const config = JSON.parse(configContents) as { organization?: string; version?: string };
+                const config = JSON.parse(configContents) as Record<string, unknown>;
+                const organization = typeof config.organization === "string" ? config.organization : undefined;
+                const version = typeof config.version === "string" ? config.version : undefined;
                 return {
-                    organization: config.organization,
-                    version: config.version,
+                    organization,
+                    version,
                     absolutePathToFernConfig: configPath
                 };
             } catch (error) {
