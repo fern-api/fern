@@ -2,7 +2,7 @@
     "extends": "../tsconfig.base.json",
     "compilerOptions": {
         "outDir": null,
-        "rootDir": "..",
+        "rootDir": ".."
     },
     "include": ["../src", "../tests"],
     "exclude": []
