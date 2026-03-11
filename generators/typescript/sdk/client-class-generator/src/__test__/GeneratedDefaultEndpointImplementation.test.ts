@@ -560,34 +560,36 @@ function createCursorPagination(): FernIr.Pagination {
                 valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                 docs: undefined,
                 availability: undefined,
+                propertyAccess: undefined,
                 v2Examples: undefined
             })
         },
         next: {
             propertyPath: undefined,
-            property: FernIr.RequestPropertyValue.body({
+            property: {
                 name: createNameAndWireValue("nextCursor"),
                 valueType: FernIr.TypeReference.container(
                     FernIr.ContainerType.optional(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                 ),
                 docs: undefined,
                 availability: undefined,
+                propertyAccess: undefined,
                 v2Examples: undefined
-            })
+            }
         },
         results: {
             propertyPath: undefined,
-            property: FernIr.RequestPropertyValue.body({
+            property: {
                 name: createNameAndWireValue("items"),
                 valueType: FernIr.TypeReference.container(
                     FernIr.ContainerType.list(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                 ),
                 docs: undefined,
                 availability: undefined,
+                propertyAccess: undefined,
                 v2Examples: undefined
-            })
-        },
-        extendedResults: undefined
+            }
+        }
     });
 }
 
