@@ -1,4 +1,5 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { getSnakeCaseSafe } from "@fern-api/ir-utils";
 import { AbstractRustGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/rust-base";
 import { ModelCustomConfigSchema, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -80,7 +81,7 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
     }
 
     public getDirectoryForFernFilepath(fernFilepath: FernIr.FernFilepath): string {
-        return fernFilepath.allParts.map((path) => path.snakeCase.safeName).join("/");
+        return fernFilepath.allParts.map((path) => getSnakeCaseSafe(path)).join("/");
     }
 
     public toModelGeneratorContext(): ModelGeneratorContext {

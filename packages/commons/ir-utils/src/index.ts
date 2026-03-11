@@ -21,10 +21,13 @@ export { isReferencedWebhookPayloadSchema } from "./utils/isReferencedWebhookPay
 export type { NameInput } from "./utils/namesUtils.js";
 export {
     ensureNameAndWireValue,
+    getCamelCaseSafe,
     getCamelCaseUnsafe,
     getNameFromWireValue,
     getOriginalName,
+    getPascalCaseSafe,
     getPascalCaseUnsafe,
+    getSnakeCaseSafe,
     getSnakeCaseUnsafe,
     getWireValue
 } from "./utils/namesUtils.js";

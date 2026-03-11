@@ -1,4 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getOriginalName, getPascalCaseUnsafe } from "@fern-api/ir-utils";
 /**
  * Detects illegal recursive type cycles in the IR that cannot be represented in Rust.
  *
@@ -237,8 +238,8 @@ export class RustCycleDetector {
             .map((typeId) => {
                 const typeDeclaration = this.ir.types[typeId];
                 const typeName =
-                    typeDeclaration?.name?.name?.originalName ??
-                    typeDeclaration?.name?.name?.pascalCase?.unsafeName ??
+                    (typeDeclaration?.name?.name != null ? getOriginalName(typeDeclaration.name.name) : undefined) ??
+                    (typeDeclaration?.name?.name != null ? getPascalCaseUnsafe(typeDeclaration.name.name) : undefined) ??
                     typeId;
                 return typeName;
             })

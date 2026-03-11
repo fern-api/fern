@@ -1,5 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { getSnakeCaseSafe } from "@fern-api/ir-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Module, UseStatement } from "@fern-api/rust-codegen";
@@ -474,7 +475,7 @@ export class WireTestGenerator {
     // =============================================================================
 
     private getTestFunctionName(endpoint: FernIr.HttpEndpoint, serviceName: string): string {
-        const endpointName = endpoint.name.snakeCase.safeName;
+        const endpointName = getSnakeCaseSafe(endpoint.name);
         // Normalize service name to avoid double underscores (e.g., endpoints_union_ -> endpoints_union)
         const normalizedServiceName = serviceName.replace(/_+$/, "");
         return `test_${normalizedServiceName}_${endpointName}_with_wiremock`;
@@ -509,7 +510,7 @@ export class WireTestGenerator {
     }
 
     private getFormattedServiceName(service: FernIr.HttpService): string {
-        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+        return service.name?.fernFilepath?.allParts?.map((part) => getSnakeCaseSafe(part)).join("_") || "root";
     }
 
     private wiremockMappingKey({

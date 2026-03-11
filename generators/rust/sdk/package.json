@@ -39,6 +39,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
+    "@fern-api/ir-utils": "workspace:*",
     "@fern-api/rust-codegen": "workspace:*"
   },
   "devDependencies": {

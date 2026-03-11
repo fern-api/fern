@@ -1,5 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { getPascalCaseSafe, getSnakeCaseSafe, getSnakeCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
 
@@ -94,12 +95,12 @@ export class WebSocketChannelGenerator {
         // Detect name collisions
         const nameCount = new Map<string, number>();
         for (const channel of Object.values(websocketChannels)) {
-            const baseName = channel.name.snakeCase.safeName;
+            const baseName = getSnakeCaseSafe(channel.name);
             nameCount.set(baseName, (nameCount.get(baseName) ?? 0) + 1);
         }
 
         for (const [channelId, channel] of Object.entries(websocketChannels)) {
-            const baseName = channel.name.snakeCase.safeName;
+            const baseName = getSnakeCaseSafe(channel.name);
 
             if ((nameCount.get(baseName) ?? 0) > 1) {
                 // Derive unique name from channel ID: "channel_speak/v1" → "speak_v1"
@@ -111,9 +112,9 @@ export class WebSocketChannelGenerator {
                 });
             } else {
                 this.channelNameMap.set(channelId, {
-                    moduleName: channel.name.snakeCase.safeName,
-                    clientName: `${channel.name.pascalCase.safeName}Client`,
-                    enumPrefix: channel.name.pascalCase.safeName
+                    moduleName: getSnakeCaseSafe(channel.name),
+                    clientName: `${getPascalCaseSafe(channel.name)}Client`,
+                    enumPrefix: getPascalCaseSafe(channel.name)
                 });
             }
         }
@@ -354,17 +355,17 @@ ${methods.join("\n\n")}
         const params: Array<{ name: string; type: string }> = [];
 
         for (const pathParam of channel.pathParameters) {
-            params.push({ name: pathParam.name.snakeCase.safeName, type: "&str" });
+            params.push({ name: getSnakeCaseSafe(pathParam.name), type: "&str" });
         }
 
         for (const header of channel.headers) {
-            params.push({ name: header.name.name.snakeCase.safeName, type: "&str" });
+            params.push({ name: getSnakeCaseUnsafe(header.name), type: "&str" });
         }
 
         for (const qp of channel.queryParameters) {
             const isOptional = this.isOptionalType(qp.valueType);
             params.push({
-                name: qp.name.name.snakeCase.safeName,
+                name: getSnakeCaseUnsafe(qp.name),
                 type: isOptional ? "Option<&str>" : "&str"
             });
         }
@@ -391,8 +392,8 @@ ${methods.join("\n\n")}
 
         const headerInserts = channel.headers
             .map((header) => {
-                const paramName = header.name.name.snakeCase.safeName;
-                const wireValue = header.name.wireValue;
+                const paramName = getSnakeCaseUnsafe(header.name);
+                const wireValue = getWireValue(header.name);
                 return `        options.headers.insert("${wireValue}".to_string(), ${paramName}.to_string());`;
             })
             .join("\n");
@@ -400,8 +401,8 @@ ${methods.join("\n\n")}
         const queryLines: string[] = [];
         if (channel.queryParameters.length > 0) {
             for (const qp of channel.queryParameters) {
-                const paramName = qp.name.name.snakeCase.safeName;
-                const wireValue = qp.name.wireValue;
+                const paramName = getSnakeCaseUnsafe(qp.name);
+                const wireValue = getWireValue(qp.name);
                 const isOptional = this.isOptionalType(qp.valueType);
                 if (isOptional) {
                     queryLines.push(`        if let Some(v) = ${paramName} {`);
@@ -556,7 +557,7 @@ impl ${connectorName} {
 
     private getMessageVariantName(msg: FernIr.WebSocketMessage): string {
         if (msg.body.type === "inlinedBody") {
-            return msg.body.name.pascalCase.safeName;
+            return getPascalCaseSafe(msg.body.name);
         }
         // For reference body types, derive variant name from the referenced type
         // Use disambiguated name so variant matches body type (e.g., AuthResponse2(AuthResponse2))
@@ -572,7 +573,7 @@ impl ${connectorName} {
 
     private getMessageMethodName(msg: FernIr.WebSocketMessage, prefix: string): string {
         const name = msg.body.type === "inlinedBody"
-            ? msg.body.name.snakeCase.safeName
+            ? getSnakeCaseSafe(msg.body.name)
             : this.toSnakeCase(msg.type);
         return `${prefix}_${name}`;
     }

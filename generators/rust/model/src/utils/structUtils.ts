@@ -1,4 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getPascalCaseUnsafe, getSnakeCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -182,14 +183,8 @@ export function hasFloatingPointSets(properties: (FernIr.ObjectProperty | FernIr
 export function getCustomTypesUsedInFields(
     properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[],
     currentTypeName?: string
-): {
-    snakeCase: { unsafeName: string };
-    pascalCase: { unsafeName: string };
-}[] {
-    const customTypeNames: {
-        snakeCase: { unsafeName: string };
-        pascalCase: { unsafeName: string };
-    }[] = [];
+): FernIr.NameOrString[] {
+    const customTypeNames: FernIr.NameOrString[] = [];
     const visited = new Set<string>();
 
     properties.forEach((property) => {
@@ -197,7 +192,7 @@ export function getCustomTypesUsedInFields(
     });
 
     // Filter out the current type itself to prevent self-imports
-    return customTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
+    return customTypeNames.filter((typeName) => getPascalCaseUnsafe(typeName) !== currentTypeName);
 }
 
 export function generateFieldType(
@@ -222,8 +217,8 @@ export function generateFieldAttributes(
     const attributes: rust.Attribute[] = [];
 
     // Add serde rename if the field name differs from wire name
-    if (property.name.name.snakeCase.unsafeName !== property.name.wireValue) {
-        attributes.push(Attribute.serde.rename(property.name.wireValue));
+    if (getSnakeCaseUnsafe(property.name.name) !== getWireValue(property.name)) {
+        attributes.push(Attribute.serde.rename(getWireValue(property.name)));
     }
 
     // Add skip_serializing_if for optional fields to omit null values
@@ -306,9 +301,9 @@ export function writeStructUseStatements(
 ): void {
     const customTypes = getCustomTypesUsedInFields(properties, currentTypeName);
     customTypes.forEach((typeName) => {
-        const modulePath = context.getModulePathForType(typeName.snakeCase.unsafeName);
+        const modulePath = context.getModulePathForType(getSnakeCaseUnsafe(typeName));
         const moduleNameEscaped = context.escapeRustKeyword(modulePath);
-        writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
+        writer.writeLine(`use crate::${moduleNameEscaped}::${getPascalCaseUnsafe(typeName)};`);
     });
 
     // Add chrono imports based on specific types needed

@@ -1,5 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { getPascalCaseUnsafe } from "@fern-api/ir-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, rust } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference.js";
@@ -133,7 +134,7 @@ export class UndiscriminatedUnionGenerator {
         const memberType = member.type;
 
         if (memberType.type === "named") {
-            return memberType.name.pascalCase.unsafeName;
+            return getPascalCaseUnsafe(memberType.name);
         } else if (memberType.type === "primitive") {
             // Handle primitive types
             const primitiveType = memberType.primitive.v1;
@@ -167,7 +168,7 @@ export class UndiscriminatedUnionGenerator {
                     // Try to get the inner type name to make it unique
                     const listInnerType = memberType.container.list;
                     if (listInnerType.type === "named") {
-                        return `${listInnerType.name.pascalCase.unsafeName}List`;
+                        return `${getPascalCaseUnsafe(listInnerType.name)}List`;
                     }
                     return `List${index}`;
                 }

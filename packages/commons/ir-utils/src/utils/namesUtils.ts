@@ -121,3 +121,39 @@ export function getPascalCaseUnsafe(input: NameInput): string {
     }
     return name.pascalCase.unsafeName;
 }
+
+/**
+ * Get the PascalCase safe name from any name-like input.
+ * Same as getPascalCaseUnsafe but returns the safe (keyword-escaped) variant.
+ */
+export function getPascalCaseSafe(input: NameInput): string {
+    const name = extractNameOrString(input);
+    if (typeof name === "string") {
+        return getDefaultCasingsGenerator().generateName(name).pascalCase.safeName;
+    }
+    return name.pascalCase.safeName;
+}
+
+/**
+ * Get the snakeCase safe name from any name-like input.
+ * Same as getSnakeCaseUnsafe but returns the safe (keyword-escaped) variant.
+ */
+export function getSnakeCaseSafe(input: NameInput): string {
+    const name = extractNameOrString(input);
+    if (typeof name === "string") {
+        return getDefaultCasingsGenerator().generateName(name).snakeCase.safeName;
+    }
+    return name.snakeCase.safeName;
+}
+
+/**
+ * Get the camelCase safe name from any name-like input.
+ * Same as getCamelCaseUnsafe but returns the safe (keyword-escaped) variant.
+ */
+export function getCamelCaseSafe(input: NameInput): string {
+    const name = extractNameOrString(input);
+    if (typeof name === "string") {
+        return getDefaultCasingsGenerator().generateName(name).camelCase.safeName;
+    }
+    return name.camelCase.safeName;
+}

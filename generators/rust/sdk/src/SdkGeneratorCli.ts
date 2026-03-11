@@ -1,6 +1,7 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { getPascalCaseSafe } from "@fern-api/ir-utils";
 import {
     AbstractRustGeneratorCli,
     formatRustCode,
@@ -196,7 +197,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         context.logger.debug(
-            `Starting SDK generation for ${context.ir.apiName.pascalCase.safeName} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
+            `Starting SDK generation for ${getPascalCaseSafe(context.ir.apiName)} (crate: ${context.getCrateName()}@${context.getCrateVersion()})`
         );
 
         const projectFiles = await this.generateProjectFiles(context);
@@ -367,7 +368,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Build module documentation
         const moduleDoc: string[] = [];
-        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiName = context.ir.apiDisplayName ?? (context.ir.apiName ? getPascalCaseSafe(context.ir.apiName) : "API");
         const apiDescription = context.ir.apiDocs;
 
         moduleDoc.push(`API client and types for the ${apiName}`);
@@ -504,7 +505,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Build module documentation
         const moduleDoc: string[] = [];
-        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiName = context.ir.apiDisplayName ?? (context.ir.apiName ? getPascalCaseSafe(context.ir.apiName) : "API");
         const apiDescription = context.ir.apiDocs;
 
         // Add main title
@@ -563,7 +564,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Add all sub-clients
         subpackages.forEach((subpackage) => {
-            const subClientName = `${subpackage.name.pascalCase.safeName}Client`;
+            const subClientName = `${getPascalCaseSafe(subpackage.name)}Client`;
             clientExports.push(subClientName);
         });
 
