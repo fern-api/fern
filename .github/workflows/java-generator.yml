@@ -8,10 +8,6 @@ on:
       - main
   workflow_call:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 env:
   DO_NOT_TRACK: "1"
 
