@@ -220,6 +220,18 @@ describe("GeneratedWebsocketResponseSchemaImpl", () => {
             expect(getTextOfTsNode(result)).toMatchSnapshot();
         });
 
+        it("respects omitUndefined flag", () => {
+            const impl = createImpl({
+                includeSerdeLayer: true,
+                omitUndefined: true,
+                receiveMessages: [createMockReceiveMessage()]
+            });
+            const context = createMockSdkContext();
+            const rawRef = ts.factory.createIdentifier("rawData");
+            const result = impl.deserializeResponse(rawRef, context);
+            expect(getTextOfTsNode(result)).toMatchSnapshot();
+        });
+
         it("respects skipResponseValidation flag", () => {
             const impl = createImpl({
                 includeSerdeLayer: true,

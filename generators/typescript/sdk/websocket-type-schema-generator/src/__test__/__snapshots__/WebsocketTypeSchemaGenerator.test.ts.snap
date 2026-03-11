@@ -1,5 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`GeneratedWebsocketResponseSchemaImpl > deserializeResponse > respects omitUndefined flag 1`] = `"WebsocketResponse.parse(rawData, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: false, breadcrumbsPrefix: "", omitUndefined: true })"`;
+
 exports[`GeneratedWebsocketResponseSchemaImpl > deserializeResponse > respects skipResponseValidation flag 1`] = `"WebsocketResponse.parse(rawData, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: "", omitUndefined: false })"`;
 
 exports[`GeneratedWebsocketResponseSchemaImpl > deserializeResponse > returns parsed expression when includeSerdeLayer is true 1`] = `"WebsocketResponse.parse(rawData, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: false, breadcrumbsPrefix: "", omitUndefined: false })"`;
