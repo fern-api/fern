@@ -17,7 +17,6 @@ jobs:
     steps:
       - uses: actions/stale@v10
         with:
-          debug-only: true
           stale-issue-message: "This issue is stale because it has been open 180 days with no activity. Remove stale label or comment or this will be closed in 30 days."
           close-issue-message: "This issue was closed because it has been inactive for 30 days after being marked stale."
           days-before-issue-stale: 180
