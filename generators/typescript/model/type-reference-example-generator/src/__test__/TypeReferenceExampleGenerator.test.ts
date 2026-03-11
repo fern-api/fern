@@ -357,6 +357,64 @@ describe("GeneratedTypeReferenceExampleImpl", () => {
             expect(getTextOfTsNode(expr)).toContain("new Set");
         });
 
+        it("generates set as Set<> when includeSerdeLayer is true and items are enum (treated as primitive)", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: ["RED", "BLUE"],
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.set({
+                        set: [createStringExample("RED"), createStringExample("BLUE")],
+                        itemType: FernIr.TypeReference.named({
+                            typeId: "type_Color",
+                            fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                            name: casingsGenerator.generateName("Color"),
+                            displayName: undefined,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    })
+                )
+            };
+            const impl = createImpl(example, { includeSerdeLayer: true });
+            const enumContext = createMockBaseContext();
+            // Override resolveTypeReference to return an enum (named + Enum shape)
+            enumContext.type.resolveTypeReference = () => ({
+                type: "named" as const,
+                shape: FernIr.ShapeType.Enum
+            });
+            const expr = impl.build(enumContext, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).toContain("new Set");
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
+        it("generates set as array when includeSerdeLayer is true but items are non-primitive", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: ["a", "b"],
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.set({
+                        set: [createStringExample("a"), createStringExample("b")],
+                        itemType: FernIr.TypeReference.named({
+                            typeId: "type_MyObject",
+                            fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                            name: casingsGenerator.generateName("MyObject"),
+                            displayName: undefined,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    })
+                )
+            };
+            const impl = createImpl(example, { includeSerdeLayer: true });
+            const nonPrimitiveContext = createMockBaseContext();
+            // Override resolveTypeReference to return a named (non-primitive) type
+            nonPrimitiveContext.type.resolveTypeReference = () => ({
+                type: "named" as const,
+                shape: FernIr.ShapeType.Object
+            });
+            const expr = impl.build(nonPrimitiveContext, DEFAULT_OPTS);
+            expect(getTextOfTsNode(expr)).not.toContain("new Set");
+            expect(getTextOfTsNode(expr)).toMatchSnapshot();
+        });
+
         it("generates set as array when includeSerdeLayer is false", () => {
             const example: FernIr.ExampleTypeReference = {
                 jsonExample: ["a", "b"],

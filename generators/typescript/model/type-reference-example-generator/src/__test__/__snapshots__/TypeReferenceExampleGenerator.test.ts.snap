@@ -8,7 +8,11 @@ exports[`GeneratedTypeReferenceExampleImpl > containers > generates map example 
 }"
 `;
 
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as Set<> when includeSerdeLayer is true and items are enum (treated as primitive) 1`] = `"new Set(["RED", "BLUE"])"`;
+
 exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as array when includeSerdeLayer is false 1`] = `"["a", "b"]"`;
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as array when includeSerdeLayer is true but items are non-primitive 1`] = `"["a", "b"]"`;
 
 exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses boolean identifier for boolean key 1`] = `
 "{
