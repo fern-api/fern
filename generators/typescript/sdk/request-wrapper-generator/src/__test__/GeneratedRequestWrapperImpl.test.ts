@@ -181,6 +181,9 @@ function createMockContext(opts?: {
     if (opts?.getTypeDeclarationFn) {
         context.type.getTypeDeclaration = opts.getTypeDeclarationFn;
     }
+    if (opts?.getGeneratedTypeFn) {
+        context.type.getGeneratedType = opts.getGeneratedTypeFn;
+    }
 
     return { context, sourceFile };
 }
