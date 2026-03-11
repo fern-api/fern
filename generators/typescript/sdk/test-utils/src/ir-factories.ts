@@ -294,7 +294,6 @@ export function createHttpEndpoint(opts?: {
     };
 }
 
-
 /**
  * Creates a DeclaredTypeName IR object for use in tests.
  * Used for inlinedRequestBody.extends and named type references.
