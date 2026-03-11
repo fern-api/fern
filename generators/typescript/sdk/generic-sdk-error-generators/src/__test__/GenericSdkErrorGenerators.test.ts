@@ -148,6 +148,45 @@ describe("GeneratedGenericAPISdkErrorImpl", () => {
             expect(getTextOfTsNode(args[0])).toMatchSnapshot();
         });
 
+        it("includes only responseBody and rawResponse when message and statusCode are undefined", () => {
+            const impl = createImpl();
+            const args = impl.buildConstructorArguments({
+                message: undefined,
+                statusCode: undefined,
+                responseBody: ts.factory.createIdentifier("body"),
+                rawResponse: ts.factory.createIdentifier("raw")
+            });
+            expect(args).toHaveLength(1);
+            assert(args[0] != null, "expected constructor argument");
+            expect(getTextOfTsNode(args[0])).toMatchSnapshot();
+        });
+
+        it("includes only message and rawResponse (statusCode and responseBody undefined)", () => {
+            const impl = createImpl();
+            const args = impl.buildConstructorArguments({
+                message: ts.factory.createStringLiteral("error"),
+                statusCode: undefined,
+                responseBody: undefined,
+                rawResponse: ts.factory.createIdentifier("raw")
+            });
+            expect(args).toHaveLength(1);
+            assert(args[0] != null, "expected constructor argument");
+            expect(getTextOfTsNode(args[0])).toMatchSnapshot();
+        });
+
+        it("includes only statusCode (all others undefined)", () => {
+            const impl = createImpl();
+            const args = impl.buildConstructorArguments({
+                message: undefined,
+                statusCode: ts.factory.createNumericLiteral(503),
+                responseBody: undefined,
+                rawResponse: undefined
+            });
+            expect(args).toHaveLength(1);
+            assert(args[0] != null, "expected constructor argument");
+            expect(getTextOfTsNode(args[0])).toMatchSnapshot();
+        });
+
         it("returns empty object when no properties provided", () => {
             const impl = createImpl();
             const args = impl.buildConstructorArguments({

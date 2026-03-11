@@ -26,10 +26,30 @@ exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > includes 
 }"
 `;
 
+exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > includes only message and rawResponse (statusCode and responseBody undefined) 1`] = `
+"{
+    message: "error",
+    rawResponse: raw
+}"
+`;
+
 exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > includes only non-null properties 1`] = `
 "{
     message: "msg",
     statusCode: 400
+}"
+`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > includes only responseBody and rawResponse when message and statusCode are undefined 1`] = `
+"{
+    body: body,
+    rawResponse: raw
+}"
+`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > includes only statusCode (all others undefined) 1`] = `
+"{
+    statusCode: 503
 }"
 `;
 
