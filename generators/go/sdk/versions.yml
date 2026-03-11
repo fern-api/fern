@@ -13,7 +13,7 @@
         )
         
         client := sdk.NewClient(
-            option.WithLogging(core.LogConfigBuilder().
+            option.WithLogging(core.NewLogConfigBuilder().
                 Level(core.LogLevelDebug).
                 Silent(false).
                 Build()),
