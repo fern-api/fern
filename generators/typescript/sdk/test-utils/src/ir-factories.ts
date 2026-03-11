@@ -291,6 +291,52 @@ export function createHttpEndpoint(opts?: {
 }
 
 /**
+ * Creates a DeclaredTypeName IR object for use in tests.
+ * Used for inlinedRequestBody.extends and named type references.
+ */
+export function createDeclaredTypeName(name: string): FernIr.DeclaredTypeName {
+    return {
+        typeId: `type_${name}`,
+        fernFilepath: { allParts: [], packagePath: [], file: undefined },
+        name: casingsGenerator.generateName(name),
+        displayName: undefined
+    };
+}
+
+/**
+ * Creates a named TypeReference pointing to a DeclaredTypeName.
+ */
+export function createNamedTypeReference(name: string): FernIr.TypeReference.Named {
+    const declaredTypeName = createDeclaredTypeName(name);
+    return FernIr.TypeReference.named({
+        typeId: declaredTypeName.typeId,
+        fernFilepath: declaredTypeName.fernFilepath,
+        name: declaredTypeName.name,
+        displayName: declaredTypeName.displayName,
+        default: undefined,
+        inline: undefined
+    });
+}
+
+/**
+ * Creates an ObjectProperty IR object for use in tests.
+ */
+export function createObjectProperty(
+    name: string,
+    valueType: FernIr.TypeReference,
+    opts?: { wireValue?: string; docs?: string }
+): FernIr.ObjectProperty {
+    return {
+        name: createNameAndWireValue(name, opts?.wireValue),
+        valueType,
+        docs: opts?.docs,
+        availability: undefined,
+        v2Examples: undefined,
+        propertyAccess: undefined
+    };
+}
+
+/**
  * Creates an SdkRequest with wrapper shape for use in tests.
  */
 export function createSdkRequestWrapper(opts?: {

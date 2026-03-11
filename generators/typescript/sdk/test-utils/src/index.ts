@@ -3,6 +3,7 @@ export {
     createAuthScheme,
     createBasicAuthScheme,
     createBearerAuthScheme,
+    createDeclaredTypeName,
     createHeaderAuthScheme,
     createHttpEndpoint,
     createHttpHeader,
@@ -10,6 +11,8 @@ export {
     createInlinedRequestBody,
     createInlinedRequestBodyProperty,
     createMinimalIR,
+    createNamedTypeReference,
+    createObjectProperty,
     createPathParameter,
     createQueryParameter,
     createSdkRequestWrapper
