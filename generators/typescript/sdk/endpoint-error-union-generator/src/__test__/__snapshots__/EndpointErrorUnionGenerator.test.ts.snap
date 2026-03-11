@@ -169,7 +169,7 @@ export const Error = {
 "
 `;
 
-exports[`GeneratedEndpointErrorUnionImpl > writeToFile > writes error union with retainOriginalCasing 1`] = `
+exports[`GeneratedEndpointErrorUnionImpl > writeToFile > writes error union with retainOriginalCasing (statusCode discrimination) 1`] = `
 "export type Error = 
     | EndpointError.NotFound
     | EndpointError._Unknown;
@@ -219,6 +219,63 @@ export const Error = {
         _visit: <_Result>(value: EndpointError, visitor: EndpointError._Visitor<_Result>): _Result => {
             switch (value.statusCode) {
                 case 404: return visitor.NotFound(value.content);
+                default: return visitor._other(value.content);
+            }
+        },
+    } as const;
+"
+`;
+
+exports[`GeneratedEndpointErrorUnionImpl > writeToFile > writes error union with retainOriginalCasing + property discrimination 1`] = `
+"export type Error = 
+    | EndpointError.BadRequest
+    | EndpointError._Unknown;
+
+export namespace Error {
+    export interface BadRequest extends _Utils {
+        errorName: "BadRequest";
+        body: string;
+    }
+
+    export interface _Unknown extends _Utils {
+        errorName: void;
+        content: Fetcher.Error;
+    }
+
+    export interface _Utils {
+        _visit: <_Result>(visitor: EndpointError._Visitor<_Result>) => _Result;
+    }
+
+    export interface _Visitor<_Result> {
+        BadRequest: (value: string) => _Result;
+        _other: (value: Fetcher.Error) => _Result;
+    }
+}
+
+export const Error = {
+        BadRequest: (value: string): EndpointError.BadRequest => {
+            return {
+                body: value,
+                errorName: "BadRequest",
+                "_visit": function <_Result>(this: EndpointError.BadRequest, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _unknown: (fetcherError: Fetcher.Error): EndpointError._Unknown => {
+            return {
+                errorName: undefined,
+                content: fetcherError,
+                "_visit": function <_Result>(this: EndpointError._Unknown, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _visit: <_Result>(value: EndpointError, visitor: EndpointError._Visitor<_Result>): _Result => {
+            switch (value.errorName) {
+                case "BadRequest": return visitor.BadRequest(value.body);
                 default: return visitor._other(value.content);
             }
         },

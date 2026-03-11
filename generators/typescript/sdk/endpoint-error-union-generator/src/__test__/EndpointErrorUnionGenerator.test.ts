@@ -563,7 +563,7 @@ describe("GeneratedEndpointErrorUnionImpl", () => {
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
 
-        it("writes error union with retainOriginalCasing", () => {
+        it("writes error union with retainOriginalCasing (statusCode discrimination)", () => {
             const errorDecl = createErrorDeclaration({
                 name: "NotFound",
                 statusCode: 404,
@@ -572,6 +572,28 @@ describe("GeneratedEndpointErrorUnionImpl", () => {
             const impl = createImpl({
                 errors: [errorDecl],
                 endpointErrors: [createResponseError("NotFound")],
+                retainOriginalCasing: true
+            });
+            const context = createMockSdkContext();
+            impl.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+
+        it("writes error union with retainOriginalCasing + property discrimination", () => {
+            const errorDecl = createErrorDeclaration({
+                name: "BadRequest",
+                statusCode: 400,
+                type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+            });
+            const discriminant = createNameAndWireValue("errorName", "errorName");
+            const contentProperty = createNameAndWireValue("body", "body");
+            const impl = createImpl({
+                errors: [errorDecl],
+                endpointErrors: [createResponseError("BadRequest")],
+                discriminationStrategy: FernIr.ErrorDiscriminationStrategy.property({
+                    discriminant,
+                    contentProperty
+                }),
                 retainOriginalCasing: true
             });
             const context = createMockSdkContext();
