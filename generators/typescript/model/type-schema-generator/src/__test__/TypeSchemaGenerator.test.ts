@@ -256,7 +256,8 @@ function createDeclaredTypeName(name: string): FernIr.DeclaredTypeName {
  * Helper to write a schema to file and get the output text.
  */
 function writeSchemaAndGetText(
-    schema: { writeToFile: (context: unknown) => void },
+    // biome-ignore lint/suspicious/noExplicitAny: test helper accepts any schema with writeToFile
+    schema: { writeToFile: (context: any) => void },
     context?: ReturnType<typeof createMockContext>
 ): string {
     const ctx = context ?? createMockContext();
@@ -786,9 +787,7 @@ describe("GeneratedUndiscriminatedUnionTypeSchemaImpl", () => {
     ): FernIr.UndiscriminatedUnionMember {
         return {
             type,
-            docs: opts?.docs,
-            typeName: undefined,
-            v2Examples: undefined
+            docs: opts?.docs
         };
     }
 
