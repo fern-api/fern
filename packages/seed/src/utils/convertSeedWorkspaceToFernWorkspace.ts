@@ -7,7 +7,8 @@ export async function convertGeneratorWorkspaceToFernWorkspace({
     absolutePathToAPIDefinition,
     taskContext,
     workspaceName,
-    cliVersion
+    cliVersion,
+    lenient
 }: {
     fixture: string;
     absolutePathToAPIDefinition: AbsoluteFilePath;
@@ -16,12 +17,15 @@ export async function convertGeneratorWorkspaceToFernWorkspace({
     workspaceName?: string;
     /** Override CLI version (defaults to "DUMMY") */
     cliVersion?: string;
+    /** If true, use lenient parsing for generators config (tolerates unrecognized keys) */
+    lenient?: boolean;
 }): Promise<AbstractAPIWorkspace<unknown> | undefined> {
     const workspace = await loadAPIWorkspace({
         absolutePathToWorkspace: absolutePathToAPIDefinition,
         context: taskContext,
         cliVersion: cliVersion ?? "DUMMY",
-        workspaceName: workspaceName ?? fixture
+        workspaceName: workspaceName ?? fixture,
+        lenient
     });
     if (!workspace.didSucceed) {
         taskContext.logger.info(

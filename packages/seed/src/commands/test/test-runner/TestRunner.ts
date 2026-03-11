@@ -41,6 +41,8 @@ export declare namespace TestRunner {
         organization?: string;
         /** Absolute path to fern.config.json (used for license path resolution) **/
         absolutePathToFernConfig?: AbsoluteFilePath;
+        /** If true, use lenient parsing for generators config (tolerates unrecognized keys) */
+        lenient?: boolean;
     }
 
     interface DoRunArgs {
@@ -161,7 +163,8 @@ export abstract class TestRunner {
         outputDir,
         generatorInvocation,
         organization,
-        absolutePathToFernConfig
+        absolutePathToFernConfig,
+        lenient
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         let lockAcquired = false;
         try {
@@ -224,7 +227,8 @@ export abstract class TestRunner {
                 const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
                     absolutePathToAPIDefinition: absolutePathToApiDefinition,
                     taskContext,
-                    fixture
+                    fixture,
+                    lenient
                 });
                 const workspaceSettings =
                     generatorInvocation != null

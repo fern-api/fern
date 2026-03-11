@@ -96,7 +96,8 @@ export async function runWithCustomFixture({
             taskContext,
             fixture: "custom",
             workspaceName,
-            cliVersion: projectConfig?.version
+            cliVersion: projectConfig?.version,
+            lenient: true
         });
         if (apiWorkspace == null) {
             taskContext.logger.error("Failed to load API definition.");
@@ -138,7 +139,8 @@ export async function runWithCustomFixture({
             outputDir: absolutePathToOutput,
             generatorInvocation: generatorGroup.invocation,
             organization: projectConfig?.organization,
-            absolutePathToFernConfig: projectConfig?.absolutePathToFernConfig
+            absolutePathToFernConfig: projectConfig?.absolutePathToFernConfig,
+            lenient: true
         });
 
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
