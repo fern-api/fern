@@ -163,10 +163,20 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             if (context.subPackageHasWebsocketEndpointsRecursively(subpackage)) {
                 const websocketChannel = context.getWebsocketChannel(subpackage.websocket);
                 if (websocketChannel) {
+                    // Compute auth context so WebSocket Options class can make auth params optional
+                    const constructorParamNames = RootClientGenerator.getConstructorParamNamesFromIr(context);
+                    const hasOAuth = context.getOauth() != null;
+                    const authContext = RootClientGenerator.buildWebSocketAuthContextStatic(
+                        websocketChannel,
+                        constructorParamNames,
+                        hasOAuth,
+                        context.settings.temporaryWebsocketEnvironments
+                    );
                     const websocketApi = new WebSocketClientGenerator({
                         context,
                         subpackage,
-                        websocketChannel
+                        websocketChannel,
+                        authContext
                     });
                     context.project.addSourceFiles(websocketApi.generate());
                 }

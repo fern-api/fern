@@ -21,7 +21,7 @@ type TypeReference = FernIr.TypeReference;
 import { RawClient } from "../endpoint/http/RawClient.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 import { collectInferredAuthCredentials } from "../utils/inferredAuthUtils.js";
-import { WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
+import { WebSocketAuthContext, WebSocketClientGenerator } from "../websocket/WebsocketClientGenerator.js";
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
@@ -87,25 +87,301 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
      * Generates the c# factory methods to create the websocket api client.
      *
      * @remarks
-     * This method only returns methods if WebSockets are enabled via the `enableWebsockets`
+     * This method only returns methods if WebSockets are enabled via the `enableWebsockets`.
+     * When the root client has auth parameters that match WebSocket query parameters,
+     * factory methods will auto-inject defaults from stored credentials.
      *
      * @returns an array of ast.Method objects that represent the factory methods.
      */
     private generateWebsocketFactories(cls: ast.Class) {
         if (this.settings.enableWebsockets) {
+            const { requiredParameters, optionalParameters } = this.getConstructorParameters();
+            const allConstructorParams = [...requiredParameters, ...optionalParameters];
+            let hasAnyAuthContext = false;
+
             for (const subpackage of this.getSubpackages()) {
                 if (subpackage.websocket != null) {
                     const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
                     if (websocketChannel != null) {
+                        const authContext = this.buildWebSocketAuthContext(websocketChannel, allConstructorParams);
+                        if (authContext != null) {
+                            hasAnyAuthContext = true;
+                        }
                         WebSocketClientGenerator.createWebSocketApiFactories(
                             cls,
                             subpackage,
                             this.context,
                             this.Types.RootClient.namespace,
-                            websocketChannel
+                            websocketChannel,
+                            authContext
                         );
                     }
                 }
+            }
+
+            if (hasAnyAuthContext) {
+                this.generateWebSocketAuthFields(cls, allConstructorParams);
+                this.generateInjectDefaultsMethods(cls, allConstructorParams);
+            }
+        }
+    }
+
+    /**
+     * Builds a WebSocketAuthContext by matching WebSocket query parameter names
+     * against root client constructor parameter names.
+     *
+     * For OAuth: if the channel has auth and a query param named "token", injects the raw access token.
+     * For header params: matches by camelCase name (e.g., constructor param "tenantName" matches query param "TenantName").
+     * For environment: if the WebSocket channel has environments configured, injects from ClientOptions.
+     */
+    private buildWebSocketAuthContext(
+        websocketChannel: FernIr.WebSocketChannel,
+        constructorParams: ConstructorParameter[]
+    ): WebSocketAuthContext | undefined {
+        return RootClientGenerator.buildWebSocketAuthContextStatic(
+            websocketChannel,
+            constructorParams.map((cp) => cp.name),
+            this.oauth != null,
+            this.settings.temporaryWebsocketEnvironments
+        );
+    }
+
+    /**
+     * Static version of buildWebSocketAuthContext that can be used from SdkGeneratorCli
+     * without needing a full RootClientGenerator instance.
+     */
+    static buildWebSocketAuthContextStatic(
+        websocketChannel: FernIr.WebSocketChannel,
+        constructorParamNames: string[],
+        hasOAuth: boolean,
+        temporaryWebsocketEnvironments?: Record<
+            string,
+            { "default-environment"?: string; environments: Record<string, string> }
+        >
+    ): WebSocketAuthContext | undefined {
+        const matchedParamFields: WebSocketAuthContext["matchedParamFields"] = [];
+        let oauthTokenPropertyName: string | undefined;
+
+        for (const queryParam of websocketChannel.queryParameters) {
+            const queryParamCamelName = queryParam.name.name.camelCase.safeName;
+            const queryParamPascalName = queryParam.name.name.pascalCase.safeName;
+
+            // Check if this query param matches a constructor parameter by camelCase name
+            const matchingParam = constructorParamNames.find((name) => name === queryParamCamelName);
+            if (matchingParam != null) {
+                matchedParamFields.push({
+                    fieldName: `_${queryParamCamelName}`,
+                    optionsPropertyName: queryParamPascalName
+                });
+                continue;
+            }
+
+            // For OAuth: if the query param looks like a token, inject from the token provider
+            if (
+                hasOAuth &&
+                websocketChannel.auth &&
+                (queryParamCamelName === "token" || queryParamCamelName === "accessToken")
+            ) {
+                oauthTokenPropertyName = queryParamPascalName;
+            }
+        }
+
+        // Check if the WebSocket channel has environments configured
+        const channelPath = websocketChannel.path.head;
+        const envs = temporaryWebsocketEnvironments;
+        const hasEnvironments =
+            envs != null &&
+            envs[channelPath] != null &&
+            envs[channelPath].environments != null &&
+            Object.entries(envs[channelPath].environments).length > 1;
+
+        // Only return an auth context if there's something to inject
+        if (matchedParamFields.length === 0 && oauthTokenPropertyName == null && !hasEnvironments) {
+            return undefined;
+        }
+
+        return {
+            matchedParamFields,
+            hasOAuth,
+            oauthTokenPropertyName,
+            hasEnvironments
+        };
+    }
+
+    /**
+     * Adds private fields to the root client class for storing auth credentials
+     * and client options needed by WebSocket factory methods.
+     *
+     * Fields added:
+     * - `_clientOptions` (when environments need to be propagated)
+     * - `_<paramName>` for each constructor param that matches a WebSocket query param
+     * - `_tokenProvider` is promoted from local var to field (when OAuth is present)
+     */
+    private generateWebSocketAuthFields(cls: ast.Class, constructorParams: ConstructorParameter[]) {
+        // Collect all unique field names needed across all WebSocket channels
+        const neededFields = new Set<string>();
+        let needsOAuthToken = false;
+        let needsClientOptions = false;
+
+        for (const subpackage of this.getSubpackages()) {
+            if (subpackage.websocket != null) {
+                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                if (websocketChannel != null) {
+                    const authContext = this.buildWebSocketAuthContext(websocketChannel, constructorParams);
+                    if (authContext != null) {
+                        for (const field of authContext.matchedParamFields) {
+                            neededFields.add(field.fieldName);
+                        }
+                        if (authContext.oauthTokenPropertyName != null) {
+                            needsOAuthToken = true;
+                        }
+                        if (authContext.hasEnvironments) {
+                            needsClientOptions = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Add private fields for matched constructor params
+        for (const fieldName of neededFields) {
+            cls.addField({
+                access: ast.Access.Private,
+                origin: cls.explicit(fieldName),
+                type: this.Primitive.string,
+                readonly: true
+            });
+        }
+
+        // Add _clientOptions field for environment propagation
+        if (needsClientOptions) {
+            cls.addField({
+                access: ast.Access.Private,
+                origin: cls.explicit("_clientOptions"),
+                type: this.Types.ClientOptions,
+                readonly: true
+            });
+        }
+
+        // If OAuth token is needed, add _tokenProvider as a class-level field
+        // (promoted from a local variable in the constructor)
+        if (needsOAuthToken) {
+            cls.addField({
+                access: ast.Access.Private,
+                origin: cls.explicit("_tokenProvider"),
+                type: this.Types.OAuthTokenProvider,
+                readonly: true
+            });
+        }
+    }
+
+    /**
+     * Generates overloaded InjectDefaults methods for each WebSocket API.
+     * Each method injects auth credentials and environment from the root client
+     * into the WebSocket Options class.
+     *
+     * Generated pattern:
+     * ```csharp
+     * private void InjectDefaults(TranscribeApi.Options options)
+     * {
+     *     options.TenantName ??= _tenantName;
+     *     options.Token ??= GetRawAccessToken();
+     *     if (string.IsNullOrEmpty(options.Environment))
+     *     {
+     *         options.Environment = _clientOptions.Environment?.Wss ?? "";
+     *     }
+     * }
+     * ```
+     */
+    private generateInjectDefaultsMethods(cls: ast.Class, constructorParams: ConstructorParameter[]) {
+        for (const subpackage of this.getSubpackages()) {
+            if (subpackage.websocket != null) {
+                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                if (websocketChannel != null) {
+                    const authContext = this.buildWebSocketAuthContext(websocketChannel, constructorParams);
+                    if (authContext != null) {
+                        const websocketApiName =
+                            WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel);
+                        const websocketApiClassReference = this.csharp.classReference({
+                            origin: websocketChannel,
+                            name: websocketApiName,
+                            namespace: this.Types.RootClient.namespace
+                        });
+                        const optionsClassReference = this.csharp.classReference({
+                            origin: websocketApiClassReference.explicit("Options"),
+                            enclosingType: websocketApiClassReference
+                        });
+
+                        cls.addMethod({
+                            name: "InjectDefaults",
+                            access: ast.Access.Private,
+                            parameters: [
+                                this.csharp.parameter({
+                                    name: "options",
+                                    type: optionsClassReference
+                                })
+                            ],
+                            body: this.csharp.codeblock((writer) => {
+                                // Inject matched constructor params
+                                for (const field of authContext.matchedParamFields) {
+                                    writer.writeLine(`options.${field.optionsPropertyName} ??= ${field.fieldName};`);
+                                }
+                                // Inject OAuth token
+                                if (authContext.oauthTokenPropertyName != null) {
+                                    writer.writeLine(
+                                        `options.${authContext.oauthTokenPropertyName} ??= GetRawAccessToken();`
+                                    );
+                                }
+                                // Inject environment from ClientOptions
+                                if (authContext.hasEnvironments) {
+                                    writer.controlFlow(
+                                        "if",
+                                        this.csharp.codeblock("string.IsNullOrEmpty(options.Environment)")
+                                    );
+                                    writer.writeLine(`options.Environment = _clientOptions.Environment?.Wss ?? "";`);
+                                    writer.endControlFlow();
+                                }
+                            })
+                        });
+                    }
+                }
+            }
+        }
+
+        // Generate GetRawAccessToken helper if any WebSocket channel needs OAuth
+        if (this.oauth != null) {
+            let needsOAuthHelper = false;
+            for (const subpackage of this.getSubpackages()) {
+                if (subpackage.websocket != null) {
+                    const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                    if (websocketChannel != null) {
+                        const authContext = this.buildWebSocketAuthContext(websocketChannel, constructorParams);
+                        if (authContext?.oauthTokenPropertyName != null) {
+                            needsOAuthHelper = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (needsOAuthHelper) {
+                cls.addMethod({
+                    name: "GetRawAccessToken",
+                    access: ast.Access.Private,
+                    return_: this.Primitive.string,
+                    parameters: [],
+                    body: this.csharp.codeblock((writer) => {
+                        writer.writeLine(
+                            `var bearerToken = _tokenProvider.${this.names.methods.getAccessTokenAsync}().Result;`
+                        );
+                        writer.writeLine('const string bearerPrefix = "Bearer ";');
+                        writer.writeLine("return bearerToken.StartsWith(bearerPrefix)");
+                        writer.indent();
+                        writer.writeLine("? bearerToken.Substring(bearerPrefix.Length)");
+                        writer.writeLine(": bearerToken;");
+                        writer.dedent();
+                    })
+                });
             }
         }
     }
@@ -187,6 +463,64 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
             namespace: this.namespaces.root,
             generation: this.generation
         });
+    }
+
+    /**
+     * Checks if any WebSocket channel needs an OAuth token injection.
+     * Used to determine whether to promote tokenProvider to a class field.
+     */
+    private needsWebSocketOAuthToken(): boolean {
+        if (this.oauth == null || !this.settings.enableWebsockets) {
+            return false;
+        }
+        const { requiredParameters, optionalParameters } = this.getConstructorParameters();
+        const allParams = [...requiredParameters, ...optionalParameters];
+        for (const subpackage of this.getSubpackages()) {
+            if (subpackage.websocket != null) {
+                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                if (websocketChannel != null) {
+                    const authContext = this.buildWebSocketAuthContext(websocketChannel, allParams);
+                    if (authContext?.oauthTokenPropertyName != null) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns the set of field names (e.g., "_tenantName") needed for WebSocket auth propagation.
+     */
+    private getWebSocketAuthFieldNames(): Set<string> {
+        if (!this.settings.enableWebsockets) {
+            return new Set();
+        }
+        const { requiredParameters, optionalParameters } = this.getConstructorParameters();
+        const allParams = [...requiredParameters, ...optionalParameters];
+        const fields = new Set<string>();
+        let needsClientOptions = false;
+
+        for (const subpackage of this.getSubpackages()) {
+            if (subpackage.websocket != null) {
+                const websocketChannel = this.context.getWebsocketChannel(subpackage.websocket);
+                if (websocketChannel != null) {
+                    const authContext = this.buildWebSocketAuthContext(websocketChannel, allParams);
+                    if (authContext != null) {
+                        for (const field of authContext.matchedParamFields) {
+                            fields.add(field.fieldName);
+                        }
+                        if (authContext.hasEnvironments) {
+                            needsClientOptions = true;
+                        }
+                    }
+                }
+            }
+        }
+        if (needsClientOptions) {
+            fields.add("_clientOptions");
+        }
+        return fields;
     }
 
     private getConstructorMethod() {
@@ -321,6 +655,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         })
                     );
 
+                    // Store fields needed for WebSocket auth propagation
+                    const wsAuthFields = this.getWebSocketAuthFieldNames();
+                    if (wsAuthFields.size > 0) {
+                        // Store constructor params as private fields
+                        for (const param of [...requiredParameters, ...optionalParameters]) {
+                            const fieldName = `_${param.name}`;
+                            if (wsAuthFields.has(fieldName)) {
+                                innerWriter.writeLine(`${fieldName} = ${param.name};`);
+                            }
+                        }
+                        // Store clientOptions for environment propagation
+                        if (wsAuthFields.has("_clientOptions")) {
+                            innerWriter.writeLine("_clientOptions = clientOptions;");
+                        }
+                    }
+
                     if (this.settings.includeExceptionHandler) {
                         innerWriter.write("clientOptions.ExceptionHandler = ");
                         innerWriter.writeNodeStatement(
@@ -404,7 +754,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         ];
                         const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
-                        innerWriter.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
+                        // Use _tokenProvider field if WebSocket needs OAuth token, otherwise local var
+                        const tokenProviderVarName = this.needsWebSocketOAuthToken()
+                            ? "_tokenProvider"
+                            : "var tokenProvider";
+                        innerWriter.write(`${tokenProviderVarName} = new OAuthTokenProvider(clientId, clientSecret, `);
                         for (const param of oauthAdditionalParams) {
                             innerWriter.write(`${param}, `);
                         }
@@ -417,8 +771,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         );
                         innerWriter.writeTextStatement(")");
 
+                        const tokenProviderRef = this.needsWebSocketOAuthToken() ? "_tokenProvider" : "tokenProvider";
                         innerWriter.writeTextStatement(
-                            `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await tokenProvider.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
+                            `clientOptionsWithAuth.Headers["Authorization"] = new Func<global::System.Threading.Tasks.ValueTask<string>>(async () => await ${tokenProviderRef}.${this.names.methods.getAccessTokenAsync}().ConfigureAwait(false))`
                         );
                     }
 
@@ -827,6 +1182,61 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
     private getSubpackages(): Subpackage[] {
         return this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
+    }
+
+    /**
+     * Extracts the camelCase constructor parameter names from the IR auth schemes and headers.
+     * This is a static utility so SdkGeneratorCli can compute auth context without a full RootClientGenerator instance.
+     */
+    static getConstructorParamNamesFromIr(context: SdkGeneratorContext): string[] {
+        const names: string[] = [];
+        const seen = new Set<string>();
+        const addName = (name: string) => {
+            if (!seen.has(name)) {
+                seen.add(name);
+                names.push(name);
+            }
+        };
+
+        for (const scheme of context.ir.auth.schemes) {
+            if (scheme.type === "header") {
+                addName(scheme.name.name.camelCase.safeName);
+            } else if (scheme.type === "bearer") {
+                addName(scheme.token.camelCase.safeName);
+            } else if (scheme.type === "basic") {
+                addName(scheme.username.camelCase.safeName);
+                addName(scheme.password.camelCase.safeName);
+            } else if (scheme.type === "oauth") {
+                addName("clientId");
+                addName("clientSecret");
+                // Include custom properties from OAuth token endpoint
+                for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ??
+                    []) {
+                    if (
+                        !(
+                            customProperty.property.valueType.type === "container" &&
+                            customProperty.property.valueType.container.type === "literal"
+                        )
+                    ) {
+                        const typeRef = context.csharpTypeMapper.convert({
+                            reference: customProperty.property.valueType
+                        });
+                        if (!typeRef.isOptional) {
+                            addName(customProperty.property.name.name.camelCase.safeName);
+                        }
+                    }
+                }
+            }
+            // inferred auth is skipped as it doesn't produce simple named params for WebSocket matching
+        }
+        for (const header of context.ir.headers) {
+            if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
+                addName(header.name.name.pascalCase.safeName);
+            } else {
+                addName(header.name.name.camelCase.safeName);
+            }
+        }
+        return names;
     }
 
     private getOAuthAdditionalConstructorParams(scheme: OAuthScheme, isOptional: boolean): ConstructorParameter[] {

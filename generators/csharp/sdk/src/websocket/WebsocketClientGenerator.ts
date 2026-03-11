@@ -6,8 +6,29 @@ import { FernIr } from "@fern-fern/ir-sdk";
 type Subpackage = FernIr.Subpackage;
 type TypeReference = FernIr.TypeReference;
 type WebSocketChannel = FernIr.WebSocketChannel;
+type QueryParameter = FernIr.QueryParameter;
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+
+/**
+ * Context for auto-propagating auth credentials and environment
+ * from the root client to WebSocket API factory methods.
+ */
+export interface WebSocketAuthContext {
+    /** Constructor parameter names that match WebSocket query params (camelCase) */
+    matchedParamFields: Array<{
+        /** The private field name on the root client (e.g., "_tenantName") */
+        fieldName: string;
+        /** The PascalCase property name on the Options class (e.g., "TenantName") */
+        optionsPropertyName: string;
+    }>;
+    /** Whether the root client uses OAuth (to inject raw access token for "token" query params) */
+    hasOAuth: boolean;
+    /** The PascalCase property name for the token query param, if it exists and OAuth is present */
+    oauthTokenPropertyName?: string;
+    /** Whether to inject the environment from ClientOptions */
+    hasEnvironments: boolean;
+}
 
 /**
  * Arguments for creating a WebSocket client generator.
@@ -20,6 +41,8 @@ export declare namespace WebSocketClientGenerator {
         context: SdkGeneratorContext;
         /** The WebSocket channel definition */
         websocketChannel: WebSocketChannel;
+        /** Optional auth context for making auth query params optional in the Options class */
+        authContext?: WebSocketAuthContext;
     }
 }
 
@@ -49,6 +72,8 @@ export class WebSocketClientGenerator extends WithGeneration {
     private optionsClassReference: ast.ClassReference;
     /** The parameter definition for the options constructor */
     private optionsParameter: ast.Parameter;
+    /** Set of PascalCase property names that are auto-propagated from the root client */
+    private authPropagatedPropertyNames: Set<string>;
 
     /**
      * Creates a safe class name for the WebSocket client from the channel name.
@@ -64,21 +89,26 @@ export class WebSocketClientGenerator extends WithGeneration {
      * Creates factory methods for instantiating WebSocket API clients.
      *
      * Generates two overloaded factory methods:
-     * - One that creates a client with default options
+     * - One that creates a client with default options (if no required options remain after auth propagation)
      * - One that accepts custom options as a parameter
      *
+     * When authContext is provided, the factory methods will inject default values
+     * for auth-related query parameters from the root client's stored credentials.
+     *
+     * @param cls - The root client class to add factory methods to
      * @param subpackage - The subpackage containing the WebSocket channel
      * @param context - The SDK generator context
      * @param namespace - The namespace for the generated class
      * @param websocketChannel - The WebSocket channel definition
-     * @returns Array of factory method definitions
+     * @param authContext - Optional auth context for auto-propagating credentials
      */
     static createWebSocketApiFactories(
         cls: ast.Class,
         subpackage: Subpackage,
         context: SdkGeneratorContext,
         namespace: string,
-        websocketChannel: WebSocketChannel
+        websocketChannel: WebSocketChannel,
+        authContext?: WebSocketAuthContext
     ): void {
         const websocketApiName = WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel);
         const createMethodName = `Create${websocketApiName}`;
@@ -94,27 +124,51 @@ export class WebSocketClientGenerator extends WithGeneration {
             enclosingType: websocketApiClassReference
         });
 
-        // if the websocket channel has required options, we can't have a default constructor
-        // nor a factory with a default options parameter
-        if (!WebSocketClientGenerator.hasRequiredOptions(websocketChannel, context)) {
+        const hasInjectDefaults =
+            authContext != null &&
+            (authContext.matchedParamFields.length > 0 ||
+                authContext.oauthTokenPropertyName != null ||
+                authContext.hasEnvironments);
+
+        // if the websocket channel has required options (excluding auth-propagated ones),
+        // we can't have a default constructor nor a factory with a default options parameter
+        if (!WebSocketClientGenerator.hasRequiredOptions(websocketChannel, context, authContext)) {
             cls.addMethod({
                 name: createMethodName,
                 parameters: [],
                 access: ast.Access.Public,
                 return_: websocketApiClassReference,
                 body: context.csharp.codeblock((writer) => {
-                    writer.write("return ");
-                    writer.writeNodeStatement(
-                        context.csharp.instantiateClass({
-                            classReference: websocketApiClassReference,
-                            arguments_: [
-                                context.csharp.instantiateClass({
-                                    classReference: optionsClassReference,
-                                    arguments_: []
-                                })
-                            ]
-                        })
-                    );
+                    if (hasInjectDefaults) {
+                        writer.writeLine("var options = ");
+                        writer.writeNodeStatement(
+                            context.csharp.instantiateClass({
+                                classReference: optionsClassReference,
+                                arguments_: []
+                            })
+                        );
+                        writer.writeLine(`InjectDefaults(options);`);
+                        writer.writeLine("return ");
+                        writer.writeNodeStatement(
+                            context.csharp.instantiateClass({
+                                classReference: websocketApiClassReference,
+                                arguments_: [context.csharp.codeblock("options")]
+                            })
+                        );
+                    } else {
+                        writer.write("return ");
+                        writer.writeNodeStatement(
+                            context.csharp.instantiateClass({
+                                classReference: websocketApiClassReference,
+                                arguments_: [
+                                    context.csharp.instantiateClass({
+                                        classReference: optionsClassReference,
+                                        arguments_: []
+                                    })
+                                ]
+                            })
+                        );
+                    }
                 })
             });
         }
@@ -129,6 +183,9 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             return_: websocketApiClassReference,
             body: context.csharp.codeblock((writer) => {
+                if (hasInjectDefaults) {
+                    writer.writeLine(`InjectDefaults(options);`);
+                }
                 writer.write("return ");
                 writer.writeNodeStatement(
                     context.csharp.instantiateClass({
@@ -147,11 +204,12 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param subpackage - The subpackage containing the WebSocket channel
      * @param websocketChannel - The WebSocket channel definition to generate code for
      */
-    constructor({ context, subpackage, websocketChannel }: WebSocketClientGenerator.Args) {
+    constructor({ context, subpackage, websocketChannel, authContext }: WebSocketClientGenerator.Args) {
         super(context.generation);
         this.context = context;
         this.subpackage = subpackage;
         this.websocketChannel = websocketChannel;
+        this.authPropagatedPropertyNames = WebSocketClientGenerator.getAuthPropagatedPropertyNames(authContext);
         this.classReference = this.csharp.classReference({
             origin: websocketChannel,
             name: WebSocketClientGenerator.createWebsocketClientClassName(websocketChannel),
@@ -383,14 +441,19 @@ export class WebSocketClientGenerator extends WithGeneration {
                 reference: queryParameter.valueType
             });
 
+            // Check if this query parameter will be auto-propagated from the root client
+            const isAuthPropagated = this.authPropagatedPropertyNames.has(queryParameter.name.name.pascalCase.safeName);
+
             optionsClass.addField({
                 origin: queryParameter,
                 access: ast.Access.Public,
-                type,
-                summary: queryParameter.docs ?? "",
+                type: isAuthPropagated ? type.asOptional() : type,
+                summary: isAuthPropagated
+                    ? `${queryParameter.docs ?? queryParameter.name.name.pascalCase.safeName}. If not set, inherited from the parent client.`
+                    : (queryParameter.docs ?? ""),
                 get: true,
                 set: true,
-                useRequired: !type.isOptional
+                useRequired: isAuthPropagated ? false : !type.isOptional
             });
         }
 
@@ -415,19 +478,47 @@ export class WebSocketClientGenerator extends WithGeneration {
     /**
      * Determines if the WebSocket channel has required options that prevent default construction.
      *
+     * When authContext is provided, query parameters that will be auto-propagated from the
+     * root client are excluded from the required check (since they'll be injected by InjectDefaults).
+     *
      * @param websocketChannel - The WebSocket channel definition
      * @param context - The SDK generator context for type mapping
+     * @param authContext - Optional auth context to exclude auto-propagated params
      * @returns True if any path or query parameters are required
      */
-    private static hasRequiredOptions(websocketChannel: WebSocketChannel, context: SdkGeneratorContext) {
+    private static hasRequiredOptions(
+        websocketChannel: WebSocketChannel,
+        context: SdkGeneratorContext,
+        authContext?: WebSocketAuthContext
+    ) {
+        const authPropagatedNames = WebSocketClientGenerator.getAuthPropagatedPropertyNames(authContext);
         return (
             websocketChannel.pathParameters.some(
                 (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
             ) ||
             websocketChannel.queryParameters.some(
-                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
+                (p) =>
+                    !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional &&
+                    !authPropagatedNames.has(p.name.name.pascalCase.safeName)
             )
         );
+    }
+
+    /**
+     * Returns the set of PascalCase property names that are auto-propagated from auth context.
+     */
+    private static getAuthPropagatedPropertyNames(authContext?: WebSocketAuthContext): Set<string> {
+        const names = new Set<string>();
+        if (authContext == null) {
+            return names;
+        }
+        for (const field of authContext.matchedParamFields) {
+            names.add(field.optionsPropertyName);
+        }
+        if (authContext.oauthTokenPropertyName != null) {
+            names.add(authContext.oauthTokenPropertyName);
+        }
+        return names;
     }
 
     /**
