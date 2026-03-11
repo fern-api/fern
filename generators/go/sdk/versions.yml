@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.29.2
+  changelogEntry:
+    - summary: |
+        Fix datetime query parameter serialization to always include milliseconds.
+        The `valueString` function in `internal/query.go` now formats `time.Time`
+        values with `"2006-01-02T15:04:05.000Z07:00"` instead of `time.RFC3339`,
+        ensuring the Go SDK sends timestamps with millisecond precision (e.g.,
+        `2024-07-01T15:30:00.000Z`) that match the WireMock stub mappings.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 61
+
 - version: 1.29.1
   changelogEntry:
     - summary: |

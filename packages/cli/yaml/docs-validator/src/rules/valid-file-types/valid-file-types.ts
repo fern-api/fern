@@ -1,12 +1,12 @@
 import { doesPathExist } from "@fern-api/fs-utils";
 import chardet from "chardet";
-import { fileTypeFromBuffer, type MimeType } from "file-type";
+import { fileTypeFromBuffer } from "file-type";
 import { readFile } from "fs/promises";
 import path from "path";
 
 import { Rule, RuleViolation } from "../../Rule.js";
 
-const ALLOWED_FILE_TYPES = new Set<MimeType>([
+const ALLOWED_FILE_TYPES = new Set<string>([
     // image files
     "image/jpeg",
     "image/png",
