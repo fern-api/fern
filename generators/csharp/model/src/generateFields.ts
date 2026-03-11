@@ -4,6 +4,7 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 type TypeReference = FernIr.TypeReference;
 
+import { getLiteralStructName } from "./generateLiteralType.js";
 import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 interface TypeInfo {
@@ -74,14 +75,17 @@ export function generateFields(
     {
         properties,
         className,
-        context
+        context,
+        literalTypeNamespace
     }: {
         properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
         className: string;
         context: ModelGeneratorContext;
+        /** The namespace for literal struct types. Required when enableReadonlyConstants is true. */
+        literalTypeNamespace?: string;
     }
 ): ast.Field[] {
-    return properties.map((property) => generateField(cls, { property, className, context }));
+    return properties.map((property) => generateField(cls, { property, className, context, literalTypeNamespace }));
 }
 
 export function generateField(
@@ -92,7 +96,8 @@ export function generateField(
         context,
         jsonProperty = true,
         initializerOverride,
-        useRequiredOverride
+        useRequiredOverride,
+        literalTypeNamespace
     }: {
         property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty;
         className: string;
@@ -102,6 +107,8 @@ export function generateField(
         initializerOverride?: ast.CodeBlock;
         /** Override whether the field should be required */
         useRequiredOverride?: boolean;
+        /** The namespace for literal struct types. Required when enableReadonlyConstants is true. */
+        literalTypeNamespace?: string;
     }
 ): ast.Field {
     const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
@@ -148,6 +155,31 @@ export function generateField(
     }
 
     if (context.generation.settings.enableReadonlyConstants && maybeLiteralInitializer) {
+        const literalValue = context.getLiteralValue(property.valueType);
+        if (typeof literalValue === "string" && literalTypeNamespace != null) {
+            // For string literals, use the literal struct type instead of string with Assert.
+            // The struct handles JSON validation via its converter.
+            const structName = getLiteralStructName({
+                parentTypeName: className,
+                propertyName: property.name.name.pascalCase.safeName
+            });
+            const literalStructType = context.csharp.classReference({
+                name: structName,
+                namespace: literalTypeNamespace
+            });
+            return cls.addField({
+                origin: property,
+                type: literalStructType,
+                access: ast.Access.Public,
+                get: true,
+                init: true,
+                summary: property.docs,
+                useRequired: false,
+                initializer: context.csharp.codeblock("new()"),
+                annotations: fieldAttributes
+            });
+        }
+        // For boolean literals, keep the existing behavior with get/set accessors
         accessors = {
             get: (writer: Writer) => {
                 writer.writeNode(maybeLiteralInitializer);

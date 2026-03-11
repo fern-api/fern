@@ -12,20 +12,22 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("literal1")]
-    public string Literal1
-    {
-        get => "literal1";
-        set =>
-            value.Assert(value == "literal1", string.Format("'Literal1' must be {0}", "literal1"));
-    }
+    public NestedObjectWithLiteralsLiteral1 Literal1 { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = new();
 
     [JsonPropertyName("literal2")]
-    public string Literal2
-    {
-        get => "literal2";
-        set =>
-            value.Assert(value == "literal2", string.Format("'Literal2' must be {0}", "literal2"));
-    }
+    public NestedObjectWithLiteralsLiteral2 Literal2 { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = new();
 
     [JsonPropertyName("strProp")]
     public required string StrProp { get; set; }

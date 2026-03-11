@@ -12,15 +12,13 @@ public record SendRequest : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("prompt")]
-    public string Prompt
-    {
-        get => "You are a helpful assistant";
-        set =>
-            value.Assert(
-                value == "You are a helpful assistant",
-                string.Format("'Prompt' must be {0}", "You are a helpful assistant")
-            );
-    }
+    public SendRequestPrompt Prompt { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = new();
 
     [JsonPropertyName("query")]
     public required string Query { get; set; }
@@ -33,22 +31,22 @@ public record SendRequest : IJsonOnDeserialized
     }
 
     [JsonPropertyName("ending")]
-    public string Ending
-    {
-        get => "$ending";
-        set => value.Assert(value == "$ending", string.Format("'Ending' must be {0}", "$ending"));
-    }
+    public SendRequestEnding Ending { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = new();
 
     [JsonPropertyName("context")]
-    public string Context
-    {
-        get => "You're super wise";
-        set =>
-            value.Assert(
-                value == "You're super wise",
-                string.Format("'Context' must be {0}", "You're super wise")
-            );
-    }
+    public SendRequestContext Context { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = new();
 
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }
