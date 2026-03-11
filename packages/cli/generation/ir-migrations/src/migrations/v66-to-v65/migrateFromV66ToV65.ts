@@ -431,7 +431,7 @@ function inflateIr(
             case "primitive":
                 return IrVersions.V65.ExampleTypeReferenceShape.primitive(inflateExamplePrimitive(shape.primitive));
             case "unknown":
-                return IrVersions.V65.ExampleTypeReferenceShape.unknown(shape);
+                return IrVersions.V65.ExampleTypeReferenceShape.unknown(shape.unknown);
             default:
                 assertNever(shape);
         }
