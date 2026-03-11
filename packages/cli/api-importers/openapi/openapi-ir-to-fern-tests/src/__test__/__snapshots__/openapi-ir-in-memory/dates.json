@@ -129,6 +129,6 @@
     "defaultIntegerFormat": "int32",
     "pathParameterOrder": "url-order",
     "resolveSchemaCollisions": false,
-    "inferForwardCompatible": true
+    "inferForwardCompatible": false
   }
 }
