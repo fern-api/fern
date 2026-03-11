@@ -91,11 +91,12 @@ function createMockSdkContext() {
                     _getReferenceToType: ({
                         rawShape,
                         parsedShape
-                    }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) =>
+                    }: {
+                        rawShape: ts.TypeNode;
+                        parsedShape: ts.TypeNode;
+                    }) =>
                         ts.factory.createTypeReferenceNode("Schema", [
-                            ts.factory.createTypeReferenceNode(
-                                ts.factory.createIdentifier(getTextOfTsNode(rawShape))
-                            ),
+                            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(getTextOfTsNode(rawShape))),
                             ts.factory.createTypeReferenceNode(
                                 ts.factory.createIdentifier(getTextOfTsNode(parsedShape))
                             )
