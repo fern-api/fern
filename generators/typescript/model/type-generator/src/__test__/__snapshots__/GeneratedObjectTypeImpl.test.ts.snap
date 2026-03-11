@@ -133,8 +133,8 @@ exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates 
 exports[`GeneratedObjectTypeImpl > generateStatements / writeToFile > generates interface with multiple required properties of different types 1`] = `
 "export interface UserProfile {
     name: string;
-    age: string;
-    active: string;
+    age: number;
+    active: boolean;
 }
 "
 `;
