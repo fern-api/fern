@@ -88,7 +88,18 @@ function createMockSdkContext() {
         coreUtilities: {
             zurg: {
                 Schema: {
-                    _getReferenceToType: () => ts.factory.createTypeReferenceNode("Schema"),
+                    _getReferenceToType: ({
+                        rawShape,
+                        parsedShape
+                    }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) =>
+                        ts.factory.createTypeReferenceNode("Schema", [
+                            ts.factory.createTypeReferenceNode(
+                                ts.factory.createIdentifier(getTextOfTsNode(rawShape))
+                            ),
+                            ts.factory.createTypeReferenceNode(
+                                ts.factory.createIdentifier(getTextOfTsNode(parsedShape))
+                            )
+                        ]),
                     _fromExpression: (expr: ts.Expression) => createMockZurgSchema(getTextOfTsNode(expr))
                 },
                 never: () => createMockZurgSchema("z.never"),
