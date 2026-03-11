@@ -1226,6 +1226,16 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         }
                     }
                 }
+                // Include scopes if non-literal and non-optional
+                const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+                if (scopes && !isLiteralTypeReference(scopes.property.valueType)) {
+                    const typeRef = context.csharpTypeMapper.convert({
+                        reference: scopes.property.valueType
+                    });
+                    if (!typeRef.isOptional) {
+                        addName(scopes.property.name.name.camelCase.safeName);
+                    }
+                }
             }
             // inferred auth is skipped as it doesn't produce simple named params for WebSocket matching
         }

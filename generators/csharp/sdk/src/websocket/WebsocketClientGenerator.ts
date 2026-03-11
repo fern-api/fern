@@ -72,6 +72,8 @@ export class WebSocketClientGenerator extends WithGeneration {
     private optionsClassReference: ast.ClassReference;
     /** The parameter definition for the options constructor */
     private optionsParameter: ast.Parameter;
+    /** Optional auth context for making auth query params optional */
+    private authContext?: WebSocketAuthContext;
     /** Set of PascalCase property names that are auto-propagated from the root client */
     private authPropagatedPropertyNames: Set<string>;
 
@@ -209,6 +211,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         this.context = context;
         this.subpackage = subpackage;
         this.websocketChannel = websocketChannel;
+        this.authContext = authContext;
         this.authPropagatedPropertyNames = WebSocketClientGenerator.getAuthPropagatedPropertyNames(authContext);
         this.classReference = this.csharp.classReference({
             origin: websocketChannel,
@@ -1093,7 +1096,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             type: this.Types.WebSocketClient
         });
 
-        if (!WebSocketClientGenerator.hasRequiredOptions(this.websocketChannel, this.context)) {
+        if (!WebSocketClientGenerator.hasRequiredOptions(this.websocketChannel, this.context, this.authContext)) {
             cls.addConstructor(this.createDefaultConstructor());
         }
 
