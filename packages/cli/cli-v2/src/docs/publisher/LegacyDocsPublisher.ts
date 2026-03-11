@@ -67,7 +67,7 @@ export class LegacyDocsPublisher {
             excludeRules.push(Rules.ValidFileTypes.name);
         }
 
-        const validator = new DocsWorkspaceValidator({ context: this.context });
+        const validator = new DocsWorkspaceValidator({ context: this.context, task: this.task });
         const result = await validator.validate({
             workspace: docsWorkspace,
             apiWorkspaces: project.apiWorkspaces,
@@ -118,14 +118,9 @@ export class LegacyDocsPublisher {
             };
         }
 
-        // The legacy infrastructure swallows errors via runInteractiveTask.
-        // Check the task context result to detect silent failures.
         if (taskContext.getResult() === TaskResult.Failure) {
-            const errorLog = this.task?.logs?.findLast((log) => log.level === "error");
-            return {
-                success: false,
-                error: errorLog?.message
-            };
+            // Don't extract the error message here — it's already in task.logs.
+            return { success: false };
         }
 
         return { success: true };

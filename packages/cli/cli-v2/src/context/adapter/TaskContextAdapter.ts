@@ -55,8 +55,15 @@ export class TaskContextAdapter implements TaskContext {
 
     public failWithoutThrowing(message?: string, error?: unknown): void {
         const errorDetails = this.formatError(error);
-        const fullMessage =
-            message != null && errorDetails != null ? `${message}: ${errorDetails}` : (message ?? errorDetails);
+        let fullMessage: string | undefined;
+        if (message != null && errorDetails != null) {
+            // Avoid stuttering when the message already contains the error details.
+            // Legacy callers often pass the same message and error as the second
+            // argument.
+            fullMessage = message.includes(errorDetails) ? message : `${message}: ${errorDetails}`;
+        } else {
+            fullMessage = message ?? errorDetails;
+        }
         if (fullMessage != null) {
             this.logger.error(fullMessage);
         }
