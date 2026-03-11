@@ -165,7 +165,9 @@ async function readOrganizationFromFernConfig(startPath: AbsoluteFilePath): Prom
                 const configContents = await readFile(configPath, "utf-8");
                 const config = JSON.parse(configContents) as { organization?: string };
                 return config.organization;
-            } catch {
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.warn(`Failed to read organization from ${configPath}: ${error}`);
                 return undefined;
             }
         }
