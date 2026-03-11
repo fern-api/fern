@@ -1137,6 +1137,179 @@ describe("GeneratedObjectTypeImpl", () => {
             expect(getTextOfTsNode(result)).toMatchSnapshot();
         });
 
+        it("filters out read-only properties when isForRequest is true", () => {
+            const generator = createObjectGenerator({
+                typeName: "RWExample",
+                properties: [
+                    createObjectPropertyWithAccess(
+                        "readProp",
+                        FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        "READ_ONLY"
+                    ),
+                    createObjectPropertyWithAccess(
+                        "writeProp",
+                        FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        "WRITE_ONLY"
+                    ),
+                    createObjectPropertyWithAccess(
+                        "normalProp",
+                        FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        undefined
+                    )
+                ],
+                generateReadWriteOnlyTypes: true
+            });
+
+            const context = createMockBaseContext();
+            const exampleProps: FernIr.ExampleObjectProperty[] = [
+                {
+                    name: createNameAndWireValue("readProp"),
+                    value: {
+                        shape: FernIr.ExampleTypeReferenceShape.primitive(
+                            FernIr.ExamplePrimitive.string({ original: "read-value" })
+                        ),
+                        jsonExample: "read-value"
+                    },
+                    originalTypeDeclaration: createDeclaredTypeName("RWExample"),
+                    propertyAccess: "READ_ONLY" as FernIr.ObjectPropertyAccess
+                },
+                {
+                    name: createNameAndWireValue("writeProp"),
+                    value: {
+                        shape: FernIr.ExampleTypeReferenceShape.primitive(
+                            FernIr.ExamplePrimitive.string({ original: "write-value" })
+                        ),
+                        jsonExample: "write-value"
+                    },
+                    originalTypeDeclaration: createDeclaredTypeName("RWExample"),
+                    propertyAccess: "WRITE_ONLY" as FernIr.ObjectPropertyAccess
+                },
+                {
+                    name: createNameAndWireValue("normalProp"),
+                    value: {
+                        shape: FernIr.ExampleTypeReferenceShape.primitive(
+                            FernIr.ExamplePrimitive.string({ original: "normal-value" })
+                        ),
+                        jsonExample: "normal-value"
+                    },
+                    originalTypeDeclaration: createDeclaredTypeName("RWExample"),
+                    propertyAccess: undefined
+                }
+            ];
+            const example = FernIr.ExampleTypeShape.object({
+                properties: exampleProps,
+                extraProperties: undefined
+            });
+
+            // isForRequest=true should filter out READ_ONLY properties
+            const requestResult = generator.buildExample(example, context, {
+                isForComment: false,
+                isForRequest: true
+            });
+            const requestText = getTextOfTsNode(requestResult);
+            expect(requestText).toMatchSnapshot();
+
+            // isForResponse=true should filter out WRITE_ONLY properties
+            const responseResult = generator.buildExample(example, context, {
+                isForComment: false,
+                isForResponse: true
+            });
+            const responseText = getTextOfTsNode(responseResult);
+            expect(responseText).toMatchSnapshot();
+        });
+
+        it("includes extra properties in example", () => {
+            const generator = createObjectGenerator({
+                typeName: "ExtraPropsObj",
+                properties: [
+                    createObjectProperty("name", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
+                ]
+            });
+
+            const context = createMockBaseContext();
+            const exampleProps: FernIr.ExampleObjectProperty[] = [
+                {
+                    name: createNameAndWireValue("name"),
+                    value: {
+                        shape: FernIr.ExampleTypeReferenceShape.primitive(
+                            FernIr.ExamplePrimitive.string({ original: "test" })
+                        ),
+                        jsonExample: "test"
+                    },
+                    originalTypeDeclaration: createDeclaredTypeName("ExtraPropsObj"),
+                    propertyAccess: undefined
+                }
+            ];
+            const extraProps: FernIr.ExampleObjectProperty[] = [
+                {
+                    name: createNameAndWireValue("extraField", "extra_field"),
+                    value: {
+                        shape: FernIr.ExampleTypeReferenceShape.primitive(
+                            FernIr.ExamplePrimitive.string({ original: "extra-value" })
+                        ),
+                        jsonExample: "extra-value"
+                    },
+                    originalTypeDeclaration: createDeclaredTypeName("ExtraPropsObj"),
+                    propertyAccess: undefined
+                }
+            ];
+            const example = FernIr.ExampleTypeShape.object({
+                properties: exampleProps,
+                extraProperties: extraProps
+            });
+
+            const result = generator.buildExample(example, context, { isForComment: true });
+            expect(getTextOfTsNode(result)).toMatchSnapshot();
+        });
+
+        it("gracefully handles property key lookup failure via logger.debug", () => {
+            const generator = createObjectGenerator({
+                typeName: "MismatchObj",
+                properties: [
+                    createObjectProperty("field", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
+                ]
+            });
+
+            const debugMessages: string[] = [];
+            const context = createMockBaseContext();
+            context.logger.debug = (msg: string) => {
+                debugMessages.push(msg);
+            };
+            // Override getGeneratedType to return an object that throws on getPropertyKey
+            context.type.getGeneratedType = () => ({
+                type: "object",
+                getPropertyKey: () => {
+                    throw new Error("Wire key not found");
+                },
+                getAllPropertiesIncludingExtensions: () => [],
+                generateStatements: () => []
+            });
+
+            const exampleProps: FernIr.ExampleObjectProperty[] = [
+                {
+                    name: createNameAndWireValue("missingField", "missing_wire"),
+                    value: {
+                        shape: FernIr.ExampleTypeReferenceShape.primitive(
+                            FernIr.ExamplePrimitive.string({ original: "val" })
+                        ),
+                        jsonExample: "val"
+                    },
+                    originalTypeDeclaration: createDeclaredTypeName("MismatchObj"),
+                    propertyAccess: undefined
+                }
+            ];
+            const example = FernIr.ExampleTypeShape.object({
+                properties: exampleProps,
+                extraProperties: undefined
+            });
+
+            // Should not throw — catches error and logs debug message
+            const result = generator.buildExample(example, context, { isForComment: true });
+            expect(getTextOfTsNode(result)).toBe("{}");
+            expect(debugMessages).toHaveLength(1);
+            expect(debugMessages[0]).toContain("missing_wire");
+        });
+
         it("throws for non-object example shape", () => {
             const generator = createObjectGenerator({
                 typeName: "MyObject",

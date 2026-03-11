@@ -6,6 +6,27 @@ exports[`GeneratedObjectTypeImpl > buildExample > builds example for object type
 }"
 `;
 
+exports[`GeneratedObjectTypeImpl > buildExample > filters out read-only properties when isForRequest is true 1`] = `
+"{
+    writeProp: "example-value",
+    normalProp: "example-value"
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > buildExample > filters out read-only properties when isForRequest is true 2`] = `
+"{
+    readProp: "example-value",
+    normalProp: "example-value"
+}"
+`;
+
+exports[`GeneratedObjectTypeImpl > buildExample > includes extra properties in example 1`] = `
+"{
+    name: "example-value",
+    extra_field: "example-value"
+}"
+`;
+
 exports[`GeneratedObjectTypeImpl > generateForInlineUnion > generates request/response type nodes when generateReadWriteOnlyTypes is true 1`] = `
 "{
     readProp: string;
