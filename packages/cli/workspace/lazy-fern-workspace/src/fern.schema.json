@@ -850,6 +850,16 @@
           "items": {
             "$ref": "#/definitions/types.EnumValue"
           }
+        },
+        "forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
