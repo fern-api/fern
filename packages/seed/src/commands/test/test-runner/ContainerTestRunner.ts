@@ -50,9 +50,12 @@ export class ContainerTestRunner extends TestRunner {
         if (containerCommands == null) {
             throw new Error(`Failed. No ${this.runner} command for ${this.generator.workspaceName}`);
         }
+        if (!this.shouldPipeOutput()) {
+            CONSOLE_LOGGER.info(`Building container for ${this.generator.workspaceName}...`);
+        }
         const containerBuildReturn = await runScript({
             commands: containerCommands,
-            logger: CONSOLE_LOGGER,
+            logger: this.shouldPipeOutput() ? CONSOLE_LOGGER : undefined,
             workingDir: path.dirname(path.dirname(this.generator.absolutePathToWorkspace)),
             doNotPipeOutput: !this.shouldPipeOutput()
         });
@@ -69,6 +72,9 @@ export class ContainerTestRunner extends TestRunner {
             runner: this.runner,
             poolSize: this.parallelism
         });
+        if (!this.shouldPipeOutput()) {
+            CONSOLE_LOGGER.info(`Starting ${this.parallelism} container(s)...`);
+        }
         await this.reusableContainer.start(CONSOLE_LOGGER, this.logLevel);
     }
 

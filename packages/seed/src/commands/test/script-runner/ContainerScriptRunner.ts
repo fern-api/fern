@@ -161,8 +161,9 @@ export class ContainerScriptRunner extends ScriptRunner {
     }
 
     public async stop(): Promise<void> {
+        const logger = this.shouldStreamOutput() ? this.context.logger : undefined;
         for (const script of this.scripts) {
-            await loggingExeca(this.context.logger, this.runner, ["kill", script.containerId], {
+            await loggingExeca(logger, this.runner, ["kill", script.containerId], {
                 doNotPipeOutput: !this.shouldStreamOutput()
             });
         }
@@ -261,7 +262,8 @@ export class ContainerScriptRunner extends ScriptRunner {
 
     private async buildFernCli(context: TaskContext): Promise<AbsoluteFilePath> {
         const rootDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../../.."));
-        await loggingExeca(context.logger, "pnpm", ["fern:build"], {
+        const logger = this.shouldStreamOutput() ? context.logger : undefined;
+        await loggingExeca(logger, "pnpm", ["fern:build"], {
             cwd: rootDir,
             doNotPipeOutput: !this.shouldStreamOutput()
         });
@@ -271,10 +273,11 @@ export class ContainerScriptRunner extends ScriptRunner {
     private async startContainers(context: TaskContext): Promise<void> {
         const absoluteFilePathToFernCli = await this.buildFernCli(context);
         const cliVolumeBind = `${absoluteFilePathToFernCli}:/fern`;
+        const logger = this.shouldStreamOutput() ? context.logger : undefined;
         // Start running a container for each script instance
         for (const script of this.workspace.workspaceConfig.scripts ?? []) {
             const startSeedCommand = await loggingExeca(
-                context.logger,
+                logger,
                 this.runner,
                 [
                     "run",

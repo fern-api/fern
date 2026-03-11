@@ -19,7 +19,7 @@ export class LocalTestRunner extends TestRunner {
         const result = await runScript({
             commands: localConfig.buildCommand,
             doNotPipeOutput: !this.shouldPipeOutput(),
-            logger: CONSOLE_LOGGER,
+            logger: this.shouldPipeOutput() ? CONSOLE_LOGGER : undefined,
             workingDir
         });
         if (result.exitCode !== 0) {

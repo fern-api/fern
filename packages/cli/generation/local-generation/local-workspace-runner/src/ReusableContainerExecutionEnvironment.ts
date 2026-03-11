@@ -49,15 +49,21 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
      * Must be called before any `execute()` calls.
      */
     public async start(logger: Logger, logLevel?: LogLevel): Promise<void> {
+        const isDebug = logLevel === LogLevel.Debug || logLevel === LogLevel.Trace;
+        // Only pass logger to docker operations when in debug mode;
+        // CONSOLE_LOGGER outputs all levels including debug, so passing it
+        // causes noisy "+ docker run ..." lines from loggingExeca.
+        const dockerLogger = isDebug ? logger : undefined;
+
         // Get the image entrypoint before starting (since we override it with /bin/sh)
-        this.entrypoint = await this.getImageEntrypoint(logger);
+        this.entrypoint = await this.getImageEntrypoint(dockerLogger);
 
         // Start N containers in parallel
         const startPromises = [];
         for (let i = 0; i < this.poolSize; i++) {
             startPromises.push(
                 startContainer({
-                    logger,
+                    logger: dockerLogger,
                     imageName: this.imageName,
                     runner: this.runner
                 })
@@ -73,7 +79,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             for (const result of settledPromises) {
                 if (result.status === "fulfilled") {
                     await stopContainer({
-                        logger,
+                        logger: dockerLogger,
                         containerId: result.value,
                         runner: this.runner
                     }).catch((cleanupErr) => {
@@ -86,12 +92,8 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             throw error;
         }
 
-        if (logLevel === LogLevel.Debug || logLevel === LogLevel.Trace) {
+        if (isDebug) {
             logger.info(
-                `Started ${this.containers.length} reusable container(s) from image ${this.imageName}: ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
-            );
-        } else {
-            logger.debug(
                 `Started ${this.containers.length} reusable container(s) from image ${this.imageName}: ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
             );
         }
@@ -287,20 +289,18 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
      * Stops and removes all containers in the pool.
      */
     public async stop(logger: Logger, logLevel?: LogLevel): Promise<void> {
+        const isDebug = logLevel === LogLevel.Debug || logLevel === LogLevel.Trace;
+        const dockerLogger = isDebug ? logger : undefined;
         const stopPromises = this.containers.map(async (containerId) => {
             await stopContainer({
-                logger,
+                logger: dockerLogger,
                 containerId,
                 runner: this.runner
             });
         });
         await Promise.all(stopPromises);
-        if (logLevel === LogLevel.Debug || logLevel === LogLevel.Trace) {
+        if (isDebug) {
             logger.info(
-                `Stopped ${this.containers.length} reusable container(s): ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
-            );
-        } else {
-            logger.debug(
                 `Stopped ${this.containers.length} reusable container(s): ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
             );
         }
@@ -308,7 +308,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
         this.availableContainers = [];
     }
 
-    private async getImageEntrypoint(logger: Logger): Promise<string[]> {
+    private async getImageEntrypoint(logger: Logger | undefined): Promise<string[]> {
         const { stdout, stderr, exitCode } = await loggingExeca(
             logger,
             this.runner,
@@ -329,7 +329,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                 return entrypoint;
             }
         } catch (e) {
-            logger.warn(`Failed to parse entrypoint for image ${this.imageName}: ${e}`);
+            logger?.warn(`Failed to parse entrypoint for image ${this.imageName}: ${e}`);
         }
 
         throw new Error(
