@@ -2,12 +2,11 @@
 - version: 1.28.5
   changelogEntry:
     - summary: |
-        Fix WireMock timestamp format mismatch in generated wire tests. The WireMock
-        query parameter matching for datetime values no longer normalizes timestamps
-        through JavaScript's `Date.toISOString()`, which was adding `.000` milliseconds
-        (e.g., `2024-07-01T15:30:00.000Z`) that the Go SDK does not send. Query parameter
-        values now use the original format from the IR examples, ensuring consistent
-        matching between the generated test code and WireMock stub mappings.
+        Fix datetime query parameter serialization to always include milliseconds.
+        The `valueString` function in `internal/query.go` now formats `time.Time`
+        values with `"2006-01-02T15:04:05.000Z07:00"` instead of `time.RFC3339`,
+        ensuring the Go SDK sends timestamps with millisecond precision (e.g.,
+        `2024-07-01T15:30:00.000Z`) that match the WireMock stub mappings.
       type: fix
   createdAt: "2026-03-09"
   irVersion: 61

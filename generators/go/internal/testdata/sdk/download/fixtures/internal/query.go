@@ -224,7 +224,7 @@ func valueString(v reflect.Value, opts tagOptions, sf reflect.StructField) strin
 		if format := sf.Tag.Get("format"); format == "date" {
 			return t.Format("2006-01-02")
 		}
-		return t.Format(time.RFC3339)
+		return t.Format("2006-01-02T15:04:05.000Z07:00")
 	}
 
 	if v.Type() == uuidType {
