@@ -48,7 +48,8 @@ function createMockRequest(opts?: {
         getReferenceToQueryParameter: (key: string) => ts.factory.createIdentifier(key),
         getExampleEndpointParameters: () => opts?.exampleParameters ?? [ts.factory.createStringLiteral("example-arg")],
         getExampleEndpointImports: () => opts?.exampleImports ?? []
-    };
+        // biome-ignore lint/suspicious/noExplicitAny: test mock for GeneratedEndpointRequest
+    } as any;
 }
 
 /**
@@ -531,11 +532,10 @@ describe("GeneratedDefaultEndpointImplementation", () => {
         it("sets responseType to text for text response endpoints", () => {
             const endpoint = createHttpEndpoint();
             endpoint.response = {
-                body: FernIr.HttpResponseBody.text({}),
-                headers: undefined,
+                body: FernIr.HttpResponseBody.text({ docs: undefined, v2Examples: undefined }),
                 statusCode: undefined,
-                docs: undefined,
-                v2StatusCodes: undefined
+                isWildcardStatusCode: undefined,
+                docs: undefined
             };
             const impl = createImpl({ endpoint });
             const context = createMockSdkContext();
@@ -595,6 +595,7 @@ function createCursorPagination(): FernIr.Pagination {
 
 function createMinimalExampleEndpointCall(): FernIr.ExampleEndpointCall {
     return {
+        id: undefined,
         name: undefined,
         url: "/test",
         rootPathParameters: [],
@@ -604,10 +605,7 @@ function createMinimalExampleEndpointCall(): FernIr.ExampleEndpointCall {
         serviceHeaders: [],
         queryParameters: [],
         request: undefined,
-        response: {
-            type: "ok",
-            body: undefined
-        },
+        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body({ jsonExample: undefined, docs: undefined })),
         docs: undefined
     };
 }

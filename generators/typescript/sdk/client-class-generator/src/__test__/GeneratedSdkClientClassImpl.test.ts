@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
-import { createHttpEndpoint, createMinimalIR, createNameAndWireValue } from "@fern-typescript/test-utils";
+import { casingsGenerator, createHttpEndpoint, createMinimalIR, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -281,7 +281,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
-                        token: createNameAndWireValue("token"),
+                        token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         docs: undefined
                     })
@@ -316,10 +316,12 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.basic({
                         key: "basic",
-                        username: createNameAndWireValue("username"),
+                        username: casingsGenerator.generateName("username"),
                         usernameEnvVar: undefined,
-                        password: createNameAndWireValue("password"),
+                        usernameOmit: undefined,
+                        password: casingsGenerator.generateName("password"),
                         passwordEnvVar: undefined,
+                        passwordOmit: undefined,
                         docs: undefined
                     })
                 ],
@@ -346,7 +348,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
-                        token: createNameAndWireValue("token"),
+                        token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         docs: undefined
                     }),
@@ -455,7 +457,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
-                        token: createNameAndWireValue("token"),
+                        token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         docs: undefined
                     })
@@ -492,7 +494,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
-                        token: createNameAndWireValue("token"),
+                        token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         docs: undefined
                     })
@@ -528,7 +530,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
-                        token: createNameAndWireValue("token"),
+                        token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         docs: undefined
                     })
@@ -747,7 +749,7 @@ describe("GeneratedSdkClientClassImpl", () => {
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
                         key: "bearer",
-                        token: createNameAndWireValue("token"),
+                        token: casingsGenerator.generateName("token"),
                         tokenEnvVar: undefined,
                         docs: undefined
                     }),
@@ -819,6 +821,7 @@ describe("GeneratedSdkClientClassImpl", () => {
 
 function createMinimalExampleEndpointCall(): FernIr.ExampleEndpointCall {
     return {
+        id: undefined,
         name: undefined,
         url: "/test",
         rootPathParameters: [],
@@ -828,10 +831,7 @@ function createMinimalExampleEndpointCall(): FernIr.ExampleEndpointCall {
         serviceHeaders: [],
         queryParameters: [],
         request: undefined,
-        response: {
-            type: "ok",
-            body: undefined
-        },
+        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body({ jsonExample: undefined, docs: undefined })),
         docs: undefined
     };
 }

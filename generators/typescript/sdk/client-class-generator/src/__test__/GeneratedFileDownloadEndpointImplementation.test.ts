@@ -47,7 +47,8 @@ function createMockRequest(opts?: {
         getReferenceToQueryParameter: (key: string) => ts.factory.createIdentifier(key),
         getExampleEndpointParameters: () => opts?.exampleParameters ?? [ts.factory.createStringLiteral("example-arg")],
         getExampleEndpointImports: () => opts?.exampleImports ?? []
-    };
+        // biome-ignore lint/suspicious/noExplicitAny: test mock for GeneratedEndpointRequest
+    } as any;
 }
 
 /**
@@ -438,6 +439,7 @@ describe("GeneratedFileDownloadEndpointImplementation", () => {
 
 function createMinimalExampleEndpointCall(): FernIr.ExampleEndpointCall {
     return {
+        id: undefined,
         name: undefined,
         url: "/download",
         rootPathParameters: [],
@@ -447,10 +449,7 @@ function createMinimalExampleEndpointCall(): FernIr.ExampleEndpointCall {
         serviceHeaders: [],
         queryParameters: [],
         request: undefined,
-        response: {
-            type: "ok",
-            body: undefined
-        },
+        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body({ jsonExample: undefined, docs: undefined })),
         docs: undefined
     };
 }
