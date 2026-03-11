@@ -642,12 +642,14 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         // loadPage: make a direct fetch to the next URI/path
         // For URI pagination: use the full URL directly
         // For path pagination: combine the next path with the base URL
+        // Use non-null assertion since loadPage is only called when hasNextPage is true
+        const nextPropertyNonNull = ts.factory.createNonNullExpression(nextPropertyAccess);
         const nextUrlExpression =
             type === "uri"
-                ? nextPropertyAccess
+                ? nextPropertyNonNull
                 : context.coreUtilities.urlUtils.join._invoke([
                       ts.factory.createIdentifier("_baseUrl"),
-                      nextPropertyAccess
+                      nextPropertyNonNull
                   ]);
 
         const loadPage = [
