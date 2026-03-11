@@ -1,11 +1,8 @@
-import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { Schema, SdkGroupName } from "@fern-api/openapi-ir";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import type { Schema, SdkGroupName } from "@fern-api/openapi-ir";
+import type { RelativeFilePath } from "@fern-api/path-utils";
 
 import { convertSdkGroupNameToFile } from "./convertSdkGroupName.js";
-
-const PACKAGE_MARKER_RELATIVE_FILEPATH = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
 
 export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
     switch (schema.type) {
@@ -18,17 +15,16 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
         case "literal":
         case "optional":
         case "nullable":
+        case "unknown":
             return getDeclarationFileFromGroupName({
                 namespace: schema.namespace,
-                groupName: schema.groupName
+                groupName: schema.groupName,
             });
         case "oneOf":
             return getDeclarationFileFromGroupName({
                 namespace: schema.value.namespace,
-                groupName: schema.value.groupName
+                groupName: schema.value.groupName,
             });
-        case "unknown":
-            return PACKAGE_MARKER_RELATIVE_FILEPATH;
         default:
             assertNever(schema);
     }
@@ -42,7 +38,7 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
  */
 export function getDeclarationFileFromGroupName({
     namespace,
-    groupName
+    groupName,
 }: {
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -51,17 +47,17 @@ export function getDeclarationFileFromGroupName({
         return convertSdkGroupNameToFile([
             {
                 type: "namespace",
-                name: namespace
+                name: namespace,
             },
-            ...groupName
+            ...groupName,
         ]);
     }
     if (namespace != null) {
         return convertSdkGroupNameToFile([
             {
                 type: "namespace",
-                name: namespace
-            }
+                name: namespace,
+            },
         ]);
     }
     return convertSdkGroupNameToFile(groupName);
