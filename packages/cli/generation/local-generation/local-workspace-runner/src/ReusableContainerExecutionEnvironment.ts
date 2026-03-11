@@ -86,10 +86,15 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             throw error;
         }
 
-        const logFn = logLevel === LogLevel.Debug || logLevel === LogLevel.Trace ? logger.info : logger.debug;
-        logFn(
-            `Started ${this.containers.length} reusable container(s) from image ${this.imageName}: ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
-        );
+        if (logLevel === LogLevel.Debug || logLevel === LogLevel.Trace) {
+            logger.info(
+                `Started ${this.containers.length} reusable container(s) from image ${this.imageName}: ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
+            );
+        } else {
+            logger.debug(
+                `Started ${this.containers.length} reusable container(s) from image ${this.imageName}: ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
+            );
+        }
     }
 
     public async execute(args: ExecutionEnvironment.ExecuteArgs): Promise<void> {
@@ -290,10 +295,15 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             });
         });
         await Promise.all(stopPromises);
-        const logFn = logLevel === LogLevel.Debug || logLevel === LogLevel.Trace ? logger.info : logger.debug;
-        logFn(
-            `Stopped ${this.containers.length} reusable container(s): ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
-        );
+        if (logLevel === LogLevel.Debug || logLevel === LogLevel.Trace) {
+            logger.info(
+                `Stopped ${this.containers.length} reusable container(s): ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
+            );
+        } else {
+            logger.debug(
+                `Stopped ${this.containers.length} reusable container(s): ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
+            );
+        }
         this.containers = [];
         this.availableContainers = [];
     }
