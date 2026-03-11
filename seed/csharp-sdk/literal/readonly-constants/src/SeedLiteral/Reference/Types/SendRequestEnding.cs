@@ -32,7 +32,11 @@ public readonly struct SendRequestEnding
             if (value != SendRequestEnding.Value)
             {
                 throw new JsonException(
-                    $"Expected \"$ending\" for type discriminator but got \"{value}\"."
+                    "Expected \""
+                        + SendRequestEnding.Value
+                        + "\" for type discriminator but got \""
+                        + value
+                        + "\"."
                 );
             }
             return new SendRequestEnding();

@@ -11,6 +11,7 @@ public record ANestedLiteral : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [JsonRequired]
     [JsonPropertyName("myLiteral")]
     public ANestedLiteralMyLiteral MyLiteral { get;
 #if NET5_0_OR_GREATER

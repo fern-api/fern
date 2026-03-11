@@ -39,7 +39,11 @@ public readonly struct NestedObjectWithLiteralsLiteral2
             if (value != NestedObjectWithLiteralsLiteral2.Value)
             {
                 throw new JsonException(
-                    $"Expected \"literal2\" for type discriminator but got \"{value}\"."
+                    "Expected \""
+                        + NestedObjectWithLiteralsLiteral2.Value
+                        + "\" for type discriminator but got \""
+                        + value
+                        + "\"."
                 );
             }
             return new NestedObjectWithLiteralsLiteral2();

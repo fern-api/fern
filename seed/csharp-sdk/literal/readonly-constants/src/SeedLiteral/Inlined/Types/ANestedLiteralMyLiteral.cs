@@ -32,7 +32,11 @@ public readonly struct ANestedLiteralMyLiteral
             if (value != ANestedLiteralMyLiteral.Value)
             {
                 throw new JsonException(
-                    $"Expected \"How super cool\" for type discriminator but got \"{value}\"."
+                    "Expected \""
+                        + ANestedLiteralMyLiteral.Value
+                        + "\" for type discriminator but got \""
+                        + value
+                        + "\"."
                 );
             }
             return new ANestedLiteralMyLiteral();

@@ -22,7 +22,8 @@ export function generateLiteralType({
     namespace: string;
     directory: RelativeFilePath;
 }): File {
-    const escapedLiteralValue = literalValue.replace(/"/g, '\\"');
+    // Escape backslashes first, then double quotes for C# string literals
+    const escapedLiteralValue = literalValue.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
     const content = `using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -53,7 +54,7 @@ public readonly struct ${structName}
             if (value != ${structName}.Value)
             {
                 throw new JsonException(
-                    $"Expected \\"${escapedLiteralValue}\\" for type discriminator but got \\"{value}\\"."
+                    "Expected \\"" + ${structName}.Value + "\\" for type discriminator but got \\"" + value + "\\"."
                 );
             }
             return new ${structName}();

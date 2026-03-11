@@ -32,7 +32,11 @@ public readonly struct SendRequestPrompt
             if (value != SendRequestPrompt.Value)
             {
                 throw new JsonException(
-                    $"Expected \"You are a helpful assistant\" for type discriminator but got \"{value}\"."
+                    "Expected \""
+                        + SendRequestPrompt.Value
+                        + "\" for type discriminator but got \""
+                        + value
+                        + "\"."
                 );
             }
             return new SendRequestPrompt();

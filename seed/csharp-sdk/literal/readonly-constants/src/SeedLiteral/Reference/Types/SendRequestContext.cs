@@ -32,7 +32,11 @@ public readonly struct SendRequestContext
             if (value != SendRequestContext.Value)
             {
                 throw new JsonException(
-                    $"Expected \"You're super wise\" for type discriminator but got \"{value}\"."
+                    "Expected \""
+                        + SendRequestContext.Value
+                        + "\" for type discriminator but got \""
+                        + value
+                        + "\"."
                 );
             }
             return new SendRequestContext();

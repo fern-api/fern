@@ -11,6 +11,7 @@ public record SendRequest : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [JsonRequired]
     [JsonPropertyName("prompt")]
     public SendRequestPrompt Prompt { get;
 #if NET5_0_OR_GREATER
@@ -30,6 +31,7 @@ public record SendRequest : IJsonOnDeserialized
         set => value.Assert(value == false, string.Format("'Stream' must be {0}", false));
     }
 
+    [JsonRequired]
     [JsonPropertyName("ending")]
     public SendRequestEnding Ending { get;
 #if NET5_0_OR_GREATER
@@ -39,6 +41,7 @@ public record SendRequest : IJsonOnDeserialized
 #endif
     } = new();
 
+    [JsonRequired]
     [JsonPropertyName("context")]
     public SendRequestContext Context { get;
 #if NET5_0_OR_GREATER

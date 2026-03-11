@@ -167,6 +167,16 @@ export function generateField(
                 name: structName,
                 namespace: literalTypeNamespace
             });
+            // Add [JsonRequired] so that a missing field in JSON throws JsonException
+            // instead of silently using the init default.
+            fieldAttributes.unshift(
+                context.csharp.annotation({
+                    reference: context.csharp.classReference({
+                        name: "JsonRequiredAttribute",
+                        namespace: "System.Text.Json.Serialization"
+                    })
+                })
+            );
             return cls.addField({
                 origin: property,
                 type: literalStructType,

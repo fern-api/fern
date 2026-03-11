@@ -11,6 +11,7 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    [JsonRequired]
     [JsonPropertyName("literal1")]
     public NestedObjectWithLiteralsLiteral1 Literal1 { get;
 #if NET5_0_OR_GREATER
@@ -20,6 +21,7 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
 #endif
     } = new();
 
+    [JsonRequired]
     [JsonPropertyName("literal2")]
     public NestedObjectWithLiteralsLiteral2 Literal2 { get;
 #if NET5_0_OR_GREATER
