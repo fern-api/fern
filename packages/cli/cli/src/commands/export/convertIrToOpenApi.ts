@@ -5,11 +5,10 @@ import {
     IntermediateRepresentation,
     TypeDeclaration
 } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { OpenAPIV3 } from "openapi-types";
-
 import { convertServices } from "./converters/servicesConverter.js";
 import { convertType } from "./converters/typeConverter.js";
-import { getOriginalName } from "@fern-api/ir-utils";
 import { constructEndpointSecurity, constructSecuritySchemes } from "./security.js";
 
 export type Mode = "stoplight" | "openapi";

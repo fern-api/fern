@@ -1,7 +1,6 @@
 import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-api/ir-sdk";
-import { OpenAPIV3 } from "openapi-types";
-
 import { getPascalCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
+import { OpenAPIV3 } from "openapi-types";
 
 export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityRequirementObject[] {
     return AuthSchemesRequirement._visit<OpenAPIV3.SecurityRequirementObject[]>(apiAuth.requirement, {

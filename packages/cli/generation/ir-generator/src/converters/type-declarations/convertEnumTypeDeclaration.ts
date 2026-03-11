@@ -1,8 +1,7 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { EnumTypeDeclaration, EnumValue } from "@fern-api/ir-sdk";
-
-import { FernFileContext } from "../../FernFileContext.js";
 import { getWireValue } from "@fern-api/ir-utils";
+import { FernFileContext } from "../../FernFileContext.js";
 import { convertDeclaration } from "../convertDeclaration.js";
 
 export function convertEnumTypeDeclaration({

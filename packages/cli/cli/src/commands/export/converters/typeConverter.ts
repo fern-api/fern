@@ -18,10 +18,9 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
+import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
-
-import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { convertObject } from "./convertObject.js";
 
 export interface ConvertedType {

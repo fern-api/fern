@@ -5,9 +5,8 @@ import {
     NameAndWireValueOrString,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { OpenAPIV3 } from "openapi-types";
-
 import { getWireValue } from "@fern-api/ir-utils";
+import { OpenAPIV3 } from "openapi-types";
 import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter.js";
 
 export interface ObjectProperty {
