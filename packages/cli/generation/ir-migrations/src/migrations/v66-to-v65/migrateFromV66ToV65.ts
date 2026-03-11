@@ -268,7 +268,8 @@ function inflateIr(
             case "enum":
                 return IrVersions.V65.Type.enum({
                     default: shape.default != null ? inflateEnumValue(shape.default) : undefined,
-                    values: shape.values.map(inflateEnumValue)
+                    values: shape.values.map(inflateEnumValue),
+                    forwardCompatible: shape.forwardCompatible
                 });
             case "alias":
                 return IrVersions.V65.Type.alias({
@@ -1688,7 +1689,8 @@ function inflateIr(
             header: inflateHeader(scheme.header),
             value: {
                 default: scheme.value.default != null ? inflateEnumValue(scheme.value.default) : undefined,
-                values: scheme.value.values.map(inflateEnumValue)
+                values: scheme.value.values.map(inflateEnumValue),
+                forwardCompatible: scheme.value.forwardCompatible
             }
         });
     };
