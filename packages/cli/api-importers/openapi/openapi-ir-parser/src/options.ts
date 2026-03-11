@@ -111,11 +111,11 @@ export interface ParseOpenAPIOptions {
     resolveSchemaCollisions: boolean;
 
     /**
-     * If true, auto-detect open-ended enums expressed as `oneOf: [enum, string]` or `anyOf: [enum, string]`
+     * If true, infer open-ended enums expressed as `oneOf: [enum, string]` or `anyOf: [enum, string]`
      * in OpenAPI specs, and lower them to a single enum type with the `openEnded` flag set to true.
      * Defaults to true.
      */
-    autoDetectOpenEndedEnums: boolean;
+    inferOpenEndedEnums: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -152,7 +152,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32,
     pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder,
     resolveSchemaCollisions: false,
-    autoDetectOpenEndedEnums: true
+    inferOpenEndedEnums: true
 };
 
 function mergeOptions<T extends object>(params: {

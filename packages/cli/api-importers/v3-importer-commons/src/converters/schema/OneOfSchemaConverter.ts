@@ -10,6 +10,7 @@ import {
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated.js";
+import { FernEnumExtension } from "../../extensions/x-fern-enum.js";
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 import { convertProperties } from "../../utils/ConvertProperties.js";
 import { EnumSchemaConverter } from "./EnumSchemaConverter.js";
@@ -48,14 +49,6 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return this.convertAsNullableSchemaOrReference();
         }
 
-        // Auto-detect open-ended enums: oneOf/anyOf with [enum, string] pattern
-        if (this.context.settings.autoDetectOpenEndedEnums) {
-            const openEndedEnum = this.convertAsOpenEndedEnum();
-            if (openEndedEnum != null) {
-                return openEndedEnum;
-            }
-        }
-
         const fernDiscriminatedExtension = new FernDiscriminatedExtension({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
@@ -65,6 +58,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         if (isDiscriminated === false) {
             return this.convertAsUndiscriminatedUnion();
+        }
+
+        // Infer open-ended enums: oneOf/anyOf with [enum, string] pattern
+        // This runs after the x-fern-discriminated check so explicit overrides take precedence
+        if (this.context.settings.inferOpenEndedEnums) {
+            const openEndedEnum = this.convertAsOpenEndedEnum();
+            if (openEndedEnum != null) {
+                return openEndedEnum;
+            }
         }
 
         // If a discriminator is present, always convert as discriminated union
@@ -125,11 +127,18 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return undefined;
         }
 
+        const fernEnumConverter = new FernEnumExtension({
+            breadcrumbs: this.breadcrumbs,
+            schema: enumSchema,
+            context: this.context
+        });
+        const maybeFernEnum = fernEnumConverter.convert();
+
         const enumConverter = new EnumSchemaConverter({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
             schema: enumSchema,
-            maybeFernEnum: undefined,
+            maybeFernEnum,
             openEnded: true
         });
 

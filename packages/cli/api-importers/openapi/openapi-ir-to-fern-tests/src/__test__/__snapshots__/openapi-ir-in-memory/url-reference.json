@@ -72,6 +72,6 @@
     "defaultIntegerFormat": "int32",
     "pathParameterOrder": "url-order",
     "resolveSchemaCollisions": false,
-    "autoDetectOpenEndedEnums": true
+    "inferOpenEndedEnums": true
   }
 }
