@@ -465,6 +465,9 @@ describe("GeneratedAliasTypeImpl", () => {
             });
 
             const module = generator.generateModule(context);
+            // Shallow assertion: verifies GeneratedAliasTypeImpl.generateModule()
+            // delegates to generateInlineAliasModule when conditions are met.
+            // The 247-line helper itself is out of scope for this unit test.
             assert(module != null, "module should be defined");
             expect(module.name).toBe("ItemList");
             expect(module.isExported).toBe(true);
@@ -489,6 +492,9 @@ describe("GeneratedAliasTypeImpl", () => {
             });
 
             const result = generator.buildExample(example, context, { isForComment: true });
+            // Note: mock getGeneratedExample returns hardcoded "example-value" regardless
+            // of input. This test verifies wiring (buildExample delegates to
+            // getGeneratedExample(example.value).build()), not example data flow.
             expect(getTextOfTsNode(result)).toBe('"example-value"');
         });
 
@@ -582,9 +588,10 @@ describe("GeneratedBrandedStringAliasImpl", () => {
         });
 
         it("uses the aliased type for the branded intersection", () => {
-            // Alias of a number type — brand should still be on string since this is
-            // GeneratedBrandedStringAliasImpl, but the intersection base type comes
-            // from getReferenceToType which returns number for this test.
+            // Alias of a number type — the intersection base type comes from
+            // getReferenceToType (returns number here), but the builder function
+            // parameter is always hardcoded to `string` (line 98 of source).
+            // This is intentional: the class is GeneratedBranded*String*AliasImpl.
             const context = createMockBaseContext();
             context.type.getReferenceToType = (): TypeReferenceNode => primitiveTypeRefNode("number");
 
