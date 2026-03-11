@@ -3,7 +3,8 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
+    endpoints "github.com/exhaustive/fern/endpoints"
+    fern "github.com/exhaustive/fern"
     context "context"
 )
 
@@ -16,10 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithRequiredField{
-        FieldString: "string",
+    request := &endpoints.ListRequestA{
+        Page: fern.Int(
+            1,
+        ),
+        Limit: fern.Int(
+            1,
+        ),
     }
-    client.Endpoints.HttpMethods.TestPost(
+    client.Endpoints.DuplicateNamesA.List(
         context.TODO(),
         request,
     )

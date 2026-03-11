@@ -278,6 +278,10 @@ fixtures:
       customConfig:
         enableWireTests: true
         omitEmptyRequestWrappers: true
+    - outputFolder: export-all-requests-at-root
+      customConfig:
+        enableWireTests: true
+        exportAllRequestsAtRoot: true
 scripts:
   - image: fernapi/go-seed:2.0.0
     commands:
