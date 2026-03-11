@@ -1,7 +1,7 @@
 import { File } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock } from "@fern-api/mock-utils";
+import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -34,8 +34,49 @@ export class WireTestSetupGenerator {
         return new WireMock().convertToWireMock(ir);
     }
 
+    /**
+     * ISO 8601 datetime pattern that matches values with `.000` milliseconds.
+     * Example: "2008-01-02T00:00:00.000Z" or "2008-01-02T00:00:00.000+05:00"
+     */
+    private static readonly DATETIME_WITH_ZERO_MILLIS_REGEX =
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.000(Z|[+-]\d{2}:\d{2})$/;
+
+    /**
+     * Strips ".000" milliseconds from all datetime values in WireMock stub mappings.
+     * This is used when datetime_milliseconds is false (default) so that WireMock stubs
+     * match the SDK's default serialize_datetime output (which omits zero fractional seconds).
+     *
+     * Mutates the input in-place for efficiency.
+     */
+    public static stripDatetimeMilliseconds(stubMapping: WireMockStubMapping): void {
+        for (const mapping of stubMapping.mappings) {
+            // Strip from query parameters
+            if (mapping.request.queryParameters) {
+                for (const [, value] of Object.entries(mapping.request.queryParameters)) {
+                    const paramValue = value as { equalTo: string };
+                    if (
+                        paramValue.equalTo != null &&
+                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
+                    ) {
+                        paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    }
+                }
+            }
+        }
+    }
+
     private generateWireMockConfigFile(): void {
         const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+
+        // When datetime_milliseconds is not enabled (default), strip milliseconds from datetime
+        // values in WireMock stubs. mock-utils always generates datetime values using
+        // Date.toISOString() which includes ".000Z", but the Python SDK's default
+        // serialize_datetime (isoformat()) omits zero fractional seconds. Stripping here
+        // ensures the stubs match what the SDK actually sends.
+        if (!this.context.customConfig.datetime_milliseconds) {
+            WireTestSetupGenerator.stripDatetimeMilliseconds(wireMockConfigContent);
+        }
+
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
