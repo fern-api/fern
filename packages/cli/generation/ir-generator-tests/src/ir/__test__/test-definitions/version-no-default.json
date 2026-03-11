@@ -127,7 +127,7 @@
                     "docs": null
                 }
             ],
-            "openEnded": null
+            "forwardCompatible": null
         }
     },
     "apiName": {

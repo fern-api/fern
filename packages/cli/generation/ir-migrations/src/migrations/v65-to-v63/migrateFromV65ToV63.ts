@@ -58,7 +58,7 @@ export const V65_TO_V63_MIGRATION: IrMigration<
                         shape: IrVersions.V63.types.Type.enum({
                             default: typeDeclaration.shape.default,
                             values: typeDeclaration.shape.values
-                        })
+                        }) 
                     };
                 }
                 return typeDeclaration;

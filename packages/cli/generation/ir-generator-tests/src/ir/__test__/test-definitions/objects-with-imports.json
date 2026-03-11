@@ -6186,7 +6186,7 @@
                         "docs": "A directory (e.g. foo/)."
                     }
                 ],
-                "openEnded": null
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {

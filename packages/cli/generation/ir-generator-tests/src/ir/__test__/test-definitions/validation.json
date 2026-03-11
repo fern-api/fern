@@ -532,7 +532,7 @@
                         "docs": null
                     }
                 ],
-                "openEnded": null
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {

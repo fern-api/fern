@@ -7,7 +7,7 @@ export declare namespace EnumSchemaConverter {
     export interface Args extends AbstractConverter.AbstractArgs {
         schema: OpenAPIV3_1.SchemaObject;
         maybeFernEnum: FernEnumConfig | undefined;
-        openEnded?: boolean;
+        forwardCompatible?: boolean;
     }
 
     export interface Output {
@@ -21,13 +21,13 @@ export class EnumSchemaConverter extends AbstractConverter<
 > {
     private readonly schema: OpenAPIV3_1.SchemaObject;
     private readonly maybeFernEnum: FernEnumConfig | undefined;
-    private readonly openEnded: boolean;
+    private readonly forwardCompatible: boolean;
 
-    constructor({ context, breadcrumbs, schema, maybeFernEnum, openEnded }: EnumSchemaConverter.Args) {
+    constructor({ context, breadcrumbs, schema, maybeFernEnum, forwardCompatible }: EnumSchemaConverter.Args) {
         super({ context, breadcrumbs });
         this.schema = schema;
         this.maybeFernEnum = maybeFernEnum;
-        this.openEnded = openEnded ?? false;
+        this.forwardCompatible = forwardCompatible ?? false;
     }
 
     public convert(): EnumSchemaConverter.Output | undefined {
@@ -65,7 +65,7 @@ export class EnumSchemaConverter extends AbstractConverter<
             type: Type.enum({
                 default: default_ != null ? values.find((v) => v.name.wireValue === default_) : undefined,
                 values,
-                openEnded: this.openEnded || undefined
+                forwardCompatible: this.forwardCompatible || undefined
             })
         };
     }

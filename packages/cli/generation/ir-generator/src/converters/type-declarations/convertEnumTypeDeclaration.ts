@@ -33,7 +33,7 @@ export function convertEnumTypeDeclaration({
     return {
         default: defaultValue,
         values,
-        openEnded: undefined
+        forwardCompatible: _enum["forward-compatible"] || undefined
     };
 }
 

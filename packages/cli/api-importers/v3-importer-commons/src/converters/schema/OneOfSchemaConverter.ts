@@ -62,7 +62,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
         // Infer open-ended enums: oneOf/anyOf with [enum, string] pattern
         // This runs after the x-fern-discriminated check so explicit overrides take precedence
-        if (this.context.settings.inferOpenEndedEnums) {
+        if (this.context.settings.inferForwardCompatible) {
             const openEndedEnum = this.convertAsOpenEndedEnum();
             if (openEndedEnum != null) {
                 return openEndedEnum;
@@ -81,7 +81,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
 
     /**
      * Detects the pattern oneOf/anyOf with exactly [enum, string] or [$ref(enum), string]
-     * and converts it to a single enum type with openEnded: true.
+     * and converts it to a single enum type with forwardCompatible: true.
      */
     private convertAsOpenEndedEnum(): OneOfSchemaConverter.Output | undefined {
         const subSchemas = this.schema.oneOf ?? this.schema.anyOf;
@@ -139,7 +139,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
             breadcrumbs: this.breadcrumbs,
             schema: enumSchema,
             maybeFernEnum,
-            openEnded: true
+            forwardCompatible: true
         });
 
         const converted = enumConverter.convert();

@@ -2,11 +2,12 @@
 - version: 4.23.0
   changelogEntry:
     - summary: |
-        Auto-detect open-ended enums in OpenAPI specs. When an enum is expressed
+        Infer forward-compatible enums in OpenAPI specs. When an enum is expressed
         as `oneOf: [enum, string]` or `anyOf: [enum, string]`, the parser now
-        lowers it to a single enum type with `openEnded: true` instead of an
-        undiscriminated union. This behavior is controlled by the new
-        `auto-detect-open-ended-enums` parser flag (enabled by default).
+        lowers it to a single enum type with `forwardCompatible: true` instead of an
+        undiscriminated union. Fern Definition enums can also be marked with
+        `forward-compatible: true`. This behavior is controlled by the new
+        `infer-forward-compatible` parser flag (enabled by default).
       type: feat
   createdAt: "2026-03-10"
   irVersion: 65

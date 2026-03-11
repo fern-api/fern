@@ -3872,7 +3872,7 @@
                         "docs": null
                     }
                 ],
-                "openEnded": null
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {
@@ -4801,7 +4801,7 @@
                         "docs": null
                     }
                 ],
-                "openEnded": null
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {

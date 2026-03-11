@@ -47,7 +47,7 @@ export class EnumConverter extends AbstractConverter<ProtofileConverterContext, 
             type: Type.enum({
                 default: undefined,
                 values,
-                openEnded: undefined
+                forwardCompatible: undefined
             })
         };
     }

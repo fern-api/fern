@@ -1584,7 +1584,7 @@
       "shape": {
         "_visit": [Function],
         "default": undefined,
-        "openEnded": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {
