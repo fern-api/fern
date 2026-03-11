@@ -1321,8 +1321,12 @@ describe("${serviceName}", () => {
         // When getNextPage() is called, the SDK sends a different page/cursor value than the original request
         const paginationIgnoredFields: string[] = [];
         if (endpoint.pagination !== undefined) {
-            // Both cursor and offset pagination have a "page" property that changes between requests
-            if (paginationGeneratesPageObject(endpoint.pagination)) {
+            // Cursor and offset pagination have a "page" property that changes between requests
+            // URI/path pagination does not have a "page" property since they use URLs from the response
+            if (
+                paginationGeneratesPageObject(endpoint.pagination) &&
+                (endpoint.pagination.type === "cursor" || endpoint.pagination.type === "offset")
+            ) {
                 const pageProperty = endpoint.pagination.page;
                 const pathParts = [
                     ...(pageProperty.propertyPath ?? []).map((p) => p.name.originalName),
@@ -2149,14 +2153,14 @@ function getResponseBodyJsonExample(response: FernIr.ExampleResponse): unknown |
 
 function paginationGeneratesPageObject(
     pagination: FernIr.Pagination
-): pagination is FernIr.Pagination.Cursor | FernIr.Pagination.Offset {
+): pagination is FernIr.Pagination.Cursor | FernIr.Pagination.Offset | FernIr.Pagination.Uri | FernIr.Pagination.Path {
     switch (pagination.type) {
         case "cursor":
         case "offset":
-            return true;
-        case "custom":
         case "uri":
         case "path":
+            return true;
+        case "custom":
             return false;
         default:
             assertNever(pagination);
@@ -2237,9 +2241,13 @@ function isPaginationCursorMissingInExample({
                 return false;
             }
             break;
-        case "custom":
         case "uri":
+            cursorProperty = pagination.nextUri;
+            break;
         case "path":
+            cursorProperty = pagination.nextPath;
+            break;
+        case "custom":
             return false;
         default:
             assertNever(pagination);

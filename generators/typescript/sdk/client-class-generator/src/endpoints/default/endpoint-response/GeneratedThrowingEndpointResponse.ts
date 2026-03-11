@@ -128,6 +128,18 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         custom: this.endpoint.pagination,
                         successReturnType
                     });
+                case "uri":
+                    return this.getUriPaginationInfo({
+                        context,
+                        uri: this.endpoint.pagination,
+                        successReturnType
+                    });
+                case "path":
+                    return this.getPathPaginationInfo({
+                        context,
+                        path: this.endpoint.pagination,
+                        successReturnType
+                    });
             }
         }
 
@@ -501,6 +513,153 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         return {
             type: "custom",
+            itemType: itemType,
+            responseType: successReturnType,
+            hasNextPage,
+            getItems,
+            loadPage
+        };
+    }
+
+    private getUriPaginationInfo({
+        context,
+        uri,
+        successReturnType
+    }: {
+        context: SdkContext;
+        uri: FernIr.UriPagination;
+        successReturnType: ts.TypeNode;
+    }): PaginationResponseInfo | undefined {
+        return this.getUriOrPathPaginationInfo({
+            context,
+            nextProperty: uri.nextUri,
+            results: uri.results,
+            successReturnType,
+            type: "uri"
+        });
+    }
+
+    private getPathPaginationInfo({
+        context,
+        path,
+        successReturnType
+    }: {
+        context: SdkContext;
+        path: FernIr.PathPagination;
+        successReturnType: ts.TypeNode;
+    }): PaginationResponseInfo | undefined {
+        return this.getUriOrPathPaginationInfo({
+            context,
+            nextProperty: path.nextPath,
+            results: path.results,
+            successReturnType,
+            type: "path"
+        });
+    }
+
+    private getUriOrPathPaginationInfo({
+        context,
+        nextProperty,
+        results,
+        successReturnType,
+        type
+    }: {
+        context: SdkContext;
+        nextProperty: FernIr.ResponseProperty;
+        results: FernIr.ResponseProperty;
+        successReturnType: ts.TypeNode;
+        type: "uri" | "path";
+    }): PaginationResponseInfo | undefined {
+        const itemValueType = results.property.valueType;
+
+        const itemTypeReference = this.getItemTypeFromListOrOptionalList(itemValueType);
+        if (itemTypeReference == null) {
+            return undefined;
+        }
+
+        const itemType = getElementTypeFromArrayType(
+            removeUndefinedAndNullFromTypeNode(
+                context.type.getReferenceToResponsePropertyType({
+                    responseType: successReturnType,
+                    property: results
+                })
+            )
+        );
+
+        // hasNextPage: check that next property is not null and not empty string
+        const nextPropertyAccess = context.type.generateGetterForResponseProperty({
+            property: nextProperty,
+            variable: "response",
+            isVariableOptional: true
+        });
+
+        const nextPropertyIsNonNull = ts.factory.createBinaryExpression(
+            nextPropertyAccess,
+            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+            ts.factory.createNull()
+        );
+
+        const nextPropertyIsStringType = ts.factory.createBinaryExpression(
+            ts.factory.createTypeOfExpression(nextPropertyAccess),
+            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+            ts.factory.createStringLiteral("string")
+        );
+
+        const nextPropertyIsEmptyString = ts.factory.createBinaryExpression(
+            nextPropertyAccess,
+            ts.factory.createToken(ts.SyntaxKind.EqualsEqualsEqualsToken),
+            ts.factory.createStringLiteral("")
+        );
+
+        const nextPropertyIsStringAndEmpty = ts.factory.createBinaryExpression(
+            nextPropertyIsStringType,
+            ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+            nextPropertyIsEmptyString
+        );
+
+        const nextPropertyIsNotEmptyString = ts.factory.createPrefixUnaryExpression(
+            ts.SyntaxKind.ExclamationToken,
+            nextPropertyIsStringAndEmpty
+        );
+
+        const hasNextPage = ts.factory.createBinaryExpression(
+            nextPropertyIsNonNull,
+            ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
+            nextPropertyIsNotEmptyString
+        );
+
+        // getItems: extract items from response
+        const getItems = ts.factory.createBinaryExpression(
+            context.type.generateGetterForResponseProperty({
+                property: results,
+                variable: "response",
+                isVariableOptional: true
+            }),
+            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+            ts.factory.createArrayLiteralExpression([], false)
+        );
+
+        // loadPage: make a direct fetch to the next URI/path
+        // For URI pagination: use the full URL directly
+        // For path pagination: combine the next path with the base URL
+        const nextUrlExpression =
+            type === "uri"
+                ? nextPropertyAccess
+                : context.coreUtilities.urlUtils.join._invoke([
+                      ts.factory.createIdentifier("_baseUrl"),
+                      nextPropertyAccess
+                  ]);
+
+        const loadPage = [
+            ts.factory.createReturnStatement(
+                ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
+                    nextUrlExpression
+                ])
+            )
+        ];
+
+        return {
+            type,
             itemType: itemType,
             responseType: successReturnType,
             hasNextPage,
