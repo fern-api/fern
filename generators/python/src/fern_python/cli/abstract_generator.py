@@ -340,7 +340,7 @@ on: [push]
 
 concurrency:
   group: ${{{{ github.workflow }}}}-${{{{ github.ref }}}}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   compile:
@@ -432,7 +432,7 @@ on: [push]
 
 concurrency:
   group: ${{{{ github.workflow }}}}-${{{{ github.ref }}}}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   compile:
