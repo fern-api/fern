@@ -7,12 +7,11 @@ import (
 	"sync"
 )
 
-// ConsoleLogger is the default logger implementation that writes to stderr.
+// ConsoleLogger is the default ILogger implementation that writes to stderr.
 // It uses a simple format of "LEVEL - message".
 type ConsoleLogger struct {
-	mu       sync.Mutex
-	output   io.Writer
-	minLevel LogLevel
+	mu     sync.Mutex
+	output io.Writer
 }
 
 // ConsoleLoggerOption configures a ConsoleLogger.
@@ -25,19 +24,11 @@ func WithConsoleLoggerOutput(output io.Writer) ConsoleLoggerOption {
 	}
 }
 
-// WithConsoleLoggerLevel sets the minimum log level for the console logger.
-func WithConsoleLoggerLevel(level LogLevel) ConsoleLoggerOption {
-	return func(l *ConsoleLogger) {
-		l.minLevel = level
-	}
-}
-
 // NewConsoleLogger creates a new ConsoleLogger instance.
-// By default, it writes to stderr with INFO level.
+// By default, it writes to stderr.
 func NewConsoleLogger(opts ...ConsoleLoggerOption) *ConsoleLogger {
 	logger := &ConsoleLogger{
-		output:   os.Stderr,
-		minLevel: LogLevelInfo,
+		output: os.Stderr,
 	}
 	for _, opt := range opts {
 		opt(logger)
@@ -47,50 +38,42 @@ func NewConsoleLogger(opts ...ConsoleLoggerOption) *ConsoleLogger {
 
 // Debug logs a debug message.
 func (l *ConsoleLogger) Debug(msg string) {
-	if l.minLevel <= LogLevelDebug {
-		l.log("DEBUG", msg)
-	}
+	l.log("DEBUG", msg)
 }
 
 // Info logs an informational message.
 func (l *ConsoleLogger) Info(msg string) {
-	if l.minLevel <= LogLevelInfo {
-		l.log("INFO", msg)
-	}
+	l.log("INFO", msg)
 }
 
 // Warn logs a warning message.
 func (l *ConsoleLogger) Warn(msg string) {
-	if l.minLevel <= LogLevelWarn {
-		l.log("WARN", msg)
-	}
+	l.log("WARN", msg)
 }
 
 // Error logs an error message.
 func (l *ConsoleLogger) Error(msg string) {
-	if l.minLevel <= LogLevelError {
-		l.log("ERROR", msg)
-	}
+	l.log("ERROR", msg)
 }
 
-// IsDebug returns true if debug logging is enabled.
+// IsDebug returns true (ConsoleLogger doesn't filter by level).
 func (l *ConsoleLogger) IsDebug() bool {
-	return l.minLevel <= LogLevelDebug
+	return true
 }
 
-// IsInfo returns true if info logging is enabled.
+// IsInfo returns true (ConsoleLogger doesn't filter by level).
 func (l *ConsoleLogger) IsInfo() bool {
-	return l.minLevel <= LogLevelInfo
+	return true
 }
 
-// IsWarn returns true if warn logging is enabled.
+// IsWarn returns true (ConsoleLogger doesn't filter by level).
 func (l *ConsoleLogger) IsWarn() bool {
-	return l.minLevel <= LogLevelWarn
+	return true
 }
 
-// IsError returns true if error logging is enabled.
+// IsError returns true (ConsoleLogger doesn't filter by level).
 func (l *ConsoleLogger) IsError() bool {
-	return l.minLevel <= LogLevelError
+	return true
 }
 
 func (l *ConsoleLogger) log(level, msg string) {
@@ -99,8 +82,5 @@ func (l *ConsoleLogger) log(level, msg string) {
 	fmt.Fprintf(l.output, "%s - %s\n", level, msg)
 }
 
-// Ensure ConsoleLogger implements both Logger and LogLevelChecker interfaces.
-var (
-	_ Logger         = (*ConsoleLogger)(nil)
-	_ LogLevelChecker = (*ConsoleLogger)(nil)
-)
+// Ensure ConsoleLogger implements ILogger interface.
+var _ ILogger = (*ConsoleLogger)(nil)

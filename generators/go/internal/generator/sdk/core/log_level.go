@@ -1,5 +1,7 @@
 package core
 
+import "strings"
+
 // LogLevel represents the severity level for log messages.
 // Silent by default — no log output unless explicitly configured.
 type LogLevel int
@@ -33,14 +35,14 @@ func (l LogLevel) String() string {
 
 // ParseLogLevel parses a log level from a string (case-insensitive).
 func ParseLogLevel(level string) LogLevel {
-	switch level {
-	case "debug", "DEBUG":
+	switch strings.ToLower(level) {
+	case "debug":
 		return LogLevelDebug
-	case "info", "INFO":
+	case "info":
 		return LogLevelInfo
-	case "warn", "WARN":
+	case "warn":
 		return LogLevelWarn
-	case "error", "ERROR":
+	case "error":
 		return LogLevelError
 	default:
 		return LogLevelInfo

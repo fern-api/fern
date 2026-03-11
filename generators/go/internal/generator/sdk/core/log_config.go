@@ -24,7 +24,7 @@ package core
 //   - Silent: true (no output unless explicitly enabled)
 type LogConfig struct {
 	level  LogLevel
-	logger Logger
+	logger ILogger
 	silent bool
 }
 
@@ -34,7 +34,7 @@ func (c *LogConfig) Level() LogLevel {
 }
 
 // Logger returns the configured logger.
-func (c *LogConfig) Logger() Logger {
+func (c *LogConfig) Logger() ILogger {
 	return c.logger
 }
 
@@ -46,7 +46,7 @@ func (c *LogConfig) Silent() bool {
 // LogConfigBuilder is used to build a LogConfig.
 type LogConfigBuilder struct {
 	level  LogLevel
-	logger Logger
+	logger ILogger
 	silent bool
 }
 
@@ -67,7 +67,7 @@ func (b *LogConfigBuilder) Level(level LogLevel) *LogConfigBuilder {
 }
 
 // Logger sets a custom logger implementation. Defaults to ConsoleLogger.
-func (b *LogConfigBuilder) Logger(logger Logger) *LogConfigBuilder {
+func (b *LogConfigBuilder) Logger(logger ILogger) *LogConfigBuilder {
 	b.logger = logger
 	return b
 }
@@ -86,4 +86,9 @@ func (b *LogConfigBuilder) Build() *LogConfig {
 		logger: b.logger,
 		silent: b.silent,
 	}
+}
+
+// createLogger creates a Logger wrapper from the LogConfig.
+func (c *LogConfig) createLogger() *Logger {
+	return NewLogger(c.logger, c.level, c.silent)
 }

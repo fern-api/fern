@@ -591,7 +591,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newLoggerFile(g.coordinator))
 		files = append(files, newConsoleLoggerFile(g.coordinator))
 		files = append(files, newLogConfigFile(g.coordinator))
-		files = append(files, newLoggingTransportFile(g.coordinator))
+		files = append(files, newLoggingHTTPClientFile(g.coordinator))
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
 		files = append(files, newHttpInternalFile(g.coordinator))
@@ -1321,11 +1321,11 @@ func newLogConfigFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-func newLoggingTransportFile(coordinator *coordinator.Client) *File {
+func newLoggingHTTPClientFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
-		"core/logging_transport.go",
-		[]byte(loggingTransportFile),
+		"core/logging_http_client.go",
+		[]byte(loggingHTTPClientFile),
 	)
 }
 

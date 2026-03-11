@@ -87,8 +87,8 @@ var (
 	//go:embed sdk/core/log_config.go
 	logConfigFile string
 
-	//go:embed sdk/core/logging_transport.go
-	loggingTransportFile string
+	//go:embed sdk/core/logging_http_client.go
+	loggingHTTPClientFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -1288,7 +1288,7 @@ func (f *fileWriter) WriteClient(
 	}
 	f.P("httpClient := options.HTTPClient")
 	f.P("if options.Logging != nil && !options.Logging.Silent() {")
-	f.P("httpClient = core.NewLoggingTransport(httpClient, options.Logging)")
+	f.P("httpClient = core.NewLoggingHTTPClient(httpClient, options.Logging)")
 	f.P("}")
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
