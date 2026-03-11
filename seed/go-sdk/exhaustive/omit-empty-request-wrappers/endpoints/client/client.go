@@ -6,6 +6,9 @@ import (
 	core "github.com/exhaustive/fern/core"
 	container "github.com/exhaustive/fern/endpoints/container"
 	contenttype "github.com/exhaustive/fern/endpoints/contenttype"
+	duplicatenamesa "github.com/exhaustive/fern/endpoints/duplicatenamesa"
+	duplicatenamesb "github.com/exhaustive/fern/endpoints/duplicatenamesb"
+	duplicatenamesc "github.com/exhaustive/fern/endpoints/duplicatenamesc"
 	enum "github.com/exhaustive/fern/endpoints/enum"
 	httpmethods "github.com/exhaustive/fern/endpoints/httpmethods"
 	object "github.com/exhaustive/fern/endpoints/object"
@@ -19,17 +22,20 @@ import (
 )
 
 type Client struct {
-	Container   *container.Client
-	ContentType *contenttype.Client
-	Enum        *enum.Client
-	HttpMethods *httpmethods.Client
-	Object      *object.Client
-	Pagination  *pagination.Client
-	Params      *params.Client
-	Primitive   *primitive.Client
-	Put         *put.Client
-	Union       *union.Client
-	Urls        *urls.Client
+	Container       *container.Client
+	ContentType     *contenttype.Client
+	DuplicateNamesA *duplicatenamesa.Client
+	DuplicateNamesB *duplicatenamesb.Client
+	DuplicateNamesC *duplicatenamesc.Client
+	Enum            *enum.Client
+	HttpMethods     *httpmethods.Client
+	Object          *object.Client
+	Pagination      *pagination.Client
+	Params          *params.Client
+	Primitive       *primitive.Client
+	Put             *put.Client
+	Union           *union.Client
+	Urls            *urls.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -38,19 +44,22 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		Container:   container.NewClient(options),
-		ContentType: contenttype.NewClient(options),
-		Enum:        enum.NewClient(options),
-		HttpMethods: httpmethods.NewClient(options),
-		Object:      object.NewClient(options),
-		Pagination:  pagination.NewClient(options),
-		Params:      params.NewClient(options),
-		Primitive:   primitive.NewClient(options),
-		Put:         put.NewClient(options),
-		Union:       union.NewClient(options),
-		Urls:        urls.NewClient(options),
-		options:     options,
-		baseURL:     options.BaseURL,
+		Container:       container.NewClient(options),
+		ContentType:     contenttype.NewClient(options),
+		DuplicateNamesA: duplicatenamesa.NewClient(options),
+		DuplicateNamesB: duplicatenamesb.NewClient(options),
+		DuplicateNamesC: duplicatenamesc.NewClient(options),
+		Enum:            enum.NewClient(options),
+		HttpMethods:     httpmethods.NewClient(options),
+		Object:          object.NewClient(options),
+		Pagination:      pagination.NewClient(options),
+		Params:          params.NewClient(options),
+		Primitive:       primitive.NewClient(options),
+		Put:             put.NewClient(options),
+		Union:           union.NewClient(options),
+		Urls:            urls.NewClient(options),
+		options:         options,
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:      options.HTTPClient,

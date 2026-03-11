@@ -15,10 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]any{
-        "key": "value",
-    }
-    client.NoAuth.PostWithNoAuth(
+    request := []byte("SGVsbG8gd29ybGQh")
+    client.Endpoints.Primitive.GetAndReturnBase64(
         context.TODO(),
         request,
     )

@@ -573,6 +573,657 @@ client.Endpoints.ContentType.PostJsonPatchContentWithCharsetType(
 </dl>
 </details>
 
+## Endpoints DuplicateNamesA
+<details><summary><code>client.Endpoints.DuplicateNamesA.Create(request) -> *types.ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create endpoint for service A
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.CreateRequestA{
+        Name: "name",
+        Value: 1,
+    }
+client.Endpoints.DuplicateNamesA.Create(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**value:** `int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.DuplicateNamesA.Get(Id) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get endpoint for service A
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.GetRequestA{
+        Id: "id",
+        Filter: fern.String(
+            "filter",
+        ),
+    }
+client.Endpoints.DuplicateNamesA.Get(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**filter:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.DuplicateNamesA.List() -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List endpoint for service A
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.ListRequestA{
+        Page: fern.Int(
+            1,
+        ),
+        Limit: fern.Int(
+            1,
+        ),
+    }
+client.Endpoints.DuplicateNamesA.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `*int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints DuplicateNamesB
+<details><summary><code>client.Endpoints.DuplicateNamesB.Create(request) -> *types.ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create endpoint for service B
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.CreateRequestB{
+        Description: "description",
+        Count: 1,
+    }
+client.Endpoints.DuplicateNamesB.Create(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**description:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**count:** `int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.DuplicateNamesB.Get(Id) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get endpoint for service B
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.GetRequestB{
+        Id: "id",
+        Expand: fern.Bool(
+            true,
+        ),
+    }
+client.Endpoints.DuplicateNamesB.Get(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**expand:** `*bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.DuplicateNamesB.List() -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List endpoint for service B
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.ListRequestB{
+        Cursor: fern.String(
+            "cursor",
+        ),
+        Size: fern.Int(
+            1,
+        ),
+    }
+client.Endpoints.DuplicateNamesB.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `*string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**size:** `*int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Endpoints DuplicateNamesC
+<details><summary><code>client.Endpoints.DuplicateNamesC.Create(request) -> *types.ObjectWithOptionalField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create endpoint for service C
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.CreateRequestC{
+        Label: "label",
+        Priority: 1,
+    }
+client.Endpoints.DuplicateNamesC.Create(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**label:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**priority:** `int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.DuplicateNamesC.Get(Id) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get endpoint for service C
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.GetRequestC{
+        Id: "id",
+        Verbose: fern.Bool(
+            true,
+        ),
+    }
+client.Endpoints.DuplicateNamesC.Get(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**verbose:** `*bool` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Endpoints.DuplicateNamesC.List() -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List endpoint for service C
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &endpoints.ListRequestC{
+        Offset: fern.Int(
+            1,
+        ),
+        Count: fern.Int(
+            1,
+        ),
+    }
+client.Endpoints.DuplicateNamesC.List(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**offset:** `*int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**count:** `*int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Endpoints Enum
 <details><summary><code>client.Endpoints.Enum.GetAndReturnEnum(request) -> *types.WeatherReport</code></summary>
 <dl>

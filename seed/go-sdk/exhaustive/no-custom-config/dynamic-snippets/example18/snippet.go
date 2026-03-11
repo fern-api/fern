@@ -3,7 +3,8 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
+    endpoints "github.com/exhaustive/fern/endpoints"
+    fern "github.com/exhaustive/fern"
     context "context"
 )
 
@@ -16,14 +17,15 @@ func do() {
             "<token>",
         ),
     )
-    request := &types.ObjectWithMapOfMap{
-        Map: map[string]map[string]string{
-            "map": map[string]string{
-                "map": "map",
-            },
-        },
+    request := &endpoints.ListRequestC{
+        Offset: fern.Int(
+            1,
+        ),
+        Count: fern.Int(
+            1,
+        ),
     }
-    client.Endpoints.Object.GetAndReturnWithMapOfMap(
+    client.Endpoints.DuplicateNamesC.List(
         context.TODO(),
         request,
     )

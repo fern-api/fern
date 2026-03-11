@@ -3,7 +3,7 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    types "github.com/exhaustive/fern/types"
+    endpoints "github.com/exhaustive/fern/endpoints"
     context "context"
 )
 
@@ -16,8 +16,11 @@ func do() {
             "<token>",
         ),
     )
-    request := types.WeatherReportSunny.Ptr()
-    client.Endpoints.Enum.GetAndReturnEnum(
+    request := &endpoints.CreateRequestA{
+        Name: "name",
+        Value: 1,
+    }
+    client.Endpoints.DuplicateNamesA.Create(
         context.TODO(),
         request,
     )

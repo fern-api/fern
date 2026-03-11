@@ -15,9 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    request := 1
-    client.Endpoints.Primitive.GetAndReturnInt(
+    client.Endpoints.Params.GetWithPath(
         context.TODO(),
-        request,
+        "param",
     )
 }

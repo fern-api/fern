@@ -3,7 +3,7 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    fern "github.com/exhaustive/fern"
+    endpoints "github.com/exhaustive/fern/endpoints"
     context "context"
 )
 
@@ -16,11 +16,12 @@ func do() {
             "<token>",
         ),
     )
-    request := fern.MustParseDateTime(
-        "2024-01-15T09:30:00Z",
-    )
-    client.Endpoints.Primitive.GetAndReturnDatetime(
+    request := &endpoints.GetWithPathAndQuery{
+        Query: "query",
+    }
+    client.Endpoints.Params.GetWithPathAndQuery(
         context.TODO(),
+        "param",
         request,
     )
 }

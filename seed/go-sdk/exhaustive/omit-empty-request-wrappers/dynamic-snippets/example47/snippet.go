@@ -15,7 +15,9 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithMixedCase(
+    request := int64(1000000)
+    client.Endpoints.Primitive.GetAndReturnLong(
         context.TODO(),
+        request,
     )
 }

@@ -15,7 +15,9 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.NoEndingSlash(
+    request := 1.1
+    client.Endpoints.Primitive.GetAndReturnDouble(
         context.TODO(),
+        request,
     )
 }

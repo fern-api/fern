@@ -3,7 +3,8 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    bytes "bytes"
+    endpoints "github.com/exhaustive/fern/endpoints"
+    fern "github.com/exhaustive/fern"
     context "context"
 )
 
@@ -16,12 +17,16 @@ func do() {
             "<token>",
         ),
     )
-    request := bytes.NewReader(
-        []byte(""),
-    )
-    client.Endpoints.Params.UploadWithPath(
+    request := &endpoints.ListItemsRequest{
+        Cursor: fern.String(
+            "cursor",
+        ),
+        Limit: fern.Int(
+            1,
+        ),
+    }
+    client.Endpoints.Pagination.ListItems(
         context.TODO(),
-        "upload-path",
         request,
     )
 }
