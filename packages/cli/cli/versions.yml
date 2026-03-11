@@ -7,7 +7,7 @@
         lowers it to a single enum type with `forwardCompatible: true` instead of an
         undiscriminated union. Fern Definition enums can also be marked with
         `forward-compatible: true`. This behavior is controlled by the new
-        `infer-forward-compatible` parser flag (enabled by default).
+        `infer-forward-compatible` parser flag (disabled by default).
       type: feat
   createdAt: "2026-03-10"
   irVersion: 65

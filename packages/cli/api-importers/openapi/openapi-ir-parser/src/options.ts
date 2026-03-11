@@ -113,7 +113,7 @@ export interface ParseOpenAPIOptions {
     /**
      * If true, infer forward-compatible enums expressed as `oneOf: [enum, string]` or `anyOf: [enum, string]`
      * in OpenAPI specs, and lower them to a single enum type with the `forwardCompatible` flag set to true.
-     * Defaults to true.
+     * Defaults to false.
      */
     inferForwardCompatible: boolean;
 }
@@ -152,7 +152,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32,
     pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder,
     resolveSchemaCollisions: false,
-    inferForwardCompatible: true
+    inferForwardCompatible: false
 };
 
 function mergeOptions<T extends object>(params: {
