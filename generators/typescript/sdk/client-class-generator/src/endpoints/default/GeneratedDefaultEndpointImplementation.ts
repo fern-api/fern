@@ -493,6 +493,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         // URI/path pagination
         if (paginationInfo != null && (paginationInfo.type === "uri" || paginationInfo.type === "path")) {
             const urlParamIdentifier = ts.factory.createIdentifier("_requestUrl");
+            // For URI/path pagination, subsequent page requests should only send headers
+            // (auth, custom headers), not query params or body. The next URL already contains
+            // all necessary parameters. This matches the Python and Java SDK behavior.
             const uriBody = [
                 ...(this.generateEndpointMetadata
                     ? generateEndpointMetadata({
@@ -500,8 +503,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                           context
                       })
                     : []),
-                ...this.request.getBuildRequestStatements(context),
-                ...this.invokeFetcherAndReturnResponse(context, urlParamIdentifier)
+                ...this.request.getBuildHeaderStatements(context),
+                ...this.invokeFetcherAndReturnResponse(context, urlParamIdentifier, {
+                    headersOnly: true
+                })
             ];
 
             const listFn = ts.factory.createVariableDeclarationList(
@@ -856,8 +861,15 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         );
     }
 
-    public invokeFetcherAndReturnResponse(context: SdkContext, urlOverride?: ts.Expression): ts.Statement[] {
-        return [...this.invokeFetcher(context, urlOverride), ...this.response.getReturnResponseStatements(context)];
+    public invokeFetcherAndReturnResponse(
+        context: SdkContext,
+        urlOverride?: ts.Expression,
+        options?: { headersOnly?: boolean }
+    ): ts.Statement[] {
+        return [
+            ...this.invokeFetcher(context, urlOverride, options),
+            ...this.response.getReturnResponseStatements(context)
+        ];
     }
 
     private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
@@ -881,9 +893,19 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
     }
 
-    private invokeFetcher(context: SdkContext, urlOverride?: ts.Expression): ts.Statement[] {
+    private invokeFetcher(
+        context: SdkContext,
+        urlOverride?: ts.Expression,
+        options?: { headersOnly?: boolean }
+    ): ts.Statement[] {
+        const requestArgs = this.request.getFetcherRequestArgs(context);
         const fetcherArgs: Fetcher.Args = {
-            ...this.request.getFetcherRequestArgs(context),
+            ...requestArgs,
+            // When headersOnly is true (URI/path pagination), exclude query params and body
+            // since the next URL already contains all necessary parameters.
+            ...(options?.headersOnly
+                ? { queryParameters: undefined, body: undefined, contentType: undefined, requestType: undefined }
+                : {}),
             url: urlOverride ?? this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             timeoutInSeconds: getTimeoutExpression({
