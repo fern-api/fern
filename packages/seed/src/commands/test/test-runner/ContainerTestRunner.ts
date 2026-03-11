@@ -99,7 +99,8 @@ export class ContainerTestRunner extends TestRunner {
         inspect = false,
         license,
         smartCasing,
-        organization
+        organization,
+        absolutePathToFernConfig
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorGroup: generatorsYml.GeneratorGroup = {
             groupName: "test",
@@ -124,7 +125,7 @@ export class ContainerTestRunner extends TestRunner {
         };
         await runContainerizedGenerationForSeed({
             organization: organization ?? DUMMY_ORGANIZATION,
-            absolutePathToFernConfig: absolutePathToFernDefinition,
+            absolutePathToFernConfig: absolutePathToFernConfig ?? absolutePathToFernDefinition,
             workspace: fernWorkspace,
             generatorGroup,
             context: taskContext,

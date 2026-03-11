@@ -39,6 +39,8 @@ export declare namespace TestRunner {
         generatorInvocation?: GeneratorInvocation;
         /** Organization name override (e.g. from customer's fern.config.json) **/
         organization?: string;
+        /** Absolute path to fern.config.json (used for license path resolution) **/
+        absolutePathToFernConfig?: AbsoluteFilePath;
     }
 
     interface DoRunArgs {
@@ -66,6 +68,8 @@ export declare namespace TestRunner {
         smartCasing?: boolean;
         /** Organization name override (e.g. from customer's fern.config.json) **/
         organization?: string;
+        /** Absolute path to fern.config.json (used for license path resolution) **/
+        absolutePathToFernConfig?: AbsoluteFilePath;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -156,7 +160,8 @@ export abstract class TestRunner {
         absolutePathToApiDefinition,
         outputDir,
         generatorInvocation,
-        organization
+        organization,
+        absolutePathToFernConfig
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         let lockAcquired = false;
         try {
@@ -274,7 +279,8 @@ export abstract class TestRunner {
                     inspect,
                     license,
                     smartCasing,
-                    organization
+                    organization,
+                    absolutePathToFernConfig
                 });
 
                 generationStopwatch.stop();

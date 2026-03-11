@@ -85,17 +85,23 @@ export async function runWithCustomFixture({
     }
 
     try {
+        // Read project config (organization, version, config path) from fern.config.json
+        const projectConfig = await readFernProjectConfig(pathToFixture);
+
+        // Derive workspace name from the directory path (e.g. "payments" from fern/apis/payments/)
+        const workspaceName = path.basename(pathToFixture);
+
         const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
             absolutePathToAPIDefinition: pathToFixture,
             taskContext,
-            fixture: "custom"
+            fixture: "custom",
+            workspaceName,
+            cliVersion: projectConfig?.version
         });
         if (apiWorkspace == null) {
             taskContext.logger.error("Failed to load API definition.");
             return;
         }
-
-        const organization = await readOrganizationFromFernConfig(pathToFixture);
 
         const generatorGroup = getGeneratorGroup({
             apiWorkspace,
@@ -131,7 +137,8 @@ export async function runWithCustomFixture({
             absolutePathToApiDefinition: pathToFixture,
             outputDir: absolutePathToOutput,
             generatorInvocation: generatorGroup.invocation,
-            organization
+            organization: projectConfig?.organization,
+            absolutePathToFernConfig: projectConfig?.absolutePathToFernConfig
         });
 
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
@@ -151,11 +158,17 @@ export async function runWithCustomFixture({
     }
 }
 
+interface FernProjectConfig {
+    organization?: string;
+    version?: string;
+    absolutePathToFernConfig: AbsoluteFilePath;
+}
+
 /**
  * Walks up the directory tree from the given path to find fern.config.json
- * and reads the organization name from it.
+ * and reads the project configuration (organization, version) from it.
  */
-async function readOrganizationFromFernConfig(startPath: AbsoluteFilePath): Promise<string | undefined> {
+async function readFernProjectConfig(startPath: AbsoluteFilePath): Promise<FernProjectConfig | undefined> {
     let currentDir = startPath;
     // Walk up the directory tree looking for fern.config.json
     while (true) {
@@ -163,11 +176,15 @@ async function readOrganizationFromFernConfig(startPath: AbsoluteFilePath): Prom
         if (await doesPathExist(configPath)) {
             try {
                 const configContents = await readFile(configPath, "utf-8");
-                const config = JSON.parse(configContents) as { organization?: string };
-                return config.organization;
+                const config = JSON.parse(configContents) as { organization?: string; version?: string };
+                return {
+                    organization: config.organization,
+                    version: config.version,
+                    absolutePathToFernConfig: configPath
+                };
             } catch (error) {
                 // eslint-disable-next-line no-console
-                console.warn(`Failed to read organization from ${configPath}: ${error}`);
+                console.warn(`Failed to read project config from ${configPath}: ${error}`);
                 return undefined;
             }
         }

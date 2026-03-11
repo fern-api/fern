@@ -56,7 +56,8 @@ export class LocalTestRunner extends TestRunner {
             inspect = false,
             license,
             smartCasing,
-            organization
+            organization,
+            absolutePathToFernConfig
         } = args;
 
         const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -85,7 +86,7 @@ export class LocalTestRunner extends TestRunner {
         await runNativeGenerationForSeed(
             {
                 organization: organization ?? DUMMY_ORGANIZATION,
-                absolutePathToFernConfig: absolutePathToFernDefinition,
+                absolutePathToFernConfig: absolutePathToFernConfig ?? absolutePathToFernDefinition,
                 workspace: fernWorkspace,
                 generatorGroup,
                 context: taskContext,

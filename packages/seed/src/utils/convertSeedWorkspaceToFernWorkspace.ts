@@ -5,17 +5,23 @@ import { AbstractAPIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-load
 export async function convertGeneratorWorkspaceToFernWorkspace({
     fixture,
     absolutePathToAPIDefinition,
-    taskContext
+    taskContext,
+    workspaceName,
+    cliVersion
 }: {
     fixture: string;
     absolutePathToAPIDefinition: AbsoluteFilePath;
     taskContext: TaskContext;
+    /** Override workspace name (defaults to fixture name) */
+    workspaceName?: string;
+    /** Override CLI version (defaults to "DUMMY") */
+    cliVersion?: string;
 }): Promise<AbstractAPIWorkspace<unknown> | undefined> {
     const workspace = await loadAPIWorkspace({
         absolutePathToWorkspace: absolutePathToAPIDefinition,
         context: taskContext,
-        cliVersion: "DUMMY",
-        workspaceName: fixture
+        cliVersion: cliVersion ?? "DUMMY",
+        workspaceName: workspaceName ?? fixture
     });
     if (!workspace.didSucceed) {
         taskContext.logger.info(
