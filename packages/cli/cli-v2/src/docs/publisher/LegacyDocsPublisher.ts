@@ -12,6 +12,7 @@ export declare namespace LegacyDocsPublisher {
     export interface PublishResult {
         success: boolean;
         error?: string;
+        url?: string;
     }
 }
 
@@ -54,14 +55,16 @@ export class LegacyDocsPublisher {
      */
     public async publish({
         instanceUrl,
-        preview
+        preview,
+        skipUpload
     }: {
         instanceUrl: string;
         preview: boolean;
+        skipUpload?: boolean;
     }): Promise<LegacyDocsPublisher.PublishResult> {
         const taskContext = new TaskContextAdapter({ context: this.context, task: this.task });
         try {
-            await runRemoteGenerationForDocsWorkspace({
+            const url = await runRemoteGenerationForDocsWorkspace({
                 organization: this.project.config.organization,
                 apiWorkspaces: this.project.apiWorkspaces,
                 ossWorkspaces: this.ossWorkspaces,
@@ -71,20 +74,20 @@ export class LegacyDocsPublisher {
                 instanceUrl,
                 preview,
                 disableTemplates: undefined,
-                skipUpload: undefined
+                skipUpload
             });
+
+            if (taskContext.getResult() === TaskResult.Failure) {
+                // Don't extract the error message here — it's already in task.logs.
+                return { success: false };
+            }
+
+            return { success: true, url };
         } catch (error) {
             return {
                 success: false,
                 error: error instanceof Error ? error.message : String(error)
             };
         }
-
-        if (taskContext.getResult() === TaskResult.Failure) {
-            // Don't extract the error message here — it's already in task.logs.
-            return { success: false };
-        }
-
-        return { success: true };
     }
 }

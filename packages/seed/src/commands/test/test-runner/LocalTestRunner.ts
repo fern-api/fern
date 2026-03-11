@@ -55,7 +55,9 @@ export class LocalTestRunner extends TestRunner {
             shouldGenerateDynamicSnippetTests,
             inspect = false,
             license,
-            smartCasing
+            smartCasing,
+            organization,
+            absolutePathToFernConfig
         } = args;
 
         const generatorGroup: generatorsYml.GeneratorGroup = {
@@ -83,8 +85,8 @@ export class LocalTestRunner extends TestRunner {
 
         await runNativeGenerationForSeed(
             {
-                organization: DUMMY_ORGANIZATION,
-                absolutePathToFernConfig: absolutePathToFernDefinition,
+                organization: organization ?? DUMMY_ORGANIZATION,
+                absolutePathToFernConfig: absolutePathToFernConfig ?? absolutePathToFernDefinition,
                 workspace: fernWorkspace,
                 generatorGroup,
                 context: taskContext,

@@ -27,7 +27,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     preview: boolean;
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
-}): Promise<void> {
+}): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
     // environment variable even in preview mode. Will bubble up an error if the env var isn't found.
@@ -83,9 +83,10 @@ export async function runRemoteGenerationForDocsWorkspace({
         `Organization: ${organization}, Preview: ${preview}, APIs: ${apiWorkspaces.length}, OSS: ${ossWorkspaces.length}`
     );
 
+    let publishedUrl: string | undefined;
     await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
         const publishStart = performance.now();
-        await publishDocs({
+        publishedUrl = await publishDocs({
             docsWorkspace,
             customDomains,
             domain: maybeInstance.url,
@@ -112,5 +113,5 @@ export async function runRemoteGenerationForDocsWorkspace({
         const publishTime = performance.now() - publishStart;
         context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);
     });
-    return;
+    return publishedUrl;
 }

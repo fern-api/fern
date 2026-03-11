@@ -1,7 +1,9 @@
-import { GeneratorGroup, GeneratorInvocation } from "@fern-api/configuration";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { GeneratorGroup, GeneratorInvocation, PROJECT_CONFIG_FILENAME } from "@fern-api/configuration";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import { readFile } from "fs/promises";
+import path from "path";
 import tmp from "tmp-promise";
 import { FixtureConfigurations } from "../../config/api/index.js";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces.js";
@@ -83,10 +85,19 @@ export async function runWithCustomFixture({
     }
 
     try {
+        // Read project config (organization, version, config path) from fern.config.json
+        const projectConfig = await readFernProjectConfig(pathToFixture);
+
+        // Derive workspace name from the directory path (e.g. "payments" from fern/apis/payments/)
+        const workspaceName = path.basename(pathToFixture);
+
         const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
             absolutePathToAPIDefinition: pathToFixture,
             taskContext,
-            fixture: "custom"
+            fixture: "custom",
+            workspaceName,
+            cliVersion: projectConfig?.version,
+            lenient: true
         });
         if (apiWorkspace == null) {
             taskContext.logger.error("Failed to load API definition.");
@@ -126,7 +137,10 @@ export async function runWithCustomFixture({
             inspect,
             absolutePathToApiDefinition: pathToFixture,
             outputDir: absolutePathToOutput,
-            generatorInvocation: generatorGroup.invocation
+            generatorInvocation: generatorGroup.invocation,
+            organization: projectConfig?.organization,
+            absolutePathToFernConfig: projectConfig?.absolutePathToFernConfig,
+            lenient: true
         });
 
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
@@ -143,6 +157,47 @@ export async function runWithCustomFixture({
             await scriptRunner?.stop();
         }
         await testRunner.cleanup();
+    }
+}
+
+interface FernProjectConfig {
+    organization?: string;
+    version?: string;
+    absolutePathToFernConfig: AbsoluteFilePath;
+}
+
+/**
+ * Walks up the directory tree from the given path to find fern.config.json
+ * and reads the project configuration (organization, version) from it.
+ */
+async function readFernProjectConfig(startPath: AbsoluteFilePath): Promise<FernProjectConfig | undefined> {
+    let currentDir = startPath;
+    // Walk up the directory tree looking for fern.config.json
+    while (true) {
+        const configPath = join(currentDir, RelativeFilePath.of(PROJECT_CONFIG_FILENAME));
+        if (await doesPathExist(configPath)) {
+            try {
+                const configContents = await readFile(configPath, "utf-8");
+                const config = JSON.parse(configContents) as Record<string, unknown>;
+                const organization = typeof config.organization === "string" ? config.organization : undefined;
+                const version = typeof config.version === "string" ? config.version : undefined;
+                return {
+                    organization,
+                    version,
+                    absolutePathToFernConfig: configPath
+                };
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.warn(`Failed to read project config from ${configPath}: ${error}`);
+                return undefined;
+            }
+        }
+        const parentDir = AbsoluteFilePath.of(path.dirname(currentDir));
+        if (parentDir === currentDir) {
+            // Reached filesystem root
+            return undefined;
+        }
+        currentDir = parentDir;
     }
 }
 
