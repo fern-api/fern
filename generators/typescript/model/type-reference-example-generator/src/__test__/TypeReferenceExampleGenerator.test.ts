@@ -402,7 +402,7 @@ describe("GeneratedTypeReferenceExampleImpl", () => {
                 shape: FernIr.ExampleTypeReferenceShape.container(
                     FernIr.ExampleContainer.nullable({
                         nullable: createStringExample("hello"),
-                        itemType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
                     })
                 )
             };
@@ -418,7 +418,7 @@ describe("GeneratedTypeReferenceExampleImpl", () => {
                 shape: FernIr.ExampleTypeReferenceShape.container(
                     FernIr.ExampleContainer.nullable({
                         nullable: undefined,
-                        itemType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
                     })
                 )
             };
@@ -434,7 +434,7 @@ describe("GeneratedTypeReferenceExampleImpl", () => {
                 shape: FernIr.ExampleTypeReferenceShape.container(
                     FernIr.ExampleContainer.optional({
                         optional: createStringExample("present"),
-                        itemType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
                     })
                 )
             };
@@ -450,7 +450,7 @@ describe("GeneratedTypeReferenceExampleImpl", () => {
                 shape: FernIr.ExampleTypeReferenceShape.container(
                     FernIr.ExampleContainer.optional({
                         optional: undefined,
-                        itemType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
                     })
                 )
             };
