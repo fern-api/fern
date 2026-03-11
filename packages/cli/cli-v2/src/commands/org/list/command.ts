@@ -138,7 +138,6 @@ export class ListCommand {
                     pager.once("close", resolve);
                 }
             });
-
         }
     }
 
