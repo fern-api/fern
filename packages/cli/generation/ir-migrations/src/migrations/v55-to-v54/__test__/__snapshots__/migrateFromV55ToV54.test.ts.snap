@@ -1295,11 +1295,7 @@ exports[`migrateFromV55ToV54 > simple 1`] = `
                                             "shape": {
                                               "type": "unknown",
                                               "unknown": {
-                                                "_visit": [Function],
-                                                "type": "unknown",
-                                                "unknown": {
-                                                  "key": "value",
-                                                },
+                                                "key": "value",
                                               },
                                             },
                                           },
