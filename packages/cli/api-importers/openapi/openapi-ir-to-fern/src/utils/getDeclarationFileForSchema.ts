@@ -18,12 +18,12 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
         case "unknown":
             return getDeclarationFileFromGroupName({
                 namespace: schema.namespace,
-                groupName: schema.groupName,
+                groupName: schema.groupName
             });
         case "oneOf":
             return getDeclarationFileFromGroupName({
                 namespace: schema.value.namespace,
-                groupName: schema.value.groupName,
+                groupName: schema.value.groupName
             });
         default:
             assertNever(schema);
@@ -38,7 +38,7 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
  */
 export function getDeclarationFileFromGroupName({
     namespace,
-    groupName,
+    groupName
 }: {
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -47,17 +47,17 @@ export function getDeclarationFileFromGroupName({
         return convertSdkGroupNameToFile([
             {
                 type: "namespace",
-                name: namespace,
+                name: namespace
             },
-            ...groupName,
+            ...groupName
         ]);
     }
     if (namespace != null) {
         return convertSdkGroupNameToFile([
             {
                 type: "namespace",
-                name: namespace,
-            },
+                name: namespace
+            }
         ]);
     }
     return convertSdkGroupNameToFile(groupName);
