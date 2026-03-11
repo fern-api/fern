@@ -1236,8 +1236,21 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         addName(scopes.property.name.name.camelCase.safeName);
                     }
                 }
+            } else if (scheme.type === "inferred") {
+                // Include inferred auth credentials (matching getParameterFromAuthScheme behavior)
+                const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
+                const tokenEndpointHttpService = context.getHttpService(tokenEndpointReference.serviceId);
+                if (tokenEndpointHttpService != null) {
+                    const tokenEndpoint = context.resolveEndpoint(
+                        tokenEndpointHttpService,
+                        tokenEndpointReference.endpointId
+                    );
+                    const credentials = collectInferredAuthCredentials(context, tokenEndpoint);
+                    for (const credential of credentials) {
+                        addName(credential.camelName);
+                    }
+                }
             }
-            // inferred auth is skipped as it doesn't produce simple named params for WebSocket matching
         }
         for (const header of context.ir.headers) {
             if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
