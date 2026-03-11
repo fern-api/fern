@@ -163,7 +163,7 @@ export class ContainerScriptRunner extends ScriptRunner {
     public async stop(): Promise<void> {
         for (const script of this.scripts) {
             await loggingExeca(this.context.logger, this.runner, ["kill", script.containerId], {
-                doNotPipeOutput: false
+                doNotPipeOutput: !this.shouldStreamOutput()
             });
         }
     }
@@ -261,7 +261,10 @@ export class ContainerScriptRunner extends ScriptRunner {
 
     private async buildFernCli(context: TaskContext): Promise<AbsoluteFilePath> {
         const rootDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../../.."));
-        await loggingExeca(context.logger, "pnpm", ["fern:build"], { cwd: rootDir });
+        await loggingExeca(context.logger, "pnpm", ["fern:build"], {
+            cwd: rootDir,
+            doNotPipeOutput: !this.shouldStreamOutput()
+        });
         return join(rootDir, RelativeFilePath.of("packages/cli/cli/dist/prod"));
     }
 
@@ -286,7 +289,7 @@ export class ContainerScriptRunner extends ScriptRunner {
                     "/bin/sh"
                 ],
                 {
-                    doNotPipeOutput: false
+                    doNotPipeOutput: !this.shouldStreamOutput()
                 }
             );
             const containerId = startSeedCommand.stdout;

@@ -4,7 +4,7 @@ import {
     ReusableContainerExecutionEnvironment,
     runContainerizedGenerationForSeed
 } from "@fern-api/local-workspace-runner";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import path from "path";
 
 import { runScript } from "../../../runScript.js";
@@ -54,7 +54,7 @@ export class ContainerTestRunner extends TestRunner {
             commands: containerCommands,
             logger: CONSOLE_LOGGER,
             workingDir: path.dirname(path.dirname(this.generator.absolutePathToWorkspace)),
-            doNotPipeOutput: false
+            doNotPipeOutput: !this.shouldPipeOutput()
         });
         if (containerBuildReturn.exitCode !== 0) {
             throw new Error(`Failed to build the container for ${this.generator.workspaceName}.`);
@@ -69,12 +69,12 @@ export class ContainerTestRunner extends TestRunner {
             runner: this.runner,
             poolSize: this.parallelism
         });
-        await this.reusableContainer.start(CONSOLE_LOGGER);
+        await this.reusableContainer.start(CONSOLE_LOGGER, this.logLevel);
     }
 
     public async cleanup(): Promise<void> {
         if (this.reusableContainer != null) {
-            await this.reusableContainer.stop(CONSOLE_LOGGER);
+            await this.reusableContainer.stop(CONSOLE_LOGGER, this.logLevel);
             this.reusableContainer = undefined;
         }
     }

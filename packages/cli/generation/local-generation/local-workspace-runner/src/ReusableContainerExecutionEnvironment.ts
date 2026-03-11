@@ -6,7 +6,7 @@ import {
     startContainer,
     stopContainer
 } from "@fern-api/docker-utils";
-import { Logger } from "@fern-api/logger";
+import { Logger, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import {
     CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
@@ -48,7 +48,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
      * Starts the pool of long-lived containers and inspects the image for its entrypoint.
      * Must be called before any `execute()` calls.
      */
-    public async start(logger: Logger): Promise<void> {
+    public async start(logger: Logger, logLevel?: LogLevel): Promise<void> {
         // Get the image entrypoint before starting (since we override it with /bin/sh)
         this.entrypoint = await this.getImageEntrypoint(logger);
 
@@ -86,7 +86,8 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             throw error;
         }
 
-        logger.info(
+        const logFn = logLevel === LogLevel.Debug || logLevel === LogLevel.Trace ? logger.info : logger.debug;
+        logFn(
             `Started ${this.containers.length} reusable container(s) from image ${this.imageName}: ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
         );
     }
@@ -280,7 +281,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
     /**
      * Stops and removes all containers in the pool.
      */
-    public async stop(logger: Logger): Promise<void> {
+    public async stop(logger: Logger, logLevel?: LogLevel): Promise<void> {
         const stopPromises = this.containers.map(async (containerId) => {
             await stopContainer({
                 logger,
@@ -289,7 +290,8 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
             });
         });
         await Promise.all(stopPromises);
-        logger.info(
+        const logFn = logLevel === LogLevel.Debug || logLevel === LogLevel.Trace ? logger.info : logger.debug;
+        logFn(
             `Stopped ${this.containers.length} reusable container(s): ${this.containers.map((id) => id.substring(0, 12)).join(", ")}`
         );
         this.containers = [];

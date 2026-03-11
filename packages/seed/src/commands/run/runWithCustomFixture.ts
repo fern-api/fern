@@ -69,7 +69,8 @@ export async function runWithCustomFixture({
             skipScripts,
             scriptRunner,
             keepContainer,
-            inspect
+            inspect,
+            logLevel
         });
     } else {
         testRunner = new ContainerTestRunner({
@@ -80,7 +81,8 @@ export async function runWithCustomFixture({
             keepContainer,
             scriptRunner,
             inspect,
-            parallelism: 1
+            parallelism: 1,
+            logLevel
         });
     }
 
