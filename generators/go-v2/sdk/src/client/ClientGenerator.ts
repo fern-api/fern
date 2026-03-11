@@ -419,14 +419,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 // Fetch a new token from the auth endpoint
                 // Get the request type reference from the endpoint
                 const serviceId = oauthScheme.configuration.tokenEndpoint.endpointReference.serviceId;
-                const requestWrapperName =
-                    tokenEndpoint.sdkRequest?.shape.type === "wrapper"
-                        ? tokenEndpoint.sdkRequest.shape.wrapperName
-                        : tokenEndpoint.sdkRequest?.requestParameterName;
-                const requestTypeRef =
-                    requestWrapperName != null
-                        ? this.context.getRequestWrapperTypeReference(serviceId, requestWrapperName)
-                        : go.typeReference({ name: "GetTokenRequest", importPath: this.context.getRootImportPath() });
+                const requestTypeRef = this.getTokenEndpointRequestTypeReference(serviceId, tokenEndpoint);
                 w.write(`response, err := authClient.${methodName}(`);
                 w.writeNode(
                     go.invokeFunc({
@@ -596,6 +589,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         const methodName = this.context.getMethodName(tokenEndpoint.name);
         const credentialParams = this.getInferredAuthCredentialParameters();
 
+        // Check if OAuth already declared authOptions/authClient variables
+        const hasOAuth = getOAuthClientCredentialsScheme(this.context.ir) != null;
+
         writer.writeNode(
             go.codeblock((w) => {
                 // Create the InferredAuthProvider
@@ -611,25 +607,28 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                 );
                 w.newLine();
 
-                // Clone options for the auth client to avoid infinite recursion
-                w.writeLine("authOptions := *options");
+                // Only declare authOptions/authClient if OAuth hasn't already done so
+                if (!hasOAuth) {
+                    // Clone options for the auth client to avoid infinite recursion
+                    w.writeLine("authOptions := *options");
 
-                // Create the auth client
-                const authClientImportPath = this.context.getClientFileLocation({
-                    fernFilepath: authServiceFernFilepath,
-                    subpackage: undefined
-                }).importPath;
-                w.write("authClient := ");
-                w.writeNode(
-                    go.invokeFunc({
-                        func: go.typeReference({
-                            name: "NewClient",
-                            importPath: authClientImportPath
-                        }),
-                        arguments_: [go.codeblock("&authOptions")]
-                    })
-                );
-                w.newLine();
+                    // Create the auth client
+                    const authClientImportPath = this.context.getClientFileLocation({
+                        fernFilepath: authServiceFernFilepath,
+                        subpackage: undefined
+                    }).importPath;
+                    w.write("authClient := ");
+                    w.writeNode(
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "NewClient",
+                                importPath: authClientImportPath
+                            }),
+                            arguments_: [go.codeblock("&authOptions")]
+                        })
+                    );
+                    w.newLine();
+                }
 
                 // Set up the token getter function
                 w.writeLine("options.SetTokenGetter(func() (string, error) {");
@@ -639,17 +638,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
                 // Build the request struct for the token endpoint call
                 const serviceId = inferredScheme.tokenEndpoint.endpoint.serviceId;
-                const requestWrapperName =
-                    tokenEndpoint.sdkRequest?.shape.type === "wrapper"
-                        ? tokenEndpoint.sdkRequest.shape.wrapperName
-                        : tokenEndpoint.sdkRequest?.requestParameterName;
-                const requestTypeRef =
-                    requestWrapperName != null
-                        ? this.context.getRequestWrapperTypeReference(serviceId, requestWrapperName)
-                        : go.typeReference({
-                              name: "GetTokenRequest",
-                              importPath: this.context.getRootImportPath()
-                          });
+                const requestTypeRef = this.getTokenEndpointRequestTypeReference(serviceId, tokenEndpoint);
 
                 w.write(`response, err := authClient.${methodName}(`);
                 w.writeNode(
@@ -807,25 +796,85 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             });
         }
 
-        // Add non-literal, non-optional body properties
-        if (tokenEndpoint.requestBody != null && tokenEndpoint.requestBody.type === "inlinedRequestBody") {
-            for (const prop of tokenEndpoint.requestBody.properties) {
-                if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
-                    continue;
-                }
-                const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
-                if (isOptional) {
-                    continue;
-                }
-                params.push({
-                    fieldName: this.context.getFieldName(prop.name.name),
-                    isOptional: false,
-                    envVar: undefined
-                });
+        // Add non-literal, non-optional body properties.
+        // These can come from inlined request bodies or referenced type declarations.
+        const bodyProperties = this.resolveTokenEndpointBodyProperties(tokenEndpoint);
+        for (const prop of bodyProperties) {
+            if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
+                continue;
             }
+            const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
+            if (isOptional) {
+                continue;
+            }
+            params.push({
+                fieldName: this.context.getFieldName(prop.name.name),
+                isOptional: false,
+                envVar: undefined
+            });
         }
 
         return params;
+    }
+
+    /**
+     * Resolves the request type reference for a token endpoint, handling both
+     * wrapper requests and justRequestBody (named type reference) requests.
+     */
+    private getTokenEndpointRequestTypeReference(
+        serviceId: FernIr.ServiceId,
+        tokenEndpoint: FernIr.HttpEndpoint
+    ): go.TypeReference {
+        if (tokenEndpoint.sdkRequest?.shape.type === "wrapper") {
+            return this.context.getRequestWrapperTypeReference(serviceId, tokenEndpoint.sdkRequest.shape.wrapperName);
+        }
+        if (
+            tokenEndpoint.sdkRequest?.shape.type === "justRequestBody" &&
+            tokenEndpoint.sdkRequest.shape.value.type === "typeReference" &&
+            tokenEndpoint.sdkRequest.shape.value.requestBodyType.type === "named"
+        ) {
+            const namedType = tokenEndpoint.sdkRequest.shape.value.requestBodyType;
+            return go.typeReference({
+                name: this.context.getClassName(namedType.name),
+                importPath: this.context.getPackageLocation(namedType.fernFilepath).importPath
+            });
+        }
+        // Fallback: use requestParameterName if available
+        if (tokenEndpoint.sdkRequest?.requestParameterName != null) {
+            return this.context.getRequestWrapperTypeReference(
+                serviceId,
+                tokenEndpoint.sdkRequest.requestParameterName
+            );
+        }
+        return go.typeReference({
+            name: "GetTokenRequest",
+            importPath: this.context.getRootImportPath()
+        });
+    }
+
+    /**
+     * Resolves body properties for a token endpoint, handling both inlined
+     * request bodies and referenced type declarations.
+     */
+    private resolveTokenEndpointBodyProperties(
+        tokenEndpoint: FernIr.HttpEndpoint
+    ): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
+        if (tokenEndpoint.requestBody == null) {
+            return [];
+        }
+        if (tokenEndpoint.requestBody.type === "inlinedRequestBody") {
+            return tokenEndpoint.requestBody.properties;
+        }
+        if (tokenEndpoint.requestBody.type === "reference") {
+            const typeRef = tokenEndpoint.requestBody.requestBodyType;
+            if (typeRef.type === "named") {
+                const typeDecl = this.context.ir.types[typeRef.typeId];
+                if (typeDecl?.shape.type === "object") {
+                    return typeDecl.shape.properties;
+                }
+            }
+        }
+        return [];
     }
 
     private writeEnvConditional({

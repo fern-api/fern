@@ -28,6 +28,8 @@ type RequestOptions struct {
 	MaxAttempts     uint
 	MaxBufSize      int
 	tokenGetter     TokenGetter
+	ClientId        string
+	ClientSecret    string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -128,6 +130,24 @@ type MaxBufSizeOption struct {
 
 func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
+}
+
+// ClientIdOption implements the RequestOption interface.
+type ClientIdOption struct {
+	ClientId string
+}
+
+func (c *ClientIdOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientId = c.ClientId
+}
+
+// ClientSecretOption implements the RequestOption interface.
+type ClientSecretOption struct {
+	ClientSecret string
+}
+
+func (c *ClientSecretOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ClientSecret = c.ClientSecret
 }
 
 // SetTokenGetter sets the token getter function for inferred auth.

@@ -382,7 +382,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		inferredParams := resolveInferredAuthParams(ir.Auth, ir.Services)
+		inferredParams := resolveInferredAuthParams(ir.Auth, ir.Services, ir.Types)
 		if err := writer.WriteRequestOptionsDefinition(
 			ir.Auth,
 			ir.Headers,

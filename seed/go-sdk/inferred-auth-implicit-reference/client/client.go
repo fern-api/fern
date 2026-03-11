@@ -35,7 +35,10 @@ func NewClient(opts ...option.RequestOption) *Client {
 	)
 	options.SetTokenGetter(func() (string, error) {
 		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
-			response, err := authClient.GetTokenWithClientCredentials(context.Background(), &fern.Request{})
+			response, err := authClient.GetTokenWithClientCredentials(context.Background(), &fern.GetTokenRequest{
+				ClientId:     options.ClientId,
+				ClientSecret: options.ClientSecret,
+			})
 			if err != nil {
 				return "", 0, err
 			}
