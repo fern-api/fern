@@ -79,22 +79,6 @@ function optionalTypeRefNode(typeName: string): TypeReferenceNode {
 }
 
 /**
- * Builds a TypeReferenceNode for a named type reference (e.g., SomeType).
- */
-function namedTypeRefNode(name: string): TypeReferenceNode {
-    const typeNode = ts.factory.createTypeReferenceNode(name);
-    return {
-        isOptional: false,
-        typeNode,
-        typeNodeWithoutUndefined: typeNode,
-        requestTypeNode: undefined,
-        requestTypeNodeWithoutUndefined: undefined,
-        responseTypeNode: undefined,
-        responseTypeNodeWithoutUndefined: undefined
-    };
-}
-
-/**
  * Builds a TypeReferenceNode with separate request/response type variants.
  */
 function readWriteTypeRefNode(opts: {
@@ -260,8 +244,7 @@ function createMockBaseContext(opts?: {
                     docs: undefined,
                     availability: undefined,
                     source: undefined,
-                    inline: undefined,
-                    displayName: undefined
+                    inline: undefined
                 };
             },
             getGeneratedType: (typeName: FernIr.DeclaredTypeName, _typeNameOverride?: string) => {
@@ -921,8 +904,7 @@ describe("GeneratedObjectTypeImpl", () => {
                             docs: undefined,
                             availability: undefined,
                             source: undefined,
-                            inline: true,
-                            displayName: undefined
+                            inline: true
                         }
                     ]
                 ]),
