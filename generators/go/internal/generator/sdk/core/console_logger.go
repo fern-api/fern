@@ -56,26 +56,6 @@ func (l *ConsoleLogger) Error(msg string) {
 	l.log("ERROR", msg)
 }
 
-// IsDebug returns true (ConsoleLogger doesn't filter by level).
-func (l *ConsoleLogger) IsDebug() bool {
-	return true
-}
-
-// IsInfo returns true (ConsoleLogger doesn't filter by level).
-func (l *ConsoleLogger) IsInfo() bool {
-	return true
-}
-
-// IsWarn returns true (ConsoleLogger doesn't filter by level).
-func (l *ConsoleLogger) IsWarn() bool {
-	return true
-}
-
-// IsError returns true (ConsoleLogger doesn't filter by level).
-func (l *ConsoleLogger) IsError() bool {
-	return true
-}
-
 func (l *ConsoleLogger) log(level, msg string) {
 	l.mu.Lock()
 	defer l.mu.Unlock()

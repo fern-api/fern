@@ -2,7 +2,6 @@ package core
 
 import (
 	"fmt"
-	"io"
 	"net/http"
 	"sort"
 	"strings"
@@ -36,30 +35,23 @@ var sensitiveHeaders = map[string]bool{
 type LoggingHTTPClient struct {
 	client HTTPClient
 	logger *Logger
-	config *LogConfig
 }
 
 // NewLoggingHTTPClient creates a new LoggingHTTPClient that wraps the given client.
-func NewLoggingHTTPClient(client HTTPClient, config *LogConfig) *LoggingHTTPClient {
+func NewLoggingHTTPClient(client HTTPClient, config *LogConfig) HTTPClient {
 	if client == nil {
 		client = &http.Client{}
 	}
 	return &LoggingHTTPClient{
 		client: client,
 		logger: config.createLogger(),
-		config: config,
 	}
 }
 
 // Do implements the HTTPClient interface.
 func (c *LoggingHTTPClient) Do(req *http.Request) (*http.Response, error) {
-	// If logging is silent, skip logging and just delegate to the client
-	if c.config.Silent() {
-		return c.client.Do(req)
-	}
-
 	// Log the request if debug is enabled
-	if c.shouldLog(LogLevelDebug) {
+	if c.logger.IsDebug() {
 		c.logRequest(req)
 	}
 
@@ -67,41 +59,21 @@ func (c *LoggingHTTPClient) Do(req *http.Request) (*http.Response, error) {
 	resp, err := c.client.Do(req)
 
 	// Log the response if debug is enabled
-	if c.shouldLog(LogLevelDebug) && resp != nil {
+	if c.logger.IsDebug() && resp != nil {
 		c.logResponse(resp)
 	}
 
 	// Log errors if error logging is enabled
-	if c.shouldLog(LogLevelError) && err != nil {
+	if c.logger.IsError() && err != nil {
 		c.logger.Error(fmt.Sprintf("HTTP Error: url=%s error=%v", req.URL, err))
 	}
 
 	// Log 4xx/5xx responses if error logging is enabled
-	if c.shouldLog(LogLevelError) && resp != nil && resp.StatusCode >= 400 {
+	if c.logger.IsError() && resp != nil && resp.StatusCode >= 400 {
 		c.logger.Error(fmt.Sprintf("HTTP Error: status=%d url=%s", resp.StatusCode, req.URL))
 	}
 
 	return resp, err
-}
-
-// shouldLog returns true if the given log level should be logged.
-func (c *LoggingHTTPClient) shouldLog(level LogLevel) bool {
-	if c.config.Silent() {
-		return false
-	}
-	// Use the Logger wrapper's level checking methods
-	switch level {
-	case LogLevelDebug:
-		return c.logger.IsDebug()
-	case LogLevelInfo:
-		return c.logger.IsInfo()
-	case LogLevelWarn:
-		return c.logger.IsWarn()
-	case LogLevelError:
-		return c.logger.IsError()
-	default:
-		return false
-	}
 }
 
 // logRequest logs the HTTP request details.
@@ -176,10 +148,3 @@ func (c *LoggingHTTPClient) logResponse(resp *http.Response) {
 
 // Ensure LoggingHTTPClient implements HTTPClient interface.
 var _ HTTPClient = (*LoggingHTTPClient)(nil)
-
-// ReadAll reads the entire response body and closes it.
-// Helper function for logging response body if needed in the future.
-func ReadAll(resp *http.Response) ([]byte, error) {
-	defer resp.Body.Close()
-	return io.ReadAll(resp.Body)
-}
