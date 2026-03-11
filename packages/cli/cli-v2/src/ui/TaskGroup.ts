@@ -328,7 +328,12 @@ export class TaskGroup {
                     line += logLines;
                 }
                 if (stage.error != null) {
-                    line += `\n        ${chalk.red(stage.error)}`;
+                    line += formatMultilineText({
+                        text: stage.error,
+                        colorFn: chalk.red.bind(chalk),
+                        baseIndent: 8,
+                        continuationIndent: 10
+                    });
                 }
             }
 

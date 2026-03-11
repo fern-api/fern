@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.63.2
+  changelogEntry:
+    - summary: |
+        Fix wire test datetime format mismatch. When `datetime_milliseconds` is false (default),
+        WireMock stubs are now stripped of `.000` milliseconds to match the SDK's default
+        `serialize_datetime` output. When true, test verification values include `.000` to match
+        millisecond-precision output. Fixes wire test failures for APIs with datetime query parameters.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
 - version: 4.63.1
   changelogEntry:
     - summary: |

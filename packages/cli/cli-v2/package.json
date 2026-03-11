@@ -52,6 +52,8 @@
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-preview": "workspace:*",
+    "@fern-api/docs-resolver": "workspace:*",
+    "@fern-api/docs-validator": "workspace:*",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fern-definition-validator": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
