@@ -679,12 +679,7 @@ describe("GeneratedUndiscriminatedUnionTypeImpl", () => {
                 ],
                 generateReadWriteOnlyTypes: true
             });
-            const context2 = createMockBaseContext({
-                typeRefOverrides: new Map([
-                    [userType.typeId, namedTypeRefNodeWithVariants("User", "User.Request", "User.Response")]
-                ])
-            });
-            const result = generator.generateModule(context2);
+            const result = generator.generateModule(context);
             assert(result != null, "module should be defined");
             expect(result.name).toBe("UserOrAdmin");
             expect(result.isExported).toBe(true);
