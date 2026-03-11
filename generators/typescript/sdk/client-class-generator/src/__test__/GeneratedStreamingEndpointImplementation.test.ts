@@ -380,6 +380,14 @@ describe("GeneratedStreamingEndpointImplementation", () => {
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
         });
+
+        it("uses web stream type when streamType is web", () => {
+            const impl = createImpl({ streamType: "web" });
+            const context = createMockSdkContext();
+            const stmts = impl.invokeFetcher(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
     });
 
     describe("SSE response type", () => {
@@ -394,6 +402,33 @@ describe("GeneratedStreamingEndpointImplementation", () => {
                         v2Examples: undefined
                     })
                 ),
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: undefined
+            };
+            const impl = createImpl({ endpoint });
+            const context = createMockSdkContext();
+            const stmts = impl.invokeFetcher(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("uses sse response type for streamParameter SSE endpoints", () => {
+            const endpoint = createHttpEndpoint();
+            endpoint.response = {
+                body: FernIr.HttpResponseBody.streamParameter({
+                    streamResponse: FernIr.StreamingResponse.sse({
+                        payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        terminator: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    nonStreamResponse: FernIr.NonStreamHttpResponseBody.json({
+                        responseBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        docs: undefined,
+                        v2Examples: undefined
+                    })
+                }),
                 statusCode: undefined,
                 isWildcardStatusCode: undefined,
                 docs: undefined

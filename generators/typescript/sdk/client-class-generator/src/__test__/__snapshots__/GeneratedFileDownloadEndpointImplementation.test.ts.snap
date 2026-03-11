@@ -31,3 +31,5 @@ exports[`GeneratedFileDownloadEndpointImplementation > invokeFetcher > generates
 exports[`GeneratedFileDownloadEndpointImplementation > invokeFetcher > generates fetcher invocation with streaming response type 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
 
 exports[`GeneratedFileDownloadEndpointImplementation > invokeFetcher > includes withCredentials when enabled 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedFileDownloadEndpointImplementation > invokeFetcher > uses web stream type when streamType is web and fileResponseType is stream 1`] = `"const _response = await this._options.fetcher.fetch({});"`;

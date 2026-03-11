@@ -376,6 +376,23 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             const docs = impl.getDocs(context);
             expect(docs).toContain("IdempotentRequestOptions");
         });
+
+        it("generates multiline parameter docs with proper indentation", () => {
+            const impl = createImpl({
+                request: createMockRequest({
+                    endpointParameters: [
+                        {
+                            name: "options",
+                            type: "Options",
+                            docs: "Configuration options.\nIncludes timeout and retry settings.\nSee docs for details."
+                        }
+                    ]
+                })
+            });
+            const context = createMockSdkContext();
+            const docs = impl.getDocs(context);
+            expect(docs).toMatchSnapshot();
+        });
     });
 
     describe("getExample", () => {
@@ -443,6 +460,151 @@ describe("GeneratedDefaultEndpointImplementation", () => {
             const impl = createImpl({
                 generateEndpointMetadata: true,
                 request: createMockRequest()
+            });
+            const context = createMockSdkContext();
+            const stmts = impl.getStatements(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates cursor pagination body with requestParameter", () => {
+            const impl = createImpl({
+                request: createMockRequest({
+                    requestParameter: ts.factory.createTypeReferenceNode("ListUsersRequest")
+                }),
+                response: createMockResponse({
+                    paginationInfo: {
+                        type: "cursor",
+                        responseType: ts.factory.createTypeReferenceNode("ListResponse"),
+                        itemType: ts.factory.createTypeReferenceNode("User"),
+                        getItems: ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("response"),
+                            ts.factory.createIdentifier("items")
+                        ),
+                        hasNextPage: ts.factory.createBinaryExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier("response"),
+                                ts.factory.createIdentifier("nextCursor")
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        loadPage: [
+                            ts.factory.createExpressionStatement(ts.factory.createIdentifier("// load next page"))
+                        ]
+                    }
+                })
+            });
+            const context = createMockSdkContext();
+            const stmts = impl.getStatements(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates offset pagination body with initializeOffset", () => {
+            const impl = createImpl({
+                request: createMockRequest({
+                    requestParameter: ts.factory.createTypeReferenceNode("ListUsersRequest")
+                }),
+                response: createMockResponse({
+                    paginationInfo: {
+                        type: "offset",
+                        initializeOffset: ts.factory.createVariableStatement(
+                            undefined,
+                            ts.factory.createVariableDeclarationList(
+                                [
+                                    ts.factory.createVariableDeclaration(
+                                        "_offset",
+                                        undefined,
+                                        undefined,
+                                        ts.factory.createNumericLiteral(0)
+                                    )
+                                ],
+                                ts.NodeFlags.Let
+                            )
+                        ),
+                        responseType: ts.factory.createTypeReferenceNode("ListResponse"),
+                        itemType: ts.factory.createTypeReferenceNode("User"),
+                        getItems: ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("response"),
+                            ts.factory.createIdentifier("items")
+                        ),
+                        hasNextPage: ts.factory.createBinaryExpression(
+                            ts.factory.createPropertyAccessExpression(
+                                ts.factory.createIdentifier("response"),
+                                ts.factory.createIdentifier("items")
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsEqualsToken),
+                            ts.factory.createNull()
+                        ),
+                        loadPage: [
+                            ts.factory.createExpressionStatement(ts.factory.createIdentifier("// load next page"))
+                        ]
+                    }
+                })
+            });
+            const context = createMockSdkContext();
+            const stmts = impl.getStatements(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates custom pagination body with sendRequest and CustomPager", () => {
+            const impl = createImpl({
+                response: createMockResponse({
+                    paginationInfo: {
+                        type: "custom",
+                        responseType: ts.factory.createTypeReferenceNode("ListResponse"),
+                        itemType: ts.factory.createTypeReferenceNode("User"),
+                        getItems: ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("response"),
+                            ts.factory.createIdentifier("items")
+                        ),
+                        hasNextPage: ts.factory.createIdentifier("false"),
+                        loadPage: []
+                    }
+                })
+            });
+            const context = createMockSdkContext();
+            const stmts = impl.getStatements(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates offset-step pagination body", () => {
+            const impl = createImpl({
+                request: createMockRequest({
+                    requestParameter: ts.factory.createTypeReferenceNode("ListUsersRequest")
+                }),
+                response: createMockResponse({
+                    paginationInfo: {
+                        type: "offset-step",
+                        initializeOffset: ts.factory.createVariableStatement(
+                            undefined,
+                            ts.factory.createVariableDeclarationList(
+                                [
+                                    ts.factory.createVariableDeclaration(
+                                        "_page",
+                                        undefined,
+                                        undefined,
+                                        ts.factory.createNumericLiteral(1)
+                                    )
+                                ],
+                                ts.NodeFlags.Let
+                            )
+                        ),
+                        responseType: ts.factory.createTypeReferenceNode("ListResponse"),
+                        itemType: ts.factory.createTypeReferenceNode("User"),
+                        getItems: ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("response"),
+                            ts.factory.createIdentifier("items")
+                        ),
+                        hasNextPage: ts.factory.createIdentifier("true"),
+                        loadPage: [
+                            ts.factory.createExpressionStatement(ts.factory.createIdentifier("// load next page"))
+                        ]
+                    }
+                })
             });
             const context = createMockSdkContext();
             const stmts = impl.getStatements(context);

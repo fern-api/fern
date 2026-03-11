@@ -2,6 +2,8 @@
 
 exports[`GeneratedStreamingEndpointImplementation > SSE response type > uses sse response type for SSE streaming endpoints 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
 
+exports[`GeneratedStreamingEndpointImplementation > SSE response type > uses sse response type for streamParameter SSE endpoints 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
 exports[`GeneratedStreamingEndpointImplementation > getDocs > combines availability and endpoint docs 1`] = `
 "@deprecated
 
@@ -26,6 +28,8 @@ return _response;"
 exports[`GeneratedStreamingEndpointImplementation > invokeFetcher > generates fetcher invocation with streaming response type 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
 
 exports[`GeneratedStreamingEndpointImplementation > invokeFetcher > includes withCredentials when enabled 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
+
+exports[`GeneratedStreamingEndpointImplementation > invokeFetcher > uses web stream type when streamType is web 1`] = `"const _response = await this._options.fetcher.fetch({});"`;
 
 exports[`GeneratedStreamingEndpointImplementation > maybeLeverageInvocation > returns for-await-of pattern for streaming 1`] = `
 "const response = result;

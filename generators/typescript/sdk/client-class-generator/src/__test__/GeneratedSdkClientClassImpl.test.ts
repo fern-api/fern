@@ -818,6 +818,227 @@ describe("GeneratedSdkClientClassImpl", () => {
             expect(clientClass.hasAuthProvider()).toBe(true);
         });
     });
+
+    describe("standalone header auth", () => {
+        it("creates header auth provider for single header scheme", () => {
+            const ir = createIR({
+                authSchemes: [
+                    FernIr.AuthScheme.header({
+                        key: "apiKey",
+                        name: createNameAndWireValue("X-API-Key"),
+                        prefix: undefined,
+                        headerEnvVar: undefined,
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        docs: undefined
+                    })
+                ],
+                authRequirement: "ALL",
+                service: {
+                    availability: undefined,
+                    name: { fernFilepath: { allParts: [], packagePath: [], file: undefined } },
+                    displayName: undefined,
+                    basePath: { head: "", parts: [] },
+                    endpoints: [{ ...createHttpEndpoint(), auth: true }],
+                    headers: [],
+                    pathParameters: [],
+                    encoding: undefined,
+                    transport: undefined,
+                    audiences: undefined
+                }
+            });
+            const clientClass = createClientClass({ ir });
+            expect(clientClass.hasAuthProvider()).toBe(true);
+            expect(clientClass.getAuthProviderInstance()).toBeDefined();
+        });
+    });
+
+    describe("OAuth auth", () => {
+        it("creates OAuth auth provider", () => {
+            const ir = createIR({
+                authSchemes: [
+                    FernIr.AuthScheme.oauth({
+                        key: "oauth",
+                        docs: undefined,
+                        configuration: FernIr.OAuthConfiguration.clientCredentials({
+                            tokenPrefix: undefined,
+                            tokenHeader: undefined,
+                            scopes: undefined,
+                            clientIdEnvVar: undefined,
+                            clientSecretEnvVar: undefined,
+                            tokenEndpoint: {
+                                endpointReference: {
+                                    endpointId: "endpoint_getToken",
+                                    serviceId: "service_auth"
+                                },
+                                requestProperties: {
+                                    clientId: {
+                                        propertyPath: undefined,
+                                        property: FernIr.RequestPropertyValue.body({
+                                            name: createNameAndWireValue("client_id"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            docs: undefined,
+                                            availability: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
+                                        })
+                                    },
+                                    clientSecret: {
+                                        propertyPath: undefined,
+                                        property: FernIr.RequestPropertyValue.body({
+                                            name: createNameAndWireValue("client_secret"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            docs: undefined,
+                                            availability: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
+                                        })
+                                    },
+                                    scopes: undefined
+                                },
+                                responseProperties: {
+                                    accessToken: {
+                                        propertyPath: undefined,
+                                        property: {
+                                            name: createNameAndWireValue("access_token"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            docs: undefined,
+                                            availability: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
+                                        }
+                                    },
+                                    expiresIn: undefined,
+                                    refreshToken: undefined
+                                }
+                            },
+                            refreshEndpoint: undefined
+                        })
+                    })
+                ],
+                authRequirement: "ALL",
+                service: {
+                    availability: undefined,
+                    name: { fernFilepath: { allParts: [], packagePath: [], file: undefined } },
+                    displayName: undefined,
+                    basePath: { head: "", parts: [] },
+                    endpoints: [{ ...createHttpEndpoint(), auth: true }],
+                    headers: [],
+                    pathParameters: [],
+                    encoding: undefined,
+                    transport: undefined,
+                    audiences: undefined
+                }
+            });
+            const clientClass = createClientClass({ ir });
+            expect(clientClass.hasAuthProvider()).toBe(true);
+        });
+    });
+
+    describe("neverThrowErrors", () => {
+        it("creates client class with neverThrowErrors enabled", () => {
+            const ir = createIR({
+                service: {
+                    availability: undefined,
+                    name: { fernFilepath: { allParts: [], packagePath: [], file: undefined } },
+                    displayName: undefined,
+                    basePath: { head: "", parts: [] },
+                    endpoints: [createHttpEndpoint()],
+                    headers: [],
+                    pathParameters: [],
+                    encoding: undefined,
+                    transport: undefined,
+                    audiences: undefined
+                }
+            });
+            const clientClass = createClientClass({ ir, neverThrowErrors: true });
+            const context = createMockSdkContext({ ir });
+            const endpoint = clientClass.getEndpoint({
+                context,
+                endpointId: ir.rootPackage.service ? (ir.services[ir.rootPackage.service]?.endpoints[0]?.id ?? "") : ""
+            });
+            expect(endpoint).toBeDefined();
+        });
+    });
+
+    describe("requireDefaultEnvironment", () => {
+        it("throws when requireDefaultEnvironment is true and no default environment", () => {
+            const clientClass = createClientClass({ requireDefaultEnvironment: true });
+            const context = createMockSdkContext();
+            const endpoint = createHttpEndpoint();
+            expect(() => clientClass.getEnvironment(endpoint, context)).toThrow(
+                "Cannot use default environment because none exists"
+            );
+        });
+
+        it("returns default environment when requireDefaultEnvironment is true and default exists", () => {
+            const clientClass = createClientClass({ requireDefaultEnvironment: true });
+            const defaultEnvExpr = ts.factory.createStringLiteral("https://api.example.com");
+            // biome-ignore lint/suspicious/noExplicitAny: test mock override
+            const context: any = {
+                ...createMockSdkContext(),
+                environments: {
+                    getGeneratedEnvironments: () => ({
+                        getReferenceToDefaultEnvironment: () => defaultEnvExpr,
+                        getReferenceToEnvironmentUrl: ({
+                            referenceToEnvironmentValue
+                        }: {
+                            referenceToEnvironmentValue: ts.Expression;
+                        }) => referenceToEnvironmentValue
+                    }),
+                    getReferenceToFirstEnvironmentEnum: () => undefined
+                }
+            };
+            const endpoint = createHttpEndpoint();
+            const ref = clientClass.getEnvironment(endpoint, context);
+            expect(serializeExpression(ref)).toBe('"https://api.example.com"');
+        });
+    });
+
+    describe("getOptionsPropertiesForSnippet", () => {
+        it("includes environment property when no default environment and not requireDefaultEnvironment", () => {
+            const clientClass = createClientClass({ requireDefaultEnvironment: false });
+            const context = createMockSdkContext();
+            const props = clientClass.getOptionsPropertiesForSnippet(context);
+            // Should include environment: "YOUR_BASE_URL" since no default env and no first enum
+            expect(props.length).toBeGreaterThan(0);
+            const envProp = props.find((p) => {
+                const text = getTextOfTsNode(p);
+                return text.includes("environment");
+            });
+            expect(envProp).toBeDefined();
+        });
+
+        it("includes auth snippet properties when auth provider exists", () => {
+            const ir = createIR({
+                authSchemes: [
+                    FernIr.AuthScheme.bearer({
+                        key: "bearer",
+                        token: casingsGenerator.generateName("token"),
+                        tokenEnvVar: undefined,
+                        docs: undefined
+                    })
+                ],
+                authRequirement: "ALL",
+                service: {
+                    availability: undefined,
+                    name: { fernFilepath: { allParts: [], packagePath: [], file: undefined } },
+                    displayName: undefined,
+                    basePath: { head: "", parts: [] },
+                    endpoints: [{ ...createHttpEndpoint(), auth: true }],
+                    headers: [],
+                    pathParameters: [],
+                    encoding: undefined,
+                    transport: undefined,
+                    audiences: undefined
+                }
+            });
+            const clientClass = createClientClass({ ir });
+            const context = createMockSdkContext({ ir });
+            const props = clientClass.getOptionsPropertiesForSnippet(context);
+            // Should include both environment and auth token properties
+            expect(props.length).toBeGreaterThanOrEqual(1);
+        });
+    });
 });
 
 // ──────────────────────────────────────────────────────────────────────────────

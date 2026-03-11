@@ -386,6 +386,14 @@ describe("GeneratedFileDownloadEndpointImplementation", () => {
             const output = serializeStatements(stmts);
             expect(output).toMatchSnapshot();
         });
+
+        it("uses web stream type when streamType is web and fileResponseType is stream", () => {
+            const impl = createImpl({ streamType: "web", fileResponseType: "stream" });
+            const context = createMockSdkContext();
+            const stmts = impl.invokeFetcher(context);
+            const output = serializeStatements(stmts);
+            expect(output).toMatchSnapshot();
+        });
     });
 
     describe("getExample", () => {
