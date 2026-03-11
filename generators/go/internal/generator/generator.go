@@ -382,6 +382,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
+		inferredParams := resolveInferredAuthParams(ir.Auth, ir.Services)
 		if err := writer.WriteRequestOptionsDefinition(
 			ir.Auth,
 			ir.Headers,
@@ -390,6 +391,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ModuleConfig,
 			g.config.Version,
 			ir.Environments,
+			inferredParams,
 		); err != nil {
 			return nil, err
 		}
@@ -449,7 +451,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers, ir.Environments)
+		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers, ir.Environments, inferredParams)
 		if err != nil {
 			return nil, err
 		}
@@ -586,6 +588,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newApiErrorFile(g.coordinator))
 		if hasOAuthScheme(ir.Auth) {
 			files = append(files, newOAuthFile(g.coordinator))
+		}
+		if getInferredAuthScheme(ir.Auth) != nil {
+			files = append(files, newInferredAuthFile(g.coordinator))
 		}
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
@@ -1107,6 +1112,7 @@ func hasOAuthScheme(auth *ir.ApiAuth) bool {
 	return false
 }
 
+
 // newPointerFile returns a *File containing the pointer helper functions
 // used to more easily instantiate pointers to primitive values (e.g. *string).
 //
@@ -1281,6 +1287,14 @@ func newOAuthFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/oauth.go",
 		[]byte(oauthFile),
+	)
+}
+
+func newInferredAuthFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/inferred_auth.go",
+		[]byte(inferredAuthFile),
 	)
 }
 

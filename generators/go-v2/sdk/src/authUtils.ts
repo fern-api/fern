@@ -1,0 +1,105 @@
+import { FernIr } from "@fern-fern/ir-sdk";
+import { SdkGeneratorContext } from "./SdkGeneratorContext.js";
+
+/**
+ * Gets the client accessor path for a service (e.g., "Auth" or "Nested.Api").
+ * Builds the dot-separated path from the service's fernFilepath parts using PascalCase.
+ */
+export function getClientAccessPath(service: FernIr.HttpService): string {
+    const parts = service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
+    return parts.join(".");
+}
+
+/**
+ * Gets the OAuth client credentials scheme from the IR auth configuration.
+ */
+export function getOAuthClientCredentialsScheme(ir: FernIr.IntermediateRepresentation): FernIr.OAuthScheme | undefined {
+    if (ir.auth == null) {
+        return undefined;
+    }
+    for (const scheme of ir.auth.schemes) {
+        if (scheme.type === "oauth" && scheme.configuration?.type === "clientCredentials") {
+            return scheme;
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Gets the inferred auth scheme from the IR auth configuration.
+ */
+export function getInferredAuthScheme(ir: FernIr.IntermediateRepresentation): FernIr.InferredAuthScheme | undefined {
+    if (ir.auth == null) {
+        return undefined;
+    }
+    for (const scheme of ir.auth.schemes) {
+        if (scheme.type === "inferred") {
+            return scheme;
+        }
+    }
+    return undefined;
+}
+
+/**
+ * Gets the field name for a request property using the context helper.
+ */
+export function getRequestPropertyFieldName(
+    context: SdkGeneratorContext,
+    requestProperty: FernIr.RequestProperty
+): string {
+    if (requestProperty.property.type === "body" && requestProperty.property.name != null) {
+        return context.getFieldName(requestProperty.property.name.name);
+    }
+    if (requestProperty.property.type === "query" && requestProperty.property.name != null) {
+        return context.getFieldName(requestProperty.property.name.name);
+    }
+    // Fallback to default names if we can't extract from IR
+    return "ClientId";
+}
+
+/**
+ * Checks if a request property is optional (pointer type).
+ */
+export function isRequestPropertyOptional(requestProperty: FernIr.RequestProperty): boolean {
+    return isTypeReferenceOptional(getRequestPropertyValueType(requestProperty));
+}
+
+/**
+ * Gets the value type from a request property.
+ */
+export function getRequestPropertyValueType(requestProperty: FernIr.RequestProperty): FernIr.TypeReference | undefined {
+    if (requestProperty.property.type === "body") {
+        return requestProperty.property.valueType;
+    }
+    if (requestProperty.property.type === "query") {
+        return requestProperty.property.valueType;
+    }
+    return undefined;
+}
+
+/**
+ * Checks if a type reference is optional.
+ */
+export function isTypeReferenceOptional(typeRef: FernIr.TypeReference | undefined): boolean {
+    if (typeRef == null) {
+        return false;
+    }
+    if (typeRef.type === "container") {
+        return typeRef.container.type === "optional";
+    }
+    return false;
+}
+
+/**
+ * Builds the URL path for an endpoint from its fullPath definition.
+ */
+export function getEndpointPath(endpoint: FernIr.HttpEndpoint): string {
+    let path = endpoint.fullPath.head;
+    for (const part of endpoint.fullPath.parts) {
+        path += `{${part.pathParameter}}${part.tail}`;
+    }
+    if (!path.startsWith("/")) {
+        path = "/" + path;
+    }
+    return path;
+}

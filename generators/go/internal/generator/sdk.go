@@ -74,6 +74,9 @@ var (
 
 	//go:embed sdk/core/oauth.go
 	oauthFile string
+
+	//go:embed sdk/core/inferred_auth.go
+	inferredAuthFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -300,6 +303,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	moduleConfig *ModuleConfig,
 	sdkVersion string,
 	environmentsConfig *common.EnvironmentsConfig,
+	inferredParams []inferredAuthParam,
 ) error {
 	importPath := path.Join(f.baseImportPath, "core")
 	f.P("// RequestOption adapts the behavior of the client or an individual request.")
@@ -308,11 +312,12 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
-	// Check if OAuth is configured
+	// Check if OAuth or inferred auth is configured
 	hasOAuth := getOAuthClientCredentials(auth) != nil
+	hasInferred := getInferredAuthScheme(auth) != nil
 
-	// Generate TokenGetter type if OAuth is configured
-	if hasOAuth {
+	// Generate TokenGetter type if OAuth or inferred auth is configured
+	if hasOAuth || hasInferred {
 		f.P("// TokenGetter is a function that returns an access token.")
 		f.P("type TokenGetter func() (string, error)")
 		f.P()
@@ -335,7 +340,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
 	f.P("MaxBufSize int")
-	if hasOAuth {
+	if hasOAuth || hasInferred {
 		f.P("tokenGetter TokenGetter")
 	}
 
@@ -364,6 +369,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			// Only add Token field if there's no Bearer auth (which already provides Token)
 			if !hasBearerAuth(auth) {
 				f.P("Token string")
+			}
+		}
+		if authScheme.Inferred != nil {
+			for _, param := range inferredParams {
+				f.P(param.PascalCase, " string")
 			}
 		}
 	}
@@ -407,7 +417,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL)
+		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams)
 	}
 
 	// Generate the ToHeader method.
@@ -467,6 +477,23 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			f.P("}")
 			f.P("}")
 		}
+		if authScheme.Inferred != nil {
+			// Use tokenGetter to fetch token and set authenticated request headers
+			f.P(`if r.tokenGetter != nil {`)
+			f.P(`if token, err := r.tokenGetter(); err == nil && token != "" {`)
+			if authScheme.Inferred.TokenEndpoint != nil {
+				for _, authHeader := range authScheme.Inferred.TokenEndpoint.AuthenticatedRequestHeaders {
+					headerName := authHeader.HeaderName
+					if authHeader.ValuePrefix != nil {
+						f.P(fmt.Sprintf(`header.Set(%q, %q + token)`, headerName, *authHeader.ValuePrefix))
+					} else {
+						f.P(fmt.Sprintf(`header.Set(%q, token)`, headerName))
+					}
+				}
+			}
+			f.P("}")
+			f.P("}")
+		}
 	}
 	for _, header := range headers {
 		valueTypeFormat := formatForValueType(header.ValueType, f.types)
@@ -505,7 +532,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, inferredParams); err != nil {
 		return err
 	}
 
@@ -544,6 +571,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	headers []*ir.HttpHeader,
 	asIdempotentRequestOption bool,
 	isMultiURL bool,
+	inferredParams []inferredAuthParam,
 ) error {
 	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
 		return err
@@ -654,6 +682,22 @@ func (f *fileWriter) writeRequestOptionStructs(
 				f.P("}")
 				f.P()
 			}
+			if authScheme.Inferred != nil {
+				for _, param := range inferredParams {
+					if err := f.writeOptionStruct(param.PascalCase, "string", true, asIdempotentRequestOption); err != nil {
+						return err
+					}
+				}
+				// Add SetTokenGetter method for internal use (if not already added by OAuth)
+				if getOAuthClientCredentials(auth) == nil {
+					f.P("// SetTokenGetter sets the token getter function for inferred auth.")
+					f.P("// This is an internal method and should not be called directly.")
+					f.P("func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {")
+					f.P("r.tokenGetter = getter")
+					f.P("}")
+					f.P()
+				}
+			}
 		}
 	}
 
@@ -757,6 +801,7 @@ func (f *fileWriter) WriteRequestOptions(
 	auth *ir.ApiAuth,
 	headers []*ir.HttpHeader,
 	environmentsConfig *common.EnvironmentsConfig,
+	inferredParams []inferredAuthParam,
 ) (*GeneratedAuth, error) {
 	// Now that we know where the types will be generated, format the generated type names as needed.
 	var (
@@ -1026,6 +1071,34 @@ func (f *fileWriter) WriteRequestOptions(
 				f.P("func WithToken(token string) *core.TokenOption {")
 				f.P("return &core.TokenOption{")
 				f.P("Token: token,")
+				f.P("}")
+				f.P("}")
+				f.P()
+			}
+		}
+		if authScheme.Inferred != nil {
+			for j, param := range inferredParams {
+				optionName := fmt.Sprintf("With%s", param.PascalCase)
+				if i == 0 && j == 0 {
+					option = ast.NewCallExpr(
+						ast.NewImportedReference(
+							optionName,
+							importPath,
+						),
+						[]ast.Expr{
+							ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, param.ScreamingSnakeCase)),
+						},
+					)
+				}
+				f.P("// ", optionName, " sets the ", param.CamelCase, " auth request parameter.")
+				if includeCustomAuthDocs {
+					f.P("//")
+					f.WriteDocs(auth.Docs)
+				}
+				typeName := "core." + param.PascalCase + "Option"
+				f.P("func ", optionName, "(", param.CamelCase, " string) *", typeName, " {")
+				f.P("return &", typeName, "{")
+				f.P(param.PascalCase, ": ", param.CamelCase, ",")
 				f.P("}")
 				f.P("}")
 				f.P()
@@ -4121,4 +4194,85 @@ func getOAuthClientCredentials(auth *ir.ApiAuth) *ir.OAuthClientCredentials {
 		return nil
 	}
 	return oauth.Configuration.ClientCredentials
+}
+
+// inferredAuthParam represents a credential parameter for inferred auth,
+// resolved from the token endpoint's request parameters.
+type inferredAuthParam struct {
+	PascalCase         string
+	CamelCase          string
+	ScreamingSnakeCase string
+}
+
+// getInferredAuthScheme returns the inferred auth scheme from the auth configuration, or nil if not present.
+func getInferredAuthScheme(auth *ir.ApiAuth) *ir.InferredAuthScheme {
+	if auth == nil {
+		return nil
+	}
+	for _, scheme := range auth.Schemes {
+		if scheme.Inferred != nil {
+			return scheme.Inferred
+		}
+	}
+	return nil
+}
+
+// resolveInferredAuthParams resolves the credential parameters for inferred auth
+// from the token endpoint's request parameters (non-literal headers and body properties).
+func resolveInferredAuthParams(auth *ir.ApiAuth, services map[ir.ServiceId]*ir.HttpService) []inferredAuthParam {
+	scheme := getInferredAuthScheme(auth)
+	if scheme == nil || scheme.TokenEndpoint == nil || scheme.TokenEndpoint.Endpoint == nil {
+		return nil
+	}
+
+	endpointRef := scheme.TokenEndpoint.Endpoint
+	service, ok := services[endpointRef.ServiceId]
+	if !ok {
+		return nil
+	}
+
+	var endpoint *ir.HttpEndpoint
+	for _, ep := range service.Endpoints {
+		if ep.Id == endpointRef.EndpointId {
+			endpoint = ep
+			break
+		}
+	}
+	if endpoint == nil {
+		return nil
+	}
+
+	var params []inferredAuthParam
+
+	// Add non-literal endpoint headers as credential parameters
+	for _, header := range endpoint.Headers {
+		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
+			continue
+		}
+		params = append(params, inferredAuthParam{
+			PascalCase:         header.Name.Name.PascalCase.UnsafeName,
+			CamelCase:          header.Name.Name.CamelCase.SafeName,
+			ScreamingSnakeCase: header.Name.Name.ScreamingSnakeCase.UnsafeName,
+		})
+	}
+
+	// Add non-literal body properties as credential parameters
+	if endpoint.RequestBody != nil && endpoint.RequestBody.InlinedRequestBody != nil {
+		for _, prop := range endpoint.RequestBody.InlinedRequestBody.Properties {
+			if prop.ValueType.Container != nil && prop.ValueType.Container.Literal != nil {
+				continue
+			}
+			// Skip optional parameters (they won't be required credentials)
+			if prop.ValueType.Container != nil && prop.ValueType.Container.Optional != nil {
+				continue
+			}
+			params = append(params, inferredAuthParam{
+				PascalCase:         prop.Name.Name.PascalCase.UnsafeName,
+				CamelCase:          prop.Name.Name.CamelCase.SafeName,
+				ScreamingSnakeCase: prop.Name.Name.ScreamingSnakeCase.UnsafeName,
+			})
+		}
+	}
+
+	return params
 }
