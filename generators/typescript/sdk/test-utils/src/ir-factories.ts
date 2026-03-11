@@ -92,8 +92,32 @@ export function createMinimalIR(opts?: {
         },
         services: opts?.services ?? {},
         headers: opts?.headers ?? [],
-        idempotencyHeaders: opts?.idempotencyHeaders ?? []
-        // biome-ignore lint/suspicious/noExplicitAny: minimal IR mock for auth provider tests
+        idempotencyHeaders: opts?.idempotencyHeaders ?? [],
+        errors: {},
+        types: {},
+        subpackages: {},
+        variables: [],
+        rootPackage: {
+            fernFilepath: { allParts: [], packagePath: [], file: undefined },
+            service: undefined,
+            types: [],
+            errors: [],
+            subpackages: [],
+            hasEndpointsInTree: false,
+            docs: undefined,
+            websocket: undefined,
+            webhooks: undefined,
+            navigationConfig: undefined
+        },
+        errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode(),
+        constants: {
+            errorInstanceIdKey: casingsGenerator.generateName("errorInstanceId")
+        },
+        environments: undefined,
+        pathParameters: [],
+        webhookGroups: {},
+        websocketChannels: {}
+        // biome-ignore lint/suspicious/noExplicitAny: minimal IR mock — some rarely-used fields omitted
     } as any;
 }
 
@@ -255,6 +279,7 @@ export function createHttpEndpoint(opts?: {
     allPathParameters?: FernIr.PathParameter[];
     requestBody?: FernIr.HttpRequestBody;
     sdkRequest?: FernIr.SdkRequest;
+    docs?: string;
 }): FernIr.HttpEndpoint {
     return {
         id: "endpoint_test",
@@ -289,7 +314,7 @@ export function createHttpEndpoint(opts?: {
         audiences: undefined,
         retries: undefined,
         apiPlayground: undefined,
-        docs: undefined,
+        docs: opts?.docs,
         availability: undefined
     };
 }

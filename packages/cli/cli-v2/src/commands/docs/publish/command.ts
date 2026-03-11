@@ -1,12 +1,18 @@
+import type { FernToken } from "@fern-api/auth";
+import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import chalk from "chalk";
 import inquirer from "inquirer";
 import type { Argv } from "yargs";
 import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
+import { LegacyProjectAdapter } from "../../../docs/adapter/LegacyProjectAdapter.js";
+import { DocsChecker } from "../../../docs/checker/DocsChecker.js";
 import { LegacyDocsPublisher } from "../../../docs/publisher/LegacyDocsPublisher.js";
+import type { DocsStageOverrides } from "../../../docs/task/DocsTaskGroup.js";
 import { DocsTaskGroup } from "../../../docs/task/DocsTaskGroup.js";
 import { CliError } from "../../../errors/CliError.js";
+import { ValidationError } from "../../../errors/ValidationError.js";
 import { command } from "../../_internal/command.js";
 
 export declare namespace PublishCommand {
@@ -15,11 +21,36 @@ export declare namespace PublishCommand {
         instance?: string;
         strict: boolean;
         preview: boolean;
+        "skip-upload": boolean;
     }
 }
 
 export class PublishCommand {
     public async handle(context: Context, args: PublishCommand.Args): Promise<void> {
+        const labels = args.preview
+            ? {
+                  title: "Generating preview",
+                  success: "Generated preview",
+                  error: "Failed to generate preview",
+                  interrupt: "Docs preview interrupted"
+              }
+            : {
+                  title: "Publishing docs",
+                  success: "Published docs",
+                  error: "Failed to publish docs",
+                  interrupt: "Docs publish interrupted"
+              };
+
+        const stageOverrides: DocsStageOverrides | undefined = args.preview
+            ? {
+                  publish: {
+                      pending: "Generate preview",
+                      running: "Generating preview...",
+                      success: "Generated preview"
+                  }
+              }
+            : undefined;
+
         const workspace = await context.loadWorkspaceOrThrow();
 
         if (workspace.docs == null) {
@@ -45,7 +76,29 @@ export class PublishCommand {
             }
         }
 
-        const taskGroup = await this.setupTaskGroup({ context, instanceUrl, org: workspace.org });
+        const adapter = new LegacyProjectAdapter({ context });
+        const project = adapter.adapt(workspace);
+
+        const docsWorkspace = project.docsWorkspaces;
+        if (docsWorkspace == null) {
+            throw new CliError({
+                message:
+                    "No docs configuration found in fern.yml.\n\n" +
+                    "  Add a 'docs:' section to your fern.yml to get started."
+            });
+        }
+
+        const ossWorkspaces = await filterOssWorkspaces(project);
+        const token = await this.getToken(context);
+        await context.verifyOrgAccess({ organization: workspace.org, token });
+
+        const taskGroup = await this.setupTaskGroup({
+            context,
+            instanceUrl,
+            org: workspace.org,
+            title: labels.title,
+            stageOverrides
+        });
         const docsTask = taskGroup.getTask("publish");
         if (docsTask == null) {
             throw new CliError({ message: "Internal error; task 'publish' not found" });
@@ -53,34 +106,50 @@ export class PublishCommand {
 
         docsTask.start();
 
-        const publisher = new LegacyDocsPublisher({ context, task: docsTask.getTask() });
-
+        // Validate the docs workspace.
         docsTask.stage.validation.start();
         try {
-            await publisher.validate({ strict: args.strict });
+            const checker = new DocsChecker({ context, task: docsTask.getTask() });
+            const checkResult = await checker.check({ workspace, strict: args.strict });
+
+            if (checkResult.hasErrors || (args.strict && checkResult.hasWarnings)) {
+                throw new ValidationError(checkResult.violations);
+            }
         } catch (error) {
             const message = error instanceof Error ? error.message : String(error);
             docsTask.stage.validation.fail(message);
         }
+
         if (docsTask.getTask().status !== "error") {
             docsTask.stage.validation.complete();
 
+            // Publish the site.
             docsTask.stage.publish.start();
+            const publisher = new LegacyDocsPublisher({
+                context,
+                task: docsTask.getTask(),
+                project,
+                docsWorkspace,
+                ossWorkspaces,
+                token
+            });
             const result = await publisher.publish({
                 instanceUrl,
-                preview: args.preview
+                preview: args.preview,
+                skipUpload: args["skip-upload"] || undefined
             });
             if (!result.success) {
                 docsTask.stage.publish.fail(result.error);
             } else {
                 docsTask.stage.publish.complete();
-                docsTask.complete();
+                const output = result.url != null ? [result.url] : undefined;
+                docsTask.complete(output);
             }
         }
 
         const summary = taskGroup.finish({
-            successMessage: "Published docs",
-            errorMessage: "Failed to publish docs"
+            successMessage: labels.success,
+            errorMessage: labels.error
         });
 
         if (summary.failedCount > 0) {
@@ -149,22 +218,40 @@ export class PublishCommand {
     private async setupTaskGroup({
         context,
         instanceUrl,
-        org
+        org,
+        title,
+        stageOverrides
     }: {
         context: Context;
         instanceUrl: string;
         org: string;
+        title: string;
+        stageOverrides?: DocsStageOverrides;
     }): Promise<DocsTaskGroup> {
         const taskGroup = new DocsTaskGroup({ context });
-        taskGroup.addTask({ id: "publish", name: instanceUrl });
-        await taskGroup.start({ title: "Publishing docs", subtitle: `org: ${org}` });
+        taskGroup.addTask({ id: "publish", name: instanceUrl, stageOverrides });
+        await taskGroup.start({ title, subtitle: `org: ${org}` });
         context.onShutdown(() => {
             taskGroup.finish({
-                successMessage: "Published docs",
-                errorMessage: "Docs publish interrupted"
+                successMessage: title,
+                errorMessage: `${title} interrupted`
             });
         });
         return taskGroup;
+    }
+
+    private getToken(context: Context): Promise<FernToken> {
+        const isRunningOnSelfHosted = process.env["FERN_FDR_ORIGIN"] != null;
+        if (isRunningOnSelfHosted) {
+            const fernToken = process.env["FERN_TOKEN"];
+            if (fernToken == null) {
+                throw new CliError({
+                    message: "No organization token found. Please set the FERN_TOKEN environment variable."
+                });
+            }
+            return Promise.resolve({ type: "organization", value: fernToken });
+        }
+        return context.getTokenOrPrompt();
     }
 }
 

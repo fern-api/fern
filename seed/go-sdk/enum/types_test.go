@@ -143,6 +143,35 @@ func TestEnumEnumWithSpecialCharacters(t *testing.T) {
 	})
 }
 
+func TestEnumForwardCompatibleEnum(t *testing.T) {
+	t.Run("NewFromString_active", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewForwardCompatibleEnumFromString("active")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ForwardCompatibleEnum("active"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_inactive", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewForwardCompatibleEnumFromString("inactive")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ForwardCompatibleEnum("inactive"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewForwardCompatibleEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewForwardCompatibleEnumFromString("active")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumOperand(t *testing.T) {
 	t.Run("NewFromString_>", func(t *testing.T) {
 		t.Parallel()

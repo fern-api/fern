@@ -10,8 +10,10 @@ import {
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3_1 } from "openapi-types";
 import { FernDiscriminatedExtension } from "../../extensions/x-fern-discriminated.js";
+import { FernEnumExtension } from "../../extensions/x-fern-enum.js";
 import { AbstractConverter, AbstractConverterContext } from "../../index.js";
 import { convertProperties } from "../../utils/ConvertProperties.js";
+import { EnumSchemaConverter } from "./EnumSchemaConverter.js";
 import { SchemaConverter } from "./SchemaConverter.js";
 import { SchemaOrReferenceConverter } from "./SchemaOrReferenceConverter.js";
 
@@ -65,7 +67,91 @@ export class OneOfSchemaConverter extends AbstractConverter<
             return this.convertAsDiscriminatedUnion();
         }
 
+        // Infer open-ended enums: oneOf/anyOf with [enum, string] pattern
+        // This runs after both x-fern-discriminated and discriminator checks so explicit overrides take precedence
+        if (this.context.settings.inferForwardCompatible) {
+            const openEndedEnum = this.convertAsOpenEndedEnum();
+            if (openEndedEnum != null) {
+                return openEndedEnum;
+            }
+        }
+
         return this.convertAsUndiscriminatedUnion();
+    }
+
+    /**
+     * Detects the pattern oneOf/anyOf with exactly [enum, string] or [$ref(enum), string]
+     * and converts it to a single enum type with forwardCompatible: true.
+     */
+    private convertAsOpenEndedEnum(): OneOfSchemaConverter.Output | undefined {
+        const subSchemas = this.schema.oneOf ?? this.schema.anyOf;
+        if (subSchemas == null || subSchemas.length !== 2) {
+            return undefined;
+        }
+
+        let enumSchema: OpenAPIV3_1.SchemaObject | undefined;
+        let hasStringSchema = false;
+
+        for (const subSchema of subSchemas) {
+            let resolved: OpenAPIV3_1.SchemaObject | undefined;
+
+            if (this.context.isReferenceObject(subSchema)) {
+                const result = this.context.resolveReference<OpenAPIV3_1.SchemaObject>({
+                    reference: subSchema,
+                    breadcrumbs: this.breadcrumbs,
+                    skipErrorCollector: true
+                });
+                if (result.resolved) {
+                    resolved = result.value;
+                }
+            } else {
+                resolved = subSchema;
+            }
+
+            if (resolved == null) {
+                continue;
+            }
+
+            if (
+                resolved.enum != null &&
+                resolved.enum.length > 1 &&
+                (resolved.type === "string" || resolved.type == null)
+            ) {
+                enumSchema = resolved;
+            } else if (resolved.type === "string" && resolved.enum == null) {
+                hasStringSchema = true;
+            }
+        }
+
+        if (enumSchema == null || !hasStringSchema) {
+            return undefined;
+        }
+
+        const fernEnumConverter = new FernEnumExtension({
+            breadcrumbs: this.breadcrumbs,
+            schema: enumSchema,
+            context: this.context
+        });
+        const maybeFernEnum = fernEnumConverter.convert();
+
+        const enumConverter = new EnumSchemaConverter({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            schema: enumSchema,
+            maybeFernEnum,
+            forwardCompatible: true
+        });
+
+        const converted = enumConverter.convert();
+        if (converted == null) {
+            return undefined;
+        }
+
+        return {
+            ...converted,
+            referencedTypes: new Set(),
+            inlinedTypes: {}
+        };
     }
 
     /**

@@ -37,6 +37,12 @@ export declare namespace TestRunner {
         outputDir?: AbsoluteFilePath;
         /** Generator invocation with per-generator API overrides **/
         generatorInvocation?: GeneratorInvocation;
+        /** Organization name override (e.g. from customer's fern.config.json) **/
+        organization?: string;
+        /** Absolute path to fern.config.json (used for license path resolution) **/
+        absolutePathToFernConfig?: AbsoluteFilePath;
+        /** If true, use lenient parsing for generators config (tolerates unrecognized keys) */
+        lenient?: boolean;
     }
 
     interface DoRunArgs {
@@ -62,6 +68,10 @@ export declare namespace TestRunner {
         inspect: boolean | undefined;
         license?: unknown;
         smartCasing?: boolean;
+        /** Organization name override (e.g. from customer's fern.config.json) **/
+        organization?: string;
+        /** Absolute path to fern.config.json (used for license path resolution) **/
+        absolutePathToFernConfig?: AbsoluteFilePath;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -151,7 +161,10 @@ export abstract class TestRunner {
         inspect,
         absolutePathToApiDefinition,
         outputDir,
-        generatorInvocation
+        generatorInvocation,
+        organization,
+        absolutePathToFernConfig,
+        lenient
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         let lockAcquired = false;
         try {
@@ -214,7 +227,8 @@ export abstract class TestRunner {
                 const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
                     absolutePathToAPIDefinition: absolutePathToApiDefinition,
                     taskContext,
-                    fixture
+                    fixture,
+                    lenient
                 });
                 const workspaceSettings =
                     generatorInvocation != null
@@ -268,7 +282,9 @@ export abstract class TestRunner {
                         !disableDynamicSnippetTests && workspaceShouldGenerateDynamicSnippetTests(this.generator),
                     inspect,
                     license,
-                    smartCasing
+                    smartCasing,
+                    organization,
+                    absolutePathToFernConfig
                 });
 
                 generationStopwatch.stop();

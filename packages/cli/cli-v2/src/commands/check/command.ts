@@ -3,6 +3,7 @@ import type { Argv } from "yargs";
 import { ApiChecker } from "../../api/checker/ApiChecker.js";
 import type { Context } from "../../context/Context.js";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
+import { DocsChecker } from "../../docs/checker/DocsChecker.js";
 import { CliError } from "../../errors/CliError.js";
 import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
 import { Icons } from "../../ui/format.js";
@@ -27,15 +28,21 @@ export class CheckCommand {
 
         this.validateArgs(args, workspace);
 
-        const { apiCheckResult, sdkCheckResult } = await this.runChecks({ context, workspace, args });
+        const { apiCheckResult, sdkCheckResult, docsCheckResult } = await this.runChecks({
+            context,
+            workspace,
+            args
+        });
 
         const totalErrors =
-            (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) + sdkCheckResult.errorCount;
-        const totalWarnings = apiCheckResult.warningCount + sdkCheckResult.warningCount;
+            (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) +
+            sdkCheckResult.errorCount +
+            docsCheckResult.errorCount;
+        const totalWarnings = apiCheckResult.warningCount + sdkCheckResult.warningCount + docsCheckResult.warningCount;
         const hasErrors = totalErrors > 0 || (args.strict && totalWarnings > 0);
 
         if (args.json) {
-            const response = this.buildJsonResponse({ apiCheckResult, sdkCheckResult, hasErrors });
+            const response = this.buildJsonResponse({ apiCheckResult, sdkCheckResult, docsCheckResult, hasErrors });
             context.stdout.info(JSON.stringify(response, null, 2));
             if (hasErrors) {
                 throw CliError.exit();
@@ -65,7 +72,11 @@ export class CheckCommand {
         context: Context;
         workspace: Workspace;
         args: CheckCommand.Args;
-    }): Promise<{ apiCheckResult: ApiChecker.Result; sdkCheckResult: SdkChecker.Result }> {
+    }): Promise<{
+        apiCheckResult: ApiChecker.Result;
+        sdkCheckResult: SdkChecker.Result;
+        docsCheckResult: DocsChecker.Result;
+    }> {
         const apiChecker = new ApiChecker({
             context,
             cliVersion: workspace.cliVersion
@@ -75,18 +86,22 @@ export class CheckCommand {
         const sdkChecker = new SdkChecker({ context });
         const sdkCheckResult = await sdkChecker.check({ workspace });
 
+        const docsChecker = new DocsChecker({ context });
+        const docsCheckResult = await docsChecker.check({ workspace, strict: args.strict });
+
         if (!args.json) {
-            const violations: (ApiChecker.ResolvedViolation | SdkChecker.ResolvedViolation)[] = [
-                ...apiCheckResult.violations,
-                ...sdkCheckResult.violations
-            ];
+            const violations: (
+                | ApiChecker.ResolvedViolation
+                | SdkChecker.ResolvedViolation
+                | DocsChecker.ResolvedViolation
+            )[] = [...apiCheckResult.violations, ...sdkCheckResult.violations, ...docsCheckResult.violations];
 
             if (violations.length > 0) {
                 this.displayViolations(violations);
             }
         }
 
-        return { apiCheckResult, sdkCheckResult };
+        return { apiCheckResult, sdkCheckResult, docsCheckResult };
     }
 
     private displayViolations(
@@ -107,10 +122,12 @@ export class CheckCommand {
     private buildJsonResponse({
         apiCheckResult,
         sdkCheckResult,
+        docsCheckResult,
         hasErrors
     }: {
         apiCheckResult: ApiChecker.Result;
         sdkCheckResult: SdkChecker.Result;
+        docsCheckResult: DocsChecker.Result;
         hasErrors: boolean;
     }): JsonOutput.Response {
         const results: JsonOutput.Results = {};
@@ -124,6 +141,10 @@ export class CheckCommand {
 
         if (sdkCheckResult.violations.length > 0) {
             results.sdks = sdkCheckResult.violations.map((v) => toJsonViolation(v));
+        }
+
+        if (docsCheckResult.violations.length > 0) {
+            results.docs = docsCheckResult.violations.map((v) => toJsonViolation(v));
         }
 
         return {

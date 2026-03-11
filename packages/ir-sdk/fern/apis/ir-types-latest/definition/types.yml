@@ -93,6 +93,13 @@ types:
     properties:
       default: optional<EnumValue>
       values: list<EnumValue>
+      forwardCompatible:
+        docs: |
+          If true, the enum is forward-compatible (i.e., the API may return values
+          not listed in `values`). This is inferred from OpenAPI specs that express
+          an enum as `oneOf: [enum, string]` or `anyOf: [enum, string]`, or from
+          Fern Definition enums marked with `forward-compatible: true`.
+        type: optional<boolean>
 
   EnumValue:
     extends: commons.Declaration
