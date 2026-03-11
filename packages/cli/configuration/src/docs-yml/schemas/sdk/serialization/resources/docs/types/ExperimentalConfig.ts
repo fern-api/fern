@@ -23,6 +23,7 @@ export const ExperimentalConfig: core.serialization.ObjectSchema<
     ),
     excludeApis: core.serialization.property("exclude-apis", core.serialization.boolean().optional()),
     basepathAware: core.serialization.property("basepath-aware", core.serialization.boolean().optional()),
+    injectLastUpdated: core.serialization.property("inject-last-updated", core.serialization.boolean().optional()),
 });
 
 export declare namespace ExperimentalConfig {
@@ -36,5 +37,6 @@ export declare namespace ExperimentalConfig {
         "ai-example-style-instructions"?: string | null;
         "exclude-apis"?: boolean | null;
         "basepath-aware"?: boolean | null;
+        "inject-last-updated"?: boolean | null;
     }
 }

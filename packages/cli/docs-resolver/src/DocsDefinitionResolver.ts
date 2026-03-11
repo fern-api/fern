@@ -512,25 +512,28 @@ export class DocsDefinitionResolver {
         this.taskContext.logger.debug(`Replaced image paths in ${replaceTime.toFixed(0)}ms`);
 
         // Inject `last-updated` frontmatter from git history for Markdown-sourced
-        // pages that don't already have it.  API-generated pages (OpenAPI tag
+        // pages.  Gated behind the `experimental.inject-last-updated` flag so
+        // existing sites are unaffected.  API-generated pages (OpenAPI tag
         // descriptions) are excluded: a single spec change regenerates N pages
         // with identical timestamps, causing Google to distrust <lastmod>
         // domain-wide (binary trust model) and wasting Bing crawl budget.
         // See: lastmod policy table in the XML sitemap research report.
-        this.taskContext.logger.debug(
-            `Injecting last-updated dates from git history (excluding ${this.apiGeneratedPagePaths.size} API-generated pages)...`
-        );
-        const injectStart = performance.now();
-        const pagesWithDates = await injectLastUpdatedDates(
-            this.parsedDocsConfig.pages,
-            this.docsWorkspace.absoluteFilePath,
-            this.apiGeneratedPagePaths
-        );
-        for (const [relativePath, processedMarkdown] of Object.entries(pagesWithDates)) {
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = processedMarkdown;
+        if (this.parsedDocsConfig.experimental?.injectLastUpdated === true) {
+            this.taskContext.logger.debug(
+                `Injecting last-updated dates from git history (excluding ${this.apiGeneratedPagePaths.size} API-generated pages)...`
+            );
+            const injectStart = performance.now();
+            const pagesWithDates = await injectLastUpdatedDates(
+                this.parsedDocsConfig.pages,
+                this.docsWorkspace.absoluteFilePath,
+                this.apiGeneratedPagePaths
+            );
+            for (const [relativePath, processedMarkdown] of Object.entries(pagesWithDates)) {
+                this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = processedMarkdown;
+            }
+            const injectTime = performance.now() - injectStart;
+            this.taskContext.logger.debug(`Injected last-updated dates in ${injectTime.toFixed(0)}ms`);
         }
-        const injectTime = performance.now() - injectStart;
-        this.taskContext.logger.debug(`Injected last-updated dates in ${injectTime.toFixed(0)}ms`);
 
         this.taskContext.logger.debug("Building page content...");
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};

@@ -38,4 +38,6 @@ export interface ExperimentalConfig {
     excludeApis?: boolean;
     /** When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths. */
     basepathAware?: boolean;
+    /** When enabled, automatically injects `last-updated` frontmatter into Markdown pages using per-file git history during `fern docs publish`. Uses `git log -G'[^\s]'` to skip whitespace-only commits. API-generated pages are excluded. Existing `last-updated` values are overwritten with the git-derived date. */
+    injectLastUpdated?: boolean;
 }
