@@ -28,6 +28,15 @@
         HTTP requests and responses are logged with headers (sensitive headers like
         Authorization are redacted). Error responses (4xx/5xx) are logged at error level.
       type: feat
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.29.3
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
   createdAt: "2026-03-11"
   irVersion: 61
 
