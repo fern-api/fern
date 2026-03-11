@@ -5,7 +5,7 @@ using SeedLiteral.Test.Utils;
 namespace SeedLiteral.Test.Unit.MockServer;
 
 [TestFixture]
-public class SendTest_ : BaseMockServerTest
+public class SendTest____ : BaseMockServerTest
 {
     [NUnit.Framework.Test]
     public async Task MockServerTest_1()
@@ -13,16 +13,24 @@ public class SendTest_ : BaseMockServerTest
         const string requestJson = """
             {
               "prompt": "You are a helpful assistant",
-              "context": "You're super wise",
               "query": "query",
-              "temperature": 1.1,
               "stream": false,
-              "aliasedContext": "You're super wise",
+              "ending": "$ending",
+              "context": "You're super wise",
               "maybeContext": "You're super wise",
-              "objectWithLiteral": {
-                "nestedLiteral": {
-                  "myLiteral": "How super cool"
-                }
+              "containerObject": {
+                "nestedObjects": [
+                  {
+                    "literal1": "literal1",
+                    "literal2": "literal2",
+                    "strProp": "strProp"
+                  },
+                  {
+                    "literal1": "literal1",
+                    "literal2": "literal2",
+                    "strProp": "strProp"
+                  }
+                ]
               }
             }
             """;
@@ -39,7 +47,7 @@ public class SendTest_ : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/inlined")
+                    .WithPath("/reference")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -50,19 +58,32 @@ public class SendTest_ : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Inlined.SendAsync(
-            new SendLiteralsInlinedRequest
+        var response = await Client.Reference.SendAsync(
+            new SendRequest
             {
                 Prompt = "You are a helpful assistant",
-                Context = "You're super wise",
                 Query = "query",
-                Temperature = 1.1,
                 Stream = false,
-                AliasedContext = "You're super wise",
+                Ending = "$ending",
+                Context = "You're super wise",
                 MaybeContext = "You're super wise",
-                ObjectWithLiteral = new ATopLevelLiteral
+                ContainerObject = new ContainerObject
                 {
-                    NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
+                    NestedObjects = new List<NestedObjectWithLiterals>()
+                    {
+                        new NestedObjectWithLiterals
+                        {
+                            Literal1 = "literal1",
+                            Literal2 = "literal2",
+                            StrProp = "strProp",
+                        },
+                        new NestedObjectWithLiterals
+                        {
+                            Literal1 = "literal1",
+                            Literal2 = "literal2",
+                            StrProp = "strProp",
+                        },
+                    },
                 },
             }
         );
@@ -74,18 +95,19 @@ public class SendTest_ : BaseMockServerTest
     {
         const string requestJson = """
             {
-              "temperature": 10.1,
               "prompt": "You are a helpful assistant",
-              "context": "You're super wise",
-              "aliasedContext": "You're super wise",
-              "maybeContext": "You're super wise",
-              "objectWithLiteral": {
-                "nestedLiteral": {
-                  "myLiteral": "How super cool"
-                }
-              },
               "stream": false,
-              "query": "What is the weather today"
+              "context": "You're super wise",
+              "query": "What is the weather today",
+              "containerObject": {
+                "nestedObjects": [
+                  {
+                    "literal1": "literal1",
+                    "literal2": "literal2",
+                    "strProp": "strProp"
+                  }
+                ]
+              }
             }
             """;
 
@@ -101,7 +123,7 @@ public class SendTest_ : BaseMockServerTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/inlined")
+                    .WithPath("/reference")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -112,20 +134,25 @@ public class SendTest_ : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.Inlined.SendAsync(
-            new SendLiteralsInlinedRequest
+        var response = await Client.Reference.SendAsync(
+            new SendRequest
             {
-                Temperature = 10.1,
                 Prompt = "You are a helpful assistant",
-                Context = "You're super wise",
-                AliasedContext = "You're super wise",
-                MaybeContext = "You're super wise",
-                ObjectWithLiteral = new ATopLevelLiteral
-                {
-                    NestedLiteral = new ANestedLiteral { MyLiteral = "How super cool" },
-                },
                 Stream = false,
+                Context = "You're super wise",
                 Query = "What is the weather today",
+                ContainerObject = new ContainerObject
+                {
+                    NestedObjects = new List<NestedObjectWithLiterals>()
+                    {
+                        new NestedObjectWithLiterals
+                        {
+                            Literal1 = "literal1",
+                            Literal2 = "literal2",
+                            StrProp = "strProp",
+                        },
+                    },
+                },
             }
         );
         JsonAssert.AreEqual(response, mockResponse);

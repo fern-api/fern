@@ -1182,6 +1182,15 @@ export class NameRegistry {
                 continue conflictResolution;
             }
 
+            // Check if the fully qualified name conflicts with an existing registered type
+            if (this.typeRegistry.has(fullyQualifiedName)) {
+                // The type name conflicts with an already-registered type (e.g., multiple endpoints
+                // with the same name producing test classes that all resolve to the same suffixed name)
+                name = `${name}_`;
+                modified = true;
+                continue conflictResolution;
+            }
+
             // No conflicts found, we're good to go
             break;
         }
