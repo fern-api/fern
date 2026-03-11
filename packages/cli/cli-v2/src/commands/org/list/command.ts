@@ -88,9 +88,17 @@ export class ListCommand {
 
         // Also handle spawn errors asynchronously (e.g. command not found on PATH).
         const spawnError = await new Promise<Error | null>((resolve) => {
-            pager.on("error", (error) => resolve(error));
-            pagerStdin.on("ready", () => resolve(null));
-            setTimeout(() => resolve(null), 50);
+            let resolved = false;
+            const safeResolve = (value: Error | null) => {
+                if (!resolved) {
+                    resolved = true;
+                    clearTimeout(timer);
+                    resolve(value);
+                }
+            };
+            const timer = setTimeout(() => safeResolve(null), 50);
+            pager.once("error", (error) => safeResolve(error));
+            pagerStdin.once("ready", () => safeResolve(null));
         });
 
         if (spawnError != null) {
