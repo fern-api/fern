@@ -92,7 +92,8 @@ function createMockBaseContext(opts?: {
                         name: {
                             typeId: "type_Named",
                             fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                            name: casingsGenerator.generateName("Named")
+                            name: casingsGenerator.generateName("Named"),
+                            displayName: undefined
                         },
                         shape: FernIr.ShapeType.Object
                     })),
@@ -102,7 +103,8 @@ function createMockBaseContext(opts?: {
                     name: {
                         typeId: "type_Named",
                         fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                        name: casingsGenerator.generateName("Named")
+                        name: casingsGenerator.generateName("Named"),
+                        displayName: undefined
                     },
                     shape: FernIr.Type.object({
                         properties: [],
@@ -355,7 +357,8 @@ describe("TypeReferenceToSchemaConverter", () => {
                         name: {
                             typeId: "type_User",
                             fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                            name: casingsGenerator.generateName("User")
+                            name: casingsGenerator.generateName("User"),
+                            displayName: undefined
                         },
                         shape: FernIr.ShapeType.Object
                     })
@@ -412,7 +415,8 @@ describe("TypeReferenceToSchemaConverter", () => {
                             name: {
                                 typeId: ref.typeId,
                                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                                name: casingsGenerator.generateName("Status")
+                                name: casingsGenerator.generateName("Status"),
+                                displayName: undefined
                             },
                             shape: FernIr.ShapeType.Enum
                         });
@@ -616,7 +620,8 @@ describe("TypeReferenceToParsedTypeNodeConverter", () => {
                         name: {
                             typeId: "type_User",
                             fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                            name: casingsGenerator.generateName("User")
+                            name: casingsGenerator.generateName("User"),
+                            displayName: undefined
                         },
                         shape: FernIr.ShapeType.Object
                     })
@@ -667,7 +672,8 @@ describe("TypeReferenceToParsedTypeNodeConverter", () => {
                             name: {
                                 typeId: ref.typeId,
                                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                                name: casingsGenerator.generateName("Status")
+                                name: casingsGenerator.generateName("Status"),
+                                displayName: undefined
                             },
                             shape: FernIr.ShapeType.Enum
                         });
@@ -976,7 +982,8 @@ describe("TypeReferenceToRawTypeNodeConverter", () => {
                             name: {
                                 typeId: ref.typeId,
                                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                                name: casingsGenerator.generateName("Status")
+                                name: casingsGenerator.generateName("Status"),
+                                displayName: undefined
                             },
                             shape: FernIr.ShapeType.Enum
                         });
@@ -1106,7 +1113,8 @@ describe("TypeReferenceToStringExpressionConverter", () => {
                                 name: {
                                     typeId: "type_Status",
                                     fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                                    name: casingsGenerator.generateName("Status")
+                                    name: casingsGenerator.generateName("Status"),
+                                    displayName: undefined
                                 },
                                 shape: FernIr.ShapeType.Enum
                             });
@@ -1154,7 +1162,8 @@ describe("TypeReferenceToStringExpressionConverter", () => {
                             name: {
                                 typeId: "type_Status",
                                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                                name: casingsGenerator.generateName("Status")
+                                name: casingsGenerator.generateName("Status"),
+                                displayName: undefined
                             },
                             shape: FernIr.ShapeType.Enum
                         })
@@ -1173,7 +1182,8 @@ describe("TypeReferenceToStringExpressionConverter", () => {
                             name: {
                                 typeId: "type_User",
                                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                                name: casingsGenerator.generateName("User")
+                                name: casingsGenerator.generateName("User"),
+                                displayName: undefined
                             },
                             shape: FernIr.ShapeType.Object
                         })
@@ -1192,7 +1202,8 @@ describe("TypeReferenceToStringExpressionConverter", () => {
                             name: {
                                 typeId: "type_Value",
                                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                                name: casingsGenerator.generateName("Value")
+                                name: casingsGenerator.generateName("Value"),
+                                displayName: undefined
                             },
                             shape: FernIr.ShapeType.UndiscriminatedUnion
                         })
@@ -1212,7 +1223,8 @@ describe("TypeReferenceToStringExpressionConverter", () => {
                             name: {
                                 typeId: "type_User",
                                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                                name: casingsGenerator.generateName("User")
+                                name: casingsGenerator.generateName("User"),
+                                displayName: undefined
                             },
                             shape: FernIr.ShapeType.Object
                         })
@@ -1231,7 +1243,8 @@ describe("TypeReferenceToStringExpressionConverter", () => {
                             name: {
                                 typeId: "type_Status",
                                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                                name: casingsGenerator.generateName("Status")
+                                name: casingsGenerator.generateName("Status"),
+                                displayName: undefined
                             },
                             shape: FernIr.ShapeType.Enum
                         })

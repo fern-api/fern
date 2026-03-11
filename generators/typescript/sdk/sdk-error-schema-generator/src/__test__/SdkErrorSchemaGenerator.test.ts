@@ -111,7 +111,10 @@ function createErrorDeclaration(opts?: { type?: FernIr.TypeReference }): FernIr.
         statusCode: 400,
         docs: undefined,
         examples: [],
-        v2Examples: undefined
+        v2Examples: undefined,
+        displayName: undefined,
+        isWildcardStatusCode: false,
+        headers: []
     };
 }
 

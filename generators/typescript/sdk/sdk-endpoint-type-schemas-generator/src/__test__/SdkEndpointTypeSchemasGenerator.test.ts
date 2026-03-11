@@ -139,7 +139,10 @@ function createMockErrorResolver(errors?: Record<string, FernIr.ErrorDeclaration
                 statusCode: 400,
                 docs: undefined,
                 examples: [],
-                v2Examples: undefined
+                v2Examples: undefined,
+                displayName: undefined,
+                isWildcardStatusCode: false,
+                headers: []
             };
         }
         // biome-ignore lint/suspicious/noExplicitAny: test mock
