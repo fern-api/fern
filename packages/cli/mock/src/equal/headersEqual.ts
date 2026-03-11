@@ -1,4 +1,5 @@
 import { ExampleEndpointCall } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 import { Request } from "express";
 import { isEqualWith } from "lodash-es";
 
@@ -13,7 +14,7 @@ export declare namespace headersEqual {
 
 export function headersEqual({ request, example }: headersEqual.Args): EqualResponse {
     for (const exampleHeader of [...example.serviceHeaders, ...example.endpointHeaders]) {
-        const wireValue = typeof exampleHeader.name === "string" ? exampleHeader.name : exampleHeader.name.wireValue;
+        const wireValue = getWireValue(exampleHeader.name);
         const requestHeader = request.headers[wireValue.toLowerCase()];
         if (
             !isEqualWith(

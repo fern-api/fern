@@ -24,11 +24,13 @@ function extractNameOrString(input: NameInput): NameOrString {
 }
 
 /**
- * Extract the original name from a NameOrString value.
+ * Extract the original name from any name-like input.
  * If the value is a string, it IS the original name.
  * If it's a Name object, extract .originalName.
+ * If it's a NameAndWireValue, extract the inner name first.
  */
-export function getOriginalName(name: NameOrString): string {
+export function getOriginalName(input: NameInput): string {
+    const name = extractNameOrString(input);
     return typeof name === "string" ? name : name.originalName;
 }
 
@@ -59,6 +61,21 @@ export function ensureNameAndWireValue(nameAndWireValue: NameAndWireValueOrStrin
         return { wireValue: nameAndWireValue, name: nameAndWireValue };
     }
     return nameAndWireValue;
+}
+
+/**
+ * Get the snakeCase unsafe name from any name-like input.
+ * Accepts NameOrString, NameAndWireValueOrString, or any combination.
+ * If given a NameAndWireValue, extracts the inner name first.
+ * If the value is a string, computes casing via the casings generator.
+ * If it's a Name object, returns the pre-computed snakeCase.unsafeName.
+ */
+export function getSnakeCaseUnsafe(input: NameInput): string {
+    const name = extractNameOrString(input);
+    if (typeof name === "string") {
+        return getDefaultCasingsGenerator().generateName(name).snakeCase.unsafeName;
+    }
+    return name.snakeCase.unsafeName;
 }
 
 // Lazy-initialized default casings generator for fallback casing computation.

@@ -8,6 +8,7 @@ import {
     QueryParameter,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3_1 } from "openapi-types";
 
@@ -216,10 +217,7 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
                     docs: this.description,
                     name: this.context.casingsGenerator.generateName(this.schemaId),
                     properties: requestBodyTypeShape.properties.map((property) => {
-                        const encoding =
-                            mediaTypeObject.encoding?.[
-                                typeof property.name === "string" ? property.name : property.name.wireValue
-                            ];
+                        const encoding = mediaTypeObject.encoding?.[getWireValue(property.name)];
                         return this.convertRequestBodyProperty({ property, contentType, encoding });
                     }),
                     v2Examples: this.convertMediaTypeObjectExamples({
@@ -486,16 +484,10 @@ export class RequestBodyConverter extends Converters.AbstractConverters.Abstract
         }
 
         const queryParameterNames = new Set(
-            this.queryParameters.map((param) =>
-                (typeof param.name === "string" ? param.name : param.name.wireValue).toLowerCase()
-            )
+            this.queryParameters.map((param) => getWireValue(param.name).toLowerCase())
         );
 
-        return bodyProperties.some((property) =>
-            queryParameterNames.has(
-                (typeof property.name === "string" ? property.name : property.name.wireValue).toLowerCase()
-            )
-        );
+        return bodyProperties.some((property) => queryParameterNames.has(getWireValue(property.name).toLowerCase()));
     }
 }
 

@@ -15,7 +15,7 @@ import {
     WebSocketMessage,
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
-import { constructHttpPath } from "@fern-api/ir-utils";
+import { constructHttpPath, getOriginalName } from "@fern-api/ir-utils";
 import { FernFileContext } from "../FernFileContext.js";
 import { getHeaderName } from "../index.js";
 import { ExampleResolver } from "../resolvers/ExampleResolver.js";
@@ -455,7 +455,7 @@ function buildUrl({
     if (example["path-parameters"] != null) {
         for (const parameter of [...pathParams.pathParameters]) {
             url = url.replaceAll(
-                `{${typeof parameter.name === "string" ? parameter.name : parameter.name.originalName}}`,
+                `{${getOriginalName(parameter.name)}}`,
                 encodeURIComponent(`${parameter.value.jsonExample}`)
             );
         }

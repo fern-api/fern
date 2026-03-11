@@ -7,6 +7,7 @@ import {
     visitRawTypeDeclaration
 } from "@fern-api/fern-definition-schema";
 import { DeclaredTypeName } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 import { FernFileContext } from "../../FernFileContext.js";
 import { TypeResolver } from "../../resolvers/TypeResolver.js";
@@ -177,11 +178,9 @@ class SeenTypeNamesImpl implements SeenTypeNames {
 
     private computeCacheKey(typeName: DeclaredTypeName): string {
         return (
-            typeName.fernFilepath.allParts
-                .map((part) => (typeof part === "string" ? part : part.originalName))
-                .join("/") +
+            typeName.fernFilepath.allParts.map((part) => getOriginalName(part)).join("/") +
             ":" +
-            (typeof typeName.name === "string" ? typeName.name : typeName.name.originalName)
+            getOriginalName(typeName.name)
         );
     }
 }

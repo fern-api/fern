@@ -1,10 +1,7 @@
-import { IntermediateRepresentation, NameOrString, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
+import { getOriginalName } from "@fern-api/ir-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { JSONSchema4 } from "json-schema";
-
-function getOriginalName(name: NameOrString): string {
-    return typeof name === "string" ? name : name.originalName;
-}
 
 export class JsonSchemaConverterContext {
     private readonly buildingTypeIds: Set<TypeId> = new Set();

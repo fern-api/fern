@@ -1,19 +1,17 @@
 import { getOpenAPISettings } from "@fern-api/api-workspace-commons";
-import { NameOrString, TypeReference } from "@fern-api/ir-sdk";
+import { TypeReference } from "@fern-api/ir-sdk";
+import { getOriginalName as getOriginalNameFromInput } from "@fern-api/ir-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 import { describe, expect, it, vi } from "vitest";
 import { AbstractConverterContext } from "../AbstractConverterContext.js";
 import { SchemaConverter } from "../converters/schema/SchemaConverter.js";
 import { ErrorCollector } from "../ErrorCollector.js";
 
-function getOriginalName(name: NameOrString | undefined): string | undefined {
+function getOriginalName(name: Parameters<typeof getOriginalNameFromInput>[0] | undefined): string | undefined {
     if (name == null) {
         return undefined;
     }
-    if (typeof name === "string") {
-        return name;
-    }
-    return name.originalName;
+    return getOriginalNameFromInput(name);
 }
 
 const mockLogger = {

@@ -1,6 +1,6 @@
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { HttpHeader, HttpMethod, HttpRequestBody, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
-import { getNameFromWireValue, getOriginalName, getWireValue } from "@fern-api/ir-utils";
+import { getOriginalName, getWireValue } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
 import { camelCase, compact, isEqual } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
@@ -120,7 +120,7 @@ export abstract class AbstractOperationConverter extends AbstractConverter<
                         queryParameters.push(convertedParameter.parameter);
                         break;
                     case "header": {
-                        const headerName = getOriginalName(getNameFromWireValue(convertedParameter.parameter.name));
+                        const headerName = getOriginalName(convertedParameter.parameter.name);
                         const headerWireValue = getWireValue(convertedParameter.parameter.name);
 
                         let duplicateHeader = false;

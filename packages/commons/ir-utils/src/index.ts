@@ -25,6 +25,7 @@ export {
     getNameFromWireValue,
     getOriginalName,
     getPascalCaseUnsafe,
+    getSnakeCaseUnsafe,
     getWireValue
 } from "./utils/namesUtils.js";
 export { stringifyFernFilepath } from "./utils/stringifyFernFilepath.js";

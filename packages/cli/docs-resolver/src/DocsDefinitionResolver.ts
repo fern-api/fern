@@ -16,6 +16,7 @@ import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve 
 import { GraphQLConverter } from "@fern-api/graphql-to-fdr";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { getSnakeCaseUnsafe } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -96,7 +97,7 @@ const defaultUploadFiles: UploadFilesFn = (files) => {
 let apiCounter = 0;
 const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     apiCounter++;
-    const apiName = typeof ir.apiName === "string" ? ir.apiName : ir.apiName.snakeCase.unsafeName;
+    const apiName = getSnakeCaseUnsafe(ir.apiName);
     return `${apiName}-${apiCounter}`;
 };
 

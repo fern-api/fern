@@ -1,9 +1,5 @@
-import { EnumTypeDeclaration, NameAndWireValueOrString } from "@fern-api/ir-sdk";
-
-function getWireValue(name: NameAndWireValueOrString): string {
-    return typeof name === "string" ? name : name.wireValue;
-}
-
+import { EnumTypeDeclaration } from "@fern-api/ir-sdk";
+import { getWireValue } from "@fern-api/ir-utils";
 import { JSONSchema4 } from "json-schema";
 
 import { JsonSchemaConverterContext } from "../JsonSchemaConverterContext.js";
