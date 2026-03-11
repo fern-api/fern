@@ -64,6 +64,15 @@ func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 	}
 }
 
+// WithMaxStreamBufSize configures the maximum buffer size for streaming responses.
+// This controls the maximum size of a single message (in bytes) that the stream
+// can process. By default, this is set to 1MB.
+func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
+	return &core.MaxBufSizeOption{
+		MaxBufSize: size,
+	}
+}
+
 // WithEnvironment sets the environment for the client, which determines
 // the base URL for each endpoint.
 func WithEnvironment(environment fern.Environment) *core.EnvironmentOption {

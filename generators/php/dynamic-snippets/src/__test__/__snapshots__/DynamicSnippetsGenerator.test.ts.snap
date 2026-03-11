@@ -627,6 +627,46 @@ $client->createUser(
 "
 `;
 
+exports[`snippets (default) > required-headers > 'GET /plants (simple)' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+    options: [
+        'tenantId' => 'my-tenant-id',
+    ],
+);
+$client->plantstore->list();
+"
+`;
+
+exports[`snippets (default) > required-headers > 'POST /plants (simple)' 1`] = `
+"<?php
+
+namespace Example;
+
+use Acme\\AcmeClient;
+use Acme\\Plantstore\\Types\\CreatePlantRequest;
+
+$client = new AcmeClient(
+    token: '<YOUR_API_KEY>',
+    options: [
+        'tenantId' => 'my-tenant-id',
+    ],
+);
+$client->plantstore->create(
+    new CreatePlantRequest([
+        'name' => 'Fern',
+        'price' => 12.99,
+    ]),
+);
+"
+`;
+
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "<?php
 

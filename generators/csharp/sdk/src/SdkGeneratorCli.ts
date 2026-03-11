@@ -1,4 +1,5 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbstractCsharpGeneratorCli, CsharpConfigSchema, TestFileGenerator } from "@fern-api/csharp-base";
 import {
     generateModels,
@@ -287,23 +288,13 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                     endpointSnippets: snippets.endpoints
                 });
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                const errorStack = e instanceof Error ? e.stack : undefined;
-                context.logger.warn(`Failed to generate README.md: ${errorMessage}`);
-                if (errorStack) {
-                    context.logger.debug(`README.md generation error stack: ${errorStack}`);
-                }
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
                 await this.generateReference({ context });
             } catch (e) {
-                const errorMessage = e instanceof Error ? e.message : String(e);
-                const errorStack = e instanceof Error ? e.stack : undefined;
-                context.logger.warn(`Failed to generate reference.md: ${errorMessage}`);
-                if (errorStack) {
-                    context.logger.debug(`reference.md generation error stack: ${errorStack}`);
-                }
+                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
         }
         context.logger.debug(`[TIMING] code generation took ${Date.now() - generateStartTime}ms`);
@@ -333,6 +324,10 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
 
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
         const builder = buildReference({ context });
+        if (builder == null) {
+            context.logger.debug("No endpoint references found; skipping reference.md generation.");
+            return;
+        }
         const content = await context.generatorAgent.generateReference(builder);
         const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(

@@ -19,5 +19,6 @@
       "boto3": "1.28.57"
     }
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

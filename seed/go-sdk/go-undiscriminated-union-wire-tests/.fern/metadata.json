@@ -9,5 +9,6 @@
       "path": "github.com/go-undiscriminated-union-wire-tests/fern"
     }
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
 }

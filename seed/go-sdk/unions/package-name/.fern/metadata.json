@@ -9,5 +9,6 @@
       "path": "github.com/fern-api/unions-go"
     }
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
 }

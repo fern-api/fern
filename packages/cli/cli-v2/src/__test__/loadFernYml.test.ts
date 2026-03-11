@@ -5,7 +5,7 @@ import { tmpdir } from "os";
 import { join } from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { loadFernYml } from "../config/fern-yml/loadFernYml.js";
-import { ValidationError } from "../errors/ValidationError.js";
+import { SourcedValidationError } from "../errors/SourcedValidationError.js";
 
 const SAMPLE_FERN_YML = `edition: 2026-01-01
 org: acme
@@ -123,7 +123,7 @@ describe("loadFernYml", () => {
     });
 
     describe("validation errors", () => {
-        it("throws ValidationError with descriptive messages for missing required fields", async () => {
+        it("throws SourcedValidationError with descriptive messages for missing required fields", async () => {
             await writeFile(
                 join(testDir, "fern.yml"),
                 `
@@ -135,11 +135,11 @@ cli:
 
             try {
                 await loadFernYml({ cwd: testDir });
-                expect.fail("Expected ValidationError to be thrown");
+                expect.fail("Expected SourcedValidationError to be thrown");
             } catch (error) {
-                expect(error).toBeInstanceOf(ValidationError);
+                expect(error).toBeInstanceOf(SourcedValidationError);
 
-                const validationError = error as ValidationError;
+                const validationError = error as SourcedValidationError;
                 expect(validationError.issues.length).toEqual(1);
                 expect(validationError.issues[0]?.message).toContain("org is required");
             }
@@ -160,10 +160,10 @@ sdks:
 
             try {
                 await loadFernYml({ cwd: testDir });
-                expect.fail("Expected ValidationError to be thrown");
+                expect.fail("Expected SourcedValidationError to be thrown");
             } catch (error) {
-                expect(error).toBeInstanceOf(ValidationError);
-                const validationError = error as ValidationError;
+                expect(error).toBeInstanceOf(SourcedValidationError);
+                const validationError = error as SourcedValidationError;
 
                 const [issue] = validationError.issues;
                 if (issue == null) {
@@ -192,11 +192,11 @@ sdks:
 
             try {
                 await loadFernYml({ cwd: testDir });
-                expect.fail("Expected ValidationError to be thrown");
+                expect.fail("Expected SourcedValidationError to be thrown");
             } catch (error) {
-                expect(error).toBeInstanceOf(ValidationError);
+                expect(error).toBeInstanceOf(SourcedValidationError);
 
-                const validationError = error as ValidationError;
+                const validationError = error as SourcedValidationError;
                 expect(validationError.issues.length).toBeGreaterThan(0);
 
                 const [issue] = validationError.issues;
@@ -223,10 +223,10 @@ sdks:
 
             try {
                 await loadFernYml({ cwd: testDir });
-                expect.fail("Expected ValidationError to be thrown");
+                expect.fail("Expected SourcedValidationError to be thrown");
             } catch (error) {
-                expect(error).toBeInstanceOf(ValidationError);
-                const validationError = error as ValidationError;
+                expect(error).toBeInstanceOf(SourcedValidationError);
+                const validationError = error as SourcedValidationError;
                 const issueWithLocation = validationError.issues.find((i) => i.location.line > 0);
                 expect(issueWithLocation).toBeDefined();
                 expect(issueWithLocation?.location.line).toBeGreaterThan(0);
@@ -249,10 +249,10 @@ sdks:
 
             try {
                 await loadFernYml({ cwd: testDir });
-                expect.fail("Expected ValidationError to be thrown");
+                expect.fail("Expected SourcedValidationError to be thrown");
             } catch (error) {
-                expect(error).toBeInstanceOf(ValidationError);
-                const validationError = error as ValidationError;
+                expect(error).toBeInstanceOf(SourcedValidationError);
+                const validationError = error as SourcedValidationError;
 
                 const expectedMessage = validationError.issues.map((i) => i.toString()).join("\n");
                 expect(validationError.message).toBe(expectedMessage);
@@ -276,10 +276,10 @@ sdks:
 
             try {
                 await loadFernYml({ cwd: testDir });
-                expect.fail("Expected ValidationError to be thrown");
+                expect.fail("Expected SourcedValidationError to be thrown");
             } catch (error) {
-                expect(error).toBeInstanceOf(ValidationError);
-                const validationError = error as ValidationError;
+                expect(error).toBeInstanceOf(SourcedValidationError);
+                const validationError = error as SourcedValidationError;
 
                 const output: string[] = [];
                 for (const issue of validationError.issues) {
@@ -462,7 +462,7 @@ sdks:
             }
         });
 
-        it("throws ValidationError when $ref file does not exist", async () => {
+        it("throws SourcedValidationError when $ref file does not exist", async () => {
             await writeFile(
                 join(testDir, "fern.yml"),
                 `
@@ -475,16 +475,16 @@ cli:
 
             try {
                 await loadFernYml({ cwd: testDir });
-                expect.fail("Expected ValidationError to be thrown");
+                expect.fail("Expected SourcedValidationError to be thrown");
             } catch (error) {
-                expect(error).toBeInstanceOf(ValidationError);
-                const validationError = error as ValidationError;
+                expect(error).toBeInstanceOf(SourcedValidationError);
+                const validationError = error as SourcedValidationError;
                 expect(validationError.issues.length).toBeGreaterThan(0);
                 expect(validationError.issues[0]?.message).toContain("Referenced file does not exist");
             }
         });
 
-        it("throws ValidationError when $ref has sibling keys", async () => {
+        it("throws SourcedValidationError when $ref has sibling keys", async () => {
             await writeFile(
                 join(testDir, "cli.yaml"),
                 `
@@ -505,16 +505,16 @@ cli:
 
             try {
                 await loadFernYml({ cwd: testDir });
-                expect.fail("Expected ValidationError to be thrown");
+                expect.fail("Expected SourcedValidationError to be thrown");
             } catch (error) {
-                expect(error).toBeInstanceOf(ValidationError);
-                const validationError = error as ValidationError;
+                expect(error).toBeInstanceOf(SourcedValidationError);
+                const validationError = error as SourcedValidationError;
                 expect(validationError.issues.length).toBeGreaterThan(0);
                 expect(validationError.issues[0]?.message).toContain("$ref cannot have sibling keys");
             }
         });
 
-        it("throws ValidationError on circular $ref", async () => {
+        it("throws SourcedValidationError on circular $ref", async () => {
             await writeFile(
                 join(testDir, "a.yaml"),
                 `
@@ -547,10 +547,10 @@ sdks:
 
             try {
                 await loadFernYml({ cwd: testDir });
-                expect.fail("Expected ValidationError to be thrown");
+                expect.fail("Expected SourcedValidationError to be thrown");
             } catch (error) {
-                expect(error).toBeInstanceOf(ValidationError);
-                const validationError = error as ValidationError;
+                expect(error).toBeInstanceOf(SourcedValidationError);
+                const validationError = error as SourcedValidationError;
                 expect(validationError.issues.length).toBeGreaterThan(0);
                 expect(validationError.issues[0]?.message).toContain("Circular $ref detected");
             }
