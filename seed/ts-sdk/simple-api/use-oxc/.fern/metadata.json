@@ -6,5 +6,6 @@
         "linter": "oxlint",
         "formatter": "oxfmt"
     },
+    "originGitCommit": "DUMMY",
     "sdkVersion": "0.0.1"
 }

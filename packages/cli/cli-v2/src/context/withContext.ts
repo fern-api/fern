@@ -3,6 +3,7 @@ import { FernCliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
 import { CliError } from "../errors/CliError.js";
+import { SourcedValidationError } from "../errors/SourcedValidationError.js";
 import { ValidationError } from "../errors/ValidationError.js";
 import { Icons } from "../ui/format.js";
 import { Context } from "./Context.js";
@@ -66,9 +67,17 @@ function createContext(options: GlobalArgs): Context {
  * Handles errors by writing appropriate output to stderr.
  */
 function handleError(context: Context, error: unknown): void {
-    if (error instanceof ValidationError) {
+    if (error instanceof SourcedValidationError) {
         for (const issue of error.issues) {
             process.stderr.write(`${chalk.red(issue.toString())}\n`);
+        }
+        return;
+    }
+
+    if (error instanceof ValidationError) {
+        for (const violation of error.violations) {
+            const color = violation.severity === "warning" ? chalk.yellow : chalk.red;
+            process.stderr.write(`${color(`${violation.relativeFilepath}: ${violation.message}`)}\n`);
         }
         return;
     }
@@ -106,7 +115,7 @@ function extractErrorCode(error: unknown): CliError.Code {
     if (error instanceof CliError && error.code != null) {
         return error.code;
     }
-    if (error instanceof ValidationError) {
+    if (error instanceof ValidationError || error instanceof SourcedValidationError) {
         return "VALIDATION_ERROR";
     }
     if (error instanceof KeyringUnavailableError) {

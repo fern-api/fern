@@ -261,3 +261,48 @@ exports[`GeneratedRequestWrapperImpl > writeToFile > generates interface with re
 }
 "
 `;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - enableInlineTypes > does not generate namespace module when no inline properties exist 1`] = `
+"export interface TestRequest {
+    name: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - enableInlineTypes > generates namespace module for inline named type properties 1`] = `
+"export interface TestRequest {
+    color: unknown;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - flattenRequestParameters with named reference body > flattens named body properties into wrapper interface 1`] = `
+"export interface TestRequest {
+    email: string;
+    age: number;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - flattenRequestParameters with named reference body > flattens named body with optional properties into wrapper 1`] = `
+"export interface TestRequest {
+    dryRun?: string;
+    name?: string;
+    description?: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - inlinedRequestBody.extends > generates interface extending multiple named types 1`] = `
+"export interface TestRequest extends BaseParams, PaginationParams {
+    query: string;
+}
+"
+`;
+
+exports[`GeneratedRequestWrapperImpl > writeToFile - inlinedRequestBody.extends > generates interface that extends named types from inlined body 1`] = `
+"export interface TestRequest extends BaseParams {
+    name: string;
+}
+"
+`;

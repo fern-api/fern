@@ -2,12 +2,15 @@ import assert from "node:assert";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
 import {
+    createDeclaredTypeName,
     createHttpEndpoint,
     createHttpHeader,
     createHttpService,
     createInlinedRequestBody,
     createInlinedRequestBodyProperty,
     createNameAndWireValue,
+    createNamedTypeReference,
+    createObjectProperty,
     createPathParameter,
     createQueryParameter,
     createSdkRequestWrapper
@@ -60,6 +63,9 @@ function createMockContext(opts?: {
     hasDefaultValueFn?: (typeRef: FernIr.TypeReference) => boolean;
     resolveTypeReferenceFn?: (typeRef: FernIr.TypeReference) => FernIr.TypeReference;
     formDataSupport?: "Node16" | "Node18";
+    getTypeDeclarationFn?: (namedType: FernIr.DeclaredTypeName) => FernIr.TypeDeclaration;
+    // biome-ignore lint/suspicious/noExplicitAny: mock factory returns loosely-typed generated type stubs
+    getGeneratedTypeFn?: (namedType: FernIr.DeclaredTypeName, typeNameOverride?: string) => any;
 }) {
     const project = new Project({ useInMemoryFileSystem: true });
     const sourceFile = project.createSourceFile("test.ts", "");
@@ -170,6 +176,14 @@ function createMockContext(opts?: {
         namespaceExport: opts?.namespaceExport ?? "TestNamespace"
         // biome-ignore lint/suspicious/noExplicitAny: minimal SdkContext mock for request wrapper tests
     } as any;
+
+    // Allow overriding getTypeDeclaration for tests that need type declarations with properties
+    if (opts?.getTypeDeclarationFn) {
+        context.type.getTypeDeclaration = opts.getTypeDeclarationFn;
+    }
+    if (opts?.getGeneratedTypeFn) {
+        context.type.getGeneratedType = opts.getGeneratedTypeFn;
+    }
 
     return { context, sourceFile };
 }
@@ -1620,6 +1634,207 @@ describe("GeneratedRequestWrapperImpl", () => {
             });
             const wrapper = new GeneratedRequestWrapperImpl(init);
             expect(wrapper.getAllPathParameters()).toHaveLength(2);
+        });
+    });
+
+    // ── Coverage gap tests ──────────────────────────────────────────────
+
+    describe("writeToFile - inlinedRequestBody.extends", () => {
+        it("generates interface that extends named types from inlined body", () => {
+            const baseTypeName = createDeclaredTypeName("BaseParams");
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("name", STRING_TYPE)],
+                extends: [baseTypeName]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext();
+
+            wrapper.writeToFile(context);
+            expect(sourceFile.getText()).toMatchSnapshot();
+        });
+
+        it("generates interface extending multiple named types", () => {
+            const baseType1 = createDeclaredTypeName("BaseParams");
+            const baseType2 = createDeclaredTypeName("PaginationParams");
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("query", STRING_TYPE)],
+                extends: [baseType1, baseType2]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext();
+
+            wrapper.writeToFile(context);
+            expect(sourceFile.getText()).toMatchSnapshot();
+        });
+    });
+
+    describe("writeToFile - enableInlineTypes", () => {
+        it("generates namespace module for inline named type properties", () => {
+            const namedTypeRef = createNamedTypeReference("InlineColor");
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("color", namedTypeRef)]
+            });
+            const init = createDefaultInit({
+                enableInlineTypes: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+
+            // Mock getTypeDeclaration to return an inline type declaration
+            const inlineTypeDeclaration: FernIr.TypeDeclaration = {
+                name: createDeclaredTypeName("InlineColor"),
+                shape: FernIr.Type.object({
+                    properties: [createObjectProperty("value", STRING_TYPE)],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                }),
+                autogeneratedExamples: [],
+                userProvidedExamples: [],
+                v2Examples: undefined,
+                referencedTypes: new Set(),
+                encoding: undefined,
+                source: undefined,
+                inline: true,
+                docs: undefined,
+                availability: undefined
+            };
+
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext({
+                enableInlineTypes: true,
+                getTypeDeclarationFn: () => inlineTypeDeclaration
+            });
+
+            wrapper.writeToFile(context);
+            expect(sourceFile.getText()).toMatchSnapshot();
+        });
+
+        it("does not generate namespace module when no inline properties exist", () => {
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("name", STRING_TYPE)]
+            });
+            const init = createDefaultInit({
+                enableInlineTypes: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext({ enableInlineTypes: true });
+
+            wrapper.writeToFile(context);
+            // Primitive properties are not inline — no namespace module should be generated
+            expect(sourceFile.getText()).toMatchSnapshot();
+        });
+    });
+
+    describe("writeToFile - flattenRequestParameters with named reference body", () => {
+        it("flattens named body properties into wrapper interface", () => {
+            const namedBodyRef = createNamedTypeReference("UserPayload");
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: namedBodyRef,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+
+            // Mock getTypeDeclaration to return an object type with properties
+            const bodyTypeDeclaration: FernIr.TypeDeclaration = {
+                name: createDeclaredTypeName("UserPayload"),
+                shape: FernIr.Type.object({
+                    properties: [createObjectProperty("email", STRING_TYPE), createObjectProperty("age", INTEGER_TYPE)],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                }),
+                autogeneratedExamples: [],
+                userProvidedExamples: [],
+                v2Examples: undefined,
+                referencedTypes: new Set(),
+                encoding: undefined,
+                source: undefined,
+                inline: undefined,
+                docs: undefined,
+                availability: undefined
+            };
+
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext({
+                getTypeDeclarationFn: () => bodyTypeDeclaration
+            });
+
+            wrapper.writeToFile(context);
+            expect(sourceFile.getText()).toMatchSnapshot();
+        });
+
+        it("flattens named body with optional properties into wrapper", () => {
+            const namedBodyRef = createNamedTypeReference("UpdatePayload");
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("dryRun", OPTIONAL_STRING_TYPE)],
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: namedBodyRef,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+
+            const bodyTypeDeclaration: FernIr.TypeDeclaration = {
+                name: createDeclaredTypeName("UpdatePayload"),
+                shape: FernIr.Type.object({
+                    properties: [
+                        createObjectProperty("name", OPTIONAL_STRING_TYPE),
+                        createObjectProperty("description", OPTIONAL_STRING_TYPE)
+                    ],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                }),
+                autogeneratedExamples: [],
+                userProvidedExamples: [],
+                v2Examples: undefined,
+                referencedTypes: new Set(),
+                encoding: undefined,
+                source: undefined,
+                inline: undefined,
+                docs: undefined,
+                availability: undefined
+            };
+
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext({
+                getTypeDeclarationFn: () => bodyTypeDeclaration
+            });
+
+            wrapper.writeToFile(context);
+            expect(sourceFile.getText()).toMatchSnapshot();
         });
     });
 });

@@ -16,7 +16,7 @@ import { GENERATE_COMMAND_TIMEOUT_MS } from "../../../constants.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
-import { ValidationError } from "../../../errors/ValidationError.js";
+import { SourcedValidationError } from "../../../errors/SourcedValidationError.js";
 import { SdkChecker } from "../../../sdk/checker/SdkChecker.js";
 import { LANGUAGES, type Language } from "../../../sdk/config/Language.js";
 import type { Target } from "../../../sdk/config/Target.js";
@@ -81,7 +81,7 @@ export class GenerateCommand {
             return this.handleWithFlags(context, args);
         }
         if (!result.success) {
-            throw new ValidationError(result.issues);
+            throw new SourcedValidationError(result.issues);
         }
         return this.handleWithWorkspace(context, result.workspace, args);
     }
@@ -373,7 +373,7 @@ export class GenerateCommand {
             }
         }
         if (issues.length > 0) {
-            throw new ValidationError(issues);
+            throw new SourcedValidationError(issues);
         }
     }
 

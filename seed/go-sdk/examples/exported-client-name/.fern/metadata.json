@@ -6,5 +6,6 @@
     "enableWireTests": false,
     "exportedClientName": "AcmeClient"
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
 }

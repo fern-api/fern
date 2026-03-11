@@ -7,5 +7,6 @@
       "include_union_utils": true
     }
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

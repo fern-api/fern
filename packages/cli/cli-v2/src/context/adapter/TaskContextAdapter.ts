@@ -54,9 +54,16 @@ export class TaskContextAdapter implements TaskContext {
     }
 
     public failWithoutThrowing(message?: string, error?: unknown): void {
-        const errorDetails = error instanceof Error ? error.message : error != null ? String(error) : undefined;
-        const fullMessage =
-            message != null && errorDetails != null ? `${message}: ${errorDetails}` : (message ?? errorDetails);
+        const errorDetails = this.formatError(error);
+        let fullMessage: string | undefined;
+        if (message != null && errorDetails != null) {
+            // Avoid stuttering when the message already contains the error details.
+            // Legacy callers often pass the same message and error as the second
+            // argument.
+            fullMessage = message.includes(errorDetails) ? message : `${message}: ${errorDetails}`;
+        } else {
+            fullMessage = message ?? errorDetails;
+        }
         if (fullMessage != null) {
             this.logger.error(fullMessage);
         }
@@ -108,5 +115,60 @@ export class TaskContextAdapter implements TaskContext {
 
     public async instrumentPostHogEvent(_event: PosthogEvent): Promise<void> {
         // no-op for now
+    }
+
+    private formatError(error: unknown): string | undefined {
+        if (error == null) {
+            return undefined;
+        }
+        if (error instanceof Error) {
+            return error.message;
+        }
+        if (typeof error === "string") {
+            return error;
+        }
+        if (typeof error === "object") {
+            const message = this.extractErrorMessage(error);
+            if (message != null) {
+                return message;
+            }
+        }
+        try {
+            return JSON.stringify(error);
+        } catch {
+            return String(error);
+        }
+    }
+
+    /**
+     * Attempts to extract a human-readable message from a structured error object.
+     *
+     * Handles common shapes from the FDR SDK and other API clients, e.g.:
+     *   { content: { body: { message: "..." } } }
+     *   { body: { message: "..." } }
+     *   { message: "..." }
+     */
+    private extractErrorMessage(error: object): string | undefined {
+        const record = error as Record<string, unknown>;
+
+        // { message: "..." }
+        if (typeof record.message === "string") {
+            return record.message;
+        }
+
+        // { body: { message: "..." } }
+        if (record.body != null && typeof record.body === "object") {
+            const body = record.body as Record<string, unknown>;
+            if (typeof body.message === "string") {
+                return body.message;
+            }
+        }
+
+        // { content: { body: { message: "..." } } }
+        if (record.content != null && typeof record.content === "object") {
+            return this.extractErrorMessage(record.content);
+        }
+
+        return undefined;
     }
 }

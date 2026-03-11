@@ -8,5 +8,6 @@
       "skip_validation": true
     }
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

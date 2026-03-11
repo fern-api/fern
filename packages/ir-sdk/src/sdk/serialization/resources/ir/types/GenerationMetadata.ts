@@ -12,6 +12,7 @@ export const GenerationMetadata: core.serialization.ObjectSchema<
     generatorName: core.serialization.string(),
     generatorVersion: core.serialization.string(),
     generatorConfig: core.serialization.unknown().optional(),
+    originGitCommit: core.serialization.string().optional(),
 });
 
 export declare namespace GenerationMetadata {
@@ -20,5 +21,6 @@ export declare namespace GenerationMetadata {
         generatorName: string;
         generatorVersion: string;
         generatorConfig?: unknown | null;
+        originGitCommit?: string | null;
     }
 }
