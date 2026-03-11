@@ -1103,6 +1103,140 @@ describe("upgrade", () => {
         });
     });
 
+    describe("wildcard version (*) in fern.config.json", () => {
+        it("should run migrations from * when config version is * and CLI matches target", async () => {
+            mockCliContext.environment.packageVersion = "1.2.0";
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "*",
+                rawConfig: { version: "*", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "*",
+                toVersion: "1.2.0",
+                context: {},
+                yes: false
+            });
+        });
+
+        it("should preserve * in fern.config.json after upgrade", async () => {
+            mockCliContext.environment.packageVersion = "1.2.0";
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "*",
+                rawConfig: { version: "*", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(writeFile).toHaveBeenCalledWith(
+                "/test/fern/fern.config.json",
+                expect.stringContaining('"version": "*"')
+            );
+        });
+
+        it("should not overwrite * with the resolved target version", async () => {
+            mockCliContext.environment.packageVersion = "1.2.0";
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "*",
+                rawConfig: { version: "*", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            const writeFileCall = vi.mocked(writeFile).mock.calls[0];
+            const writtenContent = writeFileCall?.[1] as string;
+            expect(writtenContent).not.toContain('"version": "1.2.0"');
+            expect(writtenContent).toContain('"version": "*"');
+        });
+
+        it("should trigger migrations when no upgrade available but config is *", async () => {
+            mockCliContext.environment.packageVersion = "1.2.0";
+            mockCliContext.isUpgradeAvailable = vi.fn().mockResolvedValue({
+                cliUpgradeInfo: {
+                    latestVersion: "1.2.0",
+                    isUpgradeAvailable: false
+                },
+                generatorUpgradeInfo: []
+            });
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "*",
+                rawConfig: { version: "*", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: undefined,
+                fromVersion: undefined
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "*",
+                toVersion: "1.2.0",
+                context: {},
+                yes: false
+            });
+            expect(writeFile).toHaveBeenCalledWith(
+                "/test/fern/fern.config.json",
+                expect.stringContaining('"version": "*"')
+            );
+        });
+
+        it("should rerun with --from * when CLI version !== target and config is *", async () => {
+            mockCliContext.environment.packageVersion = "1.0.0";
+            vi.mocked(isVersionAhead).mockReturnValue(true);
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "*",
+                rawConfig: { version: "*", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+            process.argv = ["node", "cli.js", "upgrade", "--version", "1.2.0"];
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(rerunFernCliAtVersion).toHaveBeenCalledWith({
+                version: "1.2.0",
+                cliContext: mockCliContext,
+                env: {
+                    [PREVIOUS_VERSION_ENV_VAR]: "*"
+                },
+                args: ["upgrade", "--from", "*", "--to", "1.2.0"],
+                throwOnError: true
+            });
+        });
+    });
+
     describe("--from-git flag", () => {
         beforeEach(() => {
             mockCliContext.environment.packageVersion = "0.0.0"; // Local dev

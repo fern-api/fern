@@ -397,14 +397,22 @@ export async function upgrade({
         });
         await cliContext.exitIfFailed();
 
+        // Preserve "*" in fern.config.json if user intentionally set it to use any installed CLI version
+        const configVersionToWrite = projectConfig.version === "*" ? "*" : resolvedTargetVersion;
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
-            draft.version = resolvedTargetVersion;
+            draft.version = configVersionToWrite;
         });
         await writeFile(
             projectConfig._absolutePath,
             ensureFinalNewline(JSON.stringify(newProjectConfig, undefined, 2))
         );
-        cliContext.logger.info(`Updated fern.config.json to version ${chalk.green(resolvedTargetVersion)}`);
+        if (projectConfig.version === "*") {
+            cliContext.logger.info(
+                `Ran migrations to version ${chalk.green(resolvedTargetVersion)} (preserving ${chalk.dim('"*"')} in fern.config.json)`
+            );
+        } else {
+            cliContext.logger.info(`Updated fern.config.json to version ${chalk.green(resolvedTargetVersion)}`);
+        }
         return;
     }
 

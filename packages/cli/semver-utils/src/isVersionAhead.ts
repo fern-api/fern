@@ -18,6 +18,14 @@ export function isVersionAhead(a: string, b: string): boolean {
         return true;
     }
 
+    // "*" is treated as always being behind any version (wildcard = no pinned version).
+    if (a === "*") {
+        return false;
+    }
+    if (b === "*") {
+        return true;
+    }
+
     const aVersion = parseVersion(a);
     const bVersion = parseVersion(b);
 

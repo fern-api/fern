@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.22.1
+  changelogEntry:
+    - summary: |
+        Fix `fern upgrade` failing with "Failed to parse version: *" when
+        `fern.config.json` has `"version": "*"`. The wildcard version is now
+        treated as always behind any real version during migration resolution,
+        and is preserved in the config file after upgrade instead of being
+        overwritten with the resolved target version.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
 - version: 4.22.0
   changelogEntry:
     - summary: |
