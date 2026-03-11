@@ -652,9 +652,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
         const loadPage = [
             ts.factory.createReturnStatement(
-                ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
-                    nextUrlExpression
-                ])
+                ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [nextUrlExpression])
             )
         ];
 
