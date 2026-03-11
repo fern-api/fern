@@ -131,7 +131,8 @@ function createUnionDeclaration(opts: {
         discriminant: createNameAndWireValueFromName(opts.discriminantName, opts.discriminantWireValue),
         types: opts.types,
         baseProperties: opts.baseProperties ?? [],
-        extends: opts.extends ?? []
+        extends: opts.extends ?? [],
+        discriminatorContext: undefined
     };
 }
 
@@ -608,6 +609,7 @@ describe("GeneratedUnionTypeImpl", () => {
             });
 
             const exampleShape = FernIr.ExampleTypeShape.union({
+                discriminant: createNameAndWireValueFromName("type"),
                 singleUnionType: {
                     wireDiscriminantValue: createNameAndWireValueFromName("foo"),
                     shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
@@ -792,6 +794,7 @@ describe("GeneratedUnionTypeImpl", () => {
             const context = createMockBaseContext();
 
             const example = FernIr.ExampleTypeShape.union({
+                discriminant: createNameAndWireValueFromName("type"),
                 singleUnionType: {
                     wireDiscriminantValue: createNameAndWireValueFromName("foo"),
                     shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
@@ -820,6 +823,7 @@ describe("GeneratedUnionTypeImpl", () => {
             const context = createMockBaseContext();
 
             const example = FernIr.ExampleTypeShape.union({
+                discriminant: createNameAndWireValueFromName("type"),
                 singleUnionType: {
                     wireDiscriminantValue: createNameAndWireValueFromName("foo"),
                     shape: FernIr.ExampleSingleUnionTypeProperties.singleProperty({
@@ -867,6 +871,7 @@ describe("GeneratedUnionTypeImpl", () => {
             });
 
             const example = FernIr.ExampleTypeShape.union({
+                discriminant: createNameAndWireValueFromName("type"),
                 singleUnionType: {
                     wireDiscriminantValue: createNameAndWireValueFromName("circle"),
                     shape: FernIr.ExampleSingleUnionTypeProperties.samePropertiesAsObject({
@@ -903,6 +908,7 @@ describe("GeneratedUnionTypeImpl", () => {
             const context = createMockBaseContext();
 
             const example = FernIr.ExampleTypeShape.union({
+                discriminant: createNameAndWireValueFromName("type"),
                 singleUnionType: {
                     wireDiscriminantValue: createNameAndWireValueFromName("foo"),
                     shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
@@ -941,6 +947,7 @@ describe("GeneratedUnionTypeImpl", () => {
             const generator = createUnionGenerator({ typeName: "Shape", shape });
 
             const example = FernIr.ExampleTypeShape.union({
+                discriminant: createNameAndWireValueFromName("type"),
                 singleUnionType: {
                     wireDiscriminantValue: createNameAndWireValueFromName("foo"),
                     shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
@@ -954,7 +961,9 @@ describe("GeneratedUnionTypeImpl", () => {
                                 FernIr.ExamplePrimitive.string({ original: "my-name" })
                             ),
                             jsonExample: "my-name"
-                        }
+                        },
+                        propertyAccess: undefined,
+                        originalTypeDeclaration: createDeclaredTypeName("WithName")
                     }
                 ]
             });
@@ -977,6 +986,7 @@ describe("GeneratedUnionTypeImpl", () => {
             const context = createMockBaseContext();
 
             const example = FernIr.ExampleTypeShape.union({
+                discriminant: createNameAndWireValueFromName("type"),
                 singleUnionType: {
                     wireDiscriminantValue: createNameAndWireValueFromName("foo"),
                     shape: FernIr.ExampleSingleUnionTypeProperties.noProperties()
@@ -1018,6 +1028,7 @@ describe("GeneratedUnionTypeImpl", () => {
             const context = createMockBaseContext();
 
             const example = FernIr.ExampleTypeShape.union({
+                discriminant: createNameAndWireValueFromName("type"),
                 singleUnionType: {
                     wireDiscriminantValue: createNameAndWireValueFromName("nonexistent"),
                     shape: FernIr.ExampleSingleUnionTypeProperties.singleProperty({
@@ -1046,6 +1057,7 @@ describe("GeneratedUnionTypeImpl", () => {
             const context = createMockBaseContext();
 
             const example = FernIr.ExampleTypeShape.union({
+                discriminant: createNameAndWireValueFromName("type"),
                 singleUnionType: {
                     wireDiscriminantValue: createNameAndWireValueFromName("foo"),
                     shape: FernIr.ExampleSingleUnionTypeProperties.singleProperty({
