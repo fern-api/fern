@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.23.1
+  changelogEntry:
+    - summary: |
+        Preserve description, namespace, group name, and availability metadata for unknown
+        (empty-type) schemas in OpenAPI specs. Previously these fields were dropped during
+        parsing, causing loss of documentation on schemas with no explicit type.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
 - version: 4.23.0
   changelogEntry:
     - summary: |
