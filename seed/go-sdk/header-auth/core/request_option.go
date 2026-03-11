@@ -26,6 +26,7 @@ type RequestOptions struct {
 	MaxAttempts     uint
 	MaxBufSize      int
 	HeaderTokenAuth string
+	Logging         *LogConfig
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -133,4 +134,13 @@ type HeaderTokenAuthOption struct {
 
 func (h *HeaderTokenAuthOption) applyRequestOptions(opts *RequestOptions) {
 	opts.HeaderTokenAuth = h.HeaderTokenAuth
+}
+
+// LoggingOption implements the RequestOption interface.
+type LoggingOption struct {
+	Logging *LogConfig
+}
+
+func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Logging = l.Logging
 }

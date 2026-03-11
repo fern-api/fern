@@ -26,6 +26,7 @@ type RequestOptions struct {
 	MaxAttempts     uint
 	MaxBufSize      int
 	Token           string
+	Logging         *LogConfig
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -142,4 +143,13 @@ type TokenOption struct {
 
 func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Token = t.Token
+}
+
+// LoggingOption implements the RequestOption interface.
+type LoggingOption struct {
+	Logging *LogConfig
+}
+
+func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Logging = l.Logging
 }

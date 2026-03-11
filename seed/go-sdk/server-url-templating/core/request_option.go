@@ -25,6 +25,7 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
+	Logging         *LogConfig
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -126,4 +127,13 @@ type EnvironmentOption struct {
 
 func (e *EnvironmentOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Environment = e.Environment
+}
+
+// LoggingOption implements the RequestOption interface.
+type LoggingOption struct {
+	Logging *LogConfig
+}
+
+func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Logging = l.Logging
 }

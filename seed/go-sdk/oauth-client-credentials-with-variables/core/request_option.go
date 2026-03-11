@@ -31,6 +31,7 @@ type RequestOptions struct {
 	ClientID        string
 	ClientSecret    string
 	Token           string
+	Logging         *LogConfig
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -178,4 +179,13 @@ func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
 // This is an internal method and should not be called directly.
 func (r *RequestOptions) SetTokenGetter(getter TokenGetter) {
 	r.tokenGetter = getter
+}
+
+// LoggingOption implements the RequestOption interface.
+type LoggingOption struct {
+	Logging *LogConfig
+}
+
+func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Logging = l.Logging
 }

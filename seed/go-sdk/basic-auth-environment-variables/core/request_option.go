@@ -27,6 +27,7 @@ type RequestOptions struct {
 	MaxBufSize      int
 	Username        string
 	AccessToken     string
+	Logging         *LogConfig
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -136,4 +137,13 @@ type BasicAuthOption struct {
 func (b *BasicAuthOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Username = b.Username
 	opts.AccessToken = b.AccessToken
+}
+
+// LoggingOption implements the RequestOption interface.
+type LoggingOption struct {
+	Logging *LogConfig
+}
+
+func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Logging = l.Logging
 }
