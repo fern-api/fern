@@ -40,9 +40,17 @@ type LoggingHTTPClient struct {
 }
 
 // NewLoggingHTTPClient creates a new LoggingHTTPClient that wraps the given client.
+
 func NewLoggingHTTPClient(client HTTPClient, config *LogConfig) *LoggingHTTPClient {
 	if client == nil {
 		client = &http.Client{}
+	}
+	if config == nil {
+		return &LoggingHTTPClient{
+			client: client,
+			logger: NewLogger(NewConsoleLogger(), LogLevelInfo, true),
+			config: NewLogConfigBuilder().Build(),
+		}
 	}
 	return &LoggingHTTPClient{
 		client: client,
@@ -50,6 +58,7 @@ func NewLoggingHTTPClient(client HTTPClient, config *LogConfig) *LoggingHTTPClie
 		config: config,
 	}
 }
+
 
 // Do implements the HTTPClient interface.
 func (c *LoggingHTTPClient) Do(req *http.Request) (*http.Response, error) {
