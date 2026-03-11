@@ -1,1 +1,2 @@
-export * from "./createSampleIr.js";
+export type { CreateSampleIrOptions } from "./createSampleIr.js";
+export { createMigratedSampleIr, createSampleIr } from "./createSampleIr.js";

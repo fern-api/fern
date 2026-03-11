@@ -7956,6 +7956,9 @@ importers:
 
   packages/commons/test-utils:
     devDependencies:
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../casings-generator
       '@fern-api/cli-source-resolver':
         specifier: workspace:*
         version: link:../../cli/cli-source-resolver
@@ -7971,6 +7974,9 @@ importers:
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../../cli/generation/ir-generator
+      '@fern-api/ir-migrations':
+        specifier: workspace:*
+        version: link:../../cli/generation/ir-migrations
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
