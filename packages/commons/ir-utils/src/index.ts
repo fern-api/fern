@@ -18,6 +18,7 @@ export { IntermediateRepresentationChangeDetector } from "./IntermediateRepresen
 export { mergeIntermediateRepresentation } from "./mergeIntermediateRepresentation.js";
 export { IdGenerator } from "./utils/IdGenerator.js";
 export { isReferencedWebhookPayloadSchema } from "./utils/isReferencedWebhookPayloadSchema.js";
+export type { NameInput } from "./utils/namesUtils.js";
 export {
     ensureNameAndWireValue,
     getCamelCaseUnsafe,
@@ -26,5 +27,4 @@ export {
     getPascalCaseUnsafe,
     getWireValue
 } from "./utils/namesUtils.js";
-export type { NameInput } from "./utils/namesUtils.js";
 export { stringifyFernFilepath } from "./utils/stringifyFernFilepath.js";

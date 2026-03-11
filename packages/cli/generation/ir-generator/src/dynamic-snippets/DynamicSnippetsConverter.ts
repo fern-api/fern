@@ -1032,17 +1032,11 @@ export class DynamicSnippetsConverter {
                 ...(example.example?.rootPathParameters ?? []),
                 ...(example.example?.servicePathParameters ?? []),
                 ...(example.example?.endpointPathParameters ?? [])
-            ].filter(
-                (param) =>
-                    !variableReferencedParams.has(getOriginalName(param.name))
-            );
+            ].filter((param) => !variableReferencedParams.has(getOriginalName(param.name)));
 
             requests.push({
                 id: example?.example?.id ?? uuidv4(),
-                name:
-                    example?.example?.name != null
-                        ? getOriginalName(example.example.name)
-                        : undefined,
+                name: example?.example?.name != null ? getOriginalName(example.example.name) : undefined,
                 endpoint: location,
                 baseUrl: undefined,
                 environment: undefined,
@@ -1052,28 +1046,19 @@ export class DynamicSnippetsConverter {
                     ...Object.fromEntries(
                         [...(example.example?.serviceHeaders ?? []), ...(example.example?.endpointHeaders ?? [])].map(
                             (header) => {
-                                return [
-                                    getWireValue(header.name),
-                                    header.value.jsonExample
-                                ];
+                                return [getWireValue(header.name), header.value.jsonExample];
                             }
                         )
                     )
                 },
                 pathParameters: Object.fromEntries(
                     pathParameterExamples.map((parameter) => {
-                        return [
-                            getOriginalName(parameter.name),
-                            parameter.value.jsonExample
-                        ];
+                        return [getOriginalName(parameter.name), parameter.value.jsonExample];
                     })
                 ),
                 queryParameters: Object.fromEntries(
                     [...(example.example?.queryParameters ?? [])].map((parameter) => {
-                        return [
-                            getWireValue(parameter.name),
-                            parameter.value.jsonExample
-                        ];
+                        return [getWireValue(parameter.name), parameter.value.jsonExample];
                     })
                 ),
                 requestBody: example.example?.request?.jsonExample
