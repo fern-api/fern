@@ -96,6 +96,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          # fetch-depth: 2 ensures the merge commit's parents are available.
+          # For PRs, HEAD is a merge commit; HEAD~1 is the base branch tip.
+          # This lets us diff accurately against the PR's actual base.
+          fetch-depth: 2
 
       - name: Install
         uses: ./.github/actions/install
@@ -127,13 +132,15 @@ jobs:
         run: |
           # Determine base ref for affected detection.
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            # Use the PR base SHA from the event payload and fetch only that
-            # specific commit. This is much faster than `git fetch --deepen=1`
-            # which negotiates the entire repo graph (~4 min on this repo).
-            BASE_REF="${{ github.event.pull_request.base.sha }}"
-            echo "Using PR base SHA: $BASE_REF"
-            # Fetch just the base commit so git diff can reach it
-            git fetch --no-tags --depth=1 origin "$BASE_REF" 2>/dev/null || true
+            # For PRs, actions/checkout creates a merge commit at HEAD.
+            # HEAD~1 is the base branch tip (first parent of the merge commit).
+            # Using HEAD~1 instead of github.event.pull_request.base.sha avoids
+            # stale base SHA issues where the event payload SHA doesn't match
+            # the merge commit's actual parent (e.g. when main moved forward
+            # between event creation and checkout). With fetch-depth: 2, HEAD~1
+            # is always available and accurate.
+            BASE_REF="HEAD~1"
+            echo "Using merge commit first parent (HEAD~1) as base ref"
           else
             # For push/dispatch/workflow_call: use last successful run SHA
             LAST_SUCCESS_SHA=$(gh api \
