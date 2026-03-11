@@ -173,6 +173,13 @@ async function resolveSourceVersion({
     projectConfig: { version: string };
     isLocalDev: boolean;
 }): Promise<string> {
+    // If config version is "latest" or "*", these aren't valid semver for migrations.
+    // Use the current CLI version as the source version instead.
+    const effectiveConfigVersion =
+        projectConfig.version === "latest" || projectConfig.version === "*"
+            ? cliContext.environment.packageVersion
+            : projectConfig.version;
+
     let resolvedFromVersion = fromVersion?.trim();
     const envVersion = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim();
 
@@ -197,19 +204,19 @@ async function resolveSourceVersion({
             }
             resolvedFromVersion = gitResult.version;
         } else {
-            // Fallback to projectConfig.version if git retrieval fails
+            // Fallback to effectiveConfigVersion if git retrieval fails
             if (hasFaultyUpgrade) {
                 const reason = getGitFailureMessage(gitResult.failureReason);
                 cliContext.logger.warn(
-                    `Detected potential faulty upgrade but could not retrieve version from git history${reason}. Using current config version: ${projectConfig.version}`
+                    `Detected potential faulty upgrade but could not retrieve version from git history${reason}. Using current config version: ${effectiveConfigVersion}`
                 );
-                resolvedFromVersion = projectConfig.version;
+                resolvedFromVersion = effectiveConfigVersion;
             } else if (fromGit) {
                 const reason = getGitFailureMessage(gitResult.failureReason);
                 cliContext.logger.debug(`Could not retrieve version from git${reason}. Falling back to config.`);
-                resolvedFromVersion = resolvedFromVersion || projectConfig.version;
+                resolvedFromVersion = resolvedFromVersion || effectiveConfigVersion;
             } else {
-                resolvedFromVersion = resolvedFromVersion || projectConfig.version;
+                resolvedFromVersion = resolvedFromVersion || effectiveConfigVersion;
             }
         }
     }
@@ -343,6 +350,13 @@ export async function upgrade({
                 isLocalDev
             });
 
+            // If config version is "latest" or "*", the CLI is already running at the
+            // intended version so there are no migrations to run.
+            if (projectConfig.version === "latest" || projectConfig.version === "*") {
+                cliContext.logger.info("No upgrade available.");
+                return;
+            }
+
             // If config version differs from CLI version, run migrations to bring it up to date
             // Also run migrations if we detect a faulty upgrade (even if versions match)
             if (projectConfig.version !== cliContext.environment.packageVersion || hasFaultyUpgrade) {
@@ -397,8 +411,10 @@ export async function upgrade({
         });
         await cliContext.exitIfFailed();
 
+        // Preserve "latest" in config if that's what the user had, otherwise write the resolved version
+        const versionToWrite = projectConfig.rawConfig.version === "latest" ? "latest" : resolvedTargetVersion;
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
-            draft.version = resolvedTargetVersion;
+            draft.version = versionToWrite;
         });
         await writeFile(
             projectConfig._absolutePath,
