@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithUriPagination</a>() -> SeedPaginationUriPath.ListUsersUriPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithUriPagination</a>() -> core.Page&lt;SeedPaginationUriPath.User, SeedPaginationUriPath.ListUsersUriPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ const response = page.response;
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithPathPagination</a>() -> SeedPaginationUriPath.ListUsersPathPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithPathPagination</a>() -> core.Page&lt;SeedPaginationUriPath.User, SeedPaginationUriPath.ListUsersPathPaginationResponse&gt;</code></summary>
 <dl>
 <dd>
 

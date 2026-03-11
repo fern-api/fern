@@ -17,8 +17,7 @@ describe("UsersClient", () => {
         };
         server.mockEndpoint().get("/users/uri").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.users.listWithUriPagination();
-        expect(response).toEqual({
+        const expected = {
             data: [
                 {
                     name: "name",
@@ -30,7 +29,10 @@ describe("UsersClient", () => {
                 },
             ],
             next: "next",
-        });
+        };
+        const page = await client.users.listWithUriPagination();
+
+        expect(expected.data).toEqual(page.data);
     });
 
     test("listWithPathPagination", async () => {
@@ -46,8 +48,7 @@ describe("UsersClient", () => {
         };
         server.mockEndpoint().get("/users/path").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.users.listWithPathPagination();
-        expect(response).toEqual({
+        const expected = {
             data: [
                 {
                     name: "name",
@@ -59,6 +60,9 @@ describe("UsersClient", () => {
                 },
             ],
             next: "next",
-        });
+        };
+        const page = await client.users.listWithPathPagination();
+
+        expect(expected.data).toEqual(page.data);
     });
 });
