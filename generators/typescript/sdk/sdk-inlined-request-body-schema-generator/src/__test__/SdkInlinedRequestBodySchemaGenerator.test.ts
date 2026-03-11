@@ -130,7 +130,7 @@ function createMockSdkContext() {
     } as any;
 }
 
-const TEST_PACKAGE_ID = "pkg_test" as PackageId;
+const TEST_PACKAGE_ID = "pkg_test" as unknown as PackageId;
 
 function createInlinedRequestBody(opts?: {
     properties?: FernIr.InlinedRequestBodyProperty[];
@@ -141,9 +141,11 @@ function createInlinedRequestBody(opts?: {
         name: casingsGenerator.generateName("CreateRequest"),
         extends: opts?.extends ?? [],
         properties: opts?.properties ?? [],
+        extendedProperties: undefined,
         extraProperties: opts?.extraProperties ?? false,
         contentType: undefined,
-        v2Examples: undefined
+        v2Examples: undefined,
+        docs: undefined
     };
 }
 
@@ -157,7 +159,8 @@ function createInlinedRequestProperty(
         valueType,
         docs: undefined,
         availability: undefined,
-        v2Examples: undefined
+        v2Examples: undefined,
+        propertyAccess: undefined
     };
 }
 
@@ -171,7 +174,7 @@ function createDeclaredTypeName(name: string): FernIr.DeclaredTypeName {
 }
 
 function createEndpointWithInlinedBody(inlinedRequestBody: FernIr.InlinedRequestBody): FernIr.HttpEndpoint {
-    const base = createHttpEndpoint({ endpointName: "create" });
+    const base = createHttpEndpoint();
     return {
         ...base,
         requestBody: FernIr.HttpRequestBody.inlinedRequestBody(inlinedRequestBody)
@@ -209,7 +212,7 @@ describe("SdkInlinedRequestBodySchemaGenerator", () => {
             allowExtraFields: false,
             omitUndefined: false
         });
-        const endpoint = createHttpEndpoint({ endpointName: "get" });
+        const endpoint = createHttpEndpoint();
         expect(() =>
             generator.generateInlinedRequestBodySchema({
                 packageId: TEST_PACKAGE_ID,
