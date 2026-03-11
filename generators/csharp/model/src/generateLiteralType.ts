@@ -1,30 +1,59 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
+import { FernIr } from "@fern-fern/ir-sdk";
+
+type Literal = FernIr.Literal;
+
 /**
- * Generates a readonly struct file for a literal string property.
+ * Generates a readonly struct file for a literal type defined in the IR.
  *
  * The struct contains:
- * - A const string Value field
- * - An implicit operator to string
+ * - A const Value field (string or bool)
+ * - An implicit operator to the underlying type
  * - ToString(), GetHashCode(), Equals() overrides
  * - == and != operators
  * - An internal sealed JsonConverter class
  */
 export function generateLiteralType({
     structName,
-    literalValue,
+    literal,
     namespace,
     directory
 }: {
     structName: string;
-    literalValue: string;
+    literal: Literal;
     namespace: string;
     directory: RelativeFilePath;
 }): File {
+    let content: string;
+    switch (literal.type) {
+        case "string":
+            content = generateStringLiteralContent({ structName, literalValue: literal.string, namespace });
+            break;
+        case "boolean":
+            content = generateBoolLiteralContent({ structName, literalValue: literal.boolean, namespace });
+            break;
+        default:
+            throw new Error(`Unsupported literal type: ${(literal as Literal).type}`);
+    }
+
+    const filename = `${structName}.cs`;
+    return new File(filename, directory, content);
+}
+
+function generateStringLiteralContent({
+    structName,
+    literalValue,
+    namespace
+}: {
+    structName: string;
+    literalValue: string;
+    namespace: string;
+}): string {
     // Escape backslashes first, then double quotes for C# string literals
     const escapedLiteralValue = literalValue.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-    const content = `using System.Text.Json;
+    return `using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ${namespace};
@@ -68,35 +97,61 @@ public readonly struct ${structName}
     }
 }
 `;
-
-    const filename = `${structName}.cs`;
-    return new File(filename, directory, content);
 }
 
-/**
- * Information about a literal property that needs a struct type generated.
- */
-export interface LiteralPropertyInfo {
-    /** The name of the struct (e.g., "FlushedEventType") */
-    structName: string;
-    /** The literal string value (e.g., "flushed") */
-    literalValue: string;
-    /** The wire name of the property (e.g., "type") */
-    wireValue: string;
-    /** The property name in PascalCase (e.g., "Type") */
-    propertyName: string;
-}
-
-/**
- * Gets the struct name for a literal property.
- * Convention: {ParentTypePascalCase}{PropertyNamePascalCase}
- */
-export function getLiteralStructName({
-    parentTypeName,
-    propertyName
+function generateBoolLiteralContent({
+    structName,
+    literalValue,
+    namespace
 }: {
-    parentTypeName: string;
-    propertyName: string;
+    structName: string;
+    literalValue: boolean;
+    namespace: string;
 }): string {
-    return `${parentTypeName}${propertyName}`;
+    const csharpValue = literalValue ? "true" : "false";
+    const oppositeValue = literalValue ? "false" : "true";
+    return `using System.Text.Json;
+using System.Text.Json.Serialization;
+
+namespace ${namespace};
+
+[JsonConverter(typeof(${structName}Converter))]
+public readonly struct ${structName}
+{
+    public const bool Value = ${csharpValue};
+
+    public static implicit operator bool(${structName} _) => Value;
+    public override string ToString() => Value.ToString();
+    public override int GetHashCode() => Value.GetHashCode();
+    public override bool Equals(object? obj) => obj is ${structName};
+
+    public static bool operator ==(${structName} _, ${structName} __) => true;
+    public static bool operator !=(${structName} _, ${structName} __) => false;
+
+    internal sealed class ${structName}Converter : JsonConverter<${structName}>
+    {
+        public override ${structName} Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var value = reader.GetBoolean();
+            if (value != ${structName}.Value)
+            {
+                throw new JsonException(
+                    "Expected ${csharpValue} for type discriminator but got ${oppositeValue}."
+                );
+            }
+            return new ${structName}();
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ${structName} value,
+            JsonSerializerOptions options
+        ) => writer.WriteBooleanValue(${structName}.Value);
+    }
+}
+`;
 }

@@ -3,49 +3,49 @@ using System.Text.Json.Serialization;
 
 namespace SeedLiteral;
 
-[JsonConverter(typeof(SendRequestContextConverter))]
-public readonly struct SendRequestContext
+[JsonConverter(typeof(SomeLiteralConverter))]
+public readonly struct SomeLiteral
 {
     public const string Value = "You're super wise";
 
-    public static implicit operator string(SendRequestContext _) => Value;
+    public static implicit operator string(SomeLiteral _) => Value;
 
     public override string ToString() => Value;
 
     public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
 
-    public override bool Equals(object? obj) => obj is SendRequestContext;
+    public override bool Equals(object? obj) => obj is SomeLiteral;
 
-    public static bool operator ==(SendRequestContext _, SendRequestContext __) => true;
+    public static bool operator ==(SomeLiteral _, SomeLiteral __) => true;
 
-    public static bool operator !=(SendRequestContext _, SendRequestContext __) => false;
+    public static bool operator !=(SomeLiteral _, SomeLiteral __) => false;
 
-    internal sealed class SendRequestContextConverter : JsonConverter<SendRequestContext>
+    internal sealed class SomeLiteralConverter : JsonConverter<SomeLiteral>
     {
-        public override SendRequestContext Read(
+        public override SomeLiteral Read(
             ref Utf8JsonReader reader,
             Type typeToConvert,
             JsonSerializerOptions options
         )
         {
             var value = reader.GetString();
-            if (value != SendRequestContext.Value)
+            if (value != SomeLiteral.Value)
             {
                 throw new JsonException(
                     "Expected \""
-                        + SendRequestContext.Value
+                        + SomeLiteral.Value
                         + "\" for type discriminator but got \""
                         + value
                         + "\"."
                 );
             }
-            return new SendRequestContext();
+            return new SomeLiteral();
         }
 
         public override void Write(
             Utf8JsonWriter writer,
-            SendRequestContext value,
+            SomeLiteral value,
             JsonSerializerOptions options
-        ) => writer.WriteStringValue(SendRequestContext.Value);
+        ) => writer.WriteStringValue(SomeLiteral.Value);
     }
 }

@@ -7,7 +7,7 @@ type EnumTypeDeclaration = FernIr.EnumTypeDeclaration;
 
 import { EnumGenerator } from "./enum/EnumGenerator.js";
 import { StringEnumGenerator } from "./enum/StringEnumGenerator.js";
-import { generateLiteralType, getLiteralStructName } from "./generateLiteralType.js";
+import { generateLiteralType } from "./generateLiteralType.js";
 import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 import { ObjectGenerator } from "./object/ObjectGenerator.js";
 import { UndiscriminatedUnionGenerator } from "./undiscriminated-union/UndiscriminatedUnionGenerator.js";
@@ -27,36 +27,33 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
             continue;
         }
         const file = typeDeclaration.shape._visit<CSharpFile | undefined>({
-            alias: () => undefined,
+            alias: (aliasDeclaration) => {
+                // Generate literal struct files for named literal alias types when enableReadonlyConstants is on.
+                // One file per literal type as defined in the IR. The struct name comes from the IR type name.
+                if (context.generation.settings.enableReadonlyConstants) {
+                    const resolvedType = aliasDeclaration.resolvedType;
+                    if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+                        const structName = typeDeclaration.name.name.pascalCase.safeName;
+                        const namespace = context.getNamespaceForTypeId(typeId);
+                        const directory = context.getDirectoryForTypeId(typeId);
+                        literalTypeFiles.push(
+                            generateLiteralType({
+                                structName,
+                                literal: resolvedType.container.literal,
+                                namespace,
+                                directory
+                            })
+                        );
+                    }
+                }
+                return undefined;
+            },
             enum: (etd: EnumTypeDeclaration) => {
                 return context.settings.isForwardCompatibleEnumsEnabled
                     ? new StringEnumGenerator(context, typeDeclaration, etd).generate()
                     : new EnumGenerator(context, typeDeclaration, etd).generate();
             },
             object: (otd) => {
-                // Generate literal struct files for string literal properties when enableReadonlyConstants is on
-                if (context.generation.settings.enableReadonlyConstants) {
-                    const parentTypeName = typeDeclaration.name.name.pascalCase.safeName;
-                    const namespace = context.getNamespaceForTypeId(typeId);
-                    const directory = context.getDirectoryForTypeId(typeId);
-                    for (const prop of [...otd.properties, ...(otd.extendedProperties ?? [])]) {
-                        const literalValue = context.getLiteralValue(prop.valueType);
-                        if (typeof literalValue === "string") {
-                            const structName = getLiteralStructName({
-                                parentTypeName,
-                                propertyName: prop.name.name.pascalCase.safeName
-                            });
-                            literalTypeFiles.push(
-                                generateLiteralType({
-                                    structName,
-                                    literalValue,
-                                    namespace,
-                                    directory
-                                })
-                            );
-                        }
-                    }
-                }
                 return new ObjectGenerator(context, typeDeclaration, otd).generate();
             },
             undiscriminatedUnion: (undiscriminatedUnionDeclaration) => {

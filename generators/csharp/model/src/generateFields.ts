@@ -4,7 +4,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 
 type TypeReference = FernIr.TypeReference;
 
-import { getLiteralStructName } from "./generateLiteralType.js";
 import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 interface TypeInfo {
@@ -75,17 +74,14 @@ export function generateFields(
     {
         properties,
         className,
-        context,
-        literalTypeNamespace
+        context
     }: {
         properties: (FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty)[];
         className: string;
         context: ModelGeneratorContext;
-        /** The namespace for literal struct types. Required when enableReadonlyConstants is true. */
-        literalTypeNamespace?: string;
     }
 ): ast.Field[] {
-    return properties.map((property) => generateField(cls, { property, className, context, literalTypeNamespace }));
+    return properties.map((property) => generateField(cls, { property, className, context }));
 }
 
 export function generateField(
@@ -96,8 +92,7 @@ export function generateField(
         context,
         jsonProperty = true,
         initializerOverride,
-        useRequiredOverride,
-        literalTypeNamespace
+        useRequiredOverride
     }: {
         property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty;
         className: string;
@@ -107,8 +102,6 @@ export function generateField(
         initializerOverride?: ast.CodeBlock;
         /** Override whether the field should be required */
         useRequiredOverride?: boolean;
-        /** The namespace for literal struct types. Required when enableReadonlyConstants is true. */
-        literalTypeNamespace?: string;
     }
 ): ast.Field {
     const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
@@ -155,18 +148,10 @@ export function generateField(
     }
 
     if (context.generation.settings.enableReadonlyConstants && maybeLiteralInitializer) {
-        const literalValue = context.getLiteralValue(property.valueType);
-        if (typeof literalValue === "string" && literalTypeNamespace != null) {
-            // For string literals, use the literal struct type instead of string with Assert.
-            // The struct handles JSON validation via its converter.
-            const structName = getLiteralStructName({
-                parentTypeName: className,
-                propertyName: property.name.name.pascalCase.safeName
-            });
-            const literalStructType = context.csharp.classReference({
-                name: structName,
-                namespace: literalTypeNamespace
-            });
+        // Check if this property references a named literal alias type in the IR.
+        // If so, use the struct type from the IR type name instead of string/boolean with Assert.
+        const namedLiteralRef = resolveNamedLiteralType(property.valueType, context);
+        if (namedLiteralRef != null) {
             // Add [JsonRequired] so that a missing field in JSON throws JsonException
             // instead of silently using the init default.
             fieldAttributes.unshift(
@@ -179,7 +164,7 @@ export function generateField(
             );
             return cls.addField({
                 origin: property,
-                type: literalStructType,
+                type: namedLiteralRef,
                 access: ast.Access.Public,
                 get: true,
                 init: true,
@@ -189,7 +174,8 @@ export function generateField(
                 annotations: fieldAttributes
             });
         }
-        // For boolean literals, keep the existing behavior with get/set accessors
+        // For inline literals (container.literal without a named IR type), keep the existing
+        // behavior with get/set accessors and Assert.
         accessors = {
             get: (writer: Writer) => {
                 writer.writeNode(maybeLiteralInitializer);
@@ -226,6 +212,36 @@ export function generateField(
         annotations: fieldAttributes,
         accessors
     });
+}
+
+/**
+ * Checks if a TypeReference points to a named literal alias type in the IR.
+ * If so, returns a ClassReference for the struct type. Otherwise returns undefined.
+ *
+ * This handles both direct named references (e.g., `context: SomeLiteral`) and
+ * named references that are aliases to literal containers.
+ */
+function resolveNamedLiteralType(
+    typeReference: TypeReference,
+    context: ModelGeneratorContext
+): ast.ClassReference | undefined {
+    if (typeReference.type !== "named") {
+        return undefined;
+    }
+    const { typeId, typeDeclaration } = context.model.dereferenceType(typeReference.typeId);
+    if (
+        typeDeclaration.shape.type === "alias" &&
+        typeDeclaration.shape.resolvedType.type === "container" &&
+        typeDeclaration.shape.resolvedType.container.type === "literal"
+    ) {
+        const structName = typeDeclaration.name.name.pascalCase.safeName;
+        const namespace = context.getNamespaceForTypeId(typeId);
+        return context.csharp.classReference({
+            name: structName,
+            namespace
+        });
+    }
+    return undefined;
 }
 
 export function generateFieldForFileProperty(

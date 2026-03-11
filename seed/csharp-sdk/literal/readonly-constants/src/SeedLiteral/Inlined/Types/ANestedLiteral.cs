@@ -11,15 +11,16 @@ public record ANestedLiteral : IJsonOnDeserialized
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [JsonRequired]
     [JsonPropertyName("myLiteral")]
-    public ANestedLiteralMyLiteral MyLiteral { get;
-#if NET5_0_OR_GREATER
-        init;
-#else
-        set;
-#endif
-    } = new();
+    public string MyLiteral
+    {
+        get => "How super cool";
+        set =>
+            value.Assert(
+                value == "How super cool",
+                string.Format("'MyLiteral' must be {0}", "How super cool")
+            );
+    }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();

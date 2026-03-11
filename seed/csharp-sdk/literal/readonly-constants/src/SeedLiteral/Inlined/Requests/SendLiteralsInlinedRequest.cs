@@ -33,16 +33,15 @@ public record SendLiteralsInlinedRequest
         set => value.Assert(value == false, string.Format("'Stream' must be {0}", false));
     }
 
+    [JsonRequired]
     [JsonPropertyName("aliasedContext")]
-    public string AliasedContext
-    {
-        get => "You're super wise";
-        set =>
-            value.Assert(
-                value == "You're super wise",
-                string.Format("'AliasedContext' must be {0}", "You're super wise")
-            );
-    }
+    public SomeAliasedLiteral AliasedContext { get;
+#if NET5_0_OR_GREATER
+        init;
+#else
+        set;
+#endif
+    } = new();
 
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }

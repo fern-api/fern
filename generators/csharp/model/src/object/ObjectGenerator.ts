@@ -43,12 +43,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             annotations: [this.System.Serializable]
         });
         const properties = [...this.objectDeclaration.properties, ...(this.objectDeclaration.extendedProperties ?? [])];
-        const literalTypeNamespace = this.context.getNamespaceForTypeId(this.typeDeclaration.name.typeId);
         generateFields(class_, {
             properties,
             className: this.classReference.name,
-            context: this.context,
-            literalTypeNamespace
+            context: this.context
         });
 
         this.addExtensionDataField(class_);

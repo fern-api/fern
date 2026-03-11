@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using SeedLiteral;
 using SeedLiteral.Test.Utils;
 
 namespace SeedLiteral.Test.Unit.MockServer;
@@ -8,6 +9,22 @@ public class SendTest_ : BaseMockServerTest
 {
     [NUnit.Framework.Test]
     public async Task MockServerTest_1() {
+        const string requestJson = """
+        {
+          "prompt": "You are a helpful assistant",
+          "context": "You're super wise",
+          "query": "query",
+          "temperature": 1.1,
+          "stream": false,
+          "aliasedContext": "You're super wise",
+          "maybeContext": "You're super wise",
+          "objectWithLiteral": {
+            "nestedLiteral": {
+              "myLiteral": "How super cool"
+            }
+          }
+        }
+        """;
 
         const string mockResponse = """
         {
@@ -17,41 +34,17 @@ public class SendTest_ : BaseMockServerTest
         }
         """;
 
-        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/path/123").UsingPost())
+        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/inlined").UsingPost().WithBodyAsJson(requestJson))
 
         .RespondWith(WireMock.ResponseBuilders.Response.Create()
         .WithStatusCode(200)
         .WithBody(mockResponse));
 
-        var response = await Client.Path.SendAsync("123"
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-    [NUnit.Framework.Test]
-    public async Task MockServerTest_2() {
-
-        const string mockResponse = """
-        {
-          "message": "The weather is sunny",
-          "status": 200,
-          "success": true
-        }
-        """;
-
-        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/path/123").UsingPost())
-
-        .RespondWith(WireMock.ResponseBuilders.Response.Create()
-        .WithStatusCode(200)
-        .WithBody(mockResponse));
-
-        var response = await Client.Path.SendAsync("123"
-        );
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-}
-     ,
+        var response = await Client.Inlined.SendAsync(new SendLiteralsInlinedRequest {
+            Prompt = "You are a helpful assistant"
+            ,
+            Context = "You're super wise"
+            ,
             Query = "query",
             Temperature = 1.1,
             Stream = false
