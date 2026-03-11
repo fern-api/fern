@@ -1957,7 +1957,7 @@ types:
         type: optional<boolean>
         availability: pre-release
         docs: |
-          When enabled, automatically injects `last-updated` frontmatter into Markdown pages using per-file git history during `fern docs publish`. Uses `git log -G'[^\s]'` to skip whitespace-only commits. API-generated pages are excluded. Existing `last-updated` values are overwritten with the git-derived date.
+          When enabled, automatically injects `last-updated` frontmatter into Markdown pages using per-file git history during `fern docs publish`. Uses `git log -G'[^\s]'` to skip whitespace-only commits. API-generated pages are excluded. Pages that already have a `last-updated` value in frontmatter are left unchanged.
 
   PlaygroundSettings:
     properties:
