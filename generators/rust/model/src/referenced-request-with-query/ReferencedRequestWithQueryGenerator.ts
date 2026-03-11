@@ -1,6 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { getOriginalName } from "@fern-api/ir-utils";
 import { RustFile } from "@fern-api/rust-base";
 
 import { RequestGenerator } from "../inlined-request-body/RequestGenerator.js";
@@ -65,7 +64,7 @@ export class ReferencedRequestWithQueryGenerator {
                 name: uniqueRequestTypeName,
                 properties,
                 extendedProperties: [],
-                docsContent: `Request for ${getOriginalName(endpoint.name)} (body + query parameters)`,
+                docsContent: `Request for ${endpoint.name.originalName} (body + query parameters)`,
                 context: this.context
             });
 
@@ -79,7 +78,7 @@ export class ReferencedRequestWithQueryGenerator {
         } catch (error) {
             // Log error but don't fail the entire generation
             this.context.logger?.warn(
-                `Failed to generate referenced request with query file for endpoint ${getOriginalName(endpoint.name)}: ${error}`
+                `Failed to generate referenced request with query file for endpoint ${endpoint.name.originalName}: ${error}`
             );
             return null;
         }

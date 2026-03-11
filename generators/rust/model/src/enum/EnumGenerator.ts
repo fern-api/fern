@@ -1,6 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { getPascalCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -84,12 +83,12 @@ export class EnumGenerator {
         const variantAttributes: rust.Attribute[] = [];
 
         // Add serde rename if the variant name differs from wire value
-        if (getPascalCaseUnsafe(enumValue.name.name) !== getWireValue(enumValue.name)) {
-            variantAttributes.push(Attribute.serde.rename(getWireValue(enumValue.name)));
+        if (enumValue.name.name.pascalCase.unsafeName !== enumValue.name.wireValue) {
+            variantAttributes.push(Attribute.serde.rename(enumValue.name.wireValue));
         }
 
         return rust.enumVariant({
-            name: getPascalCaseUnsafe(enumValue.name.name),
+            name: enumValue.name.name.pascalCase.unsafeName,
             attributes: variantAttributes.length > 0 ? variantAttributes : undefined,
             docs: enumValue.docs
                 ? rust.docComment({
@@ -111,8 +110,8 @@ export class EnumGenerator {
 
         // Generate match arms for each enum variant
         this.enumTypeDeclaration.values.forEach((enumValue) => {
-            const variantName = getPascalCaseUnsafe(enumValue.name.name);
-            const wireValue = getWireValue(enumValue.name);
+            const variantName = enumValue.name.name.pascalCase.unsafeName;
+            const wireValue = enumValue.name.wireValue;
             // Use JSON.stringify to properly escape special characters in string literals
             writer.writeLine(`Self::${variantName} => ${JSON.stringify(wireValue)},`);
         });

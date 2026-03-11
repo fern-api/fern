@@ -1,5 +1,4 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getOriginalName, getSnakeCaseUnsafe } from "@fern-api/ir-utils";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { isOptionalType, namedTypeSupportsHashAndEq, namedTypeSupportsPartialEq } from "../utils/primitiveTypeUtils.js";
@@ -122,7 +121,7 @@ export class RequestGenerator {
                         default: undefined,
                         inline: undefined,
                         fernFilepath: property.valueType.fernFilepath,
-                        displayName: getOriginalName(property.valueType.name)
+                        displayName: property.valueType.name.originalName
                     },
                     this.context
                 );
@@ -144,7 +143,7 @@ export class RequestGenerator {
                         default: undefined,
                         inline: undefined,
                         fernFilepath: property.valueType.fernFilepath,
-                        displayName: getOriginalName(property.valueType.name)
+                        displayName: property.valueType.name.originalName
                     },
                     this.context
                 );
@@ -157,7 +156,7 @@ export class RequestGenerator {
     private generateRustFieldForProperty(property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty): rust.Field {
         const fieldType = generateFieldType(property, this.context);
         const fieldAttributes = generateFieldAttributes(property, this.context);
-        const fieldName = this.context.escapeRustKeyword(getSnakeCaseUnsafe(property.name.name));
+        const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
         // Add field documentation if available
         let docs = undefined;
@@ -188,7 +187,7 @@ export class RequestGenerator {
 
                 fields.push(
                     rust.field({
-                        name: `${getSnakeCaseUnsafe(property.name.name)}_fields`,
+                        name: `${property.name.name.snakeCase.unsafeName}_fields`,
                         type: rust.Type.reference(rust.reference({ name: parentTypeName })),
                         visibility: PUBLIC,
                         attributes: [Attribute.serde.flatten()]

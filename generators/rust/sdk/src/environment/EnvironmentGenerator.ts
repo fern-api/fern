@@ -1,6 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { getCamelCaseSafe, getPascalCaseSafe, getSnakeCaseSafe } from "@fern-api/ir-utils";
 import { RustFile } from "@fern-api/rust-base";
 import {
     Attribute,
@@ -122,11 +121,11 @@ export class EnvironmentGenerator {
     }
 
     private createEnumVariant(env: FernIr.SingleBaseUrlEnvironment): EnumVariant {
-        const needsRename = getPascalCaseSafe(env.name) !== getCamelCaseSafe(env.name);
+        const needsRename = env.name.pascalCase.safeName !== env.name.camelCase.safeName;
 
         return rust.enumVariant({
-            name: getPascalCaseSafe(env.name),
-            attributes: needsRename ? [Attribute.serde.rename(getCamelCaseSafe(env.name))] : []
+            name: env.name.pascalCase.safeName,
+            attributes: needsRename ? [Attribute.serde.rename(env.name.camelCase.safeName)] : []
         });
     }
 
@@ -143,7 +142,7 @@ export class EnvironmentGenerator {
     private createUrlMethod(environments: FernIr.SingleBaseUrlEnvironment[]): Method {
         // Create match arms for each environment using proper AST
         const matchArms = environments.map((env) => {
-            const pattern = Pattern.variable(`Self::${getPascalCaseSafe(env.name)}`);
+            const pattern = Pattern.variable(`Self::${env.name.pascalCase.safeName}`);
             const expression = Expression.stringLiteral(env.url);
             return MatchArm.withExpression(pattern, expression);
         });
@@ -179,7 +178,7 @@ export class EnvironmentGenerator {
             name: "default",
             parameters: [],
             returnType: Type.reference(new Reference({ name: "Self" })),
-            body: CodeBlock.fromExpression(Expression.reference(`Self::${getPascalCaseSafe(defaultEnv.name)}`))
+            body: CodeBlock.fromExpression(Expression.reference(`Self::${defaultEnv.name.pascalCase.safeName}`))
         });
 
         return rust.implBlock({
@@ -191,12 +190,12 @@ export class EnvironmentGenerator {
 
     private createUrlStruct(env: FernIr.MultipleBaseUrlsEnvironment, baseUrls: FernIr.EnvironmentBaseUrlWithId[]): Struct {
         return rust.struct({
-            name: `${getPascalCaseSafe(env.name)}Urls`,
+            name: `${env.name.pascalCase.safeName}Urls`,
             visibility: PUBLIC,
             attributes: [Attribute.derive(["Debug", "Clone", "Serialize", "Deserialize"])],
             fields: baseUrls.map((baseUrl) =>
                 rust.field({
-                    name: getSnakeCaseSafe(baseUrl.name),
+                    name: baseUrl.name.snakeCase.safeName,
                     type: Type.string(),
                     visibility: PUBLIC
                 })
@@ -212,8 +211,8 @@ export class EnvironmentGenerator {
             attributes: [Attribute.derive(["Debug", "Clone", "Serialize", "Deserialize"])],
             variants: environments.map((env) =>
                 rust.enumVariant({
-                    name: getPascalCaseSafe(env.name),
-                    data: [Type.reference(new Reference({ name: `${getPascalCaseSafe(env.name)}Urls` }))]
+                    name: env.name.pascalCase.safeName,
+                    data: [Type.reference(new Reference({ name: `${env.name.pascalCase.safeName}Urls` }))]
                 })
             )
         });
@@ -232,8 +231,8 @@ export class EnvironmentGenerator {
     private createMultiUrlGetUrlMethod(config: FernIr.MultipleBaseUrlsEnvironments): Method {
         const matchArms = config.environments.map((env) => {
             // Use tuple pattern for tuple enum variants
-            const pattern = Pattern.raw(`Self::${getPascalCaseSafe(env.name)}(urls)`);
-            const fieldName = config.baseUrls[0] ? getSnakeCaseSafe(config.baseUrls[0].name) : "default";
+            const pattern = Pattern.raw(`Self::${env.name.pascalCase.safeName}(urls)`);
+            const fieldName = config.baseUrls[0]?.name.snakeCase.safeName || "default";
             // Need to add reference since we're borrowing from urls
             const expression = Expression.reference(`&urls.${fieldName}`);
             return MatchArm.withExpression(pattern, expression);
@@ -269,14 +268,14 @@ export class EnvironmentGenerator {
         // Create the URL struct instance with all base URLs
         const urlFields = config.baseUrls
             .map((baseUrl) => {
-                const fieldName = getSnakeCaseSafe(baseUrl.name);
+                const fieldName = baseUrl.name.snakeCase.safeName;
                 const url = defaultEnv.urls[baseUrl.id] || "";
                 return `${fieldName}: "${url}".to_string()`;
             })
             .join(", ");
 
-        const structName = `${getPascalCaseSafe(defaultEnv.name)}Urls`;
-        const defaultExpr = `Self::${getPascalCaseSafe(defaultEnv.name)}(${structName} { ${urlFields} })`;
+        const structName = `${defaultEnv.name.pascalCase.safeName}Urls`;
+        const defaultExpr = `Self::${defaultEnv.name.pascalCase.safeName}(${structName} { ${urlFields} })`;
 
         const defaultMethod = rust.method({
             name: "default",

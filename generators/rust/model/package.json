@@ -54,8 +54,5 @@
     "typescript": "catalog:",
     "vitest": "catalog:",
     "zod": "catalog:"
-  },
-  "dependencies": {
-    "@fern-api/ir-utils": "workspace:*"
   }
 }

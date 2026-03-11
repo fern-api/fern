@@ -1,6 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { getOriginalName, getPascalCaseSafe, getSnakeCaseSafe, getSnakeCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
 import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
@@ -131,7 +130,7 @@ export class SubClientGenerator {
 
         // Build module documentation
         const moduleDoc: string[] = [];
-        const serviceName = this.subpackage.displayName ?? getPascalCaseSafe(this.subpackage.name);
+        const serviceName = this.subpackage.displayName ?? this.subpackage.name.pascalCase.safeName;
         moduleDoc.push(`${serviceName} service client`);
         moduleDoc.push("");
 
@@ -149,7 +148,7 @@ export class SubClientGenerator {
                 service.endpoints.slice(0, 10).forEach((endpoint) => {
                     const method = endpoint.method.toUpperCase();
                     const path = endpoint.path.head;
-                    const name = getPascalCaseSafe(endpoint.name);
+                    const name = endpoint.name.pascalCase.safeName;
                     moduleDoc.push(`- \`${method} ${path}\` - ${name}`);
                 });
                 if (service.endpoints.length > 10) {
@@ -885,7 +884,7 @@ export class SubClientGenerator {
         }
 
         return {
-            name: getSnakeCaseSafe(endpoint.name),
+            name: endpoint.name.snakeCase.safeName,
             parameters,
             returnType: returnType.toString(),
             isAsync: true,
@@ -973,7 +972,7 @@ export class SubClientGenerator {
 
     private addIndividualQueryParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
         for (const queryParam of endpoint.queryParameters) {
-            const paramName = this.context.escapeRustKeyword(getSnakeCaseUnsafe(queryParam.name));
+            const paramName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
             params.push({
                 name: paramName,
                 type: generateRustTypeForTypeReference(queryParam.valueType, this.context),
@@ -986,9 +985,9 @@ export class SubClientGenerator {
     private addPathParameters(endpoint: FernIr.HttpEndpoint, params: EndpointParameter[]): void {
         endpoint.fullPath.parts.forEach((part) => {
             if (part.pathParameter) {
-                const pathParam = endpoint.allPathParameters.find((p) => getOriginalName(p.name) === part.pathParameter);
+                const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
                 if (pathParam) {
-                    const paramName = this.context.escapeRustKeyword(getSnakeCaseSafe(pathParam.name));
+                    const paramName = this.context.escapeRustKeyword(pathParam.name.snakeCase.safeName);
                     params.push({
                         name: paramName,
                         type: generateRustTypeForTypeReference(pathParam.valueType, this.context),
@@ -1055,11 +1054,11 @@ export class SubClientGenerator {
         // For inlined request bodies, use the name from the IR to ensure consistency
         if (endpoint.requestBody?.type === "inlinedRequestBody") {
             const inlinedRequestBody = endpoint.requestBody as FernIr.HttpRequestBody.InlinedRequestBody;
-            return getPascalCaseSafe(inlinedRequestBody.name);
+            return inlinedRequestBody.name.pascalCase.safeName;
         }
 
         // Generate TypeScript-style request type name: GetTokenRequest, CreateMovieRequest, etc.
-        const methodName = getPascalCaseSafe(endpoint.name);
+        const methodName = endpoint.name.pascalCase.safeName;
         return `${methodName}Request`;
     }
 
@@ -1086,7 +1085,7 @@ export class SubClientGenerator {
         }
 
         // Check for structured query parameter by name (only for non-array queries)
-        if (getWireValue(queryParam.name) === "query" && this.isStringType(valueType)) {
+        if (queryParam.name.wireValue === "query" && this.isStringType(valueType)) {
             return "structured_query";
         }
 
@@ -1290,7 +1289,7 @@ export class SubClientGenerator {
         const paginationParamNames = this.extractPaginationParameterNames(paginationConfig);
 
         // Filter out pagination parameters
-        const filteredParams = queryParams.filter((param) => !paginationParamNames.has(getWireValue(param.name)));
+        const filteredParams = queryParams.filter((param) => !paginationParamNames.has(param.name.wireValue));
 
         if (filteredParams.length === 0) {
             return "None";
@@ -1301,7 +1300,7 @@ export class SubClientGenerator {
 
     private buildQueryParameterStatements(queryParams: FernIr.QueryParameter[], endpoint?: FernIr.HttpEndpoint): string {
         const builderChain = queryParams.map((queryParam) => {
-            const wireValue = getWireValue(queryParam.name);
+            const wireValue = queryParam.name.wireValue;
             const method = this.getQueryBuilderMethod(queryParam);
 
             // Determine parameter source based on endpoint type
@@ -1319,7 +1318,7 @@ export class SubClientGenerator {
 
     // Smart parameter source detection
     private getQueryParameterSource(queryParam: FernIr.QueryParameter, endpoint?: FernIr.HttpEndpoint): string {
-        const fieldName = this.context.escapeRustKeyword(getSnakeCaseUnsafe(queryParam.name));
+        const fieldName = this.context.escapeRustKeyword(queryParam.name.name.snakeCase.unsafeName);
 
         if (endpoint && this.isBytesEndpoint(endpoint)) {
             // BYTES body: query params are individual method parameters
@@ -1373,10 +1372,10 @@ export class SubClientGenerator {
                 cursor: (cursor) => {
                     cursor.page.property._visit({
                         query: (query) => {
-                            paginationParamNames.add(getWireValue(query.name));
+                            paginationParamNames.add(query.name.wireValue);
                         },
                         body: (body) => {
-                            paginationParamNames.add(getWireValue(body.name));
+                            paginationParamNames.add(body.name.wireValue);
                         },
                         _other: () => {
                             /* no-op */
@@ -1386,10 +1385,10 @@ export class SubClientGenerator {
                 offset: (offset) => {
                     offset.page.property._visit({
                         query: (query) => {
-                            paginationParamNames.add(getWireValue(query.name));
+                            paginationParamNames.add(query.name.wireValue);
                         },
                         body: (body) => {
-                            paginationParamNames.add(getWireValue(body.name));
+                            paginationParamNames.add(body.name.wireValue);
                         },
                         _other: () => {
                             /* no-op */
@@ -1398,10 +1397,10 @@ export class SubClientGenerator {
                     if (offset.step) {
                         offset.step.property._visit({
                             query: (query) => {
-                                paginationParamNames.add(getWireValue(query.name));
+                                paginationParamNames.add(query.name.wireValue);
                             },
                             body: (body) => {
-                                paginationParamNames.add(getWireValue(body.name));
+                                paginationParamNames.add(body.name.wireValue);
                             },
                             _other: () => {
                                 /* no-op */
@@ -1434,10 +1433,10 @@ export class SubClientGenerator {
 
         endpoint.fullPath.parts.forEach((part) => {
             if (part.pathParameter) {
-                const pathParam = endpoint.allPathParameters.find((p) => getOriginalName(p.name) === part.pathParameter);
+                const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
                 if (pathParam) {
                     path += "{}";
-                    const escapedName = this.context.escapeRustKeyword(getSnakeCaseSafe(pathParam.name));
+                    const escapedName = this.context.escapeRustKeyword(pathParam.name.snakeCase.safeName);
                     const paramName = this.getPathParameterExpression(
                         pathParam.valueType,
                         escapedName
@@ -1793,7 +1792,7 @@ export class SubClientGenerator {
 
         const params = this.extractParametersFromEndpoint(endpoint);
         const parameters = this.buildMethodParameters(params, endpoint);
-        const baseName = getSnakeCaseSafe(endpoint.name);
+        const baseName = endpoint.name.snakeCase.safeName;
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
@@ -1922,7 +1921,7 @@ export class SubClientGenerator {
             .map((param) => `let ${param.name}_clone = ${param.name}.clone();`)
             .join("\n            ");
 
-        const pageParamName = offset.page?.property?.name ? getWireValue(offset.page.property.name) : "page";
+        const pageParamName = offset.page?.property?.name?.wireValue || "page";
 
         return `let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = ${queryParams};
@@ -2195,12 +2194,12 @@ export class SubClientGenerator {
         // If there's a propertyPath (nested properties), add them first
         if (property.propertyPath && Array.isArray(property.propertyPath)) {
             property.propertyPath.forEach((pathItem) => {
-                path.push(getOriginalName(pathItem.name));
+                path.push(pathItem.name.originalName);
             });
         }
 
         // Finally, add the property name itself
-        path.push(getWireValue(property.property.name));
+        path.push(property.property.name.wireValue);
 
         // If path is still empty, use default
         return path.length > 0 ? path : ["data"];
@@ -2209,8 +2208,8 @@ export class SubClientGenerator {
     private getCursorParamName(cursor: FernIr.CursorPagination): string {
         // Extract cursor parameter name from pagination configuration
         return cursor.page.property._visit({
-            query: (query) => getWireValue(query.name),
-            body: (body) => getWireValue(body.name),
+            query: (query) => query.name.wireValue,
+            body: (body) => body.name.wireValue,
             _other: () => "cursor"
         });
     }
@@ -2219,8 +2218,8 @@ export class SubClientGenerator {
         // Extract step parameter name from pagination configuration
         if (offset.step) {
             return offset.step.property._visit({
-                query: (query) => getWireValue(query.name),
-                body: (body) => getWireValue(body.name),
+                query: (query) => query.name.wireValue,
+                body: (body) => body.name.wireValue,
                 _other: () => "step"
             });
         }
@@ -2238,7 +2237,7 @@ export class SubClientGenerator {
         endpoint.allPathParameters.forEach((pathParam) => {
             if (pathParam.docs) {
                 paramDocs.push({
-                    name: getSnakeCaseSafe(pathParam.name),
+                    name: pathParam.name.snakeCase.safeName,
                     description: pathParam.docs
                 });
             }
@@ -2248,7 +2247,7 @@ export class SubClientGenerator {
         endpoint.queryParameters.forEach((queryParam) => {
             if (queryParam.docs) {
                 paramDocs.push({
-                    name: getSnakeCaseSafe(queryParam.name),
+                    name: queryParam.name.name.snakeCase.safeName,
                     description: queryParam.docs
                 });
             }

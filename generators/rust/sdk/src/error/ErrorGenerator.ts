@@ -1,5 +1,4 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getPascalCaseSafe } from "@fern-api/ir-utils";
 import {
     Attribute,
     CodeBlock,
@@ -509,7 +508,7 @@ export class ErrorGenerator {
 
     // Helper methods
     private getErrorVariantName(errorDeclaration: FernIr.ErrorDeclaration): string {
-        const safeName = getPascalCaseSafe(errorDeclaration.name.name);
+        const safeName = errorDeclaration.name.name.pascalCase.safeName;
         if (!safeName) {
             throw new Error(`Error declaration missing safe name: ${JSON.stringify(errorDeclaration.name)}`);
         }

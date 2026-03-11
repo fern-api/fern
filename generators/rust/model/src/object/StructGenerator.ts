@@ -1,6 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { getOriginalName, getSnakeCaseUnsafe, getWireValue } from "@fern-api/ir-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
@@ -73,7 +72,7 @@ export class StructGenerator {
 
         // Add regular properties
         const properties = skipTypeField
-            ? this.objectTypeDeclaration.properties.filter((p) => getWireValue(p.name) !== "type")
+            ? this.objectTypeDeclaration.properties.filter((p) => p.name.wireValue !== "type")
             : this.objectTypeDeclaration.properties;
         fields.push(
             ...properties.map((property) => this.generateRustFieldForProperty(property))
@@ -123,7 +122,7 @@ export class StructGenerator {
         // Generate the field type, wrapping in Box<T> if recursive
         const fieldType = generateFieldType(property, this.context, isRecursive);
         const fieldAttributes = generateFieldAttributes(property, this.context);
-        const fieldName = this.context.escapeRustKeyword(getSnakeCaseUnsafe(property.name.name));
+        const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
         return rust.field({
             name: fieldName,
@@ -148,7 +147,7 @@ export class StructGenerator {
 
             fields.push(
                 rust.field({
-                    name: `${getSnakeCaseUnsafe(parentType.name)}_fields`,
+                    name: `${parentType.name.snakeCase.unsafeName}_fields`,
                     type: rust.Type.reference(rust.reference({ name: parentTypeName })),
                     visibility: PUBLIC,
                     attributes: [Attribute.serde.flatten()]
@@ -172,7 +171,7 @@ export class StructGenerator {
                     default: undefined,
                     inline: undefined,
                     fernFilepath: parentType.fernFilepath,
-                    displayName: getOriginalName(parentType.name)
+                    displayName: parentType.name.originalName
                 },
                 this.context
             );
@@ -191,7 +190,7 @@ export class StructGenerator {
                     default: undefined,
                     inline: undefined,
                     fernFilepath: parentType.fernFilepath,
-                    displayName: getOriginalName(parentType.name)
+                    displayName: parentType.name.originalName
                 },
                 this.context
             );

@@ -1,6 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { getPascalCaseSafe, getSnakeCaseSafe } from "@fern-api/ir-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
 
@@ -24,7 +23,7 @@ export class RootClientGenerator {
     constructor(context: SdkGeneratorContext) {
         this.context = context;
         this.package = context.ir.rootPackage;
-        this.projectName = getPascalCaseSafe(context.ir.apiName);
+        this.projectName = context.ir.apiName.pascalCase.safeName;
         this.clientGeneratorContext = new ClientGeneratorContext({
             packageOrSubpackage: this.package,
             sdkGeneratorContext: context
@@ -55,7 +54,7 @@ export class RootClientGenerator {
             moduleDoc.push("");
             const seenDocNames = new Set<string>();
             subpackages.forEach((subpackage) => {
-                const name = getPascalCaseSafe(subpackage.name);
+                const name = subpackage.name.pascalCase.safeName;
                 const displayName = subpackage.displayName ?? name;
 
                 // Try to get service docs if the subpackage has a service
@@ -135,14 +134,14 @@ export class RootClientGenerator {
         const seen = new Set<string>();
         return subpackages
             .filter((subpackage) => {
-                const moduleName = getSnakeCaseSafe(subpackage.name);
+                const moduleName = subpackage.name.snakeCase.safeName;
                 if (seen.has(moduleName)) {
                     return false;
                 }
                 seen.add(moduleName);
                 return true;
             })
-            .map((subpackage) => `pub mod ${getSnakeCaseSafe(subpackage.name)};`)
+            .map((subpackage) => `pub mod ${subpackage.name.snakeCase.safeName};`)
             .join("\n");
     }
 
@@ -153,7 +152,7 @@ export class RootClientGenerator {
         return subpackages
             .filter((subpackage) => {
                 const clientName = this.getSubClientName(subpackage);
-                const reExport = `${getSnakeCaseSafe(subpackage.name)}::${clientName}`;
+                const reExport = `${subpackage.name.snakeCase.safeName}::${clientName}`;
                 if (seen.has(reExport)) {
                     return false;
                 }
@@ -162,7 +161,7 @@ export class RootClientGenerator {
             })
             .map((subpackage) => {
                 const clientName = this.getSubClientName(subpackage);
-                return `pub use ${getSnakeCaseSafe(subpackage.name)}::${clientName}`;
+                return `pub use ${subpackage.name.snakeCase.safeName}::${clientName};`;
             })
             .join("\n");
     }

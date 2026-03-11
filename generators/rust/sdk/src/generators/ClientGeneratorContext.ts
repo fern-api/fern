@@ -1,5 +1,4 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getSnakeCaseSafe } from "@fern-api/ir-utils";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 export declare namespace ClientGeneratorContext {
@@ -29,7 +28,7 @@ export class ClientGeneratorContext {
             .filter(([, subpackage]) => subpackage.service != null || subpackage.hasEndpointsInTree)
             .map(([, subpackage]) => {
                 const clientName = this.sdkGeneratorContext.getUniqueClientNameForSubpackage(subpackage);
-                const fieldName = getSnakeCaseSafe(subpackage.name);
+                const fieldName = subpackage.name.snakeCase.safeName;
                 return {
                     fieldName,
                     clientName

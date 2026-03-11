@@ -1,5 +1,4 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { getPascalCaseSafe } from "@fern-api/ir-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { Attribute, CodeBlock, Expression, PrimitiveType, PUBLIC, rust, UseStatement } from "@fern-api/rust-codegen";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -109,7 +108,7 @@ export class ClientConfigGenerator {
     }
 
     private generateDefaultImpl() {
-        const userAgent = `${getPascalCaseSafe(this.context.ir.apiName)} Rust SDK`;
+        const userAgent = `${this.context.ir.apiName.pascalCase.safeName} Rust SDK`;
         const environmentEnumName = this.getEnvironmentEnumName();
         const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment !== undefined;
 
