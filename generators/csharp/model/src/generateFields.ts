@@ -1,9 +1,11 @@
-import { ast, Writer } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
 type TypeReference = FernIr.TypeReference;
+type Literal = FernIr.Literal;
 
+import { generateNestedBoolLiteralBody, generateNestedStringLiteralBody } from "./generateLiteralType.js";
 import { ModelGeneratorContext } from "./ModelGeneratorContext.js";
 
 interface TypeInfo {
@@ -81,7 +83,11 @@ export function generateFields(
         context: ModelGeneratorContext;
     }
 ): ast.Field[] {
-    return properties.map((property) => generateField(cls, { property, className, context }));
+    // Collect all property PascalCase names for collision detection when generating
+    // nested literal struct names (e.g., {PropertyName}Literal must not collide with
+    // another property name).
+    const allPropertyPascalNames = new Set(properties.map((p) => p.name.name.pascalCase.safeName));
+    return properties.map((property) => generateField(cls, { property, className, context, allPropertyPascalNames }));
 }
 
 export function generateField(
@@ -92,7 +98,8 @@ export function generateField(
         context,
         jsonProperty = true,
         initializerOverride,
-        useRequiredOverride
+        useRequiredOverride,
+        allPropertyPascalNames
     }: {
         property: FernIr.ObjectProperty | FernIr.InlinedRequestBodyProperty;
         className: string;
@@ -102,6 +109,8 @@ export function generateField(
         initializerOverride?: ast.CodeBlock;
         /** Override whether the field should be required */
         useRequiredOverride?: boolean;
+        /** All property PascalCase names in the parent class, for collision detection */
+        allPropertyPascalNames?: Set<string>;
     }
 ): ast.Field {
     const fieldType = context.csharpTypeMapper.convert({ reference: property.valueType });
@@ -174,20 +183,45 @@ export function generateField(
                 annotations: fieldAttributes
             });
         }
-        // For inline literals (container.literal without a named IR type), keep the existing
-        // behavior with get/set accessors and Assert.
-        accessors = {
-            get: (writer: Writer) => {
-                writer.writeNode(maybeLiteralInitializer);
-            },
-            set: (writer: Writer) => {
-                writer.write("value.Assert(value == ");
-                writer.writeNode(maybeLiteralInitializer);
-                writer.write(`, string.Format("'${property.name.name.pascalCase.safeName}' must be {0}", `);
-                writer.writeNode(maybeLiteralInitializer);
-                writer.write("))");
-            }
-        };
+        // For inline literals (container.literal without a named IR type), generate a nested
+        // readonly struct inside the parent record named {PropertyName}Literal.
+        const inlineLiteral = extractInlineLiteral(property.valueType);
+        if (inlineLiteral != null) {
+            const propertyPascalName = property.name.name.pascalCase.safeName;
+            const structName = computeNestedStructName(propertyPascalName, allPropertyPascalNames ?? new Set());
+
+            // Build the nested struct inside the parent record
+            buildNestedLiteralStruct({ structName, literal: inlineLiteral, parentClass: cls, context });
+
+            // Add [JsonRequired] so that a missing field in JSON throws JsonException
+            fieldAttributes.unshift(
+                context.csharp.annotation({
+                    reference: context.csharp.classReference({
+                        name: "JsonRequiredAttribute",
+                        namespace: "System.Text.Json.Serialization"
+                    })
+                })
+            );
+
+            // Use the nested struct type for the property with init-only accessor
+            const nestedStructRef = context.csharp.classReference({
+                name: structName,
+                enclosingType: cls.reference
+            });
+            return cls.addField({
+                origin: property,
+                type: nestedStructRef,
+                access: ast.Access.Public,
+                get: true,
+                init: true,
+                summary: property.docs,
+                useRequired: false,
+                initializer: context.csharp.codeblock("new()"),
+                annotations: fieldAttributes
+            });
+        }
+        // Fallback: keep the existing behavior with get/set accessors and Assert
+        // (should not normally reach here if all inline literals are handled above)
         initializer = undefined;
         useRequired = false;
     }
@@ -242,6 +276,87 @@ function resolveNamedLiteralType(
         });
     }
     return undefined;
+}
+
+/**
+ * Extracts the IR Literal from an inline literal type reference (container.literal).
+ * Returns undefined if the type reference is not an inline literal.
+ */
+function extractInlineLiteral(typeReference: TypeReference): Literal | undefined {
+    if (typeReference.type === "container" && typeReference.container.type === "literal") {
+        return typeReference.container.literal;
+    }
+    return undefined;
+}
+
+/**
+ * Computes a nested struct name for an inline literal property with collision detection.
+ * Naming convention: {PropertyNamePascalCase}Literal
+ * If collision detected (another property has the same name), appends numeric suffix.
+ */
+function computeNestedStructName(propertyPascalName: string, allPropertyPascalNames: Set<string>): string {
+    const baseName = `${propertyPascalName}Literal`;
+    if (!allPropertyPascalNames.has(baseName)) {
+        return baseName;
+    }
+    // Collision: append numeric suffix
+    let suffix = 2;
+    while (allPropertyPascalNames.has(`${propertyPascalName}Literal${suffix}`)) {
+        suffix++;
+    }
+    return `${propertyPascalName}Literal${suffix}`;
+}
+
+/**
+ * Builds a nested readonly struct for an inline literal type inside a parent record.
+ * The struct shape is identical to named literal structs: const Value, implicit operator,
+ * overrides (ToString, GetHashCode, Equals), equality operators, and a nested JsonConverter.
+ *
+ * Uses addRawBodyContent on a nested Class to inject pre-formatted struct members.
+ */
+function buildNestedLiteralStruct({
+    structName,
+    literal,
+    parentClass,
+    context
+}: {
+    structName: string;
+    literal: Literal;
+    parentClass: ast.Class;
+    context: ModelGeneratorContext;
+}): void {
+    const converterName = `${structName}Converter`;
+
+    // Create the nested struct with [JsonConverter] annotation
+    const nestedStruct = parentClass.addNestedClass({
+        name: structName,
+        access: ast.Access.Public,
+        type: ast.Class.ClassType.Struct,
+        readonly: true,
+        annotations: [
+            context.csharp.annotation({
+                reference: context.csharp.classReference({
+                    name: "JsonConverter",
+                    namespace: "System.Text.Json.Serialization"
+                }),
+                argument: `typeof(${converterName})`
+            })
+        ]
+    });
+
+    // Add namespace references so using declarations appear at the top of the file
+    nestedStruct.addNamespaceReference("System");
+    nestedStruct.addNamespaceReference("System.Text.Json");
+    nestedStruct.addNamespaceReference("System.Text.Json.Serialization");
+
+    // Generate the struct body content using the pre-formatted templates
+    const isString = literal.type === "string";
+    const bodyContent = isString
+        ? generateNestedStringLiteralBody({ structName, literalValue: literal.string })
+        : generateNestedBoolLiteralBody({ structName, literalValue: literal.boolean });
+
+    // Inject the body content as raw content inside the struct
+    nestedStruct.addRawBodyContent(context.csharp.codeblock(bodyContent));
 }
 
 export function generateFieldForFileProperty(

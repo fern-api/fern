@@ -9,22 +9,6 @@ public class SendTest_ : BaseMockServerTest
 {
     [NUnit.Framework.Test]
     public async Task MockServerTest_1() {
-        const string requestJson = """
-        {
-          "prompt": "You are a helpful assistant",
-          "context": "You're super wise",
-          "query": "query",
-          "temperature": 1.1,
-          "stream": false,
-          "aliasedContext": "You're super wise",
-          "maybeContext": "You're super wise",
-          "objectWithLiteral": {
-            "nestedLiteral": {
-              "myLiteral": "How super cool"
-            }
-          }
-        }
-        """;
 
         const string mockResponse = """
         {
@@ -34,49 +18,36 @@ public class SendTest_ : BaseMockServerTest
         }
         """;
 
-        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/inlined").UsingPost().WithBodyAsJson(requestJson))
+        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/query").WithParam("prompt", "You are a helpful assistant").WithParam("optional_prompt", "You are a helpful assistant").WithParam("alias_prompt", "You are a helpful assistant").WithParam("alias_optional_prompt", "You are a helpful assistant").WithParam("query", "query").UsingPost())
 
         .RespondWith(WireMock.ResponseBuilders.Response.Create()
         .WithStatusCode(200)
         .WithBody(mockResponse));
 
-        var response = await Client.Inlined.SendAsync(new SendLiteralsInlinedRequest {
+        var response = await Client.Query.SendAsync(new SendLiteralsInQueryRequest {
             Prompt = "You are a helpful assistant"
             ,
-            Context = "You're super wise"
+            OptionalPrompt = "You are a helpful assistant"
+            ,
+            AliasPrompt = "You are a helpful assistant"
+            ,
+            AliasOptionalPrompt = "You are a helpful assistant"
             ,
             Query = "query",
-            Temperature = 1.1,
             Stream = false
             ,
-            AliasedContext = "You're super wise"
+            OptionalStream = false
             ,
-            MaybeContext = "You're super wise"
+            AliasStream = false
             ,
-            ObjectWithLiteral = new ATopLevelLiteral {NestedLiteral = new ANestedLiteral {MyLiteral = "How super cool"
-                }}
+            AliasOptionalStream = false
+
         });
         JsonAssert.AreEqual(response, mockResponse);
     }
 
     [NUnit.Framework.Test]
     public async Task MockServerTest_2() {
-        const string requestJson = """
-        {
-          "temperature": 10.1,
-          "prompt": "You are a helpful assistant",
-          "context": "You're super wise",
-          "aliasedContext": "You're super wise",
-          "maybeContext": "You're super wise",
-          "objectWithLiteral": {
-            "nestedLiteral": {
-              "myLiteral": "How super cool"
-            }
-          },
-          "stream": false,
-          "query": "What is the weather today"
-        }
-        """;
 
         const string mockResponse = """
         {
@@ -86,38 +57,31 @@ public class SendTest_ : BaseMockServerTest
         }
         """;
 
-        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/inlined").UsingPost().WithBodyAsJson(requestJson))
+        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/query").WithParam("prompt", "You are a helpful assistant").WithParam("optional_prompt", "You are a helpful assistant").WithParam("alias_prompt", "You are a helpful assistant").WithParam("alias_optional_prompt", "You are a helpful assistant").WithParam("query", "What is the weather today").UsingPost())
 
         .RespondWith(WireMock.ResponseBuilders.Response.Create()
         .WithStatusCode(200)
         .WithBody(mockResponse));
 
-        var response = await Client.Inlined.SendAsync(new SendLiteralsInlinedRequest {
-            Temperature = 10.1,
+        var response = await Client.Query.SendAsync(new SendLiteralsInQueryRequest {
             Prompt = "You are a helpful assistant"
             ,
-            Context = "You're super wise"
+            OptionalPrompt = "You are a helpful assistant"
             ,
-            AliasedContext = "You're super wise"
+            AliasPrompt = "You are a helpful assistant"
             ,
-            MaybeContext = "You're super wise"
+            AliasOptionalPrompt = "You are a helpful assistant"
             ,
-            ObjectWithLiteral = new ATopLevelLiteral {NestedLiteral = new ANestedLiteral {MyLiteral = "How super cool"
-                }},
             Stream = false
+            ,
+            OptionalStream = false
+            ,
+            AliasStream = false
+            ,
+            AliasOptionalStream = false
             ,
             Query = "What is the weather today"
         });
-        JsonAssert.AreEqual(response, mockResponse);
-    }
-
-}
-s>(){
-                    new NestedObjectWithLiterals {Literal1 = "literal1"
-                        , Literal2 = "literal2"
-                        , StrProp = "strProp"}
-                }
-            }});
         JsonAssert.AreEqual(response, mockResponse);
     }
 
