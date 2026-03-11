@@ -1,4 +1,4 @@
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -220,8 +220,21 @@ export function generateField(
                 annotations: fieldAttributes
             });
         }
-        // Fallback: keep the existing behavior with get/set accessors and Assert
-        // (should not normally reach here if all inline literals are handled above)
+        // Fallback: keep the existing behavior with get/set accessors and Assert.
+        // This handles cases like optional<literal<...>> where the literal is wrapped
+        // in a container that neither resolveNamedLiteralType nor extractInlineLiteral matches.
+        accessors = {
+            get: (writer: Writer) => {
+                writer.writeNode(maybeLiteralInitializer);
+            },
+            set: (writer: Writer) => {
+                writer.write("value.Assert(value == ");
+                writer.writeNode(maybeLiteralInitializer);
+                writer.write(`, string.Format("'${property.name.name.pascalCase.safeName}' must be {0}", `);
+                writer.writeNode(maybeLiteralInitializer);
+                writer.write("))");
+            }
+        };
         initializer = undefined;
         useRequired = false;
     }
