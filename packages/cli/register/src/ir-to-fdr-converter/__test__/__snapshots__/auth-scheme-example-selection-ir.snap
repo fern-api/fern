@@ -1033,7 +1033,7 @@ Examples should use the first available auth scheme (admin).
       "shape": {
         "_visit": [Function],
         "default": undefined,
-        "openEnded": undefined,
+        "forwardCompatible": undefined,
         "type": "enum",
         "values": [
           {
