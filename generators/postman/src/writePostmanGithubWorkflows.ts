@@ -33,7 +33,7 @@ export async function writePostmanGithubWorkflows({
     
     concurrency:
       group: \${{ github.workflow }}-\${{ github.ref }}
-      cancel-in-progress: true
+      cancel-in-progress: false
     
     jobs:
       

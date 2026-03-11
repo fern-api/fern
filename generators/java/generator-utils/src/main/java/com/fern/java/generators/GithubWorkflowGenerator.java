@@ -15,7 +15,7 @@ public final class GithubWorkflowGenerator {
                 + "\n"
                 + "concurrency:\n"
                 + "  group: ${{ github.workflow }}-${{ github.ref }}\n"
-                + "  cancel-in-progress: true\n"
+                + "  cancel-in-progress: false\n"
                 + "\n"
                 + "jobs:\n"
                 + "  compile:\n"
