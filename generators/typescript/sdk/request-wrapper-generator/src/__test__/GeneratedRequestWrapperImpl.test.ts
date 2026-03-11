@@ -1751,7 +1751,8 @@ describe("GeneratedRequestWrapperImpl", () => {
                     requestBody: FernIr.HttpRequestBody.reference({
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
-                        docs: undefined
+                        docs: undefined,
+                        v2Examples: undefined
                     }),
                     sdkRequest: createSdkRequestWrapper()
                 })
@@ -1795,7 +1796,8 @@ describe("GeneratedRequestWrapperImpl", () => {
                     requestBody: FernIr.HttpRequestBody.reference({
                         requestBodyType: namedBodyRef,
                         contentType: undefined,
-                        docs: undefined
+                        docs: undefined,
+                        v2Examples: undefined
                     }),
                     sdkRequest: createSdkRequestWrapper()
                 })
