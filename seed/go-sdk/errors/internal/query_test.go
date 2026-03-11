@@ -115,7 +115,7 @@ func TestQueryValues(t *testing.T) {
 			},
 		)
 		require.NoError(t, err)
-		assert.Equal(t, "dateTime=1994-03-16T12%3A34%3A56Z", values.Encode())
+		assert.Equal(t, "dateTime=1994-03-16T12%3A34%3A56.000Z", values.Encode())
 	})
 
 	t.Run("date", func(t *testing.T) {
