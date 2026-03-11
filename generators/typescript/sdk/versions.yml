@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.53.13
+  changelogEntry:
+    - summary: |
+        Fix WebSocket connections failing silently in Bun and Deno. The `getGlobalWebSocket()`
+        function now prefers the `ws` library for Bun and Deno runtimes, whose native WebSocket
+        constructors ignore the options argument containing authentication headers.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
 - version: 3.53.12
   changelogEntry:
     - summary: |
