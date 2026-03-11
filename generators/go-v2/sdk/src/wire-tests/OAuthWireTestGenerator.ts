@@ -6,9 +6,7 @@ import {
     getClientAccessPath,
     getOAuthClientCredentialsScheme,
     getRequestPropertyFieldName,
-    getRequestPropertyValueType,
-    isRequestPropertyOptional,
-    isTypeReferenceOptional
+    isRequestPropertyOptional
 } from "../authUtils.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 

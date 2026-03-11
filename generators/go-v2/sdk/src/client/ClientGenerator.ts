@@ -7,7 +7,6 @@ import {
     getInferredAuthScheme,
     getOAuthClientCredentialsScheme,
     getRequestPropertyFieldName,
-    getRequestPropertyValueType,
     isRequestPropertyOptional,
     isTypeReferenceOptional
 } from "../authUtils.js";
