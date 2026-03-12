@@ -245,7 +245,7 @@ export class CoreUtilitiesManager {
         }
 
         if (this.referencedCoreUtilities["customPagination"] != null) {
-            const paginationDir = path.join(pathToRoot, this.getPackagePathImport(), "core", "pagination");
+            const paginationDir = path.join(pathToRoot, this.relativePackagePath, "core", "pagination");
             await mkdir(paginationDir, { recursive: true });
 
             let customPagerContents = await readFile(
@@ -260,7 +260,7 @@ export class CoreUtilitiesManager {
 
         if (this.referencedCoreUtilities["pagination"] != null) {
             const hasCustomPagination = this.referencedCoreUtilities["customPagination"] != null;
-            const paginationDir = path.join(pathToRoot, this.getPackagePathImport(), "core", "pagination");
+            const paginationDir = path.join(pathToRoot, this.relativePackagePath, "core", "pagination");
             await mkdir(paginationDir, { recursive: true });
 
             if (hasCustomPagination) {
