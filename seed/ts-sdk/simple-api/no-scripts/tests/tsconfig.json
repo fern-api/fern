@@ -3,7 +3,6 @@
     "compilerOptions": {
         "outDir": null,
         "rootDir": "..",
-        "baseUrl": "..",
             "types": ["vitest/globals"]
     },
     "include": ["../src","../tests"],

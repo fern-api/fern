@@ -3006,7 +3006,7 @@ private func main() async throws {
     let client = ExhaustiveClient(token: "<token>")
 
     _ = try await client.endpoints.union.getAndReturnUnion(request: Animal.dog(
-        .init(
+        Dog(
             name: "name",
             likesToWoof: true
         )

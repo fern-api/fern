@@ -805,6 +805,62 @@ func do() {
 "
 `;
 
+exports[`snippets (default) > required-headers > 'GET /plants (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+		option.WithTenantId(
+			"my-tenant-id",
+		),
+	)
+	client.Plantstore.List(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`snippets (default) > required-headers > 'POST /plants (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+		option.WithTenantId(
+			"my-tenant-id",
+		),
+	)
+	request := &acme.CreatePlantRequest{
+		Name:  "Fern",
+		Price: 12.99,
+	}
+	client.Plantstore.Create(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "package example
 
@@ -1707,6 +1763,62 @@ func do() {
 "
 `;
 
+exports[`snippets (exportAllRequestsAtRoot) > required-headers > 'GET /plants (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+		option.WithTenantId(
+			"my-tenant-id",
+		),
+	)
+	client.Plantstore.List(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`snippets (exportAllRequestsAtRoot) > required-headers > 'POST /plants (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+		option.WithTenantId(
+			"my-tenant-id",
+		),
+	)
+	request := &acme.CreatePlantRequest{
+		Name:  "Fern",
+		Price: 12.99,
+	}
+	client.Plantstore.Create(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
 exports[`snippets (exportAllRequestsAtRoot) > single-url-environment-default > 'Production environment' 1`] = `
 "package example
 
@@ -2602,6 +2714,62 @@ func do() {
 		},
 	}
 	client.CreateUser(
+		context.TODO(),
+		request,
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > required-headers > 'GET /plants (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+		option.WithTenantId(
+			"my-tenant-id",
+		),
+	)
+	client.Plantstore.List(
+		context.TODO(),
+	)
+}
+"
+`;
+
+exports[`snippets (exportedClientName) > required-headers > 'POST /plants (simple)' 1`] = `
+"package example
+
+import (
+	context "context"
+	acme "github.com/acme/acme-go"
+	client "github.com/acme/acme-go/client"
+	option "github.com/acme/acme-go/option"
+)
+
+func do() {
+	client := client.NewFernClient(
+		option.WithToken(
+			"<YOUR_API_KEY>",
+		),
+		option.WithTenantId(
+			"my-tenant-id",
+		),
+	)
+	request := &acme.CreatePlantRequest{
+		Name:  "Fern",
+		Price: 12.99,
+	}
+	client.Plantstore.Create(
 		context.TODO(),
 		request,
 	)

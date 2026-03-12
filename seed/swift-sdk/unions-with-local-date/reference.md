@@ -77,10 +77,7 @@ private func main() async throws {
     let client = UnionsClient()
 
     _ = try await client.bigunion.update(request: BigUnion.normalSweet(
-        .init(
-            id: "id",
-            createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-            archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+        NormalSweet(
             value: "value"
         )
     ))
@@ -142,18 +139,12 @@ private func main() async throws {
 
     _ = try await client.bigunion.updateMany(request: [
         BigUnion.normalSweet(
-            .init(
-                id: "id",
-                createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            NormalSweet(
                 value: "value"
             )
         ),
         BigUnion.normalSweet(
-            .init(
-                id: "id",
-                createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+            NormalSweet(
                 value: "value"
             )
         )
@@ -273,9 +264,7 @@ private func main() async throws {
     let client = UnionsClient()
 
     _ = try await client.types.update(request: UnionWithTime.date(
-        .init(
-            date: 
-        )
+
     ))
 }
 
@@ -392,8 +381,7 @@ private func main() async throws {
     let client = UnionsClient()
 
     _ = try await client.union.update(request: Shape.circle(
-        .init(
-            id: "id",
+        Circle(
             radius: 1.1
         )
     ))

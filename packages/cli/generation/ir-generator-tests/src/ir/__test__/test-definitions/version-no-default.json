@@ -126,7 +126,8 @@
                     "availability": null,
                     "docs": null
                 }
-            ]
+            ],
+            "forwardCompatible": null
         }
     },
     "apiName": {

@@ -8,5 +8,6 @@
     "clientClassName": "CustomSimpleClient",
     "enableWireTests": true
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

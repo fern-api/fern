@@ -203,17 +203,21 @@ export async function loadAPIWorkspace({
     absolutePathToWorkspace,
     context,
     cliVersion,
-    workspaceName
+    workspaceName,
+    lenient
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     cliVersion: string;
     workspaceName: string | undefined;
+    /** If true, use lenient parsing that tolerates unrecognized keys/union members */
+    lenient?: boolean;
 }): Promise<WorkspaceLoader.Result> {
     const [generatorsConfiguration, changelog] = await Promise.all([
         loadGeneratorsConfiguration({
             absolutePathToWorkspace,
-            context
+            context,
+            lenient
         }),
         loadAPIChangelog({ absolutePathToWorkspace }).catch(() => undefined)
     ]);

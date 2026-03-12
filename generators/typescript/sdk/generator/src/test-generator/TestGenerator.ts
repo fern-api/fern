@@ -316,8 +316,7 @@ export class TestGenerator {
     "extends": "${extendsPath}",
     "compilerOptions": {
         "outDir": null,
-        "rootDir": "..",
-        "baseUrl": ".."${
+        "rootDir": ".."${
             this.testFramework === "vitest"
                 ? `,
             "types": ["vitest/globals"]`

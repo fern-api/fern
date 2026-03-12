@@ -1,0 +1,107 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedSdkErrorClassImpl > build > builds new expression with body 1`] = `"new BadRequestError(parsedBody)"`;
+
+exports[`GeneratedSdkErrorClassImpl > build > builds new expression with body and rawResponse 1`] = `"new BadRequestError(parsedBody, rawResp)"`;
+
+exports[`GeneratedSdkErrorClassImpl > build > builds new expression with only rawResponse (no body) 1`] = `"new BadRequestError(rawResp)"`;
+
+exports[`GeneratedSdkErrorClassImpl > build > builds new expression without body 1`] = `"new BadRequestError()"`;
+
+exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with body type 1`] = `
+"export class BadRequestError extends ApiError {
+    constructor(body: string, rawResponse?: RawResponse) {
+        super({
+            message: "BadRequest",
+            statusCode: 400,
+            body: body,
+            rawResponse: rawResponse
+        });
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;
+
+exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with custom status code 1`] = `
+"export class NotFoundError extends ApiError {
+    constructor(rawResponse?: RawResponse) {
+        super({
+            message: "NotFound",
+            statusCode: 404,
+            rawResponse: rawResponse
+        });
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;
+
+exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with named body type 1`] = `
+"export class BadRequestError extends ApiError {
+    constructor(body: string, rawResponse?: RawResponse) {
+        super({
+            message: "BadRequest",
+            statusCode: 400,
+            body: body,
+            rawResponse: rawResponse
+        });
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;
+
+exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class with optional body type 1`] = `
+"export class BadRequestError extends ApiError {
+    constructor(body?: string, rawResponse?: RawResponse) {
+        super({
+            message: "BadRequest",
+            statusCode: 400,
+            body: body,
+            rawResponse: rawResponse
+        });
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;
+
+exports[`GeneratedSdkErrorClassImpl > writeToFile > writes error class without body type 1`] = `
+"export class BadRequestError extends ApiError {
+    constructor(rawResponse?: RawResponse) {
+        super({
+            message: "BadRequest",
+            statusCode: 400,
+            rawResponse: rawResponse
+        });
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;

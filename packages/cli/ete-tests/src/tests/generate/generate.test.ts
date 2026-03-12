@@ -84,12 +84,12 @@ describe("fern generate", () => {
         );
     }, 180_000);
 
-    it.concurrent("generate docs with auth bypass fails", async ({ signal }) => {
+    it.concurrent("generate docs with FDR origin override but no token fails", async ({ signal }) => {
         const { stdout } = await runFernCli(["generate", "--docs", "--no-prompt"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
             env: {
-                FERN_SELF_HOSTED: "true",
+                FERN_FDR_ORIGIN: "http://localhost:8080",
                 FERN_TOKEN: ""
             },
             includeAuthToken: false,
@@ -98,12 +98,12 @@ describe("fern generate", () => {
         expect(stdout).toContain("No token found. Please set the FERN_TOKEN environment variable.");
     }, 180_000);
 
-    it.concurrent("generate docs with auth bypass succeeds", async ({ signal }) => {
+    it.concurrent("generate docs with FDR origin override and token succeeds", async ({ signal }) => {
         const { stdout } = await runFernCli(["generate", "--docs", "--no-prompt"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             reject: false,
             env: {
-                FERN_SELF_HOSTED: "true",
+                FERN_FDR_ORIGIN: "http://localhost:8080",
                 FERN_TOKEN: "dummy"
             },
             includeAuthToken: false,

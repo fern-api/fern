@@ -1,0 +1,96 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedAliasTypeImpl > generateStatements / writeToFile > generates type alias for a named type reference 1`] = `
+"export type Object_ = OriginalType;
+"
+`;
+
+exports[`GeneratedAliasTypeImpl > generateStatements / writeToFile > generates type alias for primitive string 1`] = `
+"export type TypeId = string;
+"
+`;
+
+exports[`GeneratedAliasTypeImpl > generateStatements / writeToFile > generates type alias with docs 1`] = `
+"/**
+ * An alias for type IDs.
+ */
+export type TypeId = string;
+"
+`;
+
+exports[`GeneratedAliasTypeImpl > generateStatements / writeToFile > generates type alias with docs and @example annotation 1`] = `
+"/**
+ * An alias for type IDs.
+ *
+ * @example
+ *     "example-value"
+ */
+export type TypeId = string;
+"
+`;
+
+exports[`GeneratedBrandedStringAliasImpl > buildExample > wraps example value in a call to the creator function 1`] = `"UserId("example-value")"`;
+
+exports[`GeneratedBrandedStringAliasImpl > generateStatements / writeToFile > generates branded type alias and builder function 1`] = `
+"export type UserId = string & {
+        types_UserId: void;
+    };
+
+export function UserId(value: string): UserId {
+    return value as unknown as UserId;
+}
+"
+`;
+
+exports[`GeneratedBrandedStringAliasImpl > generateStatements / writeToFile > generates branded type with docs 1`] = `
+"/**
+ * A unique user identifier.
+ */
+export type UserId = string & {
+        types_UserId: void;
+    };
+
+export function UserId(value: string): UserId {
+    return value as unknown as UserId;
+}
+"
+`;
+
+exports[`GeneratedBrandedStringAliasImpl > generateStatements / writeToFile > generates branded type with docs and @example annotation 1`] = `
+"/**
+ * A unique user identifier.
+ *
+ * @example
+ *     UserId("example-value")
+ */
+export type UserId = string & {
+        types_UserId: void;
+    };
+
+export function UserId(value: string): UserId {
+    return value as unknown as UserId;
+}
+"
+`;
+
+exports[`GeneratedBrandedStringAliasImpl > generateStatements / writeToFile > generates branded type with multi-segment package path brand 1`] = `
+"export type ResourceId = string & {
+        api_resources_ResourceId: void;
+    };
+
+export function ResourceId(value: string): ResourceId {
+    return value as unknown as ResourceId;
+}
+"
+`;
+
+exports[`GeneratedBrandedStringAliasImpl > generateStatements / writeToFile > uses the aliased type for the branded intersection 1`] = `
+"export type NumericId = number & {
+        types_NumericId: void;
+    };
+
+export function NumericId(value: string): NumericId {
+    return value as unknown as NumericId;
+}
+"
+`;

@@ -3,39 +3,10 @@ import { randomUUID } from "crypto";
 import { mkdir, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
-import { Writable } from "stream";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { CheckCommand } from "../commands/check/command.js";
 import { CheckCommand as SdkCheckCommand } from "../commands/sdk/check/command.js";
-import { Context } from "../context/Context.js";
-
-function createCapturingStream(): { stream: NodeJS.WriteStream; getOutput: () => string } {
-    const chunks: Buffer[] = [];
-    const stream = new Writable({
-        write(chunk, _encoding, callback) {
-            chunks.push(Buffer.from(chunk));
-            callback();
-        }
-    }) as NodeJS.WriteStream;
-    return {
-        stream,
-        getOutput: () => Buffer.concat(chunks as unknown as Uint8Array[]).toString("utf-8")
-    };
-}
-
-function createTestContextWithCapture({ cwd }: { cwd: AbsoluteFilePath }): {
-    context: Context;
-    getStdout: () => string;
-    getStderr: () => string;
-} {
-    const stdout = createCapturingStream();
-    const stderr = createCapturingStream();
-    return {
-        context: new Context({ stdout: stdout.stream, stderr: stderr.stream, cwd }),
-        getStdout: stdout.getOutput,
-        getStderr: stderr.getOutput
-    };
-}
+import { createTestContextWithCapture } from "./utils/createTestContext.js";
 
 describe("fern check --json", () => {
     let testDir: AbsoluteFilePath;

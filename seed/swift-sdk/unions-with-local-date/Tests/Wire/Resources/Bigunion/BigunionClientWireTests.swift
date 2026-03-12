@@ -22,9 +22,15 @@ import Unions
             baseURL: "https://api.fern.com",
             urlSession: stub.urlSession
         )
-        let expectedResponse = .normalSweet(
+        let expectedResponse = BigUnion.normalSweet(
             .init(
-                value: "value"
+                value: "value",
+                additionalProperties: [
+                    "type": JSONValue.string("normalSweet"), 
+                    "id": JSONValue.string("id"), 
+                    "created-at": JSONValue.string("2024-01-15T09:30:00Z"), 
+                    "archived-at": JSONValue.string("2024-01-15T09:30:00Z")
+                ]
             )
         )
         let response = try await client.bigunion.get(
@@ -50,10 +56,7 @@ import Unions
         let expectedResponse = true
         let response = try await client.bigunion.update(
             request: BigUnion.normalSweet(
-                .init(
-                    id: "id",
-                    createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                    archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                NormalSweet(
                     value: "value"
                 )
             ),
@@ -83,18 +86,12 @@ import Unions
         let response = try await client.bigunion.updateMany(
             request: [
                 BigUnion.normalSweet(
-                    .init(
-                        id: "id",
-                        createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                        archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                    NormalSweet(
                         value: "value"
                     )
                 ),
                 BigUnion.normalSweet(
-                    .init(
-                        id: "id",
-                        createdAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
-                        archivedAt: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
+                    NormalSweet(
                         value: "value"
                     )
                 )

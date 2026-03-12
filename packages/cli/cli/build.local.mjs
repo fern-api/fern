@@ -9,7 +9,7 @@ buildCli({
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
         DEFAULT_VENUS_ORIGIN: "http://localhost:8089",
         DEFAULT_FDR_ORIGIN: "http://localhost:8080",
-        OVERRIDE_FDR_ORIGIN: "http://localhost:8080",
+        FERN_FDR_ORIGIN: "http://localhost:8080",
         DEFAULT_FDR_LAMBDA_ORIGIN: "http://localhost:8080",
         VENUS_AUDIENCE: "venus-dev",
         LOCAL_STORAGE_FOLDER: ".fern-local",

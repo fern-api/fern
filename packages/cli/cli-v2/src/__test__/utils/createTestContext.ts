@@ -17,6 +17,41 @@ export function createTestContext({ cwd }: { cwd: AbsoluteFilePath }): Context {
 }
 
 /**
+ * Create a Context whose stdout/stderr are captured for assertion.
+ */
+export function createTestContextWithCapture({ cwd }: { cwd: AbsoluteFilePath }): {
+    context: Context;
+    getStdout: () => string;
+    getStderr: () => string;
+} {
+    const stdout = createCapturingStream();
+    const stderr = createCapturingStream();
+    return {
+        context: new Context({ stdout: stdout.stream, stderr: stderr.stream, cwd }),
+        getStdout: stdout.getOutput,
+        getStderr: stderr.getOutput
+    };
+}
+
+/**
+ * Create a writable stream that captures all written chunks so they can be
+ * inspected after the test completes.
+ */
+function createCapturingStream(): { stream: NodeJS.WriteStream; getOutput: () => string } {
+    const chunks: Buffer[] = [];
+    const stream = new Writable({
+        write(chunk, _encoding, callback) {
+            chunks.push(Buffer.from(chunk));
+            callback();
+        }
+    }) as NodeJS.WriteStream;
+    return {
+        stream,
+        getOutput: () => Buffer.concat(chunks as unknown as Uint8Array[]).toString("utf-8")
+    };
+}
+
+/**
  * A writable stream that discards all output.
  * Used for testing to suppress console output.
  */

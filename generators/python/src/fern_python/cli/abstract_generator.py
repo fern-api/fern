@@ -337,6 +337,11 @@ class AbstractGenerator(ABC):
     ) -> str:
         workflow_yaml = f"""name: ci
 on: [push]
+
+concurrency:
+  group: ${{{{ github.workflow }}}}-${{{{ github.ref }}}}
+  cancel-in-progress: false
+
 jobs:
   compile:
     runs-on: ubuntu-latest
@@ -424,6 +429,11 @@ jobs:
         workflow_yaml = f"""name: ci
 
 on: [push]
+
+concurrency:
+  group: ${{{{ github.workflow }}}}-${{{{ github.ref }}}}
+  cancel-in-progress: false
+
 jobs:
   compile:
     runs-on: ubuntu-latest

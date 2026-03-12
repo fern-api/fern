@@ -181,6 +181,9 @@ fixtures:
     - customConfig:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
+    - customConfig:
+        use-undiscriminated-unions: true
+      outputFolder: use-undiscriminated-unions
   optional:
     - customConfig: null
       outputFolder: no-custom-config
