@@ -40,6 +40,12 @@ export interface PageActionOptions {
      */
     cursor?: boolean;
     /**
+     * When enabled, displays a "Connect to Claude Code" button that allows users to install the MCP server on Claude Code for AI-powered assistance.
+     *
+     * @default: false
+     */
+    claudeCode?: boolean;
+    /**
      * When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
      *
      * @default: false

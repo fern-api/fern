@@ -59,6 +59,7 @@ export const PageActionOption = z.enum([
     "chatgpt",
     "claude",
     "cursor",
+    "claude-code",
     "vscode"
 ]);
 
@@ -355,6 +356,7 @@ export const PageActionOptions = z.object({
     chatgpt: z.boolean().optional(),
     claude: z.boolean().optional(),
     cursor: z.boolean().optional(),
+    "claude-code": z.boolean().optional(),
     vscode: z.boolean().optional(),
     custom: z.array(CustomPageAction).optional()
 });

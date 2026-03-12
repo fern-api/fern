@@ -344,6 +344,7 @@ function convertPageActions(
             openAi: pageActions.options?.chatgpt ?? true,
             claude: pageActions.options?.claude ?? true,
             cursor: pageActions.options?.cursor ?? true,
+            claudeCode: pageActions.options?.claudeCode ?? true,
             vscode: pageActions.options?.vscode ?? false,
             custom: (pageActions.options?.custom ?? []).map((action) =>
                 convertCustomPageAction(action, absoluteFilepathToDocsConfig)
@@ -368,6 +369,8 @@ function convertPageActionOption(
             return CjsFdrSdk.docs.v1.commons.PageActionOption.Claude;
         case "cursor":
             return CjsFdrSdk.docs.v1.commons.PageActionOption.Cursor;
+        case "claude-code":
+            return "claudeCode" as CjsFdrSdk.docs.v1.commons.PageActionOption;
         case "vscode":
             return CjsFdrSdk.docs.v1.commons.PageActionOption.Vscode;
         default:
