@@ -5,8 +5,7 @@
         Add support for `"latest"` as the `version` value in `fern.config.json`.
         When set to `"latest"`, the CLI automatically resolves to the most recent
         published version from npm on every invocation, removing the need to
-        manually run `fern upgrade` to stay current. The `fern upgrade` command
-        preserves the `"latest"` value in the config file after running migrations.
+        manually run `fern upgrade` to stay current.
       type: feat
   createdAt: "2026-03-11"
   irVersion: 65
