@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.26.0
+  changelogEntry:
+    - summary: |
+        Add chunked diff analysis for oversized diffs during AUTO versioning.
+        Large SDK diffs (e.g. Java with 700+ generated files) that exceed 40 KB
+        are now split into semantically ranked chunks, each analyzed by the AI
+        separately. Version bumps are merged (takes the maximum) and all changelog
+        entries are aggregated into a markdown list. Analysis is capped at 40
+        chunks to bound latency and cost. Diffs exceeding 10 MB are rejected
+        before chunking to prevent resource exhaustion. Both the local generation
+        path and the CLI `sdk-diff` command now support chunked analysis.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
 - version: 4.25.0
   changelogEntry:
     - summary: |
@@ -10,7 +25,6 @@
       type: feat
   createdAt: "2026-03-12"
   irVersion: 65
-
 - version: 4.24.1
   changelogEntry:
     - summary: |
@@ -66,7 +80,6 @@
       type: fix
   createdAt: "2026-03-12"
   irVersion: 65
-
 - version: 4.24.0
   changelogEntry:
     - summary: |
