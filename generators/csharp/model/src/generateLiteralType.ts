@@ -151,7 +151,8 @@ function generateStringLiteralContent({
 }): string {
     // Escape backslashes first, then double quotes for C# string literals
     const escapedLiteralValue = literalValue.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-    return `using System.Text.Json;
+    return `using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ${namespace};
@@ -208,7 +209,8 @@ function generateBoolLiteralContent({
 }): string {
     const csharpValue = literalValue ? "true" : "false";
     const oppositeValue = literalValue ? "false" : "true";
-    return `using System.Text.Json;
+    return `using System;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace ${namespace};
