@@ -392,17 +392,19 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     private getRawClientHeaders(): ruby.TypeLiteral {
         const headers: ruby.HashEntry[] = [];
 
-        if (this.context.ir.sdkConfig.platformHeaders.userAgent != null) {
+        if (!this.context.customConfig.omitFernHeaders) {
+            if (this.context.ir.sdkConfig.platformHeaders.userAgent != null) {
+                headers.push({
+                    key: ruby.TypeLiteral.string("User-Agent"),
+                    value: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.userAgent.value)
+                });
+            }
+
             headers.push({
-                key: ruby.TypeLiteral.string("User-Agent"),
-                value: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.userAgent.value)
+                key: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.language),
+                value: ruby.TypeLiteral.string("Ruby")
             });
         }
-
-        headers.push({
-            key: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.language),
-            value: ruby.TypeLiteral.string("Ruby")
-        });
 
         for (const header of this.context.ir.auth.schemes) {
             switch (header.type) {
