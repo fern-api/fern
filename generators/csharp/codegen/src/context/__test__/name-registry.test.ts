@@ -133,7 +133,7 @@ describe("NameRegistry", () => {
             nameRegistry.trackType(nestedRef);
 
             expect(nameRegistry.isRegisteredTypeName("MyApp.OuterType")).toBe(true);
-            expect(nameRegistry.isRegisteredTypeName("MyApp.OuterType.NestedType")).toBe(true);
+            expect(nameRegistry.isRegisteredTypeName("MyApp.OuterType+NestedType")).toBe(true);
         });
     });
 
@@ -203,7 +203,7 @@ describe("NameRegistry", () => {
             };
             const fqn = NameRegistry.fullyQualifiedNameOf(identity);
 
-            expect(fqn).toBe("MyApp.OuterType.NestedType");
+            expect(fqn).toBe("MyApp.OuterType+NestedType");
         });
 
         it("should handle deeply nested namespaces", () => {
@@ -223,7 +223,7 @@ describe("NameRegistry", () => {
             };
             const fqn = NameRegistry.fullyQualifiedNameOf(identity);
 
-            expect(fqn).toBe("MyApp.Middle.Inner");
+            expect(fqn).toBe("MyApp.Outer+Middle+Inner");
         });
     });
 
@@ -485,12 +485,12 @@ describe("NameRegistry", () => {
 
             const nestedRef = nameRegistry.registerClassReference(
                 { name: "Nested", namespace: "MyApp", enclosingType: outerRef },
-                "MyApp.Outer.Nested"
+                "MyApp.Outer+Nested"
             );
 
             expect(nestedRef.name).toBe("Nested");
             expect(nestedRef.enclosingType).toBe(outerRef);
-            expect(nestedRef.fullyQualifiedName).toBe("MyApp.Outer.Nested");
+            expect(nestedRef.fullyQualifiedName).toBe("MyApp.Outer+Nested");
         });
 
         it("should preserve additional ClassReference properties", () => {
@@ -725,7 +725,7 @@ describe("NameRegistry", () => {
             nameRegistry.trackType(level3);
 
             expect(nameRegistry.isRegisteredTypeName("Root.A.B.C.Level1")).toBe(true);
-            expect(nameRegistry.isRegisteredTypeName("Root.A.B.C.Level2.Level3")).toBe(true);
+            expect(nameRegistry.isRegisteredTypeName("Root.A.B.C.Level1+Level2+Level3")).toBe(true);
             expect(nameRegistry.isKnownNamespace("Root")).toBe(true);
             expect(nameRegistry.isKnownNamespace("Root.A")).toBe(true);
             expect(nameRegistry.isKnownNamespace("Root.A.B")).toBe(true);

@@ -866,10 +866,19 @@ export class NameRegistry {
      * @returns A fully qualified name string (e.g., "Namespace.TypeName" or "Namespace.EnclosingType.TypeName")
      */
     public static fullyQualifiedNameOf(classReference: ClassReference.Identity): string {
-        // Create a consistent string representation for registry keys
-        return classReference.enclosingType
-            ? `${classReference.namespace}.${classReference.enclosingType.name}.${classReference.name}`
-            : `${classReference.namespace}.${classReference.name}`;
+        // Create a consistent string representation for registry keys.
+        // Nested types use '+' separator (matching .NET IL convention) to structurally
+        // distinguish them from types in sub-namespaces that would otherwise produce
+        // the same dotted path. For example:
+        //   Nested:      namespace=A, enclosingType=B, name=C  → "A.B+C"
+        //   Sub-namespace: namespace=A.B, name=C               → "A.B.C"
+        if (classReference.enclosingType) {
+            const enclosingFqn =
+                classReference.enclosingType.fullyQualifiedName ??
+                `${classReference.namespace}.${classReference.enclosingType.name}`;
+            return `${enclosingFqn}+${classReference.name}`;
+        }
+        return `${classReference.namespace}.${classReference.name}`;
     }
 
     /**
@@ -1189,6 +1198,32 @@ export class NameRegistry {
                 name = `${name}_`;
                 modified = true;
                 continue conflictResolution;
+            }
+
+            // Cross-format ambiguity check: a nested type "A.B+C" and a non-nested type "A.B.C"
+            // would both resolve to "A.B.C" in C# source code, causing compilation ambiguity.
+            // Detect and resolve this by checking the alternate format.
+            if (enclosingType) {
+                // Nested type: check if a non-nested type with the same dotted path exists
+                const dottedFqn = fullyQualifiedName.replaceAll("+", ".");
+                if (this.typeRegistry.has(dottedFqn)) {
+                    name = `${name}_`;
+                    modified = true;
+                    continue conflictResolution;
+                }
+            } else {
+                // Non-nested type: check if a nested type with the same path exists
+                // e.g., "A.B.C" could collide with "A.B+C" (one level of nesting)
+                const lastDot = fullyQualifiedName.lastIndexOf(".");
+                if (lastDot > 0) {
+                    const nestedFqn =
+                        fullyQualifiedName.substring(0, lastDot) + "+" + fullyQualifiedName.substring(lastDot + 1);
+                    if (this.typeRegistry.has(nestedFqn)) {
+                        name = `${name}_`;
+                        modified = true;
+                        continue conflictResolution;
+                    }
+                }
             }
 
             // No conflicts found, we're good to go
