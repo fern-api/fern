@@ -4645,6 +4645,7 @@
                   "description": "Array of arguments passed to the given function. If this is present, the default export should be a function and will be called with these arguments, and the function result will be returned. If `args` is not present, no function calls are made, but you can still return a value using `export default myVariable`.",
                   "value": {
                     "generatedName": "EvalPostRequestArgsItem",
+                    "groupName": [],
                     "type": "unknown"
                   },
                   "generatedName": "EvalPostRequestArgs",
@@ -4736,6 +4737,7 @@
                 {
                   "value": {
                     "generatedName": "EvalPostResponseThree",
+                    "groupName": [],
                     "type": "unknown"
                   },
                   "generatedName": "EvalPostResponseThree",
@@ -5031,6 +5033,7 @@
                 {
                   "value": {
                     "generatedName": "EvalGetResponseThree",
+                    "groupName": [],
                     "type": "unknown"
                   },
                   "generatedName": "EvalGetResponseThree",
@@ -5310,6 +5313,7 @@
                 "value": {
                   "value": {
                     "generatedName": "RunPostRequestArgsItem",
+                    "groupName": [],
                     "type": "unknown"
                   },
                   "generatedName": "RunPostRequestArgs",
@@ -7573,6 +7577,7 @@
           "generatedName": "NotFoundError",
           "schema": {
             "generatedName": "NotFoundErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "The val was not found",
@@ -8684,6 +8689,7 @@
           "generatedName": "NotFoundError",
           "schema": {
             "generatedName": "NotFoundErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "The val was not found",
@@ -9113,6 +9119,8 @@
               "value": {
                 "value": {
                   "generatedName": "ResultSetRowsItemItem",
+                  "description": "Columns can be accessed like an object by column names.",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "ResultSetRowsItem",

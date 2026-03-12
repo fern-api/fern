@@ -690,7 +690,16 @@ types:
       literal: LiteralSchema
       oneOf: OneOfSchema
       nullable: NullableSchema
-      unknown: commons.WithName
+      unknown: UnknownSchema
+
+  UnknownSchema:
+    extends:
+      - commons.WithSdkGroupName
+      - commons.WithNamespace
+      - commons.WithName
+      - commons.WithDescription
+      - commons.WithAvailability
+      - commons.WithTitle
 
   PrimitiveSchema:
     extends:

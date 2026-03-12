@@ -173,6 +173,7 @@
                     },
                     "value": {
                       "generatedName": "ExportDataResponseDataItemValue",
+                      "groupName": [],
                       "type": "unknown"
                     },
                     "generatedName": "ExportDataResponseDataItem",
@@ -499,6 +500,7 @@
           "generatedName": "NotFoundError",
           "schema": {
             "generatedName": "NotFoundErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Not found",

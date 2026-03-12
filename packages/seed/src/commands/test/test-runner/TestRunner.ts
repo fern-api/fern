@@ -1,6 +1,7 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { APIS_DIRECTORY, FERN_DIRECTORY, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
 import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import path from "path";
@@ -25,6 +26,7 @@ export declare namespace TestRunner {
         keepContainer: boolean;
         inspect: boolean;
         workspaceCache?: WorkspaceCache;
+        logLevel: LogLevel;
     }
 
     interface RunArgs {
@@ -126,6 +128,7 @@ export abstract class TestRunner {
     private readonly keepContainer: boolean;
     private scriptRunner: ScriptRunner | undefined;
     private readonly workspaceCache: WorkspaceCache | undefined;
+    protected readonly logLevel: LogLevel;
 
     constructor({
         generator,
@@ -134,7 +137,8 @@ export abstract class TestRunner {
         skipScripts,
         keepContainer,
         scriptRunner,
-        workspaceCache
+        workspaceCache,
+        logLevel
     }: TestRunner.Args) {
         this.generator = generator;
         this.lock = lock;
@@ -143,6 +147,11 @@ export abstract class TestRunner {
         this.keepContainer = keepContainer;
         this.scriptRunner = scriptRunner;
         this.workspaceCache = workspaceCache;
+        this.logLevel = logLevel;
+    }
+
+    protected shouldPipeOutput(): boolean {
+        return this.logLevel === LogLevel.Debug || this.logLevel === LogLevel.Trace;
     }
 
     public abstract build(): Promise<void>;
