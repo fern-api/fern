@@ -17,11 +17,15 @@ module <%= gem_namespace %>
         # @return [String] The base URL for requests
         attr_reader :base_url
 
+        # @return [<%= gem_namespace %>::Internal::Logging::Logger] The SDK logger
+        attr_reader :logger
+
         # @param base_url [String] The base url for the request.
         # @param max_retries [Integer] The number of times to retry a failed request, defaults to 2.
         # @param timeout [Float] The timeout for the request, defaults to 60.0 seconds.
         # @param headers [Hash] The headers for the request.
-        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {})
+        # @param logging_config [<%= gem_namespace %>::Internal::Logging::LogConfig, Hash, nil] Logging configuration.
+        def initialize(base_url:, max_retries: 2, timeout: 60.0, headers: {}, logging_config: nil)
           @base_url = base_url
           @max_retries = max_retries
           @timeout = timeout
@@ -30,6 +34,8 @@ module <%= gem_namespace %>
             "X-Fern-SDK-Name": "<%= sdkName %>",
             "X-Fern-SDK-Version": "0.0.1"
           }.merge(headers)
+          @logger = <%= gem_namespace %>::Internal::Logging::Logger.from(logging_config)
+          @logging_middleware = <%= gem_namespace %>::Internal::Logging::LoggingMiddleware.new(@logger)
         end
 
         # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
@@ -47,6 +53,13 @@ module <%= gem_namespace %>
               body: request.encode_body
             )
 
+            @logging_middleware.log_request(
+              method: request.method,
+              url: url,
+              headers: request.encode_headers,
+              has_body: !request.respond_to?(:encode_body) || !request.encode_body.nil?
+            )
+
             conn = connect(url)
             conn.open_timeout = @timeout
             conn.read_timeout = @timeout
@@ -54,6 +67,12 @@ module <%= gem_namespace %>
             conn.continue_timeout = @timeout
 
             response = conn.request(http_request)
+
+            @logging_middleware.log_response(
+              status: response.code.to_i,
+              url: url,
+              headers: response.each_header.to_h
+            )
 
             break unless should_retry?(response, attempt)
 
@@ -194,4 +213,4 @@ module <%= gem_namespace %>
       end
     end
   end
-end                                                                                                                                                                                                                                                                
+end                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                

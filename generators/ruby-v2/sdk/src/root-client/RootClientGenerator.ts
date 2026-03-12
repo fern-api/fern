@@ -62,6 +62,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         });
         parameters.push(baseUrlParameter);
 
+        const loggingParameter = ruby.parameters.keyword({
+            name: "logging",
+            type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.untyped())),
+            initializer: ruby.nilValue(),
+            docs: "Logging configuration. Set { silent: false } to enable logging, or pass a LogConfig / Hash with :level, :logger, and :silent"
+        });
+        parameters.push(loggingParameter);
+
         if (isMultiUrl) {
             const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
             const environmentParameter = ruby.parameters.keyword({
@@ -128,10 +136,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 writer.write(`headers: `);
                 writer.writeNode(this.getRawClientHeaders());
                 if (inferredAuth != null) {
-                    writer.writeLine(`.merge(@auth_provider.auth_headers)`);
+                    writer.writeLine(`.merge(@auth_provider.auth_headers),`);
                 } else {
-                    writer.newLine();
+                    writer.writeLine(`,`);
                 }
+                writer.writeLine(`logging_config: logging`);
                 writer.dedent();
                 writer.writeLine(`)`);
             })

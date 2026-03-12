@@ -302,6 +302,14 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
     public getCoreAsIsFiles(): string[] {
         const files = [
+            // Logging
+            AsIsFiles.LoggingLogLevel,
+            AsIsFiles.LoggingILogger,
+            AsIsFiles.LoggingConsoleLogger,
+            AsIsFiles.LoggingLogConfig,
+            AsIsFiles.LoggingLogger,
+            AsIsFiles.LoggingMiddleware,
+
             // Public errors
             AsIsFiles.ApiError,
             AsIsFiles.ClientError,
