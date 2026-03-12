@@ -337,11 +337,16 @@ export class DynamicTypeLiteralMapper {
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
     }): python.NamedValue[] {
+        const record = this.context.getRecord(value) ?? {};
         const properties = this.context.associateByWireValue({
             parameters: object_.properties,
-            values: this.context.getRecord(value) ?? {}
+            values: record
         });
-        return properties.map((property) => {
+
+        // Track which wire values have been provided in the example
+        const providedWireValues = new Set<string>(Object.keys(record));
+
+        const result = properties.map((property) => {
             this.context.errors.scope(property.name.wireValue);
             try {
                 return {
@@ -352,6 +357,26 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.unscope();
             }
         });
+
+        // Synthesize default values for required properties missing from the example.
+        // This prevents generating invalid code like ClassName() when required fields are omitted.
+        for (const property of object_.properties) {
+            if (providedWireValues.has(property.name.wireValue)) {
+                continue;
+            }
+            if (this.context.isOptional(property.typeReference) || this.context.isNullable(property.typeReference)) {
+                continue;
+            }
+            const defaultValue = this.synthesizeDefaultValue(property.typeReference);
+            if (!python.TypeInstantiation.isNop(defaultValue)) {
+                result.push({
+                    name: this.context.getPropertyName(property.name.name),
+                    value: defaultValue
+                });
+            }
+        }
+
+        return result;
     }
 
     private convertObject({
@@ -456,6 +481,155 @@ export class DynamicTypeLiteralMapper {
         });
         return undefined;
     }
+
+    // =============================================================================
+    // DEFAULT VALUE SYNTHESIS
+    // =============================================================================
+
+    /**
+     * Synthesizes a reasonable default value for a given type reference.
+     * Used to populate required fields that are missing from examples,
+     * preventing invalid code generation (e.g. empty constructors for
+     * types with required fields).
+     */
+    private synthesizeDefaultValue(
+        typeReference: FernIr.dynamic.TypeReference,
+        seen: Set<string> = new Set()
+    ): python.TypeInstantiation {
+        switch (typeReference.type) {
+            case "optional":
+            case "nullable":
+                return python.TypeInstantiation.nop();
+            case "primitive":
+                return this.synthesizeDefaultPrimitive(typeReference.value);
+            case "literal":
+                return this.synthesizeDefaultLiteral(typeReference.value);
+            case "list":
+                return python.TypeInstantiation.list([]);
+            case "set":
+                return python.TypeInstantiation.list([]);
+            case "map":
+                return python.TypeInstantiation.dict([]);
+            case "named": {
+                if (seen.has(typeReference.value)) {
+                    return python.TypeInstantiation.nop();
+                }
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return python.TypeInstantiation.nop();
+                }
+                return this.synthesizeDefaultNamed({ named, typeId: typeReference.value, seen });
+            }
+            case "unknown":
+                return python.TypeInstantiation.nop();
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    private synthesizeDefaultPrimitive(primitive: FernIr.dynamic.PrimitiveTypeV1): python.TypeInstantiation {
+        switch (primitive) {
+            case "STRING":
+            case "BASE_64":
+            case "BIG_INTEGER":
+                return python.TypeInstantiation.str("string");
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+                return python.TypeInstantiation.int(1);
+            case "FLOAT":
+            case "DOUBLE":
+                return python.TypeInstantiation.float(1.1);
+            case "BOOLEAN":
+                return python.TypeInstantiation.bool(true);
+            case "DATE":
+                return python.TypeInstantiation.date("2024-01-15");
+            case "DATE_TIME":
+                return python.TypeInstantiation.datetime("2024-01-15T09:30:00Z");
+            case "UUID":
+                return python.TypeInstantiation.uuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+            default:
+                assertNever(primitive);
+        }
+    }
+
+    private synthesizeDefaultLiteral(literalType: FernIr.dynamic.LiteralType): python.TypeInstantiation {
+        switch (literalType.type) {
+            case "boolean":
+                return python.TypeInstantiation.bool(literalType.value);
+            case "string":
+                return python.TypeInstantiation.str(literalType.value);
+            default:
+                assertNever(literalType);
+        }
+    }
+
+    private synthesizeDefaultNamed({
+        named,
+        typeId,
+        seen
+    }: {
+        named: FernIr.dynamic.NamedType;
+        typeId: string;
+        seen: Set<string>;
+    }): python.TypeInstantiation {
+        const newSeen = new Set(seen);
+        newSeen.add(typeId);
+
+        switch (named.type) {
+            case "alias":
+                return this.synthesizeDefaultValue(named.typeReference, newSeen);
+            case "enum": {
+                const firstValue = named.values[0];
+                if (firstValue == null) {
+                    return python.TypeInstantiation.nop();
+                }
+                return python.TypeInstantiation.str(firstValue.wireValue);
+            }
+            case "object": {
+                const entries: python.NamedValue[] = [];
+                for (const property of named.properties) {
+                    if (
+                        this.context.isOptional(property.typeReference) ||
+                        this.context.isNullable(property.typeReference)
+                    ) {
+                        continue;
+                    }
+                    const defaultValue = this.synthesizeDefaultValue(property.typeReference, newSeen);
+                    if (!python.TypeInstantiation.isNop(defaultValue)) {
+                        entries.push({
+                            name: this.context.getPropertyName(property.name.name),
+                            value: defaultValue
+                        });
+                    }
+                }
+                // biome-ignore lint/correctness/useHookAtTopLevel: not a React hook
+                if (this.context.useTypedDictRequests()) {
+                    return python.TypeInstantiation.typedDict(entries, { multiline: true });
+                }
+                const classReference = this.context.getTypeClassReference(named.declaration);
+                return python.TypeInstantiation.reference(
+                    python.instantiateClass({
+                        classReference,
+                        arguments_: entries.map((entry) =>
+                            python.methodArgument({ name: entry.name, value: entry.value })
+                        ),
+                        multiline: true
+                    })
+                );
+            }
+            case "discriminatedUnion":
+            case "undiscriminatedUnion":
+                return python.TypeInstantiation.nop();
+            default:
+                assertNever(named);
+        }
+    }
+
+    // =============================================================================
+    // PRIMITIVE CONVERSION
+    // =============================================================================
 
     private convertPrimitive({
         primitive,
