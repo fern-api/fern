@@ -73,21 +73,6 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithEnvironment sets the environment for the client, which determines
-// the base URL for each endpoint.
-func WithEnvironment(environment fern.Environment) *core.EnvironmentOption {
-	return &core.EnvironmentOption{
-		Environment: environment,
-	}
-}
-
-// WithToken sets the 'Authorization: Bearer <token>' request header.
-func WithToken(token string) *core.TokenOption {
-	return &core.TokenOption{
-		Token: token,
-	}
-}
-
 // WithLogging configures logging for the SDK.
 // By default, logging is silent — no log output unless explicitly configured.
 //
@@ -102,5 +87,20 @@ func WithToken(token string) *core.TokenOption {
 func WithLogging(logging *core.LogConfig) *core.LoggingOption {
 	return &core.LoggingOption{
 		Logging: logging,
+	}
+}
+
+// WithEnvironment sets the environment for the client, which determines
+// the base URL for each endpoint.
+func WithEnvironment(environment fern.Environment) *core.EnvironmentOption {
+	return &core.EnvironmentOption{
+		Environment: environment,
+	}
+}
+
+// WithToken sets the 'Authorization: Bearer <token>' request header.
+func WithToken(token string) *core.TokenOption {
+	return &core.TokenOption{
+		Token: token,
 	}
 }

@@ -72,13 +72,6 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithToken sets the 'Authorization: Bearer <token>' request header.
-func WithToken(token string) *core.TokenOption {
-	return &core.TokenOption{
-		Token: token,
-	}
-}
-
 // WithLogging configures logging for the SDK.
 // By default, logging is silent — no log output unless explicitly configured.
 //
@@ -93,5 +86,12 @@ func WithToken(token string) *core.TokenOption {
 func WithLogging(logging *core.LogConfig) *core.LoggingOption {
 	return &core.LoggingOption{
 		Logging: logging,
+	}
+}
+
+// WithToken sets the 'Authorization: Bearer <token>' request header.
+func WithToken(token string) *core.TokenOption {
+	return &core.TokenOption{
+		Token: token,
 	}
 }

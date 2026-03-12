@@ -24,8 +24,8 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
-	ApiKey          string
 	Logging         *LogConfig
+	ApiKey          string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -126,15 +126,6 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
-// ApiKeyOption implements the RequestOption interface.
-type ApiKeyOption struct {
-	ApiKey string
-}
-
-func (a *ApiKeyOption) applyRequestOptions(opts *RequestOptions) {
-	opts.ApiKey = a.ApiKey
-}
-
 // LoggingOption implements the RequestOption interface.
 type LoggingOption struct {
 	Logging *LogConfig
@@ -142,4 +133,13 @@ type LoggingOption struct {
 
 func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Logging = l.Logging
+}
+
+// ApiKeyOption implements the RequestOption interface.
+type ApiKeyOption struct {
+	ApiKey string
+}
+
+func (a *ApiKeyOption) applyRequestOptions(opts *RequestOptions) {
+	opts.ApiKey = a.ApiKey
 }

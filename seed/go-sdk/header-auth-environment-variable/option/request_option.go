@@ -72,13 +72,6 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithHeaderTokenAuth sets the headerTokenAuth auth request header.
-func WithHeaderTokenAuth(headerTokenAuth string) *core.HeaderTokenAuthOption {
-	return &core.HeaderTokenAuthOption{
-		HeaderTokenAuth: headerTokenAuth,
-	}
-}
-
 // WithLogging configures logging for the SDK.
 // By default, logging is silent — no log output unless explicitly configured.
 //
@@ -93,5 +86,12 @@ func WithHeaderTokenAuth(headerTokenAuth string) *core.HeaderTokenAuthOption {
 func WithLogging(logging *core.LogConfig) *core.LoggingOption {
 	return &core.LoggingOption{
 		Logging: logging,
+	}
+}
+
+// WithHeaderTokenAuth sets the headerTokenAuth auth request header.
+func WithHeaderTokenAuth(headerTokenAuth string) *core.HeaderTokenAuthOption {
+	return &core.HeaderTokenAuthOption{
+		HeaderTokenAuth: headerTokenAuth,
 	}
 }
