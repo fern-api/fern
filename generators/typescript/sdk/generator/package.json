@@ -27,6 +27,7 @@
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../../knip.json --no-config-hints",
     "test": "vitest --run",
+    "test:coverage": "vitest --passWithNoTests --run --coverage",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
   },
@@ -64,6 +65,7 @@
     "@fern-api/configs": "workspace:*",
     "@types/lodash-es": "catalog:",
     "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }
