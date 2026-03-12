@@ -11,7 +11,7 @@
         (`typing.get_args`, `typing.get_origin`, `typing_extensions.Literal`), Pydantic V2 APIs
         (`pydantic.fields.FieldInfo`), and an inlined `encoders_by_type` dictionary.
       type: fix
-  createdAt: "2026-03-09"
+  createdAt: "2026-03-11"
   irVersion: 65
 
 - version: 4.63.4
