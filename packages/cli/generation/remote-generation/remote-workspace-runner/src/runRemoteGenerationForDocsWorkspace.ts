@@ -5,12 +5,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
 
-const PUBLISH_CONFLICT_RETRY_DELAYS_MS = [
-    1 * 60 * 1000, // 1 minute
-    5 * 60 * 1000, // 5 minutes
-    5 * 60 * 1000 // 5 minutes
-];
-
 export async function runRemoteGenerationForDocsWorkspace({
     organization,
     apiWorkspaces,
@@ -94,8 +88,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     let publishedUrl: string | undefined;
     await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
         const publishStart = performance.now();
-        const attemptPublish = () =>
-            publishDocs({
+        try {
+            publishedUrl = await publishDocs({
                 docsWorkspace,
                 customDomains,
                 domain: maybeInstance.url,
@@ -120,33 +114,13 @@ export async function runRemoteGenerationForDocsWorkspace({
                 docsUrl: maybeInstance.url,
                 cliVersion
             });
-
-        for (let attempt = 0; ; attempt++) {
-            try {
-                publishedUrl = await attemptPublish();
-                break;
-            } catch (error) {
-                if (
-                    !(error instanceof DocsPublishConflictError) ||
-                    attempt >= PUBLISH_CONFLICT_RETRY_DELAYS_MS.length
-                ) {
-                    if (error instanceof DocsPublishConflictError) {
-                        return context.failAndThrow(
-                            "Another docs publish is currently in progress. Please try again once the other publish is complete."
-                        );
-                    }
-                    throw error;
-                }
-                const delayMs =
-                    PUBLISH_CONFLICT_RETRY_DELAYS_MS[attempt] ??
-                    PUBLISH_CONFLICT_RETRY_DELAYS_MS[PUBLISH_CONFLICT_RETRY_DELAYS_MS.length - 1] ??
-                    60000;
-                const delayMinutes = delayMs / 60000;
-                context.logger.warn(
-                    `Another docs publish is in progress. Retrying in ${delayMinutes} minute${delayMinutes === 1 ? "" : "s"} (attempt ${attempt + 1}/${PUBLISH_CONFLICT_RETRY_DELAYS_MS.length})...`
+        } catch (error) {
+            if (error instanceof DocsPublishConflictError) {
+                return context.failAndThrow(
+                    "Another docs publish is currently in progress. Please try again once the other publish is complete."
                 );
-                await new Promise((resolve) => setTimeout(resolve, delayMs));
             }
+            throw error;
         }
 
         const publishTime = performance.now() - publishStart;
