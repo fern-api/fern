@@ -190,8 +190,16 @@ export function generateField(
             const propertyPascalName = property.name.name.pascalCase.safeName;
             const structName = computeNestedStructName(propertyPascalName, allPropertyPascalNames ?? new Set());
 
-            // Build the nested struct inside the parent record
-            buildNestedLiteralStruct({ structName, literal: inlineLiteral, parentClass: cls, context });
+            // Register the class reference FIRST so the name registry can resolve any conflicts,
+            // then use the (possibly renamed) name for the struct creation.
+            const nestedStructRef = context.csharp.classReference({
+                name: structName,
+                enclosingType: cls.reference
+            });
+            const resolvedStructName = nestedStructRef.name;
+
+            // Build the nested struct inside the parent record using the resolved name
+            buildNestedLiteralStruct({ structName: resolvedStructName, literal: inlineLiteral, parentClass: cls, context });
 
             // Add [JsonRequired] so that a missing field in JSON throws JsonException
             fieldAttributes.unshift(
@@ -203,11 +211,6 @@ export function generateField(
                 })
             );
 
-            // Use the nested struct type for the property with init-only accessor
-            const nestedStructRef = context.csharp.classReference({
-                name: structName,
-                enclosingType: cls.reference
-            });
             return cls.addField({
                 origin: property,
                 type: nestedStructRef,
