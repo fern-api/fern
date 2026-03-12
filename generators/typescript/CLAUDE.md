@@ -171,7 +171,7 @@ pnpm --filter @fern-typescript/sdk-client-class-generator test:coverage
 pnpm run test:coverage
 ```
 
-Coverage reports are generated in `text`, `json-summary`, and `html` formats. HTML reports are written to `coverage/` in each package directory (gitignored). The shared coverage configuration lives at `packages/configs/vitest/coverage.mjs`.
+Coverage reports are generated in `text`, `json-summary`, and `html` formats. HTML reports are written to `coverage/` in each package directory (gitignored). The shared coverage configuration lives in `packages/configs/vitest/base.mjs` (coverage settings are only activated when `--coverage` is passed).
 
 ## Comparison to Modern Generators
 
