@@ -156,7 +156,7 @@ export function generateField(
         useRequired = false;
     }
 
-    if (context.generation.settings.enableReadonlyConstants && maybeLiteralInitializer) {
+    if (context.generation.settings.generateLiterals && maybeLiteralInitializer) {
         // Check if this property references a named literal alias type in the IR.
         // If so, use the struct type from the IR type name instead of string/boolean with Assert.
         const namedLiteralRef = resolveNamedLiteralType(property.valueType, context);

@@ -28,9 +28,9 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
         }
         const file = typeDeclaration.shape._visit<CSharpFile | undefined>({
             alias: (aliasDeclaration) => {
-                // Generate literal struct files for named literal alias types when enableReadonlyConstants is on.
+                // Generate literal struct files for named literal alias types when generateLiterals is on.
                 // One file per literal type as defined in the IR. The struct name comes from the IR type name.
-                if (context.generation.settings.enableReadonlyConstants) {
+                if (context.generation.settings.generateLiterals) {
                     const resolvedType = aliasDeclaration.resolvedType;
                     if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
                         const rawStructName = typeDeclaration.name.name.pascalCase.safeName;
