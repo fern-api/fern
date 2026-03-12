@@ -373,6 +373,10 @@ function buildNestedLiteralStruct({
 
     // Generate the struct body content using the pre-formatted templates
     const isString = literal.type === "string";
+    const isBool = literal.type === "boolean";
+    if (!isString && !isBool) {
+        throw new Error(`Unsupported literal type for nested struct: ${(literal as Literal).type}`);
+    }
     const bodyContent = isString
         ? generateNestedStringLiteralBody({ structName, literalValue: literal.string })
         : generateNestedBoolLiteralBody({ structName, literalValue: literal.boolean });
