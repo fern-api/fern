@@ -8,13 +8,23 @@ exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse > deserialize
 
 exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse > deserializes primitive JSON response with parseOrThrow 1`] = `"EndpointSchema.parseOrThrow(response)"`;
 
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse - container type > deserializes container JSON response with parseOrThrow 1`] = `"EndpointSchema.parseOrThrow(response)"`;
+
 exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeStreamData > deserializes named streaming data with named type schema 1`] = `"namedTypeSchema.parseOrThrow(streamData)"`;
 
 exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeStreamData > deserializes primitive streaming data with parseOrThrow 1`] = `"EndpointSchema.parseOrThrow(streamData)"`;
 
+exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeStreamData - additional branches > deserializes container streaming data with parseOrThrow 1`] = `"EndpointSchema.parseOrThrow(streamData)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > error schema strategies > deserializes error with property discrimination strategy 1`] = `"EndpointSchema.parseOrThrow(error)"`;
+
 exports[`GeneratedSdkEndpointTypeSchemasImpl > serializeRequest > serializes named reference request with named type schema jsonOrThrow 1`] = `"namedTypeSchema.jsonOrThrow(request)"`;
 
 exports[`GeneratedSdkEndpointTypeSchemasImpl > serializeRequest > serializes primitive reference request with jsonOrThrow 1`] = `"EndpointSchema.jsonOrThrow(request)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > serializeRequest - allowExtraFields with extraProperties > serializes named request with extraProperties=true 1`] = `"namedTypeSchema.jsonOrThrow(request)"`;
+
+exports[`GeneratedSdkEndpointTypeSchemasImpl > serializeRequest - container type > serializes container reference request with jsonOrThrow 1`] = `"EndpointSchema.jsonOrThrow(request)"`;
 
 exports[`GeneratedSdkEndpointTypeSchemasImpl > writeToFile > writes both request and response schemas when both are primitive 1`] = `
 "export const Request: Schema<EndpointSchema.Raw, string> = typeRefSchema;

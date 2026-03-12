@@ -918,5 +918,286 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 "No endpoint error schema was generated because errors are status-code discriminated"
             );
         });
+
+        it("constructs with property discrimination strategy and errors that have types", () => {
+            const endpoint = createHttpEndpoint();
+            const endpointWithErrors: FernIr.HttpEndpoint = {
+                ...endpoint,
+                errors: [createResponseError("BadRequest")]
+            };
+            const errorDeclarations: Record<string, FernIr.ErrorDeclaration> = {
+                error_BadRequest: {
+                    name: createErrorName("BadRequest"),
+                    discriminantValue: createNameAndWireValue("BadRequest", "BadRequest"),
+                    type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                    statusCode: 400,
+                    docs: undefined,
+                    examples: [],
+                    v2Examples: undefined,
+                    displayName: undefined,
+                    isWildcardStatusCode: false,
+                    headers: []
+                }
+            };
+            const schemas = createEndpointSchemas({
+                endpoint: endpointWithErrors,
+                shouldGenerateErrors: true,
+                errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.property({
+                    discriminant: createNameAndWireValue("errorName", "errorName"),
+                    contentProperty: createNameAndWireValue("content", "content")
+                }),
+                errorResolver: createMockErrorResolver(errorDeclarations)
+            });
+            // Verify schema was constructed — exercises GeneratedEndpointErrorSchemaImpl
+            // and RawSinglePropertyErrorSingleUnionType code paths
+            expect(schemas).toBeDefined();
+        });
+
+        it("constructs with property discrimination strategy and errors that have no type", () => {
+            const endpoint = createHttpEndpoint();
+            const endpointWithErrors: FernIr.HttpEndpoint = {
+                ...endpoint,
+                errors: [createResponseError("NotFound")]
+            };
+            // Default error resolver returns errors with no type
+            const schemas = createEndpointSchemas({
+                endpoint: endpointWithErrors,
+                shouldGenerateErrors: true,
+                errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.property({
+                    discriminant: createNameAndWireValue("errorName", "errorName"),
+                    contentProperty: createNameAndWireValue("content", "content")
+                })
+            });
+            // Verify schema was constructed — exercises RawNoPropertiesSingleUnionType path
+            expect(schemas).toBeDefined();
+        });
+
+        it("deserializes error with property discrimination strategy", () => {
+            const endpoint = createHttpEndpoint();
+            const endpointWithErrors: FernIr.HttpEndpoint = {
+                ...endpoint,
+                errors: [createResponseError("BadRequest")]
+            };
+            const schemas = createEndpointSchemas({
+                endpoint: endpointWithErrors,
+                shouldGenerateErrors: true,
+                errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.property({
+                    discriminant: createNameAndWireValue("errorName", "errorName"),
+                    contentProperty: createNameAndWireValue("content", "content")
+                })
+            });
+            const context = createMockSdkContext();
+            const ref = ts.factory.createIdentifier("error");
+            const result = schemas.deserializeError(ref, context);
+            expect(getTextOfTsNode(result)).toMatchSnapshot();
+        });
+
+        it("gets reference to raw error for property discrimination strategy", () => {
+            const endpoint = createHttpEndpoint();
+            const endpointWithErrors: FernIr.HttpEndpoint = {
+                ...endpoint,
+                errors: [createResponseError("BadRequest")]
+            };
+            const schemas = createEndpointSchemas({
+                endpoint: endpointWithErrors,
+                shouldGenerateErrors: true,
+                errorDiscriminationStrategy: FernIr.ErrorDiscriminationStrategy.property({
+                    discriminant: createNameAndWireValue("errorName", "errorName"),
+                    contentProperty: createNameAndWireValue("content", "content")
+                })
+            });
+            const context = createMockSdkContext();
+            const result = schemas.getReferenceToRawError(context);
+            expect(getTextOfTsNode(result)).toBeDefined();
+        });
+    });
+
+    describe("deserializeStreamData - additional branches", () => {
+        it("throws for text streaming response at construction time", () => {
+            const endpoint = createHttpEndpoint();
+            const endpointWithStream: FernIr.HttpEndpoint = {
+                ...endpoint,
+                response: {
+                    body: FernIr.HttpResponseBody.streaming(
+                        FernIr.StreamingResponse.text({
+                            v2Examples: undefined,
+                            docs: undefined
+                        })
+                    ),
+                    statusCode: undefined,
+                    isWildcardStatusCode: undefined,
+                    docs: undefined
+                }
+            };
+            // Text streaming throws at construction time, not at deserialize time
+            expect(() => createEndpointSchemas({ endpoint: endpointWithStream })).toThrow(
+                "Non-json responses are not supported"
+            );
+        });
+
+        it("deserializes container streaming data with parseOrThrow", () => {
+            const endpoint = createHttpEndpoint();
+            const endpointWithStream: FernIr.HttpEndpoint = {
+                ...endpoint,
+                response: {
+                    body: FernIr.HttpResponseBody.streaming(
+                        FernIr.StreamingResponse.json({
+                            payload: FernIr.TypeReference.container(
+                                FernIr.ContainerType.list(
+                                    FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                                )
+                            ),
+                            terminator: undefined,
+                            v2Examples: undefined,
+                            docs: undefined
+                        })
+                    ),
+                    statusCode: undefined,
+                    isWildcardStatusCode: undefined,
+                    docs: undefined
+                }
+            };
+            const schemas = createEndpointSchemas({ endpoint: endpointWithStream });
+            const context = createMockSdkContext();
+            schemas.writeToFile(context);
+            const ref = ts.factory.createIdentifier("streamData");
+            const result = schemas.deserializeStreamData({ referenceToRawStreamData: ref, context });
+            expect(getTextOfTsNode(result)).toMatchSnapshot();
+        });
+    });
+
+    describe("getReferenceToRawResponse", () => {
+        it("throws when no response schema was generated", () => {
+            const endpoint = createHttpEndpoint();
+            const schemas = createEndpointSchemas({ endpoint });
+            const context = createMockSdkContext();
+            expect(() => schemas.getReferenceToRawResponse(context)).toThrow("No response schema was generated");
+        });
+    });
+
+    describe("serializeRequest - container type", () => {
+        it("serializes container reference request with jsonOrThrow", () => {
+            const endpoint = createHttpEndpoint();
+            const endpointWithRefBody: FernIr.HttpEndpoint = {
+                ...endpoint,
+                requestBody: FernIr.HttpRequestBody.reference({
+                    requestBodyType: FernIr.TypeReference.container(
+                        FernIr.ContainerType.list(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
+                    ),
+                    contentType: undefined,
+                    docs: undefined,
+                    v2Examples: undefined
+                })
+            };
+            const schemas = createEndpointSchemas({ endpoint: endpointWithRefBody });
+            const context = createMockSdkContext();
+            schemas.writeToFile(context);
+            const ref = ts.factory.createIdentifier("request");
+            const result = schemas.serializeRequest(ref, context);
+            expect(getTextOfTsNode(result)).toMatchSnapshot();
+        });
+    });
+
+    describe("deserializeResponse - container type", () => {
+        it("deserializes container JSON response with parseOrThrow", () => {
+            const endpoint = createHttpEndpoint();
+            const endpointWithResponse: FernIr.HttpEndpoint = {
+                ...endpoint,
+                response: {
+                    body: FernIr.HttpResponseBody.json(
+                        FernIr.JsonResponse.response({
+                            responseBodyType: FernIr.TypeReference.container(
+                                FernIr.ContainerType.list(
+                                    FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                                )
+                            ),
+                            v2Examples: undefined,
+                            docs: undefined
+                        })
+                    ),
+                    statusCode: undefined,
+                    isWildcardStatusCode: undefined,
+                    docs: undefined
+                }
+            };
+            const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
+            const context = createMockSdkContext();
+            schemas.writeToFile(context);
+            const ref = ts.factory.createIdentifier("response");
+            const result = schemas.deserializeResponse(ref, context);
+            expect(getTextOfTsNode(result)).toMatchSnapshot();
+        });
+
+        it("throws for streamParameter response type", () => {
+            const endpoint = createHttpEndpoint();
+            const endpointWithResponse: FernIr.HttpEndpoint = {
+                ...endpoint,
+                response: {
+                    body: FernIr.HttpResponseBody.streamParameter({
+                        nonStreamResponse: FernIr.JsonResponse.response({
+                            responseBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                            v2Examples: undefined,
+                            docs: undefined
+                        }),
+                        streamResponse: FernIr.StreamingResponse.json({
+                            payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                            terminator: undefined,
+                            v2Examples: undefined,
+                            docs: undefined
+                        }),
+                        v2Examples: undefined,
+                        docs: undefined
+                    }),
+                    statusCode: undefined,
+                    isWildcardStatusCode: undefined,
+                    docs: undefined
+                }
+            };
+            const schemas = createEndpointSchemas({ endpoint: endpointWithResponse });
+            const context = createMockSdkContext();
+            const ref = ts.factory.createIdentifier("response");
+            expect(() => schemas.deserializeResponse(ref, context)).toThrow(
+                "Cannot deserialize streaming response in deserializeResponse"
+            );
+        });
+    });
+
+    describe("serializeRequest - allowExtraFields with extraProperties", () => {
+        it("serializes named request with extraProperties=true", () => {
+            const endpoint = createHttpEndpoint();
+            const endpointWithRefBody: FernIr.HttpEndpoint = {
+                ...endpoint,
+                requestBody: FernIr.HttpRequestBody.reference({
+                    requestBodyType: FernIr.TypeReference.named({
+                        typeId: "type_User",
+                        fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                        name: casingsGenerator.generateName("User"),
+                        displayName: undefined,
+                        default: undefined,
+                        inline: undefined
+                    }),
+                    contentType: undefined,
+                    docs: undefined,
+                    v2Examples: undefined
+                })
+            };
+            const context = createMockSdkContext();
+            // Override getTypeDeclaration to return extraProperties=true
+            context.type.getTypeDeclaration = () => ({
+                shape: FernIr.Type.object({
+                    properties: [],
+                    extends: [],
+                    extraProperties: true,
+                    extendedProperties: undefined
+                })
+            });
+            const schemas = createEndpointSchemas({
+                endpoint: endpointWithRefBody,
+                allowExtraFields: false
+            });
+            const ref = ts.factory.createIdentifier("request");
+            const result = schemas.serializeRequest(ref, context);
+            expect(getTextOfTsNode(result)).toMatchSnapshot();
+        });
     });
 });
