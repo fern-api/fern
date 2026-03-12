@@ -214,6 +214,8 @@ export class Generation {
         extraDependencies: () => this.customConfig["extra-dependencies"] ?? {},
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
+        /** When true, generates the legacy .sln solution file format instead of the default .slnx format. Default: false. */
+        useSlnFormat: () => this.customConfig["use-sln-format"] ?? false,
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
         /**

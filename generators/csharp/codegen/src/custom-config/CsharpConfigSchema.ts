@@ -105,7 +105,13 @@ export const CsharpConfigSchema = z.object({
         ),
     "pascal-case-environments": z.boolean().optional(),
 
-    "experimental-enable-forward-compatible-enums": z.boolean().optional()
+    "experimental-enable-forward-compatible-enums": z.boolean().optional(),
+
+    // Solution file format option.
+    // When true, generates the legacy .sln solution file format instead of the
+    // default .slnx format. This is useful for teams that need compatibility
+    // with older .NET tooling or CI systems that do not yet support .slnx.
+    "use-sln-format": z.boolean().optional()
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;

@@ -94,6 +94,9 @@ fixtures:
           test: test/SeedApi.Test
           solution: .
           other: lib/SeedApi
+    - outputFolder: use-sln-format
+      customConfig:
+        use-sln-format: true
   literal:
     - customConfig: null
       outputFolder: no-custom-config

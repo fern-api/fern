@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.26.0
+  changelogEntry:
+    - summary: |
+        Add `use-sln-format` configuration option. When enabled, the generator produces
+        a legacy `.sln` solution file instead of the default `.slnx` format. This is
+        useful for teams that need compatibility with older .NET tooling or CI systems
+        that do not yet support the `.slnx` format introduced in .NET 10.
+
+        ```yaml
+        generators:
+          - name: fernapi/fern-csharp-sdk
+            config:
+              use-sln-format: true
+        ```
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
 - version: 2.25.0
   changelogEntry:
     - summary: |
