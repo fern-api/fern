@@ -9,6 +9,7 @@ import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
 import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
+import com.fern.sdk.resources.types.object.types.ObjectWithDocumentedUnknownType;
 import com.fern.sdk.resources.types.object.types.ObjectWithMapOfMap;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
@@ -114,6 +115,16 @@ public class ObjectClient {
   public ObjectWithUnknownField getAndReturnWithUnknownField(ObjectWithUnknownField request,
       RequestOptions requestOptions) {
     return this.rawClient.getAndReturnWithUnknownField(request, requestOptions).body();
+  }
+
+  public ObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
+      ObjectWithDocumentedUnknownType request) {
+    return this.rawClient.getAndReturnWithDocumentedUnknownType(request).body();
+  }
+
+  public ObjectWithDocumentedUnknownType getAndReturnWithDocumentedUnknownType(
+      ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
+    return this.rawClient.getAndReturnWithDocumentedUnknownType(request, requestOptions).body();
   }
 
   /**

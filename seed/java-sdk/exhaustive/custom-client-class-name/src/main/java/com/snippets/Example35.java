@@ -7,6 +7,6 @@ public class Example35 {
         Best client =
                 Best.builder().token("<token>").url("https://api.fern.com").build();
 
-        client.endpoints().params().uploadWithPath("upload-path", "".getBytes());
+        client.endpoints().params().modifyWithPath("param", "string");
     }
 }

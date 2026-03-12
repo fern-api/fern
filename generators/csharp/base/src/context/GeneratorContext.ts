@@ -78,6 +78,13 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         this.readOnlyMemoryTypes = new Set<PrimitiveTypeV1>(
             ast.convertReadOnlyPrimitiveTypes(this.settings.readOnlyMemoryTypes)
         );
+
+        // Log deprecation warning if the old flag is used
+        if (this.customConfig["experimental-readonly-constants"] === true) {
+            this.logger.warn(
+                'The "experimental-readonly-constants" option is deprecated. Use "generate-literals" instead.'
+            );
+        }
     }
 
     /**
@@ -653,7 +660,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return undefined;
     }
 
-    private getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
+    public getLiteralValue(typeReference: TypeReference): string | boolean | undefined {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             const literal = typeReference.container.literal;
             switch (literal.type) {

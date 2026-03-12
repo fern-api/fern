@@ -89,7 +89,7 @@ export async function publishDocs({
     excludeApis?: boolean;
     targetAudiences?: string[];
     docsUrl?: string;
-}): Promise<void> {
+}): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
     if (isAirGapped) {
@@ -506,6 +506,7 @@ export async function publishDocs({
 
         const link = terminalLink(url, url);
         context.logger.info(chalk.green(`Published docs to ${link}`));
+        return url;
     } else {
         switch (registerDocsResponse.error.error) {
             case "UnauthorizedError":

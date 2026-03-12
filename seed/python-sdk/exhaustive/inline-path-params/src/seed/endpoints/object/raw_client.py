@@ -13,9 +13,11 @@ from ...core.parse_error import ParsingError
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
+from ...types.object.types.documented_unknown_type import DocumentedUnknownType
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
 from ...types.object.types.object_with_datetime_like_string import ObjectWithDatetimeLikeString
+from ...types.object.types.object_with_documented_unknown_type import ObjectWithDocumentedUnknownType
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
@@ -394,6 +396,49 @@ class RawObjectClient:
                     ObjectWithUnknownField,
                     parse_obj_as(
                         type_=ObjectWithUnknownField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_and_return_with_documented_unknown_type(
+        self, *, documented_unknown_type: DocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[ObjectWithDocumentedUnknownType]:
+        """
+        Parameters
+        ----------
+        documented_unknown_type : DocumentedUnknownType
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ObjectWithDocumentedUnknownType]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-documented-unknown-type",
+            method="POST",
+            json={
+                "documentedUnknownType": documented_unknown_type,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithDocumentedUnknownType,
+                    parse_obj_as(
+                        type_=ObjectWithDocumentedUnknownType,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -832,6 +877,49 @@ class AsyncRawObjectClient:
                     ObjectWithUnknownField,
                     parse_obj_as(
                         type_=ObjectWithUnknownField,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_and_return_with_documented_unknown_type(
+        self, *, documented_unknown_type: DocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[ObjectWithDocumentedUnknownType]:
+        """
+        Parameters
+        ----------
+        documented_unknown_type : DocumentedUnknownType
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ObjectWithDocumentedUnknownType]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "object/get-and-return-with-documented-unknown-type",
+            method="POST",
+            json={
+                "documentedUnknownType": documented_unknown_type,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ObjectWithDocumentedUnknownType,
+                    parse_obj_as(
+                        type_=ObjectWithDocumentedUnknownType,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

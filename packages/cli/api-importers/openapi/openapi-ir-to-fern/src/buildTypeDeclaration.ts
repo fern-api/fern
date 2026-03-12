@@ -81,7 +81,11 @@ export function buildTypeDeclaration({
             typeDeclaration = buildReferenceTypeDeclaration({ schema, context, declarationFile, namespace });
             break;
         case "unknown":
-            typeDeclaration = buildUnknownTypeDeclaration(schema.nameOverride, schema.generatedName);
+            typeDeclaration = buildUnknownTypeDeclaration(
+                schema.nameOverride,
+                schema.generatedName,
+                schema.description
+            );
             break;
         case "optional":
             typeDeclaration = buildOptionalTypeDeclaration({
@@ -620,8 +624,18 @@ export function buildOptionalTypeDeclaration({
 
 export function buildUnknownTypeDeclaration(
     nameOverride: string | null | undefined,
-    generatedName: string
+    generatedName: string,
+    description: string | null | undefined
 ): ConvertedTypeDeclaration {
+    if (description != null) {
+        return {
+            name: nameOverride ?? generatedName,
+            schema: {
+                type: "unknown",
+                docs: description
+            }
+        };
+    }
     return {
         name: nameOverride ?? generatedName,
         schema: buildUnknownTypeReference()

@@ -25,6 +25,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     private coreTestFiles: File[] = [];
     private publicCoreFiles: File[] = [];
     private publicCoreTestFiles: File[] = [];
+    private sourceRawFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
 
@@ -115,6 +116,10 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
 
     public addSourceFiles(file: CSharpFile): void {
         this.sourceFiles.push(file);
+    }
+
+    public addSourceRawFile(file: File): void {
+        this.sourceRawFiles.push(file);
     }
 
     public addTestFiles(file: CSharpFile): void {
@@ -230,7 +235,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         });
 
         const writeSourceFilesStartTime = Date.now();
-        await this.writeFilesInBatches(this.sourceFiles, absolutePathToProjectDirectory);
+        await this.writeFilesInBatches([...this.sourceFiles, ...this.sourceRawFiles], absolutePathToProjectDirectory);
         this.context.logger.debug(`[TIMING] writeSourceFiles took ${Date.now() - writeSourceFilesStartTime}ms`);
 
         const writeTestFilesStartTime = Date.now();

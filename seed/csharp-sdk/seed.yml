@@ -98,7 +98,7 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        experimental-readonly-constants: true
+        generate-literals: true
       outputFolder: readonly-constants
   pagination:
     - customConfig: null
@@ -249,7 +249,7 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        experimental-readonly-constants: true
+        generate-literals: true
         experimental-enable-websockets: true
       outputFolder: with-websockets
   csharp-xml-entities:

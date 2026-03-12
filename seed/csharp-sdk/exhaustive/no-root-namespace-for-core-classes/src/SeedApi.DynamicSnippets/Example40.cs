@@ -13,8 +13,8 @@ public class Example40
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnBoolAsync(
-            true
+        await client.Endpoints.Primitive.GetAndReturnDoubleAsync(
+            1.1
         );
     }
 

@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.23.0
+- version: 4.24.0
   changelogEntry:
     - summary: |
         Add support for `"latest"` as the `version` value in `fern.config.json`.
@@ -10,6 +10,28 @@
   createdAt: "2026-03-11"
   irVersion: 65
 
+- version: 4.23.1
+  changelogEntry:
+    - summary: |
+        Preserve description, namespace, group name, and availability metadata for unknown
+        (empty-type) schemas in OpenAPI specs. Previously these fields were dropped during
+        parsing, causing loss of documentation on schemas with no explicit type.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 4.23.0
+  changelogEntry:
+    - summary: |
+        Infer forward-compatible enums in OpenAPI specs. When an enum is expressed
+        as `oneOf: [enum, string]` or `anyOf: [enum, string]`, the parser now
+        lowers it to a single enum type with `forwardCompatible: true` instead of an
+        undiscriminated union. Fern Definition enums can also be marked with
+        `forward-compatible: true`. This behavior is controlled by the new
+        `infer-forward-compatible` parser flag (disabled by default).
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 65
 - version: 4.22.0
   changelogEntry:
     - summary: |
@@ -20,7 +42,6 @@
       type: feat
   createdAt: "2026-03-10"
   irVersion: 65
-
 - version: 4.21.4
   changelogEntry:
     - summary: |
