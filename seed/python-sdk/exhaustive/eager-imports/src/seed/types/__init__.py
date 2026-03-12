@@ -6,12 +6,14 @@ from . import docs, enum, object, union
 from .docs import ObjectWithDocs
 from .enum import ErrorWithEnumBody, WeatherReport
 from .object import (
+    DocumentedUnknownType,
     DoubleOptional,
     NestedObjectWithOptionalField,
     NestedObjectWithOptionalFieldError,
     NestedObjectWithRequiredField,
     NestedObjectWithRequiredFieldError,
     ObjectWithDatetimeLikeString,
+    ObjectWithDocumentedUnknownType,
     ObjectWithMapOfMap,
     ObjectWithOptionalField,
     ObjectWithOptionalFieldError,
@@ -27,6 +29,7 @@ __all__ = [
     "Animal_Cat",
     "Animal_Dog",
     "Cat",
+    "DocumentedUnknownType",
     "Dog",
     "DoubleOptional",
     "ErrorWithEnumBody",
@@ -38,6 +41,7 @@ __all__ = [
     "NestedObjectWithRequiredFieldError",
     "ObjectWithDatetimeLikeString",
     "ObjectWithDocs",
+    "ObjectWithDocumentedUnknownType",
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithOptionalFieldError",
