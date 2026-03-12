@@ -1,4 +1,36 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Add support for configurable logging to the generated SDK.
+        Users can configure logging by passing a `LogConfig` to the client builder's `.WithLogging()` method.
+
+        Example:
+        ```go
+        import (
+            "sdk/core"
+            "sdk/option"
+        )
+
+        client := sdk.NewClient(
+            option.WithLogging(core.NewLogConfigBuilder().
+                Level(core.LogLevelDebug).
+                Silent(false).
+                Build()),
+        )
+        ```
+
+        The logging configuration supports:
+        - `Level` — Set the minimum log level (DEBUG, INFO, WARN, ERROR)
+        - `Logger` — Provide a custom logger implementation (defaults to ConsoleLogger)
+        - `Silent` — Enable/disable logging (default: true/silent)
+
+        HTTP requests and responses are logged with headers (sensitive headers like
+        Authorization are redacted). Error responses (4xx/5xx) are logged at error level.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 61
+
 - version: 1.29.3
   changelogEntry:
     - summary: |
@@ -7,7 +39,6 @@
       type: chore
   createdAt: "2026-03-11"
   irVersion: 61
-
 - version: 1.29.2
   changelogEntry:
     - summary: |

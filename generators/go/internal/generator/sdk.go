@@ -74,6 +74,21 @@ var (
 
 	//go:embed sdk/core/oauth.go
 	oauthFile string
+
+	//go:embed sdk/core/log_level.go
+	logLevelFile string
+
+	//go:embed sdk/core/logger.go
+	loggerFile string
+
+	//go:embed sdk/core/console_logger.go
+	consoleLoggerFile string
+
+	//go:embed sdk/core/log_config.go
+	logConfigFile string
+
+	//go:embed sdk/core/logging_http_client.go
+	loggingHTTPClientFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -335,6 +350,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
 	f.P("MaxBufSize int")
+	f.P("Logging *LogConfig")
 	if hasOAuth {
 		f.P("tokenGetter TokenGetter")
 	}
@@ -407,7 +423,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			return err
 		}
 		f.P()
-		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL)
+		return f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, false)
 	}
 
 	// Generate the ToHeader method.
@@ -505,7 +521,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 
 	f.P()
 
-	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL); err != nil {
+	if err := f.writeRequestOptionStructs(auth, headers, len(idempotencyHeaders) > 0, isMultiURL, false); err != nil {
 		return err
 	}
 
@@ -544,6 +560,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	headers []*ir.HttpHeader,
 	asIdempotentRequestOption bool,
 	isMultiURL bool,
+	useCore bool,
 ) error {
 	if err := f.writeOptionStruct("BaseURL", "string", true, asIdempotentRequestOption); err != nil {
 		return err
@@ -566,6 +583,20 @@ func (f *fileWriter) writeRequestOptionStructs(
 	if err := f.writeOptionStruct("MaxBufSize", "int", true, asIdempotentRequestOption); err != nil {
 		return err
 	}
+	// Add Logging option struct (special handling, not using writeOptionStruct)
+	logConfigType := "LogConfig"
+	if useCore {
+		logConfigType = "core.LogConfig"
+	}
+	f.P("// LoggingOption implements the RequestOption interface.")
+	f.P("type LoggingOption struct {")
+	f.P("Logging *", logConfigType)
+	f.P("}")
+	f.P()
+	f.P("func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {")
+	f.P("opts.Logging = l.Logging")
+	f.P("}")
+	f.P()
 	if isMultiURL {
 		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
 			return err
@@ -827,6 +858,22 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {")
 	f.P("return &core.MaxBufSizeOption{")
 	f.P("MaxBufSize: size,")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithLogging configures logging for the SDK.")
+	f.P("// By default, logging is silent — no log output unless explicitly configured.")
+	f.P("//")
+	f.P("// Example:")
+	f.P("//   client := NewClient(")
+	f.P("//     option.WithLogging(core.NewLogConfigBuilder().")
+	f.P("//       Level(core.LogLevelDebug).")
+	f.P("//       Silent(false).")
+	f.P("//       Build()),")
+	f.P("//   )")
+	f.P("func WithLogging(logging *core.LogConfig) *core.LoggingOption {")
+	f.P("return &core.LoggingOption{")
+	f.P("Logging: logging,")
 	f.P("}")
 	f.P("}")
 	f.P()
@@ -1239,11 +1286,15 @@ func (f *fileWriter) WriteClient(
 		f.P("})")
 		f.P("})")
 	}
+	f.P("httpClient := options.HTTPClient")
+	f.P("if options.Logging != nil && !options.Logging.Silent() {")
+	f.P("httpClient = core.NewLoggingHTTPClient(httpClient, options.Logging)")
+	f.P("}")
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
 	f.P("caller: internal.NewCaller(")
 	f.P("&internal.CallerParams{")
-	f.P("Client: options.HTTPClient,")
+	f.P("Client: httpClient,")
 	f.P("MaxAttempts: options.MaxAttempts,")
 	f.P("},")
 	f.P("),")
