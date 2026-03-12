@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        }
+    },
     "apiDisplayName": "URL Form Encoded API",
     "apiDocs": null,
     "auth": {
@@ -16,7 +34,25 @@
         "type_:PostSubmitResponse": {
             "inline": null,
             "name": {
-                "name": "PostSubmitResponse",
+                "name": {
+                    "originalName": "PostSubmitResponse",
+                    "camelCase": {
+                        "unsafeName": "postSubmitResponse",
+                        "safeName": "postSubmitResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_submit_response",
+                        "safeName": "post_submit_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_SUBMIT_RESPONSE",
+                        "safeName": "POST_SUBMIT_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostSubmitResponse",
+                        "safeName": "PostSubmitResponse"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -30,7 +66,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "status",
+                        "name": {
+                            "wireValue": "status",
+                            "name": {
+                                "originalName": "status",
+                                "camelCase": {
+                                    "unsafeName": "status",
+                                    "safeName": "status"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "status",
+                                    "safeName": "status"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STATUS",
+                                    "safeName": "STATUS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Status",
+                                    "safeName": "Status"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -57,7 +114,28 @@
                         "docs": null
                     },
                     {
-                        "name": "message",
+                        "name": {
+                            "wireValue": "message",
+                            "name": {
+                                "originalName": "message",
+                                "camelCase": {
+                                    "unsafeName": "message",
+                                    "safeName": "message"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "message",
+                                    "safeName": "message"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MESSAGE",
+                                    "safeName": "MESSAGE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Message",
+                                    "safeName": "Message"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -128,7 +206,25 @@
             "endpoints": [
                 {
                     "id": "endpoint_.submitFormData",
-                    "name": "submitFormData",
+                    "name": {
+                        "originalName": "submitFormData",
+                        "camelCase": {
+                            "unsafeName": "submitFormData",
+                            "safeName": "submitFormData"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "submit_form_data",
+                            "safeName": "submit_form_data"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SUBMIT_FORM_DATA",
+                            "safeName": "SUBMIT_FORM_DATA"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "SubmitFormData",
+                            "safeName": "SubmitFormData"
+                        }
+                    },
                     "displayName": "Submit form data",
                     "auth": false,
                     "security": null,
@@ -151,11 +247,50 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "PostSubmitRequest",
+                        "name": {
+                            "originalName": "PostSubmitRequest",
+                            "camelCase": {
+                                "unsafeName": "postSubmitRequest",
+                                "safeName": "postSubmitRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "post_submit_request",
+                                "safeName": "post_submit_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "POST_SUBMIT_REQUEST",
+                                "safeName": "POST_SUBMIT_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PostSubmitRequest",
+                                "safeName": "PostSubmitRequest"
+                            }
+                        },
                         "extends": [],
                         "properties": [
                             {
-                                "name": "username",
+                                "name": {
+                                    "wireValue": "username",
+                                    "name": {
+                                        "originalName": "username",
+                                        "camelCase": {
+                                            "unsafeName": "username",
+                                            "safeName": "username"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "username",
+                                            "safeName": "username"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USERNAME",
+                                            "safeName": "USERNAME"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Username",
+                                            "safeName": "Username"
+                                        }
+                                    }
+                                },
                                 "valueType": {
                                     "_type": "primitive",
                                     "primitive": {
@@ -176,7 +311,28 @@
                                 "docs": "The user's username"
                             },
                             {
-                                "name": "email",
+                                "name": {
+                                    "wireValue": "email",
+                                    "name": {
+                                        "originalName": "email",
+                                        "camelCase": {
+                                            "unsafeName": "email",
+                                            "safeName": "email"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "email",
+                                            "safeName": "email"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "EMAIL",
+                                            "safeName": "EMAIL"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Email",
+                                            "safeName": "Email"
+                                        }
+                                    }
+                                },
                                 "valueType": {
                                     "_type": "primitive",
                                     "primitive": {
@@ -212,12 +368,66 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "PostSubmitRequest",
-                            "bodyKey": "body",
+                            "wrapperName": {
+                                "originalName": "PostSubmitRequest",
+                                "camelCase": {
+                                    "unsafeName": "postSubmitRequest",
+                                    "safeName": "postSubmitRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "post_submit_request",
+                                    "safeName": "post_submit_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "POST_SUBMIT_REQUEST",
+                                    "safeName": "POST_SUBMIT_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PostSubmitRequest",
+                                    "safeName": "PostSubmitRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -227,7 +437,25 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": "PostSubmitResponse",
+                                    "name": {
+                                        "originalName": "PostSubmitResponse",
+                                        "camelCase": {
+                                            "unsafeName": "postSubmitResponse",
+                                            "safeName": "postSubmitResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "post_submit_response",
+                                            "safeName": "post_submit_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "POST_SUBMIT_RESPONSE",
+                                            "safeName": "POST_SUBMIT_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PostSubmitResponse",
+                                            "safeName": "PostSubmitResponse"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -264,7 +492,28 @@
                                     "type": "inlinedRequestBody",
                                     "properties": [
                                         {
-                                            "name": "username",
+                                            "name": {
+                                                "wireValue": "username",
+                                                "name": {
+                                                    "originalName": "username",
+                                                    "camelCase": {
+                                                        "unsafeName": "username",
+                                                        "safeName": "username"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "username",
+                                                        "safeName": "username"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "USERNAME",
+                                                        "safeName": "USERNAME"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Username",
+                                                        "safeName": "Username"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -280,7 +529,28 @@
                                             "originalTypeDeclaration": null
                                         },
                                         {
-                                            "name": "email",
+                                            "name": {
+                                                "wireValue": "email",
+                                                "name": {
+                                                    "originalName": "email",
+                                                    "camelCase": {
+                                                        "unsafeName": "email",
+                                                        "safeName": "email"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "email",
+                                                        "safeName": "email"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "EMAIL",
+                                                        "safeName": "EMAIL"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Email",
+                                                        "safeName": "Email"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -316,14 +586,53 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": "PostSubmitResponse",
+                                                    "name": {
+                                                        "originalName": "PostSubmitResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "postSubmitResponse",
+                                                            "safeName": "postSubmitResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "post_submit_response",
+                                                            "safeName": "post_submit_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                            "safeName": "POST_SUBMIT_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "PostSubmitResponse",
+                                                            "safeName": "PostSubmitResponse"
+                                                        }
+                                                    },
                                                     "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": "status",
+                                                            "name": {
+                                                                "wireValue": "status",
+                                                                "name": {
+                                                                    "originalName": "status",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "status",
+                                                                        "safeName": "status"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "status",
+                                                                        "safeName": "status"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "STATUS",
+                                                                        "safeName": "STATUS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Status",
+                                                                        "safeName": "Status"
+                                                                    }
+                                                                }
+                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -363,13 +672,52 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": "PostSubmitResponse",
+                                                                "name": {
+                                                                    "originalName": "PostSubmitResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postSubmitResponse",
+                                                                        "safeName": "postSubmitResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_submit_response",
+                                                                        "safeName": "post_submit_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                                        "safeName": "POST_SUBMIT_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostSubmitResponse",
+                                                                        "safeName": "PostSubmitResponse"
+                                                                    }
+                                                                },
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": "message",
+                                                            "name": {
+                                                                "wireValue": "message",
+                                                                "name": {
+                                                                    "originalName": "message",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "message",
+                                                                        "safeName": "message"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "message",
+                                                                        "safeName": "message"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "MESSAGE",
+                                                                        "safeName": "MESSAGE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Message",
+                                                                        "safeName": "Message"
+                                                                    }
+                                                                }
+                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -409,7 +757,25 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": "PostSubmitResponse",
+                                                                "name": {
+                                                                    "originalName": "PostSubmitResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postSubmitResponse",
+                                                                        "safeName": "postSubmitResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_submit_response",
+                                                                        "safeName": "post_submit_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                                        "safeName": "POST_SUBMIT_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostSubmitResponse",
+                                                                        "safeName": "PostSubmitResponse"
+                                                                    }
+                                                                },
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
@@ -433,7 +799,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "981e6824",
+                                "id": "c060712e",
                                 "url": "/submit",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -446,7 +812,28 @@
                                     "type": "inlinedRequestBody",
                                     "properties": [
                                         {
-                                            "name": "username",
+                                            "name": {
+                                                "wireValue": "username",
+                                                "name": {
+                                                    "originalName": "username",
+                                                    "camelCase": {
+                                                        "unsafeName": "username",
+                                                        "safeName": "username"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "username",
+                                                        "safeName": "username"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "USERNAME",
+                                                        "safeName": "USERNAME"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Username",
+                                                        "safeName": "Username"
+                                                    }
+                                                }
+                                            },
                                             "originalTypeDeclaration": null,
                                             "value": {
                                                 "shape": {
@@ -462,7 +849,28 @@
                                             }
                                         },
                                         {
-                                            "name": "email",
+                                            "name": {
+                                                "wireValue": "email",
+                                                "name": {
+                                                    "originalName": "email",
+                                                    "camelCase": {
+                                                        "unsafeName": "email",
+                                                        "safeName": "email"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "email",
+                                                        "safeName": "email"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "EMAIL",
+                                                        "safeName": "EMAIL"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Email",
+                                                        "safeName": "Email"
+                                                    }
+                                                }
+                                            },
                                             "originalTypeDeclaration": null,
                                             "value": {
                                                 "shape": {
@@ -495,9 +903,48 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": "status",
+                                                            "name": {
+                                                                "wireValue": "status",
+                                                                "name": {
+                                                                    "originalName": "status",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "status",
+                                                                        "safeName": "status"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "status",
+                                                                        "safeName": "status"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "STATUS",
+                                                                        "safeName": "STATUS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Status",
+                                                                        "safeName": "Status"
+                                                                    }
+                                                                }
+                                                            },
                                                             "originalTypeDeclaration": {
-                                                                "name": "PostSubmitResponse",
+                                                                "name": {
+                                                                    "originalName": "PostSubmitResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postSubmitResponse",
+                                                                        "safeName": "postSubmitResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_submit_response",
+                                                                        "safeName": "post_submit_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                                        "safeName": "POST_SUBMIT_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostSubmitResponse",
+                                                                        "safeName": "PostSubmitResponse"
+                                                                    }
+                                                                },
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -541,9 +988,48 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": "message",
+                                                            "name": {
+                                                                "wireValue": "message",
+                                                                "name": {
+                                                                    "originalName": "message",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "message",
+                                                                        "safeName": "message"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "message",
+                                                                        "safeName": "message"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "MESSAGE",
+                                                                        "safeName": "MESSAGE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Message",
+                                                                        "safeName": "Message"
+                                                                    }
+                                                                }
+                                                            },
                                                             "originalTypeDeclaration": {
-                                                                "name": "PostSubmitResponse",
+                                                                "name": {
+                                                                    "originalName": "PostSubmitResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postSubmitResponse",
+                                                                        "safeName": "postSubmitResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_submit_response",
+                                                                        "safeName": "post_submit_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                                        "safeName": "POST_SUBMIT_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostSubmitResponse",
+                                                                        "safeName": "PostSubmitResponse"
+                                                                    }
+                                                                },
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -590,7 +1076,25 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": "PostSubmitResponse",
+                                                    "name": {
+                                                        "originalName": "PostSubmitResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "postSubmitResponse",
+                                                            "safeName": "postSubmitResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "post_submit_response",
+                                                            "safeName": "post_submit_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "POST_SUBMIT_RESPONSE",
+                                                            "safeName": "POST_SUBMIT_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "PostSubmitResponse",
+                                                            "safeName": "PostSubmitResponse"
+                                                        }
+                                                    },
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -627,7 +1131,28 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": "errorInstanceId"
+        "errorInstanceIdKey": {
+            "wireValue": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            }
+        }
     },
     "environments": null,
     "errorDiscriminationStrategy": {

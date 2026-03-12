@@ -12,13 +12,52 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0",
+        "name": {
+          "originalName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0",
+          "camelCase": {
+            "unsafeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0",
+            "safeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0"
+          },
+          "snakeCase": {
+            "unsafeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items_0",
+            "safeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items_0"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS_0",
+            "safeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS_0"
+          },
+          "pascalCase": {
+            "unsafeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0",
+            "safeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0"
+          }
+        },
         "displayName": "Field 1"
       },
       "shape": {
         "properties": [
           {
-            "name": "id",
+            "name": {
+              "wireValue": "id",
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -66,13 +105,52 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
+        "name": {
+          "originalName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
+          "camelCase": {
+            "unsafeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
+            "safeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1"
+          },
+          "snakeCase": {
+            "unsafeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items_1",
+            "safeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS_1",
+            "safeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS_1"
+          },
+          "pascalCase": {
+            "unsafeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
+            "safeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1"
+          }
+        },
         "displayName": "Field 2"
       },
       "shape": {
         "properties": [
           {
-            "name": "name",
+            "name": {
+              "wireValue": "name",
+              "name": {
+                "originalName": "name",
+                "camelCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "snakeCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NAME",
+                  "safeName": "NAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Name",
+                  "safeName": "Name"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -120,7 +198,25 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+        "name": {
+          "originalName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+          "camelCase": {
+            "unsafeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+            "safeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+          },
+          "snakeCase": {
+            "unsafeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items",
+            "safeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS",
+            "safeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS"
+          },
+          "pascalCase": {
+            "unsafeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+            "safeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+          }
+        }
       },
       "shape": {
         "members": [
@@ -130,7 +226,25 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0",
+              "name": {
+                "originalName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0",
+                "camelCase": {
+                  "unsafeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0",
+                  "safeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0"
+                },
+                "snakeCase": {
+                  "unsafeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items_0",
+                  "safeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items_0"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS_0",
+                  "safeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS_0"
+                },
+                "pascalCase": {
+                  "unsafeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0",
+                  "safeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0"
+                }
+              },
               "typeId": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems0",
               "displayName": "Field 1",
               "inline": false,
@@ -143,7 +257,25 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
+              "name": {
+                "originalName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
+                "camelCase": {
+                  "unsafeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
+                  "safeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1"
+                },
+                "snakeCase": {
+                  "unsafeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items_1",
+                  "safeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items_1"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS_1",
+                  "safeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS_1"
+                },
+                "pascalCase": {
+                  "unsafeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
+                  "safeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1"
+                }
+              },
               "typeId": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems1",
               "displayName": "Field 2",
               "inline": false,
@@ -171,12 +303,51 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "postTestOneOfDisplayName_Response_200"
+        "name": {
+          "originalName": "postTestOneOfDisplayName_Response_200",
+          "camelCase": {
+            "unsafeName": "postTestOneOfDisplayNameResponse200",
+            "safeName": "postTestOneOfDisplayNameResponse200"
+          },
+          "snakeCase": {
+            "unsafeName": "post_test_one_of_display_name_response_200",
+            "safeName": "post_test_one_of_display_name_response_200"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE_200",
+            "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE_200"
+          },
+          "pascalCase": {
+            "unsafeName": "PostTestOneOfDisplayNameResponse200",
+            "safeName": "PostTestOneOfDisplayNameResponse200"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "id",
+            "name": {
+              "wireValue": "id",
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -245,7 +416,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "2c73bf69",
+                "id": "14204f38",
                 "url": "/test-one-of-display-name",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -257,7 +428,28 @@
                   "jsonExample": {},
                   "properties": [
                     {
-                      "name": "fields",
+                      "name": {
+                        "wireValue": "fields",
+                        "name": {
+                          "originalName": "fields",
+                          "camelCase": {
+                            "unsafeName": "fields",
+                            "safeName": "fields"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "fields",
+                            "safeName": "fields"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "FIELDS",
+                            "safeName": "FIELDS"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "Fields",
+                            "safeName": "Fields"
+                          }
+                        }
+                      },
                       "value": {
                         "shape": {
                           "container": {
@@ -268,7 +460,25 @@
                                     "allParts": [],
                                     "packagePath": []
                                   },
-                                  "name": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                                  "name": {
+                                    "originalName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                                    "camelCase": {
+                                      "unsafeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                                      "safeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items",
+                                      "safeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS",
+                                      "safeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                                      "safeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+                                    }
+                                  },
                                   "typeId": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
                                   "inline": false,
                                   "type": "named"
@@ -296,14 +506,53 @@
                         "shape": {
                           "properties": [
                             {
-                              "name": "id",
+                              "name": {
+                                "wireValue": "id",
+                                "name": {
+                                  "originalName": "id",
+                                  "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
+                                  }
+                                }
+                              },
                               "originalTypeDeclaration": {
                                 "typeId": "postTestOneOfDisplayName_Response_200",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": "postTestOneOfDisplayName_Response_200"
+                                "name": {
+                                  "originalName": "postTestOneOfDisplayName_Response_200",
+                                  "camelCase": {
+                                    "unsafeName": "postTestOneOfDisplayNameResponse200",
+                                    "safeName": "postTestOneOfDisplayNameResponse200"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "post_test_one_of_display_name_response_200",
+                                    "safeName": "post_test_one_of_display_name_response_200"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE_200",
+                                    "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE_200"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "PostTestOneOfDisplayNameResponse200",
+                                    "safeName": "PostTestOneOfDisplayNameResponse200"
+                                  }
+                                }
                               },
                               "value": {
                                 "jsonExample": "id",
@@ -327,7 +576,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "postTestOneOfDisplayName_Response_200"
+                          "name": {
+                            "originalName": "postTestOneOfDisplayName_Response_200",
+                            "camelCase": {
+                              "unsafeName": "postTestOneOfDisplayNameResponse200",
+                              "safeName": "postTestOneOfDisplayNameResponse200"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "post_test_one_of_display_name_response_200",
+                              "safeName": "post_test_one_of_display_name_response_200"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE_200",
+                              "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE_200"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "PostTestOneOfDisplayNameResponse200",
+                              "safeName": "PostTestOneOfDisplayNameResponse200"
+                            }
+                          }
                         },
                         "type": "named"
                       }
@@ -350,15 +617,72 @@
           },
           "audiences": [],
           "id": "endpoint_.postTestOneOfDisplayName",
-          "name": "postTestOneOfDisplayName",
+          "name": {
+            "originalName": "postTestOneOfDisplayName",
+            "camelCase": {
+              "unsafeName": "postTestOneOfDisplayName",
+              "safeName": "postTestOneOfDisplayName"
+            },
+            "snakeCase": {
+              "unsafeName": "post_test_one_of_display_name",
+              "safeName": "post_test_one_of_display_name"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME",
+              "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME"
+            },
+            "pascalCase": {
+              "unsafeName": "PostTestOneOfDisplayName",
+              "safeName": "PostTestOneOfDisplayName"
+            }
+          },
           "requestBody": {
             "contentType": "application/json",
-            "name": "postTestOneOfDisplayName_Request",
+            "name": {
+              "originalName": "postTestOneOfDisplayName_Request",
+              "camelCase": {
+                "unsafeName": "postTestOneOfDisplayNameRequest",
+                "safeName": "postTestOneOfDisplayNameRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "post_test_one_of_display_name_request",
+                "safeName": "post_test_one_of_display_name_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST",
+                "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "PostTestOneOfDisplayNameRequest",
+                "safeName": "PostTestOneOfDisplayNameRequest"
+              }
+            },
             "extendedProperties": [],
             "extends": [],
             "properties": [
               {
-                "name": "fields",
+                "name": {
+                  "wireValue": "fields",
+                  "name": {
+                    "originalName": "fields",
+                    "camelCase": {
+                      "unsafeName": "fields",
+                      "safeName": "fields"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "fields",
+                      "safeName": "fields"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FIELDS",
+                      "safeName": "FIELDS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Fields",
+                      "safeName": "Fields"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -368,7 +692,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                          "name": {
+                            "originalName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                            "camelCase": {
+                              "unsafeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                              "safeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items",
+                              "safeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS",
+                              "safeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                              "safeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+                            }
+                          },
                           "typeId": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
                           "inline": false,
                           "type": "named"
@@ -404,12 +746,51 @@
             "requestBodies": [
               {
                 "contentType": "application/json",
-                "name": "postTestOneOfDisplayName_Request",
+                "name": {
+                  "originalName": "postTestOneOfDisplayName_Request",
+                  "camelCase": {
+                    "unsafeName": "postTestOneOfDisplayNameRequest",
+                    "safeName": "postTestOneOfDisplayNameRequest"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "post_test_one_of_display_name_request",
+                    "safeName": "post_test_one_of_display_name_request"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST",
+                    "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "PostTestOneOfDisplayNameRequest",
+                    "safeName": "PostTestOneOfDisplayNameRequest"
+                  }
+                },
                 "extendedProperties": [],
                 "extends": [],
                 "properties": [
                   {
-                    "name": "fields",
+                    "name": {
+                      "wireValue": "fields",
+                      "name": {
+                        "originalName": "fields",
+                        "camelCase": {
+                          "unsafeName": "fields",
+                          "safeName": "fields"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "fields",
+                          "safeName": "fields"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "FIELDS",
+                          "safeName": "FIELDS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Fields",
+                          "safeName": "Fields"
+                        }
+                      }
+                    },
                     "valueType": {
                       "container": {
                         "optional": {
@@ -419,7 +800,25 @@
                                 "allParts": [],
                                 "packagePath": []
                               },
-                              "name": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                              "name": {
+                                "originalName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                                "camelCase": {
+                                  "unsafeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                                  "safeName": "testOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items",
+                                  "safeName": "test_one_of_display_name_post_request_body_content_application_json_schema_fields_items"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS",
+                                  "safeName": "TEST_ONE_OF_DISPLAY_NAME_POST_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_FIELDS_ITEMS"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
+                                  "safeName": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems"
+                                }
+                              },
                               "typeId": "TestOneOfDisplayNamePostRequestBodyContentApplicationJsonSchemaFieldsItems",
                               "inline": false,
                               "type": "named"
@@ -462,7 +861,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "postTestOneOfDisplayName_Response_200",
+                  "name": {
+                    "originalName": "postTestOneOfDisplayName_Response_200",
+                    "camelCase": {
+                      "unsafeName": "postTestOneOfDisplayNameResponse200",
+                      "safeName": "postTestOneOfDisplayNameResponse200"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "post_test_one_of_display_name_response_200",
+                      "safeName": "post_test_one_of_display_name_response_200"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE_200",
+                      "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE_200"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "PostTestOneOfDisplayNameResponse200",
+                      "safeName": "PostTestOneOfDisplayNameResponse200"
+                    }
+                  },
                   "typeId": "postTestOneOfDisplayName_Response_200",
                   "inline": false,
                   "type": "named"
@@ -518,7 +935,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "postTestOneOfDisplayName_Response_200",
+                      "name": {
+                        "originalName": "postTestOneOfDisplayName_Response_200",
+                        "camelCase": {
+                          "unsafeName": "postTestOneOfDisplayNameResponse200",
+                          "safeName": "postTestOneOfDisplayNameResponse200"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "post_test_one_of_display_name_response_200",
+                          "safeName": "post_test_one_of_display_name_response_200"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE_200",
+                          "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE_200"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "PostTestOneOfDisplayNameResponse200",
+                          "safeName": "PostTestOneOfDisplayNameResponse200"
+                        }
+                      },
                       "typeId": "postTestOneOfDisplayName_Response_200",
                       "inline": false,
                       "type": "named"
@@ -578,8 +1013,47 @@
       "sdkVersion": ""
     }
   },
-  "apiName": "",
+  "apiName": {
+    "originalName": "",
+    "camelCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "snakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "",
+      "safeName": ""
+    },
+    "pascalCase": {
+      "unsafeName": "",
+      "safeName": ""
+    }
+  },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      }
+    }
   }
 }

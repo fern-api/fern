@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        }
+    },
     "apiDisplayName": "Code Samples API",
     "apiDocs": null,
     "auth": {
@@ -10,7 +28,25 @@
         "schemes": [
             {
                 "_type": "bearer",
-                "token": "token",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                },
                 "tokenEnvVar": null,
                 "key": "BearerAuth",
                 "docs": null
@@ -24,7 +60,25 @@
         "type_:TelemetryResponse": {
             "inline": null,
             "name": {
-                "name": "TelemetryResponse",
+                "name": {
+                    "originalName": "TelemetryResponse",
+                    "camelCase": {
+                        "unsafeName": "telemetryResponse",
+                        "safeName": "telemetryResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "telemetry_response",
+                        "safeName": "telemetry_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TELEMETRY_RESPONSE",
+                        "safeName": "TELEMETRY_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TelemetryResponse",
+                        "safeName": "TelemetryResponse"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -38,7 +92,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "time",
+                        "name": {
+                            "wireValue": "time",
+                            "name": {
+                                "originalName": "time",
+                                "camelCase": {
+                                    "unsafeName": "time",
+                                    "safeName": "time"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "time",
+                                    "safeName": "time"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TIME",
+                                    "safeName": "TIME"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Time",
+                                    "safeName": "Time"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -61,7 +136,28 @@
                         "docs": "Time spent to process this request"
                     },
                     {
-                        "name": "status",
+                        "name": {
+                            "wireValue": "status",
+                            "name": {
+                                "originalName": "status",
+                                "camelCase": {
+                                    "unsafeName": "status",
+                                    "safeName": "status"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "status",
+                                    "safeName": "status"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STATUS",
+                                    "safeName": "STATUS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Status",
+                                    "safeName": "Status"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -88,14 +184,53 @@
                         "docs": null
                     },
                     {
-                        "name": "result",
+                        "name": {
+                            "wireValue": "result",
+                            "name": {
+                                "originalName": "result",
+                                "camelCase": {
+                                    "unsafeName": "result",
+                                    "safeName": "result"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "result",
+                                    "safeName": "result"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESULT",
+                                    "safeName": "RESULT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Result",
+                                    "safeName": "Result"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "named",
-                                    "name": "TelemetryData",
+                                    "name": {
+                                        "originalName": "TelemetryData",
+                                        "camelCase": {
+                                            "unsafeName": "telemetryData",
+                                            "safeName": "telemetryData"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "telemetry_data",
+                                            "safeName": "telemetry_data"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TELEMETRY_DATA",
+                                            "safeName": "TELEMETRY_DATA"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "TelemetryData",
+                                            "safeName": "TelemetryData"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -137,7 +272,25 @@
         "type_:TelemetryData": {
             "inline": null,
             "name": {
-                "name": "TelemetryData",
+                "name": {
+                    "originalName": "TelemetryData",
+                    "camelCase": {
+                        "unsafeName": "telemetryData",
+                        "safeName": "telemetryData"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "telemetry_data",
+                        "safeName": "telemetry_data"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TELEMETRY_DATA",
+                        "safeName": "TELEMETRY_DATA"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TelemetryData",
+                        "safeName": "TelemetryData"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -151,7 +304,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "cpu",
+                        "name": {
+                            "wireValue": "cpu",
+                            "name": {
+                                "originalName": "cpu",
+                                "camelCase": {
+                                    "unsafeName": "cpu",
+                                    "safeName": "cpu"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "cpu",
+                                    "safeName": "cpu"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CPU",
+                                    "safeName": "CPU"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CPU",
+                                    "safeName": "CPU"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -174,7 +348,28 @@
                         "docs": "CPU usage"
                     },
                     {
-                        "name": "memory",
+                        "name": {
+                            "wireValue": "memory",
+                            "name": {
+                                "originalName": "memory",
+                                "camelCase": {
+                                    "unsafeName": "memory",
+                                    "safeName": "memory"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "memory",
+                                    "safeName": "memory"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MEMORY",
+                                    "safeName": "MEMORY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Memory",
+                                    "safeName": "Memory"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -197,7 +392,28 @@
                         "docs": "Memory usage"
                     },
                     {
-                        "name": "network",
+                        "name": {
+                            "wireValue": "network",
+                            "name": {
+                                "originalName": "network",
+                                "camelCase": {
+                                    "unsafeName": "network",
+                                    "safeName": "network"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "network",
+                                    "safeName": "network"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NETWORK",
+                                    "safeName": "NETWORK"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Network",
+                                    "safeName": "Network"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -264,7 +480,25 @@
             "endpoints": [
                 {
                     "id": "endpoint_.telemetry",
-                    "name": "telemetry",
+                    "name": {
+                        "originalName": "telemetry",
+                        "camelCase": {
+                            "unsafeName": "telemetry",
+                            "safeName": "telemetry"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "telemetry",
+                            "safeName": "telemetry"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TELEMETRY",
+                            "safeName": "TELEMETRY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Telemetry",
+                            "safeName": "Telemetry"
+                        }
+                    },
                     "displayName": "Collect telemetry data",
                     "auth": false,
                     "security": null,
@@ -285,7 +519,28 @@
                     "allPathParameters": [],
                     "queryParameters": [
                         {
-                            "name": "anonymize",
+                            "name": {
+                                "wireValue": "anonymize",
+                                "name": {
+                                    "originalName": "anonymize",
+                                    "camelCase": {
+                                        "unsafeName": "anonymize",
+                                        "safeName": "anonymize"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "anonymize",
+                                        "safeName": "anonymize"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ANONYMIZE",
+                                        "safeName": "ANONYMIZE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Anonymize",
+                                        "safeName": "Anonymize"
+                                    }
+                                }
+                            },
                             "valueType": {
                                 "_type": "container",
                                 "container": {
@@ -318,12 +573,66 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "TelemetryRequest",
-                            "bodyKey": "body",
+                            "wrapperName": {
+                                "originalName": "TelemetryRequest",
+                                "camelCase": {
+                                    "unsafeName": "telemetryRequest",
+                                    "safeName": "telemetryRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "telemetry_request",
+                                    "safeName": "telemetry_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TELEMETRY_REQUEST",
+                                    "safeName": "TELEMETRY_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "TelemetryRequest",
+                                    "safeName": "TelemetryRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -333,7 +642,25 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": "TelemetryResponse",
+                                    "name": {
+                                        "originalName": "TelemetryResponse",
+                                        "camelCase": {
+                                            "unsafeName": "telemetryResponse",
+                                            "safeName": "telemetryResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "telemetry_response",
+                                            "safeName": "telemetry_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TELEMETRY_RESPONSE",
+                                            "safeName": "TELEMETRY_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "TelemetryResponse",
+                                            "safeName": "TelemetryResponse"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -381,14 +708,53 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": "TelemetryResponse",
+                                                    "name": {
+                                                        "originalName": "TelemetryResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "telemetryResponse",
+                                                            "safeName": "telemetryResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "telemetry_response",
+                                                            "safeName": "telemetry_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TELEMETRY_RESPONSE",
+                                                            "safeName": "TELEMETRY_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "TelemetryResponse",
+                                                            "safeName": "TelemetryResponse"
+                                                        }
+                                                    },
                                                     "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": "time",
+                                                            "name": {
+                                                                "wireValue": "time",
+                                                                "name": {
+                                                                    "originalName": "time",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "time",
+                                                                        "safeName": "time"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "time",
+                                                                        "safeName": "time"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TIME",
+                                                                        "safeName": "TIME"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Time",
+                                                                        "safeName": "Time"
+                                                                    }
+                                                                }
+                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -422,13 +788,52 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": "TelemetryResponse",
+                                                                "name": {
+                                                                    "originalName": "TelemetryResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "telemetryResponse",
+                                                                        "safeName": "telemetryResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "telemetry_response",
+                                                                        "safeName": "telemetry_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TELEMETRY_RESPONSE",
+                                                                        "safeName": "TELEMETRY_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "TelemetryResponse",
+                                                                        "safeName": "TelemetryResponse"
+                                                                    }
+                                                                },
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": "status",
+                                                            "name": {
+                                                                "wireValue": "status",
+                                                                "name": {
+                                                                    "originalName": "status",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "status",
+                                                                        "safeName": "status"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "status",
+                                                                        "safeName": "status"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "STATUS",
+                                                                        "safeName": "STATUS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Status",
+                                                                        "safeName": "Status"
+                                                                    }
+                                                                }
+                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -468,13 +873,52 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": "TelemetryResponse",
+                                                                "name": {
+                                                                    "originalName": "TelemetryResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "telemetryResponse",
+                                                                        "safeName": "telemetryResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "telemetry_response",
+                                                                        "safeName": "telemetry_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TELEMETRY_RESPONSE",
+                                                                        "safeName": "TELEMETRY_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "TelemetryResponse",
+                                                                        "safeName": "TelemetryResponse"
+                                                                    }
+                                                                },
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": "result",
+                                                            "name": {
+                                                                "wireValue": "result",
+                                                                "name": {
+                                                                    "originalName": "result",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "result",
+                                                                        "safeName": "result"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "result",
+                                                                        "safeName": "result"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RESULT",
+                                                                        "safeName": "RESULT"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Result",
+                                                                        "safeName": "Result"
+                                                                    }
+                                                                }
+                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -490,14 +934,53 @@
                                                                                         "packagePath": [],
                                                                                         "file": null
                                                                                     },
-                                                                                    "name": "TelemetryData",
+                                                                                    "name": {
+                                                                                        "originalName": "TelemetryData",
+                                                                                        "camelCase": {
+                                                                                            "unsafeName": "telemetryData",
+                                                                                            "safeName": "telemetryData"
+                                                                                        },
+                                                                                        "snakeCase": {
+                                                                                            "unsafeName": "telemetry_data",
+                                                                                            "safeName": "telemetry_data"
+                                                                                        },
+                                                                                        "screamingSnakeCase": {
+                                                                                            "unsafeName": "TELEMETRY_DATA",
+                                                                                            "safeName": "TELEMETRY_DATA"
+                                                                                        },
+                                                                                        "pascalCase": {
+                                                                                            "unsafeName": "TelemetryData",
+                                                                                            "safeName": "TelemetryData"
+                                                                                        }
+                                                                                    },
                                                                                     "displayName": null
                                                                                 },
                                                                                 "shape": {
                                                                                     "type": "object",
                                                                                     "properties": [
                                                                                         {
-                                                                                            "name": "cpu",
+                                                                                            "name": {
+                                                                                                "wireValue": "cpu",
+                                                                                                "name": {
+                                                                                                    "originalName": "cpu",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "cpu",
+                                                                                                        "safeName": "cpu"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "cpu",
+                                                                                                        "safeName": "cpu"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "CPU",
+                                                                                                        "safeName": "CPU"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "CPU",
+                                                                                                        "safeName": "CPU"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "value": {
                                                                                                 "shape": {
                                                                                                     "type": "container",
@@ -531,13 +1014,52 @@
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
-                                                                                                "name": "TelemetryData",
+                                                                                                "name": {
+                                                                                                    "originalName": "TelemetryData",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "telemetryData",
+                                                                                                        "safeName": "telemetryData"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "telemetry_data",
+                                                                                                        "safeName": "telemetry_data"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "TELEMETRY_DATA",
+                                                                                                        "safeName": "TELEMETRY_DATA"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "TelemetryData",
+                                                                                                        "safeName": "TelemetryData"
+                                                                                                    }
+                                                                                                },
                                                                                                 "displayName": null
                                                                                             },
                                                                                             "propertyAccess": null
                                                                                         },
                                                                                         {
-                                                                                            "name": "memory",
+                                                                                            "name": {
+                                                                                                "wireValue": "memory",
+                                                                                                "name": {
+                                                                                                    "originalName": "memory",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "memory",
+                                                                                                        "safeName": "memory"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "memory",
+                                                                                                        "safeName": "memory"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "MEMORY",
+                                                                                                        "safeName": "MEMORY"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Memory",
+                                                                                                        "safeName": "Memory"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "value": {
                                                                                                 "shape": {
                                                                                                     "type": "container",
@@ -571,13 +1093,52 @@
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
-                                                                                                "name": "TelemetryData",
+                                                                                                "name": {
+                                                                                                    "originalName": "TelemetryData",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "telemetryData",
+                                                                                                        "safeName": "telemetryData"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "telemetry_data",
+                                                                                                        "safeName": "telemetry_data"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "TELEMETRY_DATA",
+                                                                                                        "safeName": "TELEMETRY_DATA"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "TelemetryData",
+                                                                                                        "safeName": "TelemetryData"
+                                                                                                    }
+                                                                                                },
                                                                                                 "displayName": null
                                                                                             },
                                                                                             "propertyAccess": null
                                                                                         },
                                                                                         {
-                                                                                            "name": "network",
+                                                                                            "name": {
+                                                                                                "wireValue": "network",
+                                                                                                "name": {
+                                                                                                    "originalName": "network",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "network",
+                                                                                                        "safeName": "network"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "network",
+                                                                                                        "safeName": "network"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "NETWORK",
+                                                                                                        "safeName": "NETWORK"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Network",
+                                                                                                        "safeName": "Network"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "value": {
                                                                                                 "shape": {
                                                                                                     "type": "container",
@@ -611,7 +1172,25 @@
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
-                                                                                                "name": "TelemetryData",
+                                                                                                "name": {
+                                                                                                    "originalName": "TelemetryData",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "telemetryData",
+                                                                                                        "safeName": "telemetryData"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "telemetry_data",
+                                                                                                        "safeName": "telemetry_data"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "TELEMETRY_DATA",
+                                                                                                        "safeName": "TELEMETRY_DATA"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "TelemetryData",
+                                                                                                        "safeName": "TelemetryData"
+                                                                                                    }
+                                                                                                },
                                                                                                 "displayName": null
                                                                                             },
                                                                                             "propertyAccess": null
@@ -628,7 +1207,25 @@
                                                                         },
                                                                         "valueType": {
                                                                             "_type": "named",
-                                                                            "name": "TelemetryData",
+                                                                            "name": {
+                                                                                "originalName": "TelemetryData",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "telemetryData",
+                                                                                    "safeName": "telemetryData"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "telemetry_data",
+                                                                                    "safeName": "telemetry_data"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "TELEMETRY_DATA",
+                                                                                    "safeName": "TELEMETRY_DATA"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "TelemetryData",
+                                                                                    "safeName": "TelemetryData"
+                                                                                }
+                                                                            },
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -654,7 +1251,25 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": "TelemetryResponse",
+                                                                "name": {
+                                                                    "originalName": "TelemetryResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "telemetryResponse",
+                                                                        "safeName": "telemetryResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "telemetry_response",
+                                                                        "safeName": "telemetry_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TELEMETRY_RESPONSE",
+                                                                        "safeName": "TELEMETRY_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "TelemetryResponse",
+                                                                        "safeName": "TelemetryResponse"
+                                                                    }
+                                                                },
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
@@ -705,7 +1320,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "2c36856f",
+                                "id": "40ef2775",
                                 "url": "/telemetry",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -726,9 +1341,48 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": "time",
+                                                            "name": {
+                                                                "wireValue": "time",
+                                                                "name": {
+                                                                    "originalName": "time",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "time",
+                                                                        "safeName": "time"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "time",
+                                                                        "safeName": "time"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TIME",
+                                                                        "safeName": "TIME"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Time",
+                                                                        "safeName": "Time"
+                                                                    }
+                                                                }
+                                                            },
                                                             "originalTypeDeclaration": {
-                                                                "name": "TelemetryResponse",
+                                                                "name": {
+                                                                    "originalName": "TelemetryResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "telemetryResponse",
+                                                                        "safeName": "telemetryResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "telemetry_response",
+                                                                        "safeName": "telemetry_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TELEMETRY_RESPONSE",
+                                                                        "safeName": "TELEMETRY_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "TelemetryResponse",
+                                                                        "safeName": "TelemetryResponse"
+                                                                    }
+                                                                },
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -766,9 +1420,48 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": "status",
+                                                            "name": {
+                                                                "wireValue": "status",
+                                                                "name": {
+                                                                    "originalName": "status",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "status",
+                                                                        "safeName": "status"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "status",
+                                                                        "safeName": "status"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "STATUS",
+                                                                        "safeName": "STATUS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Status",
+                                                                        "safeName": "Status"
+                                                                    }
+                                                                }
+                                                            },
                                                             "originalTypeDeclaration": {
-                                                                "name": "TelemetryResponse",
+                                                                "name": {
+                                                                    "originalName": "TelemetryResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "telemetryResponse",
+                                                                        "safeName": "telemetryResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "telemetry_response",
+                                                                        "safeName": "telemetry_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TELEMETRY_RESPONSE",
+                                                                        "safeName": "TELEMETRY_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "TelemetryResponse",
+                                                                        "safeName": "TelemetryResponse"
+                                                                    }
+                                                                },
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -812,9 +1505,48 @@
                                                             "propertyAccess": null
                                                         },
                                                         {
-                                                            "name": "result",
+                                                            "name": {
+                                                                "wireValue": "result",
+                                                                "name": {
+                                                                    "originalName": "result",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "result",
+                                                                        "safeName": "result"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "result",
+                                                                        "safeName": "result"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RESULT",
+                                                                        "safeName": "RESULT"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Result",
+                                                                        "safeName": "Result"
+                                                                    }
+                                                                }
+                                                            },
                                                             "originalTypeDeclaration": {
-                                                                "name": "TelemetryResponse",
+                                                                "name": {
+                                                                    "originalName": "TelemetryResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "telemetryResponse",
+                                                                        "safeName": "telemetryResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "telemetry_response",
+                                                                        "safeName": "telemetry_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "TELEMETRY_RESPONSE",
+                                                                        "safeName": "TELEMETRY_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "TelemetryResponse",
+                                                                        "safeName": "TelemetryResponse"
+                                                                    }
+                                                                },
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -835,9 +1567,48 @@
                                                                                     "type": "object",
                                                                                     "properties": [
                                                                                         {
-                                                                                            "name": "cpu",
+                                                                                            "name": {
+                                                                                                "wireValue": "cpu",
+                                                                                                "name": {
+                                                                                                    "originalName": "cpu",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "cpu",
+                                                                                                        "safeName": "cpu"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "cpu",
+                                                                                                        "safeName": "cpu"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "CPU",
+                                                                                                        "safeName": "CPU"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "CPU",
+                                                                                                        "safeName": "CPU"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "name": "TelemetryData",
+                                                                                                "name": {
+                                                                                                    "originalName": "TelemetryData",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "telemetryData",
+                                                                                                        "safeName": "telemetryData"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "telemetry_data",
+                                                                                                        "safeName": "telemetry_data"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "TELEMETRY_DATA",
+                                                                                                        "safeName": "TELEMETRY_DATA"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "TelemetryData",
+                                                                                                        "safeName": "TelemetryData"
+                                                                                                    }
+                                                                                                },
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [],
                                                                                                     "packagePath": [],
@@ -875,9 +1646,48 @@
                                                                                             "propertyAccess": null
                                                                                         },
                                                                                         {
-                                                                                            "name": "memory",
+                                                                                            "name": {
+                                                                                                "wireValue": "memory",
+                                                                                                "name": {
+                                                                                                    "originalName": "memory",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "memory",
+                                                                                                        "safeName": "memory"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "memory",
+                                                                                                        "safeName": "memory"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "MEMORY",
+                                                                                                        "safeName": "MEMORY"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Memory",
+                                                                                                        "safeName": "Memory"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "name": "TelemetryData",
+                                                                                                "name": {
+                                                                                                    "originalName": "TelemetryData",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "telemetryData",
+                                                                                                        "safeName": "telemetryData"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "telemetry_data",
+                                                                                                        "safeName": "telemetry_data"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "TELEMETRY_DATA",
+                                                                                                        "safeName": "TELEMETRY_DATA"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "TelemetryData",
+                                                                                                        "safeName": "TelemetryData"
+                                                                                                    }
+                                                                                                },
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [],
                                                                                                     "packagePath": [],
@@ -915,9 +1725,48 @@
                                                                                             "propertyAccess": null
                                                                                         },
                                                                                         {
-                                                                                            "name": "network",
+                                                                                            "name": {
+                                                                                                "wireValue": "network",
+                                                                                                "name": {
+                                                                                                    "originalName": "network",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "network",
+                                                                                                        "safeName": "network"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "network",
+                                                                                                        "safeName": "network"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "NETWORK",
+                                                                                                        "safeName": "NETWORK"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Network",
+                                                                                                        "safeName": "Network"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "name": "TelemetryData",
+                                                                                                "name": {
+                                                                                                    "originalName": "TelemetryData",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "telemetryData",
+                                                                                                        "safeName": "telemetryData"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "telemetry_data",
+                                                                                                        "safeName": "telemetry_data"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "TELEMETRY_DATA",
+                                                                                                        "safeName": "TELEMETRY_DATA"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "TelemetryData",
+                                                                                                        "safeName": "TelemetryData"
+                                                                                                    }
+                                                                                                },
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [],
                                                                                                     "packagePath": [],
@@ -958,7 +1807,25 @@
                                                                                     "extraProperties": null
                                                                                 },
                                                                                 "typeName": {
-                                                                                    "name": "TelemetryData",
+                                                                                    "name": {
+                                                                                        "originalName": "TelemetryData",
+                                                                                        "camelCase": {
+                                                                                            "unsafeName": "telemetryData",
+                                                                                            "safeName": "telemetryData"
+                                                                                        },
+                                                                                        "snakeCase": {
+                                                                                            "unsafeName": "telemetry_data",
+                                                                                            "safeName": "telemetry_data"
+                                                                                        },
+                                                                                        "screamingSnakeCase": {
+                                                                                            "unsafeName": "TELEMETRY_DATA",
+                                                                                            "safeName": "TELEMETRY_DATA"
+                                                                                        },
+                                                                                        "pascalCase": {
+                                                                                            "unsafeName": "TelemetryData",
+                                                                                            "safeName": "TelemetryData"
+                                                                                        }
+                                                                                    },
                                                                                     "fernFilepath": {
                                                                                         "allParts": [],
                                                                                         "packagePath": [],
@@ -976,7 +1843,25 @@
                                                                         },
                                                                         "valueType": {
                                                                             "_type": "named",
-                                                                            "name": "TelemetryData",
+                                                                            "name": {
+                                                                                "originalName": "TelemetryData",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "telemetryData",
+                                                                                    "safeName": "telemetryData"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "telemetry_data",
+                                                                                    "safeName": "telemetry_data"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "TELEMETRY_DATA",
+                                                                                    "safeName": "TELEMETRY_DATA"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "TelemetryData",
+                                                                                    "safeName": "TelemetryData"
+                                                                                }
+                                                                            },
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -1001,7 +1886,25 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": "TelemetryResponse",
+                                                    "name": {
+                                                        "originalName": "TelemetryResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "telemetryResponse",
+                                                            "safeName": "telemetryResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "telemetry_response",
+                                                            "safeName": "telemetry_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TELEMETRY_RESPONSE",
+                                                            "safeName": "TELEMETRY_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "TelemetryResponse",
+                                                            "safeName": "TelemetryResponse"
+                                                        }
+                                                    },
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -1043,7 +1946,28 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": "errorInstanceId"
+        "errorInstanceIdKey": {
+            "wireValue": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            }
+        }
     },
     "environments": null,
     "errorDiscriminationStrategy": {

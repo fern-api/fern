@@ -12,19 +12,97 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "UnionJob"
+        "name": {
+          "originalName": "UnionJob",
+          "camelCase": {
+            "unsafeName": "unionJob",
+            "safeName": "unionJob"
+          },
+          "snakeCase": {
+            "unsafeName": "union_job",
+            "safeName": "union_job"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "UNION_JOB",
+            "safeName": "UNION_JOB"
+          },
+          "pascalCase": {
+            "unsafeName": "UnionJob",
+            "safeName": "UnionJob"
+          }
+        }
       },
       "shape": {
         "baseProperties": [],
-        "discriminant": "type",
+        "discriminant": {
+          "wireValue": "type",
+          "name": {
+            "originalName": "type",
+            "camelCase": {
+              "unsafeName": "type",
+              "safeName": "type_"
+            },
+            "snakeCase": {
+              "unsafeName": "type",
+              "safeName": "type_"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TYPE",
+              "safeName": "TYPE"
+            },
+            "pascalCase": {
+              "unsafeName": "Type",
+              "safeName": "Type"
+            }
+          }
+        },
         "extends": [],
         "types": [
           {
-            "discriminantValue": "EMBEDDING_GENERATION",
+            "discriminantValue": {
+              "wireValue": "EMBEDDING_GENERATION",
+              "name": {
+                "originalName": "EMBEDDING_GENERATION",
+                "camelCase": {
+                  "unsafeName": "embeddingGeneration",
+                  "safeName": "embeddingGeneration"
+                },
+                "snakeCase": {
+                  "unsafeName": "embedding_generation",
+                  "safeName": "embedding_generation"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "EMBEDDING_GENERATION",
+                  "safeName": "EMBEDDING_GENERATION"
+                },
+                "pascalCase": {
+                  "unsafeName": "EmbeddingGeneration",
+                  "safeName": "EmbeddingGeneration"
+                }
+              }
+            },
             "displayName": "EMBEDDING_GENERATION",
             "shape": {
               "typeId": "UnionJob_Job<EmbeddingGeneration>",
-              "name": "UnionJob_Job<EmbeddingGeneration>",
+              "name": {
+                "originalName": "UnionJob_Job<EmbeddingGeneration>",
+                "camelCase": {
+                  "unsafeName": "unionJobJobEmbeddingGeneration",
+                  "safeName": "unionJobJobEmbeddingGeneration"
+                },
+                "snakeCase": {
+                  "unsafeName": "union_job_job_embedding_generation",
+                  "safeName": "union_job_job_embedding_generation"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNION_JOB_JOB_EMBEDDING_GENERATION",
+                  "safeName": "UNION_JOB_JOB_EMBEDDING_GENERATION"
+                },
+                "pascalCase": {
+                  "unsafeName": "UnionJobJobEmbeddingGeneration",
+                  "safeName": "UnionJobJobEmbeddingGeneration"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -34,11 +112,50 @@
             }
           },
           {
-            "discriminantValue": "INFERENCE",
+            "discriminantValue": {
+              "wireValue": "INFERENCE",
+              "name": {
+                "originalName": "INFERENCE",
+                "camelCase": {
+                  "unsafeName": "inference",
+                  "safeName": "inference"
+                },
+                "snakeCase": {
+                  "unsafeName": "inference",
+                  "safeName": "inference"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INFERENCE",
+                  "safeName": "INFERENCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Inference",
+                  "safeName": "Inference"
+                }
+              }
+            },
             "displayName": "INFERENCE",
             "shape": {
               "typeId": "UnionJob_Job<Inference>",
-              "name": "UnionJob_Job<Inference>",
+              "name": {
+                "originalName": "UnionJob_Job<Inference>",
+                "camelCase": {
+                  "unsafeName": "unionJobJobInference",
+                  "safeName": "unionJobJobInference"
+                },
+                "snakeCase": {
+                  "unsafeName": "union_job_job_inference",
+                  "safeName": "union_job_job_inference"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNION_JOB_JOB_INFERENCE",
+                  "safeName": "UNION_JOB_JOB_INFERENCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "UnionJobJobInference",
+                  "safeName": "UnionJobJobInference"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -48,11 +165,50 @@
             }
           },
           {
-            "discriminantValue": "TL_INFERENCE",
+            "discriminantValue": {
+              "wireValue": "TL_INFERENCE",
+              "name": {
+                "originalName": "TL_INFERENCE",
+                "camelCase": {
+                  "unsafeName": "tlInference",
+                  "safeName": "tlInference"
+                },
+                "snakeCase": {
+                  "unsafeName": "tl_inference",
+                  "safeName": "tl_inference"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TL_INFERENCE",
+                  "safeName": "TL_INFERENCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "TlInference",
+                  "safeName": "TlInference"
+                }
+              }
+            },
             "displayName": "TL_INFERENCE",
             "shape": {
               "typeId": "UnionJob_Job<TlInference>",
-              "name": "UnionJob_Job<TlInference>",
+              "name": {
+                "originalName": "UnionJob_Job<TlInference>",
+                "camelCase": {
+                  "unsafeName": "unionJobJobTlInference",
+                  "safeName": "unionJobJobTlInference"
+                },
+                "snakeCase": {
+                  "unsafeName": "union_job_job_tl_inference",
+                  "safeName": "union_job_job_tl_inference"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNION_JOB_JOB_TL_INFERENCE",
+                  "safeName": "UNION_JOB_JOB_TL_INFERENCE"
+                },
+                "pascalCase": {
+                  "unsafeName": "UnionJobJobTlInference",
+                  "safeName": "UnionJobJobTlInference"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -62,11 +218,50 @@
             }
           },
           {
-            "discriminantValue": "TRAINING",
+            "discriminantValue": {
+              "wireValue": "TRAINING",
+              "name": {
+                "originalName": "TRAINING",
+                "camelCase": {
+                  "unsafeName": "training",
+                  "safeName": "training"
+                },
+                "snakeCase": {
+                  "unsafeName": "training",
+                  "safeName": "training"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRAINING",
+                  "safeName": "TRAINING"
+                },
+                "pascalCase": {
+                  "unsafeName": "Training",
+                  "safeName": "Training"
+                }
+              }
+            },
             "displayName": "TRAINING",
             "shape": {
               "typeId": "UnionJob_Job<Training>",
-              "name": "UnionJob_Job<Training>",
+              "name": {
+                "originalName": "UnionJob_Job<Training>",
+                "camelCase": {
+                  "unsafeName": "unionJobJobTraining",
+                  "safeName": "unionJobJobTraining"
+                },
+                "snakeCase": {
+                  "unsafeName": "union_job_job_training",
+                  "safeName": "union_job_job_training"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "UNION_JOB_JOB_TRAINING",
+                  "safeName": "UNION_JOB_JOB_TRAINING"
+                },
+                "pascalCase": {
+                  "unsafeName": "UnionJobJobTraining",
+                  "safeName": "UnionJobJobTraining"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -129,8 +324,47 @@
       "sdkVersion": ""
     }
   },
-  "apiName": "Hume AI Batch API",
+  "apiName": {
+    "originalName": "Hume AI Batch API",
+    "camelCase": {
+      "unsafeName": "humeAiBatchApi",
+      "safeName": "humeAiBatchApi"
+    },
+    "snakeCase": {
+      "unsafeName": "hume_ai_batch_api",
+      "safeName": "hume_ai_batch_api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "HUME_AI_BATCH_API",
+      "safeName": "HUME_AI_BATCH_API"
+    },
+    "pascalCase": {
+      "unsafeName": "HumeAiBatchApi",
+      "safeName": "HumeAiBatchApi"
+    }
+  },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      }
+    }
   }
 }

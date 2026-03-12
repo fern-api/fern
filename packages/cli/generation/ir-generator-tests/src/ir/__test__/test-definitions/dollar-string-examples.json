@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "dollar-string-examples",
+    "apiName": {
+        "originalName": "dollar-string-examples",
+        "camelCase": {
+            "unsafeName": "dollarStringExamples",
+            "safeName": "dollarStringExamples"
+        },
+        "snakeCase": {
+            "unsafeName": "dollar_string_examples",
+            "safeName": "dollar_string_examples"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "DOLLAR_STRING_EXAMPLES",
+            "safeName": "DOLLAR_STRING_EXAMPLES"
+        },
+        "pascalCase": {
+            "unsafeName": "DollarStringExamples",
+            "safeName": "DollarStringExamples"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -16,7 +34,25 @@
         "type_:PaymentInfo": {
             "inline": null,
             "name": {
-                "name": "PaymentInfo",
+                "name": {
+                    "originalName": "PaymentInfo",
+                    "camelCase": {
+                        "unsafeName": "paymentInfo",
+                        "safeName": "paymentInfo"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "payment_info",
+                        "safeName": "payment_info"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PAYMENT_INFO",
+                        "safeName": "PAYMENT_INFO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PaymentInfo",
+                        "safeName": "PaymentInfo"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -30,7 +66,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "amount",
+                        "name": {
+                            "wireValue": "amount",
+                            "name": {
+                                "originalName": "amount",
+                                "camelCase": {
+                                    "unsafeName": "amount",
+                                    "safeName": "amount"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "amount",
+                                    "safeName": "amount"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AMOUNT",
+                                    "safeName": "AMOUNT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Amount",
+                                    "safeName": "Amount"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -51,7 +108,28 @@
                         "docs": null
                     },
                     {
-                        "name": "currency",
+                        "name": {
+                            "wireValue": "currency",
+                            "name": {
+                                "originalName": "currency",
+                                "camelCase": {
+                                    "unsafeName": "currency",
+                                    "safeName": "currency"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "currency",
+                                    "safeName": "currency"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CURRENCY",
+                                    "safeName": "CURRENCY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Currency",
+                                    "safeName": "Currency"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -72,7 +150,28 @@
                         "docs": null
                     },
                     {
-                        "name": "description",
+                        "name": {
+                            "wireValue": "description",
+                            "name": {
+                                "originalName": "description",
+                                "camelCase": {
+                                    "unsafeName": "description",
+                                    "safeName": "description"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "description",
+                                    "safeName": "description"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DESCRIPTION",
+                                    "safeName": "DESCRIPTION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Description",
+                                    "safeName": "Description"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -118,7 +217,28 @@
     "errors": {},
     "services": {},
     "constants": {
-        "errorInstanceIdKey": "errorInstanceId"
+        "errorInstanceIdKey": {
+            "wireValue": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            }
+        }
     },
     "environments": null,
     "errorDiscriminationStrategy": {
@@ -139,13 +259,49 @@
                 "id": "webhooks_.paymentProcessed",
                 "displayName": "Payment Processed",
                 "method": "POST",
-                "name": "paymentProcessed",
+                "name": {
+                    "originalName": "paymentProcessed",
+                    "camelCase": {
+                        "unsafeName": "paymentProcessed",
+                        "safeName": "paymentProcessed"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "payment_processed",
+                        "safeName": "payment_processed"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PAYMENT_PROCESSED",
+                        "safeName": "PAYMENT_PROCESSED"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PaymentProcessed",
+                        "safeName": "PaymentProcessed"
+                    }
+                },
                 "headers": [],
                 "payload": {
                     "type": "reference",
                     "payloadType": {
                         "_type": "named",
-                        "name": "PaymentInfo",
+                        "name": {
+                            "originalName": "PaymentInfo",
+                            "camelCase": {
+                                "unsafeName": "paymentInfo",
+                                "safeName": "paymentInfo"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment_info",
+                                "safeName": "payment_info"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT_INFO",
+                                "safeName": "PAYMENT_INFO"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PaymentInfo",
+                                "safeName": "PaymentInfo"
+                            }
+                        },
                         "fernFilepath": {
                             "allParts": [],
                             "packagePath": [],
@@ -163,7 +319,25 @@
                 "responses": null,
                 "examples": [
                     {
-                        "name": "PaymentProcessedExample",
+                        "name": {
+                            "originalName": "PaymentProcessedExample",
+                            "camelCase": {
+                                "unsafeName": "paymentProcessedExample",
+                                "safeName": "paymentProcessedExample"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment_processed_example",
+                                "safeName": "payment_processed_example"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT_PROCESSED_EXAMPLE",
+                                "safeName": "PAYMENT_PROCESSED_EXAMPLE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PaymentProcessedExample",
+                                "safeName": "PaymentProcessedExample"
+                            }
+                        },
                         "payload": {
                             "shape": {
                                 "type": "named",
@@ -174,14 +348,53 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "name": "PaymentInfo",
+                                    "name": {
+                                        "originalName": "PaymentInfo",
+                                        "camelCase": {
+                                            "unsafeName": "paymentInfo",
+                                            "safeName": "paymentInfo"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "payment_info",
+                                            "safeName": "payment_info"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "PAYMENT_INFO",
+                                            "safeName": "PAYMENT_INFO"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PaymentInfo",
+                                            "safeName": "PaymentInfo"
+                                        }
+                                    },
                                     "displayName": null
                                 },
                                 "shape": {
                                     "type": "object",
                                     "properties": [
                                         {
-                                            "name": "amount",
+                                            "name": {
+                                                "wireValue": "amount",
+                                                "name": {
+                                                    "originalName": "amount",
+                                                    "camelCase": {
+                                                        "unsafeName": "amount",
+                                                        "safeName": "amount"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "amount",
+                                                        "safeName": "amount"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "AMOUNT",
+                                                        "safeName": "AMOUNT"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Amount",
+                                                        "safeName": "Amount"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -201,13 +414,52 @@
                                                     "packagePath": [],
                                                     "file": null
                                                 },
-                                                "name": "PaymentInfo",
+                                                "name": {
+                                                    "originalName": "PaymentInfo",
+                                                    "camelCase": {
+                                                        "unsafeName": "paymentInfo",
+                                                        "safeName": "paymentInfo"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "payment_info",
+                                                        "safeName": "payment_info"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "PAYMENT_INFO",
+                                                        "safeName": "PAYMENT_INFO"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PaymentInfo",
+                                                        "safeName": "PaymentInfo"
+                                                    }
+                                                },
                                                 "displayName": null
                                             },
                                             "propertyAccess": null
                                         },
                                         {
-                                            "name": "currency",
+                                            "name": {
+                                                "wireValue": "currency",
+                                                "name": {
+                                                    "originalName": "currency",
+                                                    "camelCase": {
+                                                        "unsafeName": "currency",
+                                                        "safeName": "currency"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "currency",
+                                                        "safeName": "currency"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "CURRENCY",
+                                                        "safeName": "CURRENCY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Currency",
+                                                        "safeName": "Currency"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -227,13 +479,52 @@
                                                     "packagePath": [],
                                                     "file": null
                                                 },
-                                                "name": "PaymentInfo",
+                                                "name": {
+                                                    "originalName": "PaymentInfo",
+                                                    "camelCase": {
+                                                        "unsafeName": "paymentInfo",
+                                                        "safeName": "paymentInfo"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "payment_info",
+                                                        "safeName": "payment_info"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "PAYMENT_INFO",
+                                                        "safeName": "PAYMENT_INFO"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PaymentInfo",
+                                                        "safeName": "PaymentInfo"
+                                                    }
+                                                },
                                                 "displayName": null
                                             },
                                             "propertyAccess": null
                                         },
                                         {
-                                            "name": "description",
+                                            "name": {
+                                                "wireValue": "description",
+                                                "name": {
+                                                    "originalName": "description",
+                                                    "camelCase": {
+                                                        "unsafeName": "description",
+                                                        "safeName": "description"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "description",
+                                                        "safeName": "description"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "DESCRIPTION",
+                                                        "safeName": "DESCRIPTION"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Description",
+                                                        "safeName": "Description"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "container",
@@ -273,7 +564,25 @@
                                                     "packagePath": [],
                                                     "file": null
                                                 },
-                                                "name": "PaymentInfo",
+                                                "name": {
+                                                    "originalName": "PaymentInfo",
+                                                    "camelCase": {
+                                                        "unsafeName": "paymentInfo",
+                                                        "safeName": "paymentInfo"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "payment_info",
+                                                        "safeName": "payment_info"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "PAYMENT_INFO",
+                                                        "safeName": "PAYMENT_INFO"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PaymentInfo",
+                                                        "safeName": "PaymentInfo"
+                                                    }
+                                                },
                                                 "displayName": null
                                             },
                                             "propertyAccess": null
@@ -291,7 +600,25 @@
                         "docs": "Triggered when a payment is processed.\nThis webhook tests that dollar sign values like \"$3.00\" are treated as literal strings,\nnot as example references."
                     },
                     {
-                        "name": "PaymentProcessedWithLargeAmount",
+                        "name": {
+                            "originalName": "PaymentProcessedWithLargeAmount",
+                            "camelCase": {
+                                "unsafeName": "paymentProcessedWithLargeAmount",
+                                "safeName": "paymentProcessedWithLargeAmount"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "payment_processed_with_large_amount",
+                                "safeName": "payment_processed_with_large_amount"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PAYMENT_PROCESSED_WITH_LARGE_AMOUNT",
+                                "safeName": "PAYMENT_PROCESSED_WITH_LARGE_AMOUNT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PaymentProcessedWithLargeAmount",
+                                "safeName": "PaymentProcessedWithLargeAmount"
+                            }
+                        },
                         "payload": {
                             "shape": {
                                 "type": "named",
@@ -302,14 +629,53 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "name": "PaymentInfo",
+                                    "name": {
+                                        "originalName": "PaymentInfo",
+                                        "camelCase": {
+                                            "unsafeName": "paymentInfo",
+                                            "safeName": "paymentInfo"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "payment_info",
+                                            "safeName": "payment_info"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "PAYMENT_INFO",
+                                            "safeName": "PAYMENT_INFO"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PaymentInfo",
+                                            "safeName": "PaymentInfo"
+                                        }
+                                    },
                                     "displayName": null
                                 },
                                 "shape": {
                                     "type": "object",
                                     "properties": [
                                         {
-                                            "name": "amount",
+                                            "name": {
+                                                "wireValue": "amount",
+                                                "name": {
+                                                    "originalName": "amount",
+                                                    "camelCase": {
+                                                        "unsafeName": "amount",
+                                                        "safeName": "amount"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "amount",
+                                                        "safeName": "amount"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "AMOUNT",
+                                                        "safeName": "AMOUNT"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Amount",
+                                                        "safeName": "Amount"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -329,13 +695,52 @@
                                                     "packagePath": [],
                                                     "file": null
                                                 },
-                                                "name": "PaymentInfo",
+                                                "name": {
+                                                    "originalName": "PaymentInfo",
+                                                    "camelCase": {
+                                                        "unsafeName": "paymentInfo",
+                                                        "safeName": "paymentInfo"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "payment_info",
+                                                        "safeName": "payment_info"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "PAYMENT_INFO",
+                                                        "safeName": "PAYMENT_INFO"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PaymentInfo",
+                                                        "safeName": "PaymentInfo"
+                                                    }
+                                                },
                                                 "displayName": null
                                             },
                                             "propertyAccess": null
                                         },
                                         {
-                                            "name": "currency",
+                                            "name": {
+                                                "wireValue": "currency",
+                                                "name": {
+                                                    "originalName": "currency",
+                                                    "camelCase": {
+                                                        "unsafeName": "currency",
+                                                        "safeName": "currency"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "currency",
+                                                        "safeName": "currency"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "CURRENCY",
+                                                        "safeName": "CURRENCY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Currency",
+                                                        "safeName": "Currency"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -355,13 +760,52 @@
                                                     "packagePath": [],
                                                     "file": null
                                                 },
-                                                "name": "PaymentInfo",
+                                                "name": {
+                                                    "originalName": "PaymentInfo",
+                                                    "camelCase": {
+                                                        "unsafeName": "paymentInfo",
+                                                        "safeName": "paymentInfo"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "payment_info",
+                                                        "safeName": "payment_info"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "PAYMENT_INFO",
+                                                        "safeName": "PAYMENT_INFO"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PaymentInfo",
+                                                        "safeName": "PaymentInfo"
+                                                    }
+                                                },
                                                 "displayName": null
                                             },
                                             "propertyAccess": null
                                         },
                                         {
-                                            "name": "description",
+                                            "name": {
+                                                "wireValue": "description",
+                                                "name": {
+                                                    "originalName": "description",
+                                                    "camelCase": {
+                                                        "unsafeName": "description",
+                                                        "safeName": "description"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "description",
+                                                        "safeName": "description"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "DESCRIPTION",
+                                                        "safeName": "DESCRIPTION"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Description",
+                                                        "safeName": "Description"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "container",
@@ -390,7 +834,25 @@
                                                     "packagePath": [],
                                                     "file": null
                                                 },
-                                                "name": "PaymentInfo",
+                                                "name": {
+                                                    "originalName": "PaymentInfo",
+                                                    "camelCase": {
+                                                        "unsafeName": "paymentInfo",
+                                                        "safeName": "paymentInfo"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "payment_info",
+                                                        "safeName": "payment_info"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "PAYMENT_INFO",
+                                                        "safeName": "PAYMENT_INFO"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PaymentInfo",
+                                                        "safeName": "PaymentInfo"
+                                                    }
+                                                },
                                                 "displayName": null
                                             },
                                             "propertyAccess": null

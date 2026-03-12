@@ -12,7 +12,25 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "Metadata"
+        "name": {
+          "originalName": "Metadata",
+          "camelCase": {
+            "unsafeName": "metadata",
+            "safeName": "metadata"
+          },
+          "snakeCase": {
+            "unsafeName": "metadata",
+            "safeName": "metadata"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "METADATA",
+            "safeName": "METADATA"
+          },
+          "pascalCase": {
+            "unsafeName": "Metadata",
+            "safeName": "Metadata"
+          }
+        }
       },
       "shape": {
         "aliasOf": {
@@ -31,7 +49,25 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": "MetadataValue",
+              "name": {
+                "originalName": "MetadataValue",
+                "camelCase": {
+                  "unsafeName": "metadataValue",
+                  "safeName": "metadataValue"
+                },
+                "snakeCase": {
+                  "unsafeName": "metadata_value",
+                  "safeName": "metadata_value"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "METADATA_VALUE",
+                  "safeName": "METADATA_VALUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MetadataValue",
+                  "safeName": "MetadataValue"
+                }
+              },
               "typeId": "MetadataValue",
               "inline": false,
               "type": "named"
@@ -56,7 +92,25 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": "MetadataValue",
+              "name": {
+                "originalName": "MetadataValue",
+                "camelCase": {
+                  "unsafeName": "metadataValue",
+                  "safeName": "metadataValue"
+                },
+                "snakeCase": {
+                  "unsafeName": "metadata_value",
+                  "safeName": "metadata_value"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "METADATA_VALUE",
+                  "safeName": "METADATA_VALUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MetadataValue",
+                  "safeName": "MetadataValue"
+                }
+              },
               "typeId": "MetadataValue",
               "inline": false,
               "type": "named"
@@ -85,7 +139,25 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "MetadataValue"
+        "name": {
+          "originalName": "MetadataValue",
+          "camelCase": {
+            "unsafeName": "metadataValue",
+            "safeName": "metadataValue"
+          },
+          "snakeCase": {
+            "unsafeName": "metadata_value",
+            "safeName": "metadata_value"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "METADATA_VALUE",
+            "safeName": "METADATA_VALUE"
+          },
+          "pascalCase": {
+            "unsafeName": "MetadataValue",
+            "safeName": "MetadataValue"
+          }
+        }
       },
       "shape": {
         "members": [
@@ -190,8 +262,47 @@
       "sdkVersion": ""
     }
   },
-  "apiName": "Test extension `x-fern-encoding` for schemas",
+  "apiName": {
+    "originalName": "Test extension `x-fern-encoding` for schemas",
+    "camelCase": {
+      "unsafeName": "testExtensionXFernEncodingForSchemas",
+      "safeName": "testExtensionXFernEncodingForSchemas"
+    },
+    "snakeCase": {
+      "unsafeName": "test_extension_x_fern_encoding_for_schemas",
+      "safeName": "test_extension_x_fern_encoding_for_schemas"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "TEST_EXTENSION_X_FERN_ENCODING_FOR_SCHEMAS",
+      "safeName": "TEST_EXTENSION_X_FERN_ENCODING_FOR_SCHEMAS"
+    },
+    "pascalCase": {
+      "unsafeName": "TestExtensionXFernEncodingForSchemas",
+      "safeName": "TestExtensionXFernEncodingForSchemas"
+    }
+  },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      }
+    }
   }
 }

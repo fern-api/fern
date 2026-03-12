@@ -1,6 +1,24 @@
 {
   "selfHosted": false,
-  "apiName": "api",
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    }
+  },
   "apiDisplayName": "Test vnd.fern.user+json;version=1 and /application-json",
   "auth": {
     "requirement": "ALL",
@@ -11,7 +29,25 @@
   "types": {
     "type_:Data": {
       "name": {
-        "name": "Data",
+        "name": {
+          "originalName": "Data",
+          "camelCase": {
+            "unsafeName": "data",
+            "safeName": "data"
+          },
+          "snakeCase": {
+            "unsafeName": "data",
+            "safeName": "data"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DATA",
+            "safeName": "DATA"
+          },
+          "pascalCase": {
+            "unsafeName": "Data",
+            "safeName": "Data"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -22,7 +58,28 @@
         "extends": [],
         "properties": [
           {
-            "name": "foo",
+            "name": {
+              "wireValue": "foo",
+              "name": {
+                "originalName": "foo",
+                "camelCase": {
+                  "unsafeName": "foo",
+                  "safeName": "foo"
+                },
+                "snakeCase": {
+                  "unsafeName": "foo",
+                  "safeName": "foo"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FOO",
+                  "safeName": "FOO"
+                },
+                "pascalCase": {
+                  "unsafeName": "Foo",
+                  "safeName": "Foo"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -44,7 +101,28 @@
             }
           },
           {
-            "name": "bar",
+            "name": {
+              "wireValue": "bar",
+              "name": {
+                "originalName": "bar",
+                "camelCase": {
+                  "unsafeName": "bar",
+                  "safeName": "bar"
+                },
+                "snakeCase": {
+                  "unsafeName": "bar",
+                  "safeName": "bar"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BAR",
+                  "safeName": "BAR"
+                },
+                "pascalCase": {
+                  "unsafeName": "Bar",
+                  "safeName": "Bar"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -102,7 +180,25 @@
       "endpoints": [
         {
           "id": "endpoint_.getVndFernUserJsonVersion1",
-          "name": "getVndFernUserJsonVersion1",
+          "name": {
+            "originalName": "getVndFernUserJsonVersion1",
+            "camelCase": {
+              "unsafeName": "getVndFernUserJSONVersion1",
+              "safeName": "getVndFernUserJSONVersion1"
+            },
+            "snakeCase": {
+              "unsafeName": "get_vnd_fern_user_json_version1",
+              "safeName": "get_vnd_fern_user_json_version1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_VND_FERN_USER_JSON_VERSION1",
+              "safeName": "GET_VND_FERN_USER_JSON_VERSION1"
+            },
+            "pascalCase": {
+              "unsafeName": "GetVndFernUserJSONVersion1",
+              "safeName": "GetVndFernUserJSONVersion1"
+            }
+          },
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -123,7 +219,25 @@
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": "Data",
+                  "name": {
+                    "originalName": "Data",
+                    "camelCase": {
+                      "unsafeName": "data",
+                      "safeName": "data"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "data",
+                      "safeName": "data"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "DATA",
+                      "safeName": "DATA"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Data",
+                      "safeName": "Data"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -145,7 +259,25 @@
         },
         {
           "id": "endpoint_.getApplicationJson",
-          "name": "getApplicationJson",
+          "name": {
+            "originalName": "getApplicationJson",
+            "camelCase": {
+              "unsafeName": "getApplicationJSON",
+              "safeName": "getApplicationJSON"
+            },
+            "snakeCase": {
+              "unsafeName": "get_application_json",
+              "safeName": "get_application_json"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_APPLICATION_JSON",
+              "safeName": "GET_APPLICATION_JSON"
+            },
+            "pascalCase": {
+              "unsafeName": "GetApplicationJSON",
+              "safeName": "GetApplicationJSON"
+            }
+          },
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -166,7 +298,25 @@
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": "Data",
+                  "name": {
+                    "originalName": "Data",
+                    "camelCase": {
+                      "unsafeName": "data",
+                      "safeName": "data"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "data",
+                      "safeName": "data"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "DATA",
+                      "safeName": "DATA"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Data",
+                      "safeName": "Data"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -190,7 +340,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceID",
+          "safeName": "errorInstanceID"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceID",
+          "safeName": "ErrorInstanceID"
+        }
+      }
+    }
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"

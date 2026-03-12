@@ -1,6 +1,24 @@
 {
   "selfHosted": false,
-  "apiName": "api",
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    }
+  },
   "apiDisplayName": "Security Explicit None Test",
   "auth": {
     "requirement": "ALL",
@@ -9,7 +27,25 @@
         "key": "ApiKeyAuth",
         "name": {
           "wireValue": "x-api-key",
-          "name": "apiKey"
+          "name": {
+            "originalName": "apiKey",
+            "camelCase": {
+              "unsafeName": "apiKey",
+              "safeName": "apiKey"
+            },
+            "snakeCase": {
+              "unsafeName": "api_key",
+              "safeName": "api_key"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "API_KEY",
+              "safeName": "API_KEY"
+            },
+            "pascalCase": {
+              "unsafeName": "APIKey",
+              "safeName": "APIKey"
+            }
+          }
         },
         "valueType": {
           "primitive": {
@@ -29,7 +65,25 @@
   "types": {
     "type_:GetPlantByIdResponse": {
       "name": {
-        "name": "GetPlantByIdResponse",
+        "name": {
+          "originalName": "GetPlantByIdResponse",
+          "camelCase": {
+            "unsafeName": "getPlantByIDResponse",
+            "safeName": "getPlantByIDResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "get_plant_by_id_response",
+            "safeName": "get_plant_by_id_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_PLANT_BY_ID_RESPONSE",
+            "safeName": "GET_PLANT_BY_ID_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "GetPlantByIDResponse",
+            "safeName": "GetPlantByIDResponse"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -40,7 +94,28 @@
         "extends": [],
         "properties": [
           {
-            "name": "id",
+            "name": {
+              "wireValue": "id",
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -62,7 +137,28 @@
             }
           },
           {
-            "name": "name",
+            "name": {
+              "wireValue": "name",
+              "name": {
+                "originalName": "name",
+                "camelCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "snakeCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NAME",
+                  "safeName": "NAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Name",
+                  "safeName": "Name"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -120,7 +216,25 @@
       "endpoints": [
         {
           "id": "endpoint_.getPlantById",
-          "name": "getPlantById",
+          "name": {
+            "originalName": "getPlantById",
+            "camelCase": {
+              "unsafeName": "getPlantByID",
+              "safeName": "getPlantByID"
+            },
+            "snakeCase": {
+              "unsafeName": "get_plant_by_id",
+              "safeName": "get_plant_by_id"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_PLANT_BY_ID",
+              "safeName": "GET_PLANT_BY_ID"
+            },
+            "pascalCase": {
+              "unsafeName": "GetPlantByID",
+              "safeName": "GetPlantByID"
+            }
+          },
           "displayName": "Get plant by ID (no auth required)",
           "auth": false,
           "idempotent": false,
@@ -145,7 +259,25 @@
           },
           "pathParameters": [
             {
-              "name": "plantId",
+              "name": {
+                "originalName": "plantId",
+                "camelCase": {
+                  "unsafeName": "plantID",
+                  "safeName": "plantID"
+                },
+                "snakeCase": {
+                  "unsafeName": "plant_id",
+                  "safeName": "plant_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PLANT_ID",
+                  "safeName": "PLANT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "PlantID",
+                  "safeName": "PlantID"
+                }
+              },
               "valueType": {
                 "primitive": {
                   "v1": "INTEGER",
@@ -164,7 +296,25 @@
           ],
           "allPathParameters": [
             {
-              "name": "plantId",
+              "name": {
+                "originalName": "plantId",
+                "camelCase": {
+                  "unsafeName": "plantID",
+                  "safeName": "plantID"
+                },
+                "snakeCase": {
+                  "unsafeName": "plant_id",
+                  "safeName": "plant_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PLANT_ID",
+                  "safeName": "PLANT_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "PlantID",
+                  "safeName": "PlantID"
+                }
+              },
               "valueType": {
                 "primitive": {
                   "v1": "INTEGER",
@@ -185,20 +335,92 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": "GetPlantByIdRequest",
-              "bodyKey": "body",
+              "wrapperName": {
+                "originalName": "GetPlantByIdRequest",
+                "camelCase": {
+                  "unsafeName": "getPlantByIDRequest",
+                  "safeName": "getPlantByIDRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_plant_by_id_request",
+                  "safeName": "get_plant_by_id_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_PLANT_BY_ID_REQUEST",
+                  "safeName": "GET_PLANT_BY_ID_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetPlantByIDRequest",
+                  "safeName": "GetPlantByIDRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Plant details",
                 "responseBodyType": {
-                  "name": "GetPlantByIdResponse",
+                  "name": {
+                    "originalName": "GetPlantByIdResponse",
+                    "camelCase": {
+                      "unsafeName": "getPlantByIDResponse",
+                      "safeName": "getPlantByIDResponse"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_plant_by_id_response",
+                      "safeName": "get_plant_by_id_response"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_PLANT_BY_ID_RESPONSE",
+                      "safeName": "GET_PLANT_BY_ID_RESPONSE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetPlantByIDResponse",
+                      "safeName": "GetPlantByIDResponse"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -222,7 +444,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceID",
+          "safeName": "errorInstanceID"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceID",
+          "safeName": "ErrorInstanceID"
+        }
+      }
+    }
   },
   "environments": {
     "defaultEnvironment": "Default",
@@ -230,7 +473,25 @@
       "environments": [
         {
           "id": "Default",
-          "name": "Default",
+          "name": {
+            "originalName": "Default",
+            "camelCase": {
+              "unsafeName": "default",
+              "safeName": "default"
+            },
+            "snakeCase": {
+              "unsafeName": "default",
+              "safeName": "default"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEFAULT",
+              "safeName": "DEFAULT"
+            },
+            "pascalCase": {
+              "unsafeName": "Default",
+              "safeName": "Default"
+            }
+          },
           "url": "https://api.example.com/v1"
         }
       ],

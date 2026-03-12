@@ -1,6 +1,24 @@
 {
   "selfHosted": false,
-  "apiName": "api",
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    }
+  },
   "apiDisplayName": "Tree API",
   "auth": {
     "requirement": "ALL",
@@ -11,7 +29,25 @@
   "types": {
     "type_:CreateFernResponse": {
       "name": {
-        "name": "CreateFernResponse",
+        "name": {
+          "originalName": "CreateFernResponse",
+          "camelCase": {
+            "unsafeName": "createFernResponse",
+            "safeName": "createFernResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "create_fern_response",
+            "safeName": "create_fern_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CREATE_FERN_RESPONSE",
+            "safeName": "CREATE_FERN_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "CreateFernResponse",
+            "safeName": "CreateFernResponse"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -22,7 +58,28 @@
         "extends": [],
         "properties": [
           {
-            "name": "message",
+            "name": {
+              "wireValue": "message",
+              "name": {
+                "originalName": "message",
+                "camelCase": {
+                  "unsafeName": "message",
+                  "safeName": "message"
+                },
+                "snakeCase": {
+                  "unsafeName": "message",
+                  "safeName": "message"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE",
+                  "safeName": "MESSAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Message",
+                  "safeName": "Message"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -44,7 +101,28 @@
             }
           },
           {
-            "name": "code",
+            "name": {
+              "wireValue": "code",
+              "name": {
+                "originalName": "code",
+                "camelCase": {
+                  "unsafeName": "code",
+                  "safeName": "code"
+                },
+                "snakeCase": {
+                  "unsafeName": "code",
+                  "safeName": "code"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CODE",
+                  "safeName": "CODE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Code",
+                  "safeName": "Code"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -80,7 +158,25 @@
     "type_:TreeCreateLocation": {
       "inline": true,
       "name": {
-        "name": "TreeCreateLocation",
+        "name": {
+          "originalName": "TreeCreateLocation",
+          "camelCase": {
+            "unsafeName": "treeCreateLocation",
+            "safeName": "treeCreateLocation"
+          },
+          "snakeCase": {
+            "unsafeName": "tree_create_location",
+            "safeName": "tree_create_location"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TREE_CREATE_LOCATION",
+            "safeName": "TREE_CREATE_LOCATION"
+          },
+          "pascalCase": {
+            "unsafeName": "TreeCreateLocation",
+            "safeName": "TreeCreateLocation"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -91,7 +187,28 @@
         "extends": [],
         "properties": [
           {
-            "name": "latitude",
+            "name": {
+              "wireValue": "latitude",
+              "name": {
+                "originalName": "latitude",
+                "camelCase": {
+                  "unsafeName": "latitude",
+                  "safeName": "latitude"
+                },
+                "snakeCase": {
+                  "unsafeName": "latitude",
+                  "safeName": "latitude"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LATITUDE",
+                  "safeName": "LATITUDE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Latitude",
+                  "safeName": "Latitude"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -110,7 +227,28 @@
             }
           },
           {
-            "name": "longitude",
+            "name": {
+              "wireValue": "longitude",
+              "name": {
+                "originalName": "longitude",
+                "camelCase": {
+                  "unsafeName": "longitude",
+                  "safeName": "longitude"
+                },
+                "snakeCase": {
+                  "unsafeName": "longitude",
+                  "safeName": "longitude"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LONGITUDE",
+                  "safeName": "LONGITUDE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Longitude",
+                  "safeName": "Longitude"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -142,7 +280,25 @@
     },
     "type_:TreeCreate": {
       "name": {
-        "name": "TreeCreate",
+        "name": {
+          "originalName": "TreeCreate",
+          "camelCase": {
+            "unsafeName": "treeCreate",
+            "safeName": "treeCreate"
+          },
+          "snakeCase": {
+            "unsafeName": "tree_create",
+            "safeName": "tree_create"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TREE_CREATE",
+            "safeName": "TREE_CREATE"
+          },
+          "pascalCase": {
+            "unsafeName": "TreeCreate",
+            "safeName": "TreeCreate"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -153,7 +309,28 @@
         "extends": [],
         "properties": [
           {
-            "name": "species",
+            "name": {
+              "wireValue": "species",
+              "name": {
+                "originalName": "species",
+                "camelCase": {
+                  "unsafeName": "species",
+                  "safeName": "species"
+                },
+                "snakeCase": {
+                  "unsafeName": "species",
+                  "safeName": "species"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SPECIES",
+                  "safeName": "SPECIES"
+                },
+                "pascalCase": {
+                  "unsafeName": "Species",
+                  "safeName": "Species"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -169,7 +346,28 @@
             }
           },
           {
-            "name": "height",
+            "name": {
+              "wireValue": "height",
+              "name": {
+                "originalName": "height",
+                "camelCase": {
+                  "unsafeName": "height",
+                  "safeName": "height"
+                },
+                "snakeCase": {
+                  "unsafeName": "height",
+                  "safeName": "height"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HEIGHT",
+                  "safeName": "HEIGHT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Height",
+                  "safeName": "Height"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "FLOAT"
@@ -182,7 +380,28 @@
             }
           },
           {
-            "name": "age",
+            "name": {
+              "wireValue": "age",
+              "name": {
+                "originalName": "age",
+                "camelCase": {
+                  "unsafeName": "age",
+                  "safeName": "age"
+                },
+                "snakeCase": {
+                  "unsafeName": "age",
+                  "safeName": "age"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AGE",
+                  "safeName": "AGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Age",
+                  "safeName": "Age"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -204,11 +423,50 @@
             }
           },
           {
-            "name": "location",
+            "name": {
+              "wireValue": "location",
+              "name": {
+                "originalName": "location",
+                "camelCase": {
+                  "unsafeName": "location",
+                  "safeName": "location"
+                },
+                "snakeCase": {
+                  "unsafeName": "location",
+                  "safeName": "location"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LOCATION",
+                  "safeName": "LOCATION"
+                },
+                "pascalCase": {
+                  "unsafeName": "Location",
+                  "safeName": "Location"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": "TreeCreateLocation",
+                  "name": {
+                    "originalName": "TreeCreateLocation",
+                    "camelCase": {
+                      "unsafeName": "treeCreateLocation",
+                      "safeName": "treeCreateLocation"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "tree_create_location",
+                      "safeName": "tree_create_location"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE_CREATE_LOCATION",
+                      "safeName": "TREE_CREATE_LOCATION"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "TreeCreateLocation",
+                      "safeName": "TreeCreateLocation"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -239,7 +497,25 @@
     },
     "type_:Tree": {
       "name": {
-        "name": "Tree",
+        "name": {
+          "originalName": "Tree",
+          "camelCase": {
+            "unsafeName": "tree",
+            "safeName": "tree"
+          },
+          "snakeCase": {
+            "unsafeName": "tree",
+            "safeName": "tree"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TREE",
+            "safeName": "TREE"
+          },
+          "pascalCase": {
+            "unsafeName": "Tree",
+            "safeName": "Tree"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -249,7 +525,25 @@
       "shape": {
         "extends": [
           {
-            "name": "TreeCreate",
+            "name": {
+              "originalName": "TreeCreate",
+              "camelCase": {
+                "unsafeName": "treeCreate",
+                "safeName": "treeCreate"
+              },
+              "snakeCase": {
+                "unsafeName": "tree_create",
+                "safeName": "tree_create"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "TREE_CREATE",
+                "safeName": "TREE_CREATE"
+              },
+              "pascalCase": {
+                "unsafeName": "TreeCreate",
+                "safeName": "TreeCreate"
+              }
+            },
             "fernFilepath": {
               "allParts": [],
               "packagePath": []
@@ -259,7 +553,28 @@
         ],
         "properties": [
           {
-            "name": "id",
+            "name": {
+              "wireValue": "id",
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -278,7 +593,28 @@
             }
           },
           {
-            "name": "plantedDate",
+            "name": {
+              "wireValue": "plantedDate",
+              "name": {
+                "originalName": "plantedDate",
+                "camelCase": {
+                  "unsafeName": "plantedDate",
+                  "safeName": "plantedDate"
+                },
+                "snakeCase": {
+                  "unsafeName": "planted_date",
+                  "safeName": "planted_date"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PLANTED_DATE",
+                  "safeName": "PLANTED_DATE"
+                },
+                "pascalCase": {
+                  "unsafeName": "PlantedDate",
+                  "safeName": "PlantedDate"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -300,7 +636,28 @@
         "extraProperties": false,
         "extendedProperties": [
           {
-            "name": "species",
+            "name": {
+              "wireValue": "species",
+              "name": {
+                "originalName": "species",
+                "camelCase": {
+                  "unsafeName": "species",
+                  "safeName": "species"
+                },
+                "snakeCase": {
+                  "unsafeName": "species",
+                  "safeName": "species"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SPECIES",
+                  "safeName": "SPECIES"
+                },
+                "pascalCase": {
+                  "unsafeName": "Species",
+                  "safeName": "Species"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -316,7 +673,28 @@
             }
           },
           {
-            "name": "height",
+            "name": {
+              "wireValue": "height",
+              "name": {
+                "originalName": "height",
+                "camelCase": {
+                  "unsafeName": "height",
+                  "safeName": "height"
+                },
+                "snakeCase": {
+                  "unsafeName": "height",
+                  "safeName": "height"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HEIGHT",
+                  "safeName": "HEIGHT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Height",
+                  "safeName": "Height"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "FLOAT"
@@ -329,7 +707,28 @@
             }
           },
           {
-            "name": "age",
+            "name": {
+              "wireValue": "age",
+              "name": {
+                "originalName": "age",
+                "camelCase": {
+                  "unsafeName": "age",
+                  "safeName": "age"
+                },
+                "snakeCase": {
+                  "unsafeName": "age",
+                  "safeName": "age"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "AGE",
+                  "safeName": "AGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Age",
+                  "safeName": "Age"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -351,11 +750,50 @@
             }
           },
           {
-            "name": "location",
+            "name": {
+              "wireValue": "location",
+              "name": {
+                "originalName": "location",
+                "camelCase": {
+                  "unsafeName": "location",
+                  "safeName": "location"
+                },
+                "snakeCase": {
+                  "unsafeName": "location",
+                  "safeName": "location"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LOCATION",
+                  "safeName": "LOCATION"
+                },
+                "pascalCase": {
+                  "unsafeName": "Location",
+                  "safeName": "Location"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": "TreeCreateLocation",
+                  "name": {
+                    "originalName": "TreeCreateLocation",
+                    "camelCase": {
+                      "unsafeName": "treeCreateLocation",
+                      "safeName": "treeCreateLocation"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "tree_create_location",
+                      "safeName": "tree_create_location"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE_CREATE_LOCATION",
+                      "safeName": "TREE_CREATE_LOCATION"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "TreeCreateLocation",
+                      "safeName": "TreeCreateLocation"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -407,7 +845,25 @@
       "endpoints": [
         {
           "id": "endpoint_.listTrees",
-          "name": "listTrees",
+          "name": {
+            "originalName": "listTrees",
+            "camelCase": {
+              "unsafeName": "listTrees",
+              "safeName": "listTrees"
+            },
+            "snakeCase": {
+              "unsafeName": "list_trees",
+              "safeName": "list_trees"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_TREES",
+              "safeName": "LIST_TREES"
+            },
+            "pascalCase": {
+              "unsafeName": "ListTrees",
+              "safeName": "ListTrees"
+            }
+          },
           "displayName": "List all trees",
           "auth": false,
           "idempotent": false,
@@ -431,7 +887,25 @@
                 "responseBodyType": {
                   "container": {
                     "list": {
-                      "name": "Tree",
+                      "name": {
+                        "originalName": "Tree",
+                        "camelCase": {
+                          "unsafeName": "tree",
+                          "safeName": "tree"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "tree",
+                          "safeName": "tree"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TREE",
+                          "safeName": "TREE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Tree",
+                          "safeName": "Tree"
+                        }
+                      },
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -457,7 +931,25 @@
         },
         {
           "id": "endpoint_.createTree",
-          "name": "createTree",
+          "name": {
+            "originalName": "createTree",
+            "camelCase": {
+              "unsafeName": "createTree",
+              "safeName": "createTree"
+            },
+            "snakeCase": {
+              "unsafeName": "create_tree",
+              "safeName": "create_tree"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CREATE_TREE",
+              "safeName": "CREATE_TREE"
+            },
+            "pascalCase": {
+              "unsafeName": "CreateTree",
+              "safeName": "CreateTree"
+            }
+          },
           "displayName": "Create a new tree",
           "auth": false,
           "idempotent": false,
@@ -476,7 +968,25 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": "TreeCreate",
+              "name": {
+                "originalName": "TreeCreate",
+                "camelCase": {
+                  "unsafeName": "treeCreate",
+                  "safeName": "treeCreate"
+                },
+                "snakeCase": {
+                  "unsafeName": "tree_create",
+                  "safeName": "tree_create"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TREE_CREATE",
+                  "safeName": "TREE_CREATE"
+                },
+                "pascalCase": {
+                  "unsafeName": "TreeCreate",
+                  "safeName": "TreeCreate"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -491,7 +1001,25 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": "TreeCreate",
+                  "name": {
+                    "originalName": "TreeCreate",
+                    "camelCase": {
+                      "unsafeName": "treeCreate",
+                      "safeName": "treeCreate"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "tree_create",
+                      "safeName": "tree_create"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE_CREATE",
+                      "safeName": "TREE_CREATE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "TreeCreate",
+                      "safeName": "TreeCreate"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -503,14 +1031,50 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Tree created successfully",
                 "responseBodyType": {
-                  "name": "Tree",
+                  "name": {
+                    "originalName": "Tree",
+                    "camelCase": {
+                      "unsafeName": "tree",
+                      "safeName": "tree"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "tree",
+                      "safeName": "tree"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE",
+                      "safeName": "TREE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Tree",
+                      "safeName": "Tree"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -532,7 +1096,25 @@
         },
         {
           "id": "endpoint_.getTree",
-          "name": "getTree",
+          "name": {
+            "originalName": "getTree",
+            "camelCase": {
+              "unsafeName": "getTree",
+              "safeName": "getTree"
+            },
+            "snakeCase": {
+              "unsafeName": "get_tree",
+              "safeName": "get_tree"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_TREE",
+              "safeName": "GET_TREE"
+            },
+            "pascalCase": {
+              "unsafeName": "GetTree",
+              "safeName": "GetTree"
+            }
+          },
           "displayName": "Get a tree by ID",
           "auth": false,
           "idempotent": false,
@@ -557,7 +1139,25 @@
           },
           "pathParameters": [
             {
-              "name": "treeId",
+              "name": {
+                "originalName": "treeId",
+                "camelCase": {
+                  "unsafeName": "treeID",
+                  "safeName": "treeID"
+                },
+                "snakeCase": {
+                  "unsafeName": "tree_id",
+                  "safeName": "tree_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TREE_ID",
+                  "safeName": "TREE_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TreeID",
+                  "safeName": "TreeID"
+                }
+              },
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -576,7 +1176,25 @@
           ],
           "allPathParameters": [
             {
-              "name": "treeId",
+              "name": {
+                "originalName": "treeId",
+                "camelCase": {
+                  "unsafeName": "treeID",
+                  "safeName": "treeID"
+                },
+                "snakeCase": {
+                  "unsafeName": "tree_id",
+                  "safeName": "tree_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TREE_ID",
+                  "safeName": "TREE_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "TreeID",
+                  "safeName": "TreeID"
+                }
+              },
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -597,20 +1215,92 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": "GetTreeRequest",
-              "bodyKey": "body",
+              "wrapperName": {
+                "originalName": "GetTreeRequest",
+                "camelCase": {
+                  "unsafeName": "getTreeRequest",
+                  "safeName": "getTreeRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_tree_request",
+                  "safeName": "get_tree_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_TREE_REQUEST",
+                  "safeName": "GET_TREE_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetTreeRequest",
+                  "safeName": "GetTreeRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Tree details",
                 "responseBodyType": {
-                  "name": "Tree",
+                  "name": {
+                    "originalName": "Tree",
+                    "camelCase": {
+                      "unsafeName": "tree",
+                      "safeName": "tree"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "tree",
+                      "safeName": "tree"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE",
+                      "safeName": "TREE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Tree",
+                      "safeName": "Tree"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -632,7 +1322,25 @@
         },
         {
           "id": "endpoint_.createFern",
-          "name": "createFern",
+          "name": {
+            "originalName": "createFern",
+            "camelCase": {
+              "unsafeName": "createFern",
+              "safeName": "createFern"
+            },
+            "snakeCase": {
+              "unsafeName": "create_fern",
+              "safeName": "create_fern"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CREATE_FERN",
+              "safeName": "CREATE_FERN"
+            },
+            "pascalCase": {
+              "unsafeName": "CreateFern",
+              "safeName": "CreateFern"
+            }
+          },
           "displayName": "Create a new fern",
           "auth": false,
           "idempotent": false,
@@ -650,12 +1358,51 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": "CreateFernRequest",
+            "name": {
+              "originalName": "CreateFernRequest",
+              "camelCase": {
+                "unsafeName": "createFernRequest",
+                "safeName": "createFernRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "create_fern_request",
+                "safeName": "create_fern_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "CREATE_FERN_REQUEST",
+                "safeName": "CREATE_FERN_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "CreateFernRequest",
+                "safeName": "CreateFernRequest"
+              }
+            },
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
-                "name": "color",
+                "name": {
+                  "wireValue": "color",
+                  "name": {
+                    "originalName": "color",
+                    "camelCase": {
+                      "unsafeName": "color",
+                      "safeName": "color"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "color",
+                      "safeName": "color"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "COLOR",
+                      "safeName": "COLOR"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Color",
+                      "safeName": "Color"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -677,7 +1424,28 @@
                 }
               },
               {
-                "name": "name",
+                "name": {
+                  "wireValue": "name",
+                  "name": {
+                    "originalName": "name",
+                    "camelCase": {
+                      "unsafeName": "name",
+                      "safeName": "name"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "name",
+                      "safeName": "name"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "NAME",
+                      "safeName": "NAME"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Name",
+                      "safeName": "Name"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -705,20 +1473,92 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": "CreateFernRequest",
-              "bodyKey": "body",
+              "wrapperName": {
+                "originalName": "CreateFernRequest",
+                "camelCase": {
+                  "unsafeName": "createFernRequest",
+                  "safeName": "createFernRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "create_fern_request",
+                  "safeName": "create_fern_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CREATE_FERN_REQUEST",
+                  "safeName": "CREATE_FERN_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "CreateFernRequest",
+                  "safeName": "CreateFernRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Fern created successfully",
                 "responseBodyType": {
-                  "name": "CreateFernResponse",
+                  "name": {
+                    "originalName": "CreateFernResponse",
+                    "camelCase": {
+                      "unsafeName": "createFernResponse",
+                      "safeName": "createFernResponse"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "create_fern_response",
+                      "safeName": "create_fern_response"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "CREATE_FERN_RESPONSE",
+                      "safeName": "CREATE_FERN_RESPONSE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "CreateFernResponse",
+                      "safeName": "CreateFernResponse"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -740,7 +1580,25 @@
         },
         {
           "id": "endpoint_.getFern",
-          "name": "getFern",
+          "name": {
+            "originalName": "getFern",
+            "camelCase": {
+              "unsafeName": "getFern",
+              "safeName": "getFern"
+            },
+            "snakeCase": {
+              "unsafeName": "get_fern",
+              "safeName": "get_fern"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_FERN",
+              "safeName": "GET_FERN"
+            },
+            "pascalCase": {
+              "unsafeName": "GetFern",
+              "safeName": "GetFern"
+            }
+          },
           "displayName": "Get a fern by ID",
           "auth": false,
           "idempotent": false,
@@ -765,7 +1623,25 @@
           },
           "pathParameters": [
             {
-              "name": "fernId",
+              "name": {
+                "originalName": "fernId",
+                "camelCase": {
+                  "unsafeName": "fernID",
+                  "safeName": "fernID"
+                },
+                "snakeCase": {
+                  "unsafeName": "fern_id",
+                  "safeName": "fern_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FERN_ID",
+                  "safeName": "FERN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "FernID",
+                  "safeName": "FernID"
+                }
+              },
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -784,7 +1660,25 @@
           ],
           "allPathParameters": [
             {
-              "name": "fernId",
+              "name": {
+                "originalName": "fernId",
+                "camelCase": {
+                  "unsafeName": "fernID",
+                  "safeName": "fernID"
+                },
+                "snakeCase": {
+                  "unsafeName": "fern_id",
+                  "safeName": "fern_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FERN_ID",
+                  "safeName": "FERN_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "FernID",
+                  "safeName": "FernID"
+                }
+              },
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -805,13 +1699,67 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": "GetFernRequest",
-              "bodyKey": "body",
+              "wrapperName": {
+                "originalName": "GetFernRequest",
+                "camelCase": {
+                  "unsafeName": "getFernRequest",
+                  "safeName": "getFernRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "get_fern_request",
+                  "safeName": "get_fern_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "GET_FERN_REQUEST",
+                  "safeName": "GET_FERN_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "GetFernRequest",
+                  "safeName": "GetFernRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
@@ -849,7 +1797,25 @@
         },
         {
           "id": "endpoint_.createGrass",
-          "name": "createGrass",
+          "name": {
+            "originalName": "createGrass",
+            "camelCase": {
+              "unsafeName": "createGrass",
+              "safeName": "createGrass"
+            },
+            "snakeCase": {
+              "unsafeName": "create_grass",
+              "safeName": "create_grass"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CREATE_GRASS",
+              "safeName": "CREATE_GRASS"
+            },
+            "pascalCase": {
+              "unsafeName": "CreateGrass",
+              "safeName": "CreateGrass"
+            }
+          },
           "displayName": "Create a new grass",
           "auth": false,
           "idempotent": false,
@@ -867,12 +1833,51 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": "CreateGrassRequest",
+            "name": {
+              "originalName": "CreateGrassRequest",
+              "camelCase": {
+                "unsafeName": "createGrassRequest",
+                "safeName": "createGrassRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "create_grass_request",
+                "safeName": "create_grass_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "CREATE_GRASS_REQUEST",
+                "safeName": "CREATE_GRASS_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "CreateGrassRequest",
+                "safeName": "CreateGrassRequest"
+              }
+            },
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
-                "name": "annual",
+                "name": {
+                  "wireValue": "annual",
+                  "name": {
+                    "originalName": "annual",
+                    "camelCase": {
+                      "unsafeName": "annual",
+                      "safeName": "annual"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "annual",
+                      "safeName": "annual"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ANNUAL",
+                      "safeName": "ANNUAL"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Annual",
+                      "safeName": "Annual"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -894,7 +1899,28 @@
                 }
               },
               {
-                "name": "foo",
+                "name": {
+                  "wireValue": "foo",
+                  "name": {
+                    "originalName": "foo",
+                    "camelCase": {
+                      "unsafeName": "foo",
+                      "safeName": "foo"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "foo",
+                      "safeName": "foo"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FOO",
+                      "safeName": "FOO"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Foo",
+                      "safeName": "Foo"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -916,7 +1942,28 @@
                 }
               },
               {
-                "name": "bar",
+                "name": {
+                  "wireValue": "bar",
+                  "name": {
+                    "originalName": "bar",
+                    "camelCase": {
+                      "unsafeName": "bar",
+                      "safeName": "bar"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "bar",
+                      "safeName": "bar"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "BAR",
+                      "safeName": "BAR"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Bar",
+                      "safeName": "Bar"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -944,13 +1991,67 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": "CreateGrassRequest",
-              "bodyKey": "body",
+              "wrapperName": {
+                "originalName": "CreateGrassRequest",
+                "camelCase": {
+                  "unsafeName": "createGrassRequest",
+                  "safeName": "createGrassRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "create_grass_request",
+                  "safeName": "create_grass_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CREATE_GRASS_REQUEST",
+                  "safeName": "CREATE_GRASS_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "CreateGrassRequest",
+                  "safeName": "CreateGrassRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {},
           "errors": [],
@@ -960,7 +2061,25 @@
         },
         {
           "id": "endpoint_.getPineTrees",
-          "name": "getPineTrees",
+          "name": {
+            "originalName": "getPineTrees",
+            "camelCase": {
+              "unsafeName": "getPineTrees",
+              "safeName": "getPineTrees"
+            },
+            "snakeCase": {
+              "unsafeName": "get_pine_trees",
+              "safeName": "get_pine_trees"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_PINE_TREES",
+              "safeName": "GET_PINE_TREES"
+            },
+            "pascalCase": {
+              "unsafeName": "GetPineTrees",
+              "safeName": "GetPineTrees"
+            }
+          },
           "displayName": "Get pine trees (tests duplicate summary collision handling)",
           "auth": false,
           "idempotent": false,
@@ -982,7 +2101,25 @@
               "value": {
                 "docs": "Pine tree details - both examples have the same summary \"Pine Tree\"",
                 "responseBodyType": {
-                  "name": "Tree",
+                  "name": {
+                    "originalName": "Tree",
+                    "camelCase": {
+                      "unsafeName": "tree",
+                      "safeName": "tree"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "tree",
+                      "safeName": "tree"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE",
+                      "safeName": "TREE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Tree",
+                      "safeName": "Tree"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1004,7 +2141,25 @@
         },
         {
           "id": "endpoint_.getTreeAlias",
-          "name": "getTreeAlias",
+          "name": {
+            "originalName": "getTreeAlias",
+            "camelCase": {
+              "unsafeName": "getTreeAlias",
+              "safeName": "getTreeAlias"
+            },
+            "snakeCase": {
+              "unsafeName": "get_tree_alias",
+              "safeName": "get_tree_alias"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_TREE_ALIAS",
+              "safeName": "GET_TREE_ALIAS"
+            },
+            "pascalCase": {
+              "unsafeName": "GetTreeAlias",
+              "safeName": "GetTreeAlias"
+            }
+          },
           "displayName": "Get tree using aliased example (tests recursive $ref resolution)",
           "auth": false,
           "idempotent": false,
@@ -1026,7 +2181,25 @@
               "value": {
                 "docs": "Tree details using aliased example",
                 "responseBodyType": {
-                  "name": "Tree",
+                  "name": {
+                    "originalName": "Tree",
+                    "camelCase": {
+                      "unsafeName": "tree",
+                      "safeName": "tree"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "tree",
+                      "safeName": "tree"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE",
+                      "safeName": "TREE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Tree",
+                      "safeName": "Tree"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1050,7 +2223,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceID",
+          "safeName": "errorInstanceID"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceID",
+          "safeName": "ErrorInstanceID"
+        }
+      }
+    }
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"

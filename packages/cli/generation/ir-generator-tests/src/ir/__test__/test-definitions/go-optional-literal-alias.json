@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -16,7 +34,25 @@
         "type_:SortField": {
             "inline": null,
             "name": {
-                "name": "SortField",
+                "name": {
+                    "originalName": "SortField",
+                    "camelCase": {
+                        "unsafeName": "sortField",
+                        "safeName": "sortField"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "sort_field",
+                        "safeName": "sort_field"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SORT_FIELD",
+                        "safeName": "SORT_FIELD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SortField",
+                        "safeName": "SortField"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -63,7 +99,25 @@
         "type_:SearchRequest": {
             "inline": null,
             "name": {
-                "name": "SearchRequest",
+                "name": {
+                    "originalName": "SearchRequest",
+                    "camelCase": {
+                        "unsafeName": "searchRequest",
+                        "safeName": "searchRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search_request",
+                        "safeName": "search_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_REQUEST",
+                        "safeName": "SEARCH_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SearchRequest",
+                        "safeName": "SearchRequest"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -77,14 +131,53 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "sortField",
+                        "name": {
+                            "wireValue": "sortField",
+                            "name": {
+                                "originalName": "sortField",
+                                "camelCase": {
+                                    "unsafeName": "sortField",
+                                    "safeName": "sortField"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "sort_field",
+                                    "safeName": "sort_field"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SORT_FIELD",
+                                    "safeName": "SORT_FIELD"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SortField",
+                                    "safeName": "SortField"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
                                 "_type": "optional",
                                 "optional": {
                                     "_type": "named",
-                                    "name": "SortField",
+                                    "name": {
+                                        "originalName": "SortField",
+                                        "camelCase": {
+                                            "unsafeName": "sortField",
+                                            "safeName": "sortField"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "sort_field",
+                                            "safeName": "sort_field"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SORT_FIELD",
+                                            "safeName": "SORT_FIELD"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "SortField",
+                                            "safeName": "SortField"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -106,7 +199,28 @@
                         "docs": "The sort field to use"
                     },
                     {
-                        "name": "query",
+                        "name": {
+                            "wireValue": "query",
+                            "name": {
+                                "originalName": "query",
+                                "camelCase": {
+                                    "unsafeName": "query",
+                                    "safeName": "query"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "query",
+                                    "safeName": "query"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "QUERY",
+                                    "safeName": "QUERY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Query",
+                                    "safeName": "Query"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -147,7 +261,25 @@
         "type_:SearchResponse": {
             "inline": null,
             "name": {
-                "name": "SearchResponse",
+                "name": {
+                    "originalName": "SearchResponse",
+                    "camelCase": {
+                        "unsafeName": "searchResponse",
+                        "safeName": "searchResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "search_response",
+                        "safeName": "search_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEARCH_RESPONSE",
+                        "safeName": "SEARCH_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SearchResponse",
+                        "safeName": "SearchResponse"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -161,7 +293,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "result",
+                        "name": {
+                            "wireValue": "result",
+                            "name": {
+                                "originalName": "result",
+                                "camelCase": {
+                                    "unsafeName": "result",
+                                    "safeName": "result"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "result",
+                                    "safeName": "result"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESULT",
+                                    "safeName": "RESULT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Result",
+                                    "safeName": "Result"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -226,7 +379,25 @@
             "endpoints": [
                 {
                     "id": "endpoint_.search",
-                    "name": "search",
+                    "name": {
+                        "originalName": "search",
+                        "camelCase": {
+                            "unsafeName": "search",
+                            "safeName": "search"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "search",
+                            "safeName": "search"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SEARCH",
+                            "safeName": "SEARCH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Search",
+                            "safeName": "Search"
+                        }
+                    },
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -251,7 +422,25 @@
                         "type": "reference",
                         "requestBodyType": {
                             "_type": "named",
-                            "name": "SearchRequest",
+                            "name": {
+                                "originalName": "SearchRequest",
+                                "camelCase": {
+                                    "unsafeName": "searchRequest",
+                                    "safeName": "searchRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "search_request",
+                                    "safeName": "search_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SEARCH_REQUEST",
+                                    "safeName": "SEARCH_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "SearchRequest",
+                                    "safeName": "SearchRequest"
+                                }
+                            },
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -274,7 +463,25 @@
                                 "type": "typeReference",
                                 "requestBodyType": {
                                     "_type": "named",
-                                    "name": "SearchRequest",
+                                    "name": {
+                                        "originalName": "SearchRequest",
+                                        "camelCase": {
+                                            "unsafeName": "searchRequest",
+                                            "safeName": "searchRequest"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "search_request",
+                                            "safeName": "search_request"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SEARCH_REQUEST",
+                                            "safeName": "SEARCH_REQUEST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "SearchRequest",
+                                            "safeName": "SearchRequest"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -290,7 +497,25 @@
                                 "v2Examples": null
                             }
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -300,7 +525,25 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": "SearchResponse",
+                                    "name": {
+                                        "originalName": "SearchResponse",
+                                        "camelCase": {
+                                            "unsafeName": "searchResponse",
+                                            "safeName": "searchResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "search_response",
+                                            "safeName": "search_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SEARCH_RESPONSE",
+                                            "safeName": "SEARCH_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "SearchResponse",
+                                            "safeName": "SearchResponse"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -344,14 +587,53 @@
                                                 "packagePath": [],
                                                 "file": null
                                             },
-                                            "name": "SearchRequest",
+                                            "name": {
+                                                "originalName": "SearchRequest",
+                                                "camelCase": {
+                                                    "unsafeName": "searchRequest",
+                                                    "safeName": "searchRequest"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "search_request",
+                                                    "safeName": "search_request"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SEARCH_REQUEST",
+                                                    "safeName": "SEARCH_REQUEST"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "SearchRequest",
+                                                    "safeName": "SearchRequest"
+                                                }
+                                            },
                                             "displayName": null
                                         },
                                         "shape": {
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "name": "sortField",
+                                                    "name": {
+                                                        "wireValue": "sortField",
+                                                        "name": {
+                                                            "originalName": "sortField",
+                                                            "camelCase": {
+                                                                "unsafeName": "sortField",
+                                                                "safeName": "sortField"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "sort_field",
+                                                                "safeName": "sort_field"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SORT_FIELD",
+                                                                "safeName": "SORT_FIELD"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SortField",
+                                                                "safeName": "SortField"
+                                                            }
+                                                        }
+                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "container",
@@ -367,7 +649,25 @@
                                                                                 "packagePath": [],
                                                                                 "file": null
                                                                             },
-                                                                            "name": "SortField",
+                                                                            "name": {
+                                                                                "originalName": "SortField",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "sortField",
+                                                                                    "safeName": "sortField"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "sort_field",
+                                                                                    "safeName": "sort_field"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "SORT_FIELD",
+                                                                                    "safeName": "SORT_FIELD"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "SortField",
+                                                                                    "safeName": "SortField"
+                                                                                }
+                                                                            },
                                                                             "displayName": null
                                                                         },
                                                                         "shape": {
@@ -393,7 +693,25 @@
                                                                 },
                                                                 "valueType": {
                                                                     "_type": "named",
-                                                                    "name": "SortField",
+                                                                    "name": {
+                                                                        "originalName": "SortField",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "sortField",
+                                                                            "safeName": "sortField"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "sort_field",
+                                                                            "safeName": "sort_field"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SORT_FIELD",
+                                                                            "safeName": "SORT_FIELD"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "SortField",
+                                                                            "safeName": "SortField"
+                                                                        }
+                                                                    },
                                                                     "fernFilepath": {
                                                                         "allParts": [],
                                                                         "packagePath": [],
@@ -415,13 +733,52 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "name": "SearchRequest",
+                                                        "name": {
+                                                            "originalName": "SearchRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "searchRequest",
+                                                                "safeName": "searchRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "search_request",
+                                                                "safeName": "search_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEARCH_REQUEST",
+                                                                "safeName": "SEARCH_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SearchRequest",
+                                                                "safeName": "SearchRequest"
+                                                            }
+                                                        },
                                                         "displayName": null
                                                     },
                                                     "propertyAccess": null
                                                 },
                                                 {
-                                                    "name": "query",
+                                                    "name": {
+                                                        "wireValue": "query",
+                                                        "name": {
+                                                            "originalName": "query",
+                                                            "camelCase": {
+                                                                "unsafeName": "query",
+                                                                "safeName": "query"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "query",
+                                                                "safeName": "query"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "QUERY",
+                                                                "safeName": "QUERY"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Query",
+                                                                "safeName": "Query"
+                                                            }
+                                                        }
+                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "primitive",
@@ -441,7 +798,25 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "name": "SearchRequest",
+                                                        "name": {
+                                                            "originalName": "SearchRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "searchRequest",
+                                                                "safeName": "searchRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "search_request",
+                                                                "safeName": "search_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEARCH_REQUEST",
+                                                                "safeName": "SEARCH_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SearchRequest",
+                                                                "safeName": "SearchRequest"
+                                                            }
+                                                        },
                                                         "displayName": null
                                                     },
                                                     "propertyAccess": null
@@ -469,14 +844,53 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": "SearchResponse",
+                                                    "name": {
+                                                        "originalName": "SearchResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "searchResponse",
+                                                            "safeName": "searchResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "search_response",
+                                                            "safeName": "search_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEARCH_RESPONSE",
+                                                            "safeName": "SEARCH_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SearchResponse",
+                                                            "safeName": "SearchResponse"
+                                                        }
+                                                    },
                                                     "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": "result",
+                                                            "name": {
+                                                                "wireValue": "result",
+                                                                "name": {
+                                                                    "originalName": "result",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "result",
+                                                                        "safeName": "result"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "result",
+                                                                        "safeName": "result"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RESULT",
+                                                                        "safeName": "RESULT"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Result",
+                                                                        "safeName": "Result"
+                                                                    }
+                                                                }
+                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "primitive",
@@ -496,7 +910,25 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": "SearchResponse",
+                                                                "name": {
+                                                                    "originalName": "SearchResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "searchResponse",
+                                                                        "safeName": "searchResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "search_response",
+                                                                        "safeName": "search_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "SEARCH_RESPONSE",
+                                                                        "safeName": "SEARCH_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "SearchResponse",
+                                                                        "safeName": "SearchResponse"
+                                                                    }
+                                                                },
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
@@ -519,7 +951,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "f3261190",
+                                "id": "5bbb80d5",
                                 "url": "/search",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -536,9 +968,48 @@
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "name": "sortField",
+                                                    "name": {
+                                                        "wireValue": "sortField",
+                                                        "name": {
+                                                            "originalName": "sortField",
+                                                            "camelCase": {
+                                                                "unsafeName": "sortField",
+                                                                "safeName": "sortField"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "sort_field",
+                                                                "safeName": "sort_field"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SORT_FIELD",
+                                                                "safeName": "SORT_FIELD"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SortField",
+                                                                "safeName": "SortField"
+                                                            }
+                                                        }
+                                                    },
                                                     "originalTypeDeclaration": {
-                                                        "name": "SearchRequest",
+                                                        "name": {
+                                                            "originalName": "SearchRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "searchRequest",
+                                                                "safeName": "searchRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "search_request",
+                                                                "safeName": "search_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEARCH_REQUEST",
+                                                                "safeName": "SEARCH_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SearchRequest",
+                                                                "safeName": "SearchRequest"
+                                                            }
+                                                        },
                                                         "fernFilepath": {
                                                             "allParts": [],
                                                             "packagePath": [],
@@ -555,7 +1026,25 @@
                                                                 "optional": null,
                                                                 "valueType": {
                                                                     "_type": "named",
-                                                                    "name": "SortField",
+                                                                    "name": {
+                                                                        "originalName": "SortField",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "sortField",
+                                                                            "safeName": "sortField"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "sort_field",
+                                                                            "safeName": "sort_field"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SORT_FIELD",
+                                                                            "safeName": "SORT_FIELD"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "SortField",
+                                                                            "safeName": "SortField"
+                                                                        }
+                                                                    },
                                                                     "fernFilepath": {
                                                                         "allParts": [],
                                                                         "packagePath": [],
@@ -572,9 +1061,48 @@
                                                     "propertyAccess": null
                                                 },
                                                 {
-                                                    "name": "query",
+                                                    "name": {
+                                                        "wireValue": "query",
+                                                        "name": {
+                                                            "originalName": "query",
+                                                            "camelCase": {
+                                                                "unsafeName": "query",
+                                                                "safeName": "query"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "query",
+                                                                "safeName": "query"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "QUERY",
+                                                                "safeName": "QUERY"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Query",
+                                                                "safeName": "Query"
+                                                            }
+                                                        }
+                                                    },
                                                     "originalTypeDeclaration": {
-                                                        "name": "SearchRequest",
+                                                        "name": {
+                                                            "originalName": "SearchRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "searchRequest",
+                                                                "safeName": "searchRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "search_request",
+                                                                "safeName": "search_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEARCH_REQUEST",
+                                                                "safeName": "SEARCH_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SearchRequest",
+                                                                "safeName": "SearchRequest"
+                                                            }
+                                                        },
                                                         "fernFilepath": {
                                                             "allParts": [],
                                                             "packagePath": [],
@@ -601,7 +1129,25 @@
                                             "extraProperties": null
                                         },
                                         "typeName": {
-                                            "name": "SearchRequest",
+                                            "name": {
+                                                "originalName": "SearchRequest",
+                                                "camelCase": {
+                                                    "unsafeName": "searchRequest",
+                                                    "safeName": "searchRequest"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "search_request",
+                                                    "safeName": "search_request"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SEARCH_REQUEST",
+                                                    "safeName": "SEARCH_REQUEST"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "SearchRequest",
+                                                    "safeName": "SearchRequest"
+                                                }
+                                            },
                                             "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": [],
@@ -626,9 +1172,48 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": "result",
+                                                            "name": {
+                                                                "wireValue": "result",
+                                                                "name": {
+                                                                    "originalName": "result",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "result",
+                                                                        "safeName": "result"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "result",
+                                                                        "safeName": "result"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RESULT",
+                                                                        "safeName": "RESULT"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Result",
+                                                                        "safeName": "Result"
+                                                                    }
+                                                                }
+                                                            },
                                                             "originalTypeDeclaration": {
-                                                                "name": "SearchResponse",
+                                                                "name": {
+                                                                    "originalName": "SearchResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "searchResponse",
+                                                                        "safeName": "searchResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "search_response",
+                                                                        "safeName": "search_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "SEARCH_RESPONSE",
+                                                                        "safeName": "SEARCH_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "SearchResponse",
+                                                                        "safeName": "SearchResponse"
+                                                                    }
+                                                                },
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -655,7 +1240,25 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": "SearchResponse",
+                                                    "name": {
+                                                        "originalName": "SearchResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "searchResponse",
+                                                            "safeName": "searchResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "search_response",
+                                                            "safeName": "search_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEARCH_RESPONSE",
+                                                            "safeName": "SEARCH_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SearchResponse",
+                                                            "safeName": "SearchResponse"
+                                                        }
+                                                    },
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -691,7 +1294,28 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": "errorInstanceId"
+        "errorInstanceIdKey": {
+            "wireValue": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            }
+        }
     },
     "environments": null,
     "errorDiscriminationStrategy": {

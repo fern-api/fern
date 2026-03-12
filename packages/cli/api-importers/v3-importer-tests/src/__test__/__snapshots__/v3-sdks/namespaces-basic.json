@@ -1,5 +1,23 @@
 {
-  "apiName": "Pet API",
+  "apiName": {
+    "originalName": "Pet API",
+    "camelCase": {
+      "unsafeName": "petApi",
+      "safeName": "petApi"
+    },
+    "snakeCase": {
+      "unsafeName": "pet_api",
+      "safeName": "pet_api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "PET_API",
+      "safeName": "PET_API"
+    },
+    "pascalCase": {
+      "unsafeName": "PetApi",
+      "safeName": "PetApi"
+    }
+  },
   "selfHosted": false,
   "apiDisplayName": "Pet API",
   "auth": {
@@ -13,18 +31,93 @@
         "typeId": "petsV1:Pet",
         "fernFilepath": {
           "allParts": [
-            "petsV1"
+            {
+              "originalName": "petsV1",
+              "camelCase": {
+                "unsafeName": "petsV1",
+                "safeName": "petsV1"
+              },
+              "snakeCase": {
+                "unsafeName": "pets_v_1",
+                "safeName": "pets_v_1"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "PETS_V_1",
+                "safeName": "PETS_V_1"
+              },
+              "pascalCase": {
+                "unsafeName": "PetsV1",
+                "safeName": "PetsV1"
+              }
+            }
           ],
           "packagePath": [
-            "petsV1"
+            {
+              "originalName": "petsV1",
+              "camelCase": {
+                "unsafeName": "petsV1",
+                "safeName": "petsV1"
+              },
+              "snakeCase": {
+                "unsafeName": "pets_v_1",
+                "safeName": "pets_v_1"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "PETS_V_1",
+                "safeName": "PETS_V_1"
+              },
+              "pascalCase": {
+                "unsafeName": "PetsV1",
+                "safeName": "PetsV1"
+              }
+            }
           ]
         },
-        "name": "Pet"
+        "name": {
+          "originalName": "Pet",
+          "camelCase": {
+            "unsafeName": "pet",
+            "safeName": "pet"
+          },
+          "snakeCase": {
+            "unsafeName": "pet",
+            "safeName": "pet"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PET",
+            "safeName": "PET"
+          },
+          "pascalCase": {
+            "unsafeName": "Pet",
+            "safeName": "Pet"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "id",
+            "name": {
+              "wireValue": "id",
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "INTEGER",
@@ -43,7 +136,28 @@
             }
           },
           {
-            "name": "name",
+            "name": {
+              "wireValue": "name",
+              "name": {
+                "originalName": "name",
+                "camelCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "snakeCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NAME",
+                  "safeName": "NAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Name",
+                  "safeName": "Name"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -86,18 +200,93 @@
         "typeId": "petsV2:Pet",
         "fernFilepath": {
           "allParts": [
-            "petsV2"
+            {
+              "originalName": "petsV2",
+              "camelCase": {
+                "unsafeName": "petsV2",
+                "safeName": "petsV2"
+              },
+              "snakeCase": {
+                "unsafeName": "pets_v_2",
+                "safeName": "pets_v_2"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "PETS_V_2",
+                "safeName": "PETS_V_2"
+              },
+              "pascalCase": {
+                "unsafeName": "PetsV2",
+                "safeName": "PetsV2"
+              }
+            }
           ],
           "packagePath": [
-            "petsV2"
+            {
+              "originalName": "petsV2",
+              "camelCase": {
+                "unsafeName": "petsV2",
+                "safeName": "petsV2"
+              },
+              "snakeCase": {
+                "unsafeName": "pets_v_2",
+                "safeName": "pets_v_2"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "PETS_V_2",
+                "safeName": "PETS_V_2"
+              },
+              "pascalCase": {
+                "unsafeName": "PetsV2",
+                "safeName": "PetsV2"
+              }
+            }
           ]
         },
-        "name": "Pet"
+        "name": {
+          "originalName": "Pet",
+          "camelCase": {
+            "unsafeName": "pet",
+            "safeName": "pet"
+          },
+          "snakeCase": {
+            "unsafeName": "pet",
+            "safeName": "pet"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PET",
+            "safeName": "PET"
+          },
+          "pascalCase": {
+            "unsafeName": "Pet",
+            "safeName": "Pet"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "id",
+            "name": {
+              "wireValue": "id",
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "INTEGER",
@@ -116,7 +305,28 @@
             }
           },
           {
-            "name": "name",
+            "name": {
+              "wireValue": "name",
+              "name": {
+                "originalName": "name",
+                "camelCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "snakeCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NAME",
+                  "safeName": "NAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Name",
+                  "safeName": "Name"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -156,7 +366,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      }
+    }
   },
   "errors": {},
   "services": {
@@ -164,10 +395,46 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            "petsV1"
+            {
+              "originalName": "petsV1",
+              "camelCase": {
+                "unsafeName": "petsV1",
+                "safeName": "petsV1"
+              },
+              "snakeCase": {
+                "unsafeName": "pets_v_1",
+                "safeName": "pets_v_1"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "PETS_V_1",
+                "safeName": "PETS_V_1"
+              },
+              "pascalCase": {
+                "unsafeName": "PetsV1",
+                "safeName": "PetsV1"
+              }
+            }
           ],
           "packagePath": [],
-          "file": "petsV1"
+          "file": {
+            "originalName": "petsV1",
+            "camelCase": {
+              "unsafeName": "petsV1",
+              "safeName": "petsV1"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_1",
+              "safeName": "pets_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_1",
+              "safeName": "PETS_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV1",
+              "safeName": "PetsV1"
+            }
+          }
         }
       },
       "basePath": {
@@ -194,7 +461,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "1127777",
+                "id": "9a4cc434",
                 "url": "/pets",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -227,18 +494,93 @@
                                 "shape": {
                                   "properties": [
                                     {
-                                      "name": "id",
+                                      "name": {
+                                        "wireValue": "id",
+                                        "name": {
+                                          "originalName": "id",
+                                          "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV1:Pet",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "petsV1"
+                                            {
+                                              "originalName": "petsV1",
+                                              "camelCase": {
+                                                "unsafeName": "petsV1",
+                                                "safeName": "petsV1"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_1",
+                                                "safeName": "pets_v_1"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_1",
+                                                "safeName": "PETS_V_1"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV1",
+                                                "safeName": "PetsV1"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "petsV1"
+                                            {
+                                              "originalName": "petsV1",
+                                              "camelCase": {
+                                                "unsafeName": "petsV1",
+                                                "safeName": "petsV1"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_1",
+                                                "safeName": "pets_v_1"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_1",
+                                                "safeName": "PETS_V_1"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV1",
+                                                "safeName": "PetsV1"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Pet"
+                                        "name": {
+                                          "originalName": "Pet",
+                                          "camelCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "PET",
+                                            "safeName": "PET"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Pet",
+                                            "safeName": "Pet"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": 1,
@@ -252,18 +594,93 @@
                                       }
                                     },
                                     {
-                                      "name": "name",
+                                      "name": {
+                                        "wireValue": "name",
+                                        "name": {
+                                          "originalName": "name",
+                                          "camelCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "NAME",
+                                            "safeName": "NAME"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Name",
+                                            "safeName": "Name"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV1:Pet",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "petsV1"
+                                            {
+                                              "originalName": "petsV1",
+                                              "camelCase": {
+                                                "unsafeName": "petsV1",
+                                                "safeName": "petsV1"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_1",
+                                                "safeName": "pets_v_1"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_1",
+                                                "safeName": "PETS_V_1"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV1",
+                                                "safeName": "PetsV1"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "petsV1"
+                                            {
+                                              "originalName": "petsV1",
+                                              "camelCase": {
+                                                "unsafeName": "petsV1",
+                                                "safeName": "petsV1"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_1",
+                                                "safeName": "pets_v_1"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_1",
+                                                "safeName": "PETS_V_1"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV1",
+                                                "safeName": "PetsV1"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Pet"
+                                        "name": {
+                                          "originalName": "Pet",
+                                          "camelCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "PET",
+                                            "safeName": "PET"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Pet",
+                                            "safeName": "Pet"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": "name",
@@ -285,13 +702,67 @@
                                   "typeId": "petsV1:Pet",
                                   "fernFilepath": {
                                     "allParts": [
-                                      "petsV1"
+                                      {
+                                        "originalName": "petsV1",
+                                        "camelCase": {
+                                          "unsafeName": "petsV1",
+                                          "safeName": "petsV1"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "pets_v_1",
+                                          "safeName": "pets_v_1"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "PETS_V_1",
+                                          "safeName": "PETS_V_1"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "PetsV1",
+                                          "safeName": "PetsV1"
+                                        }
+                                      }
                                     ],
                                     "packagePath": [
-                                      "petsV1"
+                                      {
+                                        "originalName": "petsV1",
+                                        "camelCase": {
+                                          "unsafeName": "petsV1",
+                                          "safeName": "petsV1"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "pets_v_1",
+                                          "safeName": "pets_v_1"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "PETS_V_1",
+                                          "safeName": "PETS_V_1"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "PetsV1",
+                                          "safeName": "PetsV1"
+                                        }
+                                      }
                                     ]
                                   },
-                                  "name": "Pet"
+                                  "name": {
+                                    "originalName": "Pet",
+                                    "camelCase": {
+                                      "unsafeName": "pet",
+                                      "safeName": "pet"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "pet",
+                                      "safeName": "pet"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "PET",
+                                      "safeName": "PET"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "Pet",
+                                      "safeName": "Pet"
+                                    }
+                                  }
                                 },
                                 "type": "named"
                               }
@@ -305,18 +776,93 @@
                                 "shape": {
                                   "properties": [
                                     {
-                                      "name": "id",
+                                      "name": {
+                                        "wireValue": "id",
+                                        "name": {
+                                          "originalName": "id",
+                                          "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV1:Pet",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "petsV1"
+                                            {
+                                              "originalName": "petsV1",
+                                              "camelCase": {
+                                                "unsafeName": "petsV1",
+                                                "safeName": "petsV1"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_1",
+                                                "safeName": "pets_v_1"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_1",
+                                                "safeName": "PETS_V_1"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV1",
+                                                "safeName": "PetsV1"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "petsV1"
+                                            {
+                                              "originalName": "petsV1",
+                                              "camelCase": {
+                                                "unsafeName": "petsV1",
+                                                "safeName": "petsV1"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_1",
+                                                "safeName": "pets_v_1"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_1",
+                                                "safeName": "PETS_V_1"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV1",
+                                                "safeName": "PetsV1"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Pet"
+                                        "name": {
+                                          "originalName": "Pet",
+                                          "camelCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "PET",
+                                            "safeName": "PET"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Pet",
+                                            "safeName": "Pet"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": 1,
@@ -330,18 +876,93 @@
                                       }
                                     },
                                     {
-                                      "name": "name",
+                                      "name": {
+                                        "wireValue": "name",
+                                        "name": {
+                                          "originalName": "name",
+                                          "camelCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "NAME",
+                                            "safeName": "NAME"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Name",
+                                            "safeName": "Name"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV1:Pet",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "petsV1"
+                                            {
+                                              "originalName": "petsV1",
+                                              "camelCase": {
+                                                "unsafeName": "petsV1",
+                                                "safeName": "petsV1"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_1",
+                                                "safeName": "pets_v_1"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_1",
+                                                "safeName": "PETS_V_1"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV1",
+                                                "safeName": "PetsV1"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "petsV1"
+                                            {
+                                              "originalName": "petsV1",
+                                              "camelCase": {
+                                                "unsafeName": "petsV1",
+                                                "safeName": "petsV1"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_1",
+                                                "safeName": "pets_v_1"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_1",
+                                                "safeName": "PETS_V_1"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV1",
+                                                "safeName": "PetsV1"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Pet"
+                                        "name": {
+                                          "originalName": "Pet",
+                                          "camelCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "PET",
+                                            "safeName": "PET"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Pet",
+                                            "safeName": "Pet"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": "name",
@@ -363,13 +984,67 @@
                                   "typeId": "petsV1:Pet",
                                   "fernFilepath": {
                                     "allParts": [
-                                      "petsV1"
+                                      {
+                                        "originalName": "petsV1",
+                                        "camelCase": {
+                                          "unsafeName": "petsV1",
+                                          "safeName": "petsV1"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "pets_v_1",
+                                          "safeName": "pets_v_1"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "PETS_V_1",
+                                          "safeName": "PETS_V_1"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "PetsV1",
+                                          "safeName": "PetsV1"
+                                        }
+                                      }
                                     ],
                                     "packagePath": [
-                                      "petsV1"
+                                      {
+                                        "originalName": "petsV1",
+                                        "camelCase": {
+                                          "unsafeName": "petsV1",
+                                          "safeName": "petsV1"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "pets_v_1",
+                                          "safeName": "pets_v_1"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "PETS_V_1",
+                                          "safeName": "PETS_V_1"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "PetsV1",
+                                          "safeName": "PetsV1"
+                                        }
+                                      }
                                     ]
                                   },
-                                  "name": "Pet"
+                                  "name": {
+                                    "originalName": "Pet",
+                                    "camelCase": {
+                                      "unsafeName": "pet",
+                                      "safeName": "pet"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "pet",
+                                      "safeName": "pet"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "PET",
+                                      "safeName": "PET"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "Pet",
+                                      "safeName": "Pet"
+                                    }
+                                  }
                                 },
                                 "type": "named"
                               }
@@ -380,7 +1055,25 @@
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": "Pet",
+                            "name": {
+                              "originalName": "Pet",
+                              "camelCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "PET",
+                                "safeName": "PET"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Pet",
+                                "safeName": "Pet"
+                              }
+                            },
                             "typeId": "petsV1:Pet",
                             "inline": false,
                             "type": "named"
@@ -408,7 +1101,25 @@
           },
           "audiences": [],
           "id": "endpoint_petsV1.listPets",
-          "name": "listPets",
+          "name": {
+            "originalName": "listPets",
+            "camelCase": {
+              "unsafeName": "listPets",
+              "safeName": "listPets"
+            },
+            "snakeCase": {
+              "unsafeName": "list_pets",
+              "safeName": "list_pets"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_PETS",
+              "safeName": "LIST_PETS"
+            },
+            "pascalCase": {
+              "unsafeName": "ListPets",
+              "safeName": "ListPets"
+            }
+          },
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -421,7 +1132,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "Pet",
+                      "name": {
+                        "originalName": "Pet",
+                        "camelCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "PET",
+                          "safeName": "PET"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Pet",
+                          "safeName": "Pet"
+                        }
+                      },
                       "typeId": "petsV1:Pet",
                       "inline": false,
                       "type": "named"
@@ -490,7 +1219,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "Pet",
+                          "name": {
+                            "originalName": "Pet",
+                            "camelCase": {
+                              "unsafeName": "pet",
+                              "safeName": "pet"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "pet",
+                              "safeName": "pet"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PET",
+                              "safeName": "PET"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Pet",
+                              "safeName": "Pet"
+                            }
+                          },
                           "typeId": "petsV1:Pet",
                           "inline": false,
                           "type": "named"
@@ -537,7 +1284,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "25075023",
+                "id": "1eb70841",
                 "url": "/pets",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -554,18 +1301,93 @@
                     "shape": {
                       "properties": [
                         {
-                          "name": "id",
+                          "name": {
+                            "wireValue": "id",
+                            "name": {
+                              "originalName": "id",
+                              "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Id",
+                                "safeName": "Id"
+                              }
+                            }
+                          },
                           "originalTypeDeclaration": {
                             "typeId": "petsV1:Pet",
                             "fernFilepath": {
                               "allParts": [
-                                "petsV1"
+                                {
+                                  "originalName": "petsV1",
+                                  "camelCase": {
+                                    "unsafeName": "petsV1",
+                                    "safeName": "petsV1"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pets_v_1",
+                                    "safeName": "pets_v_1"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PETS_V_1",
+                                    "safeName": "PETS_V_1"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "PetsV1",
+                                    "safeName": "PetsV1"
+                                  }
+                                }
                               ],
                               "packagePath": [
-                                "petsV1"
+                                {
+                                  "originalName": "petsV1",
+                                  "camelCase": {
+                                    "unsafeName": "petsV1",
+                                    "safeName": "petsV1"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pets_v_1",
+                                    "safeName": "pets_v_1"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PETS_V_1",
+                                    "safeName": "PETS_V_1"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "PetsV1",
+                                    "safeName": "PetsV1"
+                                  }
+                                }
                               ]
                             },
-                            "name": "Pet"
+                            "name": {
+                              "originalName": "Pet",
+                              "camelCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "PET",
+                                "safeName": "PET"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Pet",
+                                "safeName": "Pet"
+                              }
+                            }
                           },
                           "value": {
                             "jsonExample": 1,
@@ -579,18 +1401,93 @@
                           }
                         },
                         {
-                          "name": "name",
+                          "name": {
+                            "wireValue": "name",
+                            "name": {
+                              "originalName": "name",
+                              "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                              }
+                            }
+                          },
                           "originalTypeDeclaration": {
                             "typeId": "petsV1:Pet",
                             "fernFilepath": {
                               "allParts": [
-                                "petsV1"
+                                {
+                                  "originalName": "petsV1",
+                                  "camelCase": {
+                                    "unsafeName": "petsV1",
+                                    "safeName": "petsV1"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pets_v_1",
+                                    "safeName": "pets_v_1"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PETS_V_1",
+                                    "safeName": "PETS_V_1"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "PetsV1",
+                                    "safeName": "PetsV1"
+                                  }
+                                }
                               ],
                               "packagePath": [
-                                "petsV1"
+                                {
+                                  "originalName": "petsV1",
+                                  "camelCase": {
+                                    "unsafeName": "petsV1",
+                                    "safeName": "petsV1"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pets_v_1",
+                                    "safeName": "pets_v_1"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PETS_V_1",
+                                    "safeName": "PETS_V_1"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "PetsV1",
+                                    "safeName": "PetsV1"
+                                  }
+                                }
                               ]
                             },
-                            "name": "Pet"
+                            "name": {
+                              "originalName": "Pet",
+                              "camelCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "PET",
+                                "safeName": "PET"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Pet",
+                                "safeName": "Pet"
+                              }
+                            }
                           },
                           "value": {
                             "jsonExample": "name",
@@ -612,13 +1509,67 @@
                       "typeId": "petsV1:Pet",
                       "fernFilepath": {
                         "allParts": [
-                          "petsV1"
+                          {
+                            "originalName": "petsV1",
+                            "camelCase": {
+                              "unsafeName": "petsV1",
+                              "safeName": "petsV1"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "pets_v_1",
+                              "safeName": "pets_v_1"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PETS_V_1",
+                              "safeName": "PETS_V_1"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "PetsV1",
+                              "safeName": "PetsV1"
+                            }
+                          }
                         ],
                         "packagePath": [
-                          "petsV1"
+                          {
+                            "originalName": "petsV1",
+                            "camelCase": {
+                              "unsafeName": "petsV1",
+                              "safeName": "petsV1"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "pets_v_1",
+                              "safeName": "pets_v_1"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PETS_V_1",
+                              "safeName": "PETS_V_1"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "PetsV1",
+                              "safeName": "PetsV1"
+                            }
+                          }
                         ]
                       },
-                      "name": "Pet"
+                      "name": {
+                        "originalName": "Pet",
+                        "camelCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "PET",
+                          "safeName": "PET"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Pet",
+                          "safeName": "Pet"
+                        }
+                      }
                     },
                     "type": "named"
                   },
@@ -635,18 +1586,93 @@
                         "shape": {
                           "properties": [
                             {
-                              "name": "id",
+                              "name": {
+                                "wireValue": "id",
+                                "name": {
+                                  "originalName": "id",
+                                  "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
+                                  }
+                                }
+                              },
                               "originalTypeDeclaration": {
                                 "typeId": "petsV1:Pet",
                                 "fernFilepath": {
                                   "allParts": [
-                                    "petsV1"
+                                    {
+                                      "originalName": "petsV1",
+                                      "camelCase": {
+                                        "unsafeName": "petsV1",
+                                        "safeName": "petsV1"
+                                      },
+                                      "snakeCase": {
+                                        "unsafeName": "pets_v_1",
+                                        "safeName": "pets_v_1"
+                                      },
+                                      "screamingSnakeCase": {
+                                        "unsafeName": "PETS_V_1",
+                                        "safeName": "PETS_V_1"
+                                      },
+                                      "pascalCase": {
+                                        "unsafeName": "PetsV1",
+                                        "safeName": "PetsV1"
+                                      }
+                                    }
                                   ],
                                   "packagePath": [
-                                    "petsV1"
+                                    {
+                                      "originalName": "petsV1",
+                                      "camelCase": {
+                                        "unsafeName": "petsV1",
+                                        "safeName": "petsV1"
+                                      },
+                                      "snakeCase": {
+                                        "unsafeName": "pets_v_1",
+                                        "safeName": "pets_v_1"
+                                      },
+                                      "screamingSnakeCase": {
+                                        "unsafeName": "PETS_V_1",
+                                        "safeName": "PETS_V_1"
+                                      },
+                                      "pascalCase": {
+                                        "unsafeName": "PetsV1",
+                                        "safeName": "PetsV1"
+                                      }
+                                    }
                                   ]
                                 },
-                                "name": "Pet"
+                                "name": {
+                                  "originalName": "Pet",
+                                  "camelCase": {
+                                    "unsafeName": "pet",
+                                    "safeName": "pet"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pet",
+                                    "safeName": "pet"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PET",
+                                    "safeName": "PET"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Pet",
+                                    "safeName": "Pet"
+                                  }
+                                }
                               },
                               "value": {
                                 "jsonExample": 1,
@@ -660,18 +1686,93 @@
                               }
                             },
                             {
-                              "name": "name",
+                              "name": {
+                                "wireValue": "name",
+                                "name": {
+                                  "originalName": "name",
+                                  "camelCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "NAME",
+                                    "safeName": "NAME"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Name",
+                                    "safeName": "Name"
+                                  }
+                                }
+                              },
                               "originalTypeDeclaration": {
                                 "typeId": "petsV1:Pet",
                                 "fernFilepath": {
                                   "allParts": [
-                                    "petsV1"
+                                    {
+                                      "originalName": "petsV1",
+                                      "camelCase": {
+                                        "unsafeName": "petsV1",
+                                        "safeName": "petsV1"
+                                      },
+                                      "snakeCase": {
+                                        "unsafeName": "pets_v_1",
+                                        "safeName": "pets_v_1"
+                                      },
+                                      "screamingSnakeCase": {
+                                        "unsafeName": "PETS_V_1",
+                                        "safeName": "PETS_V_1"
+                                      },
+                                      "pascalCase": {
+                                        "unsafeName": "PetsV1",
+                                        "safeName": "PetsV1"
+                                      }
+                                    }
                                   ],
                                   "packagePath": [
-                                    "petsV1"
+                                    {
+                                      "originalName": "petsV1",
+                                      "camelCase": {
+                                        "unsafeName": "petsV1",
+                                        "safeName": "petsV1"
+                                      },
+                                      "snakeCase": {
+                                        "unsafeName": "pets_v_1",
+                                        "safeName": "pets_v_1"
+                                      },
+                                      "screamingSnakeCase": {
+                                        "unsafeName": "PETS_V_1",
+                                        "safeName": "PETS_V_1"
+                                      },
+                                      "pascalCase": {
+                                        "unsafeName": "PetsV1",
+                                        "safeName": "PetsV1"
+                                      }
+                                    }
                                   ]
                                 },
-                                "name": "Pet"
+                                "name": {
+                                  "originalName": "Pet",
+                                  "camelCase": {
+                                    "unsafeName": "pet",
+                                    "safeName": "pet"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pet",
+                                    "safeName": "pet"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PET",
+                                    "safeName": "PET"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Pet",
+                                    "safeName": "Pet"
+                                  }
+                                }
                               },
                               "value": {
                                 "jsonExample": "name",
@@ -693,13 +1794,67 @@
                           "typeId": "petsV1:Pet",
                           "fernFilepath": {
                             "allParts": [
-                              "petsV1"
+                              {
+                                "originalName": "petsV1",
+                                "camelCase": {
+                                  "unsafeName": "petsV1",
+                                  "safeName": "petsV1"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "pets_v_1",
+                                  "safeName": "pets_v_1"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "PETS_V_1",
+                                  "safeName": "PETS_V_1"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "PetsV1",
+                                  "safeName": "PetsV1"
+                                }
+                              }
                             ],
                             "packagePath": [
-                              "petsV1"
+                              {
+                                "originalName": "petsV1",
+                                "camelCase": {
+                                  "unsafeName": "petsV1",
+                                  "safeName": "petsV1"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "pets_v_1",
+                                  "safeName": "pets_v_1"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "PETS_V_1",
+                                  "safeName": "PETS_V_1"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "PetsV1",
+                                  "safeName": "PetsV1"
+                                }
+                              }
                             ]
                           },
-                          "name": "Pet"
+                          "name": {
+                            "originalName": "Pet",
+                            "camelCase": {
+                              "unsafeName": "pet",
+                              "safeName": "pet"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "pet",
+                              "safeName": "pet"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PET",
+                              "safeName": "PET"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Pet",
+                              "safeName": "Pet"
+                            }
+                          }
                         },
                         "type": "named"
                       }
@@ -722,7 +1877,25 @@
           },
           "audiences": [],
           "id": "endpoint_petsV1.createPet",
-          "name": "createPet",
+          "name": {
+            "originalName": "createPet",
+            "camelCase": {
+              "unsafeName": "createPet",
+              "safeName": "createPet"
+            },
+            "snakeCase": {
+              "unsafeName": "create_pet",
+              "safeName": "create_pet"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CREATE_PET",
+              "safeName": "CREATE_PET"
+            },
+            "pascalCase": {
+              "unsafeName": "CreatePet",
+              "safeName": "CreatePet"
+            }
+          },
           "requestBody": {
             "contentType": "application/json",
             "requestBodyType": {
@@ -730,7 +1903,25 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": "Pet",
+              "name": {
+                "originalName": "Pet",
+                "camelCase": {
+                  "unsafeName": "pet",
+                  "safeName": "pet"
+                },
+                "snakeCase": {
+                  "unsafeName": "pet",
+                  "safeName": "pet"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PET",
+                  "safeName": "PET"
+                },
+                "pascalCase": {
+                  "unsafeName": "Pet",
+                  "safeName": "Pet"
+                }
+              },
               "typeId": "petsV1:Pet",
               "inline": false,
               "type": "named"
@@ -755,7 +1946,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "Pet",
+                  "name": {
+                    "originalName": "Pet",
+                    "camelCase": {
+                      "unsafeName": "pet",
+                      "safeName": "pet"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "pet",
+                      "safeName": "pet"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PET",
+                      "safeName": "PET"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Pet",
+                      "safeName": "Pet"
+                    }
+                  },
                   "typeId": "petsV1:Pet",
                   "inline": false,
                   "type": "named"
@@ -782,7 +1991,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "Pet",
+                  "name": {
+                    "originalName": "Pet",
+                    "camelCase": {
+                      "unsafeName": "pet",
+                      "safeName": "pet"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "pet",
+                      "safeName": "pet"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PET",
+                      "safeName": "PET"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Pet",
+                      "safeName": "Pet"
+                    }
+                  },
                   "typeId": "petsV1:Pet",
                   "inline": false,
                   "type": "named"
@@ -845,7 +2072,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "Pet",
+                      "name": {
+                        "originalName": "Pet",
+                        "camelCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "PET",
+                          "safeName": "PET"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Pet",
+                          "safeName": "Pet"
+                        }
+                      },
                       "typeId": "petsV1:Pet",
                       "inline": false,
                       "type": "named"
@@ -875,10 +2120,46 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            "petsV2"
+            {
+              "originalName": "petsV2",
+              "camelCase": {
+                "unsafeName": "petsV2",
+                "safeName": "petsV2"
+              },
+              "snakeCase": {
+                "unsafeName": "pets_v_2",
+                "safeName": "pets_v_2"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "PETS_V_2",
+                "safeName": "PETS_V_2"
+              },
+              "pascalCase": {
+                "unsafeName": "PetsV2",
+                "safeName": "PetsV2"
+              }
+            }
           ],
           "packagePath": [],
-          "file": "petsV2"
+          "file": {
+            "originalName": "petsV2",
+            "camelCase": {
+              "unsafeName": "petsV2",
+              "safeName": "petsV2"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_2",
+              "safeName": "pets_v_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_2",
+              "safeName": "PETS_V_2"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV2",
+              "safeName": "PetsV2"
+            }
+          }
         }
       },
       "basePath": {
@@ -905,7 +2186,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "7fce72b6",
+                "id": "9b65b05b",
                 "url": "/pets",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -938,18 +2219,93 @@
                                 "shape": {
                                   "properties": [
                                     {
-                                      "name": "id",
+                                      "name": {
+                                        "wireValue": "id",
+                                        "name": {
+                                          "originalName": "id",
+                                          "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV2:Pet",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "petsV2"
+                                            {
+                                              "originalName": "petsV2",
+                                              "camelCase": {
+                                                "unsafeName": "petsV2",
+                                                "safeName": "petsV2"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_2",
+                                                "safeName": "pets_v_2"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_2",
+                                                "safeName": "PETS_V_2"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV2",
+                                                "safeName": "PetsV2"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "petsV2"
+                                            {
+                                              "originalName": "petsV2",
+                                              "camelCase": {
+                                                "unsafeName": "petsV2",
+                                                "safeName": "petsV2"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_2",
+                                                "safeName": "pets_v_2"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_2",
+                                                "safeName": "PETS_V_2"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV2",
+                                                "safeName": "PetsV2"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Pet"
+                                        "name": {
+                                          "originalName": "Pet",
+                                          "camelCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "PET",
+                                            "safeName": "PET"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Pet",
+                                            "safeName": "Pet"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": 1,
@@ -963,18 +2319,93 @@
                                       }
                                     },
                                     {
-                                      "name": "name",
+                                      "name": {
+                                        "wireValue": "name",
+                                        "name": {
+                                          "originalName": "name",
+                                          "camelCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "NAME",
+                                            "safeName": "NAME"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Name",
+                                            "safeName": "Name"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV2:Pet",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "petsV2"
+                                            {
+                                              "originalName": "petsV2",
+                                              "camelCase": {
+                                                "unsafeName": "petsV2",
+                                                "safeName": "petsV2"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_2",
+                                                "safeName": "pets_v_2"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_2",
+                                                "safeName": "PETS_V_2"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV2",
+                                                "safeName": "PetsV2"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "petsV2"
+                                            {
+                                              "originalName": "petsV2",
+                                              "camelCase": {
+                                                "unsafeName": "petsV2",
+                                                "safeName": "petsV2"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_2",
+                                                "safeName": "pets_v_2"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_2",
+                                                "safeName": "PETS_V_2"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV2",
+                                                "safeName": "PetsV2"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Pet"
+                                        "name": {
+                                          "originalName": "Pet",
+                                          "camelCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "PET",
+                                            "safeName": "PET"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Pet",
+                                            "safeName": "Pet"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": "name",
@@ -996,13 +2427,67 @@
                                   "typeId": "petsV2:Pet",
                                   "fernFilepath": {
                                     "allParts": [
-                                      "petsV2"
+                                      {
+                                        "originalName": "petsV2",
+                                        "camelCase": {
+                                          "unsafeName": "petsV2",
+                                          "safeName": "petsV2"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "pets_v_2",
+                                          "safeName": "pets_v_2"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "PETS_V_2",
+                                          "safeName": "PETS_V_2"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "PetsV2",
+                                          "safeName": "PetsV2"
+                                        }
+                                      }
                                     ],
                                     "packagePath": [
-                                      "petsV2"
+                                      {
+                                        "originalName": "petsV2",
+                                        "camelCase": {
+                                          "unsafeName": "petsV2",
+                                          "safeName": "petsV2"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "pets_v_2",
+                                          "safeName": "pets_v_2"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "PETS_V_2",
+                                          "safeName": "PETS_V_2"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "PetsV2",
+                                          "safeName": "PetsV2"
+                                        }
+                                      }
                                     ]
                                   },
-                                  "name": "Pet"
+                                  "name": {
+                                    "originalName": "Pet",
+                                    "camelCase": {
+                                      "unsafeName": "pet",
+                                      "safeName": "pet"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "pet",
+                                      "safeName": "pet"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "PET",
+                                      "safeName": "PET"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "Pet",
+                                      "safeName": "Pet"
+                                    }
+                                  }
                                 },
                                 "type": "named"
                               }
@@ -1016,18 +2501,93 @@
                                 "shape": {
                                   "properties": [
                                     {
-                                      "name": "id",
+                                      "name": {
+                                        "wireValue": "id",
+                                        "name": {
+                                          "originalName": "id",
+                                          "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV2:Pet",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "petsV2"
+                                            {
+                                              "originalName": "petsV2",
+                                              "camelCase": {
+                                                "unsafeName": "petsV2",
+                                                "safeName": "petsV2"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_2",
+                                                "safeName": "pets_v_2"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_2",
+                                                "safeName": "PETS_V_2"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV2",
+                                                "safeName": "PetsV2"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "petsV2"
+                                            {
+                                              "originalName": "petsV2",
+                                              "camelCase": {
+                                                "unsafeName": "petsV2",
+                                                "safeName": "petsV2"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_2",
+                                                "safeName": "pets_v_2"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_2",
+                                                "safeName": "PETS_V_2"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV2",
+                                                "safeName": "PetsV2"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Pet"
+                                        "name": {
+                                          "originalName": "Pet",
+                                          "camelCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "PET",
+                                            "safeName": "PET"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Pet",
+                                            "safeName": "Pet"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": 1,
@@ -1041,18 +2601,93 @@
                                       }
                                     },
                                     {
-                                      "name": "name",
+                                      "name": {
+                                        "wireValue": "name",
+                                        "name": {
+                                          "originalName": "name",
+                                          "camelCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "NAME",
+                                            "safeName": "NAME"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Name",
+                                            "safeName": "Name"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "petsV2:Pet",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "petsV2"
+                                            {
+                                              "originalName": "petsV2",
+                                              "camelCase": {
+                                                "unsafeName": "petsV2",
+                                                "safeName": "petsV2"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_2",
+                                                "safeName": "pets_v_2"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_2",
+                                                "safeName": "PETS_V_2"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV2",
+                                                "safeName": "PetsV2"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "petsV2"
+                                            {
+                                              "originalName": "petsV2",
+                                              "camelCase": {
+                                                "unsafeName": "petsV2",
+                                                "safeName": "petsV2"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "pets_v_2",
+                                                "safeName": "pets_v_2"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "PETS_V_2",
+                                                "safeName": "PETS_V_2"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "PetsV2",
+                                                "safeName": "PetsV2"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Pet"
+                                        "name": {
+                                          "originalName": "Pet",
+                                          "camelCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "pet",
+                                            "safeName": "pet"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "PET",
+                                            "safeName": "PET"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Pet",
+                                            "safeName": "Pet"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": "name",
@@ -1074,13 +2709,67 @@
                                   "typeId": "petsV2:Pet",
                                   "fernFilepath": {
                                     "allParts": [
-                                      "petsV2"
+                                      {
+                                        "originalName": "petsV2",
+                                        "camelCase": {
+                                          "unsafeName": "petsV2",
+                                          "safeName": "petsV2"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "pets_v_2",
+                                          "safeName": "pets_v_2"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "PETS_V_2",
+                                          "safeName": "PETS_V_2"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "PetsV2",
+                                          "safeName": "PetsV2"
+                                        }
+                                      }
                                     ],
                                     "packagePath": [
-                                      "petsV2"
+                                      {
+                                        "originalName": "petsV2",
+                                        "camelCase": {
+                                          "unsafeName": "petsV2",
+                                          "safeName": "petsV2"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "pets_v_2",
+                                          "safeName": "pets_v_2"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "PETS_V_2",
+                                          "safeName": "PETS_V_2"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "PetsV2",
+                                          "safeName": "PetsV2"
+                                        }
+                                      }
                                     ]
                                   },
-                                  "name": "Pet"
+                                  "name": {
+                                    "originalName": "Pet",
+                                    "camelCase": {
+                                      "unsafeName": "pet",
+                                      "safeName": "pet"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "pet",
+                                      "safeName": "pet"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "PET",
+                                      "safeName": "PET"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "Pet",
+                                      "safeName": "Pet"
+                                    }
+                                  }
                                 },
                                 "type": "named"
                               }
@@ -1091,7 +2780,25 @@
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": "Pet",
+                            "name": {
+                              "originalName": "Pet",
+                              "camelCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "PET",
+                                "safeName": "PET"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Pet",
+                                "safeName": "Pet"
+                              }
+                            },
                             "typeId": "petsV2:Pet",
                             "inline": false,
                             "type": "named"
@@ -1119,7 +2826,25 @@
           },
           "audiences": [],
           "id": "endpoint_petsV2.listPets",
-          "name": "listPets",
+          "name": {
+            "originalName": "listPets",
+            "camelCase": {
+              "unsafeName": "listPets",
+              "safeName": "listPets"
+            },
+            "snakeCase": {
+              "unsafeName": "list_pets",
+              "safeName": "list_pets"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LIST_PETS",
+              "safeName": "LIST_PETS"
+            },
+            "pascalCase": {
+              "unsafeName": "ListPets",
+              "safeName": "ListPets"
+            }
+          },
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -1132,7 +2857,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "Pet",
+                      "name": {
+                        "originalName": "Pet",
+                        "camelCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "PET",
+                          "safeName": "PET"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Pet",
+                          "safeName": "Pet"
+                        }
+                      },
                       "typeId": "petsV2:Pet",
                       "inline": false,
                       "type": "named"
@@ -1201,7 +2944,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "Pet",
+                          "name": {
+                            "originalName": "Pet",
+                            "camelCase": {
+                              "unsafeName": "pet",
+                              "safeName": "pet"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "pet",
+                              "safeName": "pet"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PET",
+                              "safeName": "PET"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Pet",
+                              "safeName": "Pet"
+                            }
+                          },
                           "typeId": "petsV2:Pet",
                           "inline": false,
                           "type": "named"
@@ -1248,7 +3009,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "b068bf91",
+                "id": "e98407c5",
                 "url": "/pets",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -1265,18 +3026,93 @@
                     "shape": {
                       "properties": [
                         {
-                          "name": "id",
+                          "name": {
+                            "wireValue": "id",
+                            "name": {
+                              "originalName": "id",
+                              "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Id",
+                                "safeName": "Id"
+                              }
+                            }
+                          },
                           "originalTypeDeclaration": {
                             "typeId": "petsV2:Pet",
                             "fernFilepath": {
                               "allParts": [
-                                "petsV2"
+                                {
+                                  "originalName": "petsV2",
+                                  "camelCase": {
+                                    "unsafeName": "petsV2",
+                                    "safeName": "petsV2"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pets_v_2",
+                                    "safeName": "pets_v_2"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PETS_V_2",
+                                    "safeName": "PETS_V_2"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "PetsV2",
+                                    "safeName": "PetsV2"
+                                  }
+                                }
                               ],
                               "packagePath": [
-                                "petsV2"
+                                {
+                                  "originalName": "petsV2",
+                                  "camelCase": {
+                                    "unsafeName": "petsV2",
+                                    "safeName": "petsV2"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pets_v_2",
+                                    "safeName": "pets_v_2"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PETS_V_2",
+                                    "safeName": "PETS_V_2"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "PetsV2",
+                                    "safeName": "PetsV2"
+                                  }
+                                }
                               ]
                             },
-                            "name": "Pet"
+                            "name": {
+                              "originalName": "Pet",
+                              "camelCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "PET",
+                                "safeName": "PET"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Pet",
+                                "safeName": "Pet"
+                              }
+                            }
                           },
                           "value": {
                             "jsonExample": 1,
@@ -1290,18 +3126,93 @@
                           }
                         },
                         {
-                          "name": "name",
+                          "name": {
+                            "wireValue": "name",
+                            "name": {
+                              "originalName": "name",
+                              "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                              }
+                            }
+                          },
                           "originalTypeDeclaration": {
                             "typeId": "petsV2:Pet",
                             "fernFilepath": {
                               "allParts": [
-                                "petsV2"
+                                {
+                                  "originalName": "petsV2",
+                                  "camelCase": {
+                                    "unsafeName": "petsV2",
+                                    "safeName": "petsV2"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pets_v_2",
+                                    "safeName": "pets_v_2"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PETS_V_2",
+                                    "safeName": "PETS_V_2"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "PetsV2",
+                                    "safeName": "PetsV2"
+                                  }
+                                }
                               ],
                               "packagePath": [
-                                "petsV2"
+                                {
+                                  "originalName": "petsV2",
+                                  "camelCase": {
+                                    "unsafeName": "petsV2",
+                                    "safeName": "petsV2"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pets_v_2",
+                                    "safeName": "pets_v_2"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PETS_V_2",
+                                    "safeName": "PETS_V_2"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "PetsV2",
+                                    "safeName": "PetsV2"
+                                  }
+                                }
                               ]
                             },
-                            "name": "Pet"
+                            "name": {
+                              "originalName": "Pet",
+                              "camelCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "pet",
+                                "safeName": "pet"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "PET",
+                                "safeName": "PET"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Pet",
+                                "safeName": "Pet"
+                              }
+                            }
                           },
                           "value": {
                             "jsonExample": "name",
@@ -1323,13 +3234,67 @@
                       "typeId": "petsV2:Pet",
                       "fernFilepath": {
                         "allParts": [
-                          "petsV2"
+                          {
+                            "originalName": "petsV2",
+                            "camelCase": {
+                              "unsafeName": "petsV2",
+                              "safeName": "petsV2"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "pets_v_2",
+                              "safeName": "pets_v_2"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PETS_V_2",
+                              "safeName": "PETS_V_2"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "PetsV2",
+                              "safeName": "PetsV2"
+                            }
+                          }
                         ],
                         "packagePath": [
-                          "petsV2"
+                          {
+                            "originalName": "petsV2",
+                            "camelCase": {
+                              "unsafeName": "petsV2",
+                              "safeName": "petsV2"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "pets_v_2",
+                              "safeName": "pets_v_2"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PETS_V_2",
+                              "safeName": "PETS_V_2"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "PetsV2",
+                              "safeName": "PetsV2"
+                            }
+                          }
                         ]
                       },
-                      "name": "Pet"
+                      "name": {
+                        "originalName": "Pet",
+                        "camelCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "PET",
+                          "safeName": "PET"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Pet",
+                          "safeName": "Pet"
+                        }
+                      }
                     },
                     "type": "named"
                   },
@@ -1346,18 +3311,93 @@
                         "shape": {
                           "properties": [
                             {
-                              "name": "id",
+                              "name": {
+                                "wireValue": "id",
+                                "name": {
+                                  "originalName": "id",
+                                  "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
+                                  }
+                                }
+                              },
                               "originalTypeDeclaration": {
                                 "typeId": "petsV2:Pet",
                                 "fernFilepath": {
                                   "allParts": [
-                                    "petsV2"
+                                    {
+                                      "originalName": "petsV2",
+                                      "camelCase": {
+                                        "unsafeName": "petsV2",
+                                        "safeName": "petsV2"
+                                      },
+                                      "snakeCase": {
+                                        "unsafeName": "pets_v_2",
+                                        "safeName": "pets_v_2"
+                                      },
+                                      "screamingSnakeCase": {
+                                        "unsafeName": "PETS_V_2",
+                                        "safeName": "PETS_V_2"
+                                      },
+                                      "pascalCase": {
+                                        "unsafeName": "PetsV2",
+                                        "safeName": "PetsV2"
+                                      }
+                                    }
                                   ],
                                   "packagePath": [
-                                    "petsV2"
+                                    {
+                                      "originalName": "petsV2",
+                                      "camelCase": {
+                                        "unsafeName": "petsV2",
+                                        "safeName": "petsV2"
+                                      },
+                                      "snakeCase": {
+                                        "unsafeName": "pets_v_2",
+                                        "safeName": "pets_v_2"
+                                      },
+                                      "screamingSnakeCase": {
+                                        "unsafeName": "PETS_V_2",
+                                        "safeName": "PETS_V_2"
+                                      },
+                                      "pascalCase": {
+                                        "unsafeName": "PetsV2",
+                                        "safeName": "PetsV2"
+                                      }
+                                    }
                                   ]
                                 },
-                                "name": "Pet"
+                                "name": {
+                                  "originalName": "Pet",
+                                  "camelCase": {
+                                    "unsafeName": "pet",
+                                    "safeName": "pet"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pet",
+                                    "safeName": "pet"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PET",
+                                    "safeName": "PET"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Pet",
+                                    "safeName": "Pet"
+                                  }
+                                }
                               },
                               "value": {
                                 "jsonExample": 1,
@@ -1371,18 +3411,93 @@
                               }
                             },
                             {
-                              "name": "name",
+                              "name": {
+                                "wireValue": "name",
+                                "name": {
+                                  "originalName": "name",
+                                  "camelCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "NAME",
+                                    "safeName": "NAME"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Name",
+                                    "safeName": "Name"
+                                  }
+                                }
+                              },
                               "originalTypeDeclaration": {
                                 "typeId": "petsV2:Pet",
                                 "fernFilepath": {
                                   "allParts": [
-                                    "petsV2"
+                                    {
+                                      "originalName": "petsV2",
+                                      "camelCase": {
+                                        "unsafeName": "petsV2",
+                                        "safeName": "petsV2"
+                                      },
+                                      "snakeCase": {
+                                        "unsafeName": "pets_v_2",
+                                        "safeName": "pets_v_2"
+                                      },
+                                      "screamingSnakeCase": {
+                                        "unsafeName": "PETS_V_2",
+                                        "safeName": "PETS_V_2"
+                                      },
+                                      "pascalCase": {
+                                        "unsafeName": "PetsV2",
+                                        "safeName": "PetsV2"
+                                      }
+                                    }
                                   ],
                                   "packagePath": [
-                                    "petsV2"
+                                    {
+                                      "originalName": "petsV2",
+                                      "camelCase": {
+                                        "unsafeName": "petsV2",
+                                        "safeName": "petsV2"
+                                      },
+                                      "snakeCase": {
+                                        "unsafeName": "pets_v_2",
+                                        "safeName": "pets_v_2"
+                                      },
+                                      "screamingSnakeCase": {
+                                        "unsafeName": "PETS_V_2",
+                                        "safeName": "PETS_V_2"
+                                      },
+                                      "pascalCase": {
+                                        "unsafeName": "PetsV2",
+                                        "safeName": "PetsV2"
+                                      }
+                                    }
                                   ]
                                 },
-                                "name": "Pet"
+                                "name": {
+                                  "originalName": "Pet",
+                                  "camelCase": {
+                                    "unsafeName": "pet",
+                                    "safeName": "pet"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "pet",
+                                    "safeName": "pet"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "PET",
+                                    "safeName": "PET"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Pet",
+                                    "safeName": "Pet"
+                                  }
+                                }
                               },
                               "value": {
                                 "jsonExample": "name",
@@ -1404,13 +3519,67 @@
                           "typeId": "petsV2:Pet",
                           "fernFilepath": {
                             "allParts": [
-                              "petsV2"
+                              {
+                                "originalName": "petsV2",
+                                "camelCase": {
+                                  "unsafeName": "petsV2",
+                                  "safeName": "petsV2"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "pets_v_2",
+                                  "safeName": "pets_v_2"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "PETS_V_2",
+                                  "safeName": "PETS_V_2"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "PetsV2",
+                                  "safeName": "PetsV2"
+                                }
+                              }
                             ],
                             "packagePath": [
-                              "petsV2"
+                              {
+                                "originalName": "petsV2",
+                                "camelCase": {
+                                  "unsafeName": "petsV2",
+                                  "safeName": "petsV2"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "pets_v_2",
+                                  "safeName": "pets_v_2"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "PETS_V_2",
+                                  "safeName": "PETS_V_2"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "PetsV2",
+                                  "safeName": "PetsV2"
+                                }
+                              }
                             ]
                           },
-                          "name": "Pet"
+                          "name": {
+                            "originalName": "Pet",
+                            "camelCase": {
+                              "unsafeName": "pet",
+                              "safeName": "pet"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "pet",
+                              "safeName": "pet"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "PET",
+                              "safeName": "PET"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Pet",
+                              "safeName": "Pet"
+                            }
+                          }
                         },
                         "type": "named"
                       }
@@ -1433,7 +3602,25 @@
           },
           "audiences": [],
           "id": "endpoint_petsV2.createPet",
-          "name": "createPet",
+          "name": {
+            "originalName": "createPet",
+            "camelCase": {
+              "unsafeName": "createPet",
+              "safeName": "createPet"
+            },
+            "snakeCase": {
+              "unsafeName": "create_pet",
+              "safeName": "create_pet"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CREATE_PET",
+              "safeName": "CREATE_PET"
+            },
+            "pascalCase": {
+              "unsafeName": "CreatePet",
+              "safeName": "CreatePet"
+            }
+          },
           "requestBody": {
             "contentType": "application/json",
             "requestBodyType": {
@@ -1441,7 +3628,25 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": "Pet",
+              "name": {
+                "originalName": "Pet",
+                "camelCase": {
+                  "unsafeName": "pet",
+                  "safeName": "pet"
+                },
+                "snakeCase": {
+                  "unsafeName": "pet",
+                  "safeName": "pet"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PET",
+                  "safeName": "PET"
+                },
+                "pascalCase": {
+                  "unsafeName": "Pet",
+                  "safeName": "Pet"
+                }
+              },
               "typeId": "petsV2:Pet",
               "inline": false,
               "type": "named"
@@ -1466,7 +3671,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "Pet",
+                  "name": {
+                    "originalName": "Pet",
+                    "camelCase": {
+                      "unsafeName": "pet",
+                      "safeName": "pet"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "pet",
+                      "safeName": "pet"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PET",
+                      "safeName": "PET"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Pet",
+                      "safeName": "Pet"
+                    }
+                  },
                   "typeId": "petsV2:Pet",
                   "inline": false,
                   "type": "named"
@@ -1493,7 +3716,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "Pet",
+                  "name": {
+                    "originalName": "Pet",
+                    "camelCase": {
+                      "unsafeName": "pet",
+                      "safeName": "pet"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "pet",
+                      "safeName": "pet"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "PET",
+                      "safeName": "PET"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Pet",
+                      "safeName": "Pet"
+                    }
+                  },
                   "typeId": "petsV2:Pet",
                   "inline": false,
                   "type": "named"
@@ -1556,7 +3797,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "Pet",
+                      "name": {
+                        "originalName": "Pet",
+                        "camelCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "pet",
+                          "safeName": "pet"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "PET",
+                          "safeName": "PET"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Pet",
+                          "safeName": "Pet"
+                        }
+                      },
                       "typeId": "petsV2:Pet",
                       "inline": false,
                       "type": "named"
@@ -1586,16 +3845,106 @@
   "webhookGroups": {},
   "subpackages": {
     "subpackage_petsV1": {
-      "name": "petsV1",
+      "name": {
+        "originalName": "petsV1",
+        "camelCase": {
+          "unsafeName": "petsV1",
+          "safeName": "petsV1"
+        },
+        "snakeCase": {
+          "unsafeName": "pets_v_1",
+          "safeName": "pets_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "PETS_V_1",
+          "safeName": "PETS_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "PetsV1",
+          "safeName": "PetsV1"
+        }
+      },
       "fernFilepath": {
         "allParts": [
-          "petsV1",
-          "petsV1"
+          {
+            "originalName": "petsV1",
+            "camelCase": {
+              "unsafeName": "petsV1",
+              "safeName": "petsV1"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_1",
+              "safeName": "pets_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_1",
+              "safeName": "PETS_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV1",
+              "safeName": "PetsV1"
+            }
+          },
+          {
+            "originalName": "petsV1",
+            "camelCase": {
+              "unsafeName": "petsV1",
+              "safeName": "petsV1"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_1",
+              "safeName": "pets_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_1",
+              "safeName": "PETS_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV1",
+              "safeName": "PetsV1"
+            }
+          }
         ],
         "packagePath": [
-          "petsV1"
+          {
+            "originalName": "petsV1",
+            "camelCase": {
+              "unsafeName": "petsV1",
+              "safeName": "petsV1"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_1",
+              "safeName": "pets_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_1",
+              "safeName": "PETS_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV1",
+              "safeName": "PetsV1"
+            }
+          }
         ],
-        "file": "petsV1"
+        "file": {
+          "originalName": "petsV1",
+          "camelCase": {
+            "unsafeName": "petsV1",
+            "safeName": "petsV1"
+          },
+          "snakeCase": {
+            "unsafeName": "pets_v_1",
+            "safeName": "pets_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PETS_V_1",
+            "safeName": "PETS_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "PetsV1",
+            "safeName": "PetsV1"
+          }
+        }
       },
       "service": "service_petsV1",
       "types": [],
@@ -1606,16 +3955,106 @@
       "hasEndpointsInTree": false
     },
     "subpackage_petsV1/petsV1": {
-      "name": "petsV1",
+      "name": {
+        "originalName": "petsV1",
+        "camelCase": {
+          "unsafeName": "petsV1",
+          "safeName": "petsV1"
+        },
+        "snakeCase": {
+          "unsafeName": "pets_v_1",
+          "safeName": "pets_v_1"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "PETS_V_1",
+          "safeName": "PETS_V_1"
+        },
+        "pascalCase": {
+          "unsafeName": "PetsV1",
+          "safeName": "PetsV1"
+        }
+      },
       "fernFilepath": {
         "allParts": [
-          "petsV1",
-          "petsV1"
+          {
+            "originalName": "petsV1",
+            "camelCase": {
+              "unsafeName": "petsV1",
+              "safeName": "petsV1"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_1",
+              "safeName": "pets_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_1",
+              "safeName": "PETS_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV1",
+              "safeName": "PetsV1"
+            }
+          },
+          {
+            "originalName": "petsV1",
+            "camelCase": {
+              "unsafeName": "petsV1",
+              "safeName": "petsV1"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_1",
+              "safeName": "pets_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_1",
+              "safeName": "PETS_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV1",
+              "safeName": "PetsV1"
+            }
+          }
         ],
         "packagePath": [
-          "petsV1"
+          {
+            "originalName": "petsV1",
+            "camelCase": {
+              "unsafeName": "petsV1",
+              "safeName": "petsV1"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_1",
+              "safeName": "pets_v_1"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_1",
+              "safeName": "PETS_V_1"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV1",
+              "safeName": "PetsV1"
+            }
+          }
         ],
-        "file": "petsV1"
+        "file": {
+          "originalName": "petsV1",
+          "camelCase": {
+            "unsafeName": "petsV1",
+            "safeName": "petsV1"
+          },
+          "snakeCase": {
+            "unsafeName": "pets_v_1",
+            "safeName": "pets_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PETS_V_1",
+            "safeName": "PETS_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "PetsV1",
+            "safeName": "PetsV1"
+          }
+        }
       },
       "types": [
         "petsV1:Pet"
@@ -1625,16 +4064,106 @@
       "hasEndpointsInTree": false
     },
     "subpackage_petsV2": {
-      "name": "petsV2",
+      "name": {
+        "originalName": "petsV2",
+        "camelCase": {
+          "unsafeName": "petsV2",
+          "safeName": "petsV2"
+        },
+        "snakeCase": {
+          "unsafeName": "pets_v_2",
+          "safeName": "pets_v_2"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "PETS_V_2",
+          "safeName": "PETS_V_2"
+        },
+        "pascalCase": {
+          "unsafeName": "PetsV2",
+          "safeName": "PetsV2"
+        }
+      },
       "fernFilepath": {
         "allParts": [
-          "petsV2",
-          "petsV2"
+          {
+            "originalName": "petsV2",
+            "camelCase": {
+              "unsafeName": "petsV2",
+              "safeName": "petsV2"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_2",
+              "safeName": "pets_v_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_2",
+              "safeName": "PETS_V_2"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV2",
+              "safeName": "PetsV2"
+            }
+          },
+          {
+            "originalName": "petsV2",
+            "camelCase": {
+              "unsafeName": "petsV2",
+              "safeName": "petsV2"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_2",
+              "safeName": "pets_v_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_2",
+              "safeName": "PETS_V_2"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV2",
+              "safeName": "PetsV2"
+            }
+          }
         ],
         "packagePath": [
-          "petsV2"
+          {
+            "originalName": "petsV2",
+            "camelCase": {
+              "unsafeName": "petsV2",
+              "safeName": "petsV2"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_2",
+              "safeName": "pets_v_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_2",
+              "safeName": "PETS_V_2"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV2",
+              "safeName": "PetsV2"
+            }
+          }
         ],
-        "file": "petsV2"
+        "file": {
+          "originalName": "petsV2",
+          "camelCase": {
+            "unsafeName": "petsV2",
+            "safeName": "petsV2"
+          },
+          "snakeCase": {
+            "unsafeName": "pets_v_2",
+            "safeName": "pets_v_2"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PETS_V_2",
+            "safeName": "PETS_V_2"
+          },
+          "pascalCase": {
+            "unsafeName": "PetsV2",
+            "safeName": "PetsV2"
+          }
+        }
       },
       "service": "service_petsV2",
       "types": [],
@@ -1645,16 +4174,106 @@
       "hasEndpointsInTree": false
     },
     "subpackage_petsV2/petsV2": {
-      "name": "petsV2",
+      "name": {
+        "originalName": "petsV2",
+        "camelCase": {
+          "unsafeName": "petsV2",
+          "safeName": "petsV2"
+        },
+        "snakeCase": {
+          "unsafeName": "pets_v_2",
+          "safeName": "pets_v_2"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "PETS_V_2",
+          "safeName": "PETS_V_2"
+        },
+        "pascalCase": {
+          "unsafeName": "PetsV2",
+          "safeName": "PetsV2"
+        }
+      },
       "fernFilepath": {
         "allParts": [
-          "petsV2",
-          "petsV2"
+          {
+            "originalName": "petsV2",
+            "camelCase": {
+              "unsafeName": "petsV2",
+              "safeName": "petsV2"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_2",
+              "safeName": "pets_v_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_2",
+              "safeName": "PETS_V_2"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV2",
+              "safeName": "PetsV2"
+            }
+          },
+          {
+            "originalName": "petsV2",
+            "camelCase": {
+              "unsafeName": "petsV2",
+              "safeName": "petsV2"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_2",
+              "safeName": "pets_v_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_2",
+              "safeName": "PETS_V_2"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV2",
+              "safeName": "PetsV2"
+            }
+          }
         ],
         "packagePath": [
-          "petsV2"
+          {
+            "originalName": "petsV2",
+            "camelCase": {
+              "unsafeName": "petsV2",
+              "safeName": "petsV2"
+            },
+            "snakeCase": {
+              "unsafeName": "pets_v_2",
+              "safeName": "pets_v_2"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PETS_V_2",
+              "safeName": "PETS_V_2"
+            },
+            "pascalCase": {
+              "unsafeName": "PetsV2",
+              "safeName": "PetsV2"
+            }
+          }
         ],
-        "file": "petsV2"
+        "file": {
+          "originalName": "petsV2",
+          "camelCase": {
+            "unsafeName": "petsV2",
+            "safeName": "petsV2"
+          },
+          "snakeCase": {
+            "unsafeName": "pets_v_2",
+            "safeName": "pets_v_2"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PETS_V_2",
+            "safeName": "PETS_V_2"
+          },
+          "pascalCase": {
+            "unsafeName": "PetsV2",
+            "safeName": "PetsV2"
+          }
+        }
       },
       "types": [
         "petsV2:Pet"
@@ -1674,10 +4293,46 @@
     ],
     "fernFilepath": {
       "allParts": [
-        "petsV1"
+        {
+          "originalName": "petsV1",
+          "camelCase": {
+            "unsafeName": "petsV1",
+            "safeName": "petsV1"
+          },
+          "snakeCase": {
+            "unsafeName": "pets_v_1",
+            "safeName": "pets_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PETS_V_1",
+            "safeName": "PETS_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "PetsV1",
+            "safeName": "PetsV1"
+          }
+        }
       ],
       "packagePath": [
-        "petsV1"
+        {
+          "originalName": "petsV1",
+          "camelCase": {
+            "unsafeName": "petsV1",
+            "safeName": "petsV1"
+          },
+          "snakeCase": {
+            "unsafeName": "pets_v_1",
+            "safeName": "pets_v_1"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "PETS_V_1",
+            "safeName": "PETS_V_1"
+          },
+          "pascalCase": {
+            "unsafeName": "PetsV1",
+            "safeName": "PetsV1"
+          }
+        }
       ]
     },
     "hasEndpointsInTree": false

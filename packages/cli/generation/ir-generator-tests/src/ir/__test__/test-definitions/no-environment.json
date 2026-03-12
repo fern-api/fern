@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "no-environment",
+    "apiName": {
+        "originalName": "no-environment",
+        "camelCase": {
+            "unsafeName": "noEnvironment",
+            "safeName": "noEnvironment"
+        },
+        "snakeCase": {
+            "unsafeName": "no_environment",
+            "safeName": "no_environment"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "NO_ENVIRONMENT",
+            "safeName": "NO_ENVIRONMENT"
+        },
+        "pascalCase": {
+            "unsafeName": "NoEnvironment",
+            "safeName": "NoEnvironment"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -10,7 +28,25 @@
         "schemes": [
             {
                 "_type": "bearer",
-                "token": "token",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                },
                 "tokenEnvVar": null,
                 "key": "bearer",
                 "docs": null
@@ -28,10 +64,46 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "dummy"
+                        {
+                            "originalName": "dummy",
+                            "camelCase": {
+                                "unsafeName": "dummy",
+                                "safeName": "dummy"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dummy",
+                                "safeName": "dummy"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DUMMY",
+                                "safeName": "DUMMY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dummy",
+                                "safeName": "Dummy"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "dummy"
+                    "file": {
+                        "originalName": "dummy",
+                        "camelCase": {
+                            "unsafeName": "dummy",
+                            "safeName": "dummy"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dummy",
+                            "safeName": "dummy"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DUMMY",
+                            "safeName": "DUMMY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dummy",
+                            "safeName": "Dummy"
+                        }
+                    }
                 }
             },
             "displayName": null,
@@ -51,7 +123,25 @@
             "endpoints": [
                 {
                     "id": "endpoint_dummy.getDummy",
-                    "name": "getDummy",
+                    "name": {
+                        "originalName": "getDummy",
+                        "camelCase": {
+                            "unsafeName": "getDummy",
+                            "safeName": "getDummy"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_dummy",
+                            "safeName": "get_dummy"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_DUMMY",
+                            "safeName": "GET_DUMMY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetDummy",
+                            "safeName": "GetDummy"
+                        }
+                    },
                     "displayName": null,
                     "auth": true,
                     "security": [
@@ -157,7 +247,28 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": "errorInstanceId"
+        "errorInstanceIdKey": {
+            "wireValue": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            }
+        }
     },
     "environments": null,
     "errorDiscriminationStrategy": {
@@ -297,14 +408,68 @@
     },
     "subpackages": {
         "subpackage_dummy": {
-            "name": "dummy",
+            "name": {
+                "originalName": "dummy",
+                "camelCase": {
+                    "unsafeName": "dummy",
+                    "safeName": "dummy"
+                },
+                "snakeCase": {
+                    "unsafeName": "dummy",
+                    "safeName": "dummy"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "DUMMY",
+                    "safeName": "DUMMY"
+                },
+                "pascalCase": {
+                    "unsafeName": "Dummy",
+                    "safeName": "Dummy"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "dummy"
+                    {
+                        "originalName": "dummy",
+                        "camelCase": {
+                            "unsafeName": "dummy",
+                            "safeName": "dummy"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dummy",
+                            "safeName": "dummy"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DUMMY",
+                            "safeName": "DUMMY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dummy",
+                            "safeName": "Dummy"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "dummy"
+                "file": {
+                    "originalName": "dummy",
+                    "camelCase": {
+                        "unsafeName": "dummy",
+                        "safeName": "dummy"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "dummy",
+                        "safeName": "dummy"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DUMMY",
+                        "safeName": "DUMMY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Dummy",
+                        "safeName": "Dummy"
+                    }
+                }
             },
             "service": "service_dummy",
             "types": [],

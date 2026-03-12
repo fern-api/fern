@@ -1,6 +1,24 @@
 {
   "selfHosted": false,
-  "apiName": "api",
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    }
+  },
   "apiDisplayName": "Test API",
   "auth": {
     "requirement": "ALL",
@@ -11,7 +29,25 @@
   "types": {
     "type_:PostTestRequest": {
       "name": {
-        "name": "PostTestRequest",
+        "name": {
+          "originalName": "PostTestRequest",
+          "camelCase": {
+            "unsafeName": "postTestRequest",
+            "safeName": "postTestRequest"
+          },
+          "snakeCase": {
+            "unsafeName": "post_test_request",
+            "safeName": "post_test_request"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "POST_TEST_REQUEST",
+            "safeName": "POST_TEST_REQUEST"
+          },
+          "pascalCase": {
+            "unsafeName": "PostTestRequest",
+            "safeName": "PostTestRequest"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -22,7 +58,25 @@
         "members": [
           {
             "type": {
-              "name": "Circle",
+              "name": {
+                "originalName": "Circle",
+                "camelCase": {
+                  "unsafeName": "circle",
+                  "safeName": "circle"
+                },
+                "snakeCase": {
+                  "unsafeName": "circle",
+                  "safeName": "circle"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CIRCLE",
+                  "safeName": "CIRCLE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Circle",
+                  "safeName": "Circle"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -34,7 +88,25 @@
           },
           {
             "type": {
-              "name": "Square",
+              "name": {
+                "originalName": "Square",
+                "camelCase": {
+                  "unsafeName": "square",
+                  "safeName": "square"
+                },
+                "snakeCase": {
+                  "unsafeName": "square",
+                  "safeName": "square"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SQUARE",
+                  "safeName": "SQUARE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Square",
+                  "safeName": "Square"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -56,7 +128,25 @@
     },
     "type_:PostTestResponse": {
       "name": {
-        "name": "PostTestResponse",
+        "name": {
+          "originalName": "PostTestResponse",
+          "camelCase": {
+            "unsafeName": "postTestResponse",
+            "safeName": "postTestResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "post_test_response",
+            "safeName": "post_test_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "POST_TEST_RESPONSE",
+            "safeName": "POST_TEST_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "PostTestResponse",
+            "safeName": "PostTestResponse"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -67,7 +157,25 @@
         "members": [
           {
             "type": {
-              "name": "Circle",
+              "name": {
+                "originalName": "Circle",
+                "camelCase": {
+                  "unsafeName": "circle",
+                  "safeName": "circle"
+                },
+                "snakeCase": {
+                  "unsafeName": "circle",
+                  "safeName": "circle"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CIRCLE",
+                  "safeName": "CIRCLE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Circle",
+                  "safeName": "Circle"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -79,7 +187,25 @@
           },
           {
             "type": {
-              "name": "Square",
+              "name": {
+                "originalName": "Square",
+                "camelCase": {
+                  "unsafeName": "square",
+                  "safeName": "square"
+                },
+                "snakeCase": {
+                  "unsafeName": "square",
+                  "safeName": "square"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SQUARE",
+                  "safeName": "SQUARE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Square",
+                  "safeName": "Square"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -102,7 +228,25 @@
     "type_:CircleType": {
       "inline": true,
       "name": {
-        "name": "CircleType",
+        "name": {
+          "originalName": "CircleType",
+          "camelCase": {
+            "unsafeName": "circleType",
+            "safeName": "circleType"
+          },
+          "snakeCase": {
+            "unsafeName": "circle_type",
+            "safeName": "circle_type"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CIRCLE_TYPE",
+            "safeName": "CIRCLE_TYPE"
+          },
+          "pascalCase": {
+            "unsafeName": "CircleType",
+            "safeName": "CircleType"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -112,7 +256,28 @@
       "shape": {
         "values": [
           {
-            "name": "circle"
+            "name": {
+              "wireValue": "circle",
+              "name": {
+                "originalName": "circle",
+                "camelCase": {
+                  "unsafeName": "circle",
+                  "safeName": "circle"
+                },
+                "snakeCase": {
+                  "unsafeName": "circle",
+                  "safeName": "circle"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CIRCLE",
+                  "safeName": "CIRCLE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Circle",
+                  "safeName": "Circle"
+                }
+              }
+            }
           }
         ],
         "type": "enum"
@@ -126,7 +291,25 @@
     },
     "type_:Circle": {
       "name": {
-        "name": "Circle",
+        "name": {
+          "originalName": "Circle",
+          "camelCase": {
+            "unsafeName": "circle",
+            "safeName": "circle"
+          },
+          "snakeCase": {
+            "unsafeName": "circle",
+            "safeName": "circle"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "CIRCLE",
+            "safeName": "CIRCLE"
+          },
+          "pascalCase": {
+            "unsafeName": "Circle",
+            "safeName": "Circle"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -137,9 +320,48 @@
         "extends": [],
         "properties": [
           {
-            "name": "type",
+            "name": {
+              "wireValue": "type",
+              "name": {
+                "originalName": "type",
+                "camelCase": {
+                  "unsafeName": "type",
+                  "safeName": "type"
+                },
+                "snakeCase": {
+                  "unsafeName": "type",
+                  "safeName": "type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TYPE",
+                  "safeName": "TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Type",
+                  "safeName": "Type"
+                }
+              }
+            },
             "valueType": {
-              "name": "CircleType",
+              "name": {
+                "originalName": "CircleType",
+                "camelCase": {
+                  "unsafeName": "circleType",
+                  "safeName": "circleType"
+                },
+                "snakeCase": {
+                  "unsafeName": "circle_type",
+                  "safeName": "circle_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CIRCLE_TYPE",
+                  "safeName": "CIRCLE_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "CircleType",
+                  "safeName": "CircleType"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -153,7 +375,28 @@
             }
           },
           {
-            "name": "radius",
+            "name": {
+              "wireValue": "radius",
+              "name": {
+                "originalName": "radius",
+                "camelCase": {
+                  "unsafeName": "radius",
+                  "safeName": "radius"
+                },
+                "snakeCase": {
+                  "unsafeName": "radius",
+                  "safeName": "radius"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "RADIUS",
+                  "safeName": "RADIUS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Radius",
+                  "safeName": "Radius"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "DOUBLE",
@@ -183,7 +426,25 @@
     "type_:SquareType": {
       "inline": true,
       "name": {
-        "name": "SquareType",
+        "name": {
+          "originalName": "SquareType",
+          "camelCase": {
+            "unsafeName": "squareType",
+            "safeName": "squareType"
+          },
+          "snakeCase": {
+            "unsafeName": "square_type",
+            "safeName": "square_type"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SQUARE_TYPE",
+            "safeName": "SQUARE_TYPE"
+          },
+          "pascalCase": {
+            "unsafeName": "SquareType",
+            "safeName": "SquareType"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -193,7 +454,28 @@
       "shape": {
         "values": [
           {
-            "name": "square"
+            "name": {
+              "wireValue": "square",
+              "name": {
+                "originalName": "square",
+                "camelCase": {
+                  "unsafeName": "square",
+                  "safeName": "square"
+                },
+                "snakeCase": {
+                  "unsafeName": "square",
+                  "safeName": "square"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SQUARE",
+                  "safeName": "SQUARE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Square",
+                  "safeName": "Square"
+                }
+              }
+            }
           }
         ],
         "type": "enum"
@@ -207,7 +489,25 @@
     },
     "type_:Square": {
       "name": {
-        "name": "Square",
+        "name": {
+          "originalName": "Square",
+          "camelCase": {
+            "unsafeName": "square",
+            "safeName": "square"
+          },
+          "snakeCase": {
+            "unsafeName": "square",
+            "safeName": "square"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SQUARE",
+            "safeName": "SQUARE"
+          },
+          "pascalCase": {
+            "unsafeName": "Square",
+            "safeName": "Square"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -218,9 +518,48 @@
         "extends": [],
         "properties": [
           {
-            "name": "type",
+            "name": {
+              "wireValue": "type",
+              "name": {
+                "originalName": "type",
+                "camelCase": {
+                  "unsafeName": "type",
+                  "safeName": "type"
+                },
+                "snakeCase": {
+                  "unsafeName": "type",
+                  "safeName": "type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TYPE",
+                  "safeName": "TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Type",
+                  "safeName": "Type"
+                }
+              }
+            },
             "valueType": {
-              "name": "SquareType",
+              "name": {
+                "originalName": "SquareType",
+                "camelCase": {
+                  "unsafeName": "squareType",
+                  "safeName": "squareType"
+                },
+                "snakeCase": {
+                  "unsafeName": "square_type",
+                  "safeName": "square_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SQUARE_TYPE",
+                  "safeName": "SQUARE_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SquareType",
+                  "safeName": "SquareType"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -234,7 +573,28 @@
             }
           },
           {
-            "name": "sideLength",
+            "name": {
+              "wireValue": "sideLength",
+              "name": {
+                "originalName": "sideLength",
+                "camelCase": {
+                  "unsafeName": "sideLength",
+                  "safeName": "sideLength"
+                },
+                "snakeCase": {
+                  "unsafeName": "side_length",
+                  "safeName": "side_length"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIDE_LENGTH",
+                  "safeName": "SIDE_LENGTH"
+                },
+                "pascalCase": {
+                  "unsafeName": "SideLength",
+                  "safeName": "SideLength"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "DOUBLE",
@@ -286,7 +646,25 @@
       "endpoints": [
         {
           "id": "endpoint_.testEndpoint",
-          "name": "testEndpoint",
+          "name": {
+            "originalName": "testEndpoint",
+            "camelCase": {
+              "unsafeName": "testEndpoint",
+              "safeName": "testEndpoint"
+            },
+            "snakeCase": {
+              "unsafeName": "test_endpoint",
+              "safeName": "test_endpoint"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_ENDPOINT",
+              "safeName": "TEST_ENDPOINT"
+            },
+            "pascalCase": {
+              "unsafeName": "TestEndpoint",
+              "safeName": "TestEndpoint"
+            }
+          },
           "displayName": "Test endpoint",
           "auth": false,
           "idempotent": false,
@@ -305,7 +683,25 @@
           "headers": [],
           "requestBody": {
             "requestBodyType": {
-              "name": "PostTestRequest",
+              "name": {
+                "originalName": "PostTestRequest",
+                "camelCase": {
+                  "unsafeName": "postTestRequest",
+                  "safeName": "postTestRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "post_test_request",
+                  "safeName": "post_test_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "POST_TEST_REQUEST",
+                  "safeName": "POST_TEST_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "PostTestRequest",
+                  "safeName": "PostTestRequest"
+                }
+              },
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -320,7 +716,25 @@
             "shape": {
               "value": {
                 "requestBodyType": {
-                  "name": "PostTestRequest",
+                  "name": {
+                    "originalName": "PostTestRequest",
+                    "camelCase": {
+                      "unsafeName": "postTestRequest",
+                      "safeName": "postTestRequest"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "post_test_request",
+                      "safeName": "post_test_request"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "POST_TEST_REQUEST",
+                      "safeName": "POST_TEST_REQUEST"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "PostTestRequest",
+                      "safeName": "PostTestRequest"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -332,14 +746,50 @@
               },
               "type": "justRequestBody"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": "PostTestResponse",
+                  "name": {
+                    "originalName": "PostTestResponse",
+                    "camelCase": {
+                      "unsafeName": "postTestResponse",
+                      "safeName": "postTestResponse"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "post_test_response",
+                      "safeName": "post_test_response"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "POST_TEST_RESPONSE",
+                      "safeName": "POST_TEST_RESPONSE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "PostTestResponse",
+                      "safeName": "PostTestResponse"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -363,7 +813,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceID",
+          "safeName": "errorInstanceID"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceID",
+          "safeName": "ErrorInstanceID"
+        }
+      }
+    }
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"

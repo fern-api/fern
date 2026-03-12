@@ -12,11 +12,50 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "Shape"
+        "name": {
+          "originalName": "Shape",
+          "camelCase": {
+            "unsafeName": "shape",
+            "safeName": "shape"
+          },
+          "snakeCase": {
+            "unsafeName": "shape",
+            "safeName": "shape"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SHAPE",
+            "safeName": "SHAPE"
+          },
+          "pascalCase": {
+            "unsafeName": "Shape",
+            "safeName": "Shape"
+          }
+        }
       },
       "shape": {
         "baseProperties": [],
-        "discriminant": "type",
+        "discriminant": {
+          "wireValue": "type",
+          "name": {
+            "originalName": "type",
+            "camelCase": {
+              "unsafeName": "type",
+              "safeName": "type_"
+            },
+            "snakeCase": {
+              "unsafeName": "type",
+              "safeName": "type_"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TYPE",
+              "safeName": "TYPE"
+            },
+            "pascalCase": {
+              "unsafeName": "Type",
+              "safeName": "Type"
+            }
+          }
+        },
         "extends": [],
         "types": [],
         "type": "union"
@@ -43,12 +82,51 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "TriangleType"
+        "name": {
+          "originalName": "TriangleType",
+          "camelCase": {
+            "unsafeName": "triangleType",
+            "safeName": "triangleType"
+          },
+          "snakeCase": {
+            "unsafeName": "triangle_type",
+            "safeName": "triangle_type"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TRIANGLE_TYPE",
+            "safeName": "TRIANGLE_TYPE"
+          },
+          "pascalCase": {
+            "unsafeName": "TriangleType",
+            "safeName": "TriangleType"
+          }
+        }
       },
       "shape": {
         "values": [
           {
-            "name": "triangle"
+            "name": {
+              "wireValue": "triangle",
+              "name": {
+                "originalName": "triangle",
+                "camelCase": {
+                  "unsafeName": "triangle",
+                  "safeName": "triangle"
+                },
+                "snakeCase": {
+                  "unsafeName": "triangle",
+                  "safeName": "triangle"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRIANGLE",
+                  "safeName": "TRIANGLE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Triangle",
+                  "safeName": "Triangle"
+                }
+              }
+            }
           }
         ],
         "type": "enum"
@@ -71,18 +149,75 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "Triangle"
+        "name": {
+          "originalName": "Triangle",
+          "camelCase": {
+            "unsafeName": "triangle",
+            "safeName": "triangle"
+          },
+          "snakeCase": {
+            "unsafeName": "triangle",
+            "safeName": "triangle"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TRIANGLE",
+            "safeName": "TRIANGLE"
+          },
+          "pascalCase": {
+            "unsafeName": "Triangle",
+            "safeName": "Triangle"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "type",
+            "name": {
+              "wireValue": "type",
+              "name": {
+                "originalName": "type",
+                "camelCase": {
+                  "unsafeName": "type",
+                  "safeName": "type_"
+                },
+                "snakeCase": {
+                  "unsafeName": "type",
+                  "safeName": "type_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TYPE",
+                  "safeName": "TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Type",
+                  "safeName": "Type"
+                }
+              }
+            },
             "valueType": {
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
               },
-              "name": "TriangleType",
+              "name": {
+                "originalName": "TriangleType",
+                "camelCase": {
+                  "unsafeName": "triangleType",
+                  "safeName": "triangleType"
+                },
+                "snakeCase": {
+                  "unsafeName": "triangle_type",
+                  "safeName": "triangle_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TRIANGLE_TYPE",
+                  "safeName": "TRIANGLE_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "TriangleType",
+                  "safeName": "TriangleType"
+                }
+              },
               "typeId": "TriangleType",
               "inline": false,
               "type": "named"
@@ -95,7 +230,28 @@
             }
           },
           {
-            "name": "base",
+            "name": {
+              "wireValue": "base",
+              "name": {
+                "originalName": "base",
+                "camelCase": {
+                  "unsafeName": "base",
+                  "safeName": "base"
+                },
+                "snakeCase": {
+                  "unsafeName": "base",
+                  "safeName": "base"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BASE",
+                  "safeName": "BASE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Base",
+                  "safeName": "Base"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "DOUBLE",
@@ -114,7 +270,28 @@
             }
           },
           {
-            "name": "height",
+            "name": {
+              "wireValue": "height",
+              "name": {
+                "originalName": "height",
+                "camelCase": {
+                  "unsafeName": "height",
+                  "safeName": "height"
+                },
+                "snakeCase": {
+                  "unsafeName": "height",
+                  "safeName": "height"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "HEIGHT",
+                  "safeName": "HEIGHT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Height",
+                  "safeName": "Height"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "DOUBLE",
@@ -160,12 +337,51 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "SquareType"
+        "name": {
+          "originalName": "SquareType",
+          "camelCase": {
+            "unsafeName": "squareType",
+            "safeName": "squareType"
+          },
+          "snakeCase": {
+            "unsafeName": "square_type",
+            "safeName": "square_type"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SQUARE_TYPE",
+            "safeName": "SQUARE_TYPE"
+          },
+          "pascalCase": {
+            "unsafeName": "SquareType",
+            "safeName": "SquareType"
+          }
+        }
       },
       "shape": {
         "values": [
           {
-            "name": "square"
+            "name": {
+              "wireValue": "square",
+              "name": {
+                "originalName": "square",
+                "camelCase": {
+                  "unsafeName": "square",
+                  "safeName": "square"
+                },
+                "snakeCase": {
+                  "unsafeName": "square",
+                  "safeName": "square"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SQUARE",
+                  "safeName": "SQUARE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Square",
+                  "safeName": "Square"
+                }
+              }
+            }
           }
         ],
         "type": "enum"
@@ -188,18 +404,75 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "Square"
+        "name": {
+          "originalName": "Square",
+          "camelCase": {
+            "unsafeName": "square",
+            "safeName": "square"
+          },
+          "snakeCase": {
+            "unsafeName": "square",
+            "safeName": "square"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SQUARE",
+            "safeName": "SQUARE"
+          },
+          "pascalCase": {
+            "unsafeName": "Square",
+            "safeName": "Square"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "type",
+            "name": {
+              "wireValue": "type",
+              "name": {
+                "originalName": "type",
+                "camelCase": {
+                  "unsafeName": "type",
+                  "safeName": "type_"
+                },
+                "snakeCase": {
+                  "unsafeName": "type",
+                  "safeName": "type_"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TYPE",
+                  "safeName": "TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Type",
+                  "safeName": "Type"
+                }
+              }
+            },
             "valueType": {
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
               },
-              "name": "SquareType",
+              "name": {
+                "originalName": "SquareType",
+                "camelCase": {
+                  "unsafeName": "squareType",
+                  "safeName": "squareType"
+                },
+                "snakeCase": {
+                  "unsafeName": "square_type",
+                  "safeName": "square_type"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SQUARE_TYPE",
+                  "safeName": "SQUARE_TYPE"
+                },
+                "pascalCase": {
+                  "unsafeName": "SquareType",
+                  "safeName": "SquareType"
+                }
+              },
               "typeId": "SquareType",
               "inline": false,
               "type": "named"
@@ -212,7 +485,28 @@
             }
           },
           {
-            "name": "sideLength",
+            "name": {
+              "wireValue": "sideLength",
+              "name": {
+                "originalName": "sideLength",
+                "camelCase": {
+                  "unsafeName": "sideLength",
+                  "safeName": "sideLength"
+                },
+                "snakeCase": {
+                  "unsafeName": "side_length",
+                  "safeName": "side_length"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SIDE_LENGTH",
+                  "safeName": "SIDE_LENGTH"
+                },
+                "pascalCase": {
+                  "unsafeName": "SideLength",
+                  "safeName": "SideLength"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "DOUBLE",
@@ -292,8 +586,47 @@
       "sdkVersion": ""
     }
   },
-  "apiName": "Test setting to disable usage of title param",
+  "apiName": {
+    "originalName": "Test setting to disable usage of title param",
+    "camelCase": {
+      "unsafeName": "testSettingToDisableUsageOfTitleParam",
+      "safeName": "testSettingToDisableUsageOfTitleParam"
+    },
+    "snakeCase": {
+      "unsafeName": "test_setting_to_disable_usage_of_title_param",
+      "safeName": "test_setting_to_disable_usage_of_title_param"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "TEST_SETTING_TO_DISABLE_USAGE_OF_TITLE_PARAM",
+      "safeName": "TEST_SETTING_TO_DISABLE_USAGE_OF_TITLE_PARAM"
+    },
+    "pascalCase": {
+      "unsafeName": "TestSettingToDisableUsageOfTitleParam",
+      "safeName": "TestSettingToDisableUsageOfTitleParam"
+    }
+  },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      }
+    }
   }
 }

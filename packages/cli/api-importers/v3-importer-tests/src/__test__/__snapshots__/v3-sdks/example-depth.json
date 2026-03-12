@@ -12,12 +12,51 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "TreeNode"
+        "name": {
+          "originalName": "TreeNode",
+          "camelCase": {
+            "unsafeName": "treeNode",
+            "safeName": "treeNode"
+          },
+          "snakeCase": {
+            "unsafeName": "tree_node",
+            "safeName": "tree_node"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TREE_NODE",
+            "safeName": "TREE_NODE"
+          },
+          "pascalCase": {
+            "unsafeName": "TreeNode",
+            "safeName": "TreeNode"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "value",
+            "name": {
+              "wireValue": "value",
+              "name": {
+                "originalName": "value",
+                "camelCase": {
+                  "unsafeName": "value",
+                  "safeName": "value"
+                },
+                "snakeCase": {
+                  "unsafeName": "value",
+                  "safeName": "value"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "VALUE",
+                  "safeName": "VALUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Value",
+                  "safeName": "Value"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -43,7 +82,28 @@
             }
           },
           {
-            "name": "left",
+            "name": {
+              "wireValue": "left",
+              "name": {
+                "originalName": "left",
+                "camelCase": {
+                  "unsafeName": "left",
+                  "safeName": "left"
+                },
+                "snakeCase": {
+                  "unsafeName": "left",
+                  "safeName": "left"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "LEFT",
+                  "safeName": "LEFT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Left",
+                  "safeName": "Left"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -51,7 +111,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "TreeNode",
+                  "name": {
+                    "originalName": "TreeNode",
+                    "camelCase": {
+                      "unsafeName": "treeNode",
+                      "safeName": "treeNode"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "tree_node",
+                      "safeName": "tree_node"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE_NODE",
+                      "safeName": "TREE_NODE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "TreeNode",
+                      "safeName": "TreeNode"
+                    }
+                  },
                   "typeId": "TreeNode",
                   "inline": false,
                   "type": "named"
@@ -71,7 +149,28 @@
             }
           },
           {
-            "name": "right",
+            "name": {
+              "wireValue": "right",
+              "name": {
+                "originalName": "right",
+                "camelCase": {
+                  "unsafeName": "right",
+                  "safeName": "right"
+                },
+                "snakeCase": {
+                  "unsafeName": "right",
+                  "safeName": "right"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "RIGHT",
+                  "safeName": "RIGHT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Right",
+                  "safeName": "Right"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -79,7 +178,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "TreeNode",
+                  "name": {
+                    "originalName": "TreeNode",
+                    "camelCase": {
+                      "unsafeName": "treeNode",
+                      "safeName": "treeNode"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "tree_node",
+                      "safeName": "tree_node"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE_NODE",
+                      "safeName": "TREE_NODE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "TreeNode",
+                      "safeName": "TreeNode"
+                    }
+                  },
                   "typeId": "TreeNode",
                   "inline": false,
                   "type": "named"
@@ -148,7 +265,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "2112a6ba",
+                "id": "6d30238",
                 "url": "/tree",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -176,14 +293,53 @@
                         "shape": {
                           "properties": [
                             {
-                              "name": "value",
+                              "name": {
+                                "wireValue": "value",
+                                "name": {
+                                  "originalName": "value",
+                                  "camelCase": {
+                                    "unsafeName": "value",
+                                    "safeName": "value"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "value",
+                                    "safeName": "value"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "VALUE",
+                                    "safeName": "VALUE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Value",
+                                    "safeName": "Value"
+                                  }
+                                }
+                              },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeNode",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": "TreeNode"
+                                "name": {
+                                  "originalName": "TreeNode",
+                                  "camelCase": {
+                                    "unsafeName": "treeNode",
+                                    "safeName": "treeNode"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "tree_node",
+                                    "safeName": "tree_node"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "TREE_NODE",
+                                    "safeName": "TREE_NODE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "TreeNode",
+                                    "safeName": "TreeNode"
+                                  }
+                                }
                               },
                               "value": {
                                 "jsonExample": "value",
@@ -218,14 +374,53 @@
                               }
                             },
                             {
-                              "name": "left",
+                              "name": {
+                                "wireValue": "left",
+                                "name": {
+                                  "originalName": "left",
+                                  "camelCase": {
+                                    "unsafeName": "left",
+                                    "safeName": "left"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "left",
+                                    "safeName": "left"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "LEFT",
+                                    "safeName": "LEFT"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Left",
+                                    "safeName": "Left"
+                                  }
+                                }
+                              },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeNode",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": "TreeNode"
+                                "name": {
+                                  "originalName": "TreeNode",
+                                  "camelCase": {
+                                    "unsafeName": "treeNode",
+                                    "safeName": "treeNode"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "tree_node",
+                                    "safeName": "tree_node"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "TREE_NODE",
+                                    "safeName": "TREE_NODE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "TreeNode",
+                                    "safeName": "TreeNode"
+                                  }
+                                }
                               },
                               "value": {
                                 "jsonExample": {
@@ -245,14 +440,53 @@
                                         "shape": {
                                           "properties": [
                                             {
-                                              "name": "value",
+                                              "name": {
+                                                "wireValue": "value",
+                                                "name": {
+                                                  "originalName": "value",
+                                                  "camelCase": {
+                                                    "unsafeName": "value",
+                                                    "safeName": "value"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "value",
+                                                    "safeName": "value"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "VALUE",
+                                                    "safeName": "VALUE"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "Value",
+                                                    "safeName": "Value"
+                                                  }
+                                                }
+                                              },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
                                                 "fernFilepath": {
                                                   "allParts": [],
                                                   "packagePath": []
                                                 },
-                                                "name": "TreeNode"
+                                                "name": {
+                                                  "originalName": "TreeNode",
+                                                  "camelCase": {
+                                                    "unsafeName": "treeNode",
+                                                    "safeName": "treeNode"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "tree_node",
+                                                    "safeName": "tree_node"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "TREE_NODE",
+                                                    "safeName": "TREE_NODE"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "TreeNode",
+                                                    "safeName": "TreeNode"
+                                                  }
+                                                }
                                               },
                                               "value": {
                                                 "jsonExample": "value",
@@ -287,14 +521,53 @@
                                               }
                                             },
                                             {
-                                              "name": "left",
+                                              "name": {
+                                                "wireValue": "left",
+                                                "name": {
+                                                  "originalName": "left",
+                                                  "camelCase": {
+                                                    "unsafeName": "left",
+                                                    "safeName": "left"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "left",
+                                                    "safeName": "left"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "LEFT",
+                                                    "safeName": "LEFT"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "Left",
+                                                    "safeName": "Left"
+                                                  }
+                                                }
+                                              },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
                                                 "fernFilepath": {
                                                   "allParts": [],
                                                   "packagePath": []
                                                 },
-                                                "name": "TreeNode"
+                                                "name": {
+                                                  "originalName": "TreeNode",
+                                                  "camelCase": {
+                                                    "unsafeName": "treeNode",
+                                                    "safeName": "treeNode"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "tree_node",
+                                                    "safeName": "tree_node"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "TREE_NODE",
+                                                    "safeName": "TREE_NODE"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "TreeNode",
+                                                    "safeName": "TreeNode"
+                                                  }
+                                                }
                                               },
                                               "value": {
                                                 "jsonExample": {},
@@ -306,14 +579,53 @@
                                                         "shape": {
                                                           "properties": [
                                                             {
-                                                              "name": "value",
+                                                              "name": {
+                                                                "wireValue": "value",
+                                                                "name": {
+                                                                  "originalName": "value",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "value",
+                                                                    "safeName": "value"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "value",
+                                                                    "safeName": "value"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "VALUE",
+                                                                    "safeName": "VALUE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Value",
+                                                                    "safeName": "Value"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -335,14 +647,53 @@
                                                               }
                                                             },
                                                             {
-                                                              "name": "left",
+                                                              "name": {
+                                                                "wireValue": "left",
+                                                                "name": {
+                                                                  "originalName": "left",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "left",
+                                                                    "safeName": "left"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "left",
+                                                                    "safeName": "left"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "LEFT",
+                                                                    "safeName": "LEFT"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Left",
+                                                                    "safeName": "Left"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -352,7 +703,25 @@
                                                                         "allParts": [],
                                                                         "packagePath": []
                                                                       },
-                                                                      "name": "TreeNode",
+                                                                      "name": {
+                                                                        "originalName": "TreeNode",
+                                                                        "camelCase": {
+                                                                          "unsafeName": "treeNode",
+                                                                          "safeName": "treeNode"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "unsafeName": "tree_node",
+                                                                          "safeName": "tree_node"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "unsafeName": "TREE_NODE",
+                                                                          "safeName": "TREE_NODE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                          "unsafeName": "TreeNode",
+                                                                          "safeName": "TreeNode"
+                                                                        }
+                                                                      },
                                                                       "typeId": "TreeNode",
                                                                       "inline": false,
                                                                       "type": "named"
@@ -364,14 +733,53 @@
                                                               }
                                                             },
                                                             {
-                                                              "name": "right",
+                                                              "name": {
+                                                                "wireValue": "right",
+                                                                "name": {
+                                                                  "originalName": "right",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "right",
+                                                                    "safeName": "right"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "right",
+                                                                    "safeName": "right"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "RIGHT",
+                                                                    "safeName": "RIGHT"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Right",
+                                                                    "safeName": "Right"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -381,7 +789,25 @@
                                                                         "allParts": [],
                                                                         "packagePath": []
                                                                       },
-                                                                      "name": "TreeNode",
+                                                                      "name": {
+                                                                        "originalName": "TreeNode",
+                                                                        "camelCase": {
+                                                                          "unsafeName": "treeNode",
+                                                                          "safeName": "treeNode"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "unsafeName": "tree_node",
+                                                                          "safeName": "tree_node"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "unsafeName": "TREE_NODE",
+                                                                          "safeName": "TREE_NODE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                          "unsafeName": "TreeNode",
+                                                                          "safeName": "TreeNode"
+                                                                        }
+                                                                      },
                                                                       "typeId": "TreeNode",
                                                                       "inline": false,
                                                                       "type": "named"
@@ -401,7 +827,25 @@
                                                             "allParts": [],
                                                             "packagePath": []
                                                           },
-                                                          "name": "TreeNode"
+                                                          "name": {
+                                                            "originalName": "TreeNode",
+                                                            "camelCase": {
+                                                              "unsafeName": "treeNode",
+                                                              "safeName": "treeNode"
+                                                            },
+                                                            "snakeCase": {
+                                                              "unsafeName": "tree_node",
+                                                              "safeName": "tree_node"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                              "unsafeName": "TREE_NODE",
+                                                              "safeName": "TREE_NODE"
+                                                            },
+                                                            "pascalCase": {
+                                                              "unsafeName": "TreeNode",
+                                                              "safeName": "TreeNode"
+                                                            }
+                                                          }
                                                         },
                                                         "type": "named"
                                                       }
@@ -411,7 +855,25 @@
                                                         "allParts": [],
                                                         "packagePath": []
                                                       },
-                                                      "name": "TreeNode",
+                                                      "name": {
+                                                        "originalName": "TreeNode",
+                                                        "camelCase": {
+                                                          "unsafeName": "treeNode",
+                                                          "safeName": "treeNode"
+                                                        },
+                                                        "snakeCase": {
+                                                          "unsafeName": "tree_node",
+                                                          "safeName": "tree_node"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                          "unsafeName": "TREE_NODE",
+                                                          "safeName": "TREE_NODE"
+                                                        },
+                                                        "pascalCase": {
+                                                          "unsafeName": "TreeNode",
+                                                          "safeName": "TreeNode"
+                                                        }
+                                                      },
                                                       "typeId": "TreeNode",
                                                       "inline": false,
                                                       "type": "named"
@@ -423,14 +885,53 @@
                                               }
                                             },
                                             {
-                                              "name": "right",
+                                              "name": {
+                                                "wireValue": "right",
+                                                "name": {
+                                                  "originalName": "right",
+                                                  "camelCase": {
+                                                    "unsafeName": "right",
+                                                    "safeName": "right"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "right",
+                                                    "safeName": "right"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "RIGHT",
+                                                    "safeName": "RIGHT"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "Right",
+                                                    "safeName": "Right"
+                                                  }
+                                                }
+                                              },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
                                                 "fernFilepath": {
                                                   "allParts": [],
                                                   "packagePath": []
                                                 },
-                                                "name": "TreeNode"
+                                                "name": {
+                                                  "originalName": "TreeNode",
+                                                  "camelCase": {
+                                                    "unsafeName": "treeNode",
+                                                    "safeName": "treeNode"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "tree_node",
+                                                    "safeName": "tree_node"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "TREE_NODE",
+                                                    "safeName": "TREE_NODE"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "TreeNode",
+                                                    "safeName": "TreeNode"
+                                                  }
+                                                }
                                               },
                                               "value": {
                                                 "jsonExample": {},
@@ -442,14 +943,53 @@
                                                         "shape": {
                                                           "properties": [
                                                             {
-                                                              "name": "value",
+                                                              "name": {
+                                                                "wireValue": "value",
+                                                                "name": {
+                                                                  "originalName": "value",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "value",
+                                                                    "safeName": "value"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "value",
+                                                                    "safeName": "value"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "VALUE",
+                                                                    "safeName": "VALUE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Value",
+                                                                    "safeName": "Value"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -471,14 +1011,53 @@
                                                               }
                                                             },
                                                             {
-                                                              "name": "left",
+                                                              "name": {
+                                                                "wireValue": "left",
+                                                                "name": {
+                                                                  "originalName": "left",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "left",
+                                                                    "safeName": "left"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "left",
+                                                                    "safeName": "left"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "LEFT",
+                                                                    "safeName": "LEFT"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Left",
+                                                                    "safeName": "Left"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -488,7 +1067,25 @@
                                                                         "allParts": [],
                                                                         "packagePath": []
                                                                       },
-                                                                      "name": "TreeNode",
+                                                                      "name": {
+                                                                        "originalName": "TreeNode",
+                                                                        "camelCase": {
+                                                                          "unsafeName": "treeNode",
+                                                                          "safeName": "treeNode"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "unsafeName": "tree_node",
+                                                                          "safeName": "tree_node"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "unsafeName": "TREE_NODE",
+                                                                          "safeName": "TREE_NODE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                          "unsafeName": "TreeNode",
+                                                                          "safeName": "TreeNode"
+                                                                        }
+                                                                      },
                                                                       "typeId": "TreeNode",
                                                                       "inline": false,
                                                                       "type": "named"
@@ -500,14 +1097,53 @@
                                                               }
                                                             },
                                                             {
-                                                              "name": "right",
+                                                              "name": {
+                                                                "wireValue": "right",
+                                                                "name": {
+                                                                  "originalName": "right",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "right",
+                                                                    "safeName": "right"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "right",
+                                                                    "safeName": "right"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "RIGHT",
+                                                                    "safeName": "RIGHT"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Right",
+                                                                    "safeName": "Right"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -517,7 +1153,25 @@
                                                                         "allParts": [],
                                                                         "packagePath": []
                                                                       },
-                                                                      "name": "TreeNode",
+                                                                      "name": {
+                                                                        "originalName": "TreeNode",
+                                                                        "camelCase": {
+                                                                          "unsafeName": "treeNode",
+                                                                          "safeName": "treeNode"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "unsafeName": "tree_node",
+                                                                          "safeName": "tree_node"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "unsafeName": "TREE_NODE",
+                                                                          "safeName": "TREE_NODE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                          "unsafeName": "TreeNode",
+                                                                          "safeName": "TreeNode"
+                                                                        }
+                                                                      },
                                                                       "typeId": "TreeNode",
                                                                       "inline": false,
                                                                       "type": "named"
@@ -537,7 +1191,25 @@
                                                             "allParts": [],
                                                             "packagePath": []
                                                           },
-                                                          "name": "TreeNode"
+                                                          "name": {
+                                                            "originalName": "TreeNode",
+                                                            "camelCase": {
+                                                              "unsafeName": "treeNode",
+                                                              "safeName": "treeNode"
+                                                            },
+                                                            "snakeCase": {
+                                                              "unsafeName": "tree_node",
+                                                              "safeName": "tree_node"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                              "unsafeName": "TREE_NODE",
+                                                              "safeName": "TREE_NODE"
+                                                            },
+                                                            "pascalCase": {
+                                                              "unsafeName": "TreeNode",
+                                                              "safeName": "TreeNode"
+                                                            }
+                                                          }
                                                         },
                                                         "type": "named"
                                                       }
@@ -547,7 +1219,25 @@
                                                         "allParts": [],
                                                         "packagePath": []
                                                       },
-                                                      "name": "TreeNode",
+                                                      "name": {
+                                                        "originalName": "TreeNode",
+                                                        "camelCase": {
+                                                          "unsafeName": "treeNode",
+                                                          "safeName": "treeNode"
+                                                        },
+                                                        "snakeCase": {
+                                                          "unsafeName": "tree_node",
+                                                          "safeName": "tree_node"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                          "unsafeName": "TREE_NODE",
+                                                          "safeName": "TREE_NODE"
+                                                        },
+                                                        "pascalCase": {
+                                                          "unsafeName": "TreeNode",
+                                                          "safeName": "TreeNode"
+                                                        }
+                                                      },
                                                       "typeId": "TreeNode",
                                                       "inline": false,
                                                       "type": "named"
@@ -567,7 +1257,25 @@
                                             "allParts": [],
                                             "packagePath": []
                                           },
-                                          "name": "TreeNode"
+                                          "name": {
+                                            "originalName": "TreeNode",
+                                            "camelCase": {
+                                              "unsafeName": "treeNode",
+                                              "safeName": "treeNode"
+                                            },
+                                            "snakeCase": {
+                                              "unsafeName": "tree_node",
+                                              "safeName": "tree_node"
+                                            },
+                                            "screamingSnakeCase": {
+                                              "unsafeName": "TREE_NODE",
+                                              "safeName": "TREE_NODE"
+                                            },
+                                            "pascalCase": {
+                                              "unsafeName": "TreeNode",
+                                              "safeName": "TreeNode"
+                                            }
+                                          }
                                         },
                                         "type": "named"
                                       }
@@ -577,7 +1285,25 @@
                                         "allParts": [],
                                         "packagePath": []
                                       },
-                                      "name": "TreeNode",
+                                      "name": {
+                                        "originalName": "TreeNode",
+                                        "camelCase": {
+                                          "unsafeName": "treeNode",
+                                          "safeName": "treeNode"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "tree_node",
+                                          "safeName": "tree_node"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "TREE_NODE",
+                                          "safeName": "TREE_NODE"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "TreeNode",
+                                          "safeName": "TreeNode"
+                                        }
+                                      },
                                       "typeId": "TreeNode",
                                       "inline": false,
                                       "type": "named"
@@ -589,14 +1315,53 @@
                               }
                             },
                             {
-                              "name": "right",
+                              "name": {
+                                "wireValue": "right",
+                                "name": {
+                                  "originalName": "right",
+                                  "camelCase": {
+                                    "unsafeName": "right",
+                                    "safeName": "right"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "right",
+                                    "safeName": "right"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "RIGHT",
+                                    "safeName": "RIGHT"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Right",
+                                    "safeName": "Right"
+                                  }
+                                }
+                              },
                               "originalTypeDeclaration": {
                                 "typeId": "TreeNode",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": "TreeNode"
+                                "name": {
+                                  "originalName": "TreeNode",
+                                  "camelCase": {
+                                    "unsafeName": "treeNode",
+                                    "safeName": "treeNode"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "tree_node",
+                                    "safeName": "tree_node"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "TREE_NODE",
+                                    "safeName": "TREE_NODE"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "TreeNode",
+                                    "safeName": "TreeNode"
+                                  }
+                                }
                               },
                               "value": {
                                 "jsonExample": {
@@ -616,14 +1381,53 @@
                                         "shape": {
                                           "properties": [
                                             {
-                                              "name": "value",
+                                              "name": {
+                                                "wireValue": "value",
+                                                "name": {
+                                                  "originalName": "value",
+                                                  "camelCase": {
+                                                    "unsafeName": "value",
+                                                    "safeName": "value"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "value",
+                                                    "safeName": "value"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "VALUE",
+                                                    "safeName": "VALUE"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "Value",
+                                                    "safeName": "Value"
+                                                  }
+                                                }
+                                              },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
                                                 "fernFilepath": {
                                                   "allParts": [],
                                                   "packagePath": []
                                                 },
-                                                "name": "TreeNode"
+                                                "name": {
+                                                  "originalName": "TreeNode",
+                                                  "camelCase": {
+                                                    "unsafeName": "treeNode",
+                                                    "safeName": "treeNode"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "tree_node",
+                                                    "safeName": "tree_node"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "TREE_NODE",
+                                                    "safeName": "TREE_NODE"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "TreeNode",
+                                                    "safeName": "TreeNode"
+                                                  }
+                                                }
                                               },
                                               "value": {
                                                 "jsonExample": "value",
@@ -658,14 +1462,53 @@
                                               }
                                             },
                                             {
-                                              "name": "left",
+                                              "name": {
+                                                "wireValue": "left",
+                                                "name": {
+                                                  "originalName": "left",
+                                                  "camelCase": {
+                                                    "unsafeName": "left",
+                                                    "safeName": "left"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "left",
+                                                    "safeName": "left"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "LEFT",
+                                                    "safeName": "LEFT"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "Left",
+                                                    "safeName": "Left"
+                                                  }
+                                                }
+                                              },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
                                                 "fernFilepath": {
                                                   "allParts": [],
                                                   "packagePath": []
                                                 },
-                                                "name": "TreeNode"
+                                                "name": {
+                                                  "originalName": "TreeNode",
+                                                  "camelCase": {
+                                                    "unsafeName": "treeNode",
+                                                    "safeName": "treeNode"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "tree_node",
+                                                    "safeName": "tree_node"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "TREE_NODE",
+                                                    "safeName": "TREE_NODE"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "TreeNode",
+                                                    "safeName": "TreeNode"
+                                                  }
+                                                }
                                               },
                                               "value": {
                                                 "jsonExample": {},
@@ -677,14 +1520,53 @@
                                                         "shape": {
                                                           "properties": [
                                                             {
-                                                              "name": "value",
+                                                              "name": {
+                                                                "wireValue": "value",
+                                                                "name": {
+                                                                  "originalName": "value",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "value",
+                                                                    "safeName": "value"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "value",
+                                                                    "safeName": "value"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "VALUE",
+                                                                    "safeName": "VALUE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Value",
+                                                                    "safeName": "Value"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -706,14 +1588,53 @@
                                                               }
                                                             },
                                                             {
-                                                              "name": "left",
+                                                              "name": {
+                                                                "wireValue": "left",
+                                                                "name": {
+                                                                  "originalName": "left",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "left",
+                                                                    "safeName": "left"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "left",
+                                                                    "safeName": "left"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "LEFT",
+                                                                    "safeName": "LEFT"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Left",
+                                                                    "safeName": "Left"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -723,7 +1644,25 @@
                                                                         "allParts": [],
                                                                         "packagePath": []
                                                                       },
-                                                                      "name": "TreeNode",
+                                                                      "name": {
+                                                                        "originalName": "TreeNode",
+                                                                        "camelCase": {
+                                                                          "unsafeName": "treeNode",
+                                                                          "safeName": "treeNode"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "unsafeName": "tree_node",
+                                                                          "safeName": "tree_node"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "unsafeName": "TREE_NODE",
+                                                                          "safeName": "TREE_NODE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                          "unsafeName": "TreeNode",
+                                                                          "safeName": "TreeNode"
+                                                                        }
+                                                                      },
                                                                       "typeId": "TreeNode",
                                                                       "inline": false,
                                                                       "type": "named"
@@ -735,14 +1674,53 @@
                                                               }
                                                             },
                                                             {
-                                                              "name": "right",
+                                                              "name": {
+                                                                "wireValue": "right",
+                                                                "name": {
+                                                                  "originalName": "right",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "right",
+                                                                    "safeName": "right"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "right",
+                                                                    "safeName": "right"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "RIGHT",
+                                                                    "safeName": "RIGHT"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Right",
+                                                                    "safeName": "Right"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -752,7 +1730,25 @@
                                                                         "allParts": [],
                                                                         "packagePath": []
                                                                       },
-                                                                      "name": "TreeNode",
+                                                                      "name": {
+                                                                        "originalName": "TreeNode",
+                                                                        "camelCase": {
+                                                                          "unsafeName": "treeNode",
+                                                                          "safeName": "treeNode"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "unsafeName": "tree_node",
+                                                                          "safeName": "tree_node"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "unsafeName": "TREE_NODE",
+                                                                          "safeName": "TREE_NODE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                          "unsafeName": "TreeNode",
+                                                                          "safeName": "TreeNode"
+                                                                        }
+                                                                      },
                                                                       "typeId": "TreeNode",
                                                                       "inline": false,
                                                                       "type": "named"
@@ -772,7 +1768,25 @@
                                                             "allParts": [],
                                                             "packagePath": []
                                                           },
-                                                          "name": "TreeNode"
+                                                          "name": {
+                                                            "originalName": "TreeNode",
+                                                            "camelCase": {
+                                                              "unsafeName": "treeNode",
+                                                              "safeName": "treeNode"
+                                                            },
+                                                            "snakeCase": {
+                                                              "unsafeName": "tree_node",
+                                                              "safeName": "tree_node"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                              "unsafeName": "TREE_NODE",
+                                                              "safeName": "TREE_NODE"
+                                                            },
+                                                            "pascalCase": {
+                                                              "unsafeName": "TreeNode",
+                                                              "safeName": "TreeNode"
+                                                            }
+                                                          }
                                                         },
                                                         "type": "named"
                                                       }
@@ -782,7 +1796,25 @@
                                                         "allParts": [],
                                                         "packagePath": []
                                                       },
-                                                      "name": "TreeNode",
+                                                      "name": {
+                                                        "originalName": "TreeNode",
+                                                        "camelCase": {
+                                                          "unsafeName": "treeNode",
+                                                          "safeName": "treeNode"
+                                                        },
+                                                        "snakeCase": {
+                                                          "unsafeName": "tree_node",
+                                                          "safeName": "tree_node"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                          "unsafeName": "TREE_NODE",
+                                                          "safeName": "TREE_NODE"
+                                                        },
+                                                        "pascalCase": {
+                                                          "unsafeName": "TreeNode",
+                                                          "safeName": "TreeNode"
+                                                        }
+                                                      },
                                                       "typeId": "TreeNode",
                                                       "inline": false,
                                                       "type": "named"
@@ -794,14 +1826,53 @@
                                               }
                                             },
                                             {
-                                              "name": "right",
+                                              "name": {
+                                                "wireValue": "right",
+                                                "name": {
+                                                  "originalName": "right",
+                                                  "camelCase": {
+                                                    "unsafeName": "right",
+                                                    "safeName": "right"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "right",
+                                                    "safeName": "right"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "RIGHT",
+                                                    "safeName": "RIGHT"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "Right",
+                                                    "safeName": "Right"
+                                                  }
+                                                }
+                                              },
                                               "originalTypeDeclaration": {
                                                 "typeId": "TreeNode",
                                                 "fernFilepath": {
                                                   "allParts": [],
                                                   "packagePath": []
                                                 },
-                                                "name": "TreeNode"
+                                                "name": {
+                                                  "originalName": "TreeNode",
+                                                  "camelCase": {
+                                                    "unsafeName": "treeNode",
+                                                    "safeName": "treeNode"
+                                                  },
+                                                  "snakeCase": {
+                                                    "unsafeName": "tree_node",
+                                                    "safeName": "tree_node"
+                                                  },
+                                                  "screamingSnakeCase": {
+                                                    "unsafeName": "TREE_NODE",
+                                                    "safeName": "TREE_NODE"
+                                                  },
+                                                  "pascalCase": {
+                                                    "unsafeName": "TreeNode",
+                                                    "safeName": "TreeNode"
+                                                  }
+                                                }
                                               },
                                               "value": {
                                                 "jsonExample": {},
@@ -813,14 +1884,53 @@
                                                         "shape": {
                                                           "properties": [
                                                             {
-                                                              "name": "value",
+                                                              "name": {
+                                                                "wireValue": "value",
+                                                                "name": {
+                                                                  "originalName": "value",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "value",
+                                                                    "safeName": "value"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "value",
+                                                                    "safeName": "value"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "VALUE",
+                                                                    "safeName": "VALUE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Value",
+                                                                    "safeName": "Value"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -842,14 +1952,53 @@
                                                               }
                                                             },
                                                             {
-                                                              "name": "left",
+                                                              "name": {
+                                                                "wireValue": "left",
+                                                                "name": {
+                                                                  "originalName": "left",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "left",
+                                                                    "safeName": "left"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "left",
+                                                                    "safeName": "left"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "LEFT",
+                                                                    "safeName": "LEFT"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Left",
+                                                                    "safeName": "Left"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -859,7 +2008,25 @@
                                                                         "allParts": [],
                                                                         "packagePath": []
                                                                       },
-                                                                      "name": "TreeNode",
+                                                                      "name": {
+                                                                        "originalName": "TreeNode",
+                                                                        "camelCase": {
+                                                                          "unsafeName": "treeNode",
+                                                                          "safeName": "treeNode"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "unsafeName": "tree_node",
+                                                                          "safeName": "tree_node"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "unsafeName": "TREE_NODE",
+                                                                          "safeName": "TREE_NODE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                          "unsafeName": "TreeNode",
+                                                                          "safeName": "TreeNode"
+                                                                        }
+                                                                      },
                                                                       "typeId": "TreeNode",
                                                                       "inline": false,
                                                                       "type": "named"
@@ -871,14 +2038,53 @@
                                                               }
                                                             },
                                                             {
-                                                              "name": "right",
+                                                              "name": {
+                                                                "wireValue": "right",
+                                                                "name": {
+                                                                  "originalName": "right",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "right",
+                                                                    "safeName": "right"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "right",
+                                                                    "safeName": "right"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "RIGHT",
+                                                                    "safeName": "RIGHT"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "Right",
+                                                                    "safeName": "Right"
+                                                                  }
+                                                                }
+                                                              },
                                                               "originalTypeDeclaration": {
                                                                 "typeId": "TreeNode",
                                                                 "fernFilepath": {
                                                                   "allParts": [],
                                                                   "packagePath": []
                                                                 },
-                                                                "name": "TreeNode"
+                                                                "name": {
+                                                                  "originalName": "TreeNode",
+                                                                  "camelCase": {
+                                                                    "unsafeName": "treeNode",
+                                                                    "safeName": "treeNode"
+                                                                  },
+                                                                  "snakeCase": {
+                                                                    "unsafeName": "tree_node",
+                                                                    "safeName": "tree_node"
+                                                                  },
+                                                                  "screamingSnakeCase": {
+                                                                    "unsafeName": "TREE_NODE",
+                                                                    "safeName": "TREE_NODE"
+                                                                  },
+                                                                  "pascalCase": {
+                                                                    "unsafeName": "TreeNode",
+                                                                    "safeName": "TreeNode"
+                                                                  }
+                                                                }
                                                               },
                                                               "value": {
                                                                 "shape": {
@@ -888,7 +2094,25 @@
                                                                         "allParts": [],
                                                                         "packagePath": []
                                                                       },
-                                                                      "name": "TreeNode",
+                                                                      "name": {
+                                                                        "originalName": "TreeNode",
+                                                                        "camelCase": {
+                                                                          "unsafeName": "treeNode",
+                                                                          "safeName": "treeNode"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                          "unsafeName": "tree_node",
+                                                                          "safeName": "tree_node"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                          "unsafeName": "TREE_NODE",
+                                                                          "safeName": "TREE_NODE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                          "unsafeName": "TreeNode",
+                                                                          "safeName": "TreeNode"
+                                                                        }
+                                                                      },
                                                                       "typeId": "TreeNode",
                                                                       "inline": false,
                                                                       "type": "named"
@@ -908,7 +2132,25 @@
                                                             "allParts": [],
                                                             "packagePath": []
                                                           },
-                                                          "name": "TreeNode"
+                                                          "name": {
+                                                            "originalName": "TreeNode",
+                                                            "camelCase": {
+                                                              "unsafeName": "treeNode",
+                                                              "safeName": "treeNode"
+                                                            },
+                                                            "snakeCase": {
+                                                              "unsafeName": "tree_node",
+                                                              "safeName": "tree_node"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                              "unsafeName": "TREE_NODE",
+                                                              "safeName": "TREE_NODE"
+                                                            },
+                                                            "pascalCase": {
+                                                              "unsafeName": "TreeNode",
+                                                              "safeName": "TreeNode"
+                                                            }
+                                                          }
                                                         },
                                                         "type": "named"
                                                       }
@@ -918,7 +2160,25 @@
                                                         "allParts": [],
                                                         "packagePath": []
                                                       },
-                                                      "name": "TreeNode",
+                                                      "name": {
+                                                        "originalName": "TreeNode",
+                                                        "camelCase": {
+                                                          "unsafeName": "treeNode",
+                                                          "safeName": "treeNode"
+                                                        },
+                                                        "snakeCase": {
+                                                          "unsafeName": "tree_node",
+                                                          "safeName": "tree_node"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                          "unsafeName": "TREE_NODE",
+                                                          "safeName": "TREE_NODE"
+                                                        },
+                                                        "pascalCase": {
+                                                          "unsafeName": "TreeNode",
+                                                          "safeName": "TreeNode"
+                                                        }
+                                                      },
                                                       "typeId": "TreeNode",
                                                       "inline": false,
                                                       "type": "named"
@@ -938,7 +2198,25 @@
                                             "allParts": [],
                                             "packagePath": []
                                           },
-                                          "name": "TreeNode"
+                                          "name": {
+                                            "originalName": "TreeNode",
+                                            "camelCase": {
+                                              "unsafeName": "treeNode",
+                                              "safeName": "treeNode"
+                                            },
+                                            "snakeCase": {
+                                              "unsafeName": "tree_node",
+                                              "safeName": "tree_node"
+                                            },
+                                            "screamingSnakeCase": {
+                                              "unsafeName": "TREE_NODE",
+                                              "safeName": "TREE_NODE"
+                                            },
+                                            "pascalCase": {
+                                              "unsafeName": "TreeNode",
+                                              "safeName": "TreeNode"
+                                            }
+                                          }
                                         },
                                         "type": "named"
                                       }
@@ -948,7 +2226,25 @@
                                         "allParts": [],
                                         "packagePath": []
                                       },
-                                      "name": "TreeNode",
+                                      "name": {
+                                        "originalName": "TreeNode",
+                                        "camelCase": {
+                                          "unsafeName": "treeNode",
+                                          "safeName": "treeNode"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "tree_node",
+                                          "safeName": "tree_node"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "TREE_NODE",
+                                          "safeName": "TREE_NODE"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "TreeNode",
+                                          "safeName": "TreeNode"
+                                        }
+                                      },
                                       "typeId": "TreeNode",
                                       "inline": false,
                                       "type": "named"
@@ -968,7 +2264,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "TreeNode"
+                          "name": {
+                            "originalName": "TreeNode",
+                            "camelCase": {
+                              "unsafeName": "treeNode",
+                              "safeName": "treeNode"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "tree_node",
+                              "safeName": "tree_node"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "TREE_NODE",
+                              "safeName": "TREE_NODE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "TreeNode",
+                              "safeName": "TreeNode"
+                            }
+                          }
                         },
                         "type": "named"
                       }
@@ -991,7 +2305,25 @@
           },
           "audiences": [],
           "id": "endpoint_.getTree",
-          "name": "getTree",
+          "name": {
+            "originalName": "getTree",
+            "camelCase": {
+              "unsafeName": "getTree",
+              "safeName": "getTree"
+            },
+            "snakeCase": {
+              "unsafeName": "get_tree",
+              "safeName": "get_tree"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_TREE",
+              "safeName": "GET_TREE"
+            },
+            "pascalCase": {
+              "unsafeName": "GetTree",
+              "safeName": "GetTree"
+            }
+          },
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -1002,7 +2334,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "TreeNode",
+                  "name": {
+                    "originalName": "TreeNode",
+                    "camelCase": {
+                      "unsafeName": "treeNode",
+                      "safeName": "treeNode"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "tree_node",
+                      "safeName": "tree_node"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "TREE_NODE",
+                      "safeName": "TREE_NODE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "TreeNode",
+                      "safeName": "TreeNode"
+                    }
+                  },
                   "typeId": "TreeNode",
                   "inline": false,
                   "type": "named"
@@ -1071,7 +2421,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "TreeNode",
+                      "name": {
+                        "originalName": "TreeNode",
+                        "camelCase": {
+                          "unsafeName": "treeNode",
+                          "safeName": "treeNode"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "tree_node",
+                          "safeName": "tree_node"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "TREE_NODE",
+                          "safeName": "TREE_NODE"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "TreeNode",
+                          "safeName": "TreeNode"
+                        }
+                      },
                       "typeId": "TreeNode",
                       "inline": false,
                       "type": "named"
@@ -1142,8 +2510,47 @@
       "sdkVersion": ""
     }
   },
-  "apiName": "Tree API",
+  "apiName": {
+    "originalName": "Tree API",
+    "camelCase": {
+      "unsafeName": "treeApi",
+      "safeName": "treeApi"
+    },
+    "snakeCase": {
+      "unsafeName": "tree_api",
+      "safeName": "tree_api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "TREE_API",
+      "safeName": "TREE_API"
+    },
+    "pascalCase": {
+      "unsafeName": "TreeApi",
+      "safeName": "TreeApi"
+    }
+  },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      }
+    }
   }
 }

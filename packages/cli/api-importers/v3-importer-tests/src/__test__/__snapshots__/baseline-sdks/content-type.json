@@ -1,6 +1,24 @@
 {
   "selfHosted": false,
-  "apiName": "api",
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    }
+  },
   "apiDisplayName": "Test content-type parsing.",
   "auth": {
     "requirement": "ALL",
@@ -34,7 +52,25 @@
         {
           "docs": "Test multipart request with different content types.",
           "id": "endpoint_.testUpload",
-          "name": "testUpload",
+          "name": {
+            "originalName": "testUpload",
+            "camelCase": {
+              "unsafeName": "testUpload",
+              "safeName": "testUpload"
+            },
+            "snakeCase": {
+              "unsafeName": "test_upload",
+              "safeName": "test_upload"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_UPLOAD",
+              "safeName": "TEST_UPLOAD"
+            },
+            "pascalCase": {
+              "unsafeName": "TestUpload",
+              "safeName": "TestUpload"
+            }
+          },
           "displayName": "Test upload",
           "auth": false,
           "idempotent": false,
@@ -50,7 +86,25 @@
           "pathParameters": [
             {
               "docs": "The unique key",
-              "name": "corpus_key",
+              "name": {
+                "originalName": "corpus_key",
+                "camelCase": {
+                  "unsafeName": "corpusKey",
+                  "safeName": "corpusKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "corpus_key",
+                  "safeName": "corpus_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CORPUS_KEY",
+                  "safeName": "CORPUS_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "CorpusKey",
+                  "safeName": "CorpusKey"
+                }
+              },
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -70,7 +124,25 @@
           "allPathParameters": [
             {
               "docs": "The unique key",
-              "name": "corpus_key",
+              "name": {
+                "originalName": "corpus_key",
+                "camelCase": {
+                  "unsafeName": "corpusKey",
+                  "safeName": "corpusKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "corpus_key",
+                  "safeName": "corpus_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CORPUS_KEY",
+                  "safeName": "CORPUS_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "CorpusKey",
+                  "safeName": "CorpusKey"
+                }
+              },
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -91,11 +163,50 @@
           "headers": [],
           "requestBody": {
             "contentType": "multipart/form-data",
-            "name": "PostTestRequest",
+            "name": {
+              "originalName": "PostTestRequest",
+              "camelCase": {
+                "unsafeName": "postTestRequest",
+                "safeName": "postTestRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "post_test_request",
+                "safeName": "post_test_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "POST_TEST_REQUEST",
+                "safeName": "POST_TEST_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "PostTestRequest",
+                "safeName": "PostTestRequest"
+              }
+            },
             "properties": [
               {
                 "docs": "Arbitrary object that will be attached as document metadata to the extracted document.",
-                "name": "metadata",
+                "name": {
+                  "wireValue": "metadata",
+                  "name": {
+                    "originalName": "metadata",
+                    "camelCase": {
+                      "unsafeName": "metadata",
+                      "safeName": "metadata"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "metadata",
+                      "safeName": "metadata"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "METADATA",
+                      "safeName": "METADATA"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Metadata",
+                      "safeName": "Metadata"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -127,7 +238,28 @@
                 "type": "bodyProperty"
               },
               {
-                "name": "chunking_strategy",
+                "name": {
+                  "wireValue": "chunking_strategy",
+                  "name": {
+                    "originalName": "chunking_strategy",
+                    "camelCase": {
+                      "unsafeName": "chunkingStrategy",
+                      "safeName": "chunkingStrategy"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "chunking_strategy",
+                      "safeName": "chunking_strategy"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "CHUNKING_STRATEGY",
+                      "safeName": "CHUNKING_STRATEGY"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "ChunkingStrategy",
+                      "safeName": "ChunkingStrategy"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -145,7 +277,28 @@
               },
               {
                 "docs": "Optional multipart section to override the filename.",
-                "name": "filename",
+                "name": {
+                  "wireValue": "filename",
+                  "name": {
+                    "originalName": "filename",
+                    "camelCase": {
+                      "unsafeName": "filename",
+                      "safeName": "filename"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "filename",
+                      "safeName": "filename"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FILENAME",
+                      "safeName": "FILENAME"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Filename",
+                      "safeName": "Filename"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -169,7 +322,28 @@
               },
               {
                 "value": {
-                  "key": "file",
+                  "key": {
+                    "wireValue": "file",
+                    "name": {
+                      "originalName": "file",
+                      "camelCase": {
+                        "unsafeName": "file",
+                        "safeName": "file"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "file",
+                        "safeName": "file"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "FILE",
+                        "safeName": "FILE"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "File",
+                        "safeName": "File"
+                      }
+                    }
+                  },
                   "isOptional": false,
                   "contentType": "application/octet-stream",
                   "docs": "Binary file contents. The file name of the file will be used as the document ID.",
@@ -182,13 +356,67 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": "PostTestRequest",
-              "bodyKey": "body",
+              "wrapperName": {
+                "originalName": "PostTestRequest",
+                "camelCase": {
+                  "unsafeName": "postTestRequest",
+                  "safeName": "postTestRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "post_test_request",
+                  "safeName": "post_test_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "POST_TEST_REQUEST",
+                  "safeName": "POST_TEST_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "PostTestRequest",
+                  "safeName": "PostTestRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
@@ -218,7 +446,25 @@
         {
           "docs": "Test request with dual content types.",
           "id": "endpoint_.testWithDualContentTypeRequestTypes",
-          "name": "testWithDualContentTypeRequestTypes",
+          "name": {
+            "originalName": "testWithDualContentTypeRequestTypes",
+            "camelCase": {
+              "unsafeName": "testWithDualContentTypeRequestTypes",
+              "safeName": "testWithDualContentTypeRequestTypes"
+            },
+            "snakeCase": {
+              "unsafeName": "test_with_dual_content_type_request_types",
+              "safeName": "test_with_dual_content_type_request_types"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "TEST_WITH_DUAL_CONTENT_TYPE_REQUEST_TYPES",
+              "safeName": "TEST_WITH_DUAL_CONTENT_TYPE_REQUEST_TYPES"
+            },
+            "pascalCase": {
+              "unsafeName": "TestWithDualContentTypeRequestTypes",
+              "safeName": "TestWithDualContentTypeRequestTypes"
+            }
+          },
           "displayName": "Test with dual Content-Type request types",
           "auth": false,
           "idempotent": false,
@@ -234,7 +480,25 @@
           "pathParameters": [
             {
               "docs": "The unique key",
-              "name": "corpus_key",
+              "name": {
+                "originalName": "corpus_key",
+                "camelCase": {
+                  "unsafeName": "corpusKey",
+                  "safeName": "corpusKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "corpus_key",
+                  "safeName": "corpus_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CORPUS_KEY",
+                  "safeName": "CORPUS_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "CorpusKey",
+                  "safeName": "CorpusKey"
+                }
+              },
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -254,7 +518,25 @@
           "allPathParameters": [
             {
               "docs": "The unique key",
-              "name": "corpus_key",
+              "name": {
+                "originalName": "corpus_key",
+                "camelCase": {
+                  "unsafeName": "corpusKey",
+                  "safeName": "corpusKey"
+                },
+                "snakeCase": {
+                  "unsafeName": "corpus_key",
+                  "safeName": "corpus_key"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CORPUS_KEY",
+                  "safeName": "CORPUS_KEY"
+                },
+                "pascalCase": {
+                  "unsafeName": "CorpusKey",
+                  "safeName": "CorpusKey"
+                }
+              },
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -274,13 +556,52 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": "PostExampleRequest",
+            "name": {
+              "originalName": "PostExampleRequest",
+              "camelCase": {
+                "unsafeName": "postExampleRequest",
+                "safeName": "postExampleRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "post_example_request",
+                "safeName": "post_example_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "POST_EXAMPLE_REQUEST",
+                "safeName": "POST_EXAMPLE_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "PostExampleRequest",
+                "safeName": "PostExampleRequest"
+              }
+            },
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "Arbitrary object that will be attached as document metadata to the extracted document.",
-                "name": "metadata",
+                "name": {
+                  "wireValue": "metadata",
+                  "name": {
+                    "originalName": "metadata",
+                    "camelCase": {
+                      "unsafeName": "metadata",
+                      "safeName": "metadata"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "metadata",
+                      "safeName": "metadata"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "METADATA",
+                      "safeName": "METADATA"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Metadata",
+                      "safeName": "Metadata"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -317,13 +638,67 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": "PostExampleRequest",
-              "bodyKey": "body",
+              "wrapperName": {
+                "originalName": "PostExampleRequest",
+                "camelCase": {
+                  "unsafeName": "postExampleRequest",
+                  "safeName": "postExampleRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "post_example_request",
+                  "safeName": "post_example_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "POST_EXAMPLE_REQUEST",
+                  "safeName": "POST_EXAMPLE_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "PostExampleRequest",
+                  "safeName": "PostExampleRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
@@ -354,7 +729,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceID",
+          "safeName": "errorInstanceID"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceID",
+          "safeName": "ErrorInstanceID"
+        }
+      }
+    }
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"

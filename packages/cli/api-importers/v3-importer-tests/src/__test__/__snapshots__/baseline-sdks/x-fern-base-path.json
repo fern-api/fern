@@ -1,6 +1,24 @@
 {
   "selfHosted": false,
-  "apiName": "api",
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    }
+  },
   "apiDisplayName": "Acme API",
   "auth": {
     "requirement": "ALL",
@@ -33,7 +51,25 @@
       "endpoints": [
         {
           "id": "endpoint_.exampleEndpoint",
-          "name": "exampleEndpoint",
+          "name": {
+            "originalName": "exampleEndpoint",
+            "camelCase": {
+              "unsafeName": "exampleEndpoint",
+              "safeName": "exampleEndpoint"
+            },
+            "snakeCase": {
+              "unsafeName": "example_endpoint",
+              "safeName": "example_endpoint"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "EXAMPLE_ENDPOINT",
+              "safeName": "EXAMPLE_ENDPOINT"
+            },
+            "pascalCase": {
+              "unsafeName": "ExampleEndpoint",
+              "safeName": "ExampleEndpoint"
+            }
+          },
           "displayName": "Example endpoint",
           "auth": false,
           "idempotent": false,
@@ -60,7 +96,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceID",
+          "safeName": "errorInstanceID"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceID",
+          "safeName": "ErrorInstanceID"
+        }
+      }
+    }
   },
   "environments": {
     "defaultEnvironment": "Default",
@@ -68,7 +125,25 @@
       "environments": [
         {
           "id": "Default",
-          "name": "Default",
+          "name": {
+            "originalName": "Default",
+            "camelCase": {
+              "unsafeName": "default",
+              "safeName": "default"
+            },
+            "snakeCase": {
+              "unsafeName": "default",
+              "safeName": "default"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEFAULT",
+              "safeName": "DEFAULT"
+            },
+            "pascalCase": {
+              "unsafeName": "Default",
+              "safeName": "Default"
+            }
+          },
           "url": "https://api.acme.com"
         }
       ],

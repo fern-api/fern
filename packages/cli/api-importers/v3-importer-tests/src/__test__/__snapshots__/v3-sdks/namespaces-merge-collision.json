@@ -1,5 +1,23 @@
 {
-  "apiName": "API 1",
+  "apiName": {
+    "originalName": "API 1",
+    "camelCase": {
+      "unsafeName": "api1",
+      "safeName": "api1"
+    },
+    "snakeCase": {
+      "unsafeName": "api_1",
+      "safeName": "api_1"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API_1",
+      "safeName": "API_1"
+    },
+    "pascalCase": {
+      "unsafeName": "Api1",
+      "safeName": "Api1"
+    }
+  },
   "selfHosted": false,
   "apiDisplayName": "API 1",
   "auth": {
@@ -13,18 +31,93 @@
         "typeId": "shared:User",
         "fernFilepath": {
           "allParts": [
-            "shared"
+            {
+              "originalName": "shared",
+              "camelCase": {
+                "unsafeName": "shared",
+                "safeName": "shared"
+              },
+              "snakeCase": {
+                "unsafeName": "shared",
+                "safeName": "shared"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SHARED",
+                "safeName": "SHARED"
+              },
+              "pascalCase": {
+                "unsafeName": "Shared",
+                "safeName": "Shared"
+              }
+            }
           ],
           "packagePath": [
-            "shared"
+            {
+              "originalName": "shared",
+              "camelCase": {
+                "unsafeName": "shared",
+                "safeName": "shared"
+              },
+              "snakeCase": {
+                "unsafeName": "shared",
+                "safeName": "shared"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SHARED",
+                "safeName": "SHARED"
+              },
+              "pascalCase": {
+                "unsafeName": "Shared",
+                "safeName": "Shared"
+              }
+            }
           ]
         },
-        "name": "User"
+        "name": {
+          "originalName": "User",
+          "camelCase": {
+            "unsafeName": "user",
+            "safeName": "user"
+          },
+          "snakeCase": {
+            "unsafeName": "user",
+            "safeName": "user"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "USER",
+            "safeName": "USER"
+          },
+          "pascalCase": {
+            "unsafeName": "User",
+            "safeName": "User"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "id",
+            "name": {
+              "wireValue": "id",
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "INTEGER",
@@ -43,7 +136,28 @@
             }
           },
           {
-            "name": "name",
+            "name": {
+              "wireValue": "name",
+              "name": {
+                "originalName": "name",
+                "camelCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "snakeCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NAME",
+                  "safeName": "NAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Name",
+                  "safeName": "Name"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -86,18 +200,93 @@
         "typeId": "shared:Post",
         "fernFilepath": {
           "allParts": [
-            "shared"
+            {
+              "originalName": "shared",
+              "camelCase": {
+                "unsafeName": "shared",
+                "safeName": "shared"
+              },
+              "snakeCase": {
+                "unsafeName": "shared",
+                "safeName": "shared"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SHARED",
+                "safeName": "SHARED"
+              },
+              "pascalCase": {
+                "unsafeName": "Shared",
+                "safeName": "Shared"
+              }
+            }
           ],
           "packagePath": [
-            "shared"
+            {
+              "originalName": "shared",
+              "camelCase": {
+                "unsafeName": "shared",
+                "safeName": "shared"
+              },
+              "snakeCase": {
+                "unsafeName": "shared",
+                "safeName": "shared"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SHARED",
+                "safeName": "SHARED"
+              },
+              "pascalCase": {
+                "unsafeName": "Shared",
+                "safeName": "Shared"
+              }
+            }
           ]
         },
-        "name": "Post"
+        "name": {
+          "originalName": "Post",
+          "camelCase": {
+            "unsafeName": "post",
+            "safeName": "post"
+          },
+          "snakeCase": {
+            "unsafeName": "post",
+            "safeName": "post"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "POST",
+            "safeName": "POST"
+          },
+          "pascalCase": {
+            "unsafeName": "Post",
+            "safeName": "Post"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "id",
+            "name": {
+              "wireValue": "id",
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "INTEGER",
@@ -116,7 +305,28 @@
             }
           },
           {
-            "name": "title",
+            "name": {
+              "wireValue": "title",
+              "name": {
+                "originalName": "title",
+                "camelCase": {
+                  "unsafeName": "title",
+                  "safeName": "title"
+                },
+                "snakeCase": {
+                  "unsafeName": "title",
+                  "safeName": "title"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TITLE",
+                  "safeName": "TITLE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Title",
+                  "safeName": "Title"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -159,18 +369,93 @@
         "typeId": "other:Comment",
         "fernFilepath": {
           "allParts": [
-            "other"
+            {
+              "originalName": "other",
+              "camelCase": {
+                "unsafeName": "other",
+                "safeName": "other"
+              },
+              "snakeCase": {
+                "unsafeName": "other",
+                "safeName": "other"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "OTHER",
+                "safeName": "OTHER"
+              },
+              "pascalCase": {
+                "unsafeName": "Other",
+                "safeName": "Other"
+              }
+            }
           ],
           "packagePath": [
-            "other"
+            {
+              "originalName": "other",
+              "camelCase": {
+                "unsafeName": "other",
+                "safeName": "other"
+              },
+              "snakeCase": {
+                "unsafeName": "other",
+                "safeName": "other"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "OTHER",
+                "safeName": "OTHER"
+              },
+              "pascalCase": {
+                "unsafeName": "Other",
+                "safeName": "Other"
+              }
+            }
           ]
         },
-        "name": "Comment"
+        "name": {
+          "originalName": "Comment",
+          "camelCase": {
+            "unsafeName": "comment",
+            "safeName": "comment"
+          },
+          "snakeCase": {
+            "unsafeName": "comment",
+            "safeName": "comment"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "COMMENT",
+            "safeName": "COMMENT"
+          },
+          "pascalCase": {
+            "unsafeName": "Comment",
+            "safeName": "Comment"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "id",
+            "name": {
+              "wireValue": "id",
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "Id",
+                  "safeName": "Id"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "INTEGER",
@@ -189,7 +474,28 @@
             }
           },
           {
-            "name": "text",
+            "name": {
+              "wireValue": "text",
+              "name": {
+                "originalName": "text",
+                "camelCase": {
+                  "unsafeName": "text",
+                  "safeName": "text"
+                },
+                "snakeCase": {
+                  "unsafeName": "text",
+                  "safeName": "text"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TEXT",
+                  "safeName": "TEXT"
+                },
+                "pascalCase": {
+                  "unsafeName": "Text",
+                  "safeName": "Text"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -229,7 +535,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      }
+    }
   },
   "errors": {},
   "services": {
@@ -237,10 +564,46 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            "shared"
+            {
+              "originalName": "shared",
+              "camelCase": {
+                "unsafeName": "shared",
+                "safeName": "shared"
+              },
+              "snakeCase": {
+                "unsafeName": "shared",
+                "safeName": "shared"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "SHARED",
+                "safeName": "SHARED"
+              },
+              "pascalCase": {
+                "unsafeName": "Shared",
+                "safeName": "Shared"
+              }
+            }
           ],
           "packagePath": [],
-          "file": "shared"
+          "file": {
+            "originalName": "shared",
+            "camelCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "snakeCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SHARED",
+              "safeName": "SHARED"
+            },
+            "pascalCase": {
+              "unsafeName": "Shared",
+              "safeName": "Shared"
+            }
+          }
         }
       },
       "basePath": {
@@ -265,7 +628,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "803255f1",
+                "id": "9449b5a4",
                 "url": "/users",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -298,18 +661,93 @@
                                 "shape": {
                                   "properties": [
                                     {
-                                      "name": "id",
+                                      "name": {
+                                        "wireValue": "id",
+                                        "name": {
+                                          "originalName": "id",
+                                          "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "shared:User",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "User"
+                                        "name": {
+                                          "originalName": "User",
+                                          "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": 1,
@@ -323,18 +761,93 @@
                                       }
                                     },
                                     {
-                                      "name": "name",
+                                      "name": {
+                                        "wireValue": "name",
+                                        "name": {
+                                          "originalName": "name",
+                                          "camelCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "NAME",
+                                            "safeName": "NAME"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Name",
+                                            "safeName": "Name"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "shared:User",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "User"
+                                        "name": {
+                                          "originalName": "User",
+                                          "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": "name",
@@ -356,13 +869,67 @@
                                   "typeId": "shared:User",
                                   "fernFilepath": {
                                     "allParts": [
-                                      "shared"
+                                      {
+                                        "originalName": "shared",
+                                        "camelCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "SHARED",
+                                          "safeName": "SHARED"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Shared",
+                                          "safeName": "Shared"
+                                        }
+                                      }
                                     ],
                                     "packagePath": [
-                                      "shared"
+                                      {
+                                        "originalName": "shared",
+                                        "camelCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "SHARED",
+                                          "safeName": "SHARED"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Shared",
+                                          "safeName": "Shared"
+                                        }
+                                      }
                                     ]
                                   },
-                                  "name": "User"
+                                  "name": {
+                                    "originalName": "User",
+                                    "camelCase": {
+                                      "unsafeName": "user",
+                                      "safeName": "user"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "user",
+                                      "safeName": "user"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "USER",
+                                      "safeName": "USER"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "User",
+                                      "safeName": "User"
+                                    }
+                                  }
                                 },
                                 "type": "named"
                               }
@@ -376,18 +943,93 @@
                                 "shape": {
                                   "properties": [
                                     {
-                                      "name": "id",
+                                      "name": {
+                                        "wireValue": "id",
+                                        "name": {
+                                          "originalName": "id",
+                                          "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "shared:User",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "User"
+                                        "name": {
+                                          "originalName": "User",
+                                          "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": 1,
@@ -401,18 +1043,93 @@
                                       }
                                     },
                                     {
-                                      "name": "name",
+                                      "name": {
+                                        "wireValue": "name",
+                                        "name": {
+                                          "originalName": "name",
+                                          "camelCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "name",
+                                            "safeName": "name"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "NAME",
+                                            "safeName": "NAME"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Name",
+                                            "safeName": "Name"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "shared:User",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "User"
+                                        "name": {
+                                          "originalName": "User",
+                                          "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": "name",
@@ -434,13 +1151,67 @@
                                   "typeId": "shared:User",
                                   "fernFilepath": {
                                     "allParts": [
-                                      "shared"
+                                      {
+                                        "originalName": "shared",
+                                        "camelCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "SHARED",
+                                          "safeName": "SHARED"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Shared",
+                                          "safeName": "Shared"
+                                        }
+                                      }
                                     ],
                                     "packagePath": [
-                                      "shared"
+                                      {
+                                        "originalName": "shared",
+                                        "camelCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "SHARED",
+                                          "safeName": "SHARED"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Shared",
+                                          "safeName": "Shared"
+                                        }
+                                      }
                                     ]
                                   },
-                                  "name": "User"
+                                  "name": {
+                                    "originalName": "User",
+                                    "camelCase": {
+                                      "unsafeName": "user",
+                                      "safeName": "user"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "user",
+                                      "safeName": "user"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "USER",
+                                      "safeName": "USER"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "User",
+                                      "safeName": "User"
+                                    }
+                                  }
                                 },
                                 "type": "named"
                               }
@@ -451,7 +1222,25 @@
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": "User",
+                            "name": {
+                              "originalName": "User",
+                              "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                              }
+                            },
                             "typeId": "shared:User",
                             "inline": false,
                             "type": "named"
@@ -479,7 +1268,25 @@
           },
           "audiences": [],
           "id": "endpoint_shared.getUsers",
-          "name": "getUsers",
+          "name": {
+            "originalName": "getUsers",
+            "camelCase": {
+              "unsafeName": "getUsers",
+              "safeName": "getUsers"
+            },
+            "snakeCase": {
+              "unsafeName": "get_users",
+              "safeName": "get_users"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_USERS",
+              "safeName": "GET_USERS"
+            },
+            "pascalCase": {
+              "unsafeName": "GetUsers",
+              "safeName": "GetUsers"
+            }
+          },
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -492,7 +1299,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "User",
+                      "name": {
+                        "originalName": "User",
+                        "camelCase": {
+                          "unsafeName": "user",
+                          "safeName": "user"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "user",
+                          "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "USER",
+                          "safeName": "USER"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "User",
+                          "safeName": "User"
+                        }
+                      },
                       "typeId": "shared:User",
                       "inline": false,
                       "type": "named"
@@ -561,7 +1386,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "User",
+                          "name": {
+                            "originalName": "User",
+                            "camelCase": {
+                              "unsafeName": "user",
+                              "safeName": "user"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "user",
+                              "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "USER",
+                              "safeName": "USER"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "User",
+                              "safeName": "User"
+                            }
+                          },
                           "typeId": "shared:User",
                           "inline": false,
                           "type": "named"
@@ -608,7 +1451,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "df1b1405",
+                "id": "3999428e",
                 "url": "/posts",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -641,18 +1484,93 @@
                                 "shape": {
                                   "properties": [
                                     {
-                                      "name": "id",
+                                      "name": {
+                                        "wireValue": "id",
+                                        "name": {
+                                          "originalName": "id",
+                                          "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "shared:Post",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Post"
+                                        "name": {
+                                          "originalName": "Post",
+                                          "camelCase": {
+                                            "unsafeName": "post",
+                                            "safeName": "post"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "post",
+                                            "safeName": "post"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "POST",
+                                            "safeName": "POST"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Post",
+                                            "safeName": "Post"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": 1,
@@ -666,18 +1584,93 @@
                                       }
                                     },
                                     {
-                                      "name": "title",
+                                      "name": {
+                                        "wireValue": "title",
+                                        "name": {
+                                          "originalName": "title",
+                                          "camelCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "TITLE",
+                                            "safeName": "TITLE"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Title",
+                                            "safeName": "Title"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "shared:Post",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Post"
+                                        "name": {
+                                          "originalName": "Post",
+                                          "camelCase": {
+                                            "unsafeName": "post",
+                                            "safeName": "post"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "post",
+                                            "safeName": "post"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "POST",
+                                            "safeName": "POST"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Post",
+                                            "safeName": "Post"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": "title",
@@ -699,13 +1692,67 @@
                                   "typeId": "shared:Post",
                                   "fernFilepath": {
                                     "allParts": [
-                                      "shared"
+                                      {
+                                        "originalName": "shared",
+                                        "camelCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "SHARED",
+                                          "safeName": "SHARED"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Shared",
+                                          "safeName": "Shared"
+                                        }
+                                      }
                                     ],
                                     "packagePath": [
-                                      "shared"
+                                      {
+                                        "originalName": "shared",
+                                        "camelCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "SHARED",
+                                          "safeName": "SHARED"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Shared",
+                                          "safeName": "Shared"
+                                        }
+                                      }
                                     ]
                                   },
-                                  "name": "Post"
+                                  "name": {
+                                    "originalName": "Post",
+                                    "camelCase": {
+                                      "unsafeName": "post",
+                                      "safeName": "post"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "post",
+                                      "safeName": "post"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "POST",
+                                      "safeName": "POST"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "Post",
+                                      "safeName": "Post"
+                                    }
+                                  }
                                 },
                                 "type": "named"
                               }
@@ -719,18 +1766,93 @@
                                 "shape": {
                                   "properties": [
                                     {
-                                      "name": "id",
+                                      "name": {
+                                        "wireValue": "id",
+                                        "name": {
+                                          "originalName": "id",
+                                          "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "shared:Post",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Post"
+                                        "name": {
+                                          "originalName": "Post",
+                                          "camelCase": {
+                                            "unsafeName": "post",
+                                            "safeName": "post"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "post",
+                                            "safeName": "post"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "POST",
+                                            "safeName": "POST"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Post",
+                                            "safeName": "Post"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": 1,
@@ -744,18 +1866,93 @@
                                       }
                                     },
                                     {
-                                      "name": "title",
+                                      "name": {
+                                        "wireValue": "title",
+                                        "name": {
+                                          "originalName": "title",
+                                          "camelCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "TITLE",
+                                            "safeName": "TITLE"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Title",
+                                            "safeName": "Title"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "shared:Post",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "shared"
+                                            {
+                                              "originalName": "shared",
+                                              "camelCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "shared",
+                                                "safeName": "shared"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "SHARED",
+                                                "safeName": "SHARED"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Shared",
+                                                "safeName": "Shared"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Post"
+                                        "name": {
+                                          "originalName": "Post",
+                                          "camelCase": {
+                                            "unsafeName": "post",
+                                            "safeName": "post"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "post",
+                                            "safeName": "post"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "POST",
+                                            "safeName": "POST"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Post",
+                                            "safeName": "Post"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": "title",
@@ -777,13 +1974,67 @@
                                   "typeId": "shared:Post",
                                   "fernFilepath": {
                                     "allParts": [
-                                      "shared"
+                                      {
+                                        "originalName": "shared",
+                                        "camelCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "SHARED",
+                                          "safeName": "SHARED"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Shared",
+                                          "safeName": "Shared"
+                                        }
+                                      }
                                     ],
                                     "packagePath": [
-                                      "shared"
+                                      {
+                                        "originalName": "shared",
+                                        "camelCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "shared",
+                                          "safeName": "shared"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "SHARED",
+                                          "safeName": "SHARED"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Shared",
+                                          "safeName": "Shared"
+                                        }
+                                      }
                                     ]
                                   },
-                                  "name": "Post"
+                                  "name": {
+                                    "originalName": "Post",
+                                    "camelCase": {
+                                      "unsafeName": "post",
+                                      "safeName": "post"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "post",
+                                      "safeName": "post"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "POST",
+                                      "safeName": "POST"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "Post",
+                                      "safeName": "Post"
+                                    }
+                                  }
                                 },
                                 "type": "named"
                               }
@@ -794,7 +2045,25 @@
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": "Post",
+                            "name": {
+                              "originalName": "Post",
+                              "camelCase": {
+                                "unsafeName": "post",
+                                "safeName": "post"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "post",
+                                "safeName": "post"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "POST",
+                                "safeName": "POST"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Post",
+                                "safeName": "Post"
+                              }
+                            },
                             "typeId": "shared:Post",
                             "inline": false,
                             "type": "named"
@@ -822,7 +2091,25 @@
           },
           "audiences": [],
           "id": "endpoint_shared.getPosts",
-          "name": "getPosts",
+          "name": {
+            "originalName": "getPosts",
+            "camelCase": {
+              "unsafeName": "getPosts",
+              "safeName": "getPosts"
+            },
+            "snakeCase": {
+              "unsafeName": "get_posts",
+              "safeName": "get_posts"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_POSTS",
+              "safeName": "GET_POSTS"
+            },
+            "pascalCase": {
+              "unsafeName": "GetPosts",
+              "safeName": "GetPosts"
+            }
+          },
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -835,7 +2122,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "Post",
+                      "name": {
+                        "originalName": "Post",
+                        "camelCase": {
+                          "unsafeName": "post",
+                          "safeName": "post"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "post",
+                          "safeName": "post"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "POST",
+                          "safeName": "POST"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Post",
+                          "safeName": "Post"
+                        }
+                      },
                       "typeId": "shared:Post",
                       "inline": false,
                       "type": "named"
@@ -904,7 +2209,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "Post",
+                          "name": {
+                            "originalName": "Post",
+                            "camelCase": {
+                              "unsafeName": "post",
+                              "safeName": "post"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "post",
+                              "safeName": "post"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "POST",
+                              "safeName": "POST"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Post",
+                              "safeName": "Post"
+                            }
+                          },
                           "typeId": "shared:Post",
                           "inline": false,
                           "type": "named"
@@ -943,10 +2266,46 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            "other"
+            {
+              "originalName": "other",
+              "camelCase": {
+                "unsafeName": "other",
+                "safeName": "other"
+              },
+              "snakeCase": {
+                "unsafeName": "other",
+                "safeName": "other"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "OTHER",
+                "safeName": "OTHER"
+              },
+              "pascalCase": {
+                "unsafeName": "Other",
+                "safeName": "Other"
+              }
+            }
           ],
           "packagePath": [],
-          "file": "other"
+          "file": {
+            "originalName": "other",
+            "camelCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "snakeCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OTHER",
+              "safeName": "OTHER"
+            },
+            "pascalCase": {
+              "unsafeName": "Other",
+              "safeName": "Other"
+            }
+          }
         }
       },
       "basePath": {
@@ -973,7 +2332,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "78f4d1a4",
+                "id": "9371df51",
                 "url": "/comments",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -1006,18 +2365,93 @@
                                 "shape": {
                                   "properties": [
                                     {
-                                      "name": "id",
+                                      "name": {
+                                        "wireValue": "id",
+                                        "name": {
+                                          "originalName": "id",
+                                          "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "other:Comment",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "other"
+                                            {
+                                              "originalName": "other",
+                                              "camelCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "OTHER",
+                                                "safeName": "OTHER"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Other",
+                                                "safeName": "Other"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "other"
+                                            {
+                                              "originalName": "other",
+                                              "camelCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "OTHER",
+                                                "safeName": "OTHER"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Other",
+                                                "safeName": "Other"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Comment"
+                                        "name": {
+                                          "originalName": "Comment",
+                                          "camelCase": {
+                                            "unsafeName": "comment",
+                                            "safeName": "comment"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "comment",
+                                            "safeName": "comment"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "COMMENT",
+                                            "safeName": "COMMENT"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Comment",
+                                            "safeName": "Comment"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": 1,
@@ -1031,18 +2465,93 @@
                                       }
                                     },
                                     {
-                                      "name": "text",
+                                      "name": {
+                                        "wireValue": "text",
+                                        "name": {
+                                          "originalName": "text",
+                                          "camelCase": {
+                                            "unsafeName": "text",
+                                            "safeName": "text"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "text",
+                                            "safeName": "text"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "TEXT",
+                                            "safeName": "TEXT"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Text",
+                                            "safeName": "Text"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "other:Comment",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "other"
+                                            {
+                                              "originalName": "other",
+                                              "camelCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "OTHER",
+                                                "safeName": "OTHER"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Other",
+                                                "safeName": "Other"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "other"
+                                            {
+                                              "originalName": "other",
+                                              "camelCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "OTHER",
+                                                "safeName": "OTHER"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Other",
+                                                "safeName": "Other"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Comment"
+                                        "name": {
+                                          "originalName": "Comment",
+                                          "camelCase": {
+                                            "unsafeName": "comment",
+                                            "safeName": "comment"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "comment",
+                                            "safeName": "comment"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "COMMENT",
+                                            "safeName": "COMMENT"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Comment",
+                                            "safeName": "Comment"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": "text",
@@ -1064,13 +2573,67 @@
                                   "typeId": "other:Comment",
                                   "fernFilepath": {
                                     "allParts": [
-                                      "other"
+                                      {
+                                        "originalName": "other",
+                                        "camelCase": {
+                                          "unsafeName": "other",
+                                          "safeName": "other"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "other",
+                                          "safeName": "other"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "OTHER",
+                                          "safeName": "OTHER"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Other",
+                                          "safeName": "Other"
+                                        }
+                                      }
                                     ],
                                     "packagePath": [
-                                      "other"
+                                      {
+                                        "originalName": "other",
+                                        "camelCase": {
+                                          "unsafeName": "other",
+                                          "safeName": "other"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "other",
+                                          "safeName": "other"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "OTHER",
+                                          "safeName": "OTHER"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Other",
+                                          "safeName": "Other"
+                                        }
+                                      }
                                     ]
                                   },
-                                  "name": "Comment"
+                                  "name": {
+                                    "originalName": "Comment",
+                                    "camelCase": {
+                                      "unsafeName": "comment",
+                                      "safeName": "comment"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "comment",
+                                      "safeName": "comment"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "COMMENT",
+                                      "safeName": "COMMENT"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "Comment",
+                                      "safeName": "Comment"
+                                    }
+                                  }
                                 },
                                 "type": "named"
                               }
@@ -1084,18 +2647,93 @@
                                 "shape": {
                                   "properties": [
                                     {
-                                      "name": "id",
+                                      "name": {
+                                        "wireValue": "id",
+                                        "name": {
+                                          "originalName": "id",
+                                          "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "other:Comment",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "other"
+                                            {
+                                              "originalName": "other",
+                                              "camelCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "OTHER",
+                                                "safeName": "OTHER"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Other",
+                                                "safeName": "Other"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "other"
+                                            {
+                                              "originalName": "other",
+                                              "camelCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "OTHER",
+                                                "safeName": "OTHER"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Other",
+                                                "safeName": "Other"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Comment"
+                                        "name": {
+                                          "originalName": "Comment",
+                                          "camelCase": {
+                                            "unsafeName": "comment",
+                                            "safeName": "comment"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "comment",
+                                            "safeName": "comment"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "COMMENT",
+                                            "safeName": "COMMENT"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Comment",
+                                            "safeName": "Comment"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": 1,
@@ -1109,18 +2747,93 @@
                                       }
                                     },
                                     {
-                                      "name": "text",
+                                      "name": {
+                                        "wireValue": "text",
+                                        "name": {
+                                          "originalName": "text",
+                                          "camelCase": {
+                                            "unsafeName": "text",
+                                            "safeName": "text"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "text",
+                                            "safeName": "text"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "TEXT",
+                                            "safeName": "TEXT"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Text",
+                                            "safeName": "Text"
+                                          }
+                                        }
+                                      },
                                       "originalTypeDeclaration": {
                                         "typeId": "other:Comment",
                                         "fernFilepath": {
                                           "allParts": [
-                                            "other"
+                                            {
+                                              "originalName": "other",
+                                              "camelCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "OTHER",
+                                                "safeName": "OTHER"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Other",
+                                                "safeName": "Other"
+                                              }
+                                            }
                                           ],
                                           "packagePath": [
-                                            "other"
+                                            {
+                                              "originalName": "other",
+                                              "camelCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "other",
+                                                "safeName": "other"
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "OTHER",
+                                                "safeName": "OTHER"
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "Other",
+                                                "safeName": "Other"
+                                              }
+                                            }
                                           ]
                                         },
-                                        "name": "Comment"
+                                        "name": {
+                                          "originalName": "Comment",
+                                          "camelCase": {
+                                            "unsafeName": "comment",
+                                            "safeName": "comment"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "comment",
+                                            "safeName": "comment"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "COMMENT",
+                                            "safeName": "COMMENT"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "Comment",
+                                            "safeName": "Comment"
+                                          }
+                                        }
                                       },
                                       "value": {
                                         "jsonExample": "text",
@@ -1142,13 +2855,67 @@
                                   "typeId": "other:Comment",
                                   "fernFilepath": {
                                     "allParts": [
-                                      "other"
+                                      {
+                                        "originalName": "other",
+                                        "camelCase": {
+                                          "unsafeName": "other",
+                                          "safeName": "other"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "other",
+                                          "safeName": "other"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "OTHER",
+                                          "safeName": "OTHER"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Other",
+                                          "safeName": "Other"
+                                        }
+                                      }
                                     ],
                                     "packagePath": [
-                                      "other"
+                                      {
+                                        "originalName": "other",
+                                        "camelCase": {
+                                          "unsafeName": "other",
+                                          "safeName": "other"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "other",
+                                          "safeName": "other"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "OTHER",
+                                          "safeName": "OTHER"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "Other",
+                                          "safeName": "Other"
+                                        }
+                                      }
                                     ]
                                   },
-                                  "name": "Comment"
+                                  "name": {
+                                    "originalName": "Comment",
+                                    "camelCase": {
+                                      "unsafeName": "comment",
+                                      "safeName": "comment"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "comment",
+                                      "safeName": "comment"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "COMMENT",
+                                      "safeName": "COMMENT"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "Comment",
+                                      "safeName": "Comment"
+                                    }
+                                  }
                                 },
                                 "type": "named"
                               }
@@ -1159,7 +2926,25 @@
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": "Comment",
+                            "name": {
+                              "originalName": "Comment",
+                              "camelCase": {
+                                "unsafeName": "comment",
+                                "safeName": "comment"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "comment",
+                                "safeName": "comment"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "COMMENT",
+                                "safeName": "COMMENT"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Comment",
+                                "safeName": "Comment"
+                              }
+                            },
                             "typeId": "other:Comment",
                             "inline": false,
                             "type": "named"
@@ -1187,7 +2972,25 @@
           },
           "audiences": [],
           "id": "endpoint_other.getComments",
-          "name": "getComments",
+          "name": {
+            "originalName": "getComments",
+            "camelCase": {
+              "unsafeName": "getComments",
+              "safeName": "getComments"
+            },
+            "snakeCase": {
+              "unsafeName": "get_comments",
+              "safeName": "get_comments"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_COMMENTS",
+              "safeName": "GET_COMMENTS"
+            },
+            "pascalCase": {
+              "unsafeName": "GetComments",
+              "safeName": "GetComments"
+            }
+          },
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -1200,7 +3003,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "Comment",
+                      "name": {
+                        "originalName": "Comment",
+                        "camelCase": {
+                          "unsafeName": "comment",
+                          "safeName": "comment"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "comment",
+                          "safeName": "comment"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "COMMENT",
+                          "safeName": "COMMENT"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Comment",
+                          "safeName": "Comment"
+                        }
+                      },
                       "typeId": "other:Comment",
                       "inline": false,
                       "type": "named"
@@ -1269,7 +3090,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "Comment",
+                          "name": {
+                            "originalName": "Comment",
+                            "camelCase": {
+                              "unsafeName": "comment",
+                              "safeName": "comment"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "comment",
+                              "safeName": "comment"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "COMMENT",
+                              "safeName": "COMMENT"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Comment",
+                              "safeName": "Comment"
+                            }
+                          },
                           "typeId": "other:Comment",
                           "inline": false,
                           "type": "named"
@@ -1305,16 +3144,106 @@
   "webhookGroups": {},
   "subpackages": {
     "subpackage_shared": {
-      "name": "shared",
+      "name": {
+        "originalName": "shared",
+        "camelCase": {
+          "unsafeName": "shared",
+          "safeName": "shared"
+        },
+        "snakeCase": {
+          "unsafeName": "shared",
+          "safeName": "shared"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "SHARED",
+          "safeName": "SHARED"
+        },
+        "pascalCase": {
+          "unsafeName": "Shared",
+          "safeName": "Shared"
+        }
+      },
       "fernFilepath": {
         "allParts": [
-          "shared",
-          "shared"
+          {
+            "originalName": "shared",
+            "camelCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "snakeCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SHARED",
+              "safeName": "SHARED"
+            },
+            "pascalCase": {
+              "unsafeName": "Shared",
+              "safeName": "Shared"
+            }
+          },
+          {
+            "originalName": "shared",
+            "camelCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "snakeCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SHARED",
+              "safeName": "SHARED"
+            },
+            "pascalCase": {
+              "unsafeName": "Shared",
+              "safeName": "Shared"
+            }
+          }
         ],
         "packagePath": [
-          "shared"
+          {
+            "originalName": "shared",
+            "camelCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "snakeCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SHARED",
+              "safeName": "SHARED"
+            },
+            "pascalCase": {
+              "unsafeName": "Shared",
+              "safeName": "Shared"
+            }
+          }
         ],
-        "file": "shared"
+        "file": {
+          "originalName": "shared",
+          "camelCase": {
+            "unsafeName": "shared",
+            "safeName": "shared"
+          },
+          "snakeCase": {
+            "unsafeName": "shared",
+            "safeName": "shared"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SHARED",
+            "safeName": "SHARED"
+          },
+          "pascalCase": {
+            "unsafeName": "Shared",
+            "safeName": "Shared"
+          }
+        }
       },
       "hasEndpointsInTree": false,
       "service": "service_shared",
@@ -1325,16 +3254,106 @@
       "types": []
     },
     "subpackage_shared/shared": {
-      "name": "shared",
+      "name": {
+        "originalName": "shared",
+        "camelCase": {
+          "unsafeName": "shared",
+          "safeName": "shared"
+        },
+        "snakeCase": {
+          "unsafeName": "shared",
+          "safeName": "shared"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "SHARED",
+          "safeName": "SHARED"
+        },
+        "pascalCase": {
+          "unsafeName": "Shared",
+          "safeName": "Shared"
+        }
+      },
       "fernFilepath": {
         "allParts": [
-          "shared",
-          "shared"
+          {
+            "originalName": "shared",
+            "camelCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "snakeCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SHARED",
+              "safeName": "SHARED"
+            },
+            "pascalCase": {
+              "unsafeName": "Shared",
+              "safeName": "Shared"
+            }
+          },
+          {
+            "originalName": "shared",
+            "camelCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "snakeCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SHARED",
+              "safeName": "SHARED"
+            },
+            "pascalCase": {
+              "unsafeName": "Shared",
+              "safeName": "Shared"
+            }
+          }
         ],
         "packagePath": [
-          "shared"
+          {
+            "originalName": "shared",
+            "camelCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "snakeCase": {
+              "unsafeName": "shared",
+              "safeName": "shared"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SHARED",
+              "safeName": "SHARED"
+            },
+            "pascalCase": {
+              "unsafeName": "Shared",
+              "safeName": "Shared"
+            }
+          }
         ],
-        "file": "shared"
+        "file": {
+          "originalName": "shared",
+          "camelCase": {
+            "unsafeName": "shared",
+            "safeName": "shared"
+          },
+          "snakeCase": {
+            "unsafeName": "shared",
+            "safeName": "shared"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SHARED",
+            "safeName": "SHARED"
+          },
+          "pascalCase": {
+            "unsafeName": "Shared",
+            "safeName": "Shared"
+          }
+        }
       },
       "hasEndpointsInTree": false,
       "subpackages": [],
@@ -1345,16 +3364,106 @@
       ]
     },
     "subpackage_other": {
-      "name": "other",
+      "name": {
+        "originalName": "other",
+        "camelCase": {
+          "unsafeName": "other",
+          "safeName": "other"
+        },
+        "snakeCase": {
+          "unsafeName": "other",
+          "safeName": "other"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "OTHER",
+          "safeName": "OTHER"
+        },
+        "pascalCase": {
+          "unsafeName": "Other",
+          "safeName": "Other"
+        }
+      },
       "fernFilepath": {
         "allParts": [
-          "other",
-          "other"
+          {
+            "originalName": "other",
+            "camelCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "snakeCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OTHER",
+              "safeName": "OTHER"
+            },
+            "pascalCase": {
+              "unsafeName": "Other",
+              "safeName": "Other"
+            }
+          },
+          {
+            "originalName": "other",
+            "camelCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "snakeCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OTHER",
+              "safeName": "OTHER"
+            },
+            "pascalCase": {
+              "unsafeName": "Other",
+              "safeName": "Other"
+            }
+          }
         ],
         "packagePath": [
-          "other"
+          {
+            "originalName": "other",
+            "camelCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "snakeCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OTHER",
+              "safeName": "OTHER"
+            },
+            "pascalCase": {
+              "unsafeName": "Other",
+              "safeName": "Other"
+            }
+          }
         ],
-        "file": "other"
+        "file": {
+          "originalName": "other",
+          "camelCase": {
+            "unsafeName": "other",
+            "safeName": "other"
+          },
+          "snakeCase": {
+            "unsafeName": "other",
+            "safeName": "other"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "OTHER",
+            "safeName": "OTHER"
+          },
+          "pascalCase": {
+            "unsafeName": "Other",
+            "safeName": "Other"
+          }
+        }
       },
       "service": "service_other",
       "types": [],
@@ -1365,16 +3474,106 @@
       "hasEndpointsInTree": false
     },
     "subpackage_other/other": {
-      "name": "other",
+      "name": {
+        "originalName": "other",
+        "camelCase": {
+          "unsafeName": "other",
+          "safeName": "other"
+        },
+        "snakeCase": {
+          "unsafeName": "other",
+          "safeName": "other"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "OTHER",
+          "safeName": "OTHER"
+        },
+        "pascalCase": {
+          "unsafeName": "Other",
+          "safeName": "Other"
+        }
+      },
       "fernFilepath": {
         "allParts": [
-          "other",
-          "other"
+          {
+            "originalName": "other",
+            "camelCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "snakeCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OTHER",
+              "safeName": "OTHER"
+            },
+            "pascalCase": {
+              "unsafeName": "Other",
+              "safeName": "Other"
+            }
+          },
+          {
+            "originalName": "other",
+            "camelCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "snakeCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OTHER",
+              "safeName": "OTHER"
+            },
+            "pascalCase": {
+              "unsafeName": "Other",
+              "safeName": "Other"
+            }
+          }
         ],
         "packagePath": [
-          "other"
+          {
+            "originalName": "other",
+            "camelCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "snakeCase": {
+              "unsafeName": "other",
+              "safeName": "other"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "OTHER",
+              "safeName": "OTHER"
+            },
+            "pascalCase": {
+              "unsafeName": "Other",
+              "safeName": "Other"
+            }
+          }
         ],
-        "file": "other"
+        "file": {
+          "originalName": "other",
+          "camelCase": {
+            "unsafeName": "other",
+            "safeName": "other"
+          },
+          "snakeCase": {
+            "unsafeName": "other",
+            "safeName": "other"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "OTHER",
+            "safeName": "OTHER"
+          },
+          "pascalCase": {
+            "unsafeName": "Other",
+            "safeName": "Other"
+          }
+        }
       },
       "types": [
         "other:Comment"
@@ -1394,10 +3593,46 @@
     ],
     "fernFilepath": {
       "allParts": [
-        "shared"
+        {
+          "originalName": "shared",
+          "camelCase": {
+            "unsafeName": "shared",
+            "safeName": "shared"
+          },
+          "snakeCase": {
+            "unsafeName": "shared",
+            "safeName": "shared"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SHARED",
+            "safeName": "SHARED"
+          },
+          "pascalCase": {
+            "unsafeName": "Shared",
+            "safeName": "Shared"
+          }
+        }
       ],
       "packagePath": [
-        "shared"
+        {
+          "originalName": "shared",
+          "camelCase": {
+            "unsafeName": "shared",
+            "safeName": "shared"
+          },
+          "snakeCase": {
+            "unsafeName": "shared",
+            "safeName": "shared"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SHARED",
+            "safeName": "SHARED"
+          },
+          "pascalCase": {
+            "unsafeName": "Shared",
+            "safeName": "Shared"
+          }
+        }
       ]
     },
     "hasEndpointsInTree": false

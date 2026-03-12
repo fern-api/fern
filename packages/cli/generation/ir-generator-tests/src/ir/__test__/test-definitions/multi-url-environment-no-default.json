@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "multi-url-environment-no-default",
+    "apiName": {
+        "originalName": "multi-url-environment-no-default",
+        "camelCase": {
+            "unsafeName": "multiURLEnvironmentNoDefault",
+            "safeName": "multiURLEnvironmentNoDefault"
+        },
+        "snakeCase": {
+            "unsafeName": "multi_url_environment_no_default",
+            "safeName": "multi_url_environment_no_default"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MULTI_URL_ENVIRONMENT_NO_DEFAULT",
+            "safeName": "MULTI_URL_ENVIRONMENT_NO_DEFAULT"
+        },
+        "pascalCase": {
+            "unsafeName": "MultiURLEnvironmentNoDefault",
+            "safeName": "MultiURLEnvironmentNoDefault"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -10,7 +28,25 @@
         "schemes": [
             {
                 "_type": "bearer",
-                "token": "token",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                },
                 "tokenEnvVar": null,
                 "key": "bearer",
                 "docs": null
@@ -28,10 +64,46 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "ec2"
+                        {
+                            "originalName": "ec2",
+                            "camelCase": {
+                                "unsafeName": "ec2",
+                                "safeName": "ec2"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ec2",
+                                "safeName": "ec2"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EC2",
+                                "safeName": "EC2"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ec2",
+                                "safeName": "Ec2"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "ec2"
+                    "file": {
+                        "originalName": "ec2",
+                        "camelCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EC2",
+                            "safeName": "EC2"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ec2",
+                            "safeName": "Ec2"
+                        }
+                    }
                 }
             },
             "displayName": null,
@@ -51,7 +123,25 @@
             "endpoints": [
                 {
                     "id": "endpoint_ec2.bootInstance",
-                    "name": "bootInstance",
+                    "name": {
+                        "originalName": "bootInstance",
+                        "camelCase": {
+                            "unsafeName": "bootInstance",
+                            "safeName": "bootInstance"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "boot_instance",
+                            "safeName": "boot_instance"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BOOT_INSTANCE",
+                            "safeName": "BOOT_INSTANCE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "BootInstance",
+                            "safeName": "BootInstance"
+                        }
+                    },
                     "displayName": null,
                     "auth": true,
                     "security": [
@@ -78,11 +168,50 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "BootInstanceRequest",
+                        "name": {
+                            "originalName": "BootInstanceRequest",
+                            "camelCase": {
+                                "unsafeName": "bootInstanceRequest",
+                                "safeName": "bootInstanceRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "boot_instance_request",
+                                "safeName": "boot_instance_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BOOT_INSTANCE_REQUEST",
+                                "safeName": "BOOT_INSTANCE_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "BootInstanceRequest",
+                                "safeName": "BootInstanceRequest"
+                            }
+                        },
                         "extends": [],
                         "properties": [
                             {
-                                "name": "size",
+                                "name": {
+                                    "wireValue": "size",
+                                    "name": {
+                                        "originalName": "size",
+                                        "camelCase": {
+                                            "unsafeName": "size",
+                                            "safeName": "size"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "size",
+                                            "safeName": "size"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SIZE",
+                                            "safeName": "SIZE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Size",
+                                            "safeName": "Size"
+                                        }
+                                    }
+                                },
                                 "valueType": {
                                     "_type": "primitive",
                                     "primitive": {
@@ -113,12 +242,66 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "BootInstanceRequest",
-                            "bodyKey": "body",
+                            "wrapperName": {
+                                "originalName": "BootInstanceRequest",
+                                "camelCase": {
+                                    "unsafeName": "bootInstanceRequest",
+                                    "safeName": "bootInstanceRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "boot_instance_request",
+                                    "safeName": "boot_instance_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BOOT_INSTANCE_REQUEST",
+                                    "safeName": "BOOT_INSTANCE_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "BootInstanceRequest",
+                                    "safeName": "BootInstanceRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -133,7 +316,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "6a563173",
+                                "id": "daf6f708",
                                 "url": "/ec2/boot",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -146,7 +329,28 @@
                                     "type": "inlinedRequestBody",
                                     "properties": [
                                         {
-                                            "name": "size",
+                                            "name": {
+                                                "wireValue": "size",
+                                                "name": {
+                                                    "originalName": "size",
+                                                    "camelCase": {
+                                                        "unsafeName": "size",
+                                                        "safeName": "size"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "size",
+                                                        "safeName": "size"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SIZE",
+                                                        "safeName": "SIZE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Size",
+                                                        "safeName": "Size"
+                                                    }
+                                                }
+                                            },
                                             "originalTypeDeclaration": null,
                                             "value": {
                                                 "shape": {
@@ -197,10 +401,46 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        "s3"
+                        {
+                            "originalName": "s3",
+                            "camelCase": {
+                                "unsafeName": "s3",
+                                "safeName": "s3"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "s3",
+                                "safeName": "s3"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "S3",
+                                "safeName": "S3"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "S3",
+                                "safeName": "S3"
+                            }
+                        }
                     ],
                     "packagePath": [],
-                    "file": "s3"
+                    "file": {
+                        "originalName": "s3",
+                        "camelCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        }
+                    }
                 }
             },
             "displayName": null,
@@ -220,7 +460,25 @@
             "endpoints": [
                 {
                     "id": "endpoint_s3.getPresignedUrl",
-                    "name": "getPresignedUrl",
+                    "name": {
+                        "originalName": "getPresignedUrl",
+                        "camelCase": {
+                            "unsafeName": "getPresignedURL",
+                            "safeName": "getPresignedURL"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_presigned_url",
+                            "safeName": "get_presigned_url"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_PRESIGNED_URL",
+                            "safeName": "GET_PRESIGNED_URL"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetPresignedURL",
+                            "safeName": "GetPresignedURL"
+                        }
+                    },
                     "displayName": null,
                     "auth": true,
                     "security": [
@@ -247,11 +505,50 @@
                     "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
-                        "name": "GetPresignedUrlRequest",
+                        "name": {
+                            "originalName": "GetPresignedUrlRequest",
+                            "camelCase": {
+                                "unsafeName": "getPresignedURLRequest",
+                                "safeName": "getPresignedURLRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "get_presigned_url_request",
+                                "safeName": "get_presigned_url_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "GET_PRESIGNED_URL_REQUEST",
+                                "safeName": "GET_PRESIGNED_URL_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "GetPresignedURLRequest",
+                                "safeName": "GetPresignedURLRequest"
+                            }
+                        },
                         "extends": [],
                         "properties": [
                             {
-                                "name": "s3Key",
+                                "name": {
+                                    "wireValue": "s3Key",
+                                    "name": {
+                                        "originalName": "s3Key",
+                                        "camelCase": {
+                                            "unsafeName": "s3Key",
+                                            "safeName": "s3Key"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "s3key",
+                                            "safeName": "s3key"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "S3KEY",
+                                            "safeName": "S3KEY"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "S3Key",
+                                            "safeName": "S3Key"
+                                        }
+                                    }
+                                },
                                 "valueType": {
                                     "_type": "primitive",
                                     "primitive": {
@@ -282,12 +579,66 @@
                     "sdkRequest": {
                         "shape": {
                             "type": "wrapper",
-                            "wrapperName": "GetPresignedUrlRequest",
-                            "bodyKey": "body",
+                            "wrapperName": {
+                                "originalName": "GetPresignedUrlRequest",
+                                "camelCase": {
+                                    "unsafeName": "getPresignedURLRequest",
+                                    "safeName": "getPresignedURLRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "get_presigned_url_request",
+                                    "safeName": "get_presigned_url_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "GET_PRESIGNED_URL_REQUEST",
+                                    "safeName": "GET_PRESIGNED_URL_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "GetPresignedURLRequest",
+                                    "safeName": "GetPresignedURLRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
                             "includePathParameters": false,
                             "onlyPathParameters": false
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -320,7 +671,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "dcf1e748",
+                                "id": "25097deb",
                                 "url": "/s3/presigned-url",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -333,7 +684,28 @@
                                     "type": "inlinedRequestBody",
                                     "properties": [
                                         {
-                                            "name": "s3Key",
+                                            "name": {
+                                                "wireValue": "s3Key",
+                                                "name": {
+                                                    "originalName": "s3Key",
+                                                    "camelCase": {
+                                                        "unsafeName": "s3Key",
+                                                        "safeName": "s3Key"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "s3key",
+                                                        "safeName": "s3key"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "S3KEY",
+                                                        "safeName": "S3KEY"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "S3Key",
+                                                        "safeName": "S3Key"
+                                                    }
+                                                }
+                                            },
                                             "originalTypeDeclaration": null,
                                             "value": {
                                                 "shape": {
@@ -392,7 +764,28 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": "errorInstanceId"
+        "errorInstanceIdKey": {
+            "wireValue": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            }
+        }
     },
     "environments": {
         "defaultEnvironment": null,
@@ -401,17 +794,71 @@
             "baseUrls": [
                 {
                     "id": "ec2",
-                    "name": "ec2"
+                    "name": {
+                        "originalName": "ec2",
+                        "camelCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EC2",
+                            "safeName": "EC2"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ec2",
+                            "safeName": "Ec2"
+                        }
+                    }
                 },
                 {
                     "id": "s3",
-                    "name": "s3"
+                    "name": {
+                        "originalName": "s3",
+                        "camelCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        }
+                    }
                 }
             ],
             "environments": [
                 {
                     "id": "Production",
-                    "name": "Production",
+                    "name": {
+                        "originalName": "Production",
+                        "camelCase": {
+                            "unsafeName": "production",
+                            "safeName": "production"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "production",
+                            "safeName": "production"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTION",
+                            "safeName": "PRODUCTION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Production",
+                            "safeName": "Production"
+                        }
+                    },
                     "urls": {
                         "ec2": "https://ec2.aws.com",
                         "s3": "https://s3.aws.com"
@@ -424,7 +871,25 @@
                 },
                 {
                     "id": "Staging",
-                    "name": "Staging",
+                    "name": {
+                        "originalName": "Staging",
+                        "camelCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STAGING",
+                            "safeName": "STAGING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Staging",
+                            "safeName": "Staging"
+                        }
+                    },
                     "urls": {
                         "ec2": "https://staging.ec2.aws.com",
                         "s3": "https://staging.s3.aws.com"
@@ -991,14 +1456,68 @@
     },
     "subpackages": {
         "subpackage_ec2": {
-            "name": "ec2",
+            "name": {
+                "originalName": "ec2",
+                "camelCase": {
+                    "unsafeName": "ec2",
+                    "safeName": "ec2"
+                },
+                "snakeCase": {
+                    "unsafeName": "ec2",
+                    "safeName": "ec2"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "EC2",
+                    "safeName": "EC2"
+                },
+                "pascalCase": {
+                    "unsafeName": "Ec2",
+                    "safeName": "Ec2"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "ec2"
+                    {
+                        "originalName": "ec2",
+                        "camelCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "ec2",
+                            "safeName": "ec2"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "EC2",
+                            "safeName": "EC2"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Ec2",
+                            "safeName": "Ec2"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "ec2"
+                "file": {
+                    "originalName": "ec2",
+                    "camelCase": {
+                        "unsafeName": "ec2",
+                        "safeName": "ec2"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "ec2",
+                        "safeName": "ec2"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "EC2",
+                        "safeName": "EC2"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Ec2",
+                        "safeName": "Ec2"
+                    }
+                }
             },
             "service": "service_ec2",
             "types": [],
@@ -1011,14 +1530,68 @@
             "docs": null
         },
         "subpackage_s3": {
-            "name": "s3",
+            "name": {
+                "originalName": "s3",
+                "camelCase": {
+                    "unsafeName": "s3",
+                    "safeName": "s3"
+                },
+                "snakeCase": {
+                    "unsafeName": "s3",
+                    "safeName": "s3"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "S3",
+                    "safeName": "S3"
+                },
+                "pascalCase": {
+                    "unsafeName": "S3",
+                    "safeName": "S3"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "s3"
+                    {
+                        "originalName": "s3",
+                        "camelCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "s3",
+                            "safeName": "s3"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "S3",
+                            "safeName": "S3"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "s3"
+                "file": {
+                    "originalName": "s3",
+                    "camelCase": {
+                        "unsafeName": "s3",
+                        "safeName": "s3"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "s3",
+                        "safeName": "s3"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "S3",
+                        "safeName": "S3"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "S3",
+                        "safeName": "S3"
+                    }
+                }
             },
             "service": "service_s3",
             "types": [],

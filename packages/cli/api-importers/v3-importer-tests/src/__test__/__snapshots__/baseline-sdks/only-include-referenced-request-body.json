@@ -1,6 +1,24 @@
 {
   "selfHosted": false,
-  "apiName": "api",
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    }
+  },
   "apiDisplayName": "Request Body Reference Test",
   "auth": {
     "requirement": "ALL",
@@ -12,7 +30,25 @@
     "type_:ItemMetadata": {
       "docs": "This schema is transitively referenced and should be kept",
       "name": {
-        "name": "ItemMetadata",
+        "name": {
+          "originalName": "ItemMetadata",
+          "camelCase": {
+            "unsafeName": "itemMetadata",
+            "safeName": "itemMetadata"
+          },
+          "snakeCase": {
+            "unsafeName": "item_metadata",
+            "safeName": "item_metadata"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ITEM_METADATA",
+            "safeName": "ITEM_METADATA"
+          },
+          "pascalCase": {
+            "unsafeName": "ItemMetadata",
+            "safeName": "ItemMetadata"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -23,7 +59,28 @@
         "extends": [],
         "properties": [
           {
-            "name": "tags",
+            "name": {
+              "wireValue": "tags",
+              "name": {
+                "originalName": "tags",
+                "camelCase": {
+                  "unsafeName": "tags",
+                  "safeName": "tags"
+                },
+                "snakeCase": {
+                  "unsafeName": "tags",
+                  "safeName": "tags"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "TAGS",
+                  "safeName": "TAGS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Tags",
+                  "safeName": "Tags"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -65,7 +122,25 @@
     "type_:Item": {
       "docs": "This schema is referenced by response and should be kept",
       "name": {
-        "name": "Item",
+        "name": {
+          "originalName": "Item",
+          "camelCase": {
+            "unsafeName": "item",
+            "safeName": "item"
+          },
+          "snakeCase": {
+            "unsafeName": "item",
+            "safeName": "item"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "ITEM",
+            "safeName": "ITEM"
+          },
+          "pascalCase": {
+            "unsafeName": "Item",
+            "safeName": "Item"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -76,7 +151,28 @@
         "extends": [],
         "properties": [
           {
-            "name": "id",
+            "name": {
+              "wireValue": "id",
+              "name": {
+                "originalName": "id",
+                "camelCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "snakeCase": {
+                  "unsafeName": "id",
+                  "safeName": "id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "INTEGER",
@@ -92,7 +188,28 @@
             }
           },
           {
-            "name": "name",
+            "name": {
+              "wireValue": "name",
+              "name": {
+                "originalName": "name",
+                "camelCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "snakeCase": {
+                  "unsafeName": "name",
+                  "safeName": "name"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "NAME",
+                  "safeName": "NAME"
+                },
+                "pascalCase": {
+                  "unsafeName": "Name",
+                  "safeName": "Name"
+                }
+              }
+            },
             "valueType": {
               "primitive": {
                 "v1": "STRING",
@@ -144,7 +261,25 @@
       "endpoints": [
         {
           "id": "endpoint_.createItem",
-          "name": "createItem",
+          "name": {
+            "originalName": "createItem",
+            "camelCase": {
+              "unsafeName": "createItem",
+              "safeName": "createItem"
+            },
+            "snakeCase": {
+              "unsafeName": "create_item",
+              "safeName": "create_item"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "CREATE_ITEM",
+              "safeName": "CREATE_ITEM"
+            },
+            "pascalCase": {
+              "unsafeName": "CreateItem",
+              "safeName": "CreateItem"
+            }
+          },
           "displayName": "Create an item",
           "auth": false,
           "idempotent": false,
@@ -162,12 +297,51 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": "CreateItemRequest",
+            "name": {
+              "originalName": "CreateItemRequest",
+              "camelCase": {
+                "unsafeName": "createItemRequest",
+                "safeName": "createItemRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "create_item_request",
+                "safeName": "create_item_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "CREATE_ITEM_REQUEST",
+                "safeName": "CREATE_ITEM_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "CreateItemRequest",
+                "safeName": "CreateItemRequest"
+              }
+            },
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
-                "name": "name",
+                "name": {
+                  "wireValue": "name",
+                  "name": {
+                    "originalName": "name",
+                    "camelCase": {
+                      "unsafeName": "name",
+                      "safeName": "name"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "name",
+                      "safeName": "name"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "NAME",
+                      "safeName": "NAME"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Name",
+                      "safeName": "Name"
+                    }
+                  }
+                },
                 "valueType": {
                   "primitive": {
                     "v1": "STRING",
@@ -183,11 +357,50 @@
                 }
               },
               {
-                "name": "metadata",
+                "name": {
+                  "wireValue": "metadata",
+                  "name": {
+                    "originalName": "metadata",
+                    "camelCase": {
+                      "unsafeName": "metadata",
+                      "safeName": "metadata"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "metadata",
+                      "safeName": "metadata"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "METADATA",
+                      "safeName": "METADATA"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Metadata",
+                      "safeName": "Metadata"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": "ItemMetadata",
+                      "name": {
+                        "originalName": "ItemMetadata",
+                        "camelCase": {
+                          "unsafeName": "itemMetadata",
+                          "safeName": "itemMetadata"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "item_metadata",
+                          "safeName": "item_metadata"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "ITEM_METADATA",
+                          "safeName": "ITEM_METADATA"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ItemMetadata",
+                          "safeName": "ItemMetadata"
+                        }
+                      },
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
@@ -211,20 +424,92 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": "CreateItemRequest",
-              "bodyKey": "body",
+              "wrapperName": {
+                "originalName": "CreateItemRequest",
+                "camelCase": {
+                  "unsafeName": "createItemRequest",
+                  "safeName": "createItemRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "create_item_request",
+                  "safeName": "create_item_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "CREATE_ITEM_REQUEST",
+                  "safeName": "CREATE_ITEM_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "CreateItemRequest",
+                  "safeName": "CreateItemRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Created",
                 "responseBodyType": {
-                  "name": "Item",
+                  "name": {
+                    "originalName": "Item",
+                    "camelCase": {
+                      "unsafeName": "item",
+                      "safeName": "item"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "item",
+                      "safeName": "item"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "ITEM",
+                      "safeName": "ITEM"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Item",
+                      "safeName": "Item"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -248,7 +533,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceID",
+          "safeName": "errorInstanceID"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceID",
+          "safeName": "ErrorInstanceID"
+        }
+      }
+    }
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"

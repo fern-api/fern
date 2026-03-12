@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "api",
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        }
+    },
     "apiDisplayName": "Webhook Audience Test",
     "apiDocs": null,
     "auth": {
@@ -16,7 +34,25 @@
         "type_:PublicPayload": {
             "inline": null,
             "name": {
-                "name": "PublicPayload",
+                "name": {
+                    "originalName": "PublicPayload",
+                    "camelCase": {
+                        "unsafeName": "publicPayload",
+                        "safeName": "publicPayload"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "public_payload",
+                        "safeName": "public_payload"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PUBLIC_PAYLOAD",
+                        "safeName": "PUBLIC_PAYLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PublicPayload",
+                        "safeName": "PublicPayload"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -30,7 +66,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "message",
+                        "name": {
+                            "wireValue": "message",
+                            "name": {
+                                "originalName": "message",
+                                "camelCase": {
+                                    "unsafeName": "message",
+                                    "safeName": "message"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "message",
+                                    "safeName": "message"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "MESSAGE",
+                                    "safeName": "MESSAGE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Message",
+                                    "safeName": "Message"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -69,7 +126,25 @@
         "type_:PrivatePayload": {
             "inline": null,
             "name": {
-                "name": "PrivatePayload",
+                "name": {
+                    "originalName": "PrivatePayload",
+                    "camelCase": {
+                        "unsafeName": "privatePayload",
+                        "safeName": "privatePayload"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "private_payload",
+                        "safeName": "private_payload"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRIVATE_PAYLOAD",
+                        "safeName": "PRIVATE_PAYLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PrivatePayload",
+                        "safeName": "PrivatePayload"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -83,7 +158,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "secret",
+                        "name": {
+                            "wireValue": "secret",
+                            "name": {
+                                "originalName": "secret",
+                                "camelCase": {
+                                    "unsafeName": "secret",
+                                    "safeName": "secret"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "secret",
+                                    "safeName": "secret"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SECRET",
+                                    "safeName": "SECRET"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Secret",
+                                    "safeName": "Secret"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -122,7 +218,25 @@
         "type_:NoAudiencePayload": {
             "inline": null,
             "name": {
-                "name": "NoAudiencePayload",
+                "name": {
+                    "originalName": "NoAudiencePayload",
+                    "camelCase": {
+                        "unsafeName": "noAudiencePayload",
+                        "safeName": "noAudiencePayload"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "no_audience_payload",
+                        "safeName": "no_audience_payload"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NO_AUDIENCE_PAYLOAD",
+                        "safeName": "NO_AUDIENCE_PAYLOAD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NoAudiencePayload",
+                        "safeName": "NoAudiencePayload"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -136,7 +250,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "data",
+                        "name": {
+                            "wireValue": "data",
+                            "name": {
+                                "originalName": "data",
+                                "camelCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DATA",
+                                    "safeName": "DATA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Data",
+                                    "safeName": "Data"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -176,7 +311,28 @@
     "errors": {},
     "services": {},
     "constants": {
-        "errorInstanceIdKey": "errorInstanceId"
+        "errorInstanceIdKey": {
+            "wireValue": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            }
+        }
     },
     "environments": null,
     "errorDiscriminationStrategy": {
@@ -199,13 +355,49 @@
                 "id": "webhooks_webhooks.publicWebhook",
                 "displayName": null,
                 "method": "POST",
-                "name": "publicWebhook",
+                "name": {
+                    "originalName": "publicWebhook",
+                    "camelCase": {
+                        "unsafeName": "publicWebhook",
+                        "safeName": "publicWebhook"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "public_webhook",
+                        "safeName": "public_webhook"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PUBLIC_WEBHOOK",
+                        "safeName": "PUBLIC_WEBHOOK"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PublicWebhook",
+                        "safeName": "PublicWebhook"
+                    }
+                },
                 "headers": [],
                 "payload": {
                     "type": "reference",
                     "payloadType": {
                         "_type": "named",
-                        "name": "PublicPayload",
+                        "name": {
+                            "originalName": "PublicPayload",
+                            "camelCase": {
+                                "unsafeName": "publicPayload",
+                                "safeName": "publicPayload"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "public_payload",
+                                "safeName": "public_payload"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PUBLIC_PAYLOAD",
+                                "safeName": "PUBLIC_PAYLOAD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PublicPayload",
+                                "safeName": "PublicPayload"
+                            }
+                        },
                         "fernFilepath": {
                             "allParts": [],
                             "packagePath": [],
@@ -234,14 +426,53 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "name": "PublicPayload",
+                                    "name": {
+                                        "originalName": "PublicPayload",
+                                        "camelCase": {
+                                            "unsafeName": "publicPayload",
+                                            "safeName": "publicPayload"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "public_payload",
+                                            "safeName": "public_payload"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "PUBLIC_PAYLOAD",
+                                            "safeName": "PUBLIC_PAYLOAD"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PublicPayload",
+                                            "safeName": "PublicPayload"
+                                        }
+                                    },
                                     "displayName": null
                                 },
                                 "shape": {
                                     "type": "object",
                                     "properties": [
                                         {
-                                            "name": "message",
+                                            "name": {
+                                                "wireValue": "message",
+                                                "name": {
+                                                    "originalName": "message",
+                                                    "camelCase": {
+                                                        "unsafeName": "message",
+                                                        "safeName": "message"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "message",
+                                                        "safeName": "message"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "MESSAGE",
+                                                        "safeName": "MESSAGE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Message",
+                                                        "safeName": "Message"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -261,7 +492,25 @@
                                                     "packagePath": [],
                                                     "file": null
                                                 },
-                                                "name": "PublicPayload",
+                                                "name": {
+                                                    "originalName": "PublicPayload",
+                                                    "camelCase": {
+                                                        "unsafeName": "publicPayload",
+                                                        "safeName": "publicPayload"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "public_payload",
+                                                        "safeName": "public_payload"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "PUBLIC_PAYLOAD",
+                                                        "safeName": "PUBLIC_PAYLOAD"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PublicPayload",
+                                                        "safeName": "PublicPayload"
+                                                    }
+                                                },
                                                 "displayName": null
                                             },
                                             "propertyAccess": null
@@ -285,13 +534,49 @@
                 "id": "webhooks_webhooks.privateWebhook",
                 "displayName": null,
                 "method": "POST",
-                "name": "privateWebhook",
+                "name": {
+                    "originalName": "privateWebhook",
+                    "camelCase": {
+                        "unsafeName": "privateWebhook",
+                        "safeName": "privateWebhook"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "private_webhook",
+                        "safeName": "private_webhook"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PRIVATE_WEBHOOK",
+                        "safeName": "PRIVATE_WEBHOOK"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PrivateWebhook",
+                        "safeName": "PrivateWebhook"
+                    }
+                },
                 "headers": [],
                 "payload": {
                     "type": "reference",
                     "payloadType": {
                         "_type": "named",
-                        "name": "PrivatePayload",
+                        "name": {
+                            "originalName": "PrivatePayload",
+                            "camelCase": {
+                                "unsafeName": "privatePayload",
+                                "safeName": "privatePayload"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "private_payload",
+                                "safeName": "private_payload"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRIVATE_PAYLOAD",
+                                "safeName": "PRIVATE_PAYLOAD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PrivatePayload",
+                                "safeName": "PrivatePayload"
+                            }
+                        },
                         "fernFilepath": {
                             "allParts": [],
                             "packagePath": [],
@@ -320,14 +605,53 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "name": "PrivatePayload",
+                                    "name": {
+                                        "originalName": "PrivatePayload",
+                                        "camelCase": {
+                                            "unsafeName": "privatePayload",
+                                            "safeName": "privatePayload"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "private_payload",
+                                            "safeName": "private_payload"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "PRIVATE_PAYLOAD",
+                                            "safeName": "PRIVATE_PAYLOAD"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PrivatePayload",
+                                            "safeName": "PrivatePayload"
+                                        }
+                                    },
                                     "displayName": null
                                 },
                                 "shape": {
                                     "type": "object",
                                     "properties": [
                                         {
-                                            "name": "secret",
+                                            "name": {
+                                                "wireValue": "secret",
+                                                "name": {
+                                                    "originalName": "secret",
+                                                    "camelCase": {
+                                                        "unsafeName": "secret",
+                                                        "safeName": "secret"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "secret",
+                                                        "safeName": "secret"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "SECRET",
+                                                        "safeName": "SECRET"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Secret",
+                                                        "safeName": "Secret"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -347,7 +671,25 @@
                                                     "packagePath": [],
                                                     "file": null
                                                 },
-                                                "name": "PrivatePayload",
+                                                "name": {
+                                                    "originalName": "PrivatePayload",
+                                                    "camelCase": {
+                                                        "unsafeName": "privatePayload",
+                                                        "safeName": "privatePayload"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "private_payload",
+                                                        "safeName": "private_payload"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "PRIVATE_PAYLOAD",
+                                                        "safeName": "PRIVATE_PAYLOAD"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "PrivatePayload",
+                                                        "safeName": "PrivatePayload"
+                                                    }
+                                                },
                                                 "displayName": null
                                             },
                                             "propertyAccess": null
@@ -371,13 +713,49 @@
                 "id": "webhooks_webhooks.noAudienceWebhook",
                 "displayName": null,
                 "method": "POST",
-                "name": "noAudienceWebhook",
+                "name": {
+                    "originalName": "noAudienceWebhook",
+                    "camelCase": {
+                        "unsafeName": "noAudienceWebhook",
+                        "safeName": "noAudienceWebhook"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "no_audience_webhook",
+                        "safeName": "no_audience_webhook"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "NO_AUDIENCE_WEBHOOK",
+                        "safeName": "NO_AUDIENCE_WEBHOOK"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "NoAudienceWebhook",
+                        "safeName": "NoAudienceWebhook"
+                    }
+                },
                 "headers": [],
                 "payload": {
                     "type": "reference",
                     "payloadType": {
                         "_type": "named",
-                        "name": "NoAudiencePayload",
+                        "name": {
+                            "originalName": "NoAudiencePayload",
+                            "camelCase": {
+                                "unsafeName": "noAudiencePayload",
+                                "safeName": "noAudiencePayload"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "no_audience_payload",
+                                "safeName": "no_audience_payload"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NO_AUDIENCE_PAYLOAD",
+                                "safeName": "NO_AUDIENCE_PAYLOAD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NoAudiencePayload",
+                                "safeName": "NoAudiencePayload"
+                            }
+                        },
                         "fernFilepath": {
                             "allParts": [],
                             "packagePath": [],
@@ -406,14 +784,53 @@
                                         "packagePath": [],
                                         "file": null
                                     },
-                                    "name": "NoAudiencePayload",
+                                    "name": {
+                                        "originalName": "NoAudiencePayload",
+                                        "camelCase": {
+                                            "unsafeName": "noAudiencePayload",
+                                            "safeName": "noAudiencePayload"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "no_audience_payload",
+                                            "safeName": "no_audience_payload"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NO_AUDIENCE_PAYLOAD",
+                                            "safeName": "NO_AUDIENCE_PAYLOAD"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "NoAudiencePayload",
+                                            "safeName": "NoAudiencePayload"
+                                        }
+                                    },
                                     "displayName": null
                                 },
                                 "shape": {
                                     "type": "object",
                                     "properties": [
                                         {
-                                            "name": "data",
+                                            "name": {
+                                                "wireValue": "data",
+                                                "name": {
+                                                    "originalName": "data",
+                                                    "camelCase": {
+                                                        "unsafeName": "data",
+                                                        "safeName": "data"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "data",
+                                                        "safeName": "data"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "DATA",
+                                                        "safeName": "DATA"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Data",
+                                                        "safeName": "Data"
+                                                    }
+                                                }
+                                            },
                                             "value": {
                                                 "shape": {
                                                     "type": "primitive",
@@ -433,7 +850,25 @@
                                                     "packagePath": [],
                                                     "file": null
                                                 },
-                                                "name": "NoAudiencePayload",
+                                                "name": {
+                                                    "originalName": "NoAudiencePayload",
+                                                    "camelCase": {
+                                                        "unsafeName": "noAudiencePayload",
+                                                        "safeName": "noAudiencePayload"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "no_audience_payload",
+                                                        "safeName": "no_audience_payload"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "NO_AUDIENCE_PAYLOAD",
+                                                        "safeName": "NO_AUDIENCE_PAYLOAD"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "NoAudiencePayload",
+                                                        "safeName": "NoAudiencePayload"
+                                                    }
+                                                },
                                                 "displayName": null
                                             },
                                             "propertyAccess": null
@@ -669,14 +1104,68 @@
     },
     "subpackages": {
         "subpackage_webhooks": {
-            "name": "webhooks",
+            "name": {
+                "originalName": "webhooks",
+                "camelCase": {
+                    "unsafeName": "webhooks",
+                    "safeName": "webhooks"
+                },
+                "snakeCase": {
+                    "unsafeName": "webhooks",
+                    "safeName": "webhooks"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "WEBHOOKS",
+                    "safeName": "WEBHOOKS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Webhooks",
+                    "safeName": "Webhooks"
+                }
+            },
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    "webhooks"
+                    {
+                        "originalName": "webhooks",
+                        "camelCase": {
+                            "unsafeName": "webhooks",
+                            "safeName": "webhooks"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "webhooks",
+                            "safeName": "webhooks"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "WEBHOOKS",
+                            "safeName": "WEBHOOKS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Webhooks",
+                            "safeName": "Webhooks"
+                        }
+                    }
                 ],
                 "packagePath": [],
-                "file": "webhooks"
+                "file": {
+                    "originalName": "webhooks",
+                    "camelCase": {
+                        "unsafeName": "webhooks",
+                        "safeName": "webhooks"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "webhooks",
+                        "safeName": "webhooks"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WEBHOOKS",
+                        "safeName": "WEBHOOKS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Webhooks",
+                        "safeName": "Webhooks"
+                    }
+                }
             },
             "service": null,
             "types": [],

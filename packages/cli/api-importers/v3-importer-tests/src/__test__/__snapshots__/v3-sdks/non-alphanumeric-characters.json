@@ -12,12 +12,51 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "Settings"
+        "name": {
+          "originalName": "Settings",
+          "camelCase": {
+            "unsafeName": "settings",
+            "safeName": "settings"
+          },
+          "snakeCase": {
+            "unsafeName": "settings",
+            "safeName": "settings"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "SETTINGS",
+            "safeName": "SETTINGS"
+          },
+          "pascalCase": {
+            "unsafeName": "Settings",
+            "safeName": "Settings"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "separator",
+            "name": {
+              "wireValue": "separator",
+              "name": {
+                "originalName": "separator",
+                "camelCase": {
+                  "unsafeName": "separator",
+                  "safeName": "separator"
+                },
+                "snakeCase": {
+                  "unsafeName": "separator",
+                  "safeName": "separator"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SEPARATOR",
+                  "safeName": "SEPARATOR"
+                },
+                "pascalCase": {
+                  "unsafeName": "Separator",
+                  "safeName": "Separator"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -25,7 +64,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "DocumentIDSeparators",
+                  "name": {
+                    "originalName": "DocumentIDSeparators",
+                    "camelCase": {
+                      "unsafeName": "documentIdSeparators",
+                      "safeName": "documentIdSeparators"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "document_id_separators",
+                      "safeName": "document_id_separators"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "DOCUMENT_ID_SEPARATORS",
+                      "safeName": "DOCUMENT_ID_SEPARATORS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "DocumentIdSeparators",
+                      "safeName": "DocumentIdSeparators"
+                    }
+                  },
                   "typeId": "DocumentIDSeparators",
                   "inline": false,
                   "type": "named"
@@ -65,24 +122,147 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "DocumentIDSeparators"
+        "name": {
+          "originalName": "DocumentIDSeparators",
+          "camelCase": {
+            "unsafeName": "documentIdSeparators",
+            "safeName": "documentIdSeparators"
+          },
+          "snakeCase": {
+            "unsafeName": "document_id_separators",
+            "safeName": "document_id_separators"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DOCUMENT_ID_SEPARATORS",
+            "safeName": "DOCUMENT_ID_SEPARATORS"
+          },
+          "pascalCase": {
+            "unsafeName": "DocumentIdSeparators",
+            "safeName": "DocumentIdSeparators"
+          }
+        }
       },
       "shape": {
         "values": [
           {
-            "name": "/"
+            "name": {
+              "wireValue": "/",
+              "name": {
+                "originalName": "/",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              }
+            }
           },
           {
-            "name": "-"
+            "name": {
+              "wireValue": "-",
+              "name": {
+                "originalName": "-",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              }
+            }
           },
           {
-            "name": "|"
+            "name": {
+              "wireValue": "|",
+              "name": {
+                "originalName": "|",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              }
+            }
           },
           {
-            "name": "."
+            "name": {
+              "wireValue": ".",
+              "name": {
+                "originalName": ".",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              }
+            }
           },
           {
-            "name": ""
+            "name": {
+              "wireValue": "",
+              "name": {
+                "originalName": "",
+                "camelCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "snakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                },
+                "pascalCase": {
+                  "unsafeName": "",
+                  "safeName": ""
+                }
+              }
+            }
           }
         ],
         "type": "enum"
@@ -130,7 +310,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "6ffc087f",
+                "id": "abd77a41",
                 "url": "/settings",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -144,14 +324,53 @@
                     "shape": {
                       "properties": [
                         {
-                          "name": "separator",
+                          "name": {
+                            "wireValue": "separator",
+                            "name": {
+                              "originalName": "separator",
+                              "camelCase": {
+                                "unsafeName": "separator",
+                                "safeName": "separator"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "separator",
+                                "safeName": "separator"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "SEPARATOR",
+                                "safeName": "SEPARATOR"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Separator",
+                                "safeName": "Separator"
+                              }
+                            }
+                          },
                           "originalTypeDeclaration": {
                             "typeId": "Settings",
                             "fernFilepath": {
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": "Settings"
+                            "name": {
+                              "originalName": "Settings",
+                              "camelCase": {
+                                "unsafeName": "settings",
+                                "safeName": "settings"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "settings",
+                                "safeName": "settings"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "SETTINGS",
+                                "safeName": "SETTINGS"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "Settings",
+                                "safeName": "Settings"
+                              }
+                            }
                           },
                           "value": {
                             "shape": {
@@ -161,7 +380,25 @@
                                     "allParts": [],
                                     "packagePath": []
                                   },
-                                  "name": "DocumentIDSeparators",
+                                  "name": {
+                                    "originalName": "DocumentIDSeparators",
+                                    "camelCase": {
+                                      "unsafeName": "documentIdSeparators",
+                                      "safeName": "documentIdSeparators"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "document_id_separators",
+                                      "safeName": "document_id_separators"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "DOCUMENT_ID_SEPARATORS",
+                                      "safeName": "DOCUMENT_ID_SEPARATORS"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "DocumentIdSeparators",
+                                      "safeName": "DocumentIdSeparators"
+                                    }
+                                  },
                                   "typeId": "DocumentIDSeparators",
                                   "inline": false,
                                   "type": "named"
@@ -181,7 +418,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "Settings"
+                      "name": {
+                        "originalName": "Settings",
+                        "camelCase": {
+                          "unsafeName": "settings",
+                          "safeName": "settings"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "settings",
+                          "safeName": "settings"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "SETTINGS",
+                          "safeName": "SETTINGS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Settings",
+                          "safeName": "Settings"
+                        }
+                      }
                     },
                     "type": "named"
                   },
@@ -197,14 +452,53 @@
                         "shape": {
                           "properties": [
                             {
-                              "name": "separator",
+                              "name": {
+                                "wireValue": "separator",
+                                "name": {
+                                  "originalName": "separator",
+                                  "camelCase": {
+                                    "unsafeName": "separator",
+                                    "safeName": "separator"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "separator",
+                                    "safeName": "separator"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "SEPARATOR",
+                                    "safeName": "SEPARATOR"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Separator",
+                                    "safeName": "Separator"
+                                  }
+                                }
+                              },
                               "originalTypeDeclaration": {
                                 "typeId": "Settings",
                                 "fernFilepath": {
                                   "allParts": [],
                                   "packagePath": []
                                 },
-                                "name": "Settings"
+                                "name": {
+                                  "originalName": "Settings",
+                                  "camelCase": {
+                                    "unsafeName": "settings",
+                                    "safeName": "settings"
+                                  },
+                                  "snakeCase": {
+                                    "unsafeName": "settings",
+                                    "safeName": "settings"
+                                  },
+                                  "screamingSnakeCase": {
+                                    "unsafeName": "SETTINGS",
+                                    "safeName": "SETTINGS"
+                                  },
+                                  "pascalCase": {
+                                    "unsafeName": "Settings",
+                                    "safeName": "Settings"
+                                  }
+                                }
                               },
                               "value": {
                                 "jsonExample": "/",
@@ -214,7 +508,28 @@
                                       "jsonExample": "/",
                                       "shape": {
                                         "shape": {
-                                          "value": "/",
+                                          "value": {
+                                            "wireValue": "/",
+                                            "name": {
+                                              "originalName": "/",
+                                              "camelCase": {
+                                                "unsafeName": "",
+                                                "safeName": ""
+                                              },
+                                              "snakeCase": {
+                                                "unsafeName": "",
+                                                "safeName": ""
+                                              },
+                                              "screamingSnakeCase": {
+                                                "unsafeName": "",
+                                                "safeName": ""
+                                              },
+                                              "pascalCase": {
+                                                "unsafeName": "",
+                                                "safeName": ""
+                                              }
+                                            }
+                                          },
                                           "type": "enum"
                                         },
                                         "typeName": {
@@ -223,7 +538,25 @@
                                             "allParts": [],
                                             "packagePath": []
                                           },
-                                          "name": "DocumentIDSeparators"
+                                          "name": {
+                                            "originalName": "DocumentIDSeparators",
+                                            "camelCase": {
+                                              "unsafeName": "documentIdSeparators",
+                                              "safeName": "documentIdSeparators"
+                                            },
+                                            "snakeCase": {
+                                              "unsafeName": "document_id_separators",
+                                              "safeName": "document_id_separators"
+                                            },
+                                            "screamingSnakeCase": {
+                                              "unsafeName": "DOCUMENT_ID_SEPARATORS",
+                                              "safeName": "DOCUMENT_ID_SEPARATORS"
+                                            },
+                                            "pascalCase": {
+                                              "unsafeName": "DocumentIdSeparators",
+                                              "safeName": "DocumentIdSeparators"
+                                            }
+                                          }
                                         },
                                         "type": "named"
                                       }
@@ -233,7 +566,25 @@
                                         "allParts": [],
                                         "packagePath": []
                                       },
-                                      "name": "DocumentIDSeparators",
+                                      "name": {
+                                        "originalName": "DocumentIDSeparators",
+                                        "camelCase": {
+                                          "unsafeName": "documentIdSeparators",
+                                          "safeName": "documentIdSeparators"
+                                        },
+                                        "snakeCase": {
+                                          "unsafeName": "document_id_separators",
+                                          "safeName": "document_id_separators"
+                                        },
+                                        "screamingSnakeCase": {
+                                          "unsafeName": "DOCUMENT_ID_SEPARATORS",
+                                          "safeName": "DOCUMENT_ID_SEPARATORS"
+                                        },
+                                        "pascalCase": {
+                                          "unsafeName": "DocumentIdSeparators",
+                                          "safeName": "DocumentIdSeparators"
+                                        }
+                                      },
                                       "typeId": "DocumentIDSeparators",
                                       "inline": false,
                                       "type": "named"
@@ -253,7 +604,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "Settings"
+                          "name": {
+                            "originalName": "Settings",
+                            "camelCase": {
+                              "unsafeName": "settings",
+                              "safeName": "settings"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "settings",
+                              "safeName": "settings"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "SETTINGS",
+                              "safeName": "SETTINGS"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Settings",
+                              "safeName": "Settings"
+                            }
+                          }
                         },
                         "type": "named"
                       }
@@ -276,7 +645,25 @@
           },
           "audiences": [],
           "id": "endpoint_.patchSettings",
-          "name": "patchSettings",
+          "name": {
+            "originalName": "patchSettings",
+            "camelCase": {
+              "unsafeName": "patchSettings",
+              "safeName": "patchSettings"
+            },
+            "snakeCase": {
+              "unsafeName": "patch_settings",
+              "safeName": "patch_settings"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "PATCH_SETTINGS",
+              "safeName": "PATCH_SETTINGS"
+            },
+            "pascalCase": {
+              "unsafeName": "PatchSettings",
+              "safeName": "PatchSettings"
+            }
+          },
           "requestBody": {
             "contentType": "application/json",
             "requestBodyType": {
@@ -284,7 +671,25 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": "Settings",
+              "name": {
+                "originalName": "Settings",
+                "camelCase": {
+                  "unsafeName": "settings",
+                  "safeName": "settings"
+                },
+                "snakeCase": {
+                  "unsafeName": "settings",
+                  "safeName": "settings"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SETTINGS",
+                  "safeName": "SETTINGS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Settings",
+                  "safeName": "Settings"
+                }
+              },
               "typeId": "Settings",
               "inline": false,
               "type": "named"
@@ -306,7 +711,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "Settings",
+                  "name": {
+                    "originalName": "Settings",
+                    "camelCase": {
+                      "unsafeName": "settings",
+                      "safeName": "settings"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "settings",
+                      "safeName": "settings"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SETTINGS",
+                      "safeName": "SETTINGS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Settings",
+                      "safeName": "Settings"
+                    }
+                  },
                   "typeId": "Settings",
                   "inline": false,
                   "type": "named"
@@ -330,7 +753,25 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": "Settings",
+                  "name": {
+                    "originalName": "Settings",
+                    "camelCase": {
+                      "unsafeName": "settings",
+                      "safeName": "settings"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "settings",
+                      "safeName": "settings"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SETTINGS",
+                      "safeName": "SETTINGS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Settings",
+                      "safeName": "Settings"
+                    }
+                  },
                   "typeId": "Settings",
                   "inline": false,
                   "type": "named"
@@ -388,7 +829,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "Settings",
+                      "name": {
+                        "originalName": "Settings",
+                        "camelCase": {
+                          "unsafeName": "settings",
+                          "safeName": "settings"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "settings",
+                          "safeName": "settings"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "SETTINGS",
+                          "safeName": "SETTINGS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Settings",
+                          "safeName": "Settings"
+                        }
+                      },
                       "typeId": "Settings",
                       "inline": false,
                       "type": "named"
@@ -454,8 +913,47 @@
       "sdkVersion": ""
     }
   },
-  "apiName": "Enum of separator characters",
+  "apiName": {
+    "originalName": "Enum of separator characters",
+    "camelCase": {
+      "unsafeName": "enumOfSeparatorCharacters",
+      "safeName": "enumOfSeparatorCharacters"
+    },
+    "snakeCase": {
+      "unsafeName": "enum_of_separator_characters",
+      "safeName": "enum_of_separator_characters"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "ENUM_OF_SEPARATOR_CHARACTERS",
+      "safeName": "ENUM_OF_SEPARATOR_CHARACTERS"
+    },
+    "pascalCase": {
+      "unsafeName": "EnumOfSeparatorCharacters",
+      "safeName": "EnumOfSeparatorCharacters"
+    }
+  },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      }
+    }
   }
 }

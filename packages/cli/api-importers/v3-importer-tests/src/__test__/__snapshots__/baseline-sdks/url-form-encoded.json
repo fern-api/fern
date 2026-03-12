@@ -1,6 +1,24 @@
 {
   "selfHosted": false,
-  "apiName": "api",
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    }
+  },
   "apiDisplayName": "URL Form Encoded API",
   "auth": {
     "requirement": "ALL",
@@ -11,7 +29,25 @@
   "types": {
     "type_:PostSubmitResponse": {
       "name": {
-        "name": "PostSubmitResponse",
+        "name": {
+          "originalName": "PostSubmitResponse",
+          "camelCase": {
+            "unsafeName": "postSubmitResponse",
+            "safeName": "postSubmitResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "post_submit_response",
+            "safeName": "post_submit_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "POST_SUBMIT_RESPONSE",
+            "safeName": "POST_SUBMIT_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "PostSubmitResponse",
+            "safeName": "PostSubmitResponse"
+          }
+        },
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -22,7 +58,28 @@
         "extends": [],
         "properties": [
           {
-            "name": "status",
+            "name": {
+              "wireValue": "status",
+              "name": {
+                "originalName": "status",
+                "camelCase": {
+                  "unsafeName": "status",
+                  "safeName": "status"
+                },
+                "snakeCase": {
+                  "unsafeName": "status",
+                  "safeName": "status"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "STATUS",
+                  "safeName": "STATUS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Status",
+                  "safeName": "Status"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -44,7 +101,28 @@
             }
           },
           {
-            "name": "message",
+            "name": {
+              "wireValue": "message",
+              "name": {
+                "originalName": "message",
+                "camelCase": {
+                  "unsafeName": "message",
+                  "safeName": "message"
+                },
+                "snakeCase": {
+                  "unsafeName": "message",
+                  "safeName": "message"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "MESSAGE",
+                  "safeName": "MESSAGE"
+                },
+                "pascalCase": {
+                  "unsafeName": "Message",
+                  "safeName": "Message"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -102,7 +180,25 @@
       "endpoints": [
         {
           "id": "endpoint_.submitFormData",
-          "name": "submitFormData",
+          "name": {
+            "originalName": "submitFormData",
+            "camelCase": {
+              "unsafeName": "submitFormData",
+              "safeName": "submitFormData"
+            },
+            "snakeCase": {
+              "unsafeName": "submit_form_data",
+              "safeName": "submit_form_data"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "SUBMIT_FORM_DATA",
+              "safeName": "SUBMIT_FORM_DATA"
+            },
+            "pascalCase": {
+              "unsafeName": "SubmitFormData",
+              "safeName": "SubmitFormData"
+            }
+          },
           "displayName": "Submit form data",
           "auth": false,
           "idempotent": false,
@@ -120,13 +216,52 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": "PostSubmitRequest",
+            "name": {
+              "originalName": "PostSubmitRequest",
+              "camelCase": {
+                "unsafeName": "postSubmitRequest",
+                "safeName": "postSubmitRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "post_submit_request",
+                "safeName": "post_submit_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "POST_SUBMIT_REQUEST",
+                "safeName": "POST_SUBMIT_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "PostSubmitRequest",
+                "safeName": "PostSubmitRequest"
+              }
+            },
             "extends": [],
             "contentType": "application/x-www-form-urlencoded",
             "properties": [
               {
                 "docs": "The user's username",
-                "name": "username",
+                "name": {
+                  "wireValue": "username",
+                  "name": {
+                    "originalName": "username",
+                    "camelCase": {
+                      "unsafeName": "username",
+                      "safeName": "username"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "username",
+                      "safeName": "username"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "USERNAME",
+                      "safeName": "USERNAME"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Username",
+                      "safeName": "Username"
+                    }
+                  }
+                },
                 "valueType": {
                   "primitive": {
                     "v1": "STRING",
@@ -143,7 +278,28 @@
               },
               {
                 "docs": "The user's email address",
-                "name": "email",
+                "name": {
+                  "wireValue": "email",
+                  "name": {
+                    "originalName": "email",
+                    "camelCase": {
+                      "unsafeName": "email",
+                      "safeName": "email"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "email",
+                      "safeName": "email"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "EMAIL",
+                      "safeName": "EMAIL"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Email",
+                      "safeName": "Email"
+                    }
+                  }
+                },
                 "valueType": {
                   "primitive": {
                     "v1": "STRING",
@@ -168,20 +324,92 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": "PostSubmitRequest",
-              "bodyKey": "body",
+              "wrapperName": {
+                "originalName": "PostSubmitRequest",
+                "camelCase": {
+                  "unsafeName": "postSubmitRequest",
+                  "safeName": "postSubmitRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "post_submit_request",
+                  "safeName": "post_submit_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "POST_SUBMIT_REQUEST",
+                  "safeName": "POST_SUBMIT_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "PostSubmitRequest",
+                  "safeName": "PostSubmitRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful operation",
                 "responseBodyType": {
-                  "name": "PostSubmitResponse",
+                  "name": {
+                    "originalName": "PostSubmitResponse",
+                    "camelCase": {
+                      "unsafeName": "postSubmitResponse",
+                      "safeName": "postSubmitResponse"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "post_submit_response",
+                      "safeName": "post_submit_response"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "POST_SUBMIT_RESPONSE",
+                      "safeName": "POST_SUBMIT_RESPONSE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "PostSubmitResponse",
+                      "safeName": "PostSubmitResponse"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -205,7 +433,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceID",
+          "safeName": "errorInstanceID"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceID",
+          "safeName": "ErrorInstanceID"
+        }
+      }
+    }
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"

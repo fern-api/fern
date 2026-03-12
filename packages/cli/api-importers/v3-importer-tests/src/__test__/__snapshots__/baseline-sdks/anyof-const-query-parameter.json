@@ -1,6 +1,24 @@
 {
   "selfHosted": false,
-  "apiName": "api",
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    }
+  },
   "apiDisplayName": "Test spec for anyOf with const query parameter",
   "auth": {
     "requirement": "ALL",
@@ -12,20 +30,95 @@
     "type_link:BulkTriggerHistoricalPullRequestTeamIdOne": {
       "inline": true,
       "name": {
-        "name": "BulkTriggerHistoricalPullRequestTeamIdOne",
+        "name": {
+          "originalName": "BulkTriggerHistoricalPullRequestTeamIdOne",
+          "camelCase": {
+            "unsafeName": "bulkTriggerHistoricalPullRequestTeamIDOne",
+            "safeName": "bulkTriggerHistoricalPullRequestTeamIDOne"
+          },
+          "snakeCase": {
+            "unsafeName": "bulk_trigger_historical_pull_request_team_id_one",
+            "safeName": "bulk_trigger_historical_pull_request_team_id_one"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST_TEAM_ID_ONE",
+            "safeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST_TEAM_ID_ONE"
+          },
+          "pascalCase": {
+            "unsafeName": "BulkTriggerHistoricalPullRequestTeamIDOne",
+            "safeName": "BulkTriggerHistoricalPullRequestTeamIDOne"
+          }
+        },
         "fernFilepath": {
           "allParts": [
-            "link"
+            {
+              "originalName": "link",
+              "camelCase": {
+                "unsafeName": "link",
+                "safeName": "link"
+              },
+              "snakeCase": {
+                "unsafeName": "link",
+                "safeName": "link"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LINK",
+                "safeName": "LINK"
+              },
+              "pascalCase": {
+                "unsafeName": "Link",
+                "safeName": "Link"
+              }
+            }
           ],
           "packagePath": [],
-          "file": "link"
+          "file": {
+            "originalName": "link",
+            "camelCase": {
+              "unsafeName": "link",
+              "safeName": "link"
+            },
+            "snakeCase": {
+              "unsafeName": "link",
+              "safeName": "link"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LINK",
+              "safeName": "LINK"
+            },
+            "pascalCase": {
+              "unsafeName": "Link",
+              "safeName": "Link"
+            }
+          }
         },
         "typeId": "type_link:BulkTriggerHistoricalPullRequestTeamIdOne"
       },
       "shape": {
         "values": [
           {
-            "name": "infer_from_context"
+            "name": {
+              "wireValue": "infer_from_context",
+              "name": {
+                "originalName": "infer_from_context",
+                "camelCase": {
+                  "unsafeName": "inferFromContext",
+                  "safeName": "inferFromContext"
+                },
+                "snakeCase": {
+                  "unsafeName": "infer_from_context",
+                  "safeName": "infer_from_context"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "INFER_FROM_CONTEXT",
+                  "safeName": "INFER_FROM_CONTEXT"
+                },
+                "pascalCase": {
+                  "unsafeName": "InferFromContext",
+                  "safeName": "InferFromContext"
+                }
+              }
+            }
           }
         ],
         "type": "enum"
@@ -39,13 +132,67 @@
     },
     "type_link:BulkTriggerHistoricalPullRequestTeamId": {
       "name": {
-        "name": "BulkTriggerHistoricalPullRequestTeamId",
+        "name": {
+          "originalName": "BulkTriggerHistoricalPullRequestTeamId",
+          "camelCase": {
+            "unsafeName": "bulkTriggerHistoricalPullRequestTeamID",
+            "safeName": "bulkTriggerHistoricalPullRequestTeamID"
+          },
+          "snakeCase": {
+            "unsafeName": "bulk_trigger_historical_pull_request_team_id",
+            "safeName": "bulk_trigger_historical_pull_request_team_id"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST_TEAM_ID",
+            "safeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST_TEAM_ID"
+          },
+          "pascalCase": {
+            "unsafeName": "BulkTriggerHistoricalPullRequestTeamID",
+            "safeName": "BulkTriggerHistoricalPullRequestTeamID"
+          }
+        },
         "fernFilepath": {
           "allParts": [
-            "link"
+            {
+              "originalName": "link",
+              "camelCase": {
+                "unsafeName": "link",
+                "safeName": "link"
+              },
+              "snakeCase": {
+                "unsafeName": "link",
+                "safeName": "link"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LINK",
+                "safeName": "LINK"
+              },
+              "pascalCase": {
+                "unsafeName": "Link",
+                "safeName": "Link"
+              }
+            }
           ],
           "packagePath": [],
-          "file": "link"
+          "file": {
+            "originalName": "link",
+            "camelCase": {
+              "unsafeName": "link",
+              "safeName": "link"
+            },
+            "snakeCase": {
+              "unsafeName": "link",
+              "safeName": "link"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LINK",
+              "safeName": "LINK"
+            },
+            "pascalCase": {
+              "unsafeName": "Link",
+              "safeName": "Link"
+            }
+          }
         },
         "typeId": "type_link:BulkTriggerHistoricalPullRequestTeamId"
       },
@@ -64,13 +211,67 @@
           },
           {
             "type": {
-              "name": "BulkTriggerHistoricalPullRequestTeamIdOne",
+              "name": {
+                "originalName": "BulkTriggerHistoricalPullRequestTeamIdOne",
+                "camelCase": {
+                  "unsafeName": "bulkTriggerHistoricalPullRequestTeamIDOne",
+                  "safeName": "bulkTriggerHistoricalPullRequestTeamIDOne"
+                },
+                "snakeCase": {
+                  "unsafeName": "bulk_trigger_historical_pull_request_team_id_one",
+                  "safeName": "bulk_trigger_historical_pull_request_team_id_one"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST_TEAM_ID_ONE",
+                  "safeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST_TEAM_ID_ONE"
+                },
+                "pascalCase": {
+                  "unsafeName": "BulkTriggerHistoricalPullRequestTeamIDOne",
+                  "safeName": "BulkTriggerHistoricalPullRequestTeamIDOne"
+                }
+              },
               "fernFilepath": {
                 "allParts": [
-                  "link"
+                  {
+                    "originalName": "link",
+                    "camelCase": {
+                      "unsafeName": "link",
+                      "safeName": "link"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "link",
+                      "safeName": "link"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "LINK",
+                      "safeName": "LINK"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Link",
+                      "safeName": "Link"
+                    }
+                  }
                 ],
                 "packagePath": [],
-                "file": "link"
+                "file": {
+                  "originalName": "link",
+                  "camelCase": {
+                    "unsafeName": "link",
+                    "safeName": "link"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "link",
+                    "safeName": "link"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "LINK",
+                    "safeName": "LINK"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Link",
+                    "safeName": "Link"
+                  }
+                }
               },
               "displayName": "Bulk Trigger Historical Pull Request Team ID One",
               "typeId": "type_link:BulkTriggerHistoricalPullRequestTeamIdOne",
@@ -89,13 +290,67 @@
     },
     "type_link:BulkTriggerHistoricalPullResponse": {
       "name": {
-        "name": "BulkTriggerHistoricalPullResponse",
+        "name": {
+          "originalName": "BulkTriggerHistoricalPullResponse",
+          "camelCase": {
+            "unsafeName": "bulkTriggerHistoricalPullResponse",
+            "safeName": "bulkTriggerHistoricalPullResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "bulk_trigger_historical_pull_response",
+            "safeName": "bulk_trigger_historical_pull_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "BULK_TRIGGER_HISTORICAL_PULL_RESPONSE",
+            "safeName": "BULK_TRIGGER_HISTORICAL_PULL_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "BulkTriggerHistoricalPullResponse",
+            "safeName": "BulkTriggerHistoricalPullResponse"
+          }
+        },
         "fernFilepath": {
           "allParts": [
-            "link"
+            {
+              "originalName": "link",
+              "camelCase": {
+                "unsafeName": "link",
+                "safeName": "link"
+              },
+              "snakeCase": {
+                "unsafeName": "link",
+                "safeName": "link"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LINK",
+                "safeName": "LINK"
+              },
+              "pascalCase": {
+                "unsafeName": "Link",
+                "safeName": "Link"
+              }
+            }
           ],
           "packagePath": [],
-          "file": "link"
+          "file": {
+            "originalName": "link",
+            "camelCase": {
+              "unsafeName": "link",
+              "safeName": "link"
+            },
+            "snakeCase": {
+              "unsafeName": "link",
+              "safeName": "link"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LINK",
+              "safeName": "LINK"
+            },
+            "pascalCase": {
+              "unsafeName": "Link",
+              "safeName": "Link"
+            }
+          }
         },
         "typeId": "type_link:BulkTriggerHistoricalPullResponse"
       },
@@ -103,7 +358,28 @@
         "extends": [],
         "properties": [
           {
-            "name": "success",
+            "name": {
+              "wireValue": "success",
+              "name": {
+                "originalName": "success",
+                "camelCase": {
+                  "unsafeName": "success",
+                  "safeName": "success"
+                },
+                "snakeCase": {
+                  "unsafeName": "success",
+                  "safeName": "success"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "SUCCESS",
+                  "safeName": "SUCCESS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Success",
+                  "safeName": "Success"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -143,10 +419,46 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            "link"
+            {
+              "originalName": "link",
+              "camelCase": {
+                "unsafeName": "link",
+                "safeName": "link"
+              },
+              "snakeCase": {
+                "unsafeName": "link",
+                "safeName": "link"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "LINK",
+                "safeName": "LINK"
+              },
+              "pascalCase": {
+                "unsafeName": "Link",
+                "safeName": "Link"
+              }
+            }
           ],
           "packagePath": [],
-          "file": "link"
+          "file": {
+            "originalName": "link",
+            "camelCase": {
+              "unsafeName": "link",
+              "safeName": "link"
+            },
+            "snakeCase": {
+              "unsafeName": "link",
+              "safeName": "link"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LINK",
+              "safeName": "LINK"
+            },
+            "pascalCase": {
+              "unsafeName": "Link",
+              "safeName": "Link"
+            }
+          }
         }
       },
       "basePath": {
@@ -164,7 +476,25 @@
       "endpoints": [
         {
           "id": "endpoint_link.bulk_trigger_historical_pull",
-          "name": "bulk_trigger_historical_pull",
+          "name": {
+            "originalName": "bulk_trigger_historical_pull",
+            "camelCase": {
+              "unsafeName": "bulkTriggerHistoricalPull",
+              "safeName": "bulkTriggerHistoricalPull"
+            },
+            "snakeCase": {
+              "unsafeName": "bulk_trigger_historical_pull",
+              "safeName": "bulk_trigger_historical_pull"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "BULK_TRIGGER_HISTORICAL_PULL",
+              "safeName": "BULK_TRIGGER_HISTORICAL_PULL"
+            },
+            "pascalCase": {
+              "unsafeName": "BulkTriggerHistoricalPull",
+              "safeName": "BulkTriggerHistoricalPull"
+            }
+          },
           "displayName": "Bulk Trigger Historical Pull",
           "auth": false,
           "idempotent": false,
@@ -181,15 +511,90 @@
           "allPathParameters": [],
           "queryParameters": [
             {
-              "name": "team_id",
+              "name": {
+                "wireValue": "team_id",
+                "name": {
+                  "originalName": "team_id",
+                  "camelCase": {
+                    "unsafeName": "teamID",
+                    "safeName": "teamID"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "team_id",
+                    "safeName": "team_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TEAM_ID",
+                    "safeName": "TEAM_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "TeamID",
+                    "safeName": "TeamID"
+                  }
+                }
+              },
               "valueType": {
-                "name": "BulkTriggerHistoricalPullRequestTeamId",
+                "name": {
+                  "originalName": "BulkTriggerHistoricalPullRequestTeamId",
+                  "camelCase": {
+                    "unsafeName": "bulkTriggerHistoricalPullRequestTeamID",
+                    "safeName": "bulkTriggerHistoricalPullRequestTeamID"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "bulk_trigger_historical_pull_request_team_id",
+                    "safeName": "bulk_trigger_historical_pull_request_team_id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST_TEAM_ID",
+                    "safeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST_TEAM_ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "BulkTriggerHistoricalPullRequestTeamID",
+                    "safeName": "BulkTriggerHistoricalPullRequestTeamID"
+                  }
+                },
                 "fernFilepath": {
                   "allParts": [
-                    "link"
+                    {
+                      "originalName": "link",
+                      "camelCase": {
+                        "unsafeName": "link",
+                        "safeName": "link"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "link",
+                        "safeName": "link"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "LINK",
+                        "safeName": "LINK"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Link",
+                        "safeName": "Link"
+                      }
+                    }
                   ],
                   "packagePath": [],
-                  "file": "link"
+                  "file": {
+                    "originalName": "link",
+                    "camelCase": {
+                      "unsafeName": "link",
+                      "safeName": "link"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "link",
+                      "safeName": "link"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "LINK",
+                      "safeName": "LINK"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Link",
+                      "safeName": "Link"
+                    }
+                  }
                 },
                 "typeId": "type_link:BulkTriggerHistoricalPullRequestTeamId",
                 "type": "named"
@@ -203,12 +608,51 @@
           ],
           "headers": [],
           "requestBody": {
-            "name": "BulkTriggerHistoricalPullRequest",
+            "name": {
+              "originalName": "BulkTriggerHistoricalPullRequest",
+              "camelCase": {
+                "unsafeName": "bulkTriggerHistoricalPullRequest",
+                "safeName": "bulkTriggerHistoricalPullRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "bulk_trigger_historical_pull_request",
+                "safeName": "bulk_trigger_historical_pull_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST",
+                "safeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "BulkTriggerHistoricalPullRequest",
+                "safeName": "BulkTriggerHistoricalPullRequest"
+              }
+            },
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
-                "name": "ids",
+                "name": {
+                  "wireValue": "ids",
+                  "name": {
+                    "originalName": "ids",
+                    "camelCase": {
+                      "unsafeName": "ids",
+                      "safeName": "ids"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "ids",
+                      "safeName": "ids"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "IDS",
+                      "safeName": "IDS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "IDs",
+                      "safeName": "IDs"
+                    }
+                  }
+                },
                 "valueType": {
                   "container": {
                     "optional": {
@@ -242,26 +686,134 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": "BulkTriggerHistoricalPullRequest",
-              "bodyKey": "body",
+              "wrapperName": {
+                "originalName": "BulkTriggerHistoricalPullRequest",
+                "camelCase": {
+                  "unsafeName": "bulkTriggerHistoricalPullRequest",
+                  "safeName": "bulkTriggerHistoricalPullRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "bulk_trigger_historical_pull_request",
+                  "safeName": "bulk_trigger_historical_pull_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST",
+                  "safeName": "BULK_TRIGGER_HISTORICAL_PULL_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "BulkTriggerHistoricalPullRequest",
+                  "safeName": "BulkTriggerHistoricalPullRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": "request"
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful Response",
                 "responseBodyType": {
-                  "name": "BulkTriggerHistoricalPullResponse",
+                  "name": {
+                    "originalName": "BulkTriggerHistoricalPullResponse",
+                    "camelCase": {
+                      "unsafeName": "bulkTriggerHistoricalPullResponse",
+                      "safeName": "bulkTriggerHistoricalPullResponse"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "bulk_trigger_historical_pull_response",
+                      "safeName": "bulk_trigger_historical_pull_response"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "BULK_TRIGGER_HISTORICAL_PULL_RESPONSE",
+                      "safeName": "BULK_TRIGGER_HISTORICAL_PULL_RESPONSE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "BulkTriggerHistoricalPullResponse",
+                      "safeName": "BulkTriggerHistoricalPullResponse"
+                    }
+                  },
                   "fernFilepath": {
                     "allParts": [
-                      "link"
+                      {
+                        "originalName": "link",
+                        "camelCase": {
+                          "unsafeName": "link",
+                          "safeName": "link"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "link",
+                          "safeName": "link"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "LINK",
+                          "safeName": "LINK"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Link",
+                          "safeName": "Link"
+                        }
+                      }
                     ],
                     "packagePath": [],
-                    "file": "link"
+                    "file": {
+                      "originalName": "link",
+                      "camelCase": {
+                        "unsafeName": "link",
+                        "safeName": "link"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "link",
+                        "safeName": "link"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "LINK",
+                        "safeName": "LINK"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Link",
+                        "safeName": "Link"
+                      }
+                    }
                   },
                   "typeId": "type_link:BulkTriggerHistoricalPullResponse",
                   "type": "named"
@@ -282,7 +834,28 @@
     }
   },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceID",
+          "safeName": "errorInstanceID"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceID",
+          "safeName": "ErrorInstanceID"
+        }
+      }
+    }
   },
   "errorDiscriminationStrategy": {
     "type": "statusCode"
@@ -803,12 +1376,66 @@
     "subpackage_link": {
       "fernFilepath": {
         "allParts": [
-          "link"
+          {
+            "originalName": "link",
+            "camelCase": {
+              "unsafeName": "link",
+              "safeName": "link"
+            },
+            "snakeCase": {
+              "unsafeName": "link",
+              "safeName": "link"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "LINK",
+              "safeName": "LINK"
+            },
+            "pascalCase": {
+              "unsafeName": "Link",
+              "safeName": "Link"
+            }
+          }
         ],
         "packagePath": [],
-        "file": "link"
+        "file": {
+          "originalName": "link",
+          "camelCase": {
+            "unsafeName": "link",
+            "safeName": "link"
+          },
+          "snakeCase": {
+            "unsafeName": "link",
+            "safeName": "link"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "LINK",
+            "safeName": "LINK"
+          },
+          "pascalCase": {
+            "unsafeName": "Link",
+            "safeName": "Link"
+          }
+        }
       },
-      "name": "link",
+      "name": {
+        "originalName": "link",
+        "camelCase": {
+          "unsafeName": "link",
+          "safeName": "link"
+        },
+        "snakeCase": {
+          "unsafeName": "link",
+          "safeName": "link"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "LINK",
+          "safeName": "LINK"
+        },
+        "pascalCase": {
+          "unsafeName": "Link",
+          "safeName": "Link"
+        }
+      },
       "service": "service_link",
       "types": [
         "type_link:BulkTriggerHistoricalPullRequestTeamIdOne",

@@ -12,12 +12,51 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+        "name": {
+          "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+          "camelCase": {
+            "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+            "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+          },
+          "snakeCase": {
+            "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+            "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+            "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+          },
+          "pascalCase": {
+            "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+            "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "foo",
+            "name": {
+              "wireValue": "foo",
+              "name": {
+                "originalName": "foo",
+                "camelCase": {
+                  "unsafeName": "foo",
+                  "safeName": "foo"
+                },
+                "snakeCase": {
+                  "unsafeName": "foo",
+                  "safeName": "foo"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FOO",
+                  "safeName": "FOO"
+                },
+                "pascalCase": {
+                  "unsafeName": "Foo",
+                  "safeName": "Foo"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -42,7 +81,28 @@
             }
           },
           {
-            "name": "bar",
+            "name": {
+              "wireValue": "bar",
+              "name": {
+                "originalName": "bar",
+                "camelCase": {
+                  "unsafeName": "bar",
+                  "safeName": "bar"
+                },
+                "snakeCase": {
+                  "unsafeName": "bar",
+                  "safeName": "bar"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BAR",
+                  "safeName": "BAR"
+                },
+                "pascalCase": {
+                  "unsafeName": "Bar",
+                  "safeName": "Bar"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -90,12 +150,51 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+        "name": {
+          "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+          "camelCase": {
+            "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+            "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+          },
+          "snakeCase": {
+            "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+            "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+            "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+          },
+          "pascalCase": {
+            "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+            "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+          }
+        }
       },
       "shape": {
         "properties": [
           {
-            "name": "foo",
+            "name": {
+              "wireValue": "foo",
+              "name": {
+                "originalName": "foo",
+                "camelCase": {
+                  "unsafeName": "foo",
+                  "safeName": "foo"
+                },
+                "snakeCase": {
+                  "unsafeName": "foo",
+                  "safeName": "foo"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FOO",
+                  "safeName": "FOO"
+                },
+                "pascalCase": {
+                  "unsafeName": "Foo",
+                  "safeName": "Foo"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -120,7 +219,28 @@
             }
           },
           {
-            "name": "bar",
+            "name": {
+              "wireValue": "bar",
+              "name": {
+                "originalName": "bar",
+                "camelCase": {
+                  "unsafeName": "bar",
+                  "safeName": "bar"
+                },
+                "snakeCase": {
+                  "unsafeName": "bar",
+                  "safeName": "bar"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BAR",
+                  "safeName": "BAR"
+                },
+                "pascalCase": {
+                  "unsafeName": "Bar",
+                  "safeName": "Bar"
+                }
+              }
+            },
             "valueType": {
               "container": {
                 "optional": {
@@ -193,7 +313,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "cc62656e",
+                "id": "db78b62a",
                 "url": "/object-with-array-of-objects",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -238,14 +358,53 @@
                                       "shape": {
                                         "properties": [
                                           {
-                                            "name": "foo",
+                                            "name": {
+                                              "wireValue": "foo",
+                                              "name": {
+                                                "originalName": "foo",
+                                                "camelCase": {
+                                                  "unsafeName": "foo",
+                                                  "safeName": "foo"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "foo",
+                                                  "safeName": "foo"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "FOO",
+                                                  "safeName": "FOO"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "Foo",
+                                                  "safeName": "Foo"
+                                                }
+                                              }
+                                            },
                                             "originalTypeDeclaration": {
                                               "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                                               "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": []
                                               },
-                                              "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                              "name": {
+                                                "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                "camelCase": {
+                                                  "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                                  "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                                  "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                }
+                                              }
                                             },
                                             "value": {
                                               "shape": {
@@ -267,14 +426,53 @@
                                             }
                                           },
                                           {
-                                            "name": "bar",
+                                            "name": {
+                                              "wireValue": "bar",
+                                              "name": {
+                                                "originalName": "bar",
+                                                "camelCase": {
+                                                  "unsafeName": "bar",
+                                                  "safeName": "bar"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "bar",
+                                                  "safeName": "bar"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "BAR",
+                                                  "safeName": "BAR"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "Bar",
+                                                  "safeName": "Bar"
+                                                }
+                                              }
+                                            },
                                             "originalTypeDeclaration": {
                                               "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                                               "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": []
                                               },
-                                              "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                              "name": {
+                                                "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                "camelCase": {
+                                                  "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                                  "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                                  "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                }
+                                              }
                                             },
                                             "value": {
                                               "shape": {
@@ -304,7 +502,25 @@
                                           "allParts": [],
                                           "packagePath": []
                                         },
-                                        "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                        "name": {
+                                          "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                          "camelCase": {
+                                            "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                            "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                            "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                            "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                            "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                          }
+                                        }
                                       },
                                       "type": "named"
                                     }
@@ -315,14 +531,53 @@
                                       "shape": {
                                         "properties": [
                                           {
-                                            "name": "foo",
+                                            "name": {
+                                              "wireValue": "foo",
+                                              "name": {
+                                                "originalName": "foo",
+                                                "camelCase": {
+                                                  "unsafeName": "foo",
+                                                  "safeName": "foo"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "foo",
+                                                  "safeName": "foo"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "FOO",
+                                                  "safeName": "FOO"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "Foo",
+                                                  "safeName": "Foo"
+                                                }
+                                              }
+                                            },
                                             "originalTypeDeclaration": {
                                               "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                                               "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": []
                                               },
-                                              "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                              "name": {
+                                                "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                "camelCase": {
+                                                  "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                                  "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                                  "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                }
+                                              }
                                             },
                                             "value": {
                                               "shape": {
@@ -344,14 +599,53 @@
                                             }
                                           },
                                           {
-                                            "name": "bar",
+                                            "name": {
+                                              "wireValue": "bar",
+                                              "name": {
+                                                "originalName": "bar",
+                                                "camelCase": {
+                                                  "unsafeName": "bar",
+                                                  "safeName": "bar"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "bar",
+                                                  "safeName": "bar"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "BAR",
+                                                  "safeName": "BAR"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "Bar",
+                                                  "safeName": "Bar"
+                                                }
+                                              }
+                                            },
                                             "originalTypeDeclaration": {
                                               "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                                               "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": []
                                               },
-                                              "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                              "name": {
+                                                "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                "camelCase": {
+                                                  "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                                  "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                                  "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                }
+                                              }
                                             },
                                             "value": {
                                               "shape": {
@@ -381,7 +675,25 @@
                                           "allParts": [],
                                           "packagePath": []
                                         },
-                                        "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                        "name": {
+                                          "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                          "camelCase": {
+                                            "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                            "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                            "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                            "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                            "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                          }
+                                        }
                                       },
                                       "type": "named"
                                     }
@@ -392,7 +704,25 @@
                                     "allParts": [],
                                     "packagePath": []
                                   },
-                                  "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                  "name": {
+                                    "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                    "camelCase": {
+                                      "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                      "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                      "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                      "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                      "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                    }
+                                  },
                                   "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                                   "inline": false,
                                   "type": "named"
@@ -420,7 +750,25 @@
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                            "name": {
+                              "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                              "camelCase": {
+                                "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                              }
+                            },
                             "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                             "inline": false,
                             "type": "named"
@@ -467,7 +815,25 @@
           },
           "audiences": [],
           "id": "endpoint_.getObjectWithArrayOfObjects",
-          "name": "getObjectWithArrayOfObjects",
+          "name": {
+            "originalName": "getObjectWithArrayOfObjects",
+            "camelCase": {
+              "unsafeName": "getObjectWithArrayOfObjects",
+              "safeName": "getObjectWithArrayOfObjects"
+            },
+            "snakeCase": {
+              "unsafeName": "get_object_with_array_of_objects",
+              "safeName": "get_object_with_array_of_objects"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_OBJECT_WITH_ARRAY_OF_OBJECTS",
+              "safeName": "GET_OBJECT_WITH_ARRAY_OF_OBJECTS"
+            },
+            "pascalCase": {
+              "unsafeName": "GetObjectWithArrayOfObjects",
+              "safeName": "GetObjectWithArrayOfObjects"
+            }
+          },
           "requestBody": {
             "contentType": "application/json",
             "requestBodyType": {
@@ -488,7 +854,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                      "name": {
+                        "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                        "camelCase": {
+                          "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                          "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                          "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                          "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                          "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                        }
+                      },
                       "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                       "inline": false,
                       "type": "named"
@@ -531,7 +915,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                          "name": {
+                            "originalName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                            "camelCase": {
+                              "unsafeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                              "safeName": "objectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                              "safeName": "object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                              "safeName": "OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                              "safeName": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                            }
+                          },
                           "typeId": "ObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                           "inline": false,
                           "type": "named"
@@ -654,7 +1056,7 @@
           "autogeneratedExamples": [
             {
               "example": {
-                "id": "a4715d2e",
+                "id": "d6a2e32",
                 "url": "/implicit-object-with-array-of-objects",
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
@@ -699,14 +1101,53 @@
                                       "shape": {
                                         "properties": [
                                           {
-                                            "name": "foo",
+                                            "name": {
+                                              "wireValue": "foo",
+                                              "name": {
+                                                "originalName": "foo",
+                                                "camelCase": {
+                                                  "unsafeName": "foo",
+                                                  "safeName": "foo"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "foo",
+                                                  "safeName": "foo"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "FOO",
+                                                  "safeName": "FOO"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "Foo",
+                                                  "safeName": "Foo"
+                                                }
+                                              }
+                                            },
                                             "originalTypeDeclaration": {
                                               "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                                               "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": []
                                               },
-                                              "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                              "name": {
+                                                "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                "camelCase": {
+                                                  "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                                  "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                                  "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                }
+                                              }
                                             },
                                             "value": {
                                               "shape": {
@@ -728,14 +1169,53 @@
                                             }
                                           },
                                           {
-                                            "name": "bar",
+                                            "name": {
+                                              "wireValue": "bar",
+                                              "name": {
+                                                "originalName": "bar",
+                                                "camelCase": {
+                                                  "unsafeName": "bar",
+                                                  "safeName": "bar"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "bar",
+                                                  "safeName": "bar"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "BAR",
+                                                  "safeName": "BAR"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "Bar",
+                                                  "safeName": "Bar"
+                                                }
+                                              }
+                                            },
                                             "originalTypeDeclaration": {
                                               "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                                               "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": []
                                               },
-                                              "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                              "name": {
+                                                "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                "camelCase": {
+                                                  "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                                  "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                                  "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                }
+                                              }
                                             },
                                             "value": {
                                               "shape": {
@@ -765,7 +1245,25 @@
                                           "allParts": [],
                                           "packagePath": []
                                         },
-                                        "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                        "name": {
+                                          "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                          "camelCase": {
+                                            "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                            "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                            "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                            "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                            "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                          }
+                                        }
                                       },
                                       "type": "named"
                                     }
@@ -776,14 +1274,53 @@
                                       "shape": {
                                         "properties": [
                                           {
-                                            "name": "foo",
+                                            "name": {
+                                              "wireValue": "foo",
+                                              "name": {
+                                                "originalName": "foo",
+                                                "camelCase": {
+                                                  "unsafeName": "foo",
+                                                  "safeName": "foo"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "foo",
+                                                  "safeName": "foo"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "FOO",
+                                                  "safeName": "FOO"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "Foo",
+                                                  "safeName": "Foo"
+                                                }
+                                              }
+                                            },
                                             "originalTypeDeclaration": {
                                               "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                                               "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": []
                                               },
-                                              "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                              "name": {
+                                                "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                "camelCase": {
+                                                  "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                                  "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                                  "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                }
+                                              }
                                             },
                                             "value": {
                                               "shape": {
@@ -805,14 +1342,53 @@
                                             }
                                           },
                                           {
-                                            "name": "bar",
+                                            "name": {
+                                              "wireValue": "bar",
+                                              "name": {
+                                                "originalName": "bar",
+                                                "camelCase": {
+                                                  "unsafeName": "bar",
+                                                  "safeName": "bar"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "bar",
+                                                  "safeName": "bar"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "BAR",
+                                                  "safeName": "BAR"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "Bar",
+                                                  "safeName": "Bar"
+                                                }
+                                              }
+                                            },
                                             "originalTypeDeclaration": {
                                               "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                                               "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": []
                                               },
-                                              "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                              "name": {
+                                                "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                "camelCase": {
+                                                  "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                },
+                                                "snakeCase": {
+                                                  "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                                  "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                                },
+                                                "screamingSnakeCase": {
+                                                  "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                                  "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                                },
+                                                "pascalCase": {
+                                                  "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                                  "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                                }
+                                              }
                                             },
                                             "value": {
                                               "shape": {
@@ -842,7 +1418,25 @@
                                           "allParts": [],
                                           "packagePath": []
                                         },
-                                        "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                        "name": {
+                                          "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                          "camelCase": {
+                                            "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                            "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                          },
+                                          "snakeCase": {
+                                            "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                            "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                          },
+                                          "screamingSnakeCase": {
+                                            "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                            "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                          },
+                                          "pascalCase": {
+                                            "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                            "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                          }
+                                        }
                                       },
                                       "type": "named"
                                     }
@@ -853,7 +1447,25 @@
                                     "allParts": [],
                                     "packagePath": []
                                   },
-                                  "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                  "name": {
+                                    "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                    "camelCase": {
+                                      "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                      "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                    },
+                                    "snakeCase": {
+                                      "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                      "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                                    },
+                                    "screamingSnakeCase": {
+                                      "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                      "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                                    },
+                                    "pascalCase": {
+                                      "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                      "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                                    }
+                                  },
                                   "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                                   "inline": false,
                                   "type": "named"
@@ -881,7 +1493,25 @@
                               "allParts": [],
                               "packagePath": []
                             },
-                            "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                            "name": {
+                              "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                              "camelCase": {
+                                "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                              },
+                              "snakeCase": {
+                                "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                                "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                              },
+                              "screamingSnakeCase": {
+                                "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                                "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                              },
+                              "pascalCase": {
+                                "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                                "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                              }
+                            },
                             "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                             "inline": false,
                             "type": "named"
@@ -928,7 +1558,25 @@
           },
           "audiences": [],
           "id": "endpoint_.getImplicitObjectWithArrayOfObjects",
-          "name": "getImplicitObjectWithArrayOfObjects",
+          "name": {
+            "originalName": "getImplicitObjectWithArrayOfObjects",
+            "camelCase": {
+              "unsafeName": "getImplicitObjectWithArrayOfObjects",
+              "safeName": "getImplicitObjectWithArrayOfObjects"
+            },
+            "snakeCase": {
+              "unsafeName": "get_implicit_object_with_array_of_objects",
+              "safeName": "get_implicit_object_with_array_of_objects"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "GET_IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS",
+              "safeName": "GET_IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS"
+            },
+            "pascalCase": {
+              "unsafeName": "GetImplicitObjectWithArrayOfObjects",
+              "safeName": "GetImplicitObjectWithArrayOfObjects"
+            }
+          },
           "requestBody": {
             "contentType": "application/json",
             "requestBodyType": {
@@ -949,7 +1597,25 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                      "name": {
+                        "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                        "camelCase": {
+                          "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                          "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                          "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                          "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                          "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                        }
+                      },
                       "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                       "inline": false,
                       "type": "named"
@@ -992,7 +1658,25 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                          "name": {
+                            "originalName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                            "camelCase": {
+                              "unsafeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                              "safeName": "implicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items",
+                              "safeName": "implicit_object_with_array_of_objects_get_request_body_content_application_json_schema_items"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS",
+                              "safeName": "IMPLICIT_OBJECT_WITH_ARRAY_OF_OBJECTS_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA_ITEMS"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
+                              "safeName": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems"
+                            }
+                          },
                           "typeId": "ImplicitObjectWithArrayOfObjectsGetRequestBodyContentApplicationJsonSchemaItems",
                           "inline": false,
                           "type": "named"
@@ -1139,8 +1823,47 @@
       "sdkVersion": ""
     }
   },
-  "apiName": "Primitive Array API",
+  "apiName": {
+    "originalName": "Primitive Array API",
+    "camelCase": {
+      "unsafeName": "primitiveArrayApi",
+      "safeName": "primitiveArrayApi"
+    },
+    "snakeCase": {
+      "unsafeName": "primitive_array_api",
+      "safeName": "primitive_array_api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "PRIMITIVE_ARRAY_API",
+      "safeName": "PRIMITIVE_ARRAY_API"
+    },
+    "pascalCase": {
+      "unsafeName": "PrimitiveArrayApi",
+      "safeName": "PrimitiveArrayApi"
+    }
+  },
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId"
+    "errorInstanceIdKey": {
+      "wireValue": "errorInstanceId",
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      }
+    }
   }
 }

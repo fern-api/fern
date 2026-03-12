@@ -2,7 +2,25 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": "csharp-readonly-request",
+    "apiName": {
+        "originalName": "csharp-readonly-request",
+        "camelCase": {
+            "unsafeName": "csharpReadonlyRequest",
+            "safeName": "csharpReadonlyRequest"
+        },
+        "snakeCase": {
+            "unsafeName": "csharp_readonly_request",
+            "safeName": "csharp_readonly_request"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "CSHARP_READONLY_REQUEST",
+            "safeName": "CSHARP_READONLY_REQUEST"
+        },
+        "pascalCase": {
+            "unsafeName": "CsharpReadonlyRequest",
+            "safeName": "CsharpReadonlyRequest"
+        }
+    },
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -16,7 +34,25 @@
         "type_:Vendor": {
             "inline": null,
             "name": {
-                "name": "Vendor",
+                "name": {
+                    "originalName": "Vendor",
+                    "camelCase": {
+                        "unsafeName": "vendor",
+                        "safeName": "vendor"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "vendor",
+                        "safeName": "vendor"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "VENDOR",
+                        "safeName": "VENDOR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Vendor",
+                        "safeName": "Vendor"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -30,7 +66,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "id",
+                        "name": {
+                            "wireValue": "id",
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -51,7 +108,28 @@
                         "docs": "The unique identifier for the vendor."
                     },
                     {
-                        "name": "name",
+                        "name": {
+                            "wireValue": "name",
+                            "name": {
+                                "originalName": "name",
+                                "camelCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NAME",
+                                    "safeName": "NAME"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Name",
+                                    "safeName": "Name"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -72,7 +150,28 @@
                         "docs": "The name of the vendor."
                     },
                     {
-                        "name": "created_at",
+                        "name": {
+                            "wireValue": "created_at",
+                            "name": {
+                                "originalName": "created_at",
+                                "camelCase": {
+                                    "unsafeName": "createdAt",
+                                    "safeName": "createdAt"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "created_at",
+                                    "safeName": "created_at"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CREATED_AT",
+                                    "safeName": "CREATED_AT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CreatedAt",
+                                    "safeName": "CreatedAt"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -93,7 +192,28 @@
                         "docs": "The timestamp when the vendor was created."
                     },
                     {
-                        "name": "updated_at",
+                        "name": {
+                            "wireValue": "updated_at",
+                            "name": {
+                                "originalName": "updated_at",
+                                "camelCase": {
+                                    "unsafeName": "updatedAt",
+                                    "safeName": "updatedAt"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "updated_at",
+                                    "safeName": "updated_at"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UPDATED_AT",
+                                    "safeName": "UPDATED_AT"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UpdatedAt",
+                                    "safeName": "UpdatedAt"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "primitive",
                             "primitive": {
@@ -132,7 +252,25 @@
         "type_:CreateVendorRequest": {
             "inline": null,
             "name": {
-                "name": "CreateVendorRequest",
+                "name": {
+                    "originalName": "CreateVendorRequest",
+                    "camelCase": {
+                        "unsafeName": "createVendorRequest",
+                        "safeName": "createVendorRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_vendor_request",
+                        "safeName": "create_vendor_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_VENDOR_REQUEST",
+                        "safeName": "CREATE_VENDOR_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateVendorRequest",
+                        "safeName": "CreateVendorRequest"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -146,7 +284,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "vendors",
+                        "name": {
+                            "wireValue": "vendors",
+                            "name": {
+                                "originalName": "vendors",
+                                "camelCase": {
+                                    "unsafeName": "vendors",
+                                    "safeName": "vendors"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "vendors",
+                                    "safeName": "vendors"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VENDORS",
+                                    "safeName": "VENDORS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Vendors",
+                                    "safeName": "Vendors"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -164,7 +323,25 @@
                                 },
                                 "valueType": {
                                     "_type": "named",
-                                    "name": "Vendor",
+                                    "name": {
+                                        "originalName": "Vendor",
+                                        "camelCase": {
+                                            "unsafeName": "vendor",
+                                            "safeName": "vendor"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "vendor",
+                                            "safeName": "vendor"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "VENDOR",
+                                            "safeName": "VENDOR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Vendor",
+                                            "safeName": "Vendor"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -206,7 +383,25 @@
         "type_:CreateVendorResponse": {
             "inline": null,
             "name": {
-                "name": "CreateVendorResponse",
+                "name": {
+                    "originalName": "CreateVendorResponse",
+                    "camelCase": {
+                        "unsafeName": "createVendorResponse",
+                        "safeName": "createVendorResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "create_vendor_response",
+                        "safeName": "create_vendor_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CREATE_VENDOR_RESPONSE",
+                        "safeName": "CREATE_VENDOR_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CreateVendorResponse",
+                        "safeName": "CreateVendorResponse"
+                    }
+                },
                 "fernFilepath": {
                     "allParts": [],
                     "packagePath": [],
@@ -220,7 +415,28 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": "vendors",
+                        "name": {
+                            "wireValue": "vendors",
+                            "name": {
+                                "originalName": "vendors",
+                                "camelCase": {
+                                    "unsafeName": "vendors",
+                                    "safeName": "vendors"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "vendors",
+                                    "safeName": "vendors"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "VENDORS",
+                                    "safeName": "VENDORS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Vendors",
+                                    "safeName": "Vendors"
+                                }
+                            }
+                        },
                         "valueType": {
                             "_type": "container",
                             "container": {
@@ -238,7 +454,25 @@
                                 },
                                 "valueType": {
                                     "_type": "named",
-                                    "name": "Vendor",
+                                    "name": {
+                                        "originalName": "Vendor",
+                                        "camelCase": {
+                                            "unsafeName": "vendor",
+                                            "safeName": "vendor"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "vendor",
+                                            "safeName": "vendor"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "VENDOR",
+                                            "safeName": "VENDOR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Vendor",
+                                            "safeName": "Vendor"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -306,7 +540,25 @@
             "endpoints": [
                 {
                     "id": "endpoint_.batchCreate",
-                    "name": "batchCreate",
+                    "name": {
+                        "originalName": "batchCreate",
+                        "camelCase": {
+                            "unsafeName": "batchCreate",
+                            "safeName": "batchCreate"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "batch_create",
+                            "safeName": "batch_create"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BATCH_CREATE",
+                            "safeName": "BATCH_CREATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "BatchCreate",
+                            "safeName": "BatchCreate"
+                        }
+                    },
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -331,7 +583,25 @@
                         "type": "reference",
                         "requestBodyType": {
                             "_type": "named",
-                            "name": "CreateVendorRequest",
+                            "name": {
+                                "originalName": "CreateVendorRequest",
+                                "camelCase": {
+                                    "unsafeName": "createVendorRequest",
+                                    "safeName": "createVendorRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "create_vendor_request",
+                                    "safeName": "create_vendor_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CREATE_VENDOR_REQUEST",
+                                    "safeName": "CREATE_VENDOR_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CreateVendorRequest",
+                                    "safeName": "CreateVendorRequest"
+                                }
+                            },
                             "fernFilepath": {
                                 "allParts": [],
                                 "packagePath": [],
@@ -354,7 +624,25 @@
                                 "type": "typeReference",
                                 "requestBodyType": {
                                     "_type": "named",
-                                    "name": "CreateVendorRequest",
+                                    "name": {
+                                        "originalName": "CreateVendorRequest",
+                                        "camelCase": {
+                                            "unsafeName": "createVendorRequest",
+                                            "safeName": "createVendorRequest"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "create_vendor_request",
+                                            "safeName": "create_vendor_request"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CREATE_VENDOR_REQUEST",
+                                            "safeName": "CREATE_VENDOR_REQUEST"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "CreateVendorRequest",
+                                            "safeName": "CreateVendorRequest"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -370,7 +658,25 @@
                                 "v2Examples": null
                             }
                         },
-                        "requestParameterName": "request",
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
                         "streamParameter": null
                     },
                     "response": {
@@ -380,7 +686,25 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": "CreateVendorResponse",
+                                    "name": {
+                                        "originalName": "CreateVendorResponse",
+                                        "camelCase": {
+                                            "unsafeName": "createVendorResponse",
+                                            "safeName": "createVendorResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "create_vendor_response",
+                                            "safeName": "create_vendor_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CREATE_VENDOR_RESPONSE",
+                                            "safeName": "CREATE_VENDOR_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "CreateVendorResponse",
+                                            "safeName": "CreateVendorResponse"
+                                        }
+                                    },
                                     "fernFilepath": {
                                         "allParts": [],
                                         "packagePath": [],
@@ -424,14 +748,53 @@
                                                 "packagePath": [],
                                                 "file": null
                                             },
-                                            "name": "CreateVendorRequest",
+                                            "name": {
+                                                "originalName": "CreateVendorRequest",
+                                                "camelCase": {
+                                                    "unsafeName": "createVendorRequest",
+                                                    "safeName": "createVendorRequest"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "create_vendor_request",
+                                                    "safeName": "create_vendor_request"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "CREATE_VENDOR_REQUEST",
+                                                    "safeName": "CREATE_VENDOR_REQUEST"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "CreateVendorRequest",
+                                                    "safeName": "CreateVendorRequest"
+                                                }
+                                            },
                                             "displayName": null
                                         },
                                         "shape": {
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "name": "vendors",
+                                                    "name": {
+                                                        "wireValue": "vendors",
+                                                        "name": {
+                                                            "originalName": "vendors",
+                                                            "camelCase": {
+                                                                "unsafeName": "vendors",
+                                                                "safeName": "vendors"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "vendors",
+                                                                "safeName": "vendors"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "VENDORS",
+                                                                "safeName": "VENDORS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Vendors",
+                                                                "safeName": "Vendors"
+                                                            }
+                                                        }
+                                                    },
                                                     "value": {
                                                         "shape": {
                                                             "type": "container",
@@ -461,14 +824,53 @@
                                                                                         "packagePath": [],
                                                                                         "file": null
                                                                                     },
-                                                                                    "name": "Vendor",
+                                                                                    "name": {
+                                                                                        "originalName": "Vendor",
+                                                                                        "camelCase": {
+                                                                                            "unsafeName": "vendor",
+                                                                                            "safeName": "vendor"
+                                                                                        },
+                                                                                        "snakeCase": {
+                                                                                            "unsafeName": "vendor",
+                                                                                            "safeName": "vendor"
+                                                                                        },
+                                                                                        "screamingSnakeCase": {
+                                                                                            "unsafeName": "VENDOR",
+                                                                                            "safeName": "VENDOR"
+                                                                                        },
+                                                                                        "pascalCase": {
+                                                                                            "unsafeName": "Vendor",
+                                                                                            "safeName": "Vendor"
+                                                                                        }
+                                                                                    },
                                                                                     "displayName": null
                                                                                 },
                                                                                 "shape": {
                                                                                     "type": "object",
                                                                                     "properties": [
                                                                                         {
-                                                                                            "name": "id",
+                                                                                            "name": {
+                                                                                                "wireValue": "id",
+                                                                                                "name": {
+                                                                                                    "originalName": "id",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "id",
+                                                                                                        "safeName": "id"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "id",
+                                                                                                        "safeName": "id"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "ID",
+                                                                                                        "safeName": "ID"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "ID",
+                                                                                                        "safeName": "ID"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "value": {
                                                                                                 "shape": {
                                                                                                     "type": "primitive",
@@ -488,13 +890,52 @@
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
-                                                                                                "name": "Vendor",
+                                                                                                "name": {
+                                                                                                    "originalName": "Vendor",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VENDOR",
+                                                                                                        "safeName": "VENDOR"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Vendor",
+                                                                                                        "safeName": "Vendor"
+                                                                                                    }
+                                                                                                },
                                                                                                 "displayName": null
                                                                                             },
                                                                                             "propertyAccess": null
                                                                                         },
                                                                                         {
-                                                                                            "name": "name",
+                                                                                            "name": {
+                                                                                                "wireValue": "name",
+                                                                                                "name": {
+                                                                                                    "originalName": "name",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "name",
+                                                                                                        "safeName": "name"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "name",
+                                                                                                        "safeName": "name"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "NAME",
+                                                                                                        "safeName": "NAME"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Name",
+                                                                                                        "safeName": "Name"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "value": {
                                                                                                 "shape": {
                                                                                                     "type": "primitive",
@@ -514,13 +955,52 @@
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
-                                                                                                "name": "Vendor",
+                                                                                                "name": {
+                                                                                                    "originalName": "Vendor",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VENDOR",
+                                                                                                        "safeName": "VENDOR"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Vendor",
+                                                                                                        "safeName": "Vendor"
+                                                                                                    }
+                                                                                                },
                                                                                                 "displayName": null
                                                                                             },
                                                                                             "propertyAccess": null
                                                                                         },
                                                                                         {
-                                                                                            "name": "created_at",
+                                                                                            "name": {
+                                                                                                "wireValue": "created_at",
+                                                                                                "name": {
+                                                                                                    "originalName": "created_at",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "createdAt",
+                                                                                                        "safeName": "createdAt"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "created_at",
+                                                                                                        "safeName": "created_at"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "CREATED_AT",
+                                                                                                        "safeName": "CREATED_AT"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "CreatedAt",
+                                                                                                        "safeName": "CreatedAt"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "value": {
                                                                                                 "shape": {
                                                                                                     "type": "primitive",
@@ -540,13 +1020,52 @@
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
-                                                                                                "name": "Vendor",
+                                                                                                "name": {
+                                                                                                    "originalName": "Vendor",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VENDOR",
+                                                                                                        "safeName": "VENDOR"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Vendor",
+                                                                                                        "safeName": "Vendor"
+                                                                                                    }
+                                                                                                },
                                                                                                 "displayName": null
                                                                                             },
                                                                                             "propertyAccess": "READ_ONLY"
                                                                                         },
                                                                                         {
-                                                                                            "name": "updated_at",
+                                                                                            "name": {
+                                                                                                "wireValue": "updated_at",
+                                                                                                "name": {
+                                                                                                    "originalName": "updated_at",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "updatedAt",
+                                                                                                        "safeName": "updatedAt"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "updated_at",
+                                                                                                        "safeName": "updated_at"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "UPDATED_AT",
+                                                                                                        "safeName": "UPDATED_AT"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "UpdatedAt",
+                                                                                                        "safeName": "UpdatedAt"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "value": {
                                                                                                 "shape": {
                                                                                                     "type": "primitive",
@@ -566,7 +1085,25 @@
                                                                                                     "packagePath": [],
                                                                                                     "file": null
                                                                                                 },
-                                                                                                "name": "Vendor",
+                                                                                                "name": {
+                                                                                                    "originalName": "Vendor",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VENDOR",
+                                                                                                        "safeName": "VENDOR"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Vendor",
+                                                                                                        "safeName": "Vendor"
+                                                                                                    }
+                                                                                                },
                                                                                                 "displayName": null
                                                                                             },
                                                                                             "propertyAccess": "READ_ONLY"
@@ -597,7 +1134,25 @@
                                                                 },
                                                                 "valueType": {
                                                                     "_type": "named",
-                                                                    "name": "Vendor",
+                                                                    "name": {
+                                                                        "originalName": "Vendor",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "vendor",
+                                                                            "safeName": "vendor"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "vendor",
+                                                                            "safeName": "vendor"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "VENDOR",
+                                                                            "safeName": "VENDOR"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Vendor",
+                                                                            "safeName": "Vendor"
+                                                                        }
+                                                                    },
                                                                     "fernFilepath": {
                                                                         "allParts": [],
                                                                         "packagePath": [],
@@ -626,7 +1181,25 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
-                                                        "name": "CreateVendorRequest",
+                                                        "name": {
+                                                            "originalName": "CreateVendorRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "createVendorRequest",
+                                                                "safeName": "createVendorRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "create_vendor_request",
+                                                                "safeName": "create_vendor_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "CREATE_VENDOR_REQUEST",
+                                                                "safeName": "CREATE_VENDOR_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "CreateVendorRequest",
+                                                                "safeName": "CreateVendorRequest"
+                                                            }
+                                                        },
                                                         "displayName": null
                                                     },
                                                     "propertyAccess": null
@@ -660,14 +1233,53 @@
                                                         "packagePath": [],
                                                         "file": null
                                                     },
-                                                    "name": "CreateVendorResponse",
+                                                    "name": {
+                                                        "originalName": "CreateVendorResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "createVendorResponse",
+                                                            "safeName": "createVendorResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "create_vendor_response",
+                                                            "safeName": "create_vendor_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "CREATE_VENDOR_RESPONSE",
+                                                            "safeName": "CREATE_VENDOR_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "CreateVendorResponse",
+                                                            "safeName": "CreateVendorResponse"
+                                                        }
+                                                    },
                                                     "displayName": null
                                                 },
                                                 "shape": {
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": "vendors",
+                                                            "name": {
+                                                                "wireValue": "vendors",
+                                                                "name": {
+                                                                    "originalName": "vendors",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "vendors",
+                                                                        "safeName": "vendors"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "vendors",
+                                                                        "safeName": "vendors"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "VENDORS",
+                                                                        "safeName": "VENDORS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Vendors",
+                                                                        "safeName": "Vendors"
+                                                                    }
+                                                                }
+                                                            },
                                                             "value": {
                                                                 "shape": {
                                                                     "type": "container",
@@ -697,14 +1309,53 @@
                                                                                                 "packagePath": [],
                                                                                                 "file": null
                                                                                             },
-                                                                                            "name": "Vendor",
+                                                                                            "name": {
+                                                                                                "originalName": "Vendor",
+                                                                                                "camelCase": {
+                                                                                                    "unsafeName": "vendor",
+                                                                                                    "safeName": "vendor"
+                                                                                                },
+                                                                                                "snakeCase": {
+                                                                                                    "unsafeName": "vendor",
+                                                                                                    "safeName": "vendor"
+                                                                                                },
+                                                                                                "screamingSnakeCase": {
+                                                                                                    "unsafeName": "VENDOR",
+                                                                                                    "safeName": "VENDOR"
+                                                                                                },
+                                                                                                "pascalCase": {
+                                                                                                    "unsafeName": "Vendor",
+                                                                                                    "safeName": "Vendor"
+                                                                                                }
+                                                                                            },
                                                                                             "displayName": null
                                                                                         },
                                                                                         "shape": {
                                                                                             "type": "object",
                                                                                             "properties": [
                                                                                                 {
-                                                                                                    "name": "id",
+                                                                                                    "name": {
+                                                                                                        "wireValue": "id",
+                                                                                                        "name": {
+                                                                                                            "originalName": "id",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "id",
+                                                                                                                "safeName": "id"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "id",
+                                                                                                                "safeName": "id"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "ID",
+                                                                                                                "safeName": "ID"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "ID",
+                                                                                                                "safeName": "ID"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
                                                                                                     "value": {
                                                                                                         "shape": {
                                                                                                             "type": "primitive",
@@ -724,13 +1375,52 @@
                                                                                                             "packagePath": [],
                                                                                                             "file": null
                                                                                                         },
-                                                                                                        "name": "Vendor",
+                                                                                                        "name": {
+                                                                                                            "originalName": "Vendor",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "VENDOR",
+                                                                                                                "safeName": "VENDOR"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Vendor",
+                                                                                                                "safeName": "Vendor"
+                                                                                                            }
+                                                                                                        },
                                                                                                         "displayName": null
                                                                                                     },
                                                                                                     "propertyAccess": null
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "name",
+                                                                                                    "name": {
+                                                                                                        "wireValue": "name",
+                                                                                                        "name": {
+                                                                                                            "originalName": "name",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "name",
+                                                                                                                "safeName": "name"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "name",
+                                                                                                                "safeName": "name"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "NAME",
+                                                                                                                "safeName": "NAME"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Name",
+                                                                                                                "safeName": "Name"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
                                                                                                     "value": {
                                                                                                         "shape": {
                                                                                                             "type": "primitive",
@@ -750,13 +1440,52 @@
                                                                                                             "packagePath": [],
                                                                                                             "file": null
                                                                                                         },
-                                                                                                        "name": "Vendor",
+                                                                                                        "name": {
+                                                                                                            "originalName": "Vendor",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "VENDOR",
+                                                                                                                "safeName": "VENDOR"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Vendor",
+                                                                                                                "safeName": "Vendor"
+                                                                                                            }
+                                                                                                        },
                                                                                                         "displayName": null
                                                                                                     },
                                                                                                     "propertyAccess": null
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "created_at",
+                                                                                                    "name": {
+                                                                                                        "wireValue": "created_at",
+                                                                                                        "name": {
+                                                                                                            "originalName": "created_at",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "createdAt",
+                                                                                                                "safeName": "createdAt"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "created_at",
+                                                                                                                "safeName": "created_at"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "CREATED_AT",
+                                                                                                                "safeName": "CREATED_AT"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "CreatedAt",
+                                                                                                                "safeName": "CreatedAt"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
                                                                                                     "value": {
                                                                                                         "shape": {
                                                                                                             "type": "primitive",
@@ -776,13 +1505,52 @@
                                                                                                             "packagePath": [],
                                                                                                             "file": null
                                                                                                         },
-                                                                                                        "name": "Vendor",
+                                                                                                        "name": {
+                                                                                                            "originalName": "Vendor",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "VENDOR",
+                                                                                                                "safeName": "VENDOR"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Vendor",
+                                                                                                                "safeName": "Vendor"
+                                                                                                            }
+                                                                                                        },
                                                                                                         "displayName": null
                                                                                                     },
                                                                                                     "propertyAccess": "READ_ONLY"
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "updated_at",
+                                                                                                    "name": {
+                                                                                                        "wireValue": "updated_at",
+                                                                                                        "name": {
+                                                                                                            "originalName": "updated_at",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "updatedAt",
+                                                                                                                "safeName": "updatedAt"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "updated_at",
+                                                                                                                "safeName": "updated_at"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "UPDATED_AT",
+                                                                                                                "safeName": "UPDATED_AT"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "UpdatedAt",
+                                                                                                                "safeName": "UpdatedAt"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
                                                                                                     "value": {
                                                                                                         "shape": {
                                                                                                             "type": "primitive",
@@ -802,7 +1570,25 @@
                                                                                                             "packagePath": [],
                                                                                                             "file": null
                                                                                                         },
-                                                                                                        "name": "Vendor",
+                                                                                                        "name": {
+                                                                                                            "originalName": "Vendor",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "VENDOR",
+                                                                                                                "safeName": "VENDOR"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Vendor",
+                                                                                                                "safeName": "Vendor"
+                                                                                                            }
+                                                                                                        },
                                                                                                         "displayName": null
                                                                                                     },
                                                                                                     "propertyAccess": "READ_ONLY"
@@ -833,7 +1619,25 @@
                                                                         },
                                                                         "valueType": {
                                                                             "_type": "named",
-                                                                            "name": "Vendor",
+                                                                            "name": {
+                                                                                "originalName": "Vendor",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "vendor",
+                                                                                    "safeName": "vendor"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "vendor",
+                                                                                    "safeName": "vendor"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "VENDOR",
+                                                                                    "safeName": "VENDOR"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Vendor",
+                                                                                    "safeName": "Vendor"
+                                                                                }
+                                                                            },
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -862,7 +1666,25 @@
                                                                     "packagePath": [],
                                                                     "file": null
                                                                 },
-                                                                "name": "CreateVendorResponse",
+                                                                "name": {
+                                                                    "originalName": "CreateVendorResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "createVendorResponse",
+                                                                        "safeName": "createVendorResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "create_vendor_response",
+                                                                        "safeName": "create_vendor_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "CREATE_VENDOR_RESPONSE",
+                                                                        "safeName": "CREATE_VENDOR_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "CreateVendorResponse",
+                                                                        "safeName": "CreateVendorResponse"
+                                                                    }
+                                                                },
                                                                 "displayName": null
                                                             },
                                                             "propertyAccess": null
@@ -892,7 +1714,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "d0ff7811",
+                                "id": "cab6e139",
                                 "url": "/vendors/batch",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -909,9 +1731,48 @@
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "name": "vendors",
+                                                    "name": {
+                                                        "wireValue": "vendors",
+                                                        "name": {
+                                                            "originalName": "vendors",
+                                                            "camelCase": {
+                                                                "unsafeName": "vendors",
+                                                                "safeName": "vendors"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "vendors",
+                                                                "safeName": "vendors"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "VENDORS",
+                                                                "safeName": "VENDORS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Vendors",
+                                                                "safeName": "Vendors"
+                                                            }
+                                                        }
+                                                    },
                                                     "originalTypeDeclaration": {
-                                                        "name": "CreateVendorRequest",
+                                                        "name": {
+                                                            "originalName": "CreateVendorRequest",
+                                                            "camelCase": {
+                                                                "unsafeName": "createVendorRequest",
+                                                                "safeName": "createVendorRequest"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "create_vendor_request",
+                                                                "safeName": "create_vendor_request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "CREATE_VENDOR_REQUEST",
+                                                                "safeName": "CREATE_VENDOR_REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "CreateVendorRequest",
+                                                                "safeName": "CreateVendorRequest"
+                                                            }
+                                                        },
                                                         "fernFilepath": {
                                                             "allParts": [],
                                                             "packagePath": [],
@@ -946,9 +1807,48 @@
                                                                                     "type": "object",
                                                                                     "properties": [
                                                                                         {
-                                                                                            "name": "id",
+                                                                                            "name": {
+                                                                                                "wireValue": "id",
+                                                                                                "name": {
+                                                                                                    "originalName": "id",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "id",
+                                                                                                        "safeName": "id"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "id",
+                                                                                                        "safeName": "id"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "ID",
+                                                                                                        "safeName": "ID"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "ID",
+                                                                                                        "safeName": "ID"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "name": "Vendor",
+                                                                                                "name": {
+                                                                                                    "originalName": "Vendor",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VENDOR",
+                                                                                                        "safeName": "VENDOR"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Vendor",
+                                                                                                        "safeName": "Vendor"
+                                                                                                    }
+                                                                                                },
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [],
                                                                                                     "packagePath": [],
@@ -972,9 +1872,48 @@
                                                                                             "propertyAccess": null
                                                                                         },
                                                                                         {
-                                                                                            "name": "name",
+                                                                                            "name": {
+                                                                                                "wireValue": "name",
+                                                                                                "name": {
+                                                                                                    "originalName": "name",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "name",
+                                                                                                        "safeName": "name"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "name",
+                                                                                                        "safeName": "name"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "NAME",
+                                                                                                        "safeName": "NAME"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Name",
+                                                                                                        "safeName": "Name"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "name": "Vendor",
+                                                                                                "name": {
+                                                                                                    "originalName": "Vendor",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VENDOR",
+                                                                                                        "safeName": "VENDOR"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Vendor",
+                                                                                                        "safeName": "Vendor"
+                                                                                                    }
+                                                                                                },
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [],
                                                                                                     "packagePath": [],
@@ -998,9 +1937,48 @@
                                                                                             "propertyAccess": null
                                                                                         },
                                                                                         {
-                                                                                            "name": "created_at",
+                                                                                            "name": {
+                                                                                                "wireValue": "created_at",
+                                                                                                "name": {
+                                                                                                    "originalName": "created_at",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "createdAt",
+                                                                                                        "safeName": "createdAt"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "created_at",
+                                                                                                        "safeName": "created_at"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "CREATED_AT",
+                                                                                                        "safeName": "CREATED_AT"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "CreatedAt",
+                                                                                                        "safeName": "CreatedAt"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "name": "Vendor",
+                                                                                                "name": {
+                                                                                                    "originalName": "Vendor",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VENDOR",
+                                                                                                        "safeName": "VENDOR"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Vendor",
+                                                                                                        "safeName": "Vendor"
+                                                                                                    }
+                                                                                                },
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [],
                                                                                                     "packagePath": [],
@@ -1024,9 +2002,48 @@
                                                                                             "propertyAccess": "READ_ONLY"
                                                                                         },
                                                                                         {
-                                                                                            "name": "updated_at",
+                                                                                            "name": {
+                                                                                                "wireValue": "updated_at",
+                                                                                                "name": {
+                                                                                                    "originalName": "updated_at",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "updatedAt",
+                                                                                                        "safeName": "updatedAt"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "updated_at",
+                                                                                                        "safeName": "updated_at"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "UPDATED_AT",
+                                                                                                        "safeName": "UPDATED_AT"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "UpdatedAt",
+                                                                                                        "safeName": "UpdatedAt"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
                                                                                             "originalTypeDeclaration": {
-                                                                                                "name": "Vendor",
+                                                                                                "name": {
+                                                                                                    "originalName": "Vendor",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "vendor",
+                                                                                                        "safeName": "vendor"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "VENDOR",
+                                                                                                        "safeName": "VENDOR"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Vendor",
+                                                                                                        "safeName": "Vendor"
+                                                                                                    }
+                                                                                                },
                                                                                                 "fernFilepath": {
                                                                                                     "allParts": [],
                                                                                                     "packagePath": [],
@@ -1053,7 +2070,25 @@
                                                                                     "extraProperties": null
                                                                                 },
                                                                                 "typeName": {
-                                                                                    "name": "Vendor",
+                                                                                    "name": {
+                                                                                        "originalName": "Vendor",
+                                                                                        "camelCase": {
+                                                                                            "unsafeName": "vendor",
+                                                                                            "safeName": "vendor"
+                                                                                        },
+                                                                                        "snakeCase": {
+                                                                                            "unsafeName": "vendor",
+                                                                                            "safeName": "vendor"
+                                                                                        },
+                                                                                        "screamingSnakeCase": {
+                                                                                            "unsafeName": "VENDOR",
+                                                                                            "safeName": "VENDOR"
+                                                                                        },
+                                                                                        "pascalCase": {
+                                                                                            "unsafeName": "Vendor",
+                                                                                            "safeName": "Vendor"
+                                                                                        }
+                                                                                    },
                                                                                     "fernFilepath": {
                                                                                         "allParts": [],
                                                                                         "packagePath": [],
@@ -1085,7 +2120,25 @@
                                                                 },
                                                                 "valueType": {
                                                                     "_type": "named",
-                                                                    "name": "Vendor",
+                                                                    "name": {
+                                                                        "originalName": "Vendor",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "vendor",
+                                                                            "safeName": "vendor"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "vendor",
+                                                                            "safeName": "vendor"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "VENDOR",
+                                                                            "safeName": "VENDOR"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Vendor",
+                                                                            "safeName": "Vendor"
+                                                                        }
+                                                                    },
                                                                     "fernFilepath": {
                                                                         "allParts": [],
                                                                         "packagePath": [],
@@ -1113,7 +2166,25 @@
                                             "extraProperties": null
                                         },
                                         "typeName": {
-                                            "name": "CreateVendorRequest",
+                                            "name": {
+                                                "originalName": "CreateVendorRequest",
+                                                "camelCase": {
+                                                    "unsafeName": "createVendorRequest",
+                                                    "safeName": "createVendorRequest"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "create_vendor_request",
+                                                    "safeName": "create_vendor_request"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "CREATE_VENDOR_REQUEST",
+                                                    "safeName": "CREATE_VENDOR_REQUEST"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "CreateVendorRequest",
+                                                    "safeName": "CreateVendorRequest"
+                                                }
+                                            },
                                             "fernFilepath": {
                                                 "allParts": [],
                                                 "packagePath": [],
@@ -1145,9 +2216,48 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": "vendors",
+                                                            "name": {
+                                                                "wireValue": "vendors",
+                                                                "name": {
+                                                                    "originalName": "vendors",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "vendors",
+                                                                        "safeName": "vendors"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "vendors",
+                                                                        "safeName": "vendors"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "VENDORS",
+                                                                        "safeName": "VENDORS"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Vendors",
+                                                                        "safeName": "Vendors"
+                                                                    }
+                                                                }
+                                                            },
                                                             "originalTypeDeclaration": {
-                                                                "name": "CreateVendorResponse",
+                                                                "name": {
+                                                                    "originalName": "CreateVendorResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "createVendorResponse",
+                                                                        "safeName": "createVendorResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "create_vendor_response",
+                                                                        "safeName": "create_vendor_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "CREATE_VENDOR_RESPONSE",
+                                                                        "safeName": "CREATE_VENDOR_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "CreateVendorResponse",
+                                                                        "safeName": "CreateVendorResponse"
+                                                                    }
+                                                                },
                                                                 "fernFilepath": {
                                                                     "allParts": [],
                                                                     "packagePath": [],
@@ -1182,9 +2292,48 @@
                                                                                             "type": "object",
                                                                                             "properties": [
                                                                                                 {
-                                                                                                    "name": "id",
+                                                                                                    "name": {
+                                                                                                        "wireValue": "id",
+                                                                                                        "name": {
+                                                                                                            "originalName": "id",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "id",
+                                                                                                                "safeName": "id"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "id",
+                                                                                                                "safeName": "id"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "ID",
+                                                                                                                "safeName": "ID"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "ID",
+                                                                                                                "safeName": "ID"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
                                                                                                     "originalTypeDeclaration": {
-                                                                                                        "name": "Vendor",
+                                                                                                        "name": {
+                                                                                                            "originalName": "Vendor",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "VENDOR",
+                                                                                                                "safeName": "VENDOR"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Vendor",
+                                                                                                                "safeName": "Vendor"
+                                                                                                            }
+                                                                                                        },
                                                                                                         "fernFilepath": {
                                                                                                             "allParts": [],
                                                                                                             "packagePath": [],
@@ -1208,9 +2357,48 @@
                                                                                                     "propertyAccess": null
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "name",
+                                                                                                    "name": {
+                                                                                                        "wireValue": "name",
+                                                                                                        "name": {
+                                                                                                            "originalName": "name",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "name",
+                                                                                                                "safeName": "name"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "name",
+                                                                                                                "safeName": "name"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "NAME",
+                                                                                                                "safeName": "NAME"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Name",
+                                                                                                                "safeName": "Name"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
                                                                                                     "originalTypeDeclaration": {
-                                                                                                        "name": "Vendor",
+                                                                                                        "name": {
+                                                                                                            "originalName": "Vendor",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "VENDOR",
+                                                                                                                "safeName": "VENDOR"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Vendor",
+                                                                                                                "safeName": "Vendor"
+                                                                                                            }
+                                                                                                        },
                                                                                                         "fernFilepath": {
                                                                                                             "allParts": [],
                                                                                                             "packagePath": [],
@@ -1234,9 +2422,48 @@
                                                                                                     "propertyAccess": null
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "created_at",
+                                                                                                    "name": {
+                                                                                                        "wireValue": "created_at",
+                                                                                                        "name": {
+                                                                                                            "originalName": "created_at",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "createdAt",
+                                                                                                                "safeName": "createdAt"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "created_at",
+                                                                                                                "safeName": "created_at"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "CREATED_AT",
+                                                                                                                "safeName": "CREATED_AT"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "CreatedAt",
+                                                                                                                "safeName": "CreatedAt"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
                                                                                                     "originalTypeDeclaration": {
-                                                                                                        "name": "Vendor",
+                                                                                                        "name": {
+                                                                                                            "originalName": "Vendor",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "VENDOR",
+                                                                                                                "safeName": "VENDOR"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Vendor",
+                                                                                                                "safeName": "Vendor"
+                                                                                                            }
+                                                                                                        },
                                                                                                         "fernFilepath": {
                                                                                                             "allParts": [],
                                                                                                             "packagePath": [],
@@ -1260,9 +2487,48 @@
                                                                                                     "propertyAccess": "READ_ONLY"
                                                                                                 },
                                                                                                 {
-                                                                                                    "name": "updated_at",
+                                                                                                    "name": {
+                                                                                                        "wireValue": "updated_at",
+                                                                                                        "name": {
+                                                                                                            "originalName": "updated_at",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "updatedAt",
+                                                                                                                "safeName": "updatedAt"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "updated_at",
+                                                                                                                "safeName": "updated_at"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "UPDATED_AT",
+                                                                                                                "safeName": "UPDATED_AT"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "UpdatedAt",
+                                                                                                                "safeName": "UpdatedAt"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
                                                                                                     "originalTypeDeclaration": {
-                                                                                                        "name": "Vendor",
+                                                                                                        "name": {
+                                                                                                            "originalName": "Vendor",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "vendor",
+                                                                                                                "safeName": "vendor"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "VENDOR",
+                                                                                                                "safeName": "VENDOR"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Vendor",
+                                                                                                                "safeName": "Vendor"
+                                                                                                            }
+                                                                                                        },
                                                                                                         "fernFilepath": {
                                                                                                             "allParts": [],
                                                                                                             "packagePath": [],
@@ -1289,7 +2555,25 @@
                                                                                             "extraProperties": null
                                                                                         },
                                                                                         "typeName": {
-                                                                                            "name": "Vendor",
+                                                                                            "name": {
+                                                                                                "originalName": "Vendor",
+                                                                                                "camelCase": {
+                                                                                                    "unsafeName": "vendor",
+                                                                                                    "safeName": "vendor"
+                                                                                                },
+                                                                                                "snakeCase": {
+                                                                                                    "unsafeName": "vendor",
+                                                                                                    "safeName": "vendor"
+                                                                                                },
+                                                                                                "screamingSnakeCase": {
+                                                                                                    "unsafeName": "VENDOR",
+                                                                                                    "safeName": "VENDOR"
+                                                                                                },
+                                                                                                "pascalCase": {
+                                                                                                    "unsafeName": "Vendor",
+                                                                                                    "safeName": "Vendor"
+                                                                                                }
+                                                                                            },
                                                                                             "fernFilepath": {
                                                                                                 "allParts": [],
                                                                                                 "packagePath": [],
@@ -1321,7 +2605,25 @@
                                                                         },
                                                                         "valueType": {
                                                                             "_type": "named",
-                                                                            "name": "Vendor",
+                                                                            "name": {
+                                                                                "originalName": "Vendor",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "vendor",
+                                                                                    "safeName": "vendor"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "vendor",
+                                                                                    "safeName": "vendor"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "VENDOR",
+                                                                                    "safeName": "VENDOR"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Vendor",
+                                                                                    "safeName": "Vendor"
+                                                                                }
+                                                                            },
                                                                             "fernFilepath": {
                                                                                 "allParts": [],
                                                                                 "packagePath": [],
@@ -1349,7 +2651,25 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": "CreateVendorResponse",
+                                                    "name": {
+                                                        "originalName": "CreateVendorResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "createVendorResponse",
+                                                            "safeName": "createVendorResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "create_vendor_response",
+                                                            "safeName": "create_vendor_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "CREATE_VENDOR_RESPONSE",
+                                                            "safeName": "CREATE_VENDOR_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "CreateVendorResponse",
+                                                            "safeName": "CreateVendorResponse"
+                                                        }
+                                                    },
                                                     "fernFilepath": {
                                                         "allParts": [],
                                                         "packagePath": [],
@@ -1392,7 +2712,28 @@
         }
     },
     "constants": {
-        "errorInstanceIdKey": "errorInstanceId"
+        "errorInstanceIdKey": {
+            "wireValue": "errorInstanceId",
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
+                }
+            }
+        }
     },
     "environments": null,
     "errorDiscriminationStrategy": {
