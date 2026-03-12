@@ -1,15 +1,19 @@
 # Specific rules for generators
-generators/php/* @dsinghvi
 generators/commons/* @Swimburger
 generators/csharp/* @Swimburger
+generators/go/* @amckinney
+generators/go-v2/* @amckinney
+generators/java/* @tstanmay13
+generators/openapi/* @dsinghvi @amckinney
+generators/php/* @amckinney
+generators/postman/* @dsinghvi @amckinney
+generators/python/* @amckinney
+generators/python-v2/* @amckinney
+generators/ruby-v2/* @iamnamananand996
+generators/rust/* @iamnamananand996
+generators/swift/* @kafkas
 generators/typescript/* @Swimburger
 generators/typescript-v2/* @Swimburger
-generators/java/* @tstanmay13
-generators/swift/* @kafkas
-generators/rust/* @iamnamananand996
-generators/ruby-v2/* @iamnamananand996
-generators/postman/* @dsinghvi
-generators/openapi/* @dsinghvi
 
 # Specific rules for packages
-packages/cli/* @dsinghvi
+packages/cli/* @dsinghvi @amckinney
