@@ -501,10 +501,7 @@ dotnet_diagnostic.IDE0005.severity = error
                 ""
             ].join("\n");
 
-            const solutionFilePath = join(
-                absolutePathToSolutionDirectory,
-                RelativeFilePath.of(`${this.name}.sln`)
-            );
+            const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.sln`));
             await writeFile(solutionFilePath, slnContents);
         } else {
             // Generate .slnx format (default)
@@ -521,10 +518,7 @@ dotnet_diagnostic.IDE0005.severity = error
 </Solution>
 `;
 
-            const solutionFilePath = join(
-                absolutePathToSolutionDirectory,
-                RelativeFilePath.of(`${this.name}.slnx`)
-            );
+            const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
             await writeFile(solutionFilePath, slnxContents);
         }
     }
