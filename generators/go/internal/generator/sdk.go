@@ -71,12 +71,6 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
-
-	//go:embed sdk/core/oauth.go
-	oauthFile string
-
-	//go:embed sdk/core/inferred_auth.go
-	inferredAuthFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -1255,7 +1249,7 @@ func (f *fileWriter) WriteClient(
 	f.P("caller *internal.Caller")
 	f.P("header http.Header")
 	if oauthClientCredentials != nil {
-		f.P("oauthTokenProvider *core.OAuthTokenProvider")
+		f.P("oauthTokenProvider *core.TokenProvider")
 	}
 	f.P()
 	if len(endpoints) > 0 {
@@ -1320,7 +1314,7 @@ func (f *fileWriter) WriteClient(
 		}
 	}
 	if oauthClientCredentials != nil {
-		f.P("oauthTokenProvider := core.NewOAuthTokenProvider(options.ClientID, options.ClientSecret)")
+		f.P("oauthTokenProvider := core.NewTokenProvider(0)")
 		// Create an auth client to fetch tokens
 		// We need to create a separate RequestOptions without the token getter to avoid infinite recursion
 		f.P("authOptions := core.NewRequestOptions()")

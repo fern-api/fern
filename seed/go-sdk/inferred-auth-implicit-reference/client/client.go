@@ -28,7 +28,9 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
-	inferredAuthProvider := core.NewInferredAuthProvider()
+	inferredAuthProvider := core.NewTokenProvider(
+		core.DefaultExpirySeconds,
+	)
 	authOptions := *options
 	authClient := auth.NewClient(
 		&authOptions,
@@ -47,7 +49,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 					"inferred auth response missing access token",
 				)
 			}
-			expiresIn := core.DefaultInferredAuthExpirySeconds
+			expiresIn := core.DefaultExpirySeconds
 			if response.ExpiresIn > 0 {
 				expiresIn = response.ExpiresIn
 			}

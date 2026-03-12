@@ -39,7 +39,7 @@ import (
 func do() {
     client := client.NewClient(
         option.WithApiKey(
-            "api_key",
+            "X-Api-Key",
         ),
     )
     request := &fern.GetTokenRequest{

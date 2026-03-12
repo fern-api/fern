@@ -43,9 +43,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.Password == "" {
 		options.Password = os.Getenv("MY_PASSWORD")
 	}
-	oauthTokenProvider := core.NewOAuthTokenProvider(
-		options.ClientID,
-		options.ClientSecret,
+	oauthTokenProvider := core.NewTokenProvider(
+		0,
 	)
 	authOptions := *options
 	authClient := auth.NewClient(
@@ -72,7 +71,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 			return response.AccessToken, expiresIn, nil
 		})
 	})
-	inferredAuthProvider := core.NewInferredAuthProvider()
+	inferredAuthProvider := core.NewTokenProvider(
+		core.DefaultExpirySeconds,
+	)
 	options.SetTokenGetter(func() (string, error) {
 		return inferredAuthProvider.GetOrFetch(func() (string, int, error) {
 			response, err := authClient.GetToken(context.Background(), &fern.GetTokenRequest{
@@ -87,7 +88,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 					"inferred auth response missing access token",
 				)
 			}
-			expiresIn := core.DefaultInferredAuthExpirySeconds
+			expiresIn := core.DefaultExpirySeconds
 			if response.ExpiresIn > 0 {
 				expiresIn = response.ExpiresIn
 			}

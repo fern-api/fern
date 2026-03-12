@@ -371,20 +371,17 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         const clientIdFieldName = getRequestPropertyFieldName(this.context, requestProperties.clientId);
         const clientSecretFieldName = getRequestPropertyFieldName(this.context, requestProperties.clientSecret);
 
-        // Create the OAuthTokenProvider
+        // Create the token provider for OAuth (defaultExpirySeconds=0 means tokens without expiry never auto-refresh)
         writer.writeNode(
             go.codeblock((w) => {
                 w.write("oauthTokenProvider := ");
                 w.writeNode(
                     go.invokeFunc({
                         func: go.typeReference({
-                            name: "NewOAuthTokenProvider",
+                            name: "NewTokenProvider",
                             importPath: this.context.getCoreImportPath()
                         }),
-                        arguments_: [
-                            go.selector({ on: go.codeblock("options"), selector: go.codeblock("ClientID") }),
-                            go.selector({ on: go.codeblock("options"), selector: go.codeblock("ClientSecret") })
-                        ]
+                        arguments_: [go.codeblock("0")]
                     })
                 );
                 w.newLine();
@@ -594,15 +591,15 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
 
         writer.writeNode(
             go.codeblock((w) => {
-                // Create the InferredAuthProvider
+                // Create the token provider for inferred auth (DefaultExpirySeconds applies a 1hr default when expiry is missing)
                 w.write("inferredAuthProvider := ");
                 w.writeNode(
                     go.invokeFunc({
                         func: go.typeReference({
-                            name: "NewInferredAuthProvider",
+                            name: "NewTokenProvider",
                             importPath: this.context.getCoreImportPath()
                         }),
-                        arguments_: []
+                        arguments_: [go.codeblock("core.DefaultExpirySeconds")]
                     })
                 );
                 w.newLine();
@@ -714,7 +711,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     const expiryField = this.context.getFieldName(expiryProperty.property.name.name);
                     const expiryIsOptional = this.isResponsePropertyOptional(expiryProperty);
 
-                    w.writeLine("expiresIn := core.DefaultInferredAuthExpirySeconds");
+                    w.writeLine("expiresIn := core.DefaultExpirySeconds");
                     if (expiryIsOptional) {
                         w.writeLine(`if response.${expiryField} != nil {`);
                         w.indent();
@@ -731,7 +728,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     w.writeLine(`return response.${accessTokenField}, expiresIn, nil`);
                 } else {
                     // No expiry property — use default
-                    w.writeLine(`return response.${accessTokenField}, core.DefaultInferredAuthExpirySeconds, nil`);
+                    w.writeLine(`return response.${accessTokenField}, core.DefaultExpirySeconds, nil`);
                 }
 
                 w.dedent();
