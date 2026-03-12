@@ -782,6 +782,50 @@ describe("NameRegistry", () => {
             expect(type2.namespace).toBe("MyApp.Models_");
             expect(type2.fullyQualifiedName).toBe("MyApp.Models_.User");
         });
+
+        it("should detect deeply nested type collision with non-nested type", () => {
+            // Register a doubly-nested type via registerClassReference so both the parent
+            // and nested types go through the full registry flow.
+            // First register the parent: namespace=X.Y, name=Parent → FQN "X.Y.Parent"
+            const parent = nameRegistry.registerClassReference({ name: "Parent", namespace: "X.Y" }, "X.Y.Parent");
+            // Then register the nested type: enclosingType=parent, name=Child → FQN "X.Y.Parent+Child"
+            const nested = nameRegistry.registerClassReference(
+                { name: "Child", namespace: "X.Y", enclosingType: parent },
+                "X.Y.Parent+Child"
+            );
+            expect(nested.fullyQualifiedName).toBe("X.Y.Parent+Child");
+
+            // Now register a non-nested type whose FQN "X.Y.Parent.Child" resolves to same C# path
+            // The namespace "X.Y.Parent" matches a registered type, so it gets renamed to "X.Y.Parent_"
+            // which means the FQN becomes "X.Y.Parent_.Child" — the namespace collision fires first.
+            // This is correct behavior: the namespace check is the primary guard.
+            const nonNested = nameRegistry.registerClassReference(
+                { name: "Child", namespace: "X.Y.Parent" },
+                "X.Y.Parent.Child"
+            );
+
+            // Namespace is renamed because "X.Y.Parent" conflicts with the registered type
+            expect(nonNested.namespace).toBe("X.Y.Parent_");
+            expect(nonNested.fullyQualifiedName).toBe("X.Y.Parent_.Child");
+        });
+
+        it("should detect deeply nested type collision when namespace does not conflict", () => {
+            // Directly inject a doubly-nested FQN "P.Q+R+S" into the type registry
+            // via trackType, without registering "P.Q" as a standalone type.
+            // This simulates a scenario where only the nested type exists.
+            const doublyNested = createClassRef("S", "P.Q");
+            // Override the fullyQualifiedName to simulate a doubly-nested FQN
+            (doublyNested as { fullyQualifiedName: string }).fullyQualifiedName = "P.Q+R+S";
+            nameRegistry.trackType(doublyNested);
+
+            // Now register a non-nested type whose FQN "P.Q.R.S" resolves to same C# path.
+            // The namespace "P.Q.R" does NOT conflict with any existing type, so namespace
+            // collision doesn't fire. The cross-format check should detect that "P.Q+R+S" exists.
+            const nonNested = nameRegistry.registerClassReference({ name: "S", namespace: "P.Q.R" }, "P.Q.R.S");
+
+            // The non-nested type should be renamed to avoid collision with the nested variant
+            expect(nonNested.name).toBe("S_");
+        });
     });
 
     describe("Edge Cases and Error Handling", () => {

@@ -1220,13 +1220,12 @@ export class NameRegistry {
                     continue conflictResolution;
                 }
             } else {
-                // Non-nested type: check if a nested type with the same path exists
-                // e.g., "A.B.C" could collide with "A.B+C" (one level of nesting)
-                const lastDot = fullyQualifiedName.lastIndexOf(".");
-                if (lastDot > 0) {
-                    const nestedFqn =
-                        fullyQualifiedName.substring(0, lastDot) + "+" + fullyQualifiedName.substring(lastDot + 1);
-                    if (this.typeRegistry.has(nestedFqn)) {
+                // Non-nested type: check all possible nested variations
+                // e.g., "A.B.C.D" could collide with "A.B.C+D", "A.B+C+D", "A+B+C+D", etc.
+                const segments = fullyQualifiedName.split(".");
+                for (let i = 1; i < segments.length; i++) {
+                    const nestedVariant = segments.slice(0, i).join(".") + "+" + segments.slice(i).join("+");
+                    if (this.typeRegistry.has(nestedVariant)) {
                         name = `${name}_`;
                         modified = true;
                         continue conflictResolution;
