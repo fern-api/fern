@@ -1,6 +1,4 @@
 # Specific rules for generators
-generators/go/* @Swimburger
-generators/go-v2/* @Swimburger
 generators/php/* @dsinghvi
 generators/commons/* @Swimburger
 generators/csharp/* @Swimburger
