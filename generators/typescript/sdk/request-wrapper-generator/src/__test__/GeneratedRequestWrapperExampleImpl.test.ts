@@ -25,7 +25,7 @@ function createExampleEndpointCall(overrides?: Partial<FernIr.ExampleEndpointCal
         endpointHeaders: [],
         queryParameters: [],
         request: undefined,
-        response: FernIr.ExampleResponse.ok({ body: undefined }),
+        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body(undefined)),
         docs: undefined,
         ...overrides
     };
@@ -48,7 +48,7 @@ function integerPrimitive(value: number): FernIr.ExampleTypeReferenceShape {
 
 function literalShape(value: string): FernIr.ExampleTypeReferenceShape {
     return FernIr.ExampleTypeReferenceShape.container(
-        FernIr.ExampleContainer.literal(FernIr.ExamplePrimitive.string({ original: value }))
+        FernIr.ExampleContainer.literal({ literal: FernIr.ExamplePrimitive.string({ original: value }) })
     );
 }
 
@@ -210,11 +210,13 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                     queryParameters: [
                         {
                             name: createNameAndWireValue("limit", "limit"),
-                            value: createExampleTypeReference(integerPrimitive(10), 10)
+                            value: createExampleTypeReference(integerPrimitive(10), 10),
+                            shape: undefined
                         },
                         {
                             name: createNameAndWireValue("offset", "offset"),
-                            value: createExampleTypeReference(stringPrimitive("abc"), "abc")
+                            value: createExampleTypeReference(stringPrimitive("abc"), "abc"),
+                            shape: undefined
                         }
                     ]
                 })
@@ -376,10 +378,13 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                         FernIr.FileProperty.file({
                             key: createNameAndWireValue("document", "document"),
                             isOptional: false,
+                            contentType: undefined,
                             docs: undefined
                         })
                     )
                 ],
+                v2Examples: undefined,
+                contentType: undefined,
                 docs: undefined
             });
 
@@ -401,10 +406,13 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                         FernIr.FileProperty.file({
                             key: createNameAndWireValue("document", "document"),
                             isOptional: false,
+                            contentType: undefined,
                             docs: undefined
                         })
                     )
                 ],
+                v2Examples: undefined,
+                contentType: undefined,
                 docs: undefined
             });
 
@@ -428,10 +436,13 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                         FernIr.FileProperty.fileArray({
                             key: createNameAndWireValue("documents", "documents"),
                             isOptional: false,
+                            contentType: undefined,
                             docs: undefined
                         })
                     )
                 ],
+                v2Examples: undefined,
+                contentType: undefined,
                 docs: undefined
             });
 
@@ -455,10 +466,13 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                         FernIr.FileProperty.file({
                             key: createNameAndWireValue("optionalFile", "optional_file"),
                             isOptional: true,
+                            contentType: undefined,
                             docs: undefined
                         })
                     )
                 ],
+                v2Examples: undefined,
+                contentType: undefined,
                 docs: undefined
             });
 
@@ -481,6 +495,7 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                         FernIr.FileProperty.file({
                             key: createNameAndWireValue("myFile", "my_file"),
                             isOptional: false,
+                            contentType: undefined,
                             docs: undefined
                         })
                     ),
@@ -490,9 +505,13 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                         docs: undefined,
                         availability: undefined,
                         v2Examples: undefined,
-                        propertyAccess: undefined
+                        propertyAccess: undefined,
+                        contentType: undefined,
+                        style: undefined
                     })
                 ],
+                v2Examples: undefined,
+                contentType: undefined,
                 docs: undefined
             });
 
@@ -852,9 +871,11 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                                         {
                                             name: createNameAndWireValue("name", "name"),
                                             value: createExampleTypeReference(stringPrimitive("test"), "test"),
-                                            originalTypeDeclaration: undefined
+                                            originalTypeDeclaration: createDeclaredTypeName("MyBody"),
+                                            propertyAccess: undefined
                                         }
-                                    ]
+                                    ],
+                                    extraProperties: undefined
                                 })
                             }),
                             { name: "test" }
@@ -900,7 +921,8 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                     queryParameters: [
                         {
                             name: createNameAndWireValue("page", "page"),
-                            value: createExampleTypeReference(integerPrimitive(1), 1)
+                            value: createExampleTypeReference(integerPrimitive(1), 1),
+                            shape: undefined
                         }
                     ],
                     serviceHeaders: [
@@ -943,7 +965,8 @@ describe("GeneratedRequestWrapperExampleImpl", () => {
                     queryParameters: [
                         {
                             name: createNameAndWireValue("search", "search"),
-                            value: createExampleTypeReference(stringPrimitive("query"), "query")
+                            value: createExampleTypeReference(stringPrimitive("query"), "query"),
+                            shape: undefined
                         }
                     ],
                     request: FernIr.ExampleRequestBody.inlinedRequestBody({

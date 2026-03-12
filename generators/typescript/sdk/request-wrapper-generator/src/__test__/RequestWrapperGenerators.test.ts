@@ -28,9 +28,7 @@ function createExampleEndpointCall(overrides?: Partial<FernIr.ExampleEndpointCal
         endpointHeaders: [],
         queryParameters: [],
         request: undefined,
-        response: FernIr.ExampleResponse.ok({
-            body: undefined
-        }),
+        response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body(undefined)),
         docs: undefined,
         ...overrides
     };
@@ -170,7 +168,9 @@ describe("RequestWrapperExampleGenerator", () => {
                 properties: [],
                 contentType: undefined,
                 v2Examples: undefined,
-                extraProperties: undefined
+                extendedProperties: undefined,
+                extraProperties: false,
+                docs: undefined
             }),
             flattenRequestParameters: false
         });
@@ -226,7 +226,8 @@ describe("RequestWrapperExampleGenerator", () => {
                         value: {
                             shape: FernIr.ExampleTypeReferenceShape.primitive(FernIr.ExamplePrimitive.integer(10)),
                             jsonExample: 10
-                        }
+                        },
+                        shape: undefined
                     }
                 ]
             }),

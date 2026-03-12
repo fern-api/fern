@@ -1850,8 +1850,8 @@ describe("GeneratedRequestWrapperImpl", () => {
             const { context } = createMockContext();
             const keys = wrapper.getNonBodyKeysWithData(context);
             expect(keys).toHaveLength(2);
-            expect(keys[0]?.originalParameter.type).toBe("query");
-            expect(keys[1]?.originalParameter.type).toBe("header");
+            expect(keys[0]?.originalParameter?.type).toBe("query");
+            expect(keys[1]?.originalParameter?.type).toBe("header");
         });
 
         it("includes path parameter keys when shouldInlinePathParameters=true", () => {
@@ -1867,8 +1867,8 @@ describe("GeneratedRequestWrapperImpl", () => {
             const { context } = createMockContext({ shouldInlinePathParameters: true });
             const keys = wrapper.getNonBodyKeysWithData(context);
             expect(keys).toHaveLength(2);
-            expect(keys[0]?.originalParameter.type).toBe("path");
-            expect(keys[1]?.originalParameter.type).toBe("query");
+            expect(keys[0]?.originalParameter?.type).toBe("path");
+            expect(keys[1]?.originalParameter?.type).toBe("query");
         });
 
         it("includes file property keys when inlineFileProperties=true", () => {
@@ -1888,8 +1888,8 @@ describe("GeneratedRequestWrapperImpl", () => {
             const keys = wrapper.getNonBodyKeysWithData(context);
             // file key + query key
             expect(keys).toHaveLength(2);
-            expect(keys[0]?.originalParameter.type).toBe("file");
-            expect(keys[1]?.originalParameter.type).toBe("query");
+            expect(keys[0]?.originalParameter?.type).toBe("file");
+            expect(keys[1]?.originalParameter?.type).toBe("query");
         });
 
         it("excludes file property keys when inlineFileProperties=false", () => {
@@ -1908,7 +1908,7 @@ describe("GeneratedRequestWrapperImpl", () => {
             const { context } = createMockContext();
             const keys = wrapper.getNonBodyKeysWithData(context);
             expect(keys).toHaveLength(1);
-            expect(keys[0]?.originalParameter.type).toBe("query");
+            expect(keys[0]?.originalParameter?.type).toBe("query");
         });
     });
 
