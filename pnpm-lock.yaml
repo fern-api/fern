@@ -5014,10 +5014,6 @@ importers:
         version: 4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
 
   packages/cli/cli-v2:
-    dependencies:
-      '@fern-api/casings-generator':
-        specifier: workspace:*
-        version: link:../../commons/casings-generator
     devDependencies:
       '@boundaryml/baml':
         specifier: 'catalog:'
@@ -5031,6 +5027,9 @@ importers:
       '@fern-api/auth':
         specifier: workspace:*
         version: link:../auth
+      '@fern-api/casings-generator':
+        specifier: workspace:*
+        version: link:../../commons/casings-generator
       '@fern-api/cli-logger':
         specifier: workspace:*
         version: link:../cli-logger
