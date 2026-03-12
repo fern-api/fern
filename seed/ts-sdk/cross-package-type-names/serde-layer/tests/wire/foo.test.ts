@@ -9,6 +9,7 @@ describe("FooClient", () => {
         const client = new SeedCrossPackageTypeNamesClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { publicProperty: "publicProperty", privateProperty: 1 };
         const rawResponseBody = { imported: "imported" };
+
         server
             .mockEndpoint()
             .post("")

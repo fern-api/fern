@@ -17,6 +17,7 @@ describe("MigrationClient", () => {
             { name: "name", status: "RUNNING" },
             { name: "name", status: "RUNNING" },
         ];
+
         server
             .mockEndpoint()
             .get("/migration-info/all")

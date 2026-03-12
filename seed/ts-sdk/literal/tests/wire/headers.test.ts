@@ -9,6 +9,7 @@ describe("HeadersClient", () => {
         const client = new SeedLiteralClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { query: "What is the weather today" };
         const rawResponseBody = { message: "The weather is sunny", status: 200, success: true };
+
         server
             .mockEndpoint()
             .post("/headers")
