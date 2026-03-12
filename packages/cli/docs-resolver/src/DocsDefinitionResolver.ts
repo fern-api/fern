@@ -2076,6 +2076,8 @@ export class DocsDefinitionResolver {
             return undefined;
         }
 
+        // Type assertion needed: claudeCode is not yet in the published FDR SDK
+        // PageActionOptions type, but FDR accepts it at runtime.
         return {
             default: this.parsedDocsConfig.pageActions.default,
             options: {
@@ -2094,7 +2096,7 @@ export class DocsDefinitionResolver {
                     icon: this.resolveIconFileId(customAction.icon),
                     default: customAction.default
                 }))
-            }
+            } as DocsV1Write.PageActionOptions
         };
     }
 
