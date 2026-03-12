@@ -8,6 +8,7 @@ export declare namespace CliError {
         | "EXIT"
         | "GENERATION_FAILED"
         | "BAD_REQUEST_ERROR"
+        | "NOT_FOUND_ERROR"
         | "UNAUTHORIZED_ERROR"
         | "VALIDATION_ERROR"
         | "INTERNAL_ERROR";
@@ -56,6 +57,10 @@ export class CliError extends Error {
 
     public static badRequest(message: string): CliError {
         return new CliError({ message, code: "BAD_REQUEST_ERROR" });
+    }
+
+    public static notFound(message: string): CliError {
+        return new CliError({ message, code: "NOT_FOUND_ERROR" });
     }
 
     public static unauthorized(message?: string): CliError {

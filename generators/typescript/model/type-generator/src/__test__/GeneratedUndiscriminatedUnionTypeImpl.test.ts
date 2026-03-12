@@ -1,0 +1,796 @@
+import { FernIr } from "@fern-fern/ir-sdk";
+import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
+import { casingsGenerator, createDeclaredTypeName } from "@fern-typescript/test-utils";
+import { Project, ts } from "ts-morph";
+import { assert, describe, expect, it } from "vitest";
+
+import { GeneratedUndiscriminatedUnionTypeImpl } from "../undiscriminated-union/GeneratedUndiscriminatedUnionTypeImpl.js";
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Helpers
+// ──────────────────────────────────────────────────────────────────────────────
+
+function createFernFilepath(packageName = "types"): FernIr.FernFilepath {
+    return {
+        allParts: [casingsGenerator.generateName(packageName)],
+        packagePath: [casingsGenerator.generateName(packageName)],
+        file: casingsGenerator.generateName(packageName)
+    };
+}
+
+/**
+ * Builds a TypeReferenceNode for a primitive type (non-optional).
+ */
+function primitiveTypeRefNode(typeName: string): TypeReferenceNode {
+    const typeNode = ts.factory.createKeywordTypeNode(
+        typeName === "string"
+            ? ts.SyntaxKind.StringKeyword
+            : typeName === "number"
+              ? ts.SyntaxKind.NumberKeyword
+              : typeName === "boolean"
+                ? ts.SyntaxKind.BooleanKeyword
+                : ts.SyntaxKind.AnyKeyword
+    );
+    return {
+        isOptional: false,
+        typeNode,
+        typeNodeWithoutUndefined: typeNode,
+        requestTypeNode: undefined,
+        requestTypeNodeWithoutUndefined: undefined,
+        responseTypeNode: undefined,
+        responseTypeNodeWithoutUndefined: undefined
+    };
+}
+
+/**
+ * Builds a TypeReferenceNode pointing to a named type reference.
+ */
+function namedTypeRefNode(name: string): TypeReferenceNode {
+    const typeNode = ts.factory.createTypeReferenceNode(name);
+    return {
+        isOptional: false,
+        typeNode,
+        typeNodeWithoutUndefined: typeNode,
+        requestTypeNode: undefined,
+        requestTypeNodeWithoutUndefined: undefined,
+        responseTypeNode: undefined,
+        responseTypeNodeWithoutUndefined: undefined
+    };
+}
+
+/**
+ * Builds a TypeReferenceNode with separate request/response type nodes.
+ */
+function namedTypeRefNodeWithVariants(name: string, requestName: string, responseName: string): TypeReferenceNode {
+    const typeNode = ts.factory.createTypeReferenceNode(name);
+    return {
+        isOptional: false,
+        typeNode,
+        typeNodeWithoutUndefined: typeNode,
+        requestTypeNode: ts.factory.createTypeReferenceNode(requestName),
+        requestTypeNodeWithoutUndefined: ts.factory.createTypeReferenceNode(requestName),
+        responseTypeNode: ts.factory.createTypeReferenceNode(responseName),
+        responseTypeNodeWithoutUndefined: ts.factory.createTypeReferenceNode(responseName)
+    };
+}
+
+/**
+ * Creates a mock BaseContext for undiscriminated union type tests.
+ * Provides: getReferenceToTypeForInlineUnion, getGeneratedExample, getTypeDeclaration.
+ */
+function createMockBaseContext(opts?: {
+    typeRefOverrides?: Map<string, TypeReferenceNode>;
+    getTypeDeclarationFn?: (typeName: FernIr.DeclaredTypeName) => FernIr.TypeDeclaration;
+}) {
+    const project = new Project({ useInMemoryFileSystem: true });
+    const sourceFile = project.createSourceFile("test.ts", "");
+
+    const typeRefMap = opts?.typeRefOverrides ?? new Map<string, TypeReferenceNode>();
+
+    return {
+        sourceFile,
+        // biome-ignore lint/suspicious/noEmptyBlockStatements: test mock with no-op logger
+        logger: { debug: () => {}, info: () => {}, warn: () => {}, error: () => {} },
+        type: {
+            getReferenceToTypeForInlineUnion: (typeRef: FernIr.TypeReference): TypeReferenceNode => {
+                if (typeRef.type === "named") {
+                    const override = typeRefMap.get(typeRef.typeId);
+                    if (override) {
+                        return override;
+                    }
+                }
+                return primitiveTypeRefNode("string");
+            },
+            getGeneratedExample: (_example: FernIr.ExampleTypeReference) => ({
+                build: () => ts.factory.createStringLiteral("example-value")
+            }),
+            getTypeDeclaration:
+                opts?.getTypeDeclarationFn ??
+                ((typeName: FernIr.DeclaredTypeName): FernIr.TypeDeclaration => {
+                    return {
+                        name: typeName,
+                        shape: FernIr.Type.object({
+                            properties: [],
+                            extends: [],
+                            extraProperties: false,
+                            extendedProperties: undefined
+                        }),
+                        referencedTypes: new Set<string>(),
+                        encoding: undefined,
+                        autogeneratedExamples: [],
+                        userProvidedExamples: [],
+                        v2Examples: undefined,
+                        docs: undefined,
+                        availability: undefined,
+                        source: undefined,
+                        inline: undefined
+                    };
+                })
+        }
+        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+    } as any;
+}
+
+/**
+ * Creates an UndiscriminatedUnionMember IR object.
+ */
+function createUnionMember(opts: { type: FernIr.TypeReference; docs?: string }): FernIr.UndiscriminatedUnionMember {
+    return {
+        type: opts.type,
+        docs: opts.docs
+    };
+}
+
+/**
+ * Creates a GeneratedUndiscriminatedUnionTypeImpl with the given config.
+ */
+function createGenerator(opts: {
+    typeName: string;
+    members: FernIr.UndiscriminatedUnionMember[];
+    docs?: string;
+    examples?: FernIr.ExampleType[];
+    includeSerdeLayer?: boolean;
+    retainOriginalCasing?: boolean;
+    noOptionalProperties?: boolean;
+    enableInlineTypes?: boolean;
+    generateReadWriteOnlyTypes?: boolean;
+    // biome-ignore lint/suspicious/noExplicitAny: test factory with generic type parameter
+}): GeneratedUndiscriminatedUnionTypeImpl<any> {
+    return new GeneratedUndiscriminatedUnionTypeImpl({
+        typeName: opts.typeName,
+        shape: { members: opts.members },
+        examples: opts.examples ?? [],
+        docs: opts.docs,
+        fernFilepath: createFernFilepath(),
+        getReferenceToSelf: () => ({
+            getTypeNode: () => ts.factory.createTypeReferenceNode(opts.typeName),
+            getExpression: () => ts.factory.createIdentifier(opts.typeName),
+            getEntityName: () => ts.factory.createIdentifier(opts.typeName)
+        }),
+        includeSerdeLayer: opts.includeSerdeLayer ?? true,
+        noOptionalProperties: opts.noOptionalProperties ?? false,
+        retainOriginalCasing: opts.retainOriginalCasing ?? false,
+        enableInlineTypes: opts.enableInlineTypes ?? false,
+        generateReadWriteOnlyTypes: opts.generateReadWriteOnlyTypes ?? false
+    });
+}
+
+/**
+ * Serializes generateStatements output by writing to a ts-morph SourceFile.
+ */
+// biome-ignore lint/suspicious/noExplicitAny: test utility accepting mock context or generator
+function serializeStatements(generator: any, context?: any): string {
+    const ctx = context ?? createMockBaseContext();
+    const statements = generator.generateStatements(ctx);
+    ctx.sourceFile.addStatements(statements);
+    return ctx.sourceFile.getFullText();
+}
+
+// ──────────────────────────────────────────────────────────────────────────────
+// Tests — GeneratedUndiscriminatedUnionTypeImpl
+// ──────────────────────────────────────────────────────────────────────────────
+
+describe("GeneratedUndiscriminatedUnionTypeImpl", () => {
+    describe("generateStatements / writeToFile", () => {
+        it("generates basic union with primitive members", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined })
+                    })
+                ]
+            });
+            const output = serializeStatements(generator);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates union with named type members", () => {
+            const userType = createDeclaredTypeName("User");
+            const adminType = createDeclaredTypeName("Admin");
+
+            const context = createMockBaseContext({
+                typeRefOverrides: new Map([
+                    [userType.typeId, namedTypeRefNode("User")],
+                    [adminType.typeId, namedTypeRefNode("Admin")]
+                ])
+            });
+
+            const generator = createGenerator({
+                typeName: "UserOrAdmin",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.named({
+                            typeId: userType.typeId,
+                            fernFilepath: userType.fernFilepath,
+                            name: userType.name,
+                            displayName: undefined,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.named({
+                            typeId: adminType.typeId,
+                            fernFilepath: adminType.fernFilepath,
+                            name: adminType.name,
+                            displayName: undefined,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    })
+                ]
+            });
+            const output = serializeStatements(generator, context);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates union with member docs", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        docs: "A string variant."
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined }),
+                        docs: "An integer variant."
+                    })
+                ]
+            });
+            const output = serializeStatements(generator);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates union with top-level docs", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "BOOLEAN", v2: undefined })
+                    })
+                ],
+                docs: "A simple undiscriminated union."
+            });
+            const output = serializeStatements(generator);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates union with single member", () => {
+            const generator = createGenerator({
+                typeName: "SingleMember",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                ]
+            });
+            const output = serializeStatements(generator);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates union with self-recursive map member (index signature)", () => {
+            const selfType = createDeclaredTypeName("NestedValue");
+
+            // getTypeDeclaration should return a type whose pascalCase.unsafeName matches the typeName
+            const getTypeDeclarationFn = (typeName: FernIr.DeclaredTypeName): FernIr.TypeDeclaration => ({
+                name: typeName,
+                shape: FernIr.Type.object({
+                    properties: [],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                }),
+                referencedTypes: new Set<string>(),
+                encoding: undefined,
+                autogeneratedExamples: [],
+                userProvidedExamples: [],
+                v2Examples: undefined,
+                docs: undefined,
+                availability: undefined,
+                source: undefined,
+                inline: undefined
+            });
+
+            const context = createMockBaseContext({
+                typeRefOverrides: new Map([[selfType.typeId, namedTypeRefNode("NestedValue")]]),
+                getTypeDeclarationFn
+            });
+
+            // Create a map member where valueType is a named type whose declaration name matches the typeName
+            const generator = createGenerator({
+                typeName: "NestedValue",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.container(
+                            FernIr.ContainerType.map({
+                                keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                valueType: FernIr.TypeReference.named({
+                                    typeId: selfType.typeId,
+                                    fernFilepath: selfType.fernFilepath,
+                                    name: selfType.name,
+                                    displayName: undefined,
+                                    default: undefined,
+                                    inline: undefined
+                                })
+                            })
+                        )
+                    })
+                ]
+            });
+            const output = serializeStatements(generator, context);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates union with self-recursive map wrapped in optional", () => {
+            const selfType = createDeclaredTypeName("NestedValue");
+
+            const getTypeDeclarationFn = (typeName: FernIr.DeclaredTypeName): FernIr.TypeDeclaration => ({
+                name: typeName,
+                shape: FernIr.Type.object({
+                    properties: [],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                }),
+                referencedTypes: new Set<string>(),
+                encoding: undefined,
+                autogeneratedExamples: [],
+                userProvidedExamples: [],
+                v2Examples: undefined,
+                docs: undefined,
+                availability: undefined,
+                source: undefined,
+                inline: undefined
+            });
+
+            const context = createMockBaseContext({
+                typeRefOverrides: new Map([[selfType.typeId, namedTypeRefNode("NestedValue")]]),
+                getTypeDeclarationFn
+            });
+
+            // The map valueType is wrapped in optional, but unwrapOptionalAndNullable should detect self-recursion
+            const generator = createGenerator({
+                typeName: "NestedValue",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.container(
+                            FernIr.ContainerType.map({
+                                keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                valueType: FernIr.TypeReference.container(
+                                    FernIr.ContainerType.optional(
+                                        FernIr.TypeReference.named({
+                                            typeId: selfType.typeId,
+                                            fernFilepath: selfType.fernFilepath,
+                                            name: selfType.name,
+                                            displayName: undefined,
+                                            default: undefined,
+                                            inline: undefined
+                                        })
+                                    )
+                                )
+                            })
+                        )
+                    })
+                ]
+            });
+            const output = serializeStatements(generator, context);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates union with non-recursive map member (no index signature)", () => {
+            const otherType = createDeclaredTypeName("OtherType");
+
+            const context = createMockBaseContext({
+                typeRefOverrides: new Map([[otherType.typeId, namedTypeRefNode("OtherType")]])
+            });
+
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.container(
+                            FernIr.ContainerType.map({
+                                keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                valueType: FernIr.TypeReference.named({
+                                    typeId: otherType.typeId,
+                                    fernFilepath: otherType.fernFilepath,
+                                    name: otherType.name,
+                                    displayName: undefined,
+                                    default: undefined,
+                                    inline: undefined
+                                })
+                            })
+                        )
+                    })
+                ]
+            });
+            const output = serializeStatements(generator, context);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates union with generateReadWriteOnlyTypes and request/response variants", () => {
+            const userType = createDeclaredTypeName("User");
+            const adminType = createDeclaredTypeName("Admin");
+
+            const context = createMockBaseContext({
+                typeRefOverrides: new Map([
+                    [userType.typeId, namedTypeRefNodeWithVariants("User", "User.Request", "User.Response")],
+                    [adminType.typeId, namedTypeRefNodeWithVariants("Admin", "Admin.Request", "Admin.Response")]
+                ])
+            });
+
+            const generator = createGenerator({
+                typeName: "UserOrAdmin",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.named({
+                            typeId: userType.typeId,
+                            fernFilepath: userType.fernFilepath,
+                            name: userType.name,
+                            displayName: undefined,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.named({
+                            typeId: adminType.typeId,
+                            fernFilepath: adminType.fernFilepath,
+                            name: adminType.name,
+                            displayName: undefined,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    })
+                ],
+                generateReadWriteOnlyTypes: true,
+                docs: "Example of an undiscriminated union"
+            });
+            const output = serializeStatements(generator, context);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("does not generate module when generateReadWriteOnlyTypes but no variants needed", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined })
+                    })
+                ],
+                generateReadWriteOnlyTypes: true
+            });
+            // Primitive types don't have request/response variants, so no module should be generated
+            const output = serializeStatements(generator);
+            expect(output).toMatchSnapshot();
+        });
+
+        it("generates union with examples in docs", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined })
+                    })
+                ],
+                docs: "A union type.",
+                examples: [
+                    {
+                        shape: FernIr.ExampleTypeShape.undiscriminatedUnion({
+                            index: 0,
+                            singleUnionType: {
+                                shape: FernIr.ExampleTypeReferenceShape.primitive(
+                                    FernIr.ExamplePrimitive.string({ original: "hello" })
+                                ),
+                                jsonExample: "hello"
+                            }
+                        }),
+                        docs: undefined,
+                        name: undefined,
+                        jsonExample: "hello"
+                    }
+                ]
+            });
+            const output = serializeStatements(generator);
+            expect(output).toMatchSnapshot();
+        });
+    });
+
+    describe("generateForInlineUnion", () => {
+        it("returns union type node", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined })
+                    })
+                ]
+            });
+            const context = createMockBaseContext();
+            const result = generator.generateForInlineUnion(context);
+            expect(getTextOfTsNode(result.typeNode)).toMatchSnapshot();
+        });
+
+        it("returns request/response type nodes with named variants", () => {
+            const userType = createDeclaredTypeName("User");
+            const adminType = createDeclaredTypeName("Admin");
+
+            const context = createMockBaseContext({
+                typeRefOverrides: new Map([
+                    [userType.typeId, namedTypeRefNodeWithVariants("User", "User.Request", "User.Response")],
+                    [adminType.typeId, namedTypeRefNodeWithVariants("Admin", "Admin.Request", "Admin.Response")]
+                ])
+            });
+
+            const generator = createGenerator({
+                typeName: "UserOrAdmin",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.named({
+                            typeId: userType.typeId,
+                            fernFilepath: userType.fernFilepath,
+                            name: userType.name,
+                            displayName: undefined,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.named({
+                            typeId: adminType.typeId,
+                            fernFilepath: adminType.fernFilepath,
+                            name: adminType.name,
+                            displayName: undefined,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    })
+                ]
+            });
+            const result = generator.generateForInlineUnion(context);
+            expect(getTextOfTsNode(result.typeNode)).toMatchSnapshot();
+            assert(result.requestTypeNode != null, "requestTypeNode should be defined");
+            expect(getTextOfTsNode(result.requestTypeNode)).toMatchSnapshot();
+            assert(result.responseTypeNode != null, "responseTypeNode should be defined");
+            expect(getTextOfTsNode(result.responseTypeNode)).toMatchSnapshot();
+        });
+
+        it("falls back to base typeNode when no request/response variants", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "BOOLEAN", v2: undefined })
+                    })
+                ]
+            });
+            const context = createMockBaseContext();
+            const result = generator.generateForInlineUnion(context);
+            // When no request/response variants, they still have values (fallback to typeNode)
+            assert(result.requestTypeNode != null, "requestTypeNode should be defined");
+            expect(getTextOfTsNode(result.requestTypeNode)).toEqual(getTextOfTsNode(result.typeNode));
+            assert(result.responseTypeNode != null, "responseTypeNode should be defined");
+            expect(getTextOfTsNode(result.responseTypeNode)).toEqual(getTextOfTsNode(result.typeNode));
+        });
+    });
+
+    describe("generateModule", () => {
+        it("returns undefined when generateReadWriteOnlyTypes is false", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                ]
+            });
+            const context = createMockBaseContext();
+            const result = generator.generateModule(context);
+            expect(result).toBeUndefined();
+        });
+
+        it("returns undefined when generateReadWriteOnlyTypes is true but no variants needed", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                ],
+                generateReadWriteOnlyTypes: true
+            });
+            const context = createMockBaseContext();
+            const result = generator.generateModule(context);
+            expect(result).toBeUndefined();
+        });
+
+        it("returns namespace module with Request/Response when variants are needed", () => {
+            const userType = createDeclaredTypeName("User");
+
+            const context = createMockBaseContext({
+                typeRefOverrides: new Map([
+                    [userType.typeId, namedTypeRefNodeWithVariants("User", "User.Request", "User.Response")]
+                ])
+            });
+
+            const generator = createGenerator({
+                typeName: "UserOrAdmin",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.named({
+                            typeId: userType.typeId,
+                            fernFilepath: userType.fernFilepath,
+                            name: userType.name,
+                            displayName: undefined,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    }),
+                    createUnionMember({ type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }) })
+                ],
+                generateReadWriteOnlyTypes: true
+            });
+            const result = generator.generateModule(context);
+            assert(result != null, "module should be defined");
+            expect(result.name).toBe("UserOrAdmin");
+            expect(result.isExported).toBe(true);
+        });
+
+        it("generates only Request variant when only request types differ", () => {
+            const userType = createDeclaredTypeName("User");
+
+            const requestOnlyNode: TypeReferenceNode = {
+                isOptional: false,
+                typeNode: ts.factory.createTypeReferenceNode("User"),
+                typeNodeWithoutUndefined: ts.factory.createTypeReferenceNode("User"),
+                requestTypeNode: ts.factory.createTypeReferenceNode("User.Request"),
+                requestTypeNodeWithoutUndefined: ts.factory.createTypeReferenceNode("User.Request"),
+                responseTypeNode: undefined,
+                responseTypeNodeWithoutUndefined: undefined
+            };
+
+            const context = createMockBaseContext({
+                typeRefOverrides: new Map([[userType.typeId, requestOnlyNode]])
+            });
+
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.named({
+                            typeId: userType.typeId,
+                            fernFilepath: userType.fernFilepath,
+                            name: userType.name,
+                            displayName: undefined,
+                            default: undefined,
+                            inline: undefined
+                        })
+                    }),
+                    createUnionMember({ type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }) })
+                ],
+                generateReadWriteOnlyTypes: true
+            });
+            const result = generator.generateModule(context);
+            expect(result).toBeDefined();
+            // Should only have Request, not Response
+            assert(result != null, "module should be defined");
+            const statementNames = (result.statements as Array<{ name: string }>).map((s) => s.name);
+            expect(statementNames).toContain("Request");
+            expect(statementNames).not.toContain("Response");
+        });
+    });
+
+    describe("buildExample", () => {
+        it("builds example for undiscriminated union", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    }),
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "INTEGER", v2: undefined })
+                    })
+                ]
+            });
+            const context = createMockBaseContext();
+
+            const example = FernIr.ExampleTypeShape.undiscriminatedUnion({
+                index: 0,
+                singleUnionType: {
+                    shape: FernIr.ExampleTypeReferenceShape.primitive(
+                        FernIr.ExamplePrimitive.string({ original: "hello" })
+                    ),
+                    jsonExample: "hello"
+                }
+            });
+
+            const result = generator.buildExample(example, context, { isForComment: true });
+            expect(getTextOfTsNode(result)).toMatchSnapshot();
+        });
+
+        it("throws for non-undiscriminated union example shape", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                ]
+            });
+            const context = createMockBaseContext();
+
+            const example = FernIr.ExampleTypeShape.object({
+                properties: [],
+                extraProperties: undefined
+            });
+
+            expect(() => generator.buildExample(example, context, { isForComment: true })).toThrow(
+                "Example is not for an undiscriminated union"
+            );
+        });
+    });
+
+    describe("type property", () => {
+        it("has type='undiscriminatedUnion'", () => {
+            const generator = createGenerator({
+                typeName: "MyUnion",
+                members: [
+                    createUnionMember({
+                        type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                ]
+            });
+            expect(generator.type).toBe("undiscriminatedUnion");
+        });
+    });
+});

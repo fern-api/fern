@@ -51,4 +51,6 @@ export interface BaseApiSettingsSchema {
      * Defaults to false.
      */
     "resolve-schema-collisions"?: boolean;
+    /** If true, infer forward-compatible enums from `oneOf: [enum, string]` or `anyOf: [enum, string]` patterns. Defaults to false. */
+    "infer-forward-compatible"?: boolean;
 }

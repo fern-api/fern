@@ -4814,6 +4814,7 @@
             "key": "data",
             "schema": {
               "generatedName": "ErrorEnvelopeData",
+              "groupName": [],
               "type": "unknown"
             },
             "audiences": []
@@ -4849,6 +4850,7 @@
             "key": "meta",
             "schema": {
               "generatedName": "ErrorEnvelopeMeta",
+              "groupName": [],
               "type": "unknown"
             },
             "audiences": []

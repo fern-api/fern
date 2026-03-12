@@ -14,7 +14,7 @@ $client = new SeedClient(
 );
 $client->endpoints->object->getAndReturnWithDatetimeLikeString(
     new ObjectWithDatetimeLikeString([
-        'datetimeLikeString' => 'datetimeLikeString',
-        'actualDatetime' => new DateTime('2024-01-15T09:30:00Z'),
+        'datetimeLikeString' => '2023-08-31T14:15:22Z',
+        'actualDatetime' => new DateTime('2023-08-31T14:15:22Z'),
     ]),
 );

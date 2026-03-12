@@ -1,0 +1,49 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates list example 1`] = `"["a", "b"]"`;
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates map example 1`] = `
+"{
+    "key1": "val1"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as Set<> when includeSerdeLayer is true and items are enum (treated as primitive) 1`] = `"new Set(["RED", "BLUE"])"`;
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as array when includeSerdeLayer is false 1`] = `"["a", "b"]"`;
+
+exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as array when includeSerdeLayer is true but items are non-primitive 1`] = `"["a", "b"]"`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses boolean identifier for boolean key 1`] = `
+"{
+    true: "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses numeric property name for integer key 1`] = `
+"{
+    1: "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > uses string property name for negative integer key 1`] = `
+"{
+    "-1": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > unknown types > generates JSON expression for unknown array 1`] = `
+"[
+    1,
+    2,
+    3
+]"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > unknown types > generates JSON expression for unknown object 1`] = `
+"{
+    "key": "value"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > unknown types > generates JSON expression for unknown string 1`] = `""just a string""`;
