@@ -199,7 +199,12 @@ export function generateField(
             const resolvedStructName = nestedStructRef.name;
 
             // Build the nested struct inside the parent record using the resolved name
-            buildNestedLiteralStruct({ structName: resolvedStructName, literal: inlineLiteral, parentClass: cls, context });
+            buildNestedLiteralStruct({
+                structName: resolvedStructName,
+                literal: inlineLiteral,
+                parentClass: cls,
+                context
+            });
 
             // Add [JsonRequired] so that a missing field in JSON throws JsonException
             fieldAttributes.unshift(
