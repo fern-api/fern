@@ -1,5 +1,6 @@
 using SeedExhaustive;
-using SeedExhaustive.Endpoints;
+using SeedExhaustive.Types;
+using System.Globalization;
 
 namespace Usage;
 
@@ -13,10 +14,10 @@ public class Example26
             }
         );
 
-        await client.Endpoints.Pagination.ListItemsAsync(
-            new ListItemsRequest {
-                Cursor = "cursor",
-                Limit = 1
+        await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
+            new ObjectWithDatetimeLikeString {
+                DatetimeLikeString = "datetimeLikeString",
+                ActualDatetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal)
             }
         );
     }
