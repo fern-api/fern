@@ -49,8 +49,13 @@ function createHeader(opts: {
  * Creates a mock SdkContext for BaseClientTypeGenerator.writeToFile().
  * Tracks all statements/interfaces/imports added to sourceFile.
  */
-// biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex SdkContext interface
-function createMockContext(opts?: { generateOAuthClients?: boolean; npmPackage?: { packageName: string; version: string } | null; hasVersion?: boolean; defaultVersion?: string | null }): any {
+function createMockContext(opts?: {
+    generateOAuthClients?: boolean;
+    npmPackage?: { packageName: string; version: string } | null;
+    hasVersion?: boolean;
+    defaultVersion?: string | null;
+    // biome-ignore lint/suspicious/noExplicitAny: test mock needs to satisfy complex SdkContext interface
+}): any {
     const statements: string[] = [];
     // biome-ignore lint/suspicious/noExplicitAny: test mock
     const interfaces: any[] = [];
@@ -61,19 +66,34 @@ function createMockContext(opts?: { generateOAuthClients?: boolean; npmPackage?:
     return {
         _captured: { statements, interfaces, importDeclarations, importFromRootCalls },
         generateOAuthClients: opts?.generateOAuthClients ?? false,
-        npmPackage: opts?.npmPackage === null ? undefined : (opts?.npmPackage ?? { packageName: "@test/sdk", version: "1.0.0" }),
+        npmPackage:
+            opts?.npmPackage === null
+                ? undefined
+                : (opts?.npmPackage ?? { packageName: "@test/sdk", version: "1.0.0" }),
         sourceFile: {
             // biome-ignore lint/suspicious/noExplicitAny: test mock
-            addInterface: (iface: any) => { interfaces.push(iface); },
+            addInterface: (iface: any) => {
+                interfaces.push(iface);
+            },
             // biome-ignore lint/suspicious/noExplicitAny: test mock
-            addStatements: (code: any) => { statements.push(code); },
+            addStatements: (code: any) => {
+                statements.push(code);
+            },
             // biome-ignore lint/suspicious/noExplicitAny: test mock
-            addImportDeclaration: (decl: any) => { importDeclarations.push(decl); }
+            addImportDeclaration: (decl: any) => {
+                importDeclarations.push(decl);
+            }
         },
         importsManager: {
             // biome-ignore lint/suspicious/noExplicitAny: test mock
             addImportFromRoot: (path: string, opts: any) => {
-                importFromRootCalls.push({ path, namedImports: opts.namedImports?.map((n: string | { name: string }) => typeof n === "string" ? n : n.name) ?? [] });
+                importFromRootCalls.push({
+                    path,
+                    namedImports:
+                        opts.namedImports?.map((n: string | { name: string }) =>
+                            typeof n === "string" ? n : n.name
+                        ) ?? []
+                });
             }
         },
         baseClient: {
@@ -84,7 +104,12 @@ function createMockContext(opts?: { generateOAuthClients?: boolean; npmPackage?:
                 properties: [
                     { name: "environment", type: "string", hasQuestionToken: true, docs: undefined },
                     { name: "baseUrl", type: "string", hasQuestionToken: true, docs: undefined },
-                    { name: "fetch", type: "FetchFunction", hasQuestionToken: true, docs: ["Custom fetch implementation"] }
+                    {
+                        name: "fetch",
+                        type: "FetchFunction",
+                        hasQuestionToken: true,
+                        docs: ["Custom fetch implementation"]
+                    }
                 ]
             }),
             generateBaseRequestOptionsInterface: () => ({
@@ -100,9 +125,7 @@ function createMockContext(opts?: { generateOAuthClients?: boolean; npmPackage?:
                 kind: StructureKind.Interface,
                 name: "BaseIdempotentRequestOptions",
                 isExported: true,
-                properties: [
-                    { name: "idempotencyKey", type: "string", hasQuestionToken: true }
-                ]
+                properties: [{ name: "idempotencyKey", type: "string", hasQuestionToken: true }]
             })
         },
         coreUtilities: {
@@ -117,11 +140,9 @@ function createMockContext(opts?: { generateOAuthClients?: boolean; npmPackage?:
             logging: {
                 createLogger: {
                     _invoke: (arg: ts.Expression) =>
-                        ts.factory.createCallExpression(
-                            ts.factory.createIdentifier("core.createLogger"),
-                            undefined,
-                            [arg]
-                        )
+                        ts.factory.createCallExpression(ts.factory.createIdentifier("core.createLogger"), undefined, [
+                            arg
+                        ])
                 },
                 Logger: {
                     _getReferenceToType: () => ts.factory.createTypeReferenceNode("core.Logger")
@@ -192,7 +213,9 @@ describe("BaseClientTypeGenerator", () => {
             expect(context._captured.statements.length).toBeGreaterThanOrEqual(2);
 
             // No auth import
-            expect(context._captured.importFromRootCalls.find((c: { path: string }) => c.path === "core/auth")).toBeUndefined();
+            expect(
+                context._captured.importFromRootCalls.find((c: { path: string }) => c.path === "core/auth")
+            ).toBeUndefined();
         });
 
         it("generates idempotent request options when enabled", () => {
@@ -220,7 +243,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const authImport = context._captured.importFromRootCalls.find((c: { path: string }) => c.path === "core/auth");
+            const authImport = context._captured.importFromRootCalls.find(
+                (c: { path: string }) => c.path === "core/auth"
+            );
             expect(authImport).toBeDefined();
             expect(authImport.namedImports).toContain("AuthProvider");
         });
@@ -241,7 +266,9 @@ describe("BaseClientTypeGenerator", () => {
             gen.writeToFile(context);
 
             // BaseClientOptions should be a type (with auth intersection), not an interface
-            const baseClientStatement = context._captured.statements.find((s: string) => s.includes("BaseClientOptions"));
+            const baseClientStatement = context._captured.statements.find((s: string) =>
+                s.includes("BaseClientOptions")
+            );
             expect(baseClientStatement).toBeDefined();
             expect(baseClientStatement).toContain("BearerAuthProvider.AuthOptions");
         });
@@ -265,7 +292,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const baseClientStatement = context._captured.statements.find((s: string) => s.includes("BaseClientOptions"));
+            const baseClientStatement = context._captured.statements.find((s: string) =>
+                s.includes("BaseClientOptions")
+            );
             expect(baseClientStatement).toContain("BasicAuthProvider.AuthOptions");
         });
 
@@ -286,7 +315,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const baseClientStatement = context._captured.statements.find((s: string) => s.includes("BaseClientOptions"));
+            const baseClientStatement = context._captured.statements.find((s: string) =>
+                s.includes("BaseClientOptions")
+            );
             expect(baseClientStatement).toContain("HeaderAuthProvider.AuthOptions");
         });
 
@@ -346,7 +377,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext({ generateOAuthClients: true });
             gen.writeToFile(context);
 
-            const baseClientStatement = context._captured.statements.find((s: string) => s.includes("BaseClientOptions"));
+            const baseClientStatement = context._captured.statements.find((s: string) =>
+                s.includes("BaseClientOptions")
+            );
             expect(baseClientStatement).toContain("OAuthAuthProvider.AuthOptions");
         });
 
@@ -407,7 +440,9 @@ describe("BaseClientTypeGenerator", () => {
             gen.writeToFile(context);
 
             // No auth type intersection since oauth was skipped
-            expect(context._captured.interfaces.find((i: { name: string }) => i.name === "BaseClientOptions")).toBeDefined();
+            expect(
+                context._captured.interfaces.find((i: { name: string }) => i.name === "BaseClientOptions")
+            ).toBeDefined();
         });
 
         it("generates auth type for inferred auth", () => {
@@ -431,7 +466,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const baseClientStatement = context._captured.statements.find((s: string) => s.includes("BaseClientOptions"));
+            const baseClientStatement = context._captured.statements.find((s: string) =>
+                s.includes("BaseClientOptions")
+            );
             expect(baseClientStatement).toContain("InferredAuthProvider.AuthOptions");
         });
 
@@ -459,7 +496,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const baseClientStatement = context._captured.statements.find((s: string) => s.includes("BaseClientOptions"));
+            const baseClientStatement = context._captured.statements.find((s: string) =>
+                s.includes("BaseClientOptions")
+            );
             expect(baseClientStatement).toContain("AnyAuthProvider.AuthOptions");
             expect(baseClientStatement).toContain("BearerAuthProvider.AuthOptions");
             expect(baseClientStatement).toContain("HeaderAuthProvider.AuthOptions");
@@ -491,7 +530,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const baseClientStatement = context._captured.statements.find((s: string) => s.includes("BaseClientOptions"));
+            const baseClientStatement = context._captured.statements.find((s: string) =>
+                s.includes("BaseClientOptions")
+            );
             expect(baseClientStatement).toContain("RoutingAuthProvider.AuthOptions");
         });
     });
@@ -506,7 +547,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toBeDefined();
             expect(normalizeFunc).toContain("X-Fern-Language");
             expect(normalizeFunc).toContain("JavaScript");
@@ -518,7 +561,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext({ npmPackage: { packageName: "@acme/sdk", version: "2.0.0" } });
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toContain("@acme/sdk");
             expect(normalizeFunc).toContain("2.0.0");
         });
@@ -528,7 +573,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toBeDefined();
             // Should not contain fern-specific headers
             expect(normalizeFunc).not.toContain("X-Fern-Language");
@@ -536,31 +583,30 @@ describe("BaseClientTypeGenerator", () => {
 
         it("includes mergeHeaders import when there are root headers", () => {
             const ir = createIR({
-                headers: [
-                    createHeader({ wireValue: "X-Custom-Header", camelCase: "customHeader" })
-                ]
+                headers: [createHeader({ wireValue: "X-Custom-Header", camelCase: "customHeader" })]
             });
             const gen = createGenerator({ ir, omitFernHeaders: true });
             const context = createMockContext();
             gen.writeToFile(context);
 
             const mergeHeadersImport = context._captured.importFromRootCalls.find(
-                (c: { path: string; namedImports: string[] }) => c.path === "core/headers" && c.namedImports.includes("mergeHeaders")
+                (c: { path: string; namedImports: string[] }) =>
+                    c.path === "core/headers" && c.namedImports.includes("mergeHeaders")
             );
             expect(mergeHeadersImport).toBeDefined();
         });
 
         it("includes root headers in normalizeClientOptions", () => {
             const ir = createIR({
-                headers: [
-                    createHeader({ wireValue: "X-Custom-Header", camelCase: "customHeader" })
-                ]
+                headers: [createHeader({ wireValue: "X-Custom-Header", camelCase: "customHeader" })]
             });
             const gen = createGenerator({ ir });
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toContain("X-Custom-Header");
         });
 
@@ -575,7 +621,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toContain("X-Custom-Header");
             // Authorization header should be filtered out
             expect(normalizeFunc).not.toContain('"Authorization"');
@@ -586,7 +634,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext({ npmPackage: null });
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).not.toContain("@test/sdk");
         });
     });
@@ -608,12 +658,14 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const authFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptionsWithAuth"));
+            const authFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptionsWithAuth")
+            );
             expect(authFunc).toBeDefined();
             expect(authFunc).toContain("new BearerAuthProvider");
             // Should import BearerAuthProvider
-            const importDecl = context._captured.importDeclarations.find(
-                (d: { namedImports: string[] }) => d.namedImports.includes("BearerAuthProvider")
+            const importDecl = context._captured.importDeclarations.find((d: { namedImports: string[] }) =>
+                d.namedImports.includes("BearerAuthProvider")
             );
             expect(importDecl).toBeDefined();
         });
@@ -638,7 +690,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const authFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptionsWithAuth"));
+            const authFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptionsWithAuth")
+            );
             expect(authFunc).toContain("new BasicAuthProvider");
         });
 
@@ -660,7 +714,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const authFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptionsWithAuth"));
+            const authFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptionsWithAuth")
+            );
             expect(authFunc).toContain("new HeaderAuthProvider");
         });
 
@@ -679,7 +735,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const authFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptionsWithAuth"));
+            const authFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptionsWithAuth")
+            );
             expect(authFunc).toContain("new InferredAuthProvider");
         });
 
@@ -740,7 +798,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const authFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptionsWithAuth"));
+            const authFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptionsWithAuth")
+            );
             expect(authFunc).toContain("OAuthAuthProvider.createInstance");
         });
 
@@ -768,13 +828,15 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const authFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptionsWithAuth"));
+            const authFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptionsWithAuth")
+            );
             expect(authFunc).toContain("AnyAuthProvider.createInstance");
             expect(authFunc).toContain("BearerAuthProvider, HeaderAuthProvider");
 
             // Should import AnyAuthProvider
-            const anyImport = context._captured.importDeclarations.find(
-                (d: { namedImports: string[] }) => d.namedImports.includes("AnyAuthProvider")
+            const anyImport = context._captured.importDeclarations.find((d: { namedImports: string[] }) =>
+                d.namedImports.includes("AnyAuthProvider")
             );
             expect(anyImport).toBeDefined();
         });
@@ -805,13 +867,15 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const authFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptionsWithAuth"));
+            const authFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptionsWithAuth")
+            );
             expect(authFunc).toContain("RoutingAuthProvider.createInstance");
             expect(authFunc).toContain("BearerAuthProvider, BasicAuthProvider");
 
             // Should import RoutingAuthProvider
-            const routingImport = context._captured.importDeclarations.find(
-                (d: { namedImports: string[] }) => d.namedImports.includes("RoutingAuthProvider")
+            const routingImport = context._captured.importDeclarations.find((d: { namedImports: string[] }) =>
+                d.namedImports.includes("RoutingAuthProvider")
             );
             expect(routingImport).toBeDefined();
         });
@@ -821,7 +885,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const authFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptionsWithAuth"));
+            const authFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptionsWithAuth")
+            );
             expect(authFunc).toBeUndefined();
         });
     });
@@ -832,7 +898,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const typesStatement = context._captured.statements.find((s: string) => s.includes("NormalizedClientOptions"));
+            const typesStatement = context._captured.statements.find((s: string) =>
+                s.includes("NormalizedClientOptions")
+            );
             expect(typesStatement).toBeDefined();
             expect(typesStatement).toContain("logging:");
             expect(typesStatement).not.toContain("authProvider");
@@ -853,7 +921,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const typesStatement = context._captured.statements.find((s: string) => s.includes("NormalizedClientOptionsWithAuth"));
+            const typesStatement = context._captured.statements.find((s: string) =>
+                s.includes("NormalizedClientOptionsWithAuth")
+            );
             expect(typesStatement).toBeDefined();
             expect(typesStatement).toContain("authProvider");
         });
@@ -866,7 +936,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext({ hasVersion: true, defaultVersion: "2024-01-01" });
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toContain("X-API-Version");
             expect(normalizeFunc).toContain("2024-01-01");
         });
@@ -877,7 +949,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext({ hasVersion: true, defaultVersion: null });
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toContain("X-API-Version");
         });
     });
@@ -907,7 +981,9 @@ describe("BaseClientTypeGenerator", () => {
             });
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toContain("toString");
         });
 
@@ -934,7 +1010,9 @@ describe("BaseClientTypeGenerator", () => {
             });
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toContain("fixed-value");
         });
     });
@@ -950,7 +1028,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toContain("X-Custom-Agent");
             expect(normalizeFunc).toContain("my-sdk/1.0");
         });
@@ -962,7 +1042,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext({ npmPackage: { packageName: "@acme/sdk", version: "2.0.0" } });
             gen.writeToFile(context);
 
-            const normalizeFunc = context._captured.statements.find((s: string) => s.includes("normalizeClientOptions"));
+            const normalizeFunc = context._captured.statements.find((s: string) =>
+                s.includes("normalizeClientOptions")
+            );
             expect(normalizeFunc).toContain("User-Agent");
             expect(normalizeFunc).toContain("@acme/sdk/2.0.0");
         });
@@ -1009,7 +1091,9 @@ describe("BaseClientTypeGenerator", () => {
             gen.writeToFile(context);
 
             // Should import all provider types
-            const importedNames = context._captured.importDeclarations.map((d: { namedImports: string[] }) => d.namedImports).flat();
+            const importedNames = context._captured.importDeclarations
+                .map((d: { namedImports: string[] }) => d.namedImports)
+                .flat();
             expect(importedNames).toContain("AnyAuthProvider");
             expect(importedNames).toContain("BearerAuthProvider");
             expect(importedNames).toContain("BasicAuthProvider");
@@ -1048,7 +1132,9 @@ describe("BaseClientTypeGenerator", () => {
             const context = createMockContext();
             gen.writeToFile(context);
 
-            const importedNames = context._captured.importDeclarations.map((d: { namedImports: string[] }) => d.namedImports).flat();
+            const importedNames = context._captured.importDeclarations
+                .map((d: { namedImports: string[] }) => d.namedImports)
+                .flat();
             expect(importedNames).toContain("RoutingAuthProvider");
             expect(importedNames).toContain("BearerAuthProvider");
             expect(importedNames).toContain("HeaderAuthProvider");

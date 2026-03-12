@@ -1078,9 +1078,7 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
             const schema = createUnionSchema({
                 typeName: "Shape",
                 discriminant: createNameAndWireValue("type", "type"),
-                types: [
-                    createSingleUnionType("circle", FernIr.SingleUnionTypeProperties.noProperties())
-                ],
+                types: [createSingleUnionType("circle", FernIr.SingleUnionTypeProperties.noProperties())],
                 includeUtilsOnUnionMembers: true
             });
             const output = writeSchemaAndGetText(schema);
@@ -1130,9 +1128,7 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
             const schema = createUnionSchema({
                 typeName: "Event",
                 discriminant: createNameAndWireValue("type", "type"),
-                types: [
-                    createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())
-                ]
+                types: [createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())]
             });
             const context = createMockContext();
             const module = context.sourceFile.addModule({
@@ -1171,9 +1167,7 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
             const schema = createUnionSchema({
                 typeName: "Event",
                 discriminant: createNameAndWireValue("type", "type"),
-                types: [
-                    createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())
-                ]
+                types: [createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())]
             });
             const context = createMockContext();
             schema.writeSchemaToFile(context);
@@ -1187,9 +1181,7 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
             const schema = createUnionSchema({
                 typeName: "Event",
                 discriminant: createNameAndWireValue("type", "type"),
-                types: [
-                    createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())
-                ]
+                types: [createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())]
             });
             const context = createMockContext();
             const zurgSchema = schema.getReferenceToZurgSchema(context);
@@ -1203,9 +1195,7 @@ describe("GeneratedUnionTypeSchemaImpl", () => {
             const schema = createUnionSchema({
                 typeName: "Event",
                 discriminant: createNameAndWireValue("type", "type"),
-                types: [
-                    createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())
-                ]
+                types: [createSingleUnionType("click", FernIr.SingleUnionTypeProperties.noProperties())]
             });
             const context = createMockContext();
             const rawShape = schema.getReferenceToRawShape(context);

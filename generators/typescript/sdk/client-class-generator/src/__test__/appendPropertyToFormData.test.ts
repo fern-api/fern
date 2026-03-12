@@ -678,6 +678,65 @@ describe("appendPropertyToFormData", () => {
             expect(text).toMatchSnapshot();
         });
 
+        it("generates Object.entries loop for body property with form style", () => {
+            const property = createBodyProperty("metadata", STRING_TYPE, "form");
+            const context = createMockContext();
+            const stmt = appendPropertyToFormData({
+                property,
+                context,
+                referenceToFormData,
+                wrapperName: "request",
+                requestParameter: createMockRequestParameter(),
+                includeSerdeLayer: true,
+                allowExtraFields: false,
+                omitUndefined: false
+            });
+            const text = getTextOfTsNode(stmt);
+            // form style iterates Object.entries with encodeAsFormParameter
+            expect(text).toContain("Object.entries");
+            expect(text).toContain("core.encodeAsFormParameter");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("generates JSON.stringify append for body property with json style", () => {
+            const property = createBodyProperty("config", STRING_TYPE, "json");
+            const context = createMockContext();
+            const stmt = appendPropertyToFormData({
+                property,
+                context,
+                referenceToFormData,
+                wrapperName: "request",
+                requestParameter: createMockRequestParameter(),
+                includeSerdeLayer: true,
+                allowExtraFields: false,
+                omitUndefined: false
+            });
+            const text = getTextOfTsNode(stmt);
+            // json style uses JSON.stringify
+            expect(text).toContain("JSON.stringify");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("generates for-of loop for unknown type (isMaybeIterable=true, isDefinitelyIterable=false)", () => {
+            const property = createBodyProperty("data", UNKNOWN_TYPE);
+            const context = createMockContext();
+            const stmt = appendPropertyToFormData({
+                property,
+                context,
+                referenceToFormData,
+                wrapperName: "request",
+                requestParameter: createMockRequestParameter(),
+                includeSerdeLayer: true,
+                allowExtraFields: false,
+                omitUndefined: false
+            });
+            const text = getTextOfTsNode(stmt);
+            // unknown type: isMaybeIterable=true, isDefinitelyIterable=false
+            // isMaybeList=true, isMaybeSet=true (both return true for unknown)
+            expect(text).toContain("for");
+            expect(text).toMatchSnapshot();
+        });
+
         it("generates simple append for literal container type (not iterable)", () => {
             const literalType = FernIr.TypeReference.container(
                 FernIr.ContainerType.literal(FernIr.Literal.string("fixed"))

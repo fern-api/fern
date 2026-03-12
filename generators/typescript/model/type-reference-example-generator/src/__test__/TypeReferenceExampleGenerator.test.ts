@@ -983,7 +983,7 @@ describe("GeneratedTypeReferenceExampleImpl", () => {
 
         it("uses literal container key as property name", () => {
             const example: FernIr.ExampleTypeReference = {
-                jsonExample: { "literal_key": "val" },
+                jsonExample: { literal_key: "val" },
                 shape: FernIr.ExampleTypeReferenceShape.container(
                     FernIr.ExampleContainer.map({
                         map: [
@@ -1018,7 +1018,7 @@ describe("GeneratedTypeReferenceExampleImpl", () => {
                 displayName: undefined
             };
             const example: FernIr.ExampleTypeReference = {
-                jsonExample: { "RED": "val" },
+                jsonExample: { RED: "val" },
                 shape: FernIr.ExampleTypeReferenceShape.container(
                     FernIr.ExampleContainer.map({
                         map: [
@@ -1214,6 +1214,126 @@ describe("GeneratedTypeReferenceExampleImpl", () => {
             const impl = createImpl(example);
             const context = createMockBaseContext();
             expect(() => impl.build(context, DEFAULT_OPTS)).toThrow("Cannot convert union to property name");
+        });
+
+        it("handles container literal key via getExampleAsPropertyName", () => {
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: {},
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: "literal_key",
+                                    shape: FernIr.ExampleTypeReferenceShape.container(
+                                        FernIr.ExampleContainer.literal({
+                                            literal: FernIr.ExamplePrimitive.string({ original: "literal_key" })
+                                        })
+                                    )
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            // The literal wraps a primitive string, so getExampleAsPropertyName recurses:
+            // container.literal -> primitive.string -> createStringLiteral
+            const expr = impl.build(context, DEFAULT_OPTS);
+            const text = getTextOfTsNode(expr);
+            expect(text).toContain("literal_key");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("handles named alias key via getExampleAsPropertyName", () => {
+            const typeName: FernIr.DeclaredTypeName = {
+                typeId: "type_AliasKey",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: casingsGenerator.generateName("AliasKey"),
+                displayName: undefined
+            };
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: {},
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: "alias_val",
+                                    shape: FernIr.ExampleTypeReferenceShape.named({
+                                        typeName,
+                                        shape: FernIr.ExampleTypeShape.alias({
+                                            value: createStringExample("alias_val")
+                                        })
+                                    })
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.named({
+                            ...typeName,
+                            default: undefined,
+                            inline: undefined
+                        }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            const text = getTextOfTsNode(expr);
+            // alias key recurses into the alias value (a string example)
+            expect(text).toContain("alias_val");
+            expect(text).toMatchSnapshot();
+        });
+
+        it("handles named undiscriminatedUnion key via getExampleAsPropertyName", () => {
+            const typeName: FernIr.DeclaredTypeName = {
+                typeId: "type_UnionKey",
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: casingsGenerator.generateName("UnionKey"),
+                displayName: undefined
+            };
+            const example: FernIr.ExampleTypeReference = {
+                jsonExample: {},
+                shape: FernIr.ExampleTypeReferenceShape.container(
+                    FernIr.ExampleContainer.map({
+                        map: [
+                            {
+                                key: {
+                                    jsonExample: "union_val",
+                                    shape: FernIr.ExampleTypeReferenceShape.named({
+                                        typeName,
+                                        shape: FernIr.ExampleTypeShape.undiscriminatedUnion({
+                                            index: 0,
+                                            singleUnionType: createStringExample("union_val")
+                                        })
+                                    })
+                                },
+                                value: createStringExample("val")
+                            }
+                        ],
+                        keyType: FernIr.TypeReference.named({
+                            ...typeName,
+                            default: undefined,
+                            inline: undefined
+                        }),
+                        valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    })
+                )
+            };
+            const impl = createImpl(example);
+            const context = createMockBaseContext();
+            const expr = impl.build(context, DEFAULT_OPTS);
+            const text = getTextOfTsNode(expr);
+            // undiscriminatedUnion key recurses into singleUnionType (a string example)
+            expect(text).toContain("union_val");
+            expect(text).toMatchSnapshot();
         });
 
         it("throws for unknown key", () => {

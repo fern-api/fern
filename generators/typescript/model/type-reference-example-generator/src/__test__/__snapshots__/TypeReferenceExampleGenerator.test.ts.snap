@@ -14,6 +14,24 @@ exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as array
 
 exports[`GeneratedTypeReferenceExampleImpl > containers > generates set as array when includeSerdeLayer is true but items are non-primitive 1`] = `"["a", "b"]"`;
 
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > handles container literal key via getExampleAsPropertyName 1`] = `
+"{
+    "literal_key": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > handles named alias key via getExampleAsPropertyName 1`] = `
+"{
+    "alias_val": "val"
+}"
+`;
+
+exports[`GeneratedTypeReferenceExampleImpl > map key property names > handles named undiscriminatedUnion key via getExampleAsPropertyName 1`] = `
+"{
+    "union_val": "val"
+}"
+`;
+
 exports[`GeneratedTypeReferenceExampleImpl > map key property names > recursively resolves named alias key 1`] = `
 "{
     "user-123": "val"

@@ -60,11 +60,12 @@ function createMockBaseContext(opts?: { inline?: boolean }): any {
                 getEntityName: () => ts.factory.createIdentifier("NamedType"),
                 getExpression: () => ts.factory.createIdentifier("NamedType")
             }),
-            typeNameToTypeReference: (name: FernIr.DeclaredTypeName) => FernIr.TypeReference.named({
-                ...name,
-                default: undefined,
-                inline: undefined
-            }),
+            typeNameToTypeReference: (name: FernIr.DeclaredTypeName) =>
+                FernIr.TypeReference.named({
+                    ...name,
+                    default: undefined,
+                    inline: undefined
+                }),
             getTypeDeclaration: () => ({
                 name: createDeclaredTypeName("InlineType"),
                 inline: opts?.inline ?? false
@@ -430,7 +431,10 @@ describe("ParsedSingleUnionTypeForUnion", () => {
 
     describe("getBuilderName", () => {
         it("returns camelCase name with serde layer and no retain original casing", () => {
-            const singleUnionType = createSingleUnionType("my_variant", FernIr.SingleUnionTypeProperties.noProperties());
+            const singleUnionType = createSingleUnionType(
+                "my_variant",
+                FernIr.SingleUnionTypeProperties.noProperties()
+            );
             const parsed = new ParsedSingleUnionTypeForUnion({
                 singleUnionType,
                 union,
@@ -445,7 +449,10 @@ describe("ParsedSingleUnionTypeForUnion", () => {
         });
 
         it("returns wire value when retainOriginalCasing is true", () => {
-            const singleUnionType = createSingleUnionType("my_variant", FernIr.SingleUnionTypeProperties.noProperties());
+            const singleUnionType = createSingleUnionType(
+                "my_variant",
+                FernIr.SingleUnionTypeProperties.noProperties()
+            );
             const parsed = new ParsedSingleUnionTypeForUnion({
                 singleUnionType,
                 union,
@@ -460,7 +467,10 @@ describe("ParsedSingleUnionTypeForUnion", () => {
         });
 
         it("returns wire value when includeSerdeLayer is false", () => {
-            const singleUnionType = createSingleUnionType("my_variant", FernIr.SingleUnionTypeProperties.noProperties());
+            const singleUnionType = createSingleUnionType(
+                "my_variant",
+                FernIr.SingleUnionTypeProperties.noProperties()
+            );
             const parsed = new ParsedSingleUnionTypeForUnion({
                 singleUnionType,
                 union,

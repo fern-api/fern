@@ -7,7 +7,15 @@ exports[`appendPropertyToFormData > body properties > generates Array.isArray ch
     }"
 `;
 
+exports[`appendPropertyToFormData > body properties > generates JSON.stringify append for body property with json style 1`] = `"_body.append("config", JSON.stringify(request.config));"`;
+
 exports[`appendPropertyToFormData > body properties > generates JSON.stringify for json style body property 1`] = `"_body.append("metadata", JSON.stringify(request.metadata));"`;
+
+exports[`appendPropertyToFormData > body properties > generates Object.entries loop for body property with form style 1`] = `
+"for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "metadata": request.metadata }))) {
+    _body.append(key, value);
+}"
+`;
 
 exports[`appendPropertyToFormData > body properties > generates Object.entries loop for form style body property 1`] = `
 "for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "formData": request.formData }))) {
@@ -47,6 +55,13 @@ exports[`appendPropertyToFormData > body properties > generates for-of loop for 
 "for (const _item of request.uniqueTags) {
     _body.append("uniqueTags", _item.toString());
 }"
+`;
+
+exports[`appendPropertyToFormData > body properties > generates for-of loop for unknown type (isMaybeIterable=true, isDefinitelyIterable=false) 1`] = `
+"if (Array.isArray(request.data) || request.data instanceof Set)
+    for (const _item of request.data) {
+        _body.append("data", _item.toString());
+    }"
 `;
 
 exports[`appendPropertyToFormData > body properties > generates for-of with Array.isArray+instanceof for undiscriminated union with list, set, and non-iterable members 1`] = `

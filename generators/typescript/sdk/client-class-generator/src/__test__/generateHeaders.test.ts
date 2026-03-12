@@ -562,6 +562,294 @@ describe("generateHeaders", () => {
         expect(text).toMatchSnapshot();
     });
 
+    it("generates header with stringify for named alias to DATE_TIME type", () => {
+        const mockContext = createMockContext();
+        // Override getTypeDeclaration to return alias shape pointing to DATE_TIME
+        mockContext.type.getTypeDeclaration = () => ({
+            shape: FernIr.Type.alias({
+                aliasOf: FernIr.TypeReference.primitive({ v1: "DATE_TIME", v2: undefined }),
+                resolvedType: FernIr.ResolvedTypeReference.primitive({
+                    v1: "DATE_TIME",
+                    v2: undefined
+                })
+            })
+        });
+
+        const namedHeader = createHttpHeader(
+            "X-Timestamp",
+            FernIr.TypeReference.named({
+                typeId: "type_Timestamp" as FernIr.TypeId,
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: {
+                    originalName: "Timestamp",
+                    camelCase: { unsafeName: "timestamp", safeName: "timestamp" },
+                    snakeCase: { unsafeName: "timestamp", safeName: "timestamp" },
+                    screamingSnakeCase: { unsafeName: "TIMESTAMP", safeName: "TIMESTAMP" },
+                    pascalCase: { unsafeName: "Timestamp", safeName: "Timestamp" }
+                },
+                default: undefined,
+                inline: undefined
+            }),
+            { wireValue: "X-Timestamp" }
+        );
+
+        const result = generateHeaders({
+            context: mockContext,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [] } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass(),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [namedHeader] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        // Named alias to DATE_TIME should trigger stringify
+        expect(text).toContain("toString");
+        expect(text).toMatchSnapshot();
+    });
+
+    it("generates header without stringify for named enum type", () => {
+        const mockContext = createMockContext();
+        mockContext.type.getTypeDeclaration = () => ({
+            shape: FernIr.Type.enum({ values: [] })
+        });
+
+        const namedEnumHeader = createHttpHeader(
+            "X-Status",
+            FernIr.TypeReference.named({
+                typeId: "type_Status" as FernIr.TypeId,
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: {
+                    originalName: "Status",
+                    camelCase: { unsafeName: "status", safeName: "status" },
+                    snakeCase: { unsafeName: "status", safeName: "status" },
+                    screamingSnakeCase: { unsafeName: "STATUS", safeName: "STATUS" },
+                    pascalCase: { unsafeName: "Status", safeName: "Status" }
+                },
+                default: undefined,
+                inline: undefined
+            }),
+            { wireValue: "X-Status" }
+        );
+
+        const result = generateHeaders({
+            context: mockContext,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [] } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass(),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [namedEnumHeader] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        // Enum type should NOT trigger stringify
+        expect(text).not.toContain("toString");
+        expect(text).toMatchSnapshot();
+    });
+
+    it("generates nullable header with optional wrapping nullable (typeContainsNullable recurses)", () => {
+        const optionalNullableHeader = createHttpHeader(
+            "X-OptNullable",
+            FernIr.TypeReference.container(
+                FernIr.ContainerType.optional(
+                    FernIr.TypeReference.container(
+                        FernIr.ContainerType.nullable(
+                            FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                        )
+                    )
+                )
+            ),
+            { wireValue: "X-OptNullable" }
+        );
+
+        const result = generateHeaders({
+            context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [] } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass(),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [optionalNullableHeader] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        // Optional wrapping nullable should still produce ?? undefined
+        expect(text).toContain("?? undefined");
+        expect(text).toMatchSnapshot();
+    });
+
+    it("generates nullable header with named alias to nullable type (typeContainsNullable named branch)", () => {
+        const mockContext = createMockContext();
+        mockContext.type.getTypeDeclaration = () => ({
+            shape: FernIr.Type.alias({
+                aliasOf: FernIr.TypeReference.container(
+                    FernIr.ContainerType.nullable(
+                        FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    )
+                ),
+                resolvedType: FernIr.ResolvedTypeReference.container(
+                    FernIr.ContainerType.nullable(
+                        FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                    )
+                )
+            })
+        });
+
+        const namedNullableHeader = createHttpHeader(
+            "X-NullableAlias",
+            FernIr.TypeReference.named({
+                typeId: "type_NullableString" as FernIr.TypeId,
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: {
+                    originalName: "NullableString",
+                    camelCase: { unsafeName: "nullableString", safeName: "nullableString" },
+                    snakeCase: { unsafeName: "nullable_string", safeName: "nullable_string" },
+                    screamingSnakeCase: { unsafeName: "NULLABLE_STRING", safeName: "NULLABLE_STRING" },
+                    pascalCase: { unsafeName: "NullableString", safeName: "NullableString" }
+                },
+                default: undefined,
+                inline: undefined
+            }),
+            { wireValue: "X-NullableAlias" }
+        );
+
+        const result = generateHeaders({
+            context: mockContext,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [] } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass(),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [namedNullableHeader] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        // Named alias to nullable should produce ?? undefined
+        expect(text).toContain("?? undefined");
+        expect(text).toMatchSnapshot();
+    });
+
+    it("generates header with stringify for set container type", () => {
+        const setHeader = createHttpHeader(
+            "X-Ids",
+            FernIr.TypeReference.container(
+                FernIr.ContainerType.set(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
+            ),
+            { wireValue: "X-Ids" }
+        );
+
+        const result = generateHeaders({
+            context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [] } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass(),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [setHeader] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        // Set container should trigger stringify
+        expect(text).toContain("toString");
+        expect(text).toMatchSnapshot();
+    });
+
+    it("generates header with stringify for map container type", () => {
+        const mapHeader = createHttpHeader(
+            "X-Meta",
+            FernIr.TypeReference.container(
+                FernIr.ContainerType.map({
+                    keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                    valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                })
+            ),
+            { wireValue: "X-Meta" }
+        );
+
+        const result = generateHeaders({
+            context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [] } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass(),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [mapHeader] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        // Map container should trigger stringify
+        expect(text).toContain("toString");
+        expect(text).toMatchSnapshot();
+    });
+
+    it("generates header with stringify for named object type", () => {
+        const mockContext = createMockContext();
+        mockContext.type.getTypeDeclaration = () => ({
+            shape: FernIr.Type.object({
+                properties: [],
+                extends: [],
+                extraProperties: false,
+                extendedProperties: undefined
+            })
+        });
+
+        const namedObjHeader = createHttpHeader(
+            "X-Config",
+            FernIr.TypeReference.named({
+                typeId: "type_Config" as FernIr.TypeId,
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: {
+                    originalName: "Config",
+                    camelCase: { unsafeName: "config", safeName: "config" },
+                    snakeCase: { unsafeName: "config", safeName: "config" },
+                    screamingSnakeCase: { unsafeName: "CONFIG", safeName: "CONFIG" },
+                    pascalCase: { unsafeName: "Config", safeName: "Config" }
+                },
+                default: undefined,
+                inline: undefined
+            }),
+            { wireValue: "X-Config" }
+        );
+
+        const result = generateHeaders({
+            context: mockContext,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [] } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass(),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [namedObjHeader] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        // Object named type should trigger stringify
+        expect(text).toContain("toString");
+        expect(text).toMatchSnapshot();
+    });
+
     it("generates root-level header with non-literal non-boolean value (fallback ?? this._options)", () => {
         const nonLiteralRootHeader = createHttpHeader(
             "X-Tenant",

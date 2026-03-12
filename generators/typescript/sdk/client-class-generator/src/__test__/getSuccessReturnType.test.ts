@@ -229,6 +229,56 @@ describe("getSuccessReturnType", () => {
         });
     });
 
+    describe("when response is bytes", () => {
+        it("returns stream type for bytes response with wrapper stream type", () => {
+            const endpoint = createHttpEndpoint();
+            const context = createMockContext();
+            const bytesResponse: FernIr.HttpResponseBody.Bytes = {
+                type: "bytes",
+                value: undefined
+            };
+            const result = getSuccessReturnType(endpoint, bytesResponse, context, {
+                includeContentHeadersOnResponse: false,
+                streamType: "wrapper",
+                fileResponseType: "stream"
+            });
+            expect(getTextOfTsNode(result)).toBe("Readable");
+        });
+
+        it("returns BinaryResponse for bytes response with binary-response file type", () => {
+            const endpoint = createHttpEndpoint();
+            const context = createMockContext();
+            const bytesResponse: FernIr.HttpResponseBody.Bytes = {
+                type: "bytes",
+                value: undefined
+            };
+            const result = getSuccessReturnType(endpoint, bytesResponse, context, {
+                includeContentHeadersOnResponse: false,
+                streamType: "wrapper",
+                fileResponseType: "binary-response"
+            });
+            expect(getTextOfTsNode(result)).toBe("core.BinaryResponse");
+        });
+
+        it("returns type literal with content headers for bytes when includeContentHeadersOnResponse is true", () => {
+            const endpoint = createHttpEndpoint();
+            const context = createMockContext();
+            const bytesResponse: FernIr.HttpResponseBody.Bytes = {
+                type: "bytes",
+                value: undefined
+            };
+            const result = getSuccessReturnType(endpoint, bytesResponse, context, {
+                includeContentHeadersOnResponse: true,
+                streamType: "wrapper",
+                fileResponseType: "stream"
+            });
+            const text = getTextOfTsNode(result);
+            expect(text).toContain("data");
+            expect(text).toContain("contentLengthInBytes");
+            expect(text).toContain("contentType");
+        });
+    });
+
     describe("when response is streaming", () => {
         it("returns Stream<type> for SSE streaming", () => {
             const endpoint = createHttpEndpoint();
