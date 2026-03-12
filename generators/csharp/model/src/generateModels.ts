@@ -47,7 +47,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                             generateLiteralType({
                                 structName,
                                 literal: resolvedType.container.literal,
-                                namespace,
+                                namespace: registeredRef.namespace,
                                 directory
                             })
                         );
