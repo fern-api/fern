@@ -39,7 +39,6 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@fern-fern/ir-sdk": "^65.3.0",
     "@fern-typescript/test-utils": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",
