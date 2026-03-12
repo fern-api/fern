@@ -77,11 +77,11 @@ export async function createSampleIr(
  * For example, generators on v65 IR should call:
  *   createMigratedSampleIr(path, "v65", opts)
  */
-export async function createMigratedSampleIr(
+export async function createMigratedSampleIr<T = unknown>(
     absolutePathToWorkspace: string | AbsoluteFilePath,
     targetIrVersion: string,
     opts?: CreateSampleIrOptions
-): Promise<unknown> {
+): Promise<T> {
     const ir = await createSampleIr(absolutePathToWorkspace, opts);
     const context = opts?.context ?? createMockTaskContext();
     const casingsGenerator = constructFullCasingsGenerator({
@@ -95,5 +95,5 @@ export async function createMigratedSampleIr(
         context,
         casingsGenerator
     });
-    return migrated.ir;
+    return migrated.ir as T;
 }

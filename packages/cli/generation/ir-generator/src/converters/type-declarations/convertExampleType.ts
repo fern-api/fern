@@ -163,10 +163,11 @@ export function convertTypeExample({
                         if (propertyExample == null) {
                             return undefined;
                         }
-                        const propName = typeof property === "string" ? propertyName : (property.name ?? propertyName);
                         return {
-                            name:
-                                propertyName === propName ? propertyName : { wireValue: propertyName, name: propName },
+                            name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                                name: typeof property === "string" ? propertyName : (property.name ?? propertyName),
+                                wireValue: propertyName
+                            }),
                             value: convertTypeReferenceExample({
                                 example: propertyExample,
                                 rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
@@ -186,10 +187,10 @@ export function convertTypeExample({
             });
 
             return ExampleTypeShape.union({
-                discriminant: (() => {
-                    const discName = getUnionDiscriminantName(rawUnion).name;
-                    return discriminant === discName ? discriminant : { wireValue: discriminant, name: discName };
-                })(),
+                discriminant: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                    name: getUnionDiscriminantName(rawUnion).name,
+                    wireValue: discriminant
+                }),
                 singleUnionType: convertSingleUnionType({
                     rawValueType,
                     rawSingleUnionType,
@@ -215,10 +216,10 @@ export function convertTypeExample({
                 throw new Error(`Expected one of ${validValues}. Received ${example}`);
             }
             return ExampleTypeShape.enum({
-                value: (() => {
-                    const enumName = getEnumNameFromEnumValue(example, rawEnum).name;
-                    return example === enumName ? example : { wireValue: example, name: enumName };
-                })()
+                value: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                    name: getEnumNameFromEnumValue(example, rawEnum).name,
+                    wireValue: example
+                })
             });
         },
         undiscriminatedUnion: (undiscriminatedUnion) => {
@@ -720,13 +721,13 @@ function convertObject({
                           recursionContext
                       });
                       return {
-                          name: (() => {
-                              const propName = getPropertyName({
+                          name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                              name: getPropertyName({
                                   propertyKey: wireKey,
                                   property: originalTypeDeclaration.rawPropertyType
-                              }).name;
-                              return wireKey === propName ? wireKey : { wireValue: wireKey, name: propName };
-                          })(),
+                              }).name,
+                              wireValue: wireKey
+                          }),
                           value: valueExample,
                           originalTypeDeclaration: originalTypeDeclaration.typeName,
                           propertyAccess: getPropertyAccess({ property: originalTypeDeclaration.rawPropertyType })
@@ -838,12 +839,10 @@ function convertSingleUnionType({
     workspace: FernWorkspace;
     recursionContext?: RecursionContext;
 }): ExampleSingleUnionType {
-    const wireDiscriminantValue = (() => {
-        const singleName = getSingleUnionTypeName({ unionKey: discriminantValueForExample, rawSingleUnionType }).name;
-        return discriminantValueForExample === singleName
-            ? discriminantValueForExample
-            : { wireValue: discriminantValueForExample, name: singleName };
-    })();
+    const wireDiscriminantValue = fileContainingType.casingsGenerator.generateNameAndWireValue({
+        name: getSingleUnionTypeName({ unionKey: discriminantValueForExample, rawSingleUnionType }).name,
+        wireValue: discriminantValueForExample
+    });
     if (rawValueType == null) {
         return {
             wireDiscriminantValue,

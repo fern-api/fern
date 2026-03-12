@@ -7,19 +7,14 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 
 export async function createSampleGeneratorContext(pathToDefinition: string): Promise<ModelGeneratorContext> {
     const absolutePathToWorkspace = AbsoluteFilePath.of(pathToDefinition);
-    const ir = await createMigratedSampleIr(absolutePathToWorkspace, "v65");
+    const ir = await createMigratedSampleIr<FernIr.IntermediateRepresentation>(absolutePathToWorkspace, "v65");
     const generatorConfig = createSampleGeneratorConfig();
     const customConfig: ModelCustomConfigSchema = {};
     const notificationService = new GeneratorNotificationService({
         type: "local",
         _visit: (visitor) => visitor.local()
     });
-    return new ModelGeneratorContext(
-        ir as FernIr.IntermediateRepresentation,
-        generatorConfig,
-        customConfig,
-        notificationService
-    );
+    return new ModelGeneratorContext(ir, generatorConfig, customConfig, notificationService);
 }
 
 function createSampleGeneratorConfig(): FernGeneratorExec.config.GeneratorConfig {

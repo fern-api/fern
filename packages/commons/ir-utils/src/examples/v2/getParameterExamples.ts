@@ -1,6 +1,6 @@
 import { HttpEndpoint, IntermediateRepresentation, TypeDeclaration, TypeId, V2ValueExamples } from "@fern-api/ir-sdk";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional.js";
-import { getNameFromWireValue, getOriginalName, getWireValue } from "../../utils/namesUtils.js";
+import { getOriginalName, getWireValue } from "../../utils/namesUtils.js";
 import { getFirstExamples } from "./getV2Examples.js";
 
 export function getParameterExamples({
@@ -41,7 +41,7 @@ export function getParameterExamples({
         const { userExample, autoExample } = getFirstExamples(parameter.v2Examples);
 
         if (userExample !== undefined) {
-            result.queryParameters[getOriginalName(getNameFromWireValue(parameter.name))] = userExample;
+            result.queryParameters[getOriginalName(parameter.name)] = userExample;
         } else if (autoExample !== undefined) {
             if (
                 skipOptionalRequestProperties &&
@@ -50,7 +50,7 @@ export function getParameterExamples({
                 continue;
             }
 
-            result.queryParameters[getOriginalName(getNameFromWireValue(parameter.name))] = autoExample;
+            result.queryParameters[getOriginalName(parameter.name)] = autoExample;
         }
     }
 

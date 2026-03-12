@@ -73,7 +73,7 @@ export function generateHeaderExamples(
         }
 
         const generatedExample = generateTypeReferenceExample({
-            fieldName: getOriginalName(typeof h.name === "string" ? h.name : h.name.name),
+            fieldName: getOriginalName(h.name),
             currentDepth: 0,
             maxDepth: options.maxDepth ?? 1,
             typeDeclarations: options.typeDeclarations,
@@ -114,7 +114,7 @@ export function generateQueryParameterExamples(
         }
 
         const generatedExample = generateTypeReferenceExample({
-            fieldName: getOriginalName(typeof q.name === "string" ? q.name : q.name.name),
+            fieldName: getOriginalName(q.name),
             currentDepth: 0,
             maxDepth: options.maxDepth ?? 10,
             typeDeclarations: options.typeDeclarations,
