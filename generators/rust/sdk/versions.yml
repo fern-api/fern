@@ -1,5 +1,93 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.19.4
+  changelogEntry:
+    - summary: |
+        Handle bytes endpoints, query name collisions, and WireMock mapping fixes
+        for wire test generation. Bytes endpoints with query params now generate
+        individual parameter arguments instead of a struct. Query request type names
+        include subpackage prefixes when collisions exist. WireMock mappings strip
+        .000 milliseconds from datetime strings and add fallback mappings for bytes
+        endpoints. Allow-multiple query parameters are now correctly wrapped in list types.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 62
+
+- version: 0.19.3
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 62
+
+- version: 0.19.2
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 62
+
+- version: 0.19.1
+  changelogEntry:
+    - summary: |
+        Improve error logging for README.md and reference.md generation failures.
+        The generator now logs the actual error message and stack trace instead
+        of crashing the entire generation, making it easier to diagnose issues.
+      type: fix
+  createdAt: "2026-03-09"
+  irVersion: 62
+
+- version: 0.19.0
+  changelogEntry:
+    - summary: |
+        Add WebSocket connector pattern and README code snippets when `enableWebsockets: true`.
+        WebSocket channels are now accessible through the root client via connector structs
+        (e.g., `client.realtime.connect(...)`) matching Python and Java generator patterns.
+        Generated README includes a Websockets section with connect, send, receive, and close examples.
+      type: feat
+  createdAt: "2026-03-06"
+  irVersion: 62
+
+- version: 0.18.3
+  changelogEntry:
+    - summary: |
+        Fix duplicate module declarations and WebSocket type name collisions when multiple
+        subpackages (e.g., HTTP REST and AsyncAPI WebSocket) map to the same namespace. Deduplicates
+        `pub mod` declarations, client re-exports, and doc comments. WebSocket channel generators
+        now use collision-aware type names (e.g., `AuthResponse2` instead of `AuthResponse`) to
+        correctly reference disambiguated types in the trading namespace.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 62
+
+- version: 0.18.2
+  changelogEntry:
+    - summary: |
+        Fix Rust module naming collision when a subpackage has children that share the same
+        directory name as the parent's client file. Previously, both `X.rs` and `X/mod.rs` could
+        be generated in the same directory, causing `rustfmt` errors like "file for module found
+        at both". Now the client code is inlined into the unified `mod.rs` when any children exist,
+        and child re-exports are only emitted for subpackages with services or endpoints.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 62
+
+- version: 0.18.1
+  changelogEntry:
+    - summary: |
+        Escape Rust reserved keywords (e.g., `type`, `match`, `self`) when used as path parameter
+        names in generated client methods. Previously, reserved keywords like `type` were emitted
+        as-is, causing `rustfmt` and compilation failures. Now they are properly escaped with the
+        `r#` prefix (e.g., `r#type`).
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 62
+
 - version: 0.18.0
   changelogEntry:
     - summary: |

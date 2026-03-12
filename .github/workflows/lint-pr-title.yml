@@ -55,6 +55,9 @@ jobs:
             swift
             rust
             generator-cli
+            parser
+            ir
+            cli-v2
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

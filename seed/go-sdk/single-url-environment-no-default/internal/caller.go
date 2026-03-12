@@ -113,7 +113,7 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) (*CallResponse, e
 	}
 
 	// Close the response body after we're done.
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
@@ -196,7 +196,6 @@ func newRequest(
 	if err != nil {
 		return nil, err
 	}
-	req = req.WithContext(ctx)
 	req.Header.Set(contentTypeHeader, reqContentType)
 	for name, values := range endpointHeaders {
 		req.Header[name] = values
@@ -269,16 +268,6 @@ func newFormURLEncodedRequestBody(request interface{}, bodyProperties map[string
 		values.Set(key, fmt.Sprintf("%v", val))
 	}
 	return strings.NewReader(values.Encode()), nil
-}
-
-// isZeroValue checks if the given reflect.Value is the zero value for its type.
-func isZeroValue(v reflect.Value) bool {
-	switch v.Kind() {
-	case reflect.Ptr, reflect.Interface, reflect.Slice, reflect.Map, reflect.Chan, reflect.Func:
-		return v.IsNil()
-	default:
-		return v.IsZero()
-	}
 }
 
 // decodeError decodes the error from the given HTTP response. Note that

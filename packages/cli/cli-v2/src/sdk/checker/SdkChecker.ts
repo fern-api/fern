@@ -1,10 +1,7 @@
 import { type ValidationViolation } from "@fern-api/fern-definition-validator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernRegistryClient as GeneratorsClient } from "@fern-fern/generators-sdk";
-import chalk from "chalk";
-import type { FernYmlSchemaLoader } from "../../config/fern-yml/FernYmlSchemaLoader.js";
 import type { Context } from "../../context/Context.js";
-import { Colors, Icons } from "../../ui/format.js";
 import type { Workspace } from "../../workspace/Workspace.js";
 import { getGeneratorIdFromImage } from "../config/converter/getGeneratorIdFromImage.js";
 import type { SdkConfig } from "../config/SdkConfig.js";
@@ -13,18 +10,27 @@ import type { Target } from "../config/Target.js";
 export declare namespace SdkChecker {
     export type VersionChecker = (args: { target: Target }) => Promise<{ violation: ValidationViolation | undefined }>;
 
+    export interface ResolvedViolation extends ValidationViolation {
+        /** File path relative to user's current working directory */
+        displayRelativeFilepath: string;
+        /** The line number in the file */
+        line: number;
+        /** The column number in the file */
+        column: number;
+    }
+
     export interface Config {
         /** The CLI context */
         context: Context;
-
-        /** Output stream for writing results (defaults to process.stderr) */
-        stream?: NodeJS.WriteStream;
 
         /** Override version checking (defaults to registry lookup). Useful for testing. */
         versionChecker?: VersionChecker;
     }
 
     export interface Result {
+        /** Resolved violations to display */
+        violations: SdkChecker.ResolvedViolation[];
+
         /** Total error count */
         errorCount: number;
 
@@ -37,29 +43,23 @@ export declare namespace SdkChecker {
 }
 
 export class SdkChecker {
-    private readonly stream: NodeJS.WriteStream;
     private readonly versionChecker: SdkChecker.VersionChecker;
 
     constructor(config: SdkChecker.Config) {
-        this.stream = config.stream ?? process.stderr;
         this.versionChecker = config.versionChecker ?? ((args) => this.checkVersionExists(args));
     }
 
     /**
      * Check SDK configuration in the workspace and display results.
      */
-    public async check({
-        workspace,
-        fernYml
-    }: {
-        workspace: Workspace;
-        fernYml: FernYmlSchemaLoader.Success;
-    }): Promise<SdkChecker.Result> {
+    public async check({ workspace }: { workspace: Workspace }): Promise<SdkChecker.Result> {
         const startTime = performance.now();
-        const violations: ValidationViolation[] = [];
+        const violations: SdkChecker.ResolvedViolation[] = [];
 
-        if (workspace.sdks == null) {
+        const fernYml = workspace.fernYml;
+        if (workspace.sdks == null || fernYml == null) {
             return {
+                violations: [],
                 errorCount: 0,
                 warningCount: 0,
                 elapsedMillis: performance.now() - startTime
@@ -75,11 +75,8 @@ export class SdkChecker {
         this.validateEmptyVersions({ sdks, violations });
         await this.validateVersions({ sdks, violations });
 
-        if (violations.length > 0) {
-            this.displayViolations(violations);
-        }
-
         return {
+            violations,
             ...this.countViolations(violations),
             elapsedMillis: performance.now() - startTime
         };
@@ -97,14 +94,17 @@ export class SdkChecker {
         workspace: Workspace;
         sdks: SdkConfig;
         fernYmlRelativePath: RelativeFilePath;
-        violations: ValidationViolation[];
+        violations: SdkChecker.ResolvedViolation[];
     }): void {
         if (Object.keys(workspace.apis).length === 0) {
             violations.push({
                 severity: "error",
                 relativeFilepath: fernYmlRelativePath,
                 nodePath: ["sdks"],
-                message: "SDKs are configured but no APIs are defined"
+                message: "SDKs are configured but no APIs are defined",
+                displayRelativeFilepath: fernYmlRelativePath,
+                line: 1,
+                column: 1
             });
         }
     }
@@ -119,7 +119,7 @@ export class SdkChecker {
     }: {
         workspace: Workspace;
         sdks: SdkConfig;
-        violations: ValidationViolation[];
+        violations: SdkChecker.ResolvedViolation[];
     }): void {
         for (const target of sdks.targets) {
             if (workspace.apis[target.api] == null) {
@@ -127,7 +127,10 @@ export class SdkChecker {
                     severity: "error",
                     relativeFilepath: target.sourceLocation.relativeFilePath,
                     nodePath: ["sdks", "targets", target.name, "api"],
-                    message: `API '${target.api}' is not defined`
+                    message: `API '${target.api}' is not defined`,
+                    displayRelativeFilepath: target.sourceLocation.relativeFilePath,
+                    line: target.sourceLocation.line,
+                    column: target.sourceLocation.column
                 });
             }
         }
@@ -143,7 +146,7 @@ export class SdkChecker {
     }: {
         sdks: SdkConfig;
         fernYmlRelativePath: RelativeFilePath;
-        violations: ValidationViolation[];
+        violations: SdkChecker.ResolvedViolation[];
     }): void {
         const defaultGroup = sdks.defaultGroup;
         if (defaultGroup == null) {
@@ -153,11 +156,15 @@ export class SdkChecker {
             (target) => target.groups != null && target.groups.includes(defaultGroup)
         );
         if (!isReferenced) {
+            const location = sdks.defaultGroupLocation;
             violations.push({
                 severity: "error",
-                relativeFilepath: fernYmlRelativePath,
+                relativeFilepath: location?.relativeFilePath ?? fernYmlRelativePath,
                 nodePath: ["sdks", "defaultGroup"],
-                message: `Default group '${defaultGroup}' is not referenced by any target`
+                message: `Default group '${defaultGroup}' is not referenced by any target`,
+                displayRelativeFilepath: location?.relativeFilePath ?? fernYmlRelativePath,
+                line: location?.line ?? 1,
+                column: location?.column ?? 1
             });
         }
     }
@@ -165,14 +172,23 @@ export class SdkChecker {
     /**
      * Checks if a target has an empty version string.
      */
-    private validateEmptyVersions({ sdks, violations }: { sdks: SdkConfig; violations: ValidationViolation[] }): void {
+    private validateEmptyVersions({
+        sdks,
+        violations
+    }: {
+        sdks: SdkConfig;
+        violations: SdkChecker.ResolvedViolation[];
+    }): void {
         for (const target of sdks.targets) {
             if (target.version.length === 0) {
                 violations.push({
                     severity: "error",
                     relativeFilepath: target.sourceLocation.relativeFilePath,
                     nodePath: ["sdks", "targets", target.name, "version"],
-                    message: "Version must not be empty"
+                    message: "Version must not be empty",
+                    displayRelativeFilepath: target.sourceLocation.relativeFilePath,
+                    line: target.sourceLocation.line,
+                    column: target.sourceLocation.column
                 });
             }
         }
@@ -186,12 +202,22 @@ export class SdkChecker {
         violations
     }: {
         sdks: SdkConfig;
-        violations: ValidationViolation[];
+        violations: SdkChecker.ResolvedViolation[];
     }): Promise<void> {
-        const results = await Promise.all(sdks.targets.map((target) => this.versionChecker({ target })));
+        const results = await Promise.all(
+            sdks.targets.map(async (target) => {
+                const result = await this.versionChecker({ target });
+                return { target, violation: result.violation };
+            })
+        );
         for (const result of results) {
             if (result.violation != null) {
-                violations.push(result.violation);
+                violations.push({
+                    ...result.violation,
+                    displayRelativeFilepath: result.target.sourceLocation.relativeFilePath,
+                    line: result.target.sourceLocation.line,
+                    column: result.target.sourceLocation.column
+                });
             }
         }
     }
@@ -235,32 +261,7 @@ export class SdkChecker {
         }
     }
 
-    /**
-     * Writes each violation to the output stream.
-     */
-    private displayViolations(violations: ValidationViolation[]): void {
-        for (const violation of violations) {
-            const { icon, colorFn } = this.getSeverityStyle(violation.severity);
-            const filepath = chalk.dim(String(violation.relativeFilepath));
-            this.stream.write(`  ${icon} ${filepath}  ${colorFn(violation.message)}\n`);
-        }
-        this.stream.write("\n");
-    }
-
-    private getSeverityStyle(severity: ValidationViolation["severity"]): {
-        icon: string;
-        colorFn: (text: string) => string;
-    } {
-        switch (severity) {
-            case "fatal":
-            case "error":
-                return { icon: Icons.error, colorFn: Colors.error };
-            case "warning":
-                return { icon: Icons.warning, colorFn: Colors.warning };
-        }
-    }
-
-    private countViolations(violations: ValidationViolation[]): { errorCount: number; warningCount: number } {
+    private countViolations(violations: SdkChecker.ResolvedViolation[]): { errorCount: number; warningCount: number } {
         let errorCount = 0;
         let warningCount = 0;
 

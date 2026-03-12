@@ -6,5 +6,6 @@
     "moduleName": "MyCustomModule",
     "clientClassName": "MyCustomClient"
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

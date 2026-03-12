@@ -624,6 +624,32 @@
       }
     },
     {
+      "id": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
+      "name": "getAndReturnWithDocumentedUnknownType - default",
+      "request": {
+        "urlPathTemplate": "/object/get-and-return-with-documented-unknown-type",
+        "method": "POST"
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"documentedUnknownType\": {\n    \"key\": \"value\"\n  }\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "4bc6dad1-b68d-4f0f-bda5-bf9d3730a4c4",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "e2cc3e92-6e37-4a50-9081-23952fdd73fe",
       "name": "getAndReturnWithDatetimeLikeString - default",
       "request": {
@@ -1482,6 +1508,6 @@
     }
   ],
   "meta": {
-    "total": 53
+    "total": 54
   }
 }

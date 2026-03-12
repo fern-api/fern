@@ -1,4 +1,149 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.29.3
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.29.2
+  changelogEntry:
+    - summary: |
+        Fix datetime query parameter serialization to always include milliseconds.
+        The `valueString` function in `internal/query.go` now formats `time.Time`
+        values with `"2006-01-02T15:04:05.000Z07:00"` instead of `time.RFC3339`,
+        ensuring the Go SDK sends timestamps with millisecond precision (e.g.,
+        `2024-07-01T15:30:00.000Z`) that match the WireMock stub mappings.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 61
+
+- version: 1.29.1
+  changelogEntry:
+    - summary: |
+        Remove redundant `req.WithContext(ctx)` call in the generated HTTP caller.
+        `http.NewRequestWithContext` already sets the context on the request, so
+        the subsequent `req.WithContext(ctx)` was creating an unnecessary shallow
+        copy of the request with the same context.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.29.0
+  changelogEntry:
+    - summary: |
+        Bump the default streaming buffer size from 64KB to 1MB and add a new
+        `WithMaxStreamBufSize` request option so SDK users can configure the
+        maximum buffer size for streaming responses at runtime. This controls
+        the maximum size of a single SSE event (in bytes) that the stream can
+        process. Also fixes a bug where `SseStreamReader` would return a
+        misleading `io.EOF` error instead of the underlying `bufio.ErrTooLong`
+        when a message exceeded the buffer limit.
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.28.7
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+
+- version: 1.28.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 61
+- version: 1.28.5
+  changelogEntry:
+    - summary: |
+        Improve error logging for reference.md generation failures. The generator
+        now logs the actual error message and stack trace instead of a generic
+        "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 61
+
+- version: 1.28.4
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 61
+
+- version: 1.28.3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation crash for endpoints with bytes request bodies.
+        The wire test generator now skips bytes endpoints, consistent with the
+        wiremock mapping generation which also excludes them. Previously, the
+        generator would throw "No wiremock mapping found" when an API contained
+        file upload endpoints using `application/octet-stream`.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 61
+
+- version: 1.28.2
+  changelogEntry:
+    - summary: |
+        Upgrade generated CI workflow to use `golangci/golangci-lint-action@v9`
+        (from `@v6`) for proper compatibility with golangci-lint v2.x.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 61
+
+- version: 1.28.1
+  changelogEntry:
+    - summary: |
+        Resolve datetime aliases in marshal/unmarshal code generation. Fields typed as
+        aliases of `datetime` or `date` (e.g. `DatetimeAlias: type: datetime`) now
+        correctly use the custom `internal.DateTime` / `internal.Date` serialization
+        helpers instead of falling back to default `time.Time` JSON handling. Also
+        relaxes `DateTime.UnmarshalJSON` to accept ISO 8601 timestamps without a
+        timezone suffix (e.g. `2024-01-15T09:30:00`), falling back from RFC 3339
+        when the timezone is absent.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 61
+
+- version: 1.28.0
+  changelogEntry:
+    - summary: |
+        Improve DateTime deserialization to handle multiple timestamp formats instead of
+        only strict RFC3339. The UnmarshalJSON method now tries RFC3339Nano first (which
+        is a superset of RFC3339 and supports fractional seconds), then falls back to
+        ISO 8601 without timezone (assuming UTC), then date-only format, and finally
+        Unix epoch seconds (integer). This matches the flexibility of other Fern SDK
+        generators (Java, Python, TypeScript, C#) and prevents deserialization failures
+        when APIs return timestamps in slightly different ISO 8601 variants.
+      type: feat
+  createdAt: "2026-03-04"
+  irVersion: 61
+
+- version: 1.27.0
+  changelogEntry:
+    - summary: |
+        Add golangci-lint to seed tests for generated Go SDK code; adjust various
+        internal files to comply with golangci-lint. (The upshot of this is that
+        `golangci-lint run` should now pass for any Fern-generated Go SDKs.)
+      type: feat
+  createdAt: "2026-03-04"
+  irVersion: 61
+
 - version: 1.26.1
   changelogEntry:
     - summary: |

@@ -12,14 +12,14 @@ private func main() async throws {
         nullableEnum: .value(.admin),
         optionalEnum: .active,
         nullableUnion: .value(NotificationMethod.email(
-            .init(
+            EmailNotification(
                 emailAddress: "emailAddress",
                 subject: "subject",
                 htmlContent: "htmlContent"
             )
         )),
         optionalUnion: SearchResult.user(
-            .init(
+            UserResponse(
                 id: "id",
                 username: "username",
                 email: .value("email"),

@@ -1,26 +1,17 @@
 import { assertNever } from "@fern-api/core-utils";
-import type { NodePath } from "@fern-api/fern-definition-schema";
 import type { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { AbsoluteFilePath, join, RelativeFilePath, relativize } from "@fern-api/fs-utils";
-import chalk from "chalk";
 import type { Context } from "../../context/Context.js";
-import { Colors, formatMessage, Icons } from "../../ui/format.js";
 import { Task } from "../../ui/Task.js";
 import type { Workspace } from "../../workspace/Workspace.js";
+import type { ApiDefinition } from "../config/ApiDefinition.js";
 import type { ApiSpecType } from "../config/ApiSpec.js";
+import type { AsyncApiSpec } from "../config/AsyncApiSpec.js";
+import { isAsyncApiSpec } from "../config/AsyncApiSpec.js";
 import { isFernSpec } from "../config/FernSpec.js";
+import type { OpenApiSpec } from "../config/OpenApiSpec.js";
+import { isOpenApiSpec } from "../config/OpenApiSpec.js";
 import { ApiDefinitionValidator } from "../validator/ApiDefinitionValidator.js";
-
-const INDENT = {
-    /** Base indent for file paths */
-    FILE_PATH: 2,
-    /** Indent for file paths when nested under API badge */
-    FILE_PATH_NESTED: 4,
-    /** Indent for location path relative to file (FILE_PATH + 2) */
-    LOCATION: 2,
-    /** Indent for violation message relative to file (FILE_PATH + 4) */
-    VIOLATION: 4
-} as const;
 
 export declare namespace ApiChecker {
     /**
@@ -33,6 +24,10 @@ export declare namespace ApiChecker {
         apiSpecType: ApiSpecType;
         /** File path relative to user's current working directory */
         displayRelativeFilepath: string;
+        /** The line number in the file */
+        line: number;
+        /** The column number in the file */
+        column: number;
     }
 
     export interface Config {
@@ -41,9 +36,6 @@ export declare namespace ApiChecker {
 
         /** CLI version for workspace metadata */
         cliVersion: string;
-
-        /** Output stream for writing results (defaults to process.stderr) */
-        stream?: NodeJS.WriteStream;
 
         /** The current task, if any */
         task?: Task;
@@ -55,6 +47,9 @@ export declare namespace ApiChecker {
 
         /** APIs that failed validation (have errors) */
         invalidApis: Set<string>;
+
+        /** Resolved violations to display */
+        violations: ApiChecker.ResolvedViolation[];
 
         /** Total error count */
         errorCount: number;
@@ -70,13 +65,11 @@ export declare namespace ApiChecker {
 export class ApiChecker {
     private readonly context: Context;
     private readonly cliVersion: string;
-    private readonly stream: NodeJS.WriteStream;
     private readonly task: Task | undefined;
 
     constructor(config: ApiChecker.Config) {
         this.context = config.context;
         this.cliVersion = config.cliVersion;
-        this.stream = config.stream ?? process.stderr;
         this.task = config.task;
     }
 
@@ -104,6 +97,7 @@ export class ApiChecker {
             return {
                 validApis,
                 invalidApis,
+                violations: [],
                 errorCount: 0,
                 warningCount: 0,
                 elapsedMillis: performance.now() - startTime
@@ -132,243 +126,141 @@ export class ApiChecker {
             }
 
             const apiSpecType: ApiSpecType = apiDefinition.specs.some(isFernSpec) ? "fern" : "openapi";
-            const resolvedViolations = this.resolveViolationPaths(
-                result.violations,
-                result.workspaceRoot,
+            const resolvedViolations = this.resolveViolationPaths({
+                workspaceRoot: result.workspaceRoot,
                 apiName,
-                apiSpecType
-            );
+                apiSpecType,
+                apiDefinition,
+                violations: result.violations
+            });
             allViolations.push(...resolvedViolations);
         }
 
         const dedupedViolations = this.deduplicateViolations(allViolations);
-
-        const { errorCount, warningCount } = this.countViolations(dedupedViolations);
-
-        const violationsToDisplay = strict
-            ? dedupedViolations
-            : dedupedViolations.filter((v) => v.severity === "fatal" || v.severity === "error");
-
-        const elapsedMillis = performance.now() - startTime;
-
-        // Only produce output if there are violations to display (i.e. no news is good news).
-        if (violationsToDisplay.length > 0) {
-            this.writeHeader();
-            this.displayViolations(violationsToDisplay);
-            this.writeSummary({
-                errorCount,
-                warningCount,
-                elapsedMillis,
-                strict
-            });
-        }
-
         return {
+            ...this.countViolations(dedupedViolations),
             validApis,
             invalidApis,
-            errorCount,
-            warningCount,
-            elapsedMillis
+            violations: strict
+                ? dedupedViolations
+                : dedupedViolations.filter((v) => v.severity === "fatal" || v.severity === "error"),
+            elapsedMillis: performance.now() - startTime
         };
     }
 
-    private writeHeader(): void {
-        this.stream.write("\n");
-        this.stream.write(`${Icons.info} ${chalk.bold(`Validate APIs`)}\n`);
-        this.stream.write("\n");
-    }
-
-    private writeSummary({
-        errorCount,
-        warningCount,
-        elapsedMillis,
-        strict
+    private resolveViolationPaths({
+        violations,
+        workspaceRoot,
+        apiName,
+        apiSpecType,
+        apiDefinition
     }: {
-        errorCount: number;
-        warningCount: number;
-        elapsedMillis: number;
-        strict: boolean;
-    }): void {
-        const durationStr = this.formatDuration(elapsedMillis);
-        const hasErrors = errorCount > 0;
-        const hasWarnings = warningCount > 0;
-
-        if (!hasErrors && !hasWarnings) {
-            this.stream.write(`${Icons.success} All checks passed ${chalk.dim(`(${durationStr})`)}\n`);
-            this.stream.write("\n");
-            return;
-        }
-
-        // In strict mode, warnings are treated as failures.
-        const isFailure = hasErrors || (strict && hasWarnings);
-        if (isFailure) {
-            const errorLabel = errorCount === 1 ? "error" : "errors";
-            const warningLabel = warningCount === 1 ? "warning" : "warnings";
-            this.stream.write(
-                `${Icons.error} Found ${errorCount} ${errorLabel} and ${warningCount} ${warningLabel} ${chalk.dim(`(${durationStr})`)}\n`
-            );
-            if (!strict && warningCount > 0) {
-                this.stream.write(chalk.dim("  Run 'fern check --strict' to treat warnings as errors\n"));
-            }
-            this.stream.write("\n");
-            return;
-        }
-
-        const warningLabel = warningCount === 1 ? "warning" : "warnings";
-        this.stream.write(
-            `${Icons.success} Checks passed with ${warningCount} ${warningLabel} ${chalk.dim(`(${durationStr})`)}\n`
-        );
-        this.stream.write(chalk.dim("  Run 'fern check --strict' to treat warnings as errors\n"));
-        this.stream.write("\n");
-    }
-
-    private resolveViolationPaths(
-        violations: ValidationViolation[],
-        workspaceRoot: AbsoluteFilePath,
-        apiName: string,
-        apiSpecType: ApiSpecType
-    ): ApiChecker.ResolvedViolation[] {
+        violations: ValidationViolation[];
+        workspaceRoot: AbsoluteFilePath;
+        apiName: string;
+        apiSpecType: ApiSpecType;
+        apiDefinition: ApiDefinition;
+    }): ApiChecker.ResolvedViolation[] {
         return violations.map((violation) => {
-            const absolutePath = join(workspaceRoot, RelativeFilePath.of(violation.relativeFilepath));
-            const displayRelativeFilepath = relativize(this.context.cwd, absolutePath);
+            const message = apiSpecType === "fern" ? violation.message : this.formatOssMessage(violation);
             return {
                 ...violation,
-                displayRelativeFilepath,
+                message,
+                displayRelativeFilepath: this.resolveDisplayPath({
+                    workspaceRoot,
+                    apiDefinition,
+                    apiSpecType,
+                    violation
+                }),
                 apiSpecType,
-                apiName
+                apiName,
+
+                // We don't actually surface valuable line/column information yet, but
+                // this at least points to the correct file.
+                line: 1,
+                column: 1
             };
         });
     }
 
-    private displayViolations(violations: ApiChecker.ResolvedViolation[]): void {
-        if (violations.length === 0) {
-            return;
+    /**
+     * Format a violation message for non-Fern (OSS) specs.
+     *
+     * Prepends a human-readable node path so users can locate the endpoint,
+     * then strips synthetic file paths from the body of the message.
+     */
+    private formatOssMessage(violation: ValidationViolation): string {
+        const strippedMessage = this.stripSyntheticFilePaths(violation.message);
+        const nodePathPrefix = this.formatNodePath(violation.nodePath);
+        if (nodePathPrefix.length === 0) {
+            return strippedMessage;
         }
-
-        // Group violations by API.
-        const byApi = this.groupViolationsBy(violations, (v) => v.apiName);
-        const sortedApis = Array.from(byApi.keys()).sort();
-
-        // Only show API badges when there are multiple APIs.
-        const showApiBadge = sortedApis.length > 1;
-
-        for (const apiName of sortedApis) {
-            const apiViolations = byApi.get(apiName);
-            if (apiViolations == null || apiViolations.length === 0) {
-                continue;
-            }
-
-            if (showApiBadge) {
-                this.stream.write(`${" ".repeat(INDENT.FILE_PATH)}${chalk.bold(`[${apiName}]`)}\n`);
-            }
-
-            // Group violations by file, then by location within file.
-            const byFile = this.groupViolationsBy(apiViolations, (v) => v.displayRelativeFilepath);
-            const sortedFiles = Array.from(byFile.keys()).sort();
-            const baseIndent = showApiBadge ? INDENT.FILE_PATH_NESTED : INDENT.FILE_PATH;
-
-            for (const filePath of sortedFiles) {
-                const fileViolations = byFile.get(filePath);
-                if (fileViolations == null || fileViolations.length === 0) {
-                    continue;
-                }
-
-                // Only display the file header for Fern definitions where the path
-                // corresponds to a real file on disk.
-                const firstFileViolation = fileViolations[0];
-                if (firstFileViolation != null && firstFileViolation.apiSpecType === "fern") {
-                    this.stream.write(`${" ".repeat(baseIndent)}${chalk.underline(filePath)}\n`);
-                }
-
-                // Group by location within the file.
-                const byLocation = this.groupViolationsBy(fileViolations, (v) => this.getLocationKey(v.nodePath));
-                const sortedLocations = Array.from(byLocation.keys()).sort();
-
-                for (const locationKey of sortedLocations) {
-                    const locationViolations = byLocation.get(locationKey);
-                    if (locationViolations == null || locationViolations.length === 0) {
-                        continue;
-                    }
-
-                    const firstViolation = locationViolations[0];
-                    if (firstViolation != null && firstViolation.nodePath.length > 0) {
-                        const locationPath = this.formatNodePath(firstViolation.nodePath);
-                        this.stream.write(`${" ".repeat(baseIndent + INDENT.LOCATION)}${chalk.dim(locationPath)}\n`);
-                    }
-
-                    for (const violation of locationViolations) {
-                        const { icon, colorFn } = this.getSeverityStyle(violation.severity);
-                        const message =
-                            violation.apiSpecType === "fern"
-                                ? violation.message
-                                : this.stripSyntheticFilePaths(violation.message);
-                        const formatted = formatMessage({
-                            message,
-                            colorFn,
-                            icon,
-                            indent: baseIndent + INDENT.VIOLATION,
-                            continuationIndent: 2
-                        });
-                        this.stream.write(`${formatted}\n`);
-                    }
-                }
-            }
-
-            this.stream.write("\n");
-        }
+        return `${nodePathPrefix} - ${strippedMessage}`;
     }
 
-    private groupViolationsBy<K extends string>(
-        violations: ApiChecker.ResolvedViolation[],
-        keyFn: (v: ApiChecker.ResolvedViolation) => K
-    ): Map<K, ApiChecker.ResolvedViolation[]> {
-        const grouped = new Map<K, ApiChecker.ResolvedViolation[]>();
-        for (const violation of violations) {
-            const key = keyFn(violation);
-            const existing = grouped.get(key) ?? [];
-            existing.push(violation);
-            grouped.set(key, existing);
-        }
-        return grouped;
-    }
-
-    private getLocationKey(nodePath: NodePath): string {
-        return nodePath
-            .map((item) => {
-                if (typeof item === "string") {
-                    return item;
-                }
-                return item.arrayIndex != null ? `${item.key}[${item.arrayIndex}]` : item.key;
-            })
-            .join(".");
-    }
-
-    private formatNodePath(nodePath: NodePath): string {
+    /**
+     * Formats a NodePath into a readable string like "endpoints -> getUser".
+     *
+     * Skips the leading "service" segment since it's implicit.
+     */
+    private formatNodePath(nodePath: ValidationViolation["nodePath"]): string {
         const parts: string[] = [];
         for (const item of nodePath) {
             if (typeof item === "string") {
                 parts.push(item);
             } else {
-                const indexSuffix = item.arrayIndex != null ? `[${item.arrayIndex}]` : "";
-                parts.push(`${item.key}${indexSuffix}`);
+                parts.push(item.key);
             }
         }
-        return parts.join(" > ");
+        // Drop the leading "service" — it's noise for OSS specs.
+        if (parts[0] === "service") {
+            parts.shift();
+        }
+        return parts.join(" -> ");
     }
 
-    private getSeverityStyle(severity: ValidationViolation["severity"]): {
-        icon: string;
-        colorFn: (text: string) => string;
-    } {
-        switch (severity) {
-            case "fatal":
-            case "error":
-                return { icon: Icons.error, colorFn: Colors.error };
-            case "warning":
-                return { icon: Icons.warning, colorFn: Colors.warning };
-            default:
-                assertNever(severity);
+    private resolveDisplayPath({
+        workspaceRoot,
+        apiDefinition,
+        apiSpecType,
+        violation
+    }: {
+        workspaceRoot: AbsoluteFilePath;
+        apiDefinition: ApiDefinition;
+        apiSpecType: ApiSpecType;
+        violation: ValidationViolation;
+    }): string {
+        if (apiSpecType === "fern") {
+            const absolutePath = join(workspaceRoot, RelativeFilePath.of(violation.relativeFilepath));
+            return relativize(this.context.cwd, absolutePath);
         }
+        return this.resolveOssDisplayPath(apiDefinition, violation);
+    }
+
+    private resolveOssDisplayPath(apiDefinition: ApiDefinition, violation: ValidationViolation): string {
+        const ossSpecs = apiDefinition.specs.filter(
+            (s): s is OpenApiSpec | AsyncApiSpec => isOpenApiSpec(s) || isAsyncApiSpec(s)
+        );
+        if (ossSpecs.length === 0) {
+            return violation.relativeFilepath;
+        }
+        // For multi-spec with namespaces, try matching by namespace.
+        if (ossSpecs.length > 1) {
+            for (const spec of ossSpecs) {
+                const namespace = isOpenApiSpec(spec) ? spec.namespace : spec.namespace;
+                if (namespace != null && violation.relativeFilepath.startsWith(namespace)) {
+                    const filePath = isOpenApiSpec(spec) ? spec.openapi : spec.asyncapi;
+                    return relativize(this.context.cwd, filePath);
+                }
+            }
+        }
+        // Default to first OSS spec.
+        const firstSpec = ossSpecs[0];
+        if (firstSpec == null) {
+            return violation.relativeFilepath;
+        }
+        const filePath = isOpenApiSpec(firstSpec) ? firstSpec.openapi : firstSpec.asyncapi;
+        return relativize(this.context.cwd, filePath);
     }
 
     private deduplicateViolations(violations: ApiChecker.ResolvedViolation[]): ApiChecker.ResolvedViolation[] {
@@ -415,16 +307,5 @@ export class ApiChecker {
         }
 
         return { errorCount, warningCount };
-    }
-
-    private formatDuration(ms: number): string {
-        if (ms < 1000) {
-            return `${Math.round(ms)}ms`;
-        }
-        return `${(ms / 1000).toFixed(1)}s`;
-    }
-
-    private maybePluralApis(apis: string[]): string {
-        return apis.length === 1 ? "API" : "APIs";
     }
 }

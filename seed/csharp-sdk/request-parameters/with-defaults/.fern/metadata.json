@@ -7,5 +7,6 @@
     "experimental-explicit-nullable-optional": true,
     "use-undiscriminated-unions": true
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

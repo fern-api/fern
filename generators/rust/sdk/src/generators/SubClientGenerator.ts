@@ -44,17 +44,37 @@ export class SubClientGenerator {
     // =============================================================================
 
     public generate(): RustFile | null {
-        const hasSubClients = this.hasSubClients();
         const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
 
-        // If this subpackage has subclients and is in a nested directory,
-        // we'll generate a unified mod.rs instead of a separate client file
-        if (hasSubClients && fernFilepathDir) {
+        // If this subpackage has any children at all and is in a nested directory,
+        // we'll generate a unified mod.rs instead of a separate client file.
+        // We check ALL children (not just service-having ones) because any child
+        // creates a subdirectory via generateNestedModFiles. If the client filename
+        // matches a child directory name, Rust's module resolution finds both
+        // file.rs and file/mod.rs, causing an ambiguity error.
+        const hasAnyChildren = this.subpackage.subpackages.length > 0;
+        if (hasAnyChildren && fernFilepathDir) {
             return null; // Skip separate client file generation
         }
 
         // Generate regular client file for subpackages without subclients
         const filename = this.context.getUniqueFilenameForSubpackage(this.subpackage);
+
+        // Check if this standalone file would collide with a directory created by
+        // another subpackage. This happens when multiple subpackages map to the same
+        // path (e.g., from HTTP + AsyncAPI sources) and one has children that create
+        // a subdirectory matching this file's module name. In Rust, both `X.rs` and
+        // `X/mod.rs` resolve to module `X`, causing an ambiguity error.
+        const moduleName = filename.replace(".rs", "");
+        const parentDir = fernFilepathDir ?? "";
+        const potentialConflictDir = parentDir ? `${parentDir}/${moduleName}` : moduleName;
+        const wouldCollideWithDirectory = Object.values(this.context.ir.subpackages).some((otherSubpackage) => {
+            const otherDir = this.context.getDirectoryForFernFilepath(otherSubpackage.fernFilepath);
+            return otherDir === potentialConflictDir || (otherDir != null && otherDir.startsWith(potentialConflictDir + "/"));
+        });
+        if (wouldCollideWithDirectory) {
+            return null; // Skip standalone file; another subpackage creates a directory with the same module name
+        }
         const endpoints = this.service?.endpoints || [];
 
         const rustClient = rust.client({
@@ -76,6 +96,27 @@ export class SubClientGenerator {
             directory: RelativeFilePath.of(directory),
             fileContents: module.toString()
         });
+    }
+
+    /**
+     * Returns the raw client code (struct + impl with all endpoint methods) and imports
+     * for embedding in a unified mod.rs file. Used by RootClientGenerator when this
+     * subpackage's client code needs to be inlined alongside submodule declarations.
+     */
+    public generateRawClientContent(): { rawDeclarations: string[]; imports: UseStatement[] } {
+        const endpoints = this.service?.endpoints || [];
+
+        const rustClient = rust.client({
+            name: this.subClientName,
+            fields: this.generateFields(),
+            constructors: [this.generateConstructor()],
+            methods: this.convertEndpointsToHttpMethods(endpoints)
+        });
+
+        return {
+            rawDeclarations: [rustClient.toString()],
+            imports: this.generateImports()
+        };
     }
 
     public generateModFile(): RustFile | null {
@@ -946,8 +987,9 @@ export class SubClientGenerator {
             if (part.pathParameter) {
                 const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
                 if (pathParam) {
+                    const paramName = this.context.escapeRustKeyword(pathParam.name.snakeCase.safeName);
                     params.push({
-                        name: pathParam.name.snakeCase.safeName,
+                        name: paramName,
                         type: generateRustTypeForTypeReference(pathParam.valueType, this.context),
                         isRef: this.shouldPassByReference(pathParam.valueType),
                         optional: false
@@ -1394,9 +1436,10 @@ export class SubClientGenerator {
                 const pathParam = endpoint.allPathParameters.find((p) => p.name.originalName === part.pathParameter);
                 if (pathParam) {
                     path += "{}";
+                    const escapedName = this.context.escapeRustKeyword(pathParam.name.snakeCase.safeName);
                     const paramName = this.getPathParameterExpression(
                         pathParam.valueType,
-                        pathParam.name.snakeCase.safeName
+                        escapedName
                     );
                     pathParams.push(paramName);
                 }

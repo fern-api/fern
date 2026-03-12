@@ -1,15 +1,15 @@
 import chalk from "chalk";
 import type { Argv } from "yargs";
 import { ApiChecker } from "../../api/checker/ApiChecker.js";
-import { FernYmlSchemaLoader } from "../../config/fern-yml/FernYmlSchemaLoader.js";
 import type { Context } from "../../context/Context.js";
 import type { GlobalArgs } from "../../context/GlobalArgs.js";
+import { DocsChecker } from "../../docs/checker/DocsChecker.js";
 import { CliError } from "../../errors/CliError.js";
 import { SdkChecker } from "../../sdk/checker/SdkChecker.js";
 import { Icons } from "../../ui/format.js";
 import type { Workspace } from "../../workspace/Workspace.js";
-import { WorkspaceLoader } from "../../workspace/WorkspaceLoader.js";
 import { command } from "../_internal/command.js";
+import { type JsonOutput, toJsonViolation } from "../_internal/toJsonViolation.js";
 
 export declare namespace CheckCommand {
     export interface Args extends GlobalArgs {
@@ -17,25 +17,41 @@ export declare namespace CheckCommand {
         api?: string;
         /** Treat warnings as errors */
         strict: boolean;
+        /** Output results as JSON to stdout */
+        json: boolean;
     }
 }
 
 export class CheckCommand {
     public async handle(context: Context, args: CheckCommand.Args): Promise<void> {
-        const schemaLoader = new FernYmlSchemaLoader({ cwd: context.cwd });
-        const fernYml = await schemaLoader.loadOrThrow();
-
-        context.telemetry.tag({ org: fernYml.data.org });
-
-        const loader = new WorkspaceLoader({ cwd: context.cwd, logger: context.stderr });
-        const workspace = await loader.loadOrThrow({ fernYml });
+        const workspace = await context.loadWorkspaceOrThrow();
 
         this.validateArgs(args, workspace);
 
-        const { totalErrors, totalWarnings } = await this.runChecks({ context, workspace, fernYml });
+        const { apiCheckResult, sdkCheckResult, docsCheckResult } = await this.runChecks({
+            context,
+            workspace,
+            args
+        });
+
+        const totalErrors =
+            (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) +
+            sdkCheckResult.errorCount +
+            docsCheckResult.errorCount;
+        const totalWarnings = apiCheckResult.warningCount + sdkCheckResult.warningCount + docsCheckResult.warningCount;
+        const hasErrors = totalErrors > 0 || (args.strict && totalWarnings > 0);
+
+        if (args.json) {
+            const response = this.buildJsonResponse({ apiCheckResult, sdkCheckResult, docsCheckResult, hasErrors });
+            context.stdout.info(JSON.stringify(response, null, 2));
+            if (hasErrors) {
+                throw CliError.exit();
+            }
+            return;
+        }
 
         // Fail if there are errors, or if strict mode and there are warnings.
-        if (totalErrors > 0 || (args.strict && totalWarnings > 0)) {
+        if (hasErrors) {
             throw CliError.exit();
         }
 
@@ -51,27 +67,89 @@ export class CheckCommand {
     private async runChecks({
         context,
         workspace,
-        fernYml
+        args
     }: {
         context: Context;
         workspace: Workspace;
-        fernYml: FernYmlSchemaLoader.Success;
-    }): Promise<{ totalErrors: number; totalWarnings: number }> {
+        args: CheckCommand.Args;
+    }): Promise<{
+        apiCheckResult: ApiChecker.Result;
+        sdkCheckResult: SdkChecker.Result;
+        docsCheckResult: DocsChecker.Result;
+    }> {
         const apiChecker = new ApiChecker({
             context,
             cliVersion: workspace.cliVersion
         });
-        const apiCheckResult = await apiChecker.check({
-            workspace
-        });
+        const apiCheckResult = await apiChecker.check({ workspace, strict: args.strict });
 
         const sdkChecker = new SdkChecker({ context });
-        const sdkCheckResult = await sdkChecker.check({ workspace, fernYml });
+        const sdkCheckResult = await sdkChecker.check({ workspace });
+
+        const docsChecker = new DocsChecker({ context });
+        const docsCheckResult = await docsChecker.check({ workspace, strict: args.strict });
+
+        if (!args.json) {
+            const violations: (
+                | ApiChecker.ResolvedViolation
+                | SdkChecker.ResolvedViolation
+                | DocsChecker.ResolvedViolation
+            )[] = [...apiCheckResult.violations, ...sdkCheckResult.violations, ...docsCheckResult.violations];
+
+            if (violations.length > 0) {
+                this.displayViolations(violations);
+            }
+        }
+
+        return { apiCheckResult, sdkCheckResult, docsCheckResult };
+    }
+
+    private displayViolations(
+        violations: Array<{
+            displayRelativeFilepath: string;
+            line: number;
+            column: number;
+            message: string;
+            severity: string;
+        }>
+    ): void {
+        for (const v of violations) {
+            const color = v.severity === "warning" ? chalk.yellow : chalk.red;
+            process.stderr.write(`${color(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`);
+        }
+    }
+
+    private buildJsonResponse({
+        apiCheckResult,
+        sdkCheckResult,
+        docsCheckResult,
+        hasErrors
+    }: {
+        apiCheckResult: ApiChecker.Result;
+        sdkCheckResult: SdkChecker.Result;
+        docsCheckResult: DocsChecker.Result;
+        hasErrors: boolean;
+    }): JsonOutput.Response {
+        const results: JsonOutput.Results = {};
+
+        const showApiNames = new Set(apiCheckResult.violations.map((v) => v.apiName)).size > 1;
+        if (apiCheckResult.violations.length > 0) {
+            results.apis = apiCheckResult.violations.map((v) =>
+                toJsonViolation(v, showApiNames ? { api: v.apiName } : undefined)
+            );
+        }
+
+        if (sdkCheckResult.violations.length > 0) {
+            results.sdks = sdkCheckResult.violations.map((v) => toJsonViolation(v));
+        }
+
+        if (docsCheckResult.violations.length > 0) {
+            results.docs = docsCheckResult.violations.map((v) => toJsonViolation(v));
+        }
 
         return {
-            totalErrors:
-                (apiCheckResult.invalidApis.size > 0 ? apiCheckResult.errorCount : 0) + sdkCheckResult.errorCount,
-            totalWarnings: apiCheckResult.warningCount + sdkCheckResult.warningCount
+            success: !hasErrors,
+            results
         };
     }
 
@@ -102,6 +180,11 @@ export function addCheckCommand(cli: Argv<GlobalArgs>): void {
                 .option("strict", {
                     type: "boolean",
                     description: "Treat warnings as errors",
+                    default: false
+                })
+                .option("json", {
+                    type: "boolean",
+                    description: "Output results as JSON to stdout",
                     default: false
                 })
     );

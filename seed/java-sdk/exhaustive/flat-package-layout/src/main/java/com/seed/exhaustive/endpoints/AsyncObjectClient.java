@@ -8,6 +8,7 @@ import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.types.types.NestedObjectWithOptionalField;
 import com.seed.exhaustive.types.types.NestedObjectWithRequiredField;
 import com.seed.exhaustive.types.types.ObjectWithDatetimeLikeString;
+import com.seed.exhaustive.types.types.ObjectWithDocumentedUnknownType;
 import com.seed.exhaustive.types.types.ObjectWithMapOfMap;
 import com.seed.exhaustive.types.types.ObjectWithOptionalField;
 import com.seed.exhaustive.types.types.ObjectWithRequiredField;
@@ -128,6 +129,18 @@ public class AsyncObjectClient {
             ObjectWithUnknownField request, RequestOptions requestOptions) {
         return this.rawClient
                 .getAndReturnWithUnknownField(request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ObjectWithDocumentedUnknownType> getAndReturnWithDocumentedUnknownType(
+            ObjectWithDocumentedUnknownType request) {
+        return this.rawClient.getAndReturnWithDocumentedUnknownType(request).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<ObjectWithDocumentedUnknownType> getAndReturnWithDocumentedUnknownType(
+            ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getAndReturnWithDocumentedUnknownType(request, requestOptions)
                 .thenApply(response -> response.body());
     }
 

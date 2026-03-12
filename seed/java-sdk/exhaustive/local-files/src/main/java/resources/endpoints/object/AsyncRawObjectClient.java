@@ -15,6 +15,7 @@ import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.NestedObjectWithRequiredField;
 import com.fern.sdk.resources.types.object.types.ObjectWithDatetimeLikeString;
+import com.fern.sdk.resources.types.object.types.ObjectWithDocumentedUnknownType;
 import com.fern.sdk.resources.types.object.types.ObjectWithMapOfMap;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import com.fern.sdk.resources.types.object.types.ObjectWithRequiredField;
@@ -477,26 +478,16 @@ public class AsyncRawObjectClient {
                   return future;
                 }
 
-                /**
-                 * Tests that string fields containing datetime-like values are NOT reformatted.
-                 * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
-                 * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
-                 */
-                public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> getAndReturnWithDatetimeLikeString(
-                    ObjectWithDatetimeLikeString request) {
-                  return getAndReturnWithDatetimeLikeString(request,null);
+                public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDocumentedUnknownType>> getAndReturnWithDocumentedUnknownType(
+                    ObjectWithDocumentedUnknownType request) {
+                  return getAndReturnWithDocumentedUnknownType(request,null);
                 }
 
-                /**
-                 * Tests that string fields containing datetime-like values are NOT reformatted.
-                 * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
-                 * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
-                 */
-                public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> getAndReturnWithDatetimeLikeString(
-                    ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+                public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDocumentedUnknownType>> getAndReturnWithDocumentedUnknownType(
+                    ObjectWithDocumentedUnknownType request, RequestOptions requestOptions) {
                   HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                     .addPathSegments("object")
-                    .addPathSegments("get-and-return-with-datetime-like-string");if (requestOptions != null) {
+                    .addPathSegments("get-and-return-with-documented-unknown-type");if (requestOptions != null) {
                       requestOptions.getQueryParameters().forEach((_key, _value) -> {
                         httpUrl.addQueryParameter(_key, _value);
                       } );
@@ -519,14 +510,14 @@ public class AsyncRawObjectClient {
                     if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
                       client = clientOptions.httpClientWithTimeout(requestOptions);
                     }
-                    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> future = new CompletableFuture<>();
+                    CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDocumentedUnknownType>> future = new CompletableFuture<>();
                     client.newCall(okhttpRequest).enqueue(new Callback() {
                       @Override
                       public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                         try (ResponseBody responseBody = response.body()) {
                           String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                           if (response.isSuccessful()) {
-                            future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDatetimeLikeString.class), response));
+                            future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDocumentedUnknownType.class), response));
                             return;
                           }
                           Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
@@ -545,4 +536,73 @@ public class AsyncRawObjectClient {
                     });
                     return future;
                   }
-                }
+
+                  /**
+                   * Tests that string fields containing datetime-like values are NOT reformatted.
+                   * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+                   * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+                   */
+                  public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> getAndReturnWithDatetimeLikeString(
+                      ObjectWithDatetimeLikeString request) {
+                    return getAndReturnWithDatetimeLikeString(request,null);
+                  }
+
+                  /**
+                   * Tests that string fields containing datetime-like values are NOT reformatted.
+                   * The datetimeLikeString field should preserve its exact value &quot;2023-08-31T14:15:22Z&quot;
+                   * without being converted to &quot;2023-08-31T14:15:22.000Z&quot;.
+                   */
+                  public CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> getAndReturnWithDatetimeLikeString(
+                      ObjectWithDatetimeLikeString request, RequestOptions requestOptions) {
+                    HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
+                      .addPathSegments("object")
+                      .addPathSegments("get-and-return-with-datetime-like-string");if (requestOptions != null) {
+                        requestOptions.getQueryParameters().forEach((_key, _value) -> {
+                          httpUrl.addQueryParameter(_key, _value);
+                        } );
+                      }
+                      RequestBody body;
+                      try {
+                        body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                      }
+                      catch(JsonProcessingException e) {
+                        throw new SeedExhaustiveException("Failed to serialize request", e);
+                      }
+                      Request okhttpRequest = new Request.Builder()
+                        .url(httpUrl.build())
+                        .method("POST", body)
+                        .headers(Headers.of(clientOptions.headers(requestOptions)))
+                        .addHeader("Content-Type", "application/json")
+                        .addHeader("Accept", "application/json")
+                        .build();
+                      OkHttpClient client = clientOptions.httpClient();
+                      if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+                        client = clientOptions.httpClientWithTimeout(requestOptions);
+                      }
+                      CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithDatetimeLikeString>> future = new CompletableFuture<>();
+                      client.newCall(okhttpRequest).enqueue(new Callback() {
+                        @Override
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                          try (ResponseBody responseBody = response.body()) {
+                            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                            if (response.isSuccessful()) {
+                              future.complete(new SeedExhaustiveHttpResponse<>(ObjectMappers.JSON_MAPPER.readValue(responseBodyString, ObjectWithDatetimeLikeString.class), response));
+                              return;
+                            }
+                            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+                            future.completeExceptionally(new SeedExhaustiveApiException("Error with status code " + response.code(), response.code(), errorBody, response));
+                            return;
+                          }
+                          catch (IOException e) {
+                            future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                          }
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                          future.completeExceptionally(new SeedExhaustiveException("Network error executing HTTP request", e));
+                        }
+                      });
+                      return future;
+                    }
+                  }

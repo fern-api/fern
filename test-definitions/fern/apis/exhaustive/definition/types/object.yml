@@ -61,6 +61,17 @@ types:
     properties:
       unknown: unknown
 
+  ObjectWithDocumentedUnknownType:
+    docs: |
+      Tests that unknown types are able to preserve their type names.
+    properties:
+      documentedUnknownType: DocumentedUnknownType
+
+  DocumentedUnknownType:
+    docs: |
+      Tests that unknown types are able to preserve their docstrings.
+    type: unknown
+
 errors:
   ObjectWithOptionalFieldError:
     status-code: 400

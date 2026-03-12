@@ -94,7 +94,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
@@ -183,7 +183,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest {
                 cursor: Some("cursor".to_string()),
             },
             None,
@@ -242,7 +242,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
+            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
             None,
         )
         .await;
@@ -302,7 +302,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
@@ -391,7 +391,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_double_offset_pagination(
-            &ListWithDoubleOffsetPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithDoubleOffsetPaginationQueryRequest {
                 page: Some(1.1),
                 per_page: Some(1.1),
                 order: Some(Order::Asc),
@@ -480,7 +480,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
+            &InlineUsersInlineUsersListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
             None,
         )
         .await;
@@ -540,7 +540,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
@@ -621,7 +621,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
@@ -702,7 +702,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_extended_results(
-            &ListWithExtendedResultsQueryRequest {
+            &InlineUsersInlineUsersListWithExtendedResultsQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             },
             None,
@@ -761,7 +761,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_extended_results(
-            &ListWithExtendedResultsQueryRequest {
+            &InlineUsersInlineUsersListWithExtendedResultsQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             },
             None,
@@ -820,7 +820,7 @@ async fn main() {
         .inline_users
         .inline_users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest {
+            &InlineUsersInlineUsersListWithCursorPaginationQueryRequest {
                 starting_after: Some("starting_after".to_string()),
                 page: None,
                 per_page: None,
@@ -884,7 +884,10 @@ async fn main() {
     client
         .inline_users
         .inline_users
-        .list_with_global_config(&ListWithGlobalConfigQueryRequest { offset: Some(1) }, None)
+        .list_with_global_config(
+            &InlineUsersInlineUsersListWithGlobalConfigQueryRequest { offset: Some(1) },
+            None,
+        )
         .await;
 }
 ```
@@ -939,7 +942,7 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest2 {
+            &UsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
@@ -1027,7 +1030,7 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest2 {
+            &UsersListWithMixedTypeCursorPaginationQueryRequest {
                 cursor: Some("cursor".to_string()),
             },
             None,
@@ -1085,7 +1088,7 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest2 { cursor: None },
+            &UsersListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
             None,
         )
         .await;
@@ -1230,7 +1233,7 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest2 {
+            &UsersListWithCursorPaginationQueryRequest {
                 page: Some(1),
                 per_page: Some(1),
                 order: Some(Order::Asc),
@@ -1318,7 +1321,7 @@ async fn main() {
     client
         .users
         .list_with_double_offset_pagination(
-            &ListWithDoubleOffsetPaginationQueryRequest2 {
+            &UsersListWithDoubleOffsetPaginationQueryRequest {
                 page: Some(1.1),
                 per_page: Some(1.1),
                 order: Some(Order::Asc),
@@ -1406,7 +1409,7 @@ async fn main() {
     client
         .users
         .list_with_mixed_type_cursor_pagination(
-            &ListWithMixedTypeCursorPaginationQueryRequest2 { cursor: None },
+            &UsersListWithMixedTypeCursorPaginationQueryRequest { cursor: None },
             None,
         )
         .await;
@@ -1465,7 +1468,7 @@ async fn main() {
     client
         .users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest2 {
+            &UsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
@@ -1545,7 +1548,7 @@ async fn main() {
     client
         .users
         .list_with_offset_step_pagination(
-            &ListWithOffsetStepPaginationQueryRequest2 {
+            &UsersListWithOffsetStepPaginationQueryRequest {
                 page: Some(1),
                 limit: Some(1),
                 order: Some(Order::Asc),
@@ -1625,7 +1628,7 @@ async fn main() {
     client
         .users
         .list_with_extended_results(
-            &ListWithExtendedResultsQueryRequest2 {
+            &UsersListWithExtendedResultsQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             },
             None,
@@ -1683,7 +1686,7 @@ async fn main() {
     client
         .users
         .list_with_extended_results(
-            &ListWithExtendedResultsQueryRequest2 {
+            &UsersListWithExtendedResultsQueryRequest {
                 cursor: Some(Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap()),
             },
             None,
@@ -1741,7 +1744,7 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest2 {
+            &UsersListWithCursorPaginationQueryRequest {
                 starting_after: Some("starting_after".to_string()),
                 page: None,
                 per_page: None,
@@ -1805,7 +1808,7 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest2 {
+            &UsersListWithCursorPaginationQueryRequest {
                 starting_after: Some("starting_after".to_string()),
                 page: None,
                 per_page: None,
@@ -1868,7 +1871,10 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_with_global_config(&ListWithGlobalConfigQueryRequest2 { offset: Some(1) }, None)
+        .list_with_global_config(
+            &UsersListWithGlobalConfigQueryRequest { offset: Some(1) },
+            None,
+        )
         .await;
 }
 ```

@@ -28,6 +28,7 @@
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
+    "test:e2e": "vitest --config vitest.e2e.config.ts --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
@@ -50,6 +51,7 @@
     "@fern-api/github": "workspace:*",
     "@fern-api/go-dynamic-snippets": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
+    "@fern-api/logger": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",

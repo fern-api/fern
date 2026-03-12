@@ -24,11 +24,131 @@ export interface AutoVersionResult {
      * The commit message describing the changes.
      */
     commitMessage: string;
+    /**
+     * User-facing changelog entry for CHANGELOG.md and GitHub Releases.
+     * Undefined for PATCH changes, present for MINOR/MAJOR.
+     */
+    changelogEntry?: string;
+}
+
+/**
+ * Counts the number of files changed in a git diff by scanning for "diff --git" headers.
+ * Uses indexOf-based scanning instead of regex to avoid O(n) regex overhead on large diffs.
+ */
+export function countFilesInDiff(diffContent: string): number {
+    const marker = "diff --git ";
+    let count = 0;
+    let pos = 0;
+    while (true) {
+        const idx = diffContent.indexOf(marker, pos);
+        if (idx === -1) {
+            break;
+        }
+        // Only count if the marker is at the start of a line
+        if (idx === 0 || diffContent[idx - 1] === "\n") {
+            count++;
+        }
+        pos = idx + marker.length;
+    }
+    return count;
+}
+
+/**
+ * Formats a character length as a human-readable KB string with one decimal place.
+ */
+export function formatSizeKB(charLength: number): string {
+    return (charLength / 1024).toFixed(1);
 }
 
 interface FileSection {
     lines: string[];
 }
+
+/**
+ * Glob-like patterns for files that should be completely excluded from the
+ * cleaned diff sent to AI analysis. These files add noise (lock files,
+ * generated docs, test fixtures, CI config) without carrying meaningful
+ * API-surface signal for semantic versioning.
+ *
+ * Each entry is a regex tested against the file path. Most use the /i flag
+ * for case-insensitive matching; /Test\.java$/ is intentionally
+ * case-sensitive to match Java's PascalCase naming convention.
+ */
+const EXCLUDED_FILE_PATTERNS: RegExp[] = [
+    // Documentation / generated reference
+    /(?:^|\/)reference\.md$/i,
+    /(?:^|\/)changelog(?:\.[^/]*)?$/i,
+    /(?:^|\/)readme(?:\.[^/]*)?$/i,
+    /(?:^|\/)license(?:\.[^/]*)?$/i,
+
+    // Lock files (dependency resolution, zero semantic value)
+    /(?:^|\/)pnpm-lock\.yaml$/i,
+    /(?:^|\/)yarn\.lock$/i,
+    /(?:^|\/)package-lock\.json$/i,
+    /(?:^|\/)poetry\.lock$/i,
+    /(?:^|\/)gemfile\.lock$/i,
+    /(?:^|\/)go\.sum$/i,
+    /(?:^|\/)cargo\.lock$/i,
+    /(?:^|\/)composer\.lock$/i,
+    /\.lock$/i, // catch-all for any other lockfiles
+
+    // Test files (by naming convention only — directory patterns like tests/ and
+    // test/ are intentionally omitted because a customer's API domain could use
+    // those names, e.g. a QA platform SDK with a "tests" resource)
+    /\.test\.ts$/i,
+    /\.test\.js$/i,
+    /\.test\.py$/i,
+    /\.spec\.ts$/i,
+    /\.spec\.js$/i,
+    /_test\.go$/i,
+    /_test\.py$/i,
+    /Test\.java$/,
+    /(?:^|\/)__tests__\//i, // __tests__/ is unambiguously a test directory
+    /(?:^|\/)wiremock\//i, // Fern-generated WireMock test fixtures
+
+    // Snapshot files
+    /(?:^|\/)__snapshots__\//i,
+    /\.snap$/i,
+
+    // CI / editor config (no API surface relevance)
+    /(?:^|\/)\.github\//i,
+    /(?:^|\/)\.circleci\//i,
+    /(?:^|\/)\.editorconfig$/i,
+    /(?:^|\/)\.prettierrc/i,
+    /(?:^|\/)biome\.json$/i,
+
+    // Linting / static analysis config
+    /(?:^|\/)\.eslintrc/i,
+    /(?:^|\/)eslint\.config\./i,
+    /(?:^|\/)\.rubocop/i, // Ruby linter
+    /(?:^|\/)phpstan\.neon$/i, // PHP static analysis
+    /(?:^|\/)phpunit\.xml$/i, // PHP test runner config
+    /(?:^|\/)\.pylintrc$/i, // Python linter
+    /(?:^|\/)pylintrc$/i,
+    /(?:^|\/)\.flake8$/i, // Python linter
+    /(?:^|\/)\.mypy\.ini$/i, // Python type checker
+    /(?:^|\/)mypy\.ini$/i,
+    /(?:^|\/)\.swiftlint\.yml$/i, // Swift linter
+    /(?:^|\/)\.scalafmt\.conf$/i, // Scala formatter
+    /(?:^|\/)rustfmt\.toml$/i, // Rust formatter
+    /(?:^|\/)\.stylelintrc/i, // CSS linter
+
+    // Build / devtool config (no API surface)
+    /(?:^|\/)tsconfig[^/]*\.json$/i, // TypeScript compiler config
+    /(?:^|\/)vitest\.config\./i, // Test runner config
+    /(?:^|\/)jest\.config\./i, // Test runner config
+    /(?:^|\/)pnpm-workspace\.yaml$/i, // Workspace config
+    /(?:^|\/)\.npmrc$/i, // npm config
+    /(?:^|\/)\.yarnrc/i, // Yarn config
+    /(?:^|\/)tox\.ini$/i, // Python test runner
+    /(?:^|\/)Makefile$/i, // Build automation
+    /(?:^|\/)Rakefile$/i, // Ruby build tasks
+    /(?:^|\/)contributing(?:\.[^/]*)?$/i, // Contributor docs
+    /(?:^|\/)snippet\.json$/i, // Fern-generated snippet metadata
+    /(?:^|\/)\.gitignore$/i,
+    /(?:^|\/)\.gitattributes$/i,
+    /\.slnx$/i // .NET solution files
+];
 
 /**
  * Service for handling automatic semantic versioning operations including
@@ -172,6 +292,13 @@ export class AutoVersioningService {
 
         const cleanedSections: FileSection[] = [];
         for (const section of fileSections) {
+            // Skip entire file sections whose path matches an exclusion pattern
+            const filePath = this.extractFilePathFromSection(section);
+            if (filePath != null && this.shouldExcludeFile(filePath)) {
+                this.logger.debug(`Excluding file from diff analysis: ${filePath}`);
+                continue;
+            }
+
             const cleaned = this.cleanFileSection(section, mappedMagicVersion);
             if (cleaned != undefined) {
                 cleanedSections.push(cleaned);
@@ -186,9 +313,176 @@ export class AutoVersioningService {
         }
 
         this.logger.debug(
-            `Cleaned diff: removed ${diffContent.length - result.join("\n").length} bytes containing version changes`
+            `Cleaned diff: removed ${diffContent.length - result.join("\n").length} chars containing version changes`
         );
         return result.join("\n");
+    }
+
+    /**
+     * Known patterns for API-surface signatures (function/method/class declarations).
+     * Used by truncateDiff to prioritise sections with signature-like changes.
+     *
+     * Covers all languages Fern generates SDKs for:
+     * - TypeScript/JavaScript: export function, export class, export interface, export type
+     * - Java/C#: public class, public interface, public void, protected, internal
+     * - Python: def method_name, class ClassName
+     * - Go: func ExportedName (uppercase = exported)
+     * - Ruby: def method_name, class ClassName, module ModuleName
+     * - Swift: public func, public class, open class
+     * - Rust: pub fn, pub struct, pub enum, pub trait
+     * - PHP: public function, class ClassName
+     */
+    private static readonly SIGNATURE_PATTERNS: RegExp[] = [
+        // TypeScript / JavaScript
+        /^[+-]\s*export\s+/,
+        // Java / C# / Swift / PHP — access modifiers
+        /^[+-]\s*public\s+/,
+        /^[+-]\s*protected\s+/,
+        /^[+-]\s*internal\s+/,
+        /^[+-]\s*open\s+(class|func)\s+/,
+        // Python / Ruby
+        /^[+-]\s*def\s+/,
+        /^[+-]\s*class\s+[A-Z]/,
+        /^[+-]\s*module\s+[A-Z]/,
+        // Go — exported identifiers start with uppercase
+        /^[+-]\s*func\s+[A-Z]/,
+        /^[+-]\s*func\s+\([^)]+\)\s+[A-Z]/,
+        /^[+-]\s*type\s+[A-Z]/,
+        // Rust
+        /^[+-]\s*pub\s+(fn|struct|enum|trait|type|mod)\s+/,
+        // PHP
+        /^[+-]\s*function\s+/
+    ];
+
+    /**
+     * Splits a cleaned diff into chunks that each fit within a byte budget.
+     * File sections are ranked by semantic priority (same 5-tier system as
+     * classifySection) so the first chunk always contains the highest-signal
+     * sections. Each chunk contains only complete file sections — no partial
+     * files.
+     *
+     * If a single file section exceeds `maxBytesPerChunk`, it is placed alone
+     * in its own chunk so no information is lost.
+     *
+     * @param diff The cleaned diff string (output of cleanDiffForAI)
+     * @param maxBytesPerChunk Maximum byte size for each chunk
+     * @return Array of diff chunk strings (at least one element for non-empty diffs)
+     */
+    public chunkDiff(diff: string, maxBytesPerChunk: number): string[] {
+        const lines = diff.split("\n");
+        const fileSections = this.parseFileSections(lines);
+
+        if (fileSections.length === 0) {
+            return [diff];
+        }
+
+        // Classify and rank each file section (highest priority first)
+        const ranked = fileSections
+            .map((section) => ({
+                text: section.lines.join("\n"),
+                priority: this.classifySection(section)
+            }))
+            .sort((a, b) => a.priority - b.priority);
+
+        const chunks: string[] = [];
+        let currentChunkTexts: string[] = [];
+        let currentChunkBytes = 0;
+
+        for (const entry of ranked) {
+            const sectionBytes = Buffer.byteLength(entry.text, "utf-8");
+            const newlineBytes = currentChunkTexts.length > 0 ? 1 : 0; // Account for \n separator
+
+            // If this section alone exceeds the budget, give it its own chunk
+            if (sectionBytes > maxBytesPerChunk) {
+                // Flush any accumulated sections first
+                if (currentChunkTexts.length > 0) {
+                    chunks.push(currentChunkTexts.join("\n"));
+                    currentChunkTexts = [];
+                }
+                currentChunkBytes = 0;
+                chunks.push(entry.text);
+                continue;
+            }
+
+            // If adding this section would exceed the budget, start a new chunk
+            if (currentChunkBytes + sectionBytes + newlineBytes > maxBytesPerChunk && currentChunkTexts.length > 0) {
+                chunks.push(currentChunkTexts.join("\n"));
+                currentChunkTexts = [];
+                currentChunkBytes = 0;
+            }
+
+            currentChunkTexts.push(entry.text);
+            currentChunkBytes += sectionBytes + (currentChunkTexts.length > 1 ? 1 : 0);
+        }
+
+        // Flush remaining sections
+        if (currentChunkTexts.length > 0) {
+            chunks.push(currentChunkTexts.join("\n"));
+        }
+
+        return chunks;
+    }
+
+    /**
+     * Classifies a file section into a priority bucket for truncation ranking.
+     * Lower number = higher priority (included first).
+     *
+     * 1 = deletion-only, 2 = mixed with signatures, 3 = mixed,
+     * 4 = addition-only, 5 = context-only
+     */
+    private static isDiffHeader(line: string): boolean {
+        return (
+            line.startsWith("--- a/") ||
+            line.startsWith("--- /dev/null") ||
+            line.startsWith("+++ b/") ||
+            line.startsWith("+++ /dev/null")
+        );
+    }
+
+    private classifySection(section: FileSection): number {
+        let hasAdditions = false;
+        let hasDeletions = false;
+        let hasSignature = false;
+
+        for (const line of section.lines) {
+            const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
+            const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
+
+            if (isAddition) {
+                hasAdditions = true;
+            }
+            if (isDeletion) {
+                hasDeletions = true;
+            }
+
+            if (isAddition || isDeletion) {
+                for (const pattern of AutoVersioningService.SIGNATURE_PATTERNS) {
+                    if (pattern.test(line)) {
+                        hasSignature = true;
+                        break;
+                    }
+                }
+            }
+
+            // Early exit: once we know all three flags, the classification is determined
+            if (hasAdditions && hasDeletions && hasSignature) {
+                break;
+            }
+        }
+
+        if (hasDeletions && !hasAdditions) {
+            return 1; // deletion-only
+        }
+        if (hasDeletions && hasAdditions && hasSignature) {
+            return 2; // mixed with signatures
+        }
+        if (hasDeletions && hasAdditions) {
+            return 3; // mixed
+        }
+        if (hasAdditions) {
+            return 4; // addition-only
+        }
+        return 5; // context-only
     }
 
     /**
@@ -242,8 +536,8 @@ export class AutoVersioningService {
 
         let hasChanges = false;
         for (const line of processedContent) {
-            const isAddition = line.startsWith("+") && !line.startsWith("+++");
-            const isDeletion = line.startsWith("-") && !line.startsWith("---");
+            const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
+            const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
             if (isAddition || isDeletion) {
                 hasChanges = true;
                 break;
@@ -310,7 +604,7 @@ export class AutoVersioningService {
     }
 
     private isDeletionLine(line: string): boolean {
-        return line.startsWith("-") && !line.startsWith("---");
+        return line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
     }
 
     private findMatchingAdditionLine(lines: string[], startIndex: number, mappedMagicVersion: string): number {
@@ -339,7 +633,7 @@ export class AutoVersioningService {
     }
 
     private isAdditionLine(line: string): boolean {
-        return line.startsWith("+") && !line.startsWith("+++");
+        return line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
     }
 
     private shouldStopSearching(line: string): boolean {
@@ -347,8 +641,7 @@ export class AutoVersioningService {
             line.startsWith("@@") ||
             line.startsWith("diff --git") ||
             line.startsWith("index ") ||
-            line.startsWith("---") ||
-            line.startsWith("+++")
+            AutoVersioningService.isDiffHeader(line)
         );
     }
 
@@ -444,6 +737,32 @@ export class AutoVersioningService {
      */
     private escapeForSed(str: string): string {
         return str.replace(/[/&]/g, "\\$&");
+    }
+
+    /**
+     * Extracts the file path from a diff file section.
+     * Parses the "diff --git a/path b/path" header line.
+     */
+    private extractFilePathFromSection(section: FileSection): string | undefined {
+        const firstLine = section.lines[0];
+        if (firstLine == null) {
+            return undefined;
+        }
+        // diff --git a/some/path b/some/path
+        // Also handles quoted paths: diff --git "a/path with spaces" "b/path with spaces"
+        const match = firstLine.match(/^diff --git "?a\/(.+?)"? "?b\/(.+?)"?$/);
+        if (match?.[2] != null) {
+            return match[2];
+        }
+        return undefined;
+    }
+
+    /**
+     * Checks whether a file path matches any of the exclusion patterns.
+     * Excluded files are noise for AI-based semantic version analysis.
+     */
+    private shouldExcludeFile(filePath: string): boolean {
+        return EXCLUDED_FILE_PATTERNS.some((pattern) => pattern.test(filePath));
     }
 
     /**

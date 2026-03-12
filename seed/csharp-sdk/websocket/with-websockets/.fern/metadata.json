@@ -3,8 +3,9 @@
   "generatorName": "fernapi/fern-csharp-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "experimental-readonly-constants": true,
+    "generate-literals": true,
     "experimental-enable-websockets": true
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

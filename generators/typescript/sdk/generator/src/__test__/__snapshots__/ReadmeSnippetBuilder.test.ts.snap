@@ -1,0 +1,121 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ReadmeSnippetBuilder > full snapshot > matches snapshot for comprehensive feature set 1`] = `
+{
+  "ABORTING_REQUESTS": [
+    "const controller = new AbortController();
+const response = await client.createUser(..., {
+    abortSignal: controller.signal
+});
+controller.abort(); // aborts the request
+",
+  ],
+  "ACCESS_RAW_RESPONSE_DATA": [
+    "const { data, rawResponse } = await client.createUser(...).withRawResponse();
+
+console.log(data);
+console.log(rawResponse.headers['X-My-Header']);
+",
+  ],
+  "ADDITIONAL_HEADERS": [
+    "import { MySDKClient } from "@acme/sdk";
+
+const client = new MySDKClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
+const response = await client.createUser(..., {
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+",
+  ],
+  "ADDITIONAL_QUERY_STRING_PARAMETERS": [
+    "const response = await client.createUser(..., {
+    queryParams: {
+        'customQueryParamKey': 'custom query param value'
+    }
+});
+",
+  ],
+  "AUTHENTICATION": false,
+  "BINARY_RESPONSE": [],
+  "EXCEPTION_HANDLING": [
+    "import { MySDKError } from "@acme/sdk";
+
+try {
+    await client.createUser(...);
+} catch (err) {
+    if (err instanceof MySDKError) {
+        console.log(err.statusCode);
+        console.log(err.message);
+        console.log(err.body);
+        console.log(err.rawResponse);
+    }
+}
+",
+  ],
+  "FILE_UPLOADS": [],
+  "LOGGING": [
+    "import { MySDKClient, logging } from "@acme/sdk";
+
+const client = new MySDKClient({
+    ...
+    logging: {
+        level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info
+        logger: new logging.ConsoleLogger(), // defaults to ConsoleLogger
+        silent: false, // defaults to true, set to false to enable logging
+    }
+});
+",
+  ],
+  "PAGINATION": [
+    "const users = await client.listUsers();",
+  ],
+  "REQUEST_AND_RESPONSE_TYPES": [
+    "import { AcmeSdk } from "@acme/sdk";
+
+const request: AcmeSdk.CreateUserRequest = {
+    ...
+};
+",
+  ],
+  "RETRIES": [
+    "const response = await client.createUser(..., {
+    maxRetries: 0 // override maxRetries at the request level
+});
+",
+  ],
+  "RUNTIME_COMPATIBILITY": [
+    "import { MySDKClient } from "@acme/sdk";
+
+const client = new MySDKClient({
+    ...
+    fetcher: // provide your implementation here
+});
+",
+  ],
+  "STREAMING_RESPONSE": [
+    "const stream = await client.streamEvents();",
+  ],
+  "SUBPACKAGE_EXPORTS": [
+    "import { UsersClient } from '@acme/sdk/users';
+
+const client = new UsersClient({...});
+",
+  ],
+  "TIMEOUTS": [
+    "const response = await client.createUser(..., {
+    timeoutInSeconds: 30 // override timeout to 30s
+});
+",
+  ],
+  "USAGE": [
+    "await client.createUser({name: "John"});",
+  ],
+}
+`;

@@ -276,6 +276,9 @@ fixtures:
     - customConfig:
         custom_transport: true
       outputFolder: custom-transport
+    - customConfig:
+        datetime_milliseconds: true
+      outputFolder: datetime-milliseconds
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -364,6 +367,11 @@ fixtures:
     - customConfig:
         should_generate_websocket_clients: true
       outputFolder: websocket-with_generated_clients
+    - customConfig:
+        should_generate_websocket_clients: true
+        pydantic_config:
+          skip_validation: true
+      outputFolder: websocket-with_generated_clients-skip_validation
   nullable:
     - outputFolder: no-custom-config
     - customConfig:

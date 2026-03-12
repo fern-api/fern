@@ -179,6 +179,19 @@ export declare class ObjectClient {
     getAndReturnWithUnknownField(request: SeedExhaustive.types.ObjectWithUnknownField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithUnknownField>;
     private __getAndReturnWithUnknownField;
     /**
+     * @param {SeedExhaustive.types.ObjectWithDocumentedUnknownType} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
+     *         documentedUnknownType: {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    getAndReturnWithDocumentedUnknownType(request: SeedExhaustive.types.ObjectWithDocumentedUnknownType, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithDocumentedUnknownType>;
+    private __getAndReturnWithDocumentedUnknownType;
+    /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".

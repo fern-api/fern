@@ -14,10 +14,12 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+__exportStar(require("./DocumentedUnknownType.js"), exports);
 __exportStar(require("./DoubleOptional.js"), exports);
 __exportStar(require("./NestedObjectWithOptionalField.js"), exports);
 __exportStar(require("./NestedObjectWithRequiredField.js"), exports);
 __exportStar(require("./ObjectWithDatetimeLikeString.js"), exports);
+__exportStar(require("./ObjectWithDocumentedUnknownType.js"), exports);
 __exportStar(require("./ObjectWithMapOfMap.js"), exports);
 __exportStar(require("./ObjectWithOptionalField.js"), exports);
 __exportStar(require("./ObjectWithRequiredField.js"), exports);

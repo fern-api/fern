@@ -4,6 +4,7 @@ import { commandGroup } from "../_internal/commandGroup.js";
 import { addAddCommand } from "./add/index.js";
 import { addCheckCommand } from "./check/index.js";
 import { addGenerateCommand } from "./generate/index.js";
+import { addPreviewCommand } from "./preview/index.js";
 import { addUpdateCommand } from "./update/index.js";
 
 export function addSdkCommand(cli: Argv<GlobalArgs>): void {
@@ -11,6 +12,7 @@ export function addSdkCommand(cli: Argv<GlobalArgs>): void {
         addAddCommand,
         addCheckCommand,
         addGenerateCommand,
+        addPreviewCommand,
         addUpdateCommand
     ]);
 }

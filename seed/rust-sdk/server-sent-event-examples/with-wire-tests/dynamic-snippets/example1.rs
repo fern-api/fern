@@ -11,7 +11,7 @@ async fn main() {
         .completions
         .stream(
             &StreamCompletionRequest {
-                query: "query".to_string(),
+                query: "".to_string(),
             },
             None,
         )

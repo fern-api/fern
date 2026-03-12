@@ -9,7 +9,6 @@ import { BaseSwiftCustomConfigSchema, NameRegistry, Referencer, swift } from "@f
 import { pascalCase } from "../util/pascal-case.js";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper.js";
 import { FilePropertyMapper } from "./FilePropertyMapper.js";
-import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions.js";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums.js";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions.js";
 
@@ -88,11 +87,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
 
         registeredSchemaTypes.forEach(({ namedType, registeredSymbol }) => {
-            registerDiscriminatedUnionVariants({
-                parentSymbol: registeredSymbol,
-                registry: nameRegistry,
-                namedType
-            });
             registerLiteralEnums({
                 parentSymbol: registeredSymbol,
                 registry: nameRegistry,

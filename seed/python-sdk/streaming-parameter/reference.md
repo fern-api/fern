@@ -1,12 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate</a>(...) -&gt; typing.AsyncIterator[
-    AsyncHttpResponse[
-        typing.AsyncIterator[
-            typing.Union[typing.AsyncIterator[StreamResponse], RegularResponse]
-        ]
-    ]
-]</code></summary>
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -24,6 +18,7 @@ from seed import SeedStreaming
 client = SeedStreaming(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.dummy.generate(
     stream=False,
     num_events=5,

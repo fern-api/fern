@@ -10,6 +10,7 @@ describe("NoAuthClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .post("/no-auth")
@@ -30,6 +31,7 @@ describe("NoAuthClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
         const rawResponseBody = { message: "message" };
+
         server
             .mockEndpoint()
             .post("/no-auth")

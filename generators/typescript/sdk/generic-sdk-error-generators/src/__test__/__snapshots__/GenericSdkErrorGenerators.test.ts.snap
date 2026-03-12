@@ -1,0 +1,190 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedGenericAPISdkErrorImpl > build > builds new expression with all parameters 1`] = `
+"new ApiError({
+    message: "something went wrong",
+    statusCode: 500,
+    body: body,
+    rawResponse: rawResp
+})"
+`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > build > builds new expression with no parameters 1`] = `"new ApiError({})"`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > build > builds new expression with only message 1`] = `
+"new ApiError({
+    message: "error"
+})"
+`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > includes all properties when all provided 1`] = `
+"{
+    message: "msg",
+    statusCode: 400,
+    body: body,
+    rawResponse: raw
+}"
+`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > includes only message and rawResponse (statusCode and responseBody undefined) 1`] = `
+"{
+    message: "error",
+    rawResponse: raw
+}"
+`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > includes only non-null properties 1`] = `
+"{
+    message: "msg",
+    statusCode: 400
+}"
+`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > includes only responseBody and rawResponse when message and statusCode are undefined 1`] = `
+"{
+    body: body,
+    rawResponse: raw
+}"
+`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > includes only statusCode (all others undefined) 1`] = `
+"{
+    statusCode: 503
+}"
+`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > buildConstructorArguments > returns empty object when no properties provided 1`] = `"{}"`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with custom name 1`] = `
+"export class CustomApiError extends Error {
+    public readonly statusCode?: number;
+    public readonly body?: unknown;
+    public readonly rawResponse?: RawResponse;
+
+    constructor({ message, statusCode, body, rawResponse }: {
+            message?: string;
+            statusCode?: number;
+            body?: unknown;
+            rawResponse?: RawResponse;
+        }) {
+        super(buildMessage({ message, statusCode, body }));
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+        this.statusCode = statusCode;
+        this.body = body;
+        this.rawResponse = rawResponse;
+    }
+}
+
+function buildMessage({ message, statusCode, body }: {
+        message: string | undefined;
+        statusCode: number | undefined;
+        body: unknown | undefined;
+    }): string {
+    let lines: string[] = [];
+    if (message != null) {
+        lines.push(message);
+    }
+
+    if (statusCode != null) {
+        lines.push(\`Status code: \${statusCode.toString()}\`);
+    }
+
+    if (body != null) {
+        lines.push(\`Body: \${toJson(body, undefined, 2)}\`);
+    }
+
+    return lines.join("\\n");
+}
+"
+`;
+
+exports[`GeneratedGenericAPISdkErrorImpl > writeToFile > writes error class with statusCode, body, and rawResponse properties 1`] = `
+"export class ApiError extends Error {
+    public readonly statusCode?: number;
+    public readonly body?: unknown;
+    public readonly rawResponse?: RawResponse;
+
+    constructor({ message, statusCode, body, rawResponse }: {
+            message?: string;
+            statusCode?: number;
+            body?: unknown;
+            rawResponse?: RawResponse;
+        }) {
+        super(buildMessage({ message, statusCode, body }));
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+        this.statusCode = statusCode;
+        this.body = body;
+        this.rawResponse = rawResponse;
+    }
+}
+
+function buildMessage({ message, statusCode, body }: {
+        message: string | undefined;
+        statusCode: number | undefined;
+        body: unknown | undefined;
+    }): string {
+    let lines: string[] = [];
+    if (message != null) {
+        lines.push(message);
+    }
+
+    if (statusCode != null) {
+        lines.push(\`Status code: \${statusCode.toString()}\`);
+    }
+
+    if (body != null) {
+        lines.push(\`Body: \${toJson(body, undefined, 2)}\`);
+    }
+
+    return lines.join("\\n");
+}
+"
+`;
+
+exports[`GeneratedTimeoutSdkErrorImpl > build > builds new expression with message 1`] = `"new TimeoutError("Request timed out")"`;
+
+exports[`GeneratedTimeoutSdkErrorImpl > buildConstructorArguments > wraps message in object literal 1`] = `
+"{
+    message: "timeout"
+}"
+`;
+
+exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class 1`] = `
+"export class TimeoutError extends Error {
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;
+
+exports[`GeneratedTimeoutSdkErrorImpl > writeToFile > writes timeout error class with custom name 1`] = `
+"export class CustomTimeoutError extends Error {
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
+    }
+}
+"
+`;

@@ -13,7 +13,7 @@ public class Example1
 
         await foreach (var item in client.Completions.StreamAsync(
             new StreamCompletionRequest {
-                Query = "query"
+                Query = ""
             }
         ))
         {

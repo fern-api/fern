@@ -13,6 +13,7 @@ describe("S3Client", () => {
         });
         const rawRequestBody = { s3Key: "s3Key" };
         const rawResponseBody = "string";
+
         server
             .mockEndpoint()
             .post("/s3/presigned-url")
