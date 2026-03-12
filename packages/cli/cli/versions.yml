@@ -53,6 +53,7 @@
         the property-level and resolved schema-level `readOnly` flag.
       type: fix
   createdAt: "2026-03-12"
+  irVersion: 65
 
 - version: 4.24.0
   changelogEntry:
