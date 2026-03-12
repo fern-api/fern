@@ -1,0 +1,612 @@
+import { FernIr } from "@fern-fern/ir-sdk";
+import { getTextOfTsNode, PackageId, Reference } from "@fern-typescript/commons";
+import { ErrorResolver } from "@fern-typescript/resolvers";
+import { casingsGenerator, createMinimalIR, createNameAndWireValue } from "@fern-typescript/test-utils";
+import { Project, ts } from "ts-morph";
+import { assert, describe, expect, it } from "vitest";
+
+import { EndpointErrorUnionGenerator } from "../EndpointErrorUnionGenerator.js";
+import { ParsedSingleUnionTypeForError } from "../error/ParsedSingleUnionTypeForError.js";
+import { UnknownErrorSingleUnionType } from "../error/UnknownErrorSingleUnionType.js";
+import { UnknownErrorSingleUnionTypeGenerator } from "../error/UnknownErrorSingleUnionTypeGenerator.js";
+import { GeneratedEndpointErrorUnionImpl } from "../GeneratedEndpointErrorUnionImpl.js";
+
+// ────────────────────────────────────────────────────────────────────────────
+// Helpers
+// ────────────────────────────────────────────────────────────────────────────
+
+const MOCK_PACKAGE_ID = "pkg_test" as unknown as PackageId;
+
+function createMockReference(name: string): Reference {
+    return {
+        getExpression: () => ts.factory.createIdentifier(name),
+        getTypeNode: () => ts.factory.createTypeReferenceNode(name),
+        getEntityName: () => ts.factory.createIdentifier(name)
+        // biome-ignore lint/suspicious/noExplicitAny: test mock
+    } as any;
+}
+
+function createMockSdkContext() {
+    const project = new Project({ useInMemoryFileSystem: true });
+    const sourceFile = project.createSourceFile("test.ts", "");
+    return {
+        sourceFile,
+        type: {
+            getReferenceToType: () => ({
+                typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                typeNodeWithoutUndefined: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                isOptional: false
+            }),
+            getReferenceToTypeForInlineUnion: () => ({
+                typeNode: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                typeNodeWithoutUndefined: ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                isOptional: false
+            }),
+            getReferenceToNamedType: () => createMockReference("SomeType"),
+            getGeneratedType: () => ({
+                type: "object",
+                buildExample: () => ts.factory.createStringLiteral("example")
+            })
+        },
+        endpointErrorUnion: {
+            getReferenceToEndpointTypeExport: () => createMockReference("EndpointError")
+        },
+        coreUtilities: {
+            fetcher: {
+                Fetcher: {
+                    Error: {
+                        _getReferenceToType: () => ts.factory.createTypeReferenceNode("Fetcher.Error")
+                    }
+                }
+            }
+        }
+        // biome-ignore lint/suspicious/noExplicitAny: test mock
+    } as any;
+}
+
+function createErrorDeclaration(opts?: {
+    name?: string;
+    statusCode?: number;
+    type?: FernIr.TypeReference;
+}): FernIr.ErrorDeclaration {
+    const errorName = opts?.name ?? "BadRequest";
+    return {
+        name: {
+            errorId: `error_${errorName}`,
+            fernFilepath: { allParts: [], packagePath: [], file: undefined },
+            name: casingsGenerator.generateName(errorName)
+        },
+        discriminantValue: createNameAndWireValue(errorName, errorName),
+        type: opts?.type,
+        statusCode: opts?.statusCode ?? 400,
+        docs: undefined,
+        examples: [],
+        v2Examples: undefined,
+        displayName: undefined,
+        isWildcardStatusCode: false,
+        headers: []
+    };
+}
+
+function createDeclaredErrorName(name: string): FernIr.DeclaredErrorName {
+    return {
+        errorId: `error_${name}`,
+        fernFilepath: { allParts: [], packagePath: [], file: undefined },
+        name: casingsGenerator.generateName(name)
+    };
+}
+
+function createResponseError(name: string): FernIr.ResponseError {
+    return {
+        error: createDeclaredErrorName(name),
+        docs: undefined
+    };
+}
+
+function createMinimalEndpoint(opts?: { errors?: FernIr.ResponseError[] }): FernIr.HttpEndpoint {
+    return {
+        id: "endpoint_test",
+        name: casingsGenerator.generateName("testEndpoint"),
+        displayName: undefined,
+        method: "POST",
+        headers: [],
+        responseHeaders: undefined,
+        baseUrl: undefined,
+        v2BaseUrls: undefined,
+        basePath: undefined,
+        path: { head: "/test", parts: [] },
+        fullPath: { head: "/test", parts: [] },
+        pathParameters: [],
+        allPathParameters: [],
+        queryParameters: [],
+        requestBody: undefined,
+        v2RequestBodies: undefined,
+        sdkRequest: undefined,
+        response: undefined,
+        v2Responses: undefined,
+        errors: opts?.errors ?? [],
+        auth: false,
+        security: undefined,
+        idempotent: false,
+        pagination: undefined,
+        userSpecifiedExamples: [],
+        autogeneratedExamples: [],
+        v2Examples: undefined,
+        transport: undefined,
+        source: undefined,
+        audiences: undefined,
+        retries: undefined,
+        apiPlayground: undefined,
+        docs: undefined,
+        availability: undefined
+    };
+}
+
+function createIRWithErrors(
+    errors: FernIr.ErrorDeclaration[],
+    discriminationStrategy?: FernIr.ErrorDiscriminationStrategy
+): FernIr.IntermediateRepresentation {
+    const ir = createMinimalIR();
+    ir.errors = {};
+    for (const err of errors) {
+        ir.errors[err.name.errorId] = err;
+    }
+    if (discriminationStrategy) {
+        ir.errorDiscriminationStrategy = discriminationStrategy;
+    }
+    return ir;
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// UnknownErrorSingleUnionTypeGenerator
+// ────────────────────────────────────────────────────────────────────────────
+
+describe("UnknownErrorSingleUnionTypeGenerator", () => {
+    function createGenerator(discriminant = "errorName") {
+        return new UnknownErrorSingleUnionTypeGenerator({ discriminant });
+    }
+
+    it("generateForInlineUnion returns content property with Fetcher.Error type", () => {
+        const gen = createGenerator();
+        const context = createMockSdkContext();
+        const result = gen.generateForInlineUnion(context);
+        expect(getTextOfTsNode(result.typeNode)).toMatchSnapshot();
+        expect(result.requestTypeNode).toBeUndefined();
+        expect(result.responseTypeNode).toBeUndefined();
+    });
+
+    it("getExtendsForInterface returns empty array", () => {
+        const gen = createGenerator();
+        expect(gen.getExtendsForInterface()).toEqual([]);
+    });
+
+    it("getDiscriminantPropertiesForInterface returns empty array", () => {
+        const gen = createGenerator();
+        expect(gen.getDiscriminantPropertiesForInterface()).toEqual([]);
+    });
+
+    it("generateModule returns undefined", () => {
+        const gen = createGenerator();
+        expect(gen.generateModule()).toBeUndefined();
+    });
+
+    it("getNonDiscriminantPropertiesForInterface returns content property", () => {
+        const gen = createGenerator();
+        const context = createMockSdkContext();
+        const result = gen.getNonDiscriminantPropertiesForInterface(context);
+        expect(result).toHaveLength(1);
+        expect(result[0]?.property.name).toContain("content");
+    });
+
+    it("getVisitorArguments returns property access on content", () => {
+        const gen = createGenerator();
+        const unionValue = ts.factory.createIdentifier("error");
+        const args = gen.getVisitorArguments({ localReferenceToUnionValue: unionValue });
+        expect(args).toHaveLength(1);
+        assert(args[0] != null, "expected visitor argument");
+        expect(getTextOfTsNode(args[0])).toBe("error.content");
+    });
+
+    it("getVisitMethodParameterType returns Fetcher.Error type", () => {
+        const gen = createGenerator();
+        const context = createMockSdkContext();
+        const result = gen.getVisitMethodParameterType(context);
+        assert(result != null, "expected visit method parameter type");
+        expect(getTextOfTsNode(result)).toContain("Fetcher.Error");
+    });
+
+    it("getParametersForBuilder returns single parameter", () => {
+        const gen = createGenerator();
+        const context = createMockSdkContext();
+        const params = gen.getParametersForBuilder(context);
+        expect(params).toHaveLength(1);
+        assert(params[0] != null, "expected builder parameter");
+        expect(getTextOfTsNode(params[0])).toMatchSnapshot();
+    });
+
+    it("getBuilderArgsFromExistingValue returns existing value", () => {
+        const gen = createGenerator();
+        const val = ts.factory.createIdentifier("existingErr");
+        const args = gen.getBuilderArgsFromExistingValue(val);
+        expect(args).toHaveLength(1);
+        assert(args[0] != null, "expected builder arg");
+        expect(getTextOfTsNode(args[0])).toBe("existingErr");
+    });
+
+    it("getNonDiscriminantPropertiesForBuilder returns discriminant and content assignments", () => {
+        const gen = createGenerator("errorName");
+        const props = gen.getNonDiscriminantPropertiesForBuilder();
+        expect(props).toHaveLength(2);
+        // First should be discriminant set to undefined, second should be content set to fetcherError
+        assert(props[0] != null, "expected first property");
+        assert(props[1] != null, "expected second property");
+        expect(getTextOfTsNode(props[0])).toContain("errorName");
+        expect(getTextOfTsNode(props[1])).toContain("content");
+    });
+
+    it("needsRequestResponse returns false for both", () => {
+        const gen = createGenerator();
+        expect(gen.needsRequestResponse()).toEqual({ request: false, response: false });
+    });
+});
+
+// ────────────────────────────────────────────────────────────────────────────
+// UnknownErrorSingleUnionType
+// ────────────────────────────────────────────────────────────────────────────
+
+describe("UnknownErrorSingleUnionType", () => {
+    it("needsRequestResponse returns false for both", () => {
+        const generatorMock = new UnknownErrorSingleUnionTypeGenerator({ discriminant: "errorName" });
+        const unknownType = new UnknownErrorSingleUnionType({
+            singleUnionType: generatorMock,
+            includeUtilsOnUnionMembers: false
+        });
+        expect(unknownType.needsRequestResponse()).toEqual({ request: false, response: false });
+    });
+
+    it("getDocs returns undefined", () => {
+        const generatorMock = new UnknownErrorSingleUnionTypeGenerator({ discriminant: "errorName" });
+        const unknownType = new UnknownErrorSingleUnionType({
+            singleUnionType: generatorMock,
+            includeUtilsOnUnionMembers: false
+        });
+        expect(unknownType.getDocs()).toBeUndefined();
+    });
+});
+
+// ────────────────────────────────────────────────────────────────────────────
+// ParsedSingleUnionTypeForError
+// ────────────────────────────────────────────────────────────────────────────
+
+describe("ParsedSingleUnionTypeForError", () => {
+    function createParsedError(opts?: {
+        errorName?: string;
+        statusCode?: number;
+        type?: FernIr.TypeReference;
+        discriminationStrategy?: FernIr.ErrorDiscriminationStrategy;
+        retainOriginalCasing?: boolean;
+        docs?: string;
+    }) {
+        const name = opts?.errorName ?? "BadRequest";
+        const errorDecl = createErrorDeclaration({
+            name,
+            statusCode: opts?.statusCode ?? 400,
+            type: opts?.type
+        });
+
+        const ir = createIRWithErrors([errorDecl]);
+        const errorResolver = new ErrorResolver(ir);
+
+        const responseError: FernIr.ResponseError = {
+            error: createDeclaredErrorName(name),
+            docs: opts?.docs
+        };
+
+        return new ParsedSingleUnionTypeForError({
+            error: responseError,
+            errorResolver,
+            errorDiscriminationStrategy:
+                opts?.discriminationStrategy ?? FernIr.ErrorDiscriminationStrategy.statusCode(),
+            includeUtilsOnUnionMembers: false,
+            noOptionalProperties: false,
+            retainOriginalCasing: opts?.retainOriginalCasing ?? false,
+            enableInlineTypes: false,
+            generateReadWriteOnlyTypes: false
+        });
+    }
+
+    describe("getTypeName", () => {
+        it("returns PascalCase error name", () => {
+            const parsed = createParsedError({ errorName: "BadRequest" });
+            expect(parsed.getTypeName()).toBe("BadRequest");
+        });
+
+        it("sanitizes names starting with digit", () => {
+            const parsed = createParsedError({ errorName: "400Error" });
+            expect(parsed.getTypeName()).toMatch(/^_/);
+        });
+    });
+
+    describe("getDiscriminantValue", () => {
+        it("returns status code for statusCode discrimination", () => {
+            const parsed = createParsedError({
+                statusCode: 404,
+                discriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode()
+            });
+            expect(parsed.getDiscriminantValue()).toBe(404);
+        });
+
+        it("returns wire value for property discrimination", () => {
+            const discriminant = createNameAndWireValue("errorName", "errorName");
+            const contentProperty = createNameAndWireValue("body", "body");
+            const parsed = createParsedError({
+                discriminationStrategy: FernIr.ErrorDiscriminationStrategy.property({
+                    discriminant,
+                    contentProperty
+                })
+            });
+            expect(parsed.getDiscriminantValue()).toBe("BadRequest");
+        });
+    });
+
+    describe("getBuilderName", () => {
+        it("returns camelCase name by default", () => {
+            const parsed = createParsedError({ errorName: "BadRequest" });
+            expect(parsed.getBuilderName()).toBe("badRequest");
+        });
+
+        it("returns original name when retainOriginalCasing is true", () => {
+            const parsed = createParsedError({
+                errorName: "BadRequest",
+                retainOriginalCasing: true
+            });
+            expect(parsed.getBuilderName()).toBe("BadRequest");
+        });
+    });
+
+    describe("getVisitorKey", () => {
+        it("returns camelCase name by default", () => {
+            const parsed = createParsedError({ errorName: "BadRequest" });
+            expect(parsed.getVisitorKey()).toBe("badRequest");
+        });
+
+        it("returns original name when retainOriginalCasing is true", () => {
+            const parsed = createParsedError({
+                errorName: "BadRequest",
+                retainOriginalCasing: true
+            });
+            expect(parsed.getVisitorKey()).toBe("BadRequest");
+        });
+    });
+
+    describe("getDocs", () => {
+        it("returns undefined when no docs", () => {
+            const parsed = createParsedError();
+            expect(parsed.getDocs()).toBeUndefined();
+        });
+
+        it("returns docs string when present", () => {
+            const parsed = createParsedError({ docs: "This is a bad request error" });
+            expect(parsed.getDocs()).toBe("This is a bad request error");
+        });
+    });
+
+    describe("needsRequestResponse", () => {
+        it("returns false for both", () => {
+            const parsed = createParsedError();
+            expect(parsed.needsRequestResponse()).toEqual({ request: false, response: false });
+        });
+    });
+});
+
+// ────────────────────────────────────────────────────────────────────────────
+// EndpointErrorUnionGenerator (factory)
+// ────────────────────────────────────────────────────────────────────────────
+
+describe("EndpointErrorUnionGenerator", () => {
+    it("creates GeneratedEndpointErrorUnionImpl", () => {
+        const ir = createIRWithErrors([]);
+        const errorResolver = new ErrorResolver(ir);
+
+        const generator = new EndpointErrorUnionGenerator({
+            intermediateRepresentation: ir,
+            errorResolver,
+            includeSerdeLayer: true,
+            retainOriginalCasing: false,
+            noOptionalProperties: false,
+            enableInlineTypes: false,
+            generateReadWriteOnlyTypes: false
+        });
+
+        const result = generator.generateEndpointErrorUnion({
+            packageId: MOCK_PACKAGE_ID,
+            endpoint: createMinimalEndpoint()
+        });
+        expect(result).toBeDefined();
+    });
+
+    it("passes flags through to implementation", () => {
+        const errorDecl = createErrorDeclaration({
+            name: "NotFound",
+            statusCode: 404,
+            type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+        });
+        const ir = createIRWithErrors([errorDecl]);
+        const errorResolver = new ErrorResolver(ir);
+
+        const generator = new EndpointErrorUnionGenerator({
+            intermediateRepresentation: ir,
+            errorResolver,
+            includeSerdeLayer: true,
+            retainOriginalCasing: false,
+            noOptionalProperties: false,
+            enableInlineTypes: false,
+            generateReadWriteOnlyTypes: false
+        });
+
+        const result = generator.generateEndpointErrorUnion({
+            packageId: MOCK_PACKAGE_ID,
+            endpoint: createMinimalEndpoint({ errors: [createResponseError("NotFound")] })
+        });
+        expect(result).toBeDefined();
+    });
+});
+
+// ────────────────────────────────────────────────────────────────────────────
+// GeneratedEndpointErrorUnionImpl
+// ────────────────────────────────────────────────────────────────────────────
+
+describe("GeneratedEndpointErrorUnionImpl", () => {
+    function createImpl(opts?: {
+        errors?: FernIr.ErrorDeclaration[];
+        endpointErrors?: FernIr.ResponseError[];
+        discriminationStrategy?: FernIr.ErrorDiscriminationStrategy;
+        includeSerdeLayer?: boolean;
+        retainOriginalCasing?: boolean;
+    }) {
+        const errors = opts?.errors ?? [];
+        const ir = createIRWithErrors(errors, opts?.discriminationStrategy);
+        const errorResolver = new ErrorResolver(ir);
+
+        return new GeneratedEndpointErrorUnionImpl({
+            packageId: MOCK_PACKAGE_ID,
+            endpoint: createMinimalEndpoint({ errors: opts?.endpointErrors }),
+            errorResolver,
+            errorDiscriminationStrategy:
+                opts?.discriminationStrategy ?? FernIr.ErrorDiscriminationStrategy.statusCode(),
+            includeSerdeLayer: opts?.includeSerdeLayer ?? true,
+            noOptionalProperties: false,
+            retainOriginalCasing: opts?.retainOriginalCasing ?? false,
+            enableInlineTypes: false,
+            generateReadWriteOnlyTypes: false
+        });
+    }
+
+    describe("writeToFile", () => {
+        it("writes error union with no errors (empty)", () => {
+            const impl = createImpl();
+            const context = createMockSdkContext();
+            impl.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+
+        it("writes error union with single error using statusCode discrimination", () => {
+            const errorDecl = createErrorDeclaration({
+                name: "NotFound",
+                statusCode: 404,
+                type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+            });
+            const impl = createImpl({
+                errors: [errorDecl],
+                endpointErrors: [createResponseError("NotFound")],
+                discriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode()
+            });
+            const context = createMockSdkContext();
+            impl.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+
+        it("writes error union with property discrimination", () => {
+            const errorDecl = createErrorDeclaration({
+                name: "BadRequest",
+                statusCode: 400,
+                type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+            });
+            const discriminant = createNameAndWireValue("errorName", "errorName");
+            const contentProperty = createNameAndWireValue("body", "body");
+            const impl = createImpl({
+                errors: [errorDecl],
+                endpointErrors: [createResponseError("BadRequest")],
+                discriminationStrategy: FernIr.ErrorDiscriminationStrategy.property({
+                    discriminant,
+                    contentProperty
+                })
+            });
+            const context = createMockSdkContext();
+            impl.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+
+        it("writes error union with multiple errors", () => {
+            const notFoundDecl = createErrorDeclaration({
+                name: "NotFound",
+                statusCode: 404,
+                type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+            });
+            const badRequestDecl = createErrorDeclaration({
+                name: "BadRequest",
+                statusCode: 400
+            });
+            const impl = createImpl({
+                errors: [notFoundDecl, badRequestDecl],
+                endpointErrors: [createResponseError("NotFound"), createResponseError("BadRequest")],
+                discriminationStrategy: FernIr.ErrorDiscriminationStrategy.statusCode()
+            });
+            const context = createMockSdkContext();
+            impl.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+
+        it("writes error union without serde layer", () => {
+            const errorDecl = createErrorDeclaration({
+                name: "NotFound",
+                statusCode: 404,
+                type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+            });
+            const impl = createImpl({
+                errors: [errorDecl],
+                endpointErrors: [createResponseError("NotFound")],
+                includeSerdeLayer: false
+            });
+            const context = createMockSdkContext();
+            impl.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+
+        it("writes error union with retainOriginalCasing (statusCode discrimination)", () => {
+            const errorDecl = createErrorDeclaration({
+                name: "NotFound",
+                statusCode: 404,
+                type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+            });
+            const impl = createImpl({
+                errors: [errorDecl],
+                endpointErrors: [createResponseError("NotFound")],
+                retainOriginalCasing: true
+            });
+            const context = createMockSdkContext();
+            impl.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+
+        it("writes error union with retainOriginalCasing + property discrimination", () => {
+            const errorDecl = createErrorDeclaration({
+                name: "BadRequest",
+                statusCode: 400,
+                type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+            });
+            const discriminant = createNameAndWireValue("errorName", "errorName");
+            const contentProperty = createNameAndWireValue("body", "body");
+            const impl = createImpl({
+                errors: [errorDecl],
+                endpointErrors: [createResponseError("BadRequest")],
+                discriminationStrategy: FernIr.ErrorDiscriminationStrategy.property({
+                    discriminant,
+                    contentProperty
+                }),
+                retainOriginalCasing: true
+            });
+            const context = createMockSdkContext();
+            impl.writeToFile(context);
+            expect(context.sourceFile.getFullText()).toMatchSnapshot();
+        });
+    });
+
+    describe("getErrorUnion", () => {
+        it("returns the generated union", () => {
+            const impl = createImpl();
+            const errorUnion = impl.getErrorUnion();
+            expect(errorUnion).toBeDefined();
+        });
+    });
+});

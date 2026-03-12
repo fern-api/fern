@@ -508,7 +508,8 @@ export class EndpointSnippetGenerator {
     }): java.BuilderParameter[] {
         const args: java.BuilderParameter[] = [];
         for (const header of headers) {
-            const arg = this.getRootClientHeaderArg({ header, value: values.value });
+            const value = values[header.name.wireValue];
+            const arg = this.getRootClientHeaderArg({ header, value });
             if (arg != null) {
                 args.push({
                     name: this.context.getMethodName(header.name.name),

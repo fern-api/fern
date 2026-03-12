@@ -263,10 +263,8 @@ export class WireTestGenerator {
     ): python.PythonFile | null {
         const statements: python.AstNode[] = [];
 
-        // Add raw imports that the AST doesn't support (simple "import X" statements)
+        // Add raw imports for pytest (not supported by AST)
         statements.push(python.codeBlock("import pytest"));
-        statements.push(python.codeBlock("from datetime import datetime, date"));
-        statements.push(python.codeBlock("from uuid import UUID"));
 
         // Add an import registration statement (for "from X import Y" style imports)
         statements.push(this.createImportRegistration());
@@ -620,6 +618,54 @@ export class WireTestGenerator {
     // PATH AND QUERY PARAMETER HELPERS
     // =============================================================================
 
+    /**
+     * Checks if a query parameter is typed as datetime (DATE_TIME) in the IR.
+     * Handles optional/nullable wrappers by unwrapping to the inner type.
+     * String-typed parameters that happen to contain datetime-looking values return false.
+     */
+    private isDatetimeTypedQueryParam(endpoint: FernIr.HttpEndpoint, wireKey: string): boolean {
+        const queryParam = endpoint.queryParameters.find((qp) => qp.name.wireValue === wireKey);
+        if (!queryParam) {
+            return false;
+        }
+        return this.isDatetimeTypeReference(queryParam.valueType);
+    }
+
+    /**
+     * Recursively checks if a TypeReference resolves to a datetime primitive.
+     * Unwraps optional/nullable containers to check the inner type.
+     */
+    private isDatetimeTypeReference(typeRef: FernIr.TypeReference): boolean {
+        if (typeRef.type === "primitive") {
+            return typeRef.primitive.v1 === "DATE_TIME";
+        }
+        if (typeRef.type === "container") {
+            if (typeRef.container.type === "optional") {
+                return this.isDatetimeTypeReference(typeRef.container.optional);
+            }
+            if (typeRef.container.type === "nullable") {
+                return this.isDatetimeTypeReference(typeRef.container.nullable);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Normalizes a query parameter value for datetime_milliseconds config.
+     * When datetime_milliseconds is true AND the parameter is datetime-typed, adds ".000" to
+     * datetime values that lack fractional seconds so the test verification matches the SDK's
+     * millisecond-precision output from serialize_datetime.
+     * String-typed parameters are never normalized because the SDK passes them through as-is.
+     */
+    private normalizeDatetimeQueryParamValue(value: string, isDatetimeTyped: boolean): string {
+        if (this.context.customConfig.datetime_milliseconds && isDatetimeTyped) {
+            // Use replace with a capture group to insert ".000" before the timezone suffix.
+            // The regex matches the seconds portion followed by the timezone (Z or +/-offset).
+            return value.replace(/^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(Z|[+-]\d{2}:\d{2})$/, "$1.000$2");
+        }
+        return value;
+    }
+
     private buildQueryParamsCode(endpoint: FernIr.HttpEndpoint): string {
         const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
         if (!dynamicEndpoint?.examples?.[0]?.queryParameters) {
@@ -631,7 +677,9 @@ export class WireTestGenerator {
 
         for (const [key, value] of Object.entries(queryParams)) {
             if (value != null) {
-                entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(String(value))}"`);
+                const isDatetimeTyped = this.isDatetimeTypedQueryParam(endpoint, key);
+                const normalized = this.normalizeDatetimeQueryParamValue(String(value), isDatetimeTyped);
+                entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(normalized)}"`);
             }
         }
 

@@ -15,7 +15,7 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.Urls.WithUnderscores(
+    client.Endpoints.Urls.WithEndingSlash(
         context.TODO(),
     )
 }

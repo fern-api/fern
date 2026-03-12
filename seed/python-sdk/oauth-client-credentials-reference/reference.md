@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -16,8 +16,11 @@
 from seed import SeedOauthClientCredentialsReference
 
 client = SeedOauthClientCredentialsReference(
-    base_url="YOUR_BASE_URL",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
+
 client.auth.get_token(
     client_id="client_id",
     client_secret="client_secret",
@@ -37,15 +40,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**client_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_secret:** `str` 
+**request:** `GetTokenRequest` 
     
 </dd>
 </dl>
@@ -66,7 +61,7 @@ client.auth.get_token(
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -82,8 +77,11 @@ client.auth.get_token(
 from seed import SeedOauthClientCredentialsReference
 
 client = SeedOauthClientCredentialsReference(
-    base_url="YOUR_BASE_URL",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
+
 client.simple.get_something()
 
 ```

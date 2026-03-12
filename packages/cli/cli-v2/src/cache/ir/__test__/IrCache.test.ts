@@ -30,7 +30,7 @@ describe("IrCache", () => {
         it("stores content and looks it up by same hash and version", async () => {
             const hash = "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2";
             const irVersion = "v63";
-            const content = JSON.stringify({ types: {}, services: {} });
+            const content = { types: {}, services: {} };
 
             await cache.store({ hash, irVersion, content });
             const entry = await cache.lookup({ hash, irVersion });
@@ -44,15 +44,15 @@ describe("IrCache", () => {
     });
 
     describe("store + read", () => {
-        it("stores content and reads it back exactly", async () => {
+        it("stores content and reads it back with matching structure", async () => {
             const hash = "b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3";
             const irVersion = "v63";
-            const content = JSON.stringify({ types: { User: { name: "User" } } });
+            const content = { types: { User: { name: "User" } } };
 
             const entry = await cache.store({ hash, irVersion, content });
             const readContent = await cache.read(entry);
 
-            expect(readContent).toBe(content);
+            expect(JSON.parse(readContent)).toEqual(content);
         });
     });
 
@@ -69,8 +69,8 @@ describe("IrCache", () => {
     describe("multiple IR versions", () => {
         it("stores and looks up entries independently per version", async () => {
             const hash = "c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4";
-            const contentV63 = JSON.stringify({ version: "v63", types: {} });
-            const contentV62 = JSON.stringify({ version: "v62", types: {} });
+            const contentV63 = { version: "v63", types: {} };
+            const contentV62 = { version: "v62", types: {} };
 
             await cache.store({ hash, irVersion: "v63", content: contentV63 });
             await cache.store({ hash, irVersion: "v62", content: contentV62 });
@@ -88,8 +88,8 @@ describe("IrCache", () => {
             const readV63 = await cache.read(entryV63);
             const readV62 = await cache.read(entryV62);
 
-            expect(readV63).toBe(contentV63);
-            expect(readV62).toBe(contentV62);
+            expect(JSON.parse(readV63)).toEqual(contentV63);
+            expect(JSON.parse(readV62)).toEqual(contentV62);
         });
     });
 
@@ -97,7 +97,7 @@ describe("IrCache", () => {
         it("stores same hash and version twice without errors", async () => {
             const hash = "d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5";
             const irVersion = "v63";
-            const content = JSON.stringify({ types: {} });
+            const content = { types: {} };
 
             const entry1 = await cache.store({ hash, irVersion, content });
             const entry2 = await cache.store({ hash, irVersion, content });
@@ -108,24 +108,20 @@ describe("IrCache", () => {
 
     describe("getStats", () => {
         it("returns correct stats across versions", async () => {
-            const content1 = JSON.stringify({ id: 1 });
-            const content2 = JSON.stringify({ id: 2 });
-            const content3 = JSON.stringify({ id: 3 });
-
             await cache.store({
                 hash: "1111111111111111111111111111111111111111111111111111111111111111",
                 irVersion: "v63",
-                content: content1
+                content: { id: 1 }
             });
             await cache.store({
                 hash: "2222222222222222222222222222222222222222222222222222222222222222",
                 irVersion: "v63",
-                content: content2
+                content: { id: 2 }
             });
             await cache.store({
                 hash: "3333333333333333333333333333333333333333333333333333333333333333",
                 irVersion: "v62",
-                content: content3
+                content: { id: 3 }
             });
 
             const stats = await cache.getStats();
@@ -146,7 +142,7 @@ describe("IrCache", () => {
 
     describe("clear", () => {
         it("clears all entries and reports correct counts", async () => {
-            const content = JSON.stringify({ data: "test" });
+            const content = { data: "test" };
 
             await cache.store({
                 hash: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -172,7 +168,7 @@ describe("IrCache", () => {
         });
 
         it("does not delete entries on dry run", async () => {
-            const content = JSON.stringify({ data: "test" });
+            const content = { data: "test" };
             const hash = "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc";
             const irVersion = "v63";
 

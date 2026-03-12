@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -16,9 +16,11 @@
 from seed import SeedOauthClientCredentialsWithVariables
 
 client = SeedOauthClientCredentialsWithVariables(
-    base_url="YOUR_BASE_URL",
-    root_variable="YOUR_ROOT_VARIABLE",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
+
 client.auth.get_token_with_client_credentials(
     client_id="client_id",
     client_secret="client_secret",
@@ -55,6 +57,22 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
+**audience:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grant_type:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **scope:** `typing.Optional[str]` 
     
 </dd>
@@ -75,7 +93,7 @@ client.auth.get_token_with_client_credentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -&gt; AsyncHttpResponse[TokenResponse]</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -91,9 +109,11 @@ client.auth.get_token_with_client_credentials(
 from seed import SeedOauthClientCredentialsWithVariables
 
 client = SeedOauthClientCredentialsWithVariables(
-    base_url="YOUR_BASE_URL",
-    root_variable="YOUR_ROOT_VARIABLE",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
+
 client.auth.refresh_token(
     client_id="client_id",
     client_secret="client_secret",
@@ -139,6 +159,22 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
+**audience:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grant_type:** `typing.Literal` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **scope:** `typing.Optional[str]` 
     
 </dd>
@@ -160,7 +196,7 @@ client.auth.refresh_token(
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>client.nested_no_auth.api.<a href="src/seed/nested_no_auth/api/client.py">get_something</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.nested_no_auth.api.<a href="src/seed/nested_no_auth/api/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -176,9 +212,11 @@ client.auth.refresh_token(
 from seed import SeedOauthClientCredentialsWithVariables
 
 client = SeedOauthClientCredentialsWithVariables(
-    base_url="YOUR_BASE_URL",
-    root_variable="YOUR_ROOT_VARIABLE",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
+
 client.nested_no_auth.api.get_something()
 
 ```
@@ -208,7 +246,7 @@ client.nested_no_auth.api.get_something()
 </details>
 
 ## Nested Api
-<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -224,9 +262,11 @@ client.nested_no_auth.api.get_something()
 from seed import SeedOauthClientCredentialsWithVariables
 
 client = SeedOauthClientCredentialsWithVariables(
-    base_url="YOUR_BASE_URL",
-    root_variable="YOUR_ROOT_VARIABLE",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
+
 client.nested.api.get_something()
 
 ```
@@ -256,7 +296,7 @@ client.nested.api.get_something()
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">post</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py">post</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -272,9 +312,11 @@ client.nested.api.get_something()
 from seed import SeedOauthClientCredentialsWithVariables
 
 client = SeedOauthClientCredentialsWithVariables(
-    base_url="YOUR_BASE_URL",
-    root_variable="YOUR_ROOT_VARIABLE",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
+
 client.service.post()
 
 ```
@@ -287,6 +329,14 @@ client.service.post()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**endpoint_param:** `str` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -304,7 +354,7 @@ client.service.post()
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>() -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -320,9 +370,11 @@ client.service.post()
 from seed import SeedOauthClientCredentialsWithVariables
 
 client = SeedOauthClientCredentialsWithVariables(
-    base_url="YOUR_BASE_URL",
-    root_variable="YOUR_ROOT_VARIABLE",
+    client_id="<clientId>",
+    client_secret="<clientSecret>",
+    base_url="https://yourhost.com/path/to/api",
 )
+
 client.simple.get_something()
 
 ```

@@ -1,4 +1,126 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.24.5
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 2.24.4
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippet generation for undiscriminated unions when `use-undiscriminated-unions: true`
+        is set. Previously, snippets always emitted `OneOf<A, B, C>` regardless of the config setting.
+        Now, when the setting is enabled, snippets use the SDK's generated union wrapper type (e.g.
+        `MixedType`) instead, matching the actual SDK types and producing compilable code.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 2.24.3
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 2.24.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 2.24.1
+  changelogEntry:
+    - summary: |
+        Improve error logging for README.md and reference.md generation failures.
+        The generator now logs the actual error message and stack trace instead
+        of a generic "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 2.24.0
+  changelogEntry:
+    - summary: |
+        Upgrade IR SDK from v62 to v65. Adds support for `dateTimeRfc2822` primitive,
+        `validation` on `LongType`, and `uri`/`path` pagination types (currently skipped
+        with a warning as they are not yet fully supported in C#).
+      type: feat
+  createdAt: "2026-03-08"
+  irVersion: 65
+
+- version: 2.23.12
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 2.23.11
+  changelogEntry:
+    - summary: |
+        Remove unnecessary NuGet package restore from the generator Dockerfile.
+        NuGet packages are not needed at generation time since the generator only
+        writes files and runs csharpier; no dotnet restore occurs during generation.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 2.23.10
+  changelogEntry:
+    - summary: |
+        Optimize context construction performance: replace expensive O(n) string
+        split/filter/join in ModelNavigator's tree indexing with O(1) incremental
+        path building, skip recursion into name-casing variant branches that only
+        contain primitive values, and lazily initialize the CsharpFormatter so
+        the csharpier tool path is only resolved when formatting is actually needed.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+
+- version: 2.23.9
+  changelogEntry:
+    - summary: |
+        Sync and cache NuGet dependencies across all C# Dockerfiles. Updates test
+        framework packages to match generated SDK versions and adds NuGet restore
+        caching to the generator Dockerfiles.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+- version: 2.23.8
+  changelogEntry:
+    - summary: |
+        Reduce dotnet CLI process spawns during project setup by generating
+        the `.slnx` solution file and test project reference directly as
+        templates instead of invoking 5 separate `dotnet` CLI commands
+        (`dotnet new sln`, `dotnet sln add` ×2, `dotnet remove reference`,
+        `dotnet add reference`). This eliminates ~5-10s of cold .NET CLI
+        startup overhead per generation run.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
+- version: 2.23.7
+  changelogEntry:
+    - summary: |
+        Parallelize file writes during project persistence using batched concurrency
+        (100 files per batch via `Promise.all`), significantly reducing generation time
+        for large projects with thousands of files.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 62
 - version: 2.23.6
   changelogEntry:
     - summary: |

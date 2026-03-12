@@ -88,6 +88,18 @@ class Pydantic:
         # V1 and V1_ON_V2 use parse_obj
         return "parse_obj"
 
+    def ValidationError(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            import_=AST.ReferenceImport(
+                module=AST.Module.external(
+                    dependency=_get_dependency(self.version_compatibility),
+                    module_path=_get_module_path(self.version_compatibility),
+                ),
+                named_import="ValidationError",
+            ),
+            qualified_name_excluding_import=(),
+        )
+
     @property
     def extra(self) -> "Pydantic.Extra":
         return Pydantic.Extra(self.version_compatibility)

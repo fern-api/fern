@@ -1,0 +1,119 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ReadmeConfigBuilder > full snapshot > matches snapshot for comprehensive config 1`] = `
+{
+  "apiName": "Acme",
+  "apiReferenceLink": "https://docs.acme.com",
+  "bannerLink": undefined,
+  "customSections": undefined,
+  "disabledFeatures": undefined,
+  "features": [
+    {
+      "addendum": undefined,
+      "advanced": false,
+      "description": undefined,
+      "id": "USAGE",
+      "snippets": [
+        "await client.createUser();",
+      ],
+      "snippetsAreOptional": false,
+    },
+    {
+      "addendum": undefined,
+      "advanced": true,
+      "description": undefined,
+      "id": "RETRIES",
+      "snippets": [
+        "const response = await client.createUser(..., {
+    maxRetries: 0 // override maxRetries at the request level
+});
+",
+      ],
+      "snippetsAreOptional": false,
+    },
+    {
+      "addendum": undefined,
+      "advanced": false,
+      "description": undefined,
+      "id": "TIMEOUTS",
+      "snippets": [
+        "const response = await client.createUser(..., {
+    timeoutInSeconds: 30 // override timeout to 30s
+});
+",
+      ],
+      "snippetsAreOptional": false,
+    },
+    {
+      "addendum": undefined,
+      "advanced": false,
+      "description": undefined,
+      "id": "EXCEPTION_HANDLING",
+      "snippets": [
+        "import { MySDKError } from "@acme/sdk";
+
+try {
+    await client.createUser(...);
+} catch (err) {
+    if (err instanceof MySDKError) {
+        console.log(err.statusCode);
+        console.log(err.message);
+        console.log(err.body);
+        console.log(err.rawResponse);
+    }
+}
+",
+      ],
+      "snippetsAreOptional": false,
+    },
+    {
+      "addendum": undefined,
+      "advanced": false,
+      "description": undefined,
+      "id": "LOGGING",
+      "snippets": [
+        "import { MySDKClient, logging } from "@acme/sdk";
+
+const client = new MySDKClient({
+    ...
+    logging: {
+        level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info
+        logger: new logging.ConsoleLogger(), // defaults to ConsoleLogger
+        silent: false, // defaults to true, set to false to enable logging
+    }
+});
+",
+      ],
+      "snippetsAreOptional": false,
+    },
+    {
+      "addendum": undefined,
+      "advanced": false,
+      "description": undefined,
+      "id": "RUNTIME_COMPATIBILITY",
+      "snippets": [
+        "import { MySDKClient } from "@acme/sdk";
+
+const client = new MySDKClient({
+    ...
+    fetcher: // provide your implementation here
+});
+",
+      ],
+      "snippetsAreOptional": false,
+    },
+  ],
+  "introduction": "Welcome to Acme SDK",
+  "language": {
+    "_visit": [Function],
+    "publishInfo": {
+      "packageName": "@acme/sdk",
+    },
+    "type": "typescript",
+  },
+  "organization": "acme",
+  "referenceMarkdownPath": "./reference.md",
+  "remote": undefined,
+  "whiteLabel": undefined,
+}
+`;

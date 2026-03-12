@@ -2,5 +2,6 @@
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-go-model",
   "generatorVersion": "latest",
+  "originGitCommit": "DUMMY",
   "sdkVersion": "v0.0.1"
 }

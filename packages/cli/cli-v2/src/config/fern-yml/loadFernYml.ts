@@ -8,7 +8,7 @@ import { FernYmlSchemaLoader } from "./FernYmlSchemaLoader.js";
  * error reporting. Domain-specific converters (e.g., SDKConfigConverter)
  * handle conversion to their respective config types.
  *
- * @throws ValidationError if the configuration is invalid.
+ * @throws SourcedValidationError if the configuration is invalid.
  * @throws Error if fern.yml is not found.
  */
 export async function loadFernYml({ cwd }: { cwd?: AbsoluteFilePath }): Promise<FernYmlSchemaLoader.Success> {

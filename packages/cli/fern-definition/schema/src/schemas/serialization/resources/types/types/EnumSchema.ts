@@ -11,6 +11,7 @@ export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.
         .object({
             default: core.serialization.string().optional(),
             enum: core.serialization.list(EnumValue),
+            "forward-compatible": core.serialization.boolean().optional(),
         })
         .extend(BaseTypeDeclarationSchema);
 
@@ -18,5 +19,6 @@ export declare namespace EnumSchema {
     export interface Raw extends BaseTypeDeclarationSchema.Raw {
         default?: string | null;
         enum: EnumValue.Raw[];
+        "forward-compatible"?: boolean | null;
     }
 }

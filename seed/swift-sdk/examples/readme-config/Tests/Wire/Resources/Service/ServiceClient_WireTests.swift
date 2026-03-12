@@ -228,7 +228,7 @@ import Examples
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = "<head>...</head>"
+        let expectedResponse = MetadataType.html("<head>...</head>")
         let response = try await client.service.getMetadata(
             shallow: false,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -259,7 +259,7 @@ import Examples
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = "string"
+        let expectedResponse = MetadataType.html("string")
         let response = try await client.service.getMetadata(
             shallow: true,
             requestOptions: RequestOptions(additionalHeaders: stub.headers)
@@ -355,13 +355,7 @@ import Examples
                     name: "name"
                 ),
                 metadata: MetadataType.html(
-                    .init(
-                        extra: [
-                            "extra": "extra"
-                        ],
-                        tags: ,
-                        html: 
-                    )
+
                 ),
                 commonMetadata: Metadata(
                     id: "id",
@@ -371,7 +365,7 @@ import Examples
                     jsonString: "jsonString"
                 ),
                 eventInfo: EventInfo.metadata(
-                    .init(
+                    Metadata(
                         id: "id",
                         data: [
                             "data": "data"
@@ -380,25 +374,21 @@ import Examples
                     )
                 ),
                 data: Data.string(
-                    .init(
-                        string: 
-                    )
+
                 ),
                 migration: Migration(
                     name: "name",
                     status: .running
                 ),
                 exception: Exception.generic(
-                    .init(
+                    ExceptionInfo(
                         exceptionType: "exceptionType",
                         exceptionMessage: "exceptionMessage",
                         exceptionStacktrace: "exceptionStacktrace"
                     )
                 ),
                 test: Test.and(
-                    .init(
-                        and: 
-                    )
+
                 ),
                 node: Node(
                     name: "name",

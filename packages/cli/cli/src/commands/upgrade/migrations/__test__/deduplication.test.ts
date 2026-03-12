@@ -26,8 +26,23 @@ vi.mock("@fern-api/logging-execa", () => ({
 }));
 
 // Mock fs/promises
+// The lock file mechanism uses open("wx") which returns a FileHandle with
+// .writeFile() and .close() methods. We also mock stat to throw ENOENT so
+// that ensureMigrationsInstalled always runs npm install.
+const mockFileHandle = { writeFile: vi.fn(async () => undefined), close: vi.fn(async () => undefined) };
+let mockStatShouldSucceed = false;
 vi.mock("fs/promises", () => ({
     mkdir: vi.fn(async () => undefined),
+    open: vi.fn(async () => mockFileHandle),
+    unlink: vi.fn(async () => undefined),
+    stat: vi.fn(async () => {
+        if (!mockStatShouldSucceed) {
+            const err = new Error("ENOENT") as NodeJS.ErrnoException;
+            err.code = "ENOENT";
+            throw err;
+        }
+        return { mtimeMs: Date.now() };
+    }),
     readFile: vi.fn(async () =>
         JSON.stringify({
             name: "@fern-api/generator-migrations",
@@ -93,8 +108,19 @@ describe("Migration loader deduplication", () => {
                 return { stdout: "", stderr: "", exitCode: 0 };
             })
         }));
+        mockStatShouldSucceed = false;
         vi.doMock("fs/promises", () => ({
             mkdir: vi.fn(async () => undefined),
+            open: vi.fn(async () => mockFileHandle),
+            unlink: vi.fn(async () => undefined),
+            stat: vi.fn(async () => {
+                if (!mockStatShouldSucceed) {
+                    const err = new Error("ENOENT") as NodeJS.ErrnoException;
+                    err.code = "ENOENT";
+                    throw err;
+                }
+                return { mtimeMs: Date.now() };
+            }),
             readFile: vi.fn(async () =>
                 JSON.stringify({
                     name: "@fern-api/generator-migrations",
@@ -110,9 +136,9 @@ describe("Migration loader deduplication", () => {
     it("should only run npm install once when called concurrently", async () => {
         // We need to mock the dynamic import that happens inside ensureMigrationsInstalled.
         // The function does: const { migrations } = await import(packageEntryPoint);
-        // We mock the path module to return a predictable path, then mock that path's import.
+        // The install dir is the shared cache dir: ~/.fern/migration-cache/
         vi.doMock(
-            "/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js",
+            `/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js`,
             () => ({
                 migrations: mockMigrationsMap
             })
@@ -149,7 +175,7 @@ describe("Migration loader deduplication", () => {
 
     it("should retry npm install after a transient failure", async () => {
         vi.doMock(
-            "/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js",
+            `/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js`,
             () => ({
                 migrations: mockMigrationsMap
             })
@@ -187,7 +213,7 @@ describe("Migration loader deduplication", () => {
 
     it("should return undefined for unknown generators", async () => {
         vi.doMock(
-            "/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js",
+            `/tmp/test-fern-home/.fern/migration-cache/node_modules/@fern-api/generator-migrations/dist/index.js`,
             () => ({
                 migrations: mockMigrationsMap
             })

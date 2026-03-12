@@ -34,28 +34,31 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-import datetime
-
 from seed import SeedNullable
-from seed.nullable import Metadata, Status
+from seed.nullable import Metadata
+import datetime
 
 client = SeedNullable(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.nullable.create_user(
     username="username",
-    tags=["tags", "tags"],
+    tags=[
+        "tags",
+        "tags"
+    ],
     metadata=Metadata(
-        created_at=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
-        updated_at=datetime.datetime.fromisoformat(
-            "2024-01-15 09:30:00+00:00",
-        ),
+        created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+        updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
         avatar="avatar",
         activated=True,
-        status=Status(),
-        values={"values": "values"},
+        status={
+            "type": "active"
+        },
+        values={
+            "values": "values"
+        },
     ),
     avatar="avatar",
 )
@@ -67,10 +70,10 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 
 ```python
 import asyncio
+from seed.nullable import Metadata
 import datetime
 
 from seed import AsyncSeedNullable
-from seed.nullable import Metadata, Status
 
 client = AsyncSeedNullable(
     base_url="https://yourhost.com/path/to/api",
@@ -80,18 +83,21 @@ client = AsyncSeedNullable(
 async def main() -> None:
     await client.nullable.create_user(
         username="username",
-        tags=["tags", "tags"],
+        tags=[
+            "tags",
+            "tags"
+        ],
         metadata=Metadata(
-            created_at=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            updated_at=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
+            created_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
+            updated_at=datetime.datetime.fromisoformat("2024-01-15T09:30:00+00:00"),
             avatar="avatar",
             activated=True,
-            status=Status(),
-            values={"values": "values"},
+            status={
+                "type": "active"
+            },
+            values={
+                "values": "values"
+            },
         ),
         avatar="avatar",
     )
@@ -125,9 +131,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from seed import SeedNullable
 
-client = SeedNullable(
-    ...,
-)
+client = SeedNullable(...)
 response = client.nullable.with_raw_response.create_user(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -159,14 +163,9 @@ client.nullable.create_user(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from seed import SeedNullable
 
-client = SeedNullable(
-    ...,
-    timeout=20.0,
-)
-
+client = SeedNullable(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.nullable.create_user(..., request_options={

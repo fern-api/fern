@@ -36,7 +36,7 @@ export async function generateDocsWorkspace({
         cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.");
         return;
     }
-    const isRunningOnSelfHosted = process.env["FERN_SELF_HOSTED"] === "true";
+    const hasFdrOriginOverride = !!process.env["FERN_FDR_ORIGIN"] || !!process.env["OVERRIDE_FDR_ORIGIN"];
 
     if (!preview && !isCI() && !noPrompt) {
         const productionUrl = instance ?? docsWorkspace.config.instances[0]?.url;
@@ -53,8 +53,8 @@ export async function generateDocsWorkspace({
     }
 
     let token: FernToken | null = null;
-    if (isRunningOnSelfHosted) {
-        const fernToken = process.env["FERN_TOKEN"]; // token can be a dummy token
+    if (hasFdrOriginOverride) {
+        const fernToken = process.env["FERN_TOKEN"];
         if (!fernToken) {
             cliContext.failAndThrow("No token found. Please set the FERN_TOKEN environment variable.");
             return;
@@ -79,12 +79,10 @@ export async function generateDocsWorkspace({
         }
     }
 
-    if (!isRunningOnSelfHosted) {
-        await cliContext.instrumentPostHogEvent({
-            orgId: project.config.organization,
-            command: "fern generate --docs"
-        });
-    }
+    await cliContext.instrumentPostHogEvent({
+        orgId: project.config.organization,
+        command: "fern generate --docs"
+    });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
         await validateDocsWorkspaceAndLogIssues({
@@ -94,7 +92,7 @@ export async function generateDocsWorkspace({
             apiWorkspaces: project.apiWorkspaces,
             ossWorkspaces: await filterOssWorkspaces(project),
             errorOnBrokenLinks: strictBrokenLinks,
-            excludeRules: getExcludeRules(brokenLinks, strictBrokenLinks, isRunningOnSelfHosted)
+            excludeRules: getExcludeRules(brokenLinks, strictBrokenLinks)
         });
 
         context.logger.info("Validation complete, starting remote docs generation...");
@@ -124,13 +122,10 @@ export async function generateDocsWorkspace({
     });
 }
 
-function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean, isRunningOnSelfHosted: boolean): string[] {
-    let excludeRules: string[] = [];
+function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): string[] {
+    const excludeRules: string[] = [];
     if (!brokenLinks && !strictBrokenLinks) {
         excludeRules.push(Rules.ValidMarkdownLinks.name);
-    }
-    if (isRunningOnSelfHosted) {
-        excludeRules.push(Rules.ValidFileTypes.name);
     }
     return excludeRules;
 }

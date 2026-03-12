@@ -12,7 +12,7 @@ import { EndpointSignatureInfo } from "../endpoint/EndpointSignatureInfo.js";
 import { SingleEndpointSnippet } from "../endpoint/snippets/EndpointSnippetsGenerator.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
-export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
+export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder | undefined {
     const builder = new ReferenceConfigBuilder();
     const serviceEntries = Object.entries(context.ir.services);
     let hasEndpoints = false;
@@ -31,7 +31,7 @@ export function buildReference({ context }: { context: SdkGeneratorContext }): R
         }
     });
     if (!hasEndpoints) {
-        throw new Error(`No endpoint references found for any service while building reference.md.`);
+        return undefined;
     }
     return builder;
 }
