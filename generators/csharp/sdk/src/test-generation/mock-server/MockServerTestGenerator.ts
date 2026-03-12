@@ -202,10 +202,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
         if (segments.length === 0) {
             return this.constants.folders.mockServerTests;
         }
-        return join(
-            this.constants.folders.mockServerTests,
-            ...segments.map(RelativeFilePath.of)
-        );
+        return join(this.constants.folders.mockServerTests, ...segments.map(RelativeFilePath.of));
     }
 
     protected getFilepath(): RelativeFilePath {
