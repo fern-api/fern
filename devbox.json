@@ -17,6 +17,7 @@
     "init_hook": [
       "printf '\\033]0;%s\\007' 'fern (devbox)'",
       "unset GOROOT # Unset GOROOT from parent shell to avoid conflicts with devbox's Go",
+      "export PATH=\"$(go env GOPATH)/bin:$PATH\"",
       "go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@dc6f6fa 2>/dev/null || true",
       "echo 'Node.js:' $(node --version)",
       "echo 'pnpm:' $(pnpm --version)",

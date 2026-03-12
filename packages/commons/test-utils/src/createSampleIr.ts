@@ -89,11 +89,11 @@ export async function createMigratedSampleIr<T = unknown>(
         keywords: opts?.keywords,
         smartCasing: opts?.smartCasing ?? true
     });
-    const migrated = INTERMEDIATE_REPRESENTATION_MIGRATOR.migrateThroughVersion({
+    const migrated = INTERMEDIATE_REPRESENTATION_MIGRATOR.migrateThroughVersion<T>({
         version: targetIrVersion,
         intermediateRepresentation: ir,
         context,
         casingsGenerator
     });
-    return migrated.ir as T;
+    return migrated.ir;
 }

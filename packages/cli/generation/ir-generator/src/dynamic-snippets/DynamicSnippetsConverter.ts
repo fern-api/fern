@@ -79,12 +79,12 @@ export class DynamicSnippetsConverter {
         this.generatorConfig = args.generatorConfig;
         this.casingsGenerator = constructCasingsGenerator({
             generationLanguage: args.generationLanguage,
-            smartCasing: args.smartCasing ?? false,
+            smartCasing: args.smartCasing ?? args.smartCasing ?? true,
             keywords: args.ir.casingsConfig?.keywords
         });
         this.fullCasingsGenerator = constructFullCasingsGenerator({
             generationLanguage: args.generationLanguage,
-            smartCasing: args.smartCasing ?? false,
+            smartCasing: args.smartCasing ?? args.smartCasing ?? true,
             keywords: args.ir.casingsConfig?.keywords
         });
         this.auth = this.convertAuth(this.ir.auth);

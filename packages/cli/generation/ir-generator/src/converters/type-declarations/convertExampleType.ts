@@ -124,7 +124,10 @@ export function convertTypeExample({
                         return undefined;
                     }
                     return {
-                        name: propertyName,
+                        name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                            name: propertyName,
+                            wireValue: propertyName
+                        }),
                         value: convertTypeReferenceExample({
                             example: propertyExample,
                             rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
@@ -739,7 +742,10 @@ function convertObject({
                 ? undefined
                 : propertiesWithoutTypeDeclaration.map<ExampleExtraObjectProperty>(([wireKey, propertyExample]) => {
                       return {
-                          name: wireKey,
+                          name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                              name: wireKey,
+                              wireValue: wireKey
+                          }),
                           value: {
                               shape: convertUnknownExample({ example: propertyExample }),
                               jsonExample: propertyExample
@@ -839,7 +845,7 @@ function convertSingleUnionType({
     workspace: FernWorkspace;
     recursionContext?: RecursionContext;
 }): ExampleSingleUnionType {
-    const wireDiscriminantValue = fileContainingType.casingsGenerator.generateNameAndWireValue({
+    const wireDiscriminantValue = fileContainingExample.casingsGenerator.generateNameAndWireValue({
         name: getSingleUnionTypeName({ unionKey: discriminantValueForExample, rawSingleUnionType }).name,
         wireValue: discriminantValueForExample
     });
