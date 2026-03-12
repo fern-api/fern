@@ -437,6 +437,26 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     }
                 }),
         async (argv) => {
+            // Large IR files (>2 GB) can exceed Node's default heap limit.
+            // If the current process was not already spawned with an increased
+            // heap, re-spawn with --max-old-space-size so that the full IR can
+            // be parsed and validated in memory.
+            if (process.env.__FERN_DIFF_HEAP_RESPAWNED == null) {
+                const { spawnSync } = await import("child_process");
+                const HEAP_SIZE_MB = 16384;
+                const child = spawnSync(
+                    process.execPath,
+                    [`--max-old-space-size=${HEAP_SIZE_MB}`, ...process.execArgv, ...process.argv.slice(1)],
+                    {
+                        env: { ...process.env, __FERN_DIFF_HEAP_RESPAWNED: "1" },
+                        stdio: "inherit",
+                        maxBuffer: 1024 * 1024 * 100
+                    }
+                );
+                await cliContext.exit({ code: child.status ?? 1 });
+                return;
+            }
+
             const fromVersion = undefinedIfNullish(argv.fromVersion);
             const generatorVersions = undefinedIfSomeNullish({
                 from: argv.fromGeneratorVersion,

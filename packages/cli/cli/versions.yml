@@ -3,9 +3,10 @@
   changelogEntry:
     - summary: |
         Fix `fern diff` running out of memory on very large IR files (>2 GB).
-        The command now streams only the `types`, `errors`, and `services` fields
-        needed for change detection instead of loading the entire IR into memory,
-        avoiding Node.js's heap allocation limit.
+        The command now automatically re-spawns Node with an increased heap limit
+        (16 GB) when running `fern diff`, allowing the full IR to be parsed and
+        validated in memory. Combined with the streaming JSON parser from v4.24.2,
+        this removes both the V8 string-size limit and the heap allocation limit.
       type: fix
   createdAt: "2026-03-12"
   irVersion: 65

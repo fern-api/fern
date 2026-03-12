@@ -1,5 +1,6 @@
 import { diffSemverOrThrow } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, doesPathExist, resolve, streamFieldsFromFile } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, resolve, streamObjectFromFile } from "@fern-api/fs-utils";
+import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
 import { FernCliError } from "@fern-api/task-context";
 import semver from "semver";
@@ -33,9 +34,9 @@ export async function diff({
 }): Promise<Result> {
     const detector = new IntermediateRepresentationChangeDetector();
     const irChange = resultFromIRChangeResults(
-        await detector.checkFromInternalIr({
-            from: await readIrFields({ context, filepath: from, flagName: "from" }),
-            to: await readIrFields({ context, filepath: to, flagName: "to" })
+        await detector.check({
+            from: await readIr({ context, filepath: from, flagName: "from" }),
+            to: await readIr({ context, filepath: to, flagName: "to" })
         })
     );
     const generatorChange = diffGeneratorVersions(context, generatorVersions);
@@ -61,14 +62,7 @@ export async function diff({
     return { bump, nextVersion, errors };
 }
 
-/**
- * The fields from the IR that the change detector actually needs.
- * By streaming only these fields we avoid loading the entire IR into memory,
- * which is critical for IR files that can exceed 2 GB.
- */
-const IR_DIFF_FIELDS = ["types", "errors", "services"] as const;
-
-async function readIrFields({
+async function readIr({
     context,
     filepath,
     flagName
@@ -76,20 +70,19 @@ async function readIrFields({
     context: CliContext;
     filepath: string;
     flagName: string;
-}): Promise<IntermediateRepresentationChangeDetector.InternalIr> {
+}): Promise<IntermediateRepresentation> {
     const absoluteFilepath = AbsoluteFilePath.of(resolve(cwd(), filepath));
     if (!(await doesPathExist(absoluteFilepath, "file"))) {
         context.failWithoutThrowing(`File not found: ${absoluteFilepath}`);
         throw new FernCliError();
     }
-    const partial = (await streamFieldsFromFile(absoluteFilepath, [...IR_DIFF_FIELDS])) as Record<string, unknown>;
-    if (partial.types == null || partial.errors == null || partial.services == null) {
-        context.failWithoutThrowing(
-            `Invalid --${flagName}; expected a filepath containing a valid IR with types, errors, and services`
-        );
+    const ir = await streamObjectFromFile(absoluteFilepath);
+    const parsed = serialization.IntermediateRepresentation.parse(ir);
+    if (!parsed.ok) {
+        context.failWithoutThrowing(`Invalid --${flagName}; expected a filepath containing a valid IR`);
         throw new FernCliError();
     }
-    return partial as unknown as IntermediateRepresentationChangeDetector.InternalIr;
+    return parsed.value;
 }
 
 function resultFromIRChangeResults(results: IntermediateRepresentationChangeDetector.Result): InternalResult {
