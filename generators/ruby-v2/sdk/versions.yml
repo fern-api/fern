@@ -3,10 +3,39 @@
 - version: 1.1.0
   changelogEntry:
     - summary: |
-        Add configurable logging support to generated Ruby SDKs. Logging is silent by default
-        and can be enabled via the `logging` parameter when initializing the client. Supports
-        custom log levels, custom logger backends, and automatic HTTP request/response logging
-        with sensitive header redaction
+        Add support for logging to the generated SDK.
+        Users can configure the logger by passing a `logging` parameter to the client constructor.
+
+        ```ruby
+        require "acme"
+
+        client = Acme::Client.new(
+          token: "YOUR_TOKEN",
+          logging: {
+            level: :debug,        # :info is the default
+            logger: Acme::Internal::Logging::ConsoleLogger.new,  # ConsoleLogger is the default
+            silent: false         # true is the default, set to false to enable logging
+          }
+        )
+        ```
+
+        The `logging` parameter accepts a `LogConfig`, `Hash`, or `nil` with the following properties:
+        - `level`: The log level to use. Defaults to `:info`.
+        - `logger`: The logger implementation to use. Defaults to `ConsoleLogger`.
+        - `silent`: Whether to silence the logger. Defaults to `true`.
+
+        The `level` property can be one of the following values:
+        - `:debug`
+        - `:info`
+        - `:warn`
+        - `:error`
+
+        To provide a custom logger, implement the `ILogger` module
+        with `debug`, `info`, `warn`, and `error` methods.
+
+        HTTP request and response details (method, URL, status code, headers) are
+        logged via a `LoggingMiddleware` added to the HTTP client. Sensitive headers
+        (`authorization`, `x-api-key`, `cookie`, etc.) are automatically redacted in logs.
       type: feat
   createdAt: "2026-03-12"
   irVersion: 61
