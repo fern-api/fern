@@ -11,14 +11,14 @@ import { assert, describe, expect, it } from "vitest";
 
 import { buildUrl } from "../endpoints/utils/buildUrl.js";
 
-function createMockContext() {
+function createMockContext(opts?: { useSerializerPrefix?: boolean }) {
     const coreUtilities = createMockCoreUtilities();
     return {
         coreUtilities,
         requestWrapper: {
             shouldInlinePathParameters: () => false
         },
-        typeSchema: createMockTypeSchemaContext()
+        typeSchema: createMockTypeSchemaContext({ useSerializerPrefix: opts?.useSerializerPrefix })
         // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
     } as any;
 }
@@ -225,6 +225,124 @@ describe("buildUrl", () => {
 
         assert(result != null, "expected buildUrl to return an expression with original casing");
         const text = getTextOfTsNode(result);
+        expect(text).toMatchSnapshot();
+    });
+
+    it("serializes named type path parameter with includeSerdeLayer", () => {
+        const namedParam: FernIr.PathParameter = {
+            ...createPathParameter("userId"),
+            valueType: FernIr.TypeReference.named({
+                typeId: "type_UserId" as FernIr.TypeId,
+                fernFilepath: { allParts: [], packagePath: [], file: undefined },
+                name: {
+                    originalName: "UserId",
+                    camelCase: { unsafeName: "userId", safeName: "userId" },
+                    snakeCase: { unsafeName: "user_id", safeName: "user_id" },
+                    screamingSnakeCase: { unsafeName: "USER_ID", safeName: "USER_ID" },
+                    pascalCase: { unsafeName: "UserId", safeName: "UserId" }
+                },
+                default: undefined,
+                inline: undefined,
+                displayName: undefined
+            })
+        };
+
+        const result = buildUrl({
+            endpoint: {
+                sdkRequest: undefined,
+                fullPath: {
+                    head: "/users/",
+                    parts: [{ pathParameter: "userId", tail: "" }]
+                },
+                allPathParameters: [namedParam],
+                path: {
+                    head: "/users/",
+                    parts: [{ pathParameter: "userId", tail: "" }]
+                }
+            },
+            generatedClientClass: createMockGeneratedClientClass(),
+            context: createMockContext({ useSerializerPrefix: true }),
+            includeSerdeLayer: true,
+            retainOriginalCasing: false,
+            omitUndefined: false,
+            parameterNaming: "default",
+            getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
+        });
+
+        assert(result != null, "expected buildUrl to return an expression for named type with serde");
+        const text = getTextOfTsNode(result);
+        // Should include serializer.jsonOrThrow serialization for named type
+        expect(text).toContain("serializer.jsonOrThrow");
+        expect(text).toMatchSnapshot();
+    });
+
+    it("uses variable reference when path parameter has variable property", () => {
+        const variableParam: FernIr.PathParameter = {
+            ...createPathParameter("userId"),
+            variable: "userId" as FernIr.VariableId
+        };
+
+        const result = buildUrl({
+            endpoint: {
+                sdkRequest: undefined,
+                fullPath: {
+                    head: "/users/",
+                    parts: [{ pathParameter: "userId", tail: "" }]
+                },
+                allPathParameters: [variableParam],
+                path: {
+                    head: "/users/",
+                    parts: [{ pathParameter: "userId", tail: "" }]
+                }
+            },
+            generatedClientClass: createMockGeneratedClientClass(),
+            context: createMockContext(),
+            includeSerdeLayer: false,
+            retainOriginalCasing: false,
+            omitUndefined: false,
+            parameterNaming: "default",
+            getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
+        });
+
+        assert(result != null, "expected buildUrl to return an expression for variable path parameter");
+        const text = getTextOfTsNode(result);
+        // Should reference the variable via generatedClientClass.getReferenceToVariable
+        expect(text).toContain("this");
+        expect(text).toMatchSnapshot();
+    });
+
+    it("uses request reference when shouldInlinePathParameters is true", () => {
+        const param = createPathParameter("userId");
+
+        const mockContext = createMockContext();
+        mockContext.requestWrapper.shouldInlinePathParameters = () => true;
+
+        const result = buildUrl({
+            endpoint: {
+                sdkRequest: undefined,
+                fullPath: {
+                    head: "/users/",
+                    parts: [{ pathParameter: "userId", tail: "" }]
+                },
+                allPathParameters: [param],
+                path: {
+                    head: "/users/",
+                    parts: [{ pathParameter: "userId", tail: "" }]
+                }
+            },
+            generatedClientClass: createMockGeneratedClientClass(),
+            context: mockContext,
+            includeSerdeLayer: false,
+            retainOriginalCasing: false,
+            omitUndefined: false,
+            parameterNaming: "default",
+            getReferenceToPathParameterVariableFromRequest: defaultGetReferenceToPathParameterVariableFromRequest
+        });
+
+        assert(result != null, "expected buildUrl to return an expression for inline path parameters");
+        const text = getTextOfTsNode(result);
+        // Should use the getReferenceToPathParameterVariableFromRequest callback
+        expect(text).toContain("request.userId");
         expect(text).toMatchSnapshot();
     });
 

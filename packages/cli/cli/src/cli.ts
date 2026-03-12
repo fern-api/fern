@@ -443,7 +443,7 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             // be parsed and validated in memory.
             if (process.env.__FERN_DIFF_HEAP_RESPAWNED == null) {
                 const { spawnSync } = await import("child_process");
-                const HEAP_SIZE_MB = 16384;
+                const HEAP_SIZE_MB = 8192;
                 const child = spawnSync(
                     process.execPath,
                     [`--max-old-space-size=${HEAP_SIZE_MB}`, ...process.execArgv, ...process.argv.slice(1)],
