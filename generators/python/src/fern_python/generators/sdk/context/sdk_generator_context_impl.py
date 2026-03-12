@@ -267,11 +267,23 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         type = reference.get_as_union()
         if type.type == "named":
             shape = self.pydantic_generator_context.get_declaration_for_type_id(type.type_id).shape.get_as_union()
+            # Single-value enums (from OpenAPI const) should be treated as literals
+            if shape.type == "enum" and len(shape.values) == 1:
+                return shape.values[0].name.wire_value
             if shape.type == "alias":
                 resolved_type = shape.resolved_type.get_as_union()
                 if resolved_type.type == "container":
                     return self._get_literal_value(resolved_type.container)
+                # Also check if the alias resolves to a named type (e.g. single-value enum)
+                if resolved_type.type == "named":
+                    return self.get_literal_value(ir_types.TypeReference.factory.named(resolved_type.name))
         if type.type == "container":
+            container = type.container.get_as_union()
+            # Unwrap optional/nullable to check inner type
+            if container.type == "optional":
+                return self.get_literal_value(container.optional)
+            if container.type == "nullable":
+                return self.get_literal_value(container.nullable)
             return self._get_literal_value(type.container)
         return None
 

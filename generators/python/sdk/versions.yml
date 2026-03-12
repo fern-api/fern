@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.63.5
+  changelogEntry:
+    - summary: |
+        Single-value enums (originating from OpenAPI `const` fields) are now treated as
+        literal types with auto-populated default values in generated Python SDKs. Fields
+        that can only ever be one value no longer require manual specification by users.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
 - version: 4.63.4
   changelogEntry:
     - summary: |

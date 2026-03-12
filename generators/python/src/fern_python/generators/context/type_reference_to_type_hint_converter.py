@@ -208,6 +208,14 @@ class TypeReferenceToTypeHintConverter:
         as_request: bool,
         as_if_type_checking_import: bool = False,
     ) -> AST.TypeHint:
+        # Single-value enums (originating from OpenAPI const) should be treated as literals
+        declaration = self._context.get_declaration_for_type_id(type_name.type_id)
+        shape = declaration.shape.get_as_union()
+        if shape.type == "enum" and len(shape.values) == 1:
+            wire_value = shape.values[0].name.wire_value
+            escaped = wire_value.replace("\\", "\\\\").replace('"', '\\"')
+            return AST.TypeHint.literal(value=AST.Expression(f'"{escaped}"'))
+
         return AST.TypeHint(
             type=self._type_declaration_referencer.get_class_reference(
                 name=type_name,

@@ -123,7 +123,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                 alias=lambda a: self.get_initializer_for_type_reference(
                     a.alias_of, ignore_literals=ignore_literals, for_request_param=for_request_param
                 ),
-                enum=lambda _: None,
+                enum=lambda e: self._get_single_value_enum_default(e, ignore_literals),
                 object=lambda _: None,
                 union=lambda _: None,
                 undiscriminated_union=lambda _: None,
@@ -151,6 +151,38 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             )
 
         return default_value
+
+    def _get_single_value_enum_default(
+        self, enum: ir_types.EnumTypeDeclaration, ignore_literals: bool = False
+    ) -> Optional[AST.Expression]:
+        """If the enum has exactly one value (i.e. originates from an OpenAPI const),
+        treat it as a literal and return a default expression for it."""
+        if ignore_literals:
+            return None
+        if len(enum.values) == 1:
+            wire_value = enum.values[0].name.wire_value
+            escaped = wire_value.replace("\\", "\\\\").replace('"', '\\"')
+            return AST.Expression(f'"{escaped}"')
+        return None
+
+    def get_single_value_enum_string(self, type_reference: ir_types.TypeReference) -> Optional[str]:
+        """If the type reference resolves to a single-value enum, return the wire value string.
+        Follows aliases. Returns None otherwise."""
+        union = type_reference.get_as_union()
+        if union.type == "named":
+            type_declaration = self.get_declaration_for_type_id(union.type_id)
+            shape = type_declaration.shape.get_as_union()
+            if shape.type == "enum" and len(shape.values) == 1:
+                return shape.values[0].name.wire_value
+            if shape.type == "alias":
+                return self.get_single_value_enum_string(shape.alias_of)
+        if union.type == "container":
+            container = union.container.get_as_union()
+            if container.type == "optional":
+                return self.get_single_value_enum_string(container.optional)
+            if container.type == "nullable":
+                return self.get_single_value_enum_string(container.nullable)
+        return None
 
     def get_class_reference_for_type_id(
         self,

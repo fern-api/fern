@@ -1646,7 +1646,8 @@ class EndpointFunctionGenerator:
             type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_name.type_id)
             return type_declaration.shape.visit(
                 alias=lambda alias: self._is_enum_type_with_value(alias.alias_of, allow_optional=allow_optional),
-                enum=lambda _enum: True,
+                # Single-value enums (from OpenAPI const) are treated as literals, not enum classes
+                enum=lambda _enum: len(_enum.values) != 1,
                 object=lambda _obj: False,
                 union=lambda _union: False,
                 undiscriminated_union=lambda _union: False,
