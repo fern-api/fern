@@ -398,8 +398,8 @@ export class AutoVersioningService {
                 if (currentChunkTexts.length > 0) {
                     chunks.push(currentChunkTexts.join("\n"));
                     currentChunkTexts = [];
-                    currentChunkBytes = 0;
                 }
+                currentChunkBytes = 0;
                 chunks.push(entry.text);
                 continue;
             }
