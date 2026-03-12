@@ -1,5 +1,36 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`GeneratedEndpointErrorSchemaImpl > constructs with multiple errors (mixed typed and untyped) 1`] = `
+"export const Error: Schema<EndpointSchema.Raw, ErrorUnion> = union({}).transform();
+
+export declare namespace Error {
+    export type Raw = Error.BadRequest | Error.Error;
+
+    export interface BadRequest {
+        errorName: "BadRequest";
+        content: string;
+    }
+
+    export interface Error {
+        errorName: "Error";
+    }
+}
+"
+`;
+
+exports[`GeneratedEndpointErrorSchemaImpl > writeToFile generates error schema output 1`] = `
+"export const Error: Schema<EndpointSchema.Raw, ErrorUnion> = union({}).transform();
+
+export declare namespace Error {
+    export type Raw = Error.Error;
+
+    export interface Error {
+        errorName: "Error";
+    }
+}
+"
+`;
+
 exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse > casts response when serde layer disabled 1`] = `"response as string"`;
 
 exports[`GeneratedSdkEndpointTypeSchemasImpl > deserializeResponse > casts text response to string type 1`] = `"response as string"`;
@@ -84,5 +115,19 @@ export declare namespace StreamData {
 }
 
 
+"
+`;
+
+exports[`RawSinglePropertyErrorSingleUnionType > exercises getNonDiscriminantPropertiesForInterface and getNonDiscriminantPropertiesForSchema via writeToFile 1`] = `
+"export const Error: Schema<EndpointSchema.Raw, ErrorUnion> = union({}).transform();
+
+export declare namespace Error {
+    export type Raw = Error.BadRequest;
+
+    export interface BadRequest {
+        errorName: "BadRequest";
+        content: string;
+    }
+}
 "
 `;
