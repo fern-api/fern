@@ -6,19 +6,19 @@ import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved.js";
 
 /**
- * Used at IR generation time. Emits compressed forms (strings) when no user-defined
- * casing overrides are present, and full Name/NameAndWireValue objects when overrides exist.
+ * Used at IR generation time. Always returns fully inflated Name/NameAndWireValue
+ * objects with all casing variants computed.
  */
 export interface CasingsGenerator {
     generateName(
         name: string,
         opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean }
-    ): NameOrString;
+    ): Name;
     generateNameAndWireValue(args: {
         name: string;
         wireValue: string;
         opts?: { casingOverrides?: RawSchemas.CasingOverridesSchema; preserveUnderscores?: boolean };
-    }): NameAndWireValueOrString;
+    }): NameAndWireValue;
 }
 
 /**
@@ -147,18 +147,12 @@ export function constructCasingsGenerator({
     const config: CasingsConfig = { generationLanguage, keywords, smartCasing };
     return {
         generateName: (inputName, opts) => {
-            if (opts?.casingOverrides == null) {
-                return inputName;
-            }
-            return computeName(inputName, opts, config);
+            return computeName(inputName, opts ?? {}, config);
         },
         generateNameAndWireValue: ({ name, wireValue, opts }) => {
-            if (opts?.casingOverrides == null) {
-                return wireValue === name ? wireValue : { wireValue, name };
-            }
             return {
                 wireValue,
-                name: computeName(name, opts, config)
+                name: computeName(name, opts ?? {}, config)
             };
         }
     };

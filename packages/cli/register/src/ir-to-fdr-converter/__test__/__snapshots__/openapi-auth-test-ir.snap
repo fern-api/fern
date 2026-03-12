@@ -1,7 +1,25 @@
 {
   "apiDisplayName": "Auth Test API",
   "apiDocs": undefined,
-  "apiName": "Auth Test API",
+  "apiName": {
+    "camelCase": {
+      "safeName": "authTestApi",
+      "unsafeName": "authTestApi",
+    },
+    "originalName": "Auth Test API",
+    "pascalCase": {
+      "safeName": "AuthTestApi",
+      "unsafeName": "AuthTestApi",
+    },
+    "screamingSnakeCase": {
+      "safeName": "AUTH_TEST_API",
+      "unsafeName": "AUTH_TEST_API",
+    },
+    "snakeCase": {
+      "safeName": "auth_test_api",
+      "unsafeName": "auth_test_api",
+    },
+  },
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -13,7 +31,25 @@
         "_visit": [Function],
         "docs": "JWT Bearer token authentication",
         "key": "bearerAuth",
-        "token": "token",
+        "token": {
+          "camelCase": {
+            "safeName": "token",
+            "unsafeName": "token",
+          },
+          "originalName": "token",
+          "pascalCase": {
+            "safeName": "Token",
+            "unsafeName": "Token",
+          },
+          "screamingSnakeCase": {
+            "safeName": "TOKEN",
+            "unsafeName": "TOKEN",
+          },
+          "snakeCase": {
+            "safeName": "token",
+            "unsafeName": "token",
+          },
+        },
         "tokenEnvVar": undefined,
         "type": "bearer",
       },
@@ -22,7 +58,28 @@
   "basePath": undefined,
   "casingsConfig": undefined,
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId",
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
   },
   "dynamic": undefined,
   "environments": {
@@ -35,7 +92,25 @@
           "defaultUrl": undefined,
           "docs": undefined,
           "id": "https://api.example.com/v1",
-          "name": "https://api.example.com/v1",
+          "name": {
+            "camelCase": {
+              "safeName": "httpsApiExampleComV1",
+              "unsafeName": "httpsApiExampleComV1",
+            },
+            "originalName": "https://api.example.com/v1",
+            "pascalCase": {
+              "safeName": "HttpsApiExampleComV1",
+              "unsafeName": "HttpsApiExampleComV1",
+            },
+            "screamingSnakeCase": {
+              "safeName": "HTTPS_API_EXAMPLE_COM_V_1",
+              "unsafeName": "HTTPS_API_EXAMPLE_COM_V_1",
+            },
+            "snakeCase": {
+              "safeName": "https_api_example_com_v_1",
+              "unsafeName": "https_api_example_com_v_1",
+            },
+          },
           "url": "https://api.example.com/v1",
           "urlTemplate": undefined,
           "urlVariables": undefined,
@@ -51,7 +126,25 @@
   "errors": {
     "GetProtectedRequestUnauthorizedError": {
       "discriminantValue": {
-        "name": "GetProtectedRequestUnauthorizedError",
+        "name": {
+          "camelCase": {
+            "safeName": "getProtectedRequestUnauthorizedError",
+            "unsafeName": "getProtectedRequestUnauthorizedError",
+          },
+          "originalName": "GetProtectedRequestUnauthorizedError",
+          "pascalCase": {
+            "safeName": "GetProtectedRequestUnauthorizedError",
+            "unsafeName": "GetProtectedRequestUnauthorizedError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_PROTECTED_REQUEST_UNAUTHORIZED_ERROR",
+            "unsafeName": "GET_PROTECTED_REQUEST_UNAUTHORIZED_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_protected_request_unauthorized_error",
+            "unsafeName": "get_protected_request_unauthorized_error",
+          },
+        },
         "wireValue": "GetProtectedRequestUnauthorizedError",
       },
       "displayName": "UnauthorizedError",
@@ -66,7 +159,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "GetProtectedRequestUnauthorizedError",
+        "name": {
+          "camelCase": {
+            "safeName": "getProtectedRequestUnauthorizedError",
+            "unsafeName": "getProtectedRequestUnauthorizedError",
+          },
+          "originalName": "GetProtectedRequestUnauthorizedError",
+          "pascalCase": {
+            "safeName": "GetProtectedRequestUnauthorizedError",
+            "unsafeName": "GetProtectedRequestUnauthorizedError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "GET_PROTECTED_REQUEST_UNAUTHORIZED_ERROR",
+            "unsafeName": "GET_PROTECTED_REQUEST_UNAUTHORIZED_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "get_protected_request_unauthorized_error",
+            "unsafeName": "get_protected_request_unauthorized_error",
+          },
+        },
       },
       "statusCode": 401,
       "type": {
@@ -79,7 +190,25 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": "Error",
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
         "type": "named",
         "typeId": "Error",
       },
@@ -164,7 +293,25 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": "GetProtectedRequestUnauthorizedError",
+                "name": {
+                  "camelCase": {
+                    "safeName": "getProtectedRequestUnauthorizedError",
+                    "unsafeName": "getProtectedRequestUnauthorizedError",
+                  },
+                  "originalName": "GetProtectedRequestUnauthorizedError",
+                  "pascalCase": {
+                    "safeName": "GetProtectedRequestUnauthorizedError",
+                    "unsafeName": "GetProtectedRequestUnauthorizedError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "GET_PROTECTED_REQUEST_UNAUTHORIZED_ERROR",
+                    "unsafeName": "GET_PROTECTED_REQUEST_UNAUTHORIZED_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "get_protected_request_unauthorized_error",
+                    "unsafeName": "get_protected_request_unauthorized_error",
+                  },
+                },
               },
             },
           ],
@@ -176,7 +323,25 @@
           "id": "endpoint_.getProtected",
           "idempotent": false,
           "method": "GET",
-          "name": "getProtected",
+          "name": {
+            "camelCase": {
+              "safeName": "getProtected",
+              "unsafeName": "getProtected",
+            },
+            "originalName": "getProtected",
+            "pascalCase": {
+              "safeName": "GetProtected",
+              "unsafeName": "GetProtected",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_PROTECTED",
+              "unsafeName": "GET_PROTECTED",
+            },
+            "snakeCase": {
+              "safeName": "get_protected",
+              "unsafeName": "get_protected",
+            },
+          },
           "pagination": undefined,
           "path": {
             "head": "/protected",
@@ -202,7 +367,25 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": "ProtectedResource",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "protectedResource",
+                      "unsafeName": "protectedResource",
+                    },
+                    "originalName": "ProtectedResource",
+                    "pascalCase": {
+                      "safeName": "ProtectedResource",
+                      "unsafeName": "ProtectedResource",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PROTECTED_RESOURCE",
+                      "unsafeName": "PROTECTED_RESOURCE",
+                    },
+                    "snakeCase": {
+                      "safeName": "protected_resource",
+                      "unsafeName": "protected_resource",
+                    },
+                  },
                   "type": "named",
                   "typeId": "ProtectedResource",
                 },
@@ -294,7 +477,25 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": "ProtectedResource",
+                      "name": {
+                        "camelCase": {
+                          "safeName": "protectedResource",
+                          "unsafeName": "protectedResource",
+                        },
+                        "originalName": "ProtectedResource",
+                        "pascalCase": {
+                          "safeName": "ProtectedResource",
+                          "unsafeName": "ProtectedResource",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PROTECTED_RESOURCE",
+                          "unsafeName": "PROTECTED_RESOURCE",
+                        },
+                        "snakeCase": {
+                          "safeName": "protected_resource",
+                          "unsafeName": "protected_resource",
+                        },
+                      },
                       "type": "named",
                       "typeId": "ProtectedResource",
                     },
@@ -337,7 +538,25 @@
           "id": "endpoint_.getPublic",
           "idempotent": false,
           "method": "GET",
-          "name": "getPublic",
+          "name": {
+            "camelCase": {
+              "safeName": "getPublic",
+              "unsafeName": "getPublic",
+            },
+            "originalName": "getPublic",
+            "pascalCase": {
+              "safeName": "GetPublic",
+              "unsafeName": "GetPublic",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_PUBLIC",
+              "unsafeName": "GET_PUBLIC",
+            },
+            "snakeCase": {
+              "safeName": "get_public",
+              "unsafeName": "get_public",
+            },
+          },
           "pagination": undefined,
           "path": {
             "head": "/public",
@@ -502,7 +721,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "Error",
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
         "typeId": "Error",
       },
       "referencedTypes": Set {},
@@ -515,7 +752,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "code",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -545,7 +803,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "message",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -600,7 +879,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "ProtectedResource",
+        "name": {
+          "camelCase": {
+            "safeName": "protectedResource",
+            "unsafeName": "protectedResource",
+          },
+          "originalName": "ProtectedResource",
+          "pascalCase": {
+            "safeName": "ProtectedResource",
+            "unsafeName": "ProtectedResource",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PROTECTED_RESOURCE",
+            "unsafeName": "PROTECTED_RESOURCE",
+          },
+          "snakeCase": {
+            "safeName": "protected_resource",
+            "unsafeName": "protected_resource",
+          },
+        },
         "typeId": "ProtectedResource",
       },
       "referencedTypes": Set {},
@@ -613,7 +910,28 @@
           {
             "availability": undefined,
             "docs": "Resource identifier",
-            "name": "id",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -643,7 +961,28 @@
           {
             "availability": undefined,
             "docs": "Protected data",
-            "name": "data",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "data",
+                  "unsafeName": "data",
+                },
+                "originalName": "data",
+                "pascalCase": {
+                  "safeName": "Data",
+                  "unsafeName": "Data",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DATA",
+                  "unsafeName": "DATA",
+                },
+                "snakeCase": {
+                  "safeName": "data",
+                  "unsafeName": "data",
+                },
+              },
+              "wireValue": "data",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},

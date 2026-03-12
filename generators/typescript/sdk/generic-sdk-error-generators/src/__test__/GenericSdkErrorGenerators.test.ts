@@ -1,4 +1,5 @@
-import { getTextOfTsNode, Reference } from "@fern-typescript/commons";
+import { getTextOfTsNode } from "@fern-typescript/commons";
+import { createMockReference } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 import { GeneratedGenericAPISdkErrorImpl } from "../generic-api-error/GeneratedGenericAPISdkErrorImpl.js";
@@ -9,15 +10,6 @@ import { TimeoutSdkErrorGenerator } from "../timeout-error/TimeoutSdkErrorGenera
 // ────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
-
-function createMockReference(name: string): Reference {
-    return {
-        getExpression: () => ts.factory.createIdentifier(name),
-        getTypeNode: () => ts.factory.createTypeReferenceNode(name),
-        getEntityName: () => ts.factory.createIdentifier(name)
-        // biome-ignore lint/suspicious/noExplicitAny: test mock
-    } as any;
-}
 
 function createMockSdkContext() {
     const project = new Project({ useInMemoryFileSystem: true });

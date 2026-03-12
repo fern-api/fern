@@ -1,5 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
+import { getTextOfTsNode, PackageId, Zurg } from "@fern-typescript/commons";
+import { createMockReference } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -11,15 +12,6 @@ import { WebsocketTypeSchemaGenerator } from "../WebsocketTypeSchemaGenerator.js
 // ────────────────────────────────────────────────────────────────────────────
 
 const MOCK_PACKAGE_ID = "pkg_test" as unknown as PackageId;
-
-function createMockReference(name: string): Reference {
-    return {
-        getExpression: () => ts.factory.createIdentifier(name),
-        getTypeNode: () => ts.factory.createTypeReferenceNode(name),
-        getEntityName: () => ts.factory.createIdentifier(name)
-        // biome-ignore lint/suspicious/noExplicitAny: test mock
-    } as any;
-}
 
 function createMockZurgSchema(name: string): Zurg.Schema {
     return {

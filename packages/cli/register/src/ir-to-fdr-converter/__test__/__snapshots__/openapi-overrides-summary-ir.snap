@@ -1,7 +1,25 @@
 {
   "apiDisplayName": "OpenAPI Overrides Summary Test",
   "apiDocs": undefined,
-  "apiName": "OpenAPI Overrides Summary Test",
+  "apiName": {
+    "camelCase": {
+      "safeName": "openApiOverridesSummaryTest",
+      "unsafeName": "openApiOverridesSummaryTest",
+    },
+    "originalName": "OpenAPI Overrides Summary Test",
+    "pascalCase": {
+      "safeName": "OpenApiOverridesSummaryTest",
+      "unsafeName": "OpenApiOverridesSummaryTest",
+    },
+    "screamingSnakeCase": {
+      "safeName": "OPEN_API_OVERRIDES_SUMMARY_TEST",
+      "unsafeName": "OPEN_API_OVERRIDES_SUMMARY_TEST",
+    },
+    "snakeCase": {
+      "safeName": "open_api_overrides_summary_test",
+      "unsafeName": "open_api_overrides_summary_test",
+    },
+  },
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -13,7 +31,28 @@
   "basePath": undefined,
   "casingsConfig": undefined,
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId",
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
   },
   "dynamic": undefined,
   "environments": undefined,
@@ -98,7 +137,25 @@
           "id": "endpoint_.authorize",
           "idempotent": false,
           "method": "POST",
-          "name": "authorize",
+          "name": {
+            "camelCase": {
+              "safeName": "authorize",
+              "unsafeName": "authorize",
+            },
+            "originalName": "authorize",
+            "pascalCase": {
+              "safeName": "Authorize",
+              "unsafeName": "Authorize",
+            },
+            "screamingSnakeCase": {
+              "safeName": "AUTHORIZE",
+              "unsafeName": "AUTHORIZE",
+            },
+            "snakeCase": {
+              "safeName": "authorize",
+              "unsafeName": "authorize",
+            },
+          },
           "pagination": undefined,
           "path": {
             "head": "/authorize",
@@ -124,7 +181,25 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": "AuthResponse",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "authResponse",
+                      "unsafeName": "authResponse",
+                    },
+                    "originalName": "AuthResponse",
+                    "pascalCase": {
+                      "safeName": "AuthResponse",
+                      "unsafeName": "AuthResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "AUTH_RESPONSE",
+                      "unsafeName": "AUTH_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "auth_response",
+                      "unsafeName": "auth_response",
+                    },
+                  },
                   "type": "named",
                   "typeId": "AuthResponse",
                 },
@@ -210,7 +285,25 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": "AuthResponse",
+                      "name": {
+                        "camelCase": {
+                          "safeName": "authResponse",
+                          "unsafeName": "authResponse",
+                        },
+                        "originalName": "AuthResponse",
+                        "pascalCase": {
+                          "safeName": "AuthResponse",
+                          "unsafeName": "AuthResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "AUTH_RESPONSE",
+                          "unsafeName": "AUTH_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "auth_response",
+                          "unsafeName": "auth_response",
+                        },
+                      },
                       "type": "named",
                       "typeId": "AuthResponse",
                     },
@@ -238,7 +331,25 @@
               "docs": undefined,
               "explode": undefined,
               "location": "ENDPOINT",
-              "name": "id",
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
               "v2Examples": {
                 "autogeneratedExamples": {
                   "id_example": "id",
@@ -289,7 +400,25 @@
           "id": "endpoint_.getContact",
           "idempotent": false,
           "method": "GET",
-          "name": "getContact",
+          "name": {
+            "camelCase": {
+              "safeName": "getContact",
+              "unsafeName": "getContact",
+            },
+            "originalName": "getContact",
+            "pascalCase": {
+              "safeName": "GetContact",
+              "unsafeName": "GetContact",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_CONTACT",
+              "unsafeName": "GET_CONTACT",
+            },
+            "snakeCase": {
+              "safeName": "get_contact",
+              "unsafeName": "get_contact",
+            },
+          },
           "pagination": undefined,
           "path": {
             "head": "/contacts/",
@@ -305,7 +434,25 @@
               "docs": undefined,
               "explode": undefined,
               "location": "ENDPOINT",
-              "name": "id",
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
               "v2Examples": {
                 "autogeneratedExamples": {
                   "id_example": "id",
@@ -352,7 +499,25 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": "Contact",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "contact",
+                      "unsafeName": "contact",
+                    },
+                    "originalName": "Contact",
+                    "pascalCase": {
+                      "safeName": "Contact",
+                      "unsafeName": "Contact",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "CONTACT",
+                      "unsafeName": "CONTACT",
+                    },
+                    "snakeCase": {
+                      "safeName": "contact",
+                      "unsafeName": "contact",
+                    },
+                  },
                   "type": "named",
                   "typeId": "Contact",
                 },
@@ -442,7 +607,25 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": "Contact",
+                      "name": {
+                        "camelCase": {
+                          "safeName": "contact",
+                          "unsafeName": "contact",
+                        },
+                        "originalName": "Contact",
+                        "pascalCase": {
+                          "safeName": "Contact",
+                          "unsafeName": "Contact",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "CONTACT",
+                          "unsafeName": "CONTACT",
+                        },
+                        "snakeCase": {
+                          "safeName": "contact",
+                          "unsafeName": "contact",
+                        },
+                      },
                       "type": "named",
                       "typeId": "Contact",
                     },
@@ -485,7 +668,25 @@
           "id": "endpoint_.listPayments",
           "idempotent": false,
           "method": "GET",
-          "name": "listPayments",
+          "name": {
+            "camelCase": {
+              "safeName": "listPayments",
+              "unsafeName": "listPayments",
+            },
+            "originalName": "listPayments",
+            "pascalCase": {
+              "safeName": "ListPayments",
+              "unsafeName": "ListPayments",
+            },
+            "screamingSnakeCase": {
+              "safeName": "LIST_PAYMENTS",
+              "unsafeName": "LIST_PAYMENTS",
+            },
+            "snakeCase": {
+              "safeName": "list_payments",
+              "unsafeName": "list_payments",
+            },
+          },
           "pagination": undefined,
           "path": {
             "head": "/payments",
@@ -515,7 +716,25 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": "Payment",
+                      "name": {
+                        "camelCase": {
+                          "safeName": "payment",
+                          "unsafeName": "payment",
+                        },
+                        "originalName": "Payment",
+                        "pascalCase": {
+                          "safeName": "Payment",
+                          "unsafeName": "Payment",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PAYMENT",
+                          "unsafeName": "PAYMENT",
+                        },
+                        "snakeCase": {
+                          "safeName": "payment",
+                          "unsafeName": "payment",
+                        },
+                      },
                       "type": "named",
                       "typeId": "Payment",
                     },
@@ -615,7 +834,25 @@
                             "packagePath": [],
                           },
                           "inline": false,
-                          "name": "Payment",
+                          "name": {
+                            "camelCase": {
+                              "safeName": "payment",
+                              "unsafeName": "payment",
+                            },
+                            "originalName": "Payment",
+                            "pascalCase": {
+                              "safeName": "Payment",
+                              "unsafeName": "Payment",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "PAYMENT",
+                              "unsafeName": "PAYMENT",
+                            },
+                            "snakeCase": {
+                              "safeName": "payment",
+                              "unsafeName": "payment",
+                            },
+                          },
                           "type": "named",
                           "typeId": "Payment",
                         },
@@ -664,7 +901,25 @@
           "id": "endpoint_.createPayment",
           "idempotent": false,
           "method": "POST",
-          "name": "createPayment",
+          "name": {
+            "camelCase": {
+              "safeName": "createPayment",
+              "unsafeName": "createPayment",
+            },
+            "originalName": "createPayment",
+            "pascalCase": {
+              "safeName": "CreatePayment",
+              "unsafeName": "CreatePayment",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_PAYMENT",
+              "unsafeName": "CREATE_PAYMENT",
+            },
+            "snakeCase": {
+              "safeName": "create_payment",
+              "unsafeName": "create_payment",
+            },
+          },
           "pagination": undefined,
           "path": {
             "head": "/payments",
@@ -686,7 +941,25 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": "PaymentRequest",
+              "name": {
+                "camelCase": {
+                  "safeName": "paymentRequest",
+                  "unsafeName": "paymentRequest",
+                },
+                "originalName": "PaymentRequest",
+                "pascalCase": {
+                  "safeName": "PaymentRequest",
+                  "unsafeName": "PaymentRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PAYMENT_REQUEST",
+                  "unsafeName": "PAYMENT_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "payment_request",
+                  "unsafeName": "payment_request",
+                },
+              },
               "type": "named",
               "typeId": "PaymentRequest",
             },
@@ -715,7 +988,25 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": "Payment",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "payment",
+                      "unsafeName": "payment",
+                    },
+                    "originalName": "Payment",
+                    "pascalCase": {
+                      "safeName": "Payment",
+                      "unsafeName": "Payment",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PAYMENT",
+                      "unsafeName": "PAYMENT",
+                    },
+                    "snakeCase": {
+                      "safeName": "payment",
+                      "unsafeName": "payment",
+                    },
+                  },
                   "type": "named",
                   "typeId": "Payment",
                 },
@@ -797,7 +1088,25 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": "PaymentRequest",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "paymentRequest",
+                      "unsafeName": "paymentRequest",
+                    },
+                    "originalName": "PaymentRequest",
+                    "pascalCase": {
+                      "safeName": "PaymentRequest",
+                      "unsafeName": "PaymentRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "PAYMENT_REQUEST",
+                      "unsafeName": "PAYMENT_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "payment_request",
+                      "unsafeName": "payment_request",
+                    },
+                  },
                   "type": "named",
                   "typeId": "PaymentRequest",
                 },
@@ -830,7 +1139,25 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": "Payment",
+                      "name": {
+                        "camelCase": {
+                          "safeName": "payment",
+                          "unsafeName": "payment",
+                        },
+                        "originalName": "Payment",
+                        "pascalCase": {
+                          "safeName": "Payment",
+                          "unsafeName": "Payment",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "PAYMENT",
+                          "unsafeName": "PAYMENT",
+                        },
+                        "snakeCase": {
+                          "safeName": "payment",
+                          "unsafeName": "payment",
+                        },
+                      },
                       "type": "named",
                       "typeId": "Payment",
                     },
@@ -882,7 +1209,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "AuthResponse",
+        "name": {
+          "camelCase": {
+            "safeName": "authResponse",
+            "unsafeName": "authResponse",
+          },
+          "originalName": "AuthResponse",
+          "pascalCase": {
+            "safeName": "AuthResponse",
+            "unsafeName": "AuthResponse",
+          },
+          "screamingSnakeCase": {
+            "safeName": "AUTH_RESPONSE",
+            "unsafeName": "AUTH_RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "auth_response",
+            "unsafeName": "auth_response",
+          },
+        },
         "typeId": "AuthResponse",
       },
       "referencedTypes": Set {},
@@ -895,7 +1240,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "token",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "token",
+                  "unsafeName": "token",
+                },
+                "originalName": "token",
+                "pascalCase": {
+                  "safeName": "Token",
+                  "unsafeName": "Token",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TOKEN",
+                  "unsafeName": "TOKEN",
+                },
+                "snakeCase": {
+                  "safeName": "token",
+                  "unsafeName": "token",
+                },
+              },
+              "wireValue": "token",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -955,7 +1321,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "Contact",
+        "name": {
+          "camelCase": {
+            "safeName": "contact",
+            "unsafeName": "contact",
+          },
+          "originalName": "Contact",
+          "pascalCase": {
+            "safeName": "Contact",
+            "unsafeName": "Contact",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CONTACT",
+            "unsafeName": "CONTACT",
+          },
+          "snakeCase": {
+            "safeName": "contact",
+            "unsafeName": "contact",
+          },
+        },
         "typeId": "Contact",
       },
       "referencedTypes": Set {},
@@ -968,7 +1352,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "id",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -1006,7 +1411,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "name",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -1066,7 +1492,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "Payment",
+        "name": {
+          "camelCase": {
+            "safeName": "payment",
+            "unsafeName": "payment",
+          },
+          "originalName": "Payment",
+          "pascalCase": {
+            "safeName": "Payment",
+            "unsafeName": "Payment",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PAYMENT",
+            "unsafeName": "PAYMENT",
+          },
+          "snakeCase": {
+            "safeName": "payment",
+            "unsafeName": "payment",
+          },
+        },
         "typeId": "Payment",
       },
       "referencedTypes": Set {},
@@ -1079,7 +1523,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "id",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -1117,7 +1582,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "amount",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+                "originalName": "amount",
+                "pascalCase": {
+                  "safeName": "Amount",
+                  "unsafeName": "Amount",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "AMOUNT",
+                  "unsafeName": "AMOUNT",
+                },
+                "snakeCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+              },
+              "wireValue": "amount",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -1178,7 +1664,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "PaymentRequest",
+        "name": {
+          "camelCase": {
+            "safeName": "paymentRequest",
+            "unsafeName": "paymentRequest",
+          },
+          "originalName": "PaymentRequest",
+          "pascalCase": {
+            "safeName": "PaymentRequest",
+            "unsafeName": "PaymentRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PAYMENT_REQUEST",
+            "unsafeName": "PAYMENT_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "payment_request",
+            "unsafeName": "payment_request",
+          },
+        },
         "typeId": "PaymentRequest",
       },
       "referencedTypes": Set {},
@@ -1191,7 +1695,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "amount",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+                "originalName": "amount",
+                "pascalCase": {
+                  "safeName": "Amount",
+                  "unsafeName": "Amount",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "AMOUNT",
+                  "unsafeName": "AMOUNT",
+                },
+                "snakeCase": {
+                  "safeName": "amount",
+                  "unsafeName": "amount",
+                },
+              },
+              "wireValue": "amount",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {

@@ -507,6 +507,37 @@ describe("ObjectClient", () => {
         });
     });
 
+    test("getAndReturnWithDocumentedUnknownType", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { documentedUnknownType: { key: "value" } };
+        const rawResponseBody = { documentedUnknownType: { key: "value" } };
+        server
+            .mockEndpoint()
+            .post("/object/get-and-return-with-documented-unknown-type")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
+            documentedUnknownType: {
+                key: "value",
+            },
+        });
+        expect(response).toEqual({
+            body: {
+                documentedUnknownType: {
+                    key: "value",
+                },
+            },
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
     test("getAndReturnWithDatetimeLikeString", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });

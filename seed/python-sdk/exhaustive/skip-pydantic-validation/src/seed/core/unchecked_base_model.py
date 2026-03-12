@@ -7,7 +7,7 @@ import uuid
 
 import pydantic
 import typing_extensions
-from .pydantic_utilities import (
+from .pydantic_utilities import (  # type: ignore[attr-defined]
     IS_PYDANTIC_V2,
     ModelField,
     UniversalBaseModel,
@@ -348,7 +348,9 @@ def _get_is_populate_by_name(model: typing.Type["Model"]) -> bool:
     return model.__config__.allow_population_by_field_name  # type: ignore # Pydantic v1
 
 
-PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]
+from pydantic.fields import FieldInfo as _FieldInfo
+
+PydanticField = typing.Union[ModelField, _FieldInfo]
 
 
 # Pydantic V1 swapped the typing of __fields__'s values from ModelField to FieldInfo
