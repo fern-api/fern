@@ -32,6 +32,13 @@ const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
 const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
 
+export class DocsPublishConflictError extends Error {
+    constructor() {
+        super("Another docs publish is currently in progress for this domain.");
+        this.name = "DocsPublishConflictError";
+    }
+}
+
 interface FileWithMimeType {
     mediaType: string;
     absoluteFilePath: AbsoluteFilePath;
@@ -70,7 +77,8 @@ export async function publishDocs({
     withAiExamples = true,
     excludeApis = false,
     targetAudiences,
-    docsUrl
+    docsUrl,
+    cliVersion
 }: {
     token: FernToken;
     organization: string;
@@ -89,6 +97,7 @@ export async function publishDocs({
     excludeApis?: boolean;
     targetAudiences?: string[];
     docsUrl?: string;
+    cliVersion?: string;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -258,7 +267,8 @@ export async function publishDocs({
                     orgId: CjsFdrSdk.OrgId(organization),
                     filepaths: filepaths,
                     images,
-                    ...(isBasepathAware && { basepathAware: true })
+                    ...(isBasepathAware && { basepathAware: true }),
+                    ...(cliVersion != null && { cliVersion })
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
@@ -599,6 +609,12 @@ async function startDocsRegisterFailed(
             error: JSON.stringify(error)
         }
     });
+
+    const errorObj = error as Record<string, unknown>;
+    const errorContent = errorObj?.content as Record<string, unknown> | undefined;
+    if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
+        throw new DocsPublishConflictError();
+    }
 
     const authErrorMessage = getAuthenticationErrorMessage(error, organization);
     if (authErrorMessage != null) {
