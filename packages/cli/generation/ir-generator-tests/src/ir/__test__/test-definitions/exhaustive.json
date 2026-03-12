@@ -1667,106 +1667,16 @@
         "type_types/object:ObjectWithDocumentedUnknownType": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "ObjectWithDocumentedUnknownType",
-                    "camelCase": {
-                        "unsafeName": "objectWithDocumentedUnknownType",
-                        "safeName": "objectWithDocumentedUnknownType"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "object_with_documented_unknown_type",
-                        "safeName": "object_with_documented_unknown_type"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE",
-                        "safeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "ObjectWithDocumentedUnknownType",
-                        "safeName": "ObjectWithDocumentedUnknownType"
-                    }
-                },
+                "name": "ObjectWithDocumentedUnknownType",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "types",
-                            "camelCase": {
-                                "unsafeName": "types",
-                                "safeName": "types"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "types",
-                                "safeName": "types"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "TYPES",
-                                "safeName": "TYPES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Types",
-                                "safeName": "Types"
-                            }
-                        },
-                        {
-                            "originalName": "object",
-                            "camelCase": {
-                                "unsafeName": "object",
-                                "safeName": "object"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "object",
-                                "safeName": "object"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "OBJECT",
-                                "safeName": "OBJECT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Object",
-                                "safeName": "Object"
-                            }
-                        }
+                        "types",
+                        "object"
                     ],
                     "packagePath": [
-                        {
-                            "originalName": "types",
-                            "camelCase": {
-                                "unsafeName": "types",
-                                "safeName": "types"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "types",
-                                "safeName": "types"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "TYPES",
-                                "safeName": "TYPES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Types",
-                                "safeName": "Types"
-                            }
-                        }
+                        "types"
                     ],
-                    "file": {
-                        "originalName": "object",
-                        "camelCase": {
-                            "unsafeName": "object",
-                            "safeName": "object"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "object",
-                            "safeName": "object"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "OBJECT",
-                            "safeName": "OBJECT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Object",
-                            "safeName": "Object"
-                        }
-                    }
+                    "file": "object"
                 },
                 "displayName": null,
                 "typeId": "type_types/object:ObjectWithDocumentedUnknownType"
@@ -1776,130 +1686,19 @@
                 "extends": [],
                 "properties": [
                     {
-                        "name": {
-                            "name": {
-                                "originalName": "documentedUnknownType",
-                                "camelCase": {
-                                    "unsafeName": "documentedUnknownType",
-                                    "safeName": "documentedUnknownType"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "documented_unknown_type",
-                                    "safeName": "documented_unknown_type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DOCUMENTED_UNKNOWN_TYPE",
-                                    "safeName": "DOCUMENTED_UNKNOWN_TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "DocumentedUnknownType",
-                                    "safeName": "DocumentedUnknownType"
-                                }
-                            },
-                            "wireValue": "documentedUnknownType"
-                        },
+                        "name": "documentedUnknownType",
                         "valueType": {
                             "_type": "named",
-                            "name": {
-                                "originalName": "DocumentedUnknownType",
-                                "camelCase": {
-                                    "unsafeName": "documentedUnknownType",
-                                    "safeName": "documentedUnknownType"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "documented_unknown_type",
-                                    "safeName": "documented_unknown_type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DOCUMENTED_UNKNOWN_TYPE",
-                                    "safeName": "DOCUMENTED_UNKNOWN_TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "DocumentedUnknownType",
-                                    "safeName": "DocumentedUnknownType"
-                                }
-                            },
+                            "name": "DocumentedUnknownType",
                             "fernFilepath": {
                                 "allParts": [
-                                    {
-                                        "originalName": "types",
-                                        "camelCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPES",
-                                            "safeName": "TYPES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Types",
-                                            "safeName": "Types"
-                                        }
-                                    },
-                                    {
-                                        "originalName": "object",
-                                        "camelCase": {
-                                            "unsafeName": "object",
-                                            "safeName": "object"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "object",
-                                            "safeName": "object"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "OBJECT",
-                                            "safeName": "OBJECT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Object",
-                                            "safeName": "Object"
-                                        }
-                                    }
+                                    "types",
+                                    "object"
                                 ],
                                 "packagePath": [
-                                    {
-                                        "originalName": "types",
-                                        "camelCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPES",
-                                            "safeName": "TYPES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Types",
-                                            "safeName": "Types"
-                                        }
-                                    }
+                                    "types"
                                 ],
-                                "file": {
-                                    "originalName": "object",
-                                    "camelCase": {
-                                        "unsafeName": "object",
-                                        "safeName": "object"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "object",
-                                        "safeName": "object"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "OBJECT",
-                                        "safeName": "OBJECT"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Object",
-                                        "safeName": "Object"
-                                    }
-                                }
+                                "file": "object"
                             },
                             "displayName": null,
                             "typeId": "type_types/object:DocumentedUnknownType",
@@ -1935,106 +1734,16 @@
         "type_types/object:DocumentedUnknownType": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "DocumentedUnknownType",
-                    "camelCase": {
-                        "unsafeName": "documentedUnknownType",
-                        "safeName": "documentedUnknownType"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "documented_unknown_type",
-                        "safeName": "documented_unknown_type"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "DOCUMENTED_UNKNOWN_TYPE",
-                        "safeName": "DOCUMENTED_UNKNOWN_TYPE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "DocumentedUnknownType",
-                        "safeName": "DocumentedUnknownType"
-                    }
-                },
+                "name": "DocumentedUnknownType",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "types",
-                            "camelCase": {
-                                "unsafeName": "types",
-                                "safeName": "types"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "types",
-                                "safeName": "types"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "TYPES",
-                                "safeName": "TYPES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Types",
-                                "safeName": "Types"
-                            }
-                        },
-                        {
-                            "originalName": "object",
-                            "camelCase": {
-                                "unsafeName": "object",
-                                "safeName": "object"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "object",
-                                "safeName": "object"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "OBJECT",
-                                "safeName": "OBJECT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Object",
-                                "safeName": "Object"
-                            }
-                        }
+                        "types",
+                        "object"
                     ],
                     "packagePath": [
-                        {
-                            "originalName": "types",
-                            "camelCase": {
-                                "unsafeName": "types",
-                                "safeName": "types"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "types",
-                                "safeName": "types"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "TYPES",
-                                "safeName": "TYPES"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Types",
-                                "safeName": "Types"
-                            }
-                        }
+                        "types"
                     ],
-                    "file": {
-                        "originalName": "object",
-                        "camelCase": {
-                            "unsafeName": "object",
-                            "safeName": "object"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "object",
-                            "safeName": "object"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "OBJECT",
-                            "safeName": "OBJECT"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Object",
-                            "safeName": "Object"
-                        }
-                    }
+                    "file": "object"
                 },
                 "displayName": null,
                 "typeId": "type_types/object:DocumentedUnknownType"
@@ -19296,25 +19005,7 @@
                 },
                 {
                     "id": "endpoint_endpoints/object.getAndReturnWithDocumentedUnknownType",
-                    "name": {
-                        "originalName": "getAndReturnWithDocumentedUnknownType",
-                        "camelCase": {
-                            "unsafeName": "getAndReturnWithDocumentedUnknownType",
-                            "safeName": "getAndReturnWithDocumentedUnknownType"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "get_and_return_with_documented_unknown_type",
-                            "safeName": "get_and_return_with_documented_unknown_type"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "GET_AND_RETURN_WITH_DOCUMENTED_UNKNOWN_TYPE",
-                            "safeName": "GET_AND_RETURN_WITH_DOCUMENTED_UNKNOWN_TYPE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "GetAndReturnWithDocumentedUnknownType",
-                            "safeName": "GetAndReturnWithDocumentedUnknownType"
-                        }
-                    },
+                    "name": "getAndReturnWithDocumentedUnknownType",
                     "displayName": null,
                     "auth": true,
                     "security": [
@@ -19343,106 +19034,16 @@
                         "type": "reference",
                         "requestBodyType": {
                             "_type": "named",
-                            "name": {
-                                "originalName": "ObjectWithDocumentedUnknownType",
-                                "camelCase": {
-                                    "unsafeName": "objectWithDocumentedUnknownType",
-                                    "safeName": "objectWithDocumentedUnknownType"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "object_with_documented_unknown_type",
-                                    "safeName": "object_with_documented_unknown_type"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE",
-                                    "safeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ObjectWithDocumentedUnknownType",
-                                    "safeName": "ObjectWithDocumentedUnknownType"
-                                }
-                            },
+                            "name": "ObjectWithDocumentedUnknownType",
                             "fernFilepath": {
                                 "allParts": [
-                                    {
-                                        "originalName": "types",
-                                        "camelCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPES",
-                                            "safeName": "TYPES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Types",
-                                            "safeName": "Types"
-                                        }
-                                    },
-                                    {
-                                        "originalName": "object",
-                                        "camelCase": {
-                                            "unsafeName": "object",
-                                            "safeName": "object"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "object",
-                                            "safeName": "object"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "OBJECT",
-                                            "safeName": "OBJECT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Object",
-                                            "safeName": "Object"
-                                        }
-                                    }
+                                    "types",
+                                    "object"
                                 ],
                                 "packagePath": [
-                                    {
-                                        "originalName": "types",
-                                        "camelCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "types",
-                                            "safeName": "types"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TYPES",
-                                            "safeName": "TYPES"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Types",
-                                            "safeName": "Types"
-                                        }
-                                    }
+                                    "types"
                                 ],
-                                "file": {
-                                    "originalName": "object",
-                                    "camelCase": {
-                                        "unsafeName": "object",
-                                        "safeName": "object"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "object",
-                                        "safeName": "object"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "OBJECT",
-                                        "safeName": "OBJECT"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Object",
-                                        "safeName": "Object"
-                                    }
-                                }
+                                "file": "object"
                             },
                             "displayName": null,
                             "typeId": "type_types/object:ObjectWithDocumentedUnknownType",
@@ -19461,106 +19062,16 @@
                                 "type": "typeReference",
                                 "requestBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "ObjectWithDocumentedUnknownType",
-                                        "camelCase": {
-                                            "unsafeName": "objectWithDocumentedUnknownType",
-                                            "safeName": "objectWithDocumentedUnknownType"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "object_with_documented_unknown_type",
-                                            "safeName": "object_with_documented_unknown_type"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE",
-                                            "safeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ObjectWithDocumentedUnknownType",
-                                            "safeName": "ObjectWithDocumentedUnknownType"
-                                        }
-                                    },
+                                    "name": "ObjectWithDocumentedUnknownType",
                                     "fernFilepath": {
                                         "allParts": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            },
-                                            {
-                                                "originalName": "object",
-                                                "camelCase": {
-                                                    "unsafeName": "object",
-                                                    "safeName": "object"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "object",
-                                                    "safeName": "object"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "OBJECT",
-                                                    "safeName": "OBJECT"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Object",
-                                                    "safeName": "Object"
-                                                }
-                                            }
+                                            "types",
+                                            "object"
                                         ],
                                         "packagePath": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            }
+                                            "types"
                                         ],
-                                        "file": {
-                                            "originalName": "object",
-                                            "camelCase": {
-                                                "unsafeName": "object",
-                                                "safeName": "object"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "object",
-                                                "safeName": "object"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "OBJECT",
-                                                "safeName": "OBJECT"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Object",
-                                                "safeName": "Object"
-                                            }
-                                        }
+                                        "file": "object"
                                     },
                                     "displayName": null,
                                     "typeId": "type_types/object:ObjectWithDocumentedUnknownType",
@@ -19572,25 +19083,7 @@
                                 "v2Examples": null
                             }
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -19600,106 +19093,16 @@
                                 "type": "response",
                                 "responseBodyType": {
                                     "_type": "named",
-                                    "name": {
-                                        "originalName": "ObjectWithDocumentedUnknownType",
-                                        "camelCase": {
-                                            "unsafeName": "objectWithDocumentedUnknownType",
-                                            "safeName": "objectWithDocumentedUnknownType"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "object_with_documented_unknown_type",
-                                            "safeName": "object_with_documented_unknown_type"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE",
-                                            "safeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "ObjectWithDocumentedUnknownType",
-                                            "safeName": "ObjectWithDocumentedUnknownType"
-                                        }
-                                    },
+                                    "name": "ObjectWithDocumentedUnknownType",
                                     "fernFilepath": {
                                         "allParts": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            },
-                                            {
-                                                "originalName": "object",
-                                                "camelCase": {
-                                                    "unsafeName": "object",
-                                                    "safeName": "object"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "object",
-                                                    "safeName": "object"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "OBJECT",
-                                                    "safeName": "OBJECT"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Object",
-                                                    "safeName": "Object"
-                                                }
-                                            }
+                                            "types",
+                                            "object"
                                         ],
                                         "packagePath": [
-                                            {
-                                                "originalName": "types",
-                                                "camelCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "types",
-                                                    "safeName": "types"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "TYPES",
-                                                    "safeName": "TYPES"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Types",
-                                                    "safeName": "Types"
-                                                }
-                                            }
+                                            "types"
                                         ],
-                                        "file": {
-                                            "originalName": "object",
-                                            "camelCase": {
-                                                "unsafeName": "object",
-                                                "safeName": "object"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "object",
-                                                "safeName": "object"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "OBJECT",
-                                                "safeName": "OBJECT"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Object",
-                                                "safeName": "Object"
-                                            }
-                                        }
+                                        "file": "object"
                                     },
                                     "displayName": null,
                                     "typeId": "type_types/object:ObjectWithDocumentedUnknownType",
@@ -19720,7 +19123,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "a126d901",
+                                "id": "e0aee0c9",
                                 "url": "/object/get-and-return-with-documented-unknown-type",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -19737,129 +19140,18 @@
                                             "type": "object",
                                             "properties": [
                                                 {
-                                                    "name": {
-                                                        "name": {
-                                                            "originalName": "documentedUnknownType",
-                                                            "camelCase": {
-                                                                "unsafeName": "documentedUnknownType",
-                                                                "safeName": "documentedUnknownType"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "documented_unknown_type",
-                                                                "safeName": "documented_unknown_type"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "DOCUMENTED_UNKNOWN_TYPE",
-                                                                "safeName": "DOCUMENTED_UNKNOWN_TYPE"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "DocumentedUnknownType",
-                                                                "safeName": "DocumentedUnknownType"
-                                                            }
-                                                        },
-                                                        "wireValue": "documentedUnknownType"
-                                                    },
+                                                    "name": "documentedUnknownType",
                                                     "originalTypeDeclaration": {
-                                                        "name": {
-                                                            "originalName": "ObjectWithDocumentedUnknownType",
-                                                            "camelCase": {
-                                                                "unsafeName": "objectWithDocumentedUnknownType",
-                                                                "safeName": "objectWithDocumentedUnknownType"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "object_with_documented_unknown_type",
-                                                                "safeName": "object_with_documented_unknown_type"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE",
-                                                                "safeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "ObjectWithDocumentedUnknownType",
-                                                                "safeName": "ObjectWithDocumentedUnknownType"
-                                                            }
-                                                        },
+                                                        "name": "ObjectWithDocumentedUnknownType",
                                                         "fernFilepath": {
                                                             "allParts": [
-                                                                {
-                                                                    "originalName": "types",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "types",
-                                                                        "safeName": "types"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "types",
-                                                                        "safeName": "types"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "TYPES",
-                                                                        "safeName": "TYPES"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Types",
-                                                                        "safeName": "Types"
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "originalName": "object",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "object",
-                                                                        "safeName": "object"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "object",
-                                                                        "safeName": "object"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "OBJECT",
-                                                                        "safeName": "OBJECT"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Object",
-                                                                        "safeName": "Object"
-                                                                    }
-                                                                }
+                                                                "types",
+                                                                "object"
                                                             ],
                                                             "packagePath": [
-                                                                {
-                                                                    "originalName": "types",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "types",
-                                                                        "safeName": "types"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "types",
-                                                                        "safeName": "types"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "TYPES",
-                                                                        "safeName": "TYPES"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Types",
-                                                                        "safeName": "Types"
-                                                                    }
-                                                                }
+                                                                "types"
                                                             ],
-                                                            "file": {
-                                                                "originalName": "object",
-                                                                "camelCase": {
-                                                                    "unsafeName": "object",
-                                                                    "safeName": "object"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "object",
-                                                                    "safeName": "object"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "OBJECT",
-                                                                    "safeName": "OBJECT"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Object",
-                                                                    "safeName": "Object"
-                                                                }
-                                                            }
+                                                            "file": "object"
                                                         },
                                                         "displayName": null,
                                                         "typeId": "type_types/object:ObjectWithDocumentedUnknownType"
@@ -19882,106 +19174,16 @@
                                                                 }
                                                             },
                                                             "typeName": {
-                                                                "name": {
-                                                                    "originalName": "DocumentedUnknownType",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "documentedUnknownType",
-                                                                        "safeName": "documentedUnknownType"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "documented_unknown_type",
-                                                                        "safeName": "documented_unknown_type"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "DOCUMENTED_UNKNOWN_TYPE",
-                                                                        "safeName": "DOCUMENTED_UNKNOWN_TYPE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "DocumentedUnknownType",
-                                                                        "safeName": "DocumentedUnknownType"
-                                                                    }
-                                                                },
+                                                                "name": "DocumentedUnknownType",
                                                                 "fernFilepath": {
                                                                     "allParts": [
-                                                                        {
-                                                                            "originalName": "types",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "TYPES",
-                                                                                "safeName": "TYPES"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Types",
-                                                                                "safeName": "Types"
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "originalName": "object",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "object",
-                                                                                "safeName": "object"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "object",
-                                                                                "safeName": "object"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "OBJECT",
-                                                                                "safeName": "OBJECT"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Object",
-                                                                                "safeName": "Object"
-                                                                            }
-                                                                        }
+                                                                        "types",
+                                                                        "object"
                                                                     ],
                                                                     "packagePath": [
-                                                                        {
-                                                                            "originalName": "types",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "TYPES",
-                                                                                "safeName": "TYPES"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Types",
-                                                                                "safeName": "Types"
-                                                                            }
-                                                                        }
+                                                                        "types"
                                                                     ],
-                                                                    "file": {
-                                                                        "originalName": "object",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "object",
-                                                                            "safeName": "object"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "object",
-                                                                            "safeName": "object"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "OBJECT",
-                                                                            "safeName": "OBJECT"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Object",
-                                                                            "safeName": "Object"
-                                                                        }
-                                                                    }
+                                                                    "file": "object"
                                                                 },
                                                                 "displayName": null,
                                                                 "typeId": "type_types/object:DocumentedUnknownType"
@@ -19997,106 +19199,16 @@
                                             "extraProperties": null
                                         },
                                         "typeName": {
-                                            "name": {
-                                                "originalName": "ObjectWithDocumentedUnknownType",
-                                                "camelCase": {
-                                                    "unsafeName": "objectWithDocumentedUnknownType",
-                                                    "safeName": "objectWithDocumentedUnknownType"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "object_with_documented_unknown_type",
-                                                    "safeName": "object_with_documented_unknown_type"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE",
-                                                    "safeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "ObjectWithDocumentedUnknownType",
-                                                    "safeName": "ObjectWithDocumentedUnknownType"
-                                                }
-                                            },
+                                            "name": "ObjectWithDocumentedUnknownType",
                                             "fernFilepath": {
                                                 "allParts": [
-                                                    {
-                                                        "originalName": "types",
-                                                        "camelCase": {
-                                                            "unsafeName": "types",
-                                                            "safeName": "types"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "types",
-                                                            "safeName": "types"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "TYPES",
-                                                            "safeName": "TYPES"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Types",
-                                                            "safeName": "Types"
-                                                        }
-                                                    },
-                                                    {
-                                                        "originalName": "object",
-                                                        "camelCase": {
-                                                            "unsafeName": "object",
-                                                            "safeName": "object"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "object",
-                                                            "safeName": "object"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "OBJECT",
-                                                            "safeName": "OBJECT"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Object",
-                                                            "safeName": "Object"
-                                                        }
-                                                    }
+                                                    "types",
+                                                    "object"
                                                 ],
                                                 "packagePath": [
-                                                    {
-                                                        "originalName": "types",
-                                                        "camelCase": {
-                                                            "unsafeName": "types",
-                                                            "safeName": "types"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "types",
-                                                            "safeName": "types"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "TYPES",
-                                                            "safeName": "TYPES"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Types",
-                                                            "safeName": "Types"
-                                                        }
-                                                    }
+                                                    "types"
                                                 ],
-                                                "file": {
-                                                    "originalName": "object",
-                                                    "camelCase": {
-                                                        "unsafeName": "object",
-                                                        "safeName": "object"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "object",
-                                                        "safeName": "object"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "OBJECT",
-                                                        "safeName": "OBJECT"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Object",
-                                                        "safeName": "Object"
-                                                    }
-                                                }
+                                                "file": "object"
                                             },
                                             "displayName": null,
                                             "typeId": "type_types/object:ObjectWithDocumentedUnknownType"
@@ -20119,129 +19231,18 @@
                                                     "type": "object",
                                                     "properties": [
                                                         {
-                                                            "name": {
-                                                                "name": {
-                                                                    "originalName": "documentedUnknownType",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "documentedUnknownType",
-                                                                        "safeName": "documentedUnknownType"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "documented_unknown_type",
-                                                                        "safeName": "documented_unknown_type"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "DOCUMENTED_UNKNOWN_TYPE",
-                                                                        "safeName": "DOCUMENTED_UNKNOWN_TYPE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "DocumentedUnknownType",
-                                                                        "safeName": "DocumentedUnknownType"
-                                                                    }
-                                                                },
-                                                                "wireValue": "documentedUnknownType"
-                                                            },
+                                                            "name": "documentedUnknownType",
                                                             "originalTypeDeclaration": {
-                                                                "name": {
-                                                                    "originalName": "ObjectWithDocumentedUnknownType",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "objectWithDocumentedUnknownType",
-                                                                        "safeName": "objectWithDocumentedUnknownType"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "object_with_documented_unknown_type",
-                                                                        "safeName": "object_with_documented_unknown_type"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE",
-                                                                        "safeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "ObjectWithDocumentedUnknownType",
-                                                                        "safeName": "ObjectWithDocumentedUnknownType"
-                                                                    }
-                                                                },
+                                                                "name": "ObjectWithDocumentedUnknownType",
                                                                 "fernFilepath": {
                                                                     "allParts": [
-                                                                        {
-                                                                            "originalName": "types",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "TYPES",
-                                                                                "safeName": "TYPES"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Types",
-                                                                                "safeName": "Types"
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "originalName": "object",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "object",
-                                                                                "safeName": "object"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "object",
-                                                                                "safeName": "object"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "OBJECT",
-                                                                                "safeName": "OBJECT"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Object",
-                                                                                "safeName": "Object"
-                                                                            }
-                                                                        }
+                                                                        "types",
+                                                                        "object"
                                                                     ],
                                                                     "packagePath": [
-                                                                        {
-                                                                            "originalName": "types",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "types",
-                                                                                "safeName": "types"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "TYPES",
-                                                                                "safeName": "TYPES"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "Types",
-                                                                                "safeName": "Types"
-                                                                            }
-                                                                        }
+                                                                        "types"
                                                                     ],
-                                                                    "file": {
-                                                                        "originalName": "object",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "object",
-                                                                            "safeName": "object"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "object",
-                                                                            "safeName": "object"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "OBJECT",
-                                                                            "safeName": "OBJECT"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Object",
-                                                                            "safeName": "Object"
-                                                                        }
-                                                                    }
+                                                                    "file": "object"
                                                                 },
                                                                 "displayName": null,
                                                                 "typeId": "type_types/object:ObjectWithDocumentedUnknownType"
@@ -20264,106 +19265,16 @@
                                                                         }
                                                                     },
                                                                     "typeName": {
-                                                                        "name": {
-                                                                            "originalName": "DocumentedUnknownType",
-                                                                            "camelCase": {
-                                                                                "unsafeName": "documentedUnknownType",
-                                                                                "safeName": "documentedUnknownType"
-                                                                            },
-                                                                            "snakeCase": {
-                                                                                "unsafeName": "documented_unknown_type",
-                                                                                "safeName": "documented_unknown_type"
-                                                                            },
-                                                                            "screamingSnakeCase": {
-                                                                                "unsafeName": "DOCUMENTED_UNKNOWN_TYPE",
-                                                                                "safeName": "DOCUMENTED_UNKNOWN_TYPE"
-                                                                            },
-                                                                            "pascalCase": {
-                                                                                "unsafeName": "DocumentedUnknownType",
-                                                                                "safeName": "DocumentedUnknownType"
-                                                                            }
-                                                                        },
+                                                                        "name": "DocumentedUnknownType",
                                                                         "fernFilepath": {
                                                                             "allParts": [
-                                                                                {
-                                                                                    "originalName": "types",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "types",
-                                                                                        "safeName": "types"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "types",
-                                                                                        "safeName": "types"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "TYPES",
-                                                                                        "safeName": "TYPES"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Types",
-                                                                                        "safeName": "Types"
-                                                                                    }
-                                                                                },
-                                                                                {
-                                                                                    "originalName": "object",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "object",
-                                                                                        "safeName": "object"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "object",
-                                                                                        "safeName": "object"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "OBJECT",
-                                                                                        "safeName": "OBJECT"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Object",
-                                                                                        "safeName": "Object"
-                                                                                    }
-                                                                                }
+                                                                                "types",
+                                                                                "object"
                                                                             ],
                                                                             "packagePath": [
-                                                                                {
-                                                                                    "originalName": "types",
-                                                                                    "camelCase": {
-                                                                                        "unsafeName": "types",
-                                                                                        "safeName": "types"
-                                                                                    },
-                                                                                    "snakeCase": {
-                                                                                        "unsafeName": "types",
-                                                                                        "safeName": "types"
-                                                                                    },
-                                                                                    "screamingSnakeCase": {
-                                                                                        "unsafeName": "TYPES",
-                                                                                        "safeName": "TYPES"
-                                                                                    },
-                                                                                    "pascalCase": {
-                                                                                        "unsafeName": "Types",
-                                                                                        "safeName": "Types"
-                                                                                    }
-                                                                                }
+                                                                                "types"
                                                                             ],
-                                                                            "file": {
-                                                                                "originalName": "object",
-                                                                                "camelCase": {
-                                                                                    "unsafeName": "object",
-                                                                                    "safeName": "object"
-                                                                                },
-                                                                                "snakeCase": {
-                                                                                    "unsafeName": "object",
-                                                                                    "safeName": "object"
-                                                                                },
-                                                                                "screamingSnakeCase": {
-                                                                                    "unsafeName": "OBJECT",
-                                                                                    "safeName": "OBJECT"
-                                                                                },
-                                                                                "pascalCase": {
-                                                                                    "unsafeName": "Object",
-                                                                                    "safeName": "Object"
-                                                                                }
-                                                                            }
+                                                                            "file": "object"
                                                                         },
                                                                         "displayName": null,
                                                                         "typeId": "type_types/object:DocumentedUnknownType"
@@ -20379,106 +19290,16 @@
                                                     "extraProperties": null
                                                 },
                                                 "typeName": {
-                                                    "name": {
-                                                        "originalName": "ObjectWithDocumentedUnknownType",
-                                                        "camelCase": {
-                                                            "unsafeName": "objectWithDocumentedUnknownType",
-                                                            "safeName": "objectWithDocumentedUnknownType"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "object_with_documented_unknown_type",
-                                                            "safeName": "object_with_documented_unknown_type"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE",
-                                                            "safeName": "OBJECT_WITH_DOCUMENTED_UNKNOWN_TYPE"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "ObjectWithDocumentedUnknownType",
-                                                            "safeName": "ObjectWithDocumentedUnknownType"
-                                                        }
-                                                    },
+                                                    "name": "ObjectWithDocumentedUnknownType",
                                                     "fernFilepath": {
                                                         "allParts": [
-                                                            {
-                                                                "originalName": "types",
-                                                                "camelCase": {
-                                                                    "unsafeName": "types",
-                                                                    "safeName": "types"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "types",
-                                                                    "safeName": "types"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "TYPES",
-                                                                    "safeName": "TYPES"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Types",
-                                                                    "safeName": "Types"
-                                                                }
-                                                            },
-                                                            {
-                                                                "originalName": "object",
-                                                                "camelCase": {
-                                                                    "unsafeName": "object",
-                                                                    "safeName": "object"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "object",
-                                                                    "safeName": "object"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "OBJECT",
-                                                                    "safeName": "OBJECT"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Object",
-                                                                    "safeName": "Object"
-                                                                }
-                                                            }
+                                                            "types",
+                                                            "object"
                                                         ],
                                                         "packagePath": [
-                                                            {
-                                                                "originalName": "types",
-                                                                "camelCase": {
-                                                                    "unsafeName": "types",
-                                                                    "safeName": "types"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "types",
-                                                                    "safeName": "types"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "TYPES",
-                                                                    "safeName": "TYPES"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Types",
-                                                                    "safeName": "Types"
-                                                                }
-                                                            }
+                                                            "types"
                                                         ],
-                                                        "file": {
-                                                            "originalName": "object",
-                                                            "camelCase": {
-                                                                "unsafeName": "object",
-                                                                "safeName": "object"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "object",
-                                                                "safeName": "object"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "OBJECT",
-                                                                "safeName": "OBJECT"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Object",
-                                                                "safeName": "Object"
-                                                            }
-                                                        }
+                                                        "file": "object"
                                                     },
                                                     "displayName": null,
                                                     "typeId": "type_types/object:ObjectWithDocumentedUnknownType"
@@ -33678,6 +32499,7 @@
                 "properties": [
                     {
                         "name": {
+                            "wireValue": "documentedUnknownType",
                             "name": {
                                 "originalName": "documentedUnknownType",
                                 "camelCase": {
@@ -33696,8 +32518,7 @@
                                     "unsafeName": "DocumentedUnknownType",
                                     "safeName": "DocumentedUnknownType"
                                 }
-                            },
-                            "wireValue": "documentedUnknownType"
+                            }
                         },
                         "typeReference": {
                             "type": "named",

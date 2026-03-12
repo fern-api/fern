@@ -3385,6 +3385,7 @@
             "properties": [
                 {
                     "name": {
+                        "wireValue": "documentedUnknownType",
                         "name": {
                             "originalName": "documentedUnknownType",
                             "camelCase": {
@@ -3403,8 +3404,7 @@
                                 "unsafeName": "DocumentedUnknownType",
                                 "safeName": "DocumentedUnknownType"
                             }
-                        },
-                        "wireValue": "documentedUnknownType"
+                        }
                     },
                     "typeReference": {
                         "type": "named",
