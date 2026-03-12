@@ -1,6 +1,11 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, TypeReferenceNode } from "@fern-typescript/commons";
-import { casingsGenerator, createDeclaredTypeName } from "@fern-typescript/test-utils";
+import {
+    casingsGenerator,
+    createDeclaredTypeName,
+    namedTypeRefNode,
+    primitiveTypeRefNode
+} from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 
@@ -15,46 +20,6 @@ function createFernFilepath(packageName = "types"): FernIr.FernFilepath {
         allParts: [casingsGenerator.generateName(packageName)],
         packagePath: [casingsGenerator.generateName(packageName)],
         file: casingsGenerator.generateName(packageName)
-    };
-}
-
-/**
- * Builds a TypeReferenceNode for a primitive type (non-optional).
- */
-function primitiveTypeRefNode(typeName: string): TypeReferenceNode {
-    const typeNode = ts.factory.createKeywordTypeNode(
-        typeName === "string"
-            ? ts.SyntaxKind.StringKeyword
-            : typeName === "number"
-              ? ts.SyntaxKind.NumberKeyword
-              : typeName === "boolean"
-                ? ts.SyntaxKind.BooleanKeyword
-                : ts.SyntaxKind.AnyKeyword
-    );
-    return {
-        isOptional: false,
-        typeNode,
-        typeNodeWithoutUndefined: typeNode,
-        requestTypeNode: undefined,
-        requestTypeNodeWithoutUndefined: undefined,
-        responseTypeNode: undefined,
-        responseTypeNodeWithoutUndefined: undefined
-    };
-}
-
-/**
- * Builds a TypeReferenceNode pointing to a named type reference.
- */
-function namedTypeRefNode(name: string): TypeReferenceNode {
-    const typeNode = ts.factory.createTypeReferenceNode(name);
-    return {
-        isOptional: false,
-        typeNode,
-        typeNodeWithoutUndefined: typeNode,
-        requestTypeNode: undefined,
-        requestTypeNodeWithoutUndefined: undefined,
-        responseTypeNode: undefined,
-        responseTypeNodeWithoutUndefined: undefined
     };
 }
 

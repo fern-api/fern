@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { Reference, Zurg } from "@fern-typescript/commons";
+import { Zurg } from "@fern-typescript/commons";
 import { GeneratedType } from "@fern-typescript/contexts";
-import { casingsGenerator, createNameAndWireValue } from "@fern-typescript/test-utils";
+import { casingsGenerator, createMockReference, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -15,18 +15,6 @@ import { GeneratedUnionTypeSchemaImpl } from "../union/GeneratedUnionTypeSchemaI
 // ────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
-
-/**
- * Creates a mock Reference object that returns identifiers for the given name.
- */
-function createMockReference(name: string): Reference {
-    return {
-        getExpression: () => ts.factory.createIdentifier(name),
-        getTypeNode: () => ts.factory.createTypeReferenceNode(name),
-        getEntityName: () => ts.factory.createIdentifier(name)
-        // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal Reference interface
-    } as any;
-}
 
 /**
  * Creates a minimal Zurg.Schema mock that returns an expression for serialization.
