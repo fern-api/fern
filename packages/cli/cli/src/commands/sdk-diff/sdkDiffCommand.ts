@@ -184,8 +184,16 @@ export async function sdkDiffCommand({
 
         context.logger.debug("Multi-chunk analysis complete");
 
+        if (bestBump === VersionBump.NO_CHANGE) {
+            return {
+                version_bump: VersionBump.NO_CHANGE,
+                message: "No changes detected between the directories",
+                changelog_entry: ""
+            };
+        }
+
         return {
-            version_bump: (bestBump as VersionBump) ?? VersionBump.NO_CHANGE,
+            version_bump: bestBump as VersionBump,
             message: bestMessage || "SDK regeneration",
             changelog_entry:
                 allChangelogEntries.length > 1
