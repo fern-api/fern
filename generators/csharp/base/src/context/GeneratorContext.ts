@@ -82,8 +82,7 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         // Log deprecation warning if the old flag is used
         if (this.customConfig["experimental-readonly-constants"] === true) {
             this.logger.warn(
-                'The "experimental-readonly-constants" option is deprecated. Use "generate-literals" instead. ' +
-                    "See https://buildwithfern.com/learn/sdks/features/literal-types for more details."
+                'The "experimental-readonly-constants" option is deprecated. Use "generate-literals" instead.'
             );
         }
     }

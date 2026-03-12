@@ -1,6 +1,5 @@
-using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 
 namespace SeedLiteral;
 
@@ -13,7 +12,7 @@ public readonly struct AliasToPrompt
 
     public override string ToString() => Value;
 
-    public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
+    public override int GetHashCode() => Value.GetHashCode(global::System.StringComparison.Ordinal);
 
     public override bool Equals(object? obj) => obj is AliasToPrompt;
 
@@ -25,7 +24,7 @@ public readonly struct AliasToPrompt
     {
         public override AliasToPrompt Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

@@ -60,7 +60,7 @@ public record SendResponse : IJsonOnDeserialized
         {
             public override SuccessLiteral Read(
                 ref Utf8JsonReader reader,
-                Type typeToConvert,
+                global::System.Type typeToConvert,
                 JsonSerializerOptions options
             )
             {

@@ -81,7 +81,8 @@ public record SendRequest : IJsonOnDeserialized
 
         public override string ToString() => Value;
 
-        public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
+        public override int GetHashCode() =>
+            Value.GetHashCode(global::System.StringComparison.Ordinal);
 
         public override bool Equals(object? obj) => obj is PromptLiteral;
 
@@ -93,7 +94,7 @@ public record SendRequest : IJsonOnDeserialized
         {
             public override PromptLiteral Read(
                 ref Utf8JsonReader reader,
-                Type typeToConvert,
+                global::System.Type typeToConvert,
                 JsonSerializerOptions options
             )
             {
@@ -140,7 +141,7 @@ public record SendRequest : IJsonOnDeserialized
         {
             public override StreamLiteral Read(
                 ref Utf8JsonReader reader,
-                Type typeToConvert,
+                global::System.Type typeToConvert,
                 JsonSerializerOptions options
             )
             {
@@ -169,7 +170,8 @@ public record SendRequest : IJsonOnDeserialized
 
         public override string ToString() => Value;
 
-        public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
+        public override int GetHashCode() =>
+            Value.GetHashCode(global::System.StringComparison.Ordinal);
 
         public override bool Equals(object? obj) => obj is EndingLiteral;
 
@@ -181,7 +183,7 @@ public record SendRequest : IJsonOnDeserialized
         {
             public override EndingLiteral Read(
                 ref Utf8JsonReader reader,
-                Type typeToConvert,
+                global::System.Type typeToConvert,
                 JsonSerializerOptions options
             )
             {

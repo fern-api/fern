@@ -55,7 +55,8 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
 
         public override string ToString() => Value;
 
-        public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
+        public override int GetHashCode() =>
+            Value.GetHashCode(global::System.StringComparison.Ordinal);
 
         public override bool Equals(object? obj) => obj is Literal1Literal;
 
@@ -67,7 +68,7 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
         {
             public override Literal1Literal Read(
                 ref Utf8JsonReader reader,
-                Type typeToConvert,
+                global::System.Type typeToConvert,
                 JsonSerializerOptions options
             )
             {
@@ -102,7 +103,8 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
 
         public override string ToString() => Value;
 
-        public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
+        public override int GetHashCode() =>
+            Value.GetHashCode(global::System.StringComparison.Ordinal);
 
         public override bool Equals(object? obj) => obj is Literal2Literal;
 
@@ -114,7 +116,7 @@ public record NestedObjectWithLiterals : IJsonOnDeserialized
         {
             public override Literal2Literal Read(
                 ref Utf8JsonReader reader,
-                Type typeToConvert,
+                global::System.Type typeToConvert,
                 JsonSerializerOptions options
             )
             {

@@ -42,7 +42,8 @@ public record ANestedLiteral : IJsonOnDeserialized
 
         public override string ToString() => Value;
 
-        public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
+        public override int GetHashCode() =>
+            Value.GetHashCode(global::System.StringComparison.Ordinal);
 
         public override bool Equals(object? obj) => obj is MyLiteralLiteral;
 
@@ -54,7 +55,7 @@ public record ANestedLiteral : IJsonOnDeserialized
         {
             public override MyLiteralLiteral Read(
                 ref Utf8JsonReader reader,
-                Type typeToConvert,
+                global::System.Type typeToConvert,
                 JsonSerializerOptions options
             )
             {

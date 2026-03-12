@@ -67,7 +67,8 @@ public record SendLiteralsInlinedRequest
 
         public override string ToString() => Value;
 
-        public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
+        public override int GetHashCode() =>
+            Value.GetHashCode(global::System.StringComparison.Ordinal);
 
         public override bool Equals(object? obj) => obj is PromptLiteral;
 
@@ -79,7 +80,7 @@ public record SendLiteralsInlinedRequest
         {
             public override PromptLiteral Read(
                 ref Utf8JsonReader reader,
-                Type typeToConvert,
+                global::System.Type typeToConvert,
                 JsonSerializerOptions options
             )
             {
@@ -126,7 +127,7 @@ public record SendLiteralsInlinedRequest
         {
             public override StreamLiteral Read(
                 ref Utf8JsonReader reader,
-                Type typeToConvert,
+                global::System.Type typeToConvert,
                 JsonSerializerOptions options
             )
             {

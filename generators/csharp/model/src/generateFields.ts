@@ -357,8 +357,9 @@ function buildNestedLiteralStruct({
         ]
     });
 
-    // Add namespace references so using declarations appear at the top of the file
-    nestedStruct.addNamespaceReference("System");
+    // Add namespace references so using declarations appear at the top of the file.
+    // Note: System.Type and System.StringComparison are fully qualified with global:: in the
+    // raw body content to avoid conflicts with customer-defined types named "Type" or "System".
     nestedStruct.addNamespaceReference("System.Text.Json");
     nestedStruct.addNamespaceReference("System.Text.Json.Serialization");
 

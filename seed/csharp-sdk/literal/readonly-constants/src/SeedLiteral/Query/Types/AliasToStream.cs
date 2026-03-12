@@ -1,6 +1,5 @@
-using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 
 namespace SeedLiteral;
 
@@ -25,7 +24,7 @@ public readonly struct AliasToStream
     {
         public override AliasToStream Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {

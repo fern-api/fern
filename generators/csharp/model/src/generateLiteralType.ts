@@ -59,7 +59,7 @@ export function generateNestedStringLiteralBody({
 
     public static implicit operator string(${structName} _) => Value;
     public override string ToString() => Value;
-    public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
+    public override int GetHashCode() => Value.GetHashCode(global::System.StringComparison.Ordinal);
     public override bool Equals(object? obj) => obj is ${structName};
 
     public static bool operator ==(${structName} _, ${structName} __) => true;
@@ -69,7 +69,7 @@ export function generateNestedStringLiteralBody({
     {
         public override ${structName} Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -118,7 +118,7 @@ export function generateNestedBoolLiteralBody({
     {
         public override ${structName} Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -151,9 +151,8 @@ function generateStringLiteralContent({
 }): string {
     // Escape backslashes first, then double quotes for C# string literals
     const escapedLiteralValue = literalValue.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-    return `using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+    return `using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 
 namespace ${namespace};
 
@@ -164,7 +163,7 @@ public readonly struct ${structName}
 
     public static implicit operator string(${structName} _) => Value;
     public override string ToString() => Value;
-    public override int GetHashCode() => Value.GetHashCode(StringComparison.Ordinal);
+    public override int GetHashCode() => Value.GetHashCode(global::System.StringComparison.Ordinal);
     public override bool Equals(object? obj) => obj is ${structName};
 
     public static bool operator ==(${structName} _, ${structName} __) => true;
@@ -174,7 +173,7 @@ public readonly struct ${structName}
     {
         public override ${structName} Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
@@ -209,9 +208,8 @@ function generateBoolLiteralContent({
 }): string {
     const csharpValue = literalValue ? "true" : "false";
     const oppositeValue = literalValue ? "false" : "true";
-    return `using System;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+    return `using global::System.Text.Json;
+using global::System.Text.Json.Serialization;
 
 namespace ${namespace};
 
@@ -232,7 +230,7 @@ public readonly struct ${structName}
     {
         public override ${structName} Read(
             ref Utf8JsonReader reader,
-            Type typeToConvert,
+            global::System.Type typeToConvert,
             JsonSerializerOptions options
         )
         {
