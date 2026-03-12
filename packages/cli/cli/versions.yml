@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.24.2
+  changelogEntry:
+    - summary: |
+        Fix `fern diff` failing on IR files larger than 2 GB. The command now
+        uses streaming JSON parsing (`stream-json`) instead of reading the entire
+        file into a single string, avoiding Node.js's V8 string size limit.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
 - version: 4.24.1
   changelogEntry:
     - summary: |
