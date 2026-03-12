@@ -1,5 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { Reference } from "@fern-typescript/commons";
+import { BaseContext } from "@fern-typescript/contexts";
 import { casingsGenerator, createDeclaredTypeName, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
@@ -22,12 +23,11 @@ function createReferenceToSelf(): Reference {
     return {
         getTypeNode: () => ts.factory.createTypeReferenceNode("TestType"),
         getEntityName: () => ts.factory.createIdentifier("TestType"),
-        getExpression: () => ts.factory.createIdentifier("TestType"),
-        isDefault: false
+        getExpression: () => ts.factory.createIdentifier("TestType")
     };
 }
 
-function createBaseArgs(shape: FernIr.Type): TypeGenerator.generateType.Args<never> {
+function createBaseArgs(shape: FernIr.Type): TypeGenerator.generateType.Args<BaseContext> {
     return {
         typeName: "TestType",
         shape,
@@ -81,7 +81,6 @@ describe("TypeGenerator", () => {
                         name: createNameAndWireValue("Active", "ACTIVE"),
                         docs: undefined,
                         availability: undefined,
-                        casing: undefined
                     }
                 ],
                 default: undefined
@@ -97,7 +96,7 @@ describe("TypeGenerator", () => {
                 extends: [],
                 types: [],
                 baseProperties: [],
-                v2Examples: undefined
+                discriminatorContext: undefined
             });
             const result = generator.generateType(createBaseArgs(shape));
             expect(result.type).toBe("union");
@@ -140,7 +139,7 @@ describe("TypeGenerator", () => {
                     inline: undefined
                 }),
                 resolvedType: FernIr.ResolvedTypeReference.named({
-                    ...namedType,
+                    name: namedType,
                     shape: FernIr.ShapeType.Object
                 })
             });

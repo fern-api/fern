@@ -22,7 +22,7 @@ function createUnionDeclaration(opts?: {
         extends: [],
         types: opts?.types ?? [],
         baseProperties: [],
-        v2Examples: undefined
+        discriminatorContext: undefined
     };
 }
 
@@ -178,7 +178,8 @@ describe("UnknownSingleUnionTypeGenerator", () => {
 
 describe("UnknownSingleUnionType", () => {
     it("getDiscriminantValueType returns string keyword", () => {
-        const unknownType = new UnknownSingleUnionType({
+        // biome-ignore lint/suspicious/noExplicitAny: UnknownSingleUnionType inherits constructor from AbstractParsedSingleUnionType
+        const unknownType = new (UnknownSingleUnionType as any)({
             singleUnionType: new UnknownSingleUnionTypeGenerator(),
             includeUtilsOnUnionMembers: true
         });
@@ -187,7 +188,8 @@ describe("UnknownSingleUnionType", () => {
     });
 
     it("needsRequestResponse returns false for both", () => {
-        const unknownType = new UnknownSingleUnionType({
+        // biome-ignore lint/suspicious/noExplicitAny: UnknownSingleUnionType inherits constructor from AbstractParsedSingleUnionType
+        const unknownType = new (UnknownSingleUnionType as any)({
             singleUnionType: new UnknownSingleUnionTypeGenerator(),
             includeUtilsOnUnionMembers: true
         });
@@ -195,7 +197,8 @@ describe("UnknownSingleUnionType", () => {
     });
 
     it("getDocs returns undefined", () => {
-        const unknownType = new UnknownSingleUnionType({
+        // biome-ignore lint/suspicious/noExplicitAny: UnknownSingleUnionType inherits constructor from AbstractParsedSingleUnionType
+        const unknownType = new (UnknownSingleUnionType as any)({
             singleUnionType: new UnknownSingleUnionTypeGenerator(),
             includeUtilsOnUnionMembers: true
         });
