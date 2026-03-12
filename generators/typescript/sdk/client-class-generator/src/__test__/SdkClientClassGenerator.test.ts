@@ -48,9 +48,7 @@ function createMockImportsManager(): any {
     };
 }
 
-function createGenerator(
-    opts?: Partial<SdkClientClassGenerator.Init>
-): SdkClientClassGenerator {
+function createGenerator(opts?: Partial<SdkClientClassGenerator.Init>): SdkClientClassGenerator {
     return new SdkClientClassGenerator({
         intermediateRepresentation: createMinimalIR(),
         errorResolver: createMockErrorResolver(),

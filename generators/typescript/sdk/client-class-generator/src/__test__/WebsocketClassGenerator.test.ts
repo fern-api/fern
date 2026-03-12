@@ -7,9 +7,7 @@ import { WebsocketClassGenerator } from "../WebsocketClassGenerator.js";
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
-function createChannel(opts?: {
-    messages?: FernIr.WebSocketMessage[];
-}): FernIr.WebSocketChannel {
+function createChannel(opts?: { messages?: FernIr.WebSocketMessage[] }): FernIr.WebSocketChannel {
     return {
         name: casingsGenerator.generateName("ChatChannel"),
         displayName: undefined,
@@ -28,9 +26,7 @@ function createChannel(opts?: {
     };
 }
 
-function createGenerator(
-    opts?: Partial<WebsocketClassGenerator.Init>
-): WebsocketClassGenerator {
+function createGenerator(opts?: Partial<WebsocketClassGenerator.Init>): WebsocketClassGenerator {
     return new WebsocketClassGenerator({
         intermediateRepresentation: createMinimalIR(),
         retainOriginalCasing: false,

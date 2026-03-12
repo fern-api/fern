@@ -12,8 +12,7 @@ function createMockContext(): any {
         externalDependencies: {
             stream: {
                 Readable: {
-                    _getReferenceToType: () =>
-                        ts.factory.createTypeReferenceNode("stream.Readable")
+                    _getReferenceToType: () => ts.factory.createTypeReferenceNode("stream.Readable")
                 }
             }
         }
