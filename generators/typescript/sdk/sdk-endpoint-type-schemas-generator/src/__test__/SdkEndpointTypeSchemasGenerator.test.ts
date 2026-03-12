@@ -86,8 +86,7 @@ function createMockSdkContext() {
                         discriminant: "errorName",
                         visitPropertyName: "_visit",
                         getBasePropertyKey: (key: string) => key,
-                        buildFromExistingValue: ({ existingValue }: { existingValue: ts.Expression }) =>
-                            existingValue,
+                        buildFromExistingValue: ({ existingValue }: { existingValue: ts.Expression }) => existingValue,
                         buildUnknown: ({ existingValue }: { existingValue: ts.Expression }) => existingValue
                         // biome-ignore lint/suspicious/noExplicitAny: test mock
                     }) as any
@@ -96,10 +95,7 @@ function createMockSdkContext() {
         sdkError: {
             getErrorDeclaration: (errorName: FernIr.DeclaredErrorName) => ({
                 name: errorName,
-                discriminantValue: createNameAndWireValue(
-                    errorName.name.originalName,
-                    errorName.name.originalName
-                ),
+                discriminantValue: createNameAndWireValue(errorName.name.originalName, errorName.name.originalName),
                 type: undefined,
                 statusCode: 400
             })

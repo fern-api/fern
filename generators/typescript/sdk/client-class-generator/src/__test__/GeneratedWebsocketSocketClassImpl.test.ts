@@ -41,9 +41,7 @@ function createWebSocketMessage(
     };
 }
 
-function createChannel(opts?: {
-    messages?: FernIr.WebSocketMessage[];
-}): FernIr.WebSocketChannel {
+function createChannel(opts?: { messages?: FernIr.WebSocketMessage[] }): FernIr.WebSocketChannel {
     return {
         name: casingsGenerator.generateName("ChatChannel"),
         displayName: undefined,
@@ -87,7 +85,11 @@ function createMockContext(): any {
             zurg: {
                 object: (properties: unknown[]) => ({
                     jsonOrThrow: (expr: ts.Expression) =>
-                        ts.factory.createCallExpression(ts.factory.createIdentifier("serializer.jsonOrThrow"), undefined, [expr]),
+                        ts.factory.createCallExpression(
+                            ts.factory.createIdentifier("serializer.jsonOrThrow"),
+                            undefined,
+                            [expr]
+                        ),
                     properties
                 })
             }
@@ -110,13 +112,17 @@ function createMockContext(): any {
         typeSchema: {
             getSchemaOfTypeReference: () => ({
                 jsonOrThrow: (expr: ts.Expression, _opts: unknown) =>
-                    ts.factory.createCallExpression(ts.factory.createIdentifier("schema.jsonOrThrow"), undefined, [expr])
+                    ts.factory.createCallExpression(ts.factory.createIdentifier("schema.jsonOrThrow"), undefined, [
+                        expr
+                    ])
             })
         },
         websocketTypeSchema: {
             getGeneratedWebsocketResponseTypeSchema: () => ({
                 deserializeResponse: (expr: ts.Expression) =>
-                    ts.factory.createCallExpression(ts.factory.createIdentifier("responseSchema.parse"), undefined, [expr])
+                    ts.factory.createCallExpression(ts.factory.createIdentifier("responseSchema.parse"), undefined, [
+                        expr
+                    ])
             })
         },
         logger: {
@@ -241,6 +247,7 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
 
             const classStructure = context._addedClasses[0] as { ctors: { statements: string[] }[] };
             expect(classStructure.ctors).toHaveLength(1);
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             const ctorStatements = classStructure.ctors[0]!.statements;
             expect(ctorStatements.some((s: string) => s.includes("addEventListener"))).toBe(true);
             expect(ctorStatements.some((s: string) => s.includes('"open"'))).toBe(true);
@@ -256,6 +263,7 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
 
             const classStructure = context._addedClasses[0] as { getAccessors: { name: string }[] };
             expect(classStructure.getAccessors).toHaveLength(1);
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(classStructure.getAccessors[0]!.name).toBe("readyState");
         });
     });
@@ -280,6 +288,7 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             // Should have 2 client send methods
             expect(sendMethods).toHaveLength(2);
             // With serde layer, should use JSON.stringify
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(sendMethods[0]!.statements.some((s: string) => s.includes("JSON.stringify"))).toBe(true);
         });
 
@@ -296,6 +305,7 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
                 (m: { name: string }) => m.name.startsWith("send") && m.name !== "sendBinary" && m.name !== "sendJson"
             );
             expect(sendMethods).toHaveLength(1);
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(sendMethods[0]!.statements.some((s: string) => s.includes("sendJson"))).toBe(true);
         });
 
@@ -358,7 +368,12 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
                     v1: "STRING",
                     v2: {
                         type: "string",
-                        validation: { format: "binary", minLength: undefined, maxLength: undefined, pattern: undefined },
+                        validation: {
+                            format: "binary",
+                            minLength: undefined,
+                            maxLength: undefined,
+                            pattern: undefined
+                        },
                         default: undefined
                     }
                 }
@@ -381,11 +396,16 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             const context = createMockContext();
             impl.writeToFile(context);
 
-            const classStructure = context._addedClasses[0] as { methods: { name: string; statements: string[]; returnType: string }[] };
+            const classStructure = context._addedClasses[0] as {
+                methods: { name: string; statements: string[]; returnType: string }[];
+            };
             const connectMethod = classStructure.methods.find((m: { name: string }) => m.name === "connect");
             expect(connectMethod).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(connectMethod!.returnType).toBe("ChatSocket");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(connectMethod!.statements.some((s: string) => s.includes("reconnect"))).toBe(true);
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(connectMethod!.statements.some((s: string) => s.includes("return this"))).toBe(true);
         });
     });
@@ -399,8 +419,11 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             const classStructure = context._addedClasses[0] as { methods: { name: string; statements: string[] }[] };
             const closeMethod = classStructure.methods.find((m: { name: string }) => m.name === "close");
             expect(closeMethod).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(closeMethod!.statements.some((s: string) => s.includes("removeEventListener"))).toBe(true);
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(closeMethod!.statements.some((s: string) => s.includes("handleClose"))).toBe(true);
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(closeMethod!.statements.some((s: string) => s.includes("1000"))).toBe(true);
         });
     });
@@ -416,7 +439,9 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             };
             const onMethod = classStructure.methods.find((m: { name: string }) => m.name === "on");
             expect(onMethod).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(onMethod!.typeParameters[0]!.name).toBe("T");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(onMethod!.parameters.map((p: { name: string }) => p.name)).toEqual(["event", "callback"]);
         });
     });
@@ -428,9 +453,13 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             impl.writeToFile(context);
 
             const classStructure = context._addedClasses[0] as { properties: { name: string; initializer: string }[] };
-            const handleMessageProp = classStructure.properties.find((p: { name: string }) => p.name === "handleMessage");
+            const handleMessageProp = classStructure.properties.find(
+                (p: { name: string }) => p.name === "handleMessage"
+            );
             expect(handleMessageProp).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(handleMessageProp!.initializer).toContain("fromJson");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(handleMessageProp!.initializer).toContain("parsedResponse");
         });
 
@@ -440,9 +469,13 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             impl.writeToFile(context);
 
             const classStructure = context._addedClasses[0] as { properties: { name: string; initializer: string }[] };
-            const handleMessageProp = classStructure.properties.find((p: { name: string }) => p.name === "handleMessage");
+            const handleMessageProp = classStructure.properties.find(
+                (p: { name: string }) => p.name === "handleMessage"
+            );
             expect(handleMessageProp).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(handleMessageProp!.initializer).toContain("message");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(handleMessageProp!.initializer).not.toContain("parsedResponse");
         });
     });
@@ -474,8 +507,7 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
 
             const classStructure = context._addedClasses[0] as { methods: { name: string }[] };
             const sendMethods = classStructure.methods.filter(
-                (m: { name: string }) =>
-                    m.name.startsWith("send") && m.name !== "sendBinary" && m.name !== "sendJson"
+                (m: { name: string }) => m.name.startsWith("send") && m.name !== "sendBinary" && m.name !== "sendJson"
             );
             expect(sendMethods).toHaveLength(0);
         });
@@ -492,8 +524,11 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             };
             const waitMethod = classStructure.methods.find((m: { name: string }) => m.name === "waitForOpen");
             expect(waitMethod).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(waitMethod!.isAsync).toBe(true);
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(waitMethod!.returnType).toContain("Promise");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(waitMethod!.returnType).toContain("ReconnectingWebSocket");
         });
     });
@@ -509,7 +544,9 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             };
             const assertMethod = classStructure.methods.find((m: { name: string }) => m.name === "assertSocketIsOpen");
             expect(assertMethod).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(assertMethod!.statements.some((s: string) => s.includes("Socket is not connected"))).toBe(true);
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(assertMethod!.statements.some((s: string) => s.includes("Socket is not open"))).toBe(true);
         });
     });
@@ -525,6 +562,7 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             };
             const sendBinaryMethod = classStructure.methods.find((m: { name: string }) => m.name === "sendBinary");
             expect(sendBinaryMethod).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(sendBinaryMethod!.parameters[0]!.type).toBe("ArrayBufferLike | Blob | ArrayBufferView");
         });
     });
@@ -538,6 +576,7 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             const classStructure = context._addedClasses[0] as { properties: { name: string; initializer: string }[] };
             const handleOpen = classStructure.properties.find((p: { name: string }) => p.name === "handleOpen");
             expect(handleOpen).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(handleOpen!.initializer).toContain("eventHandlers.open");
         });
     });
@@ -548,10 +587,14 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             const context = createMockContext();
             impl.writeToFile(context);
 
-            const classStructure = context._addedClasses[0] as { properties: { name: string; type: string; initializer: string }[] };
+            const classStructure = context._addedClasses[0] as {
+                properties: { name: string; type: string; initializer: string }[];
+            };
             const handleClose = classStructure.properties.find((p: { name: string }) => p.name === "handleClose");
             expect(handleClose).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(handleClose!.type).toContain("CloseEvent");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(handleClose!.initializer).toContain("eventHandlers.close");
         });
     });
@@ -562,10 +605,14 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
             const context = createMockContext();
             impl.writeToFile(context);
 
-            const classStructure = context._addedClasses[0] as { properties: { name: string; type: string; initializer: string }[] };
+            const classStructure = context._addedClasses[0] as {
+                properties: { name: string; type: string; initializer: string }[];
+            };
             const handleError = classStructure.properties.find((p: { name: string }) => p.name === "handleError");
             expect(handleError).toBeDefined();
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(handleError!.type).toContain("ErrorEvent");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(handleError!.initializer).toContain("new Error");
         });
     });

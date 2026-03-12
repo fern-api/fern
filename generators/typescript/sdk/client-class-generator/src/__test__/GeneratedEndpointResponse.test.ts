@@ -3,8 +3,8 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { createHttpEndpoint, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
-import { GeneratedThrowingEndpointResponse } from "../endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse.js";
 import { GeneratedNonThrowingEndpointResponse } from "../endpoints/default/endpoint-response/GeneratedNonThrowingEndpointResponse.js";
+import { GeneratedThrowingEndpointResponse } from "../endpoints/default/endpoint-response/GeneratedThrowingEndpointResponse.js";
 
 // ──────────────────────────────────────────────────────────────────────────────
 // Shared test helpers
@@ -87,13 +87,25 @@ function createMockContext(): any {
             },
             getReferenceToResponsePropertyType: () =>
                 ts.factory.createArrayTypeNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)),
-            generateGetterForResponseProperty: ({ property, variable }: { property: FernIr.ResponseProperty; variable: string }) =>
+            generateGetterForResponseProperty: ({
+                property,
+                variable
+            }: {
+                property: FernIr.ResponseProperty;
+                variable: string;
+            }) =>
                 ts.factory.createPropertyAccessChain(
                     ts.factory.createIdentifier(variable),
                     ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
                     property.property.name.name.camelCase.unsafeName
                 ),
-            generateGetterForRequestProperty: ({ property, variable }: { property: FernIr.RequestProperty; variable: string }) =>
+            generateGetterForRequestProperty: ({
+                property,
+                variable
+            }: {
+                property: FernIr.RequestProperty;
+                variable: string;
+            }) =>
                 ts.factory.createPropertyAccessChain(
                     ts.factory.createIdentifier(variable),
                     ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
@@ -115,8 +127,14 @@ function createMockContext(): any {
                 Stream: {
                     _getReferenceToType: (itemType: ts.TypeNode) =>
                         ts.factory.createTypeReferenceNode("Stream", [itemType]),
-                    _construct: ({ stream }: { stream: ts.Expression; eventShape: unknown; signal: ts.Expression | undefined; parse: ts.Expression }) =>
-                        ts.factory.createNewExpression(ts.factory.createIdentifier("Stream"), undefined, [stream])
+                    _construct: ({
+                        stream
+                    }: {
+                        stream: ts.Expression;
+                        eventShape: unknown;
+                        signal: ts.Expression | undefined;
+                        parse: ts.Expression;
+                    }) => ts.factory.createNewExpression(ts.factory.createIdentifier("Stream"), undefined, [stream])
                 }
             },
             fetcher: {
@@ -192,7 +210,12 @@ function createMockContext(): any {
             }),
             getGeneratedSdkError: () => ({
                 type: "class" as const,
-                build: (_context: unknown, { referenceToBody }: { referenceToBody: ts.Expression | undefined; referenceToRawResponse: ts.Expression }) =>
+                build: (
+                    _context: unknown,
+                    {
+                        referenceToBody
+                    }: { referenceToBody: ts.Expression | undefined; referenceToRawResponse: ts.Expression }
+                ) =>
                     ts.factory.createNewExpression(ts.factory.createIdentifier("SdkError"), undefined, [
                         referenceToBody ?? ts.factory.createIdentifier("undefined")
                     ])
@@ -213,7 +236,12 @@ function createMockContext(): any {
                 deserializeError: (body: ts.Expression) =>
                     ts.factory.createCallExpression(ts.factory.createIdentifier("deserializeError"), undefined, [body]),
                 getReferenceToRawError: () => ts.factory.createTypeReferenceNode("RawError"),
-                deserializeStreamData: ({ referenceToRawStreamData }: { context: unknown; referenceToRawStreamData: ts.Expression }) =>
+                deserializeStreamData: ({
+                    referenceToRawStreamData
+                }: {
+                    context: unknown;
+                    referenceToRawStreamData: ts.Expression;
+                }) =>
                     ts.factory.createCallExpression(ts.factory.createIdentifier("deserializeStreamData"), undefined, [
                         referenceToRawStreamData
                     ])
@@ -223,7 +251,13 @@ function createMockContext(): any {
             getGeneratedEndpointErrorUnion: () => ({
                 getErrorUnion: () => ({
                     getReferenceTo: () => ts.factory.createTypeReferenceNode("ErrorUnion"),
-                    buildWithBuilder: ({ discriminantValueToBuild }: { discriminantValueToBuild: number; builderArgument: ts.Expression | undefined; context: unknown }) =>
+                    buildWithBuilder: ({
+                        discriminantValueToBuild
+                    }: {
+                        discriminantValueToBuild: number;
+                        builderArgument: ts.Expression | undefined;
+                        context: unknown;
+                    }) =>
                         ts.factory.createCallExpression(ts.factory.createIdentifier("buildError"), undefined, [
                             ts.factory.createNumericLiteral(discriminantValueToBuild)
                         ]),
@@ -238,7 +272,15 @@ function createMockContext(): any {
             getGeneratedGenericAPISdkError: () => ({
                 build: (
                     _context: unknown,
-                    { statusCode, responseBody }: { message: string | undefined; statusCode: ts.Expression; responseBody: ts.Expression; rawResponse: ts.Expression }
+                    {
+                        statusCode,
+                        responseBody
+                    }: {
+                        message: string | undefined;
+                        statusCode: ts.Expression;
+                        responseBody: ts.Expression;
+                        rawResponse: ts.Expression;
+                    }
                 ) =>
                     ts.factory.createNewExpression(ts.factory.createIdentifier("GenericAPIError"), undefined, [
                         statusCode,
@@ -319,9 +361,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 | FernIr.HttpResponseBody.Text
                 | FernIr.HttpResponseBody.Bytes
                 | undefined,
-            errorDiscriminationStrategy:
-                opts?.errorDiscrimination ??
-                FernIr.ErrorDiscriminationStrategy.statusCode(),
+            errorDiscriminationStrategy: opts?.errorDiscrimination ?? FernIr.ErrorDiscriminationStrategy.statusCode(),
             errorResolver: createMockErrorResolver(opts?.errorResolverErrors),
             includeContentHeadersOnResponse: opts?.includeContentHeaders ?? false,
             clientClass: createMockClientClass(),
@@ -391,8 +431,11 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(info!.type).toBe("cursor");
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.hasNextPage)).toMatchSnapshot();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.getItems)).toMatchSnapshot();
             });
 
@@ -417,6 +460,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(info!.type).toBe("cursor");
             });
 
@@ -430,6 +474,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(info!.type).toBe("cursor");
             });
         });
@@ -446,8 +491,11 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(info!.type).toBe("offset");
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.hasNextPage)).toMatchSnapshot();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.getItems)).toMatchSnapshot();
             });
 
@@ -465,7 +513,9 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(info!.type).toBe("offset-step");
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.hasNextPage)).toMatchSnapshot();
             });
 
@@ -483,6 +533,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(info!.type).toBe("offset");
             });
 
@@ -491,13 +542,18 @@ describe("GeneratedThrowingEndpointResponse", () => {
                     page: createRequestProperty("page", INTEGER_TYPE),
                     results: createResponseProperty("items", LIST_STRING_TYPE),
                     step: undefined,
-                    hasNextPage: createResponseProperty("hasMore", FernIr.TypeReference.primitive({ v1: "BOOLEAN", v2: undefined }))
+                    hasNextPage: createResponseProperty(
+                        "hasMore",
+                        FernIr.TypeReference.primitive({ v1: "BOOLEAN", v2: undefined })
+                    )
                 });
                 const instance = createInstance({ pagination: offsetPagination });
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.hasNextPage)).toContain("hasMore");
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.hasNextPage)).toMatchSnapshot();
             });
 
@@ -523,7 +579,9 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(info!.type).toBe("custom");
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 expect(getTextOfTsNode(info!.hasNextPage)).toBe("false");
             });
 
@@ -535,6 +593,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 const loadPageText = serializeStatements(info!.loadPage);
                 expect(loadPageText).toContain("Custom pagination requires manual implementation");
             });
@@ -573,7 +632,9 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
                 // The offset initialization should use default of 5
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 if (info!.type === "offset" || info!.type === "offset-step") {
+                    // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                     const initText = serializeStatements([info!.initializeOffset]);
                     expect(initText).toContain("5");
                 }
@@ -590,7 +651,9 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 if (info!.type === "offset" || info!.type === "offset-step") {
+                    // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                     const initText = serializeStatements([info!.initializeOffset]);
                     expect(initText).toContain("1");
                 }
@@ -622,7 +685,9 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 if (info!.type === "offset" || info!.type === "offset-step") {
+                    // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                     const initText = serializeStatements([info!.initializeOffset]);
                     expect(initText).toContain("3");
                 }
@@ -654,7 +719,9 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 const context = createMockContext();
                 const info = instance.getPaginationInfo(context);
                 expect(info).toBeDefined();
+                // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                 if (info!.type === "offset" || info!.type === "offset-step") {
+                    // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
                     const initText = serializeStatements([info!.initializeOffset]);
                     expect(initText).toContain("7");
                 }
@@ -823,9 +890,7 @@ describe("GeneratedNonThrowingEndpointResponse", () => {
                 | FernIr.HttpResponseBody.Text
                 | FernIr.HttpResponseBody.Bytes
                 | undefined,
-            errorDiscriminationStrategy:
-                opts?.errorDiscrimination ??
-                FernIr.ErrorDiscriminationStrategy.statusCode(),
+            errorDiscriminationStrategy: opts?.errorDiscrimination ?? FernIr.ErrorDiscriminationStrategy.statusCode(),
             errorResolver: createMockErrorResolver(opts?.errorResolverErrors),
             includeSerdeLayer: true,
             streamType: "wrapper",

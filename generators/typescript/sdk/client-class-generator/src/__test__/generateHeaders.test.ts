@@ -378,11 +378,9 @@ describe("generateHeaders", () => {
     });
 
     it("throws when header is non-literal and requestParameter is undefined", () => {
-        const header = createHttpHeader(
-            "X-Required",
-            FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
-            { wireValue: "X-Required" }
-        );
+        const header = createHttpHeader("X-Required", FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }), {
+            wireValue: "X-Required"
+        });
 
         expect(() =>
             generateHeaders({
@@ -661,9 +659,7 @@ describe("generateHeaders", () => {
             FernIr.TypeReference.container(
                 FernIr.ContainerType.optional(
                     FernIr.TypeReference.container(
-                        FernIr.ContainerType.nullable(
-                            FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-                        )
+                        FernIr.ContainerType.nullable(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                     )
                 )
             ),
@@ -694,14 +690,10 @@ describe("generateHeaders", () => {
         mockContext.type.getTypeDeclaration = () => ({
             shape: FernIr.Type.alias({
                 aliasOf: FernIr.TypeReference.container(
-                    FernIr.ContainerType.nullable(
-                        FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-                    )
+                    FernIr.ContainerType.nullable(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                 ),
                 resolvedType: FernIr.ResolvedTypeReference.container(
-                    FernIr.ContainerType.nullable(
-                        FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-                    )
+                    FernIr.ContainerType.nullable(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
                 )
             })
         });

@@ -14,4 +14,4 @@ exports[`buildUrl > uses request reference when shouldInlinePathParameters is tr
 
 exports[`buildUrl > uses root path parameter reference for ROOT location 1`] = `"\`/tenants/\${this.tenantId}/data\`"`;
 
-exports[`buildUrl > uses variable reference when path parameter has variable property 1`] = `"\`/users/\${this._[object Object]}\`"`;
+exports[`buildUrl > uses variable reference when path parameter has variable property 1`] = `"\`/users/\${this._userId}\`"`;

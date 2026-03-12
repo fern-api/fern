@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
-import { casingsGenerator, createNameAndWireValue, createDeclaredTypeName } from "@fern-typescript/test-utils";
+import { casingsGenerator, createDeclaredTypeName, createNameAndWireValue } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
@@ -65,7 +65,11 @@ function literalShape(value: string): FernIr.ExampleTypeReferenceShape {
 function createMockContext(opts?: {
     inlineFileProperties?: boolean;
     shouldInlinePathParameters?: boolean;
-    generatedTypeOverride?: (decl: FernIr.DeclaredTypeName) => { type: string; getSinglePropertyKey?: (prop: FernIr.SingleUnionTypeProperty) => string; getPropertyKey?: (args: { propertyWireKey: string }) => string };
+    generatedTypeOverride?: (decl: FernIr.DeclaredTypeName) => {
+        type: string;
+        getSinglePropertyKey?: (prop: FernIr.SingleUnionTypeProperty) => string;
+        getPropertyKey?: (args: { propertyWireKey: string }) => string;
+    };
     getPropertyKeyError?: boolean;
 }): SdkContext {
     const mockGeneratedRequestWrapper = {
@@ -106,42 +110,49 @@ function createMockContext(opts?: {
             }
         },
         type: {
-                getGeneratedExample: (exampleTypeRef: FernIr.ExampleTypeReference) => ({
-                    build: () => {
-                        // For literal containers, return undefined to test filtering
+            getGeneratedExample: (exampleTypeRef: FernIr.ExampleTypeReference) => ({
+                build: () => {
+                    // For literal containers, return undefined to test filtering
+                    if (
+                        exampleTypeRef.shape.type === "container" &&
+                        exampleTypeRef.shape.container.type === "literal"
+                    ) {
+                        return ts.factory.createIdentifier("undefined");
+                    }
+                    // For primitives, return based on the primitive type
+                    if (exampleTypeRef.shape.type === "primitive") {
+                        const primType = exampleTypeRef.shape.primitive.type;
                         if (
-                            exampleTypeRef.shape.type === "container" &&
-                            exampleTypeRef.shape.container.type === "literal"
+                            primType === "integer" ||
+                            primType === "long" ||
+                            primType === "uint" ||
+                            primType === "uint64" ||
+                            primType === "float" ||
+                            primType === "double"
                         ) {
-                            return ts.factory.createIdentifier("undefined");
+                            return ts.factory.createNumericLiteral(Number(exampleTypeRef.jsonExample));
                         }
-                        // For primitives, return based on the primitive type
-                        if (exampleTypeRef.shape.type === "primitive") {
-                            const primType = exampleTypeRef.shape.primitive.type;
-                            if (primType === "integer" || primType === "long" || primType === "uint" || primType === "uint64" || primType === "float" || primType === "double") {
-                                return ts.factory.createNumericLiteral(Number(exampleTypeRef.jsonExample));
-                            }
-                            if (primType === "boolean") {
-                                return exampleTypeRef.jsonExample ? ts.factory.createTrue() : ts.factory.createFalse();
-                            }
-                            return ts.factory.createStringLiteral(String(exampleTypeRef.jsonExample));
+                        if (primType === "boolean") {
+                            return exampleTypeRef.jsonExample ? ts.factory.createTrue() : ts.factory.createFalse();
                         }
-                        // For named types, return a simple object
-                        if (exampleTypeRef.shape.type === "named") {
-                            return ts.factory.createObjectLiteralExpression(
-                                [
-                                    ts.factory.createPropertyAssignment(
-                                        "value",
-                                        ts.factory.createStringLiteral("named-value")
-                                    )
-                                ],
-                                true
-                            );
-                        }
-                        // Default: return a string literal of the json example
                         return ts.factory.createStringLiteral(String(exampleTypeRef.jsonExample));
                     }
-                }),
+                    // For named types, return a simple object
+                    if (exampleTypeRef.shape.type === "named") {
+                        return ts.factory.createObjectLiteralExpression(
+                            [
+                                ts.factory.createPropertyAssignment(
+                                    "value",
+                                    ts.factory.createStringLiteral("named-value")
+                                )
+                            ],
+                            true
+                        );
+                    }
+                    // Default: return a string literal of the json example
+                    return ts.factory.createStringLiteral(String(exampleTypeRef.jsonExample));
+                }
+            }),
             getGeneratedType: (decl: FernIr.DeclaredTypeName) => {
                 if (opts?.generatedTypeOverride) {
                     return opts.generatedTypeOverride(decl);

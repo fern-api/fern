@@ -278,17 +278,7 @@ describe("buildUrl", () => {
     it("uses variable reference when path parameter has variable property", () => {
         const variableParam: FernIr.PathParameter = {
             ...createPathParameter("userId"),
-            variable: {
-                id: "var_userId" as FernIr.VariableId,
-                name: {
-                    originalName: "userId",
-                    camelCase: { unsafeName: "userId", safeName: "userId" },
-                    snakeCase: { unsafeName: "user_id", safeName: "user_id" },
-                    screamingSnakeCase: { unsafeName: "USER_ID", safeName: "USER_ID" },
-                    pascalCase: { unsafeName: "UserId", safeName: "UserId" }
-                },
-                type: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-            }
+            variable: "userId" as FernIr.VariableId
         };
 
         const result = buildUrl({

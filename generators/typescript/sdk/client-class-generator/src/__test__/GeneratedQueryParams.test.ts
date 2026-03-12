@@ -179,7 +179,13 @@ describe("GeneratedQueryParams", () => {
             const namedType = FernIr.TypeReference.named({
                 typeId: "type_MyObject",
                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                name: { originalName: "MyObject", camelCase: { unsafeName: "myObject", safeName: "myObject" }, snakeCase: { unsafeName: "my_object", safeName: "my_object" }, screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" }, pascalCase: { unsafeName: "MyObject", safeName: "MyObject" } },
+                name: {
+                    originalName: "MyObject",
+                    camelCase: { unsafeName: "myObject", safeName: "myObject" },
+                    snakeCase: { unsafeName: "my_object", safeName: "my_object" },
+                    screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" },
+                    pascalCase: { unsafeName: "MyObject", safeName: "MyObject" }
+                },
                 displayName: undefined,
                 default: undefined,
                 inline: undefined
@@ -187,7 +193,12 @@ describe("GeneratedQueryParams", () => {
             const queryParams = [createQueryParameter("filter", namedType)];
             const mockContext = createMockContext({ includeSerdeLayer: true });
             mockContext.type.getTypeDeclaration = () => ({
-                shape: FernIr.Type.object({ properties: [], extends: [], extraProperties: false, extendedProperties: undefined })
+                shape: FernIr.Type.object({
+                    properties: [],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                })
             });
 
             const generator = new GeneratedQueryParams({
@@ -197,7 +208,9 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(mockContext);
             expect(statements).toHaveLength(1);
-            const text = getTextOfTsNode(statements[0]!);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
             expect(text).toContain("jsonOrThrow");
             expect(text).toMatchSnapshot();
         });
@@ -206,7 +219,13 @@ describe("GeneratedQueryParams", () => {
             const namedType = FernIr.TypeReference.named({
                 typeId: "type_MyObject",
                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                name: { originalName: "MyObject", camelCase: { unsafeName: "myObject", safeName: "myObject" }, snakeCase: { unsafeName: "my_object", safeName: "my_object" }, screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" }, pascalCase: { unsafeName: "MyObject", safeName: "MyObject" } },
+                name: {
+                    originalName: "MyObject",
+                    camelCase: { unsafeName: "myObject", safeName: "myObject" },
+                    snakeCase: { unsafeName: "my_object", safeName: "my_object" },
+                    screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" },
+                    pascalCase: { unsafeName: "MyObject", safeName: "MyObject" }
+                },
                 displayName: undefined,
                 default: undefined,
                 inline: undefined
@@ -215,7 +234,12 @@ describe("GeneratedQueryParams", () => {
             const queryParams = [createQueryParameter("filter", optionalNamedType)];
             const mockContext = createMockContext({ includeSerdeLayer: true });
             mockContext.type.getTypeDeclaration = () => ({
-                shape: FernIr.Type.object({ properties: [], extends: [], extraProperties: false, extendedProperties: undefined })
+                shape: FernIr.Type.object({
+                    properties: [],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                })
             });
 
             const generator = new GeneratedQueryParams({
@@ -225,7 +249,9 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(mockContext);
             expect(statements).toHaveLength(1);
-            const text = getTextOfTsNode(statements[0]!);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
             // Optional object should have conditional: filter !== null ? serializer : filter
             expect(text).toContain("!= null");
             expect(text).toContain("jsonOrThrow");
@@ -236,7 +262,13 @@ describe("GeneratedQueryParams", () => {
             const namedType = FernIr.TypeReference.named({
                 typeId: "type_MyObject",
                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                name: { originalName: "MyObject", camelCase: { unsafeName: "myObject", safeName: "myObject" }, snakeCase: { unsafeName: "my_object", safeName: "my_object" }, screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" }, pascalCase: { unsafeName: "MyObject", safeName: "MyObject" } },
+                name: {
+                    originalName: "MyObject",
+                    camelCase: { unsafeName: "myObject", safeName: "myObject" },
+                    snakeCase: { unsafeName: "my_object", safeName: "my_object" },
+                    screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" },
+                    pascalCase: { unsafeName: "MyObject", safeName: "MyObject" }
+                },
                 displayName: undefined,
                 default: undefined,
                 inline: undefined
@@ -244,7 +276,12 @@ describe("GeneratedQueryParams", () => {
             const queryParams = [createQueryParameter("filter", namedType)];
             const mockContext = createMockContext({ includeSerdeLayer: false });
             mockContext.type.getTypeDeclaration = () => ({
-                shape: FernIr.Type.object({ properties: [], extends: [], extraProperties: false, extendedProperties: undefined })
+                shape: FernIr.Type.object({
+                    properties: [],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                })
             });
 
             const generator = new GeneratedQueryParams({
@@ -254,7 +291,9 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(mockContext);
             expect(statements).toHaveLength(1);
-            const text = getTextOfTsNode(statements[0]!);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
             // Without serde layer, object type just passes through
             expect(text).not.toContain("jsonOrThrow");
             expect(text).toMatchSnapshot();
@@ -264,7 +303,13 @@ describe("GeneratedQueryParams", () => {
             const namedType = FernIr.TypeReference.named({
                 typeId: "type_MyObject",
                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                name: { originalName: "MyObject", camelCase: { unsafeName: "myObject", safeName: "myObject" }, snakeCase: { unsafeName: "my_object", safeName: "my_object" }, screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" }, pascalCase: { unsafeName: "MyObject", safeName: "MyObject" } },
+                name: {
+                    originalName: "MyObject",
+                    camelCase: { unsafeName: "myObject", safeName: "myObject" },
+                    snakeCase: { unsafeName: "my_object", safeName: "my_object" },
+                    screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" },
+                    pascalCase: { unsafeName: "MyObject", safeName: "MyObject" }
+                },
                 displayName: undefined,
                 default: undefined,
                 inline: undefined
@@ -273,7 +318,12 @@ describe("GeneratedQueryParams", () => {
             const queryParams = [createQueryParameter("items", listOfObject, { allowMultiple: true })];
             const mockContext = createMockContext({ includeSerdeLayer: true });
             mockContext.type.getTypeDeclaration = () => ({
-                shape: FernIr.Type.object({ properties: [], extends: [], extraProperties: false, extendedProperties: undefined })
+                shape: FernIr.Type.object({
+                    properties: [],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                })
             });
 
             const generator = new GeneratedQueryParams({
@@ -283,7 +333,9 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(mockContext);
             expect(statements).toHaveLength(1);
-            const text = getTextOfTsNode(statements[0]!);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
             // Should have Array.isArray check and async map with Promise.all
             expect(text).toContain("Array.isArray");
             expect(text).toContain("Promise.all");
@@ -303,7 +355,9 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
-            const text = getTextOfTsNode(statements[0]!);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
             // Should have Array.isArray check and map with stringify
             expect(text).toContain("Array.isArray");
             expect(text).toContain("map");
@@ -323,7 +377,9 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
-            const text = getTextOfTsNode(statements[0]!);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
             // String list doesn't need transform, should just be passed through
             expect(text).toMatchSnapshot();
         });
@@ -338,7 +394,9 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
-            const text = getTextOfTsNode(statements[0]!);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
             expect(text).toContain("toString");
             expect(text).toMatchSnapshot();
         });
@@ -347,7 +405,13 @@ describe("GeneratedQueryParams", () => {
             const namedType = FernIr.TypeReference.named({
                 typeId: "type_MyObject",
                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                name: { originalName: "MyObject", camelCase: { unsafeName: "myObject", safeName: "myObject" }, snakeCase: { unsafeName: "my_object", safeName: "my_object" }, screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" }, pascalCase: { unsafeName: "MyObject", safeName: "MyObject" } },
+                name: {
+                    originalName: "MyObject",
+                    camelCase: { unsafeName: "myObject", safeName: "myObject" },
+                    snakeCase: { unsafeName: "my_object", safeName: "my_object" },
+                    screamingSnakeCase: { unsafeName: "MY_OBJECT", safeName: "MY_OBJECT" },
+                    pascalCase: { unsafeName: "MyObject", safeName: "MyObject" }
+                },
                 displayName: undefined,
                 default: undefined,
                 inline: undefined
@@ -355,7 +419,12 @@ describe("GeneratedQueryParams", () => {
             const queryParams = [createQueryParameter("filter_data", namedType)];
             const mockContext = createMockContext({ includeSerdeLayer: true, retainOriginalCasing: true });
             mockContext.type.getTypeDeclaration = () => ({
-                shape: FernIr.Type.object({ properties: [], extends: [], extraProperties: false, extendedProperties: undefined })
+                shape: FernIr.Type.object({
+                    properties: [],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                })
             });
 
             const generator = new GeneratedQueryParams({
@@ -365,7 +434,9 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(mockContext);
             expect(statements).toHaveLength(1);
-            const text = getTextOfTsNode(statements[0]!);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
             // retainOriginalCasing uses originalName for breadcrumbs
             expect(text).toContain("filter_data");
             expect(text).toMatchSnapshot();
@@ -375,7 +446,13 @@ describe("GeneratedQueryParams", () => {
             const namedType = FernIr.TypeReference.named({
                 typeId: "type_MyAlias",
                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
-                name: { originalName: "MyAlias", camelCase: { unsafeName: "myAlias", safeName: "myAlias" }, snakeCase: { unsafeName: "my_alias", safeName: "my_alias" }, screamingSnakeCase: { unsafeName: "MY_ALIAS", safeName: "MY_ALIAS" }, pascalCase: { unsafeName: "MyAlias", safeName: "MyAlias" } },
+                name: {
+                    originalName: "MyAlias",
+                    camelCase: { unsafeName: "myAlias", safeName: "myAlias" },
+                    snakeCase: { unsafeName: "my_alias", safeName: "my_alias" },
+                    screamingSnakeCase: { unsafeName: "MY_ALIAS", safeName: "MY_ALIAS" },
+                    pascalCase: { unsafeName: "MyAlias", safeName: "MyAlias" }
+                },
                 displayName: undefined,
                 default: undefined,
                 inline: undefined
@@ -396,7 +473,9 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(mockContext);
             expect(statements).toHaveLength(1);
-            const text = getTextOfTsNode(statements[0]!);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
             // Alias of string primitive should not need stringify
             expect(text).not.toContain("toString");
             expect(text).toMatchSnapshot();
@@ -415,7 +494,9 @@ describe("GeneratedQueryParams", () => {
 
             const statements = generator.getBuildStatements(createMockContext());
             expect(statements).toHaveLength(1);
-            const text = getTextOfTsNode(statements[0]!);
+            const firstStmt = statements[0];
+            assert(firstStmt != null, "expected at least one statement");
+            const text = getTextOfTsNode(firstStmt);
             expect(text).toMatchSnapshot();
         });
     });

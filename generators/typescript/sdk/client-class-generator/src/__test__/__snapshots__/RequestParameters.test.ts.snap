@@ -2,7 +2,7 @@
 
 exports[`RequestWrapperParameter > extractDefaultValue > returns BigInt call for bigInteger type with useBigInt 1`] = `"const { bigVal = BigInt("123456789012345678901234567890"), ..._body } = request;"`;
 
-exports[`RequestWrapperParameter > extractDefaultValue > returns BigInt call for long type with useBigInt 1`] = `"const { bigId = BigInt("9007199254740992"), ..._body } = request;"`;
+exports[`RequestWrapperParameter > extractDefaultValue > returns BigInt call for long type with useBigInt 1`] = `"const { bigId = BigInt("9007199254740991"), ..._body } = request;"`;
 
 exports[`RequestWrapperParameter > extractDefaultValue > returns boolean default for boolean type with default value 1`] = `"const { verbose = true, ..._body } = request;"`;
 

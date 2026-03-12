@@ -21,7 +21,13 @@ function createMockContext() {
 function createEndpoint(security?: Record<string, string[]>[]): FernIr.HttpEndpoint {
     return {
         id: "endpoint_test",
-        name: { originalName: "test", camelCase: { unsafeName: "test", safeName: "test" }, snakeCase: { unsafeName: "test", safeName: "test" }, screamingSnakeCase: { unsafeName: "TEST", safeName: "TEST" }, pascalCase: { unsafeName: "Test", safeName: "Test" } },
+        name: {
+            originalName: "test",
+            camelCase: { unsafeName: "test", safeName: "test" },
+            snakeCase: { unsafeName: "test", safeName: "test" },
+            screamingSnakeCase: { unsafeName: "TEST", safeName: "TEST" },
+            pascalCase: { unsafeName: "Test", safeName: "Test" }
+        },
         displayName: undefined,
         method: "POST",
         headers: [],

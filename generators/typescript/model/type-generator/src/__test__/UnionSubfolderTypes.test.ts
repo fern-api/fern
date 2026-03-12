@@ -123,6 +123,7 @@ describe("UnknownSingleUnionTypeGenerator", () => {
         const localRef = ts.factory.createIdentifier("value");
         const args = gen.getVisitorArguments({ localReferenceToUnionValue: localRef });
         expect(args).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(args[0]!)).toBe("value");
     });
 
@@ -131,7 +132,9 @@ describe("UnknownSingleUnionTypeGenerator", () => {
         const context = createMockBaseContext();
         const typeNode = gen.getVisitMethodParameterType(context, { discriminant: "type" });
         expect(typeNode).toBeDefined();
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(typeNode!)).toContain("type");
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(typeNode!)).toContain("string");
     });
 
@@ -140,6 +143,7 @@ describe("UnknownSingleUnionTypeGenerator", () => {
         const context = createMockBaseContext();
         const params = gen.getParametersForBuilder(context, { discriminant: "kind" });
         expect(params).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         const paramText = getTextOfTsNode(params[0]!);
         expect(paramText).toContain("value");
         expect(paramText).toContain("kind");
@@ -150,6 +154,7 @@ describe("UnknownSingleUnionTypeGenerator", () => {
         const existing = ts.factory.createIdentifier("existingVal");
         const args = gen.getBuilderArgsFromExistingValue(existing);
         expect(args).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(args[0]!)).toBe("existingVal");
     });
 
@@ -157,6 +162,7 @@ describe("UnknownSingleUnionTypeGenerator", () => {
         const gen = new UnknownSingleUnionTypeGenerator();
         const props = gen.getNonDiscriminantPropertiesForBuilder();
         expect(props).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(props[0]! as unknown as ts.Expression)).toContain("value");
     });
 
@@ -230,6 +236,7 @@ describe("SamePropertiesAsObjectSingleUnionTypeGenerator", () => {
         const context = createMockBaseContext({ inline: false });
         const result = gen.getExtendsForInterface(context);
         expect(result).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(result[0]!.typeNode)).toBe("SomeType");
     });
 
@@ -284,6 +291,7 @@ describe("SamePropertiesAsObjectSingleUnionTypeGenerator", () => {
         const context = createMockBaseContext();
         const params = gen.getParametersForBuilder(context);
         expect(params).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         const paramText = getTextOfTsNode(params[0]!);
         expect(paramText).toContain("value");
     });
@@ -299,6 +307,7 @@ describe("SamePropertiesAsObjectSingleUnionTypeGenerator", () => {
         const context = createMockBaseContext();
         const typeNode = gen.getVisitMethodParameterType(context);
         expect(typeNode).toBeDefined();
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(typeNode!)).toBe("NamedType");
     });
 
@@ -307,6 +316,7 @@ describe("SamePropertiesAsObjectSingleUnionTypeGenerator", () => {
         const localRef = ts.factory.createIdentifier("val");
         const args = gen.getVisitorArguments({ localReferenceToUnionValue: localRef });
         expect(args).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(args[0]!)).toBe("val");
     });
 
@@ -315,6 +325,7 @@ describe("SamePropertiesAsObjectSingleUnionTypeGenerator", () => {
         const existing = ts.factory.createIdentifier("x");
         const args = gen.getBuilderArgsFromExistingValue(existing);
         expect(args).toHaveLength(1);
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(args[0]!)).toBe("x");
     });
 });

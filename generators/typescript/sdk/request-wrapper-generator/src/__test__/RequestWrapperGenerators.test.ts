@@ -1,11 +1,11 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PackageId } from "@fern-typescript/commons";
 import {
+    casingsGenerator,
     createHttpEndpoint,
     createHttpService,
     createNameAndWireValue,
-    createSdkRequestWrapper,
-    casingsGenerator
+    createSdkRequestWrapper
 } from "@fern-typescript/test-utils";
 import { describe, expect, it } from "vitest";
 
@@ -224,9 +224,7 @@ describe("RequestWrapperExampleGenerator", () => {
                     {
                         name: createNameAndWireValue("limit", "limit"),
                         value: {
-                            shape: FernIr.ExampleTypeReferenceShape.primitive(
-                                FernIr.ExamplePrimitive.integer(10)
-                            ),
+                            shape: FernIr.ExampleTypeReferenceShape.primitive(FernIr.ExamplePrimitive.integer(10)),
                             jsonExample: 10
                         }
                     }

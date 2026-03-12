@@ -7,8 +7,6 @@ import {
     createInlinedRequestBody,
     createNameAndWireValue,
     createPathParameter,
-    createQueryParameter,
-    createSdkRequestBody,
     createSdkRequestWrapper,
     serializeStatements
 } from "@fern-typescript/test-utils";
@@ -589,6 +587,7 @@ describe("RequestWrapperParameter", () => {
             });
         const ref = param.getReferenceToRequestBody(context);
         expect(ref).toBeDefined();
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(ref!)).toBe("_body");
     });
 
@@ -605,6 +604,7 @@ describe("RequestWrapperParameter", () => {
             });
         const ref = param.getReferenceToRequestBody(context);
         expect(ref).toBeDefined();
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         expect(getTextOfTsNode(ref!)).toBe("request");
     });
 
@@ -761,7 +761,7 @@ describe("RequestWrapperParameter", () => {
                                     valueType: FernIr.TypeReference.primitive({
                                         v1: "LONG",
                                         v2: FernIr.PrimitiveTypeV2.long({
-                                            default: 9007199254740993,
+                                            default: 9007199254740991,
                                             minimum: undefined,
                                             maximum: undefined,
                                             validation: undefined

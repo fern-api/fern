@@ -2108,16 +2108,17 @@ describe("GeneratedRequestWrapperImpl", () => {
             const realTypeName = createDeclaredTypeName("RealBase");
             const namedRef = createNamedTypeReference("RealBase");
             const { context } = createMockContext({
-                getTypeDeclarationFn: () => ({
-                    shape: FernIr.Type.alias({
-                        aliasOf: namedRef,
-                        resolvedType: FernIr.ResolvedTypeReference.named({
-                            name: realTypeName,
-                            shape: "OBJECT" as FernIr.ShapeType
+                getTypeDeclarationFn: () =>
+                    ({
+                        shape: FernIr.Type.alias({
+                            aliasOf: namedRef,
+                            resolvedType: FernIr.ResolvedTypeReference.named({
+                                name: realTypeName,
+                                shape: "OBJECT" as FernIr.ShapeType
+                            })
                         })
-                    })
-                    // biome-ignore lint/suspicious/noExplicitAny: test mock
-                }) as any,
+                        // biome-ignore lint/suspicious/noExplicitAny: test mock
+                    }) as any,
                 getGeneratedTypeFn: () => ({
                     type: "object",
                     getAllPropertiesIncludingExtensions: () => [{ type: STRING_TYPE }]
@@ -2147,10 +2148,7 @@ describe("GeneratedRequestWrapperImpl", () => {
 
         it("returns false when file upload has required file property", () => {
             const fileBody = createFileUploadRequestBody({
-                properties: [
-                    createFileProperty("photo"),
-                    createBodyPropertyForUpload("caption", OPTIONAL_STRING_TYPE)
-                ]
+                properties: [createFileProperty("photo"), createBodyPropertyForUpload("caption", OPTIONAL_STRING_TYPE)]
             });
             const init = createDefaultInit({
                 inlineFileProperties: true,
@@ -2166,10 +2164,7 @@ describe("GeneratedRequestWrapperImpl", () => {
 
         it("ignores file properties when inlineFileProperties=false", () => {
             const fileBody = createFileUploadRequestBody({
-                properties: [
-                    createFileProperty("photo"),
-                    createBodyPropertyForUpload("caption", OPTIONAL_STRING_TYPE)
-                ]
+                properties: [createFileProperty("photo"), createBodyPropertyForUpload("caption", OPTIONAL_STRING_TYPE)]
             });
             const init = createDefaultInit({
                 inlineFileProperties: false,
@@ -2397,10 +2392,7 @@ describe("GeneratedRequestWrapperImpl", () => {
         it("generates namespace module for file upload body with inline named properties", () => {
             const namedTypeRef = createNamedTypeReference("UploadMeta");
             const fileBody = createFileUploadRequestBody({
-                properties: [
-                    createFileProperty("document"),
-                    createBodyPropertyForUpload("metadata", namedTypeRef)
-                ]
+                properties: [createFileProperty("document"), createBodyPropertyForUpload("metadata", namedTypeRef)]
             });
             const init = createDefaultInit({
                 enableInlineTypes: true,

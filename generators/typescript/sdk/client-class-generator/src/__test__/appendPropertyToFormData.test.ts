@@ -1,10 +1,13 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { casingsGenerator, createInlinedRequestBodyProperty, createNameAndWireValue } from "@fern-typescript/test-utils";
+import {
+    casingsGenerator,
+    createInlinedRequestBodyProperty,
+    createNameAndWireValue
+} from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 import { appendPropertyToFormData } from "../endpoints/utils/appendPropertyToFormData.js";
-import { FileUploadRequestParameter } from "../request-parameter/FileUploadRequestParameter.js";
 
 const STRING_TYPE = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined });
 const OPTIONAL_STRING_TYPE = FernIr.TypeReference.container(FernIr.ContainerType.optional(STRING_TYPE));
@@ -43,7 +46,14 @@ function createMockContext(): any {
         },
         coreUtilities: {
             formDataUtils: {
-                appendFile: ({ key, value }: { referenceToFormData: ts.Expression; key: string; value: ts.Expression }) =>
+                appendFile: ({
+                    key,
+                    value
+                }: {
+                    referenceToFormData: ts.Expression;
+                    key: string;
+                    value: ts.Expression;
+                }) =>
                     ts.factory.createExpressionStatement(
                         ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(
@@ -336,10 +346,13 @@ describe("appendPropertyToFormData", () => {
         });
 
         it("generates for-of loop for named type aliasing a list", () => {
-            const aliasOfList = createNamedType("ListAlias", FernIr.Type.alias({
-                aliasOf: LIST_STRING_TYPE,
-                resolvedType: FernIr.ResolvedTypeReference.container(FernIr.ContainerType.list(STRING_TYPE))
-            }));
+            const aliasOfList = createNamedType(
+                "ListAlias",
+                FernIr.Type.alias({
+                    aliasOf: LIST_STRING_TYPE,
+                    resolvedType: FernIr.ResolvedTypeReference.container(FernIr.ContainerType.list(STRING_TYPE))
+                })
+            );
             const property = createBodyProperty("items", aliasOfList);
             const context = createMockContextWithDeclarations({
                 type_ListAlias: FernIr.Type.alias({
@@ -363,10 +376,13 @@ describe("appendPropertyToFormData", () => {
         });
 
         it("generates for-of loop for named type aliasing a set", () => {
-            const aliasOfSet = createNamedType("SetAlias", FernIr.Type.alias({
-                aliasOf: SET_STRING_TYPE,
-                resolvedType: FernIr.ResolvedTypeReference.container(FernIr.ContainerType.set(STRING_TYPE))
-            }));
+            const aliasOfSet = createNamedType(
+                "SetAlias",
+                FernIr.Type.alias({
+                    aliasOf: SET_STRING_TYPE,
+                    resolvedType: FernIr.ResolvedTypeReference.container(FernIr.ContainerType.set(STRING_TYPE))
+                })
+            );
             const property = createBodyProperty("uniqueItems", aliasOfSet);
             const context = createMockContextWithDeclarations({
                 type_SetAlias: FernIr.Type.alias({
@@ -393,13 +409,16 @@ describe("appendPropertyToFormData", () => {
             // Mix of iterable (list, set) and non-iterable (string) members:
             // isMaybeIterable=true, isDefinitelyIterable=false (not all members iterable)
             // isMaybeList=true (list member), isMaybeSet=true (set member)
-            const unionType = createNamedType("MixedUnion", FernIr.Type.undiscriminatedUnion({
-                members: [
-                    { type: LIST_STRING_TYPE, docs: undefined },
-                    { type: SET_STRING_TYPE, docs: undefined },
-                    { type: STRING_TYPE, docs: undefined }
-                ]
-            }));
+            const unionType = createNamedType(
+                "MixedUnion",
+                FernIr.Type.undiscriminatedUnion({
+                    members: [
+                        { type: LIST_STRING_TYPE, docs: undefined },
+                        { type: SET_STRING_TYPE, docs: undefined },
+                        { type: STRING_TYPE, docs: undefined }
+                    ]
+                })
+            );
             const property = createBodyProperty("mixed", unionType);
             const context = createMockContextWithDeclarations({
                 type_MixedUnion: FernIr.Type.undiscriminatedUnion({
@@ -470,12 +489,15 @@ describe("appendPropertyToFormData", () => {
         });
 
         it("generates for-of with only instanceof Set for undiscriminated union with only set member", () => {
-            const unionType = createNamedType("SetOnlyUnion", FernIr.Type.undiscriminatedUnion({
-                members: [
-                    { type: SET_STRING_TYPE, docs: undefined },
-                    { type: STRING_TYPE, docs: undefined }
-                ]
-            }));
+            const unionType = createNamedType(
+                "SetOnlyUnion",
+                FernIr.Type.undiscriminatedUnion({
+                    members: [
+                        { type: SET_STRING_TYPE, docs: undefined },
+                        { type: STRING_TYPE, docs: undefined }
+                    ]
+                })
+            );
             const property = createBodyProperty("setOrString", unionType);
             const context = createMockContextWithDeclarations({
                 type_SetOnlyUnion: FernIr.Type.undiscriminatedUnion({
@@ -501,12 +523,15 @@ describe("appendPropertyToFormData", () => {
         });
 
         it("generates for-of with only Array.isArray for undiscriminated union with only list member", () => {
-            const unionType = createNamedType("ListOnlyUnion", FernIr.Type.undiscriminatedUnion({
-                members: [
-                    { type: LIST_STRING_TYPE, docs: undefined },
-                    { type: STRING_TYPE, docs: undefined }
-                ]
-            }));
+            const unionType = createNamedType(
+                "ListOnlyUnion",
+                FernIr.Type.undiscriminatedUnion({
+                    members: [
+                        { type: LIST_STRING_TYPE, docs: undefined },
+                        { type: STRING_TYPE, docs: undefined }
+                    ]
+                })
+            );
             const property = createBodyProperty("listOrString", unionType);
             const context = createMockContextWithDeclarations({
                 type_ListOnlyUnion: FernIr.Type.undiscriminatedUnion({
@@ -533,12 +558,15 @@ describe("appendPropertyToFormData", () => {
         });
 
         it("generates for-of without guard for undiscriminated union where all members are definitely iterable", () => {
-            const unionType = createNamedType("AllIterableUnion", FernIr.Type.undiscriminatedUnion({
-                members: [
-                    { type: LIST_STRING_TYPE, docs: undefined },
-                    { type: SET_STRING_TYPE, docs: undefined }
-                ]
-            }));
+            const unionType = createNamedType(
+                "AllIterableUnion",
+                FernIr.Type.undiscriminatedUnion({
+                    members: [
+                        { type: LIST_STRING_TYPE, docs: undefined },
+                        { type: SET_STRING_TYPE, docs: undefined }
+                    ]
+                })
+            );
             const property = createBodyProperty("allIterable", unionType);
             const context = createMockContextWithDeclarations({
                 type_AllIterableUnion: FernIr.Type.undiscriminatedUnion({
@@ -568,12 +596,15 @@ describe("appendPropertyToFormData", () => {
         });
 
         it("generates simple append for non-iterable named type (object)", () => {
-            const objectType = createNamedType("MyObject", FernIr.Type.object({
-                properties: [],
-                extends: [],
-                extraProperties: false,
-                extendedProperties: undefined
-            }));
+            const objectType = createNamedType(
+                "MyObject",
+                FernIr.Type.object({
+                    properties: [],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                })
+            );
             const property = createBodyProperty("obj", objectType);
             const context = createMockContextWithDeclarations({
                 type_MyObject: FernIr.Type.object({
@@ -600,9 +631,12 @@ describe("appendPropertyToFormData", () => {
         });
 
         it("generates simple append for enum named type", () => {
-            const enumType = createNamedType("MyEnum", FernIr.Type.enum({
-                values: []
-            }));
+            const enumType = createNamedType(
+                "MyEnum",
+                FernIr.Type.enum({
+                    values: []
+                })
+            );
             const property = createBodyProperty("status", enumType);
             const context = createMockContextWithDeclarations({
                 type_MyEnum: FernIr.Type.enum({
@@ -625,12 +659,15 @@ describe("appendPropertyToFormData", () => {
         });
 
         it("generates simple append for union named type", () => {
-            const unionType = createNamedType("MyUnion", FernIr.Type.union({
-                discriminant: createNameAndWireValue("type"),
-                extends: [],
-                baseProperties: [],
-                types: []
-            }));
+            const unionType = createNamedType(
+                "MyUnion",
+                FernIr.Type.union({
+                    discriminant: createNameAndWireValue("type"),
+                    extends: [],
+                    baseProperties: [],
+                    types: []
+                })
+            );
             const property = createBodyProperty("variant", unionType);
             const context = createMockContextWithDeclarations({
                 type_MyUnion: FernIr.Type.union({
@@ -656,10 +693,12 @@ describe("appendPropertyToFormData", () => {
         });
 
         it("generates simple append for map container type (not iterable)", () => {
-            const mapType = FernIr.TypeReference.container(FernIr.ContainerType.map({
-                keyType: STRING_TYPE,
-                valueType: STRING_TYPE
-            }));
+            const mapType = FernIr.TypeReference.container(
+                FernIr.ContainerType.map({
+                    keyType: STRING_TYPE,
+                    valueType: STRING_TYPE
+                })
+            );
             const property = createBodyProperty("metadata", mapType);
             const context = createMockContext();
             const stmt = appendPropertyToFormData({

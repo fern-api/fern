@@ -1,5 +1,4 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getTextOfTsNode } from "@fern-typescript/commons";
 import { casingsGenerator } from "@fern-typescript/test-utils";
 import { ClassDeclarationStructure, Scope, StructureKind, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
@@ -12,6 +11,7 @@ function createFernFilepath(parts: string[]): FernIr.FernFilepath {
     return {
         allParts: parts.map((p) => casingsGenerator.generateName(p)),
         packagePath: parts.slice(0, -1).map((p) => casingsGenerator.generateName(p)),
+        // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
         file: parts.length > 0 ? casingsGenerator.generateName(parts[parts.length - 1]!) : undefined
     };
 }
@@ -33,8 +33,7 @@ function createSubpackage(name: string): FernIr.Subpackage {
 
 function createMockWrapperService() {
     return {
-        getReferenceToOptions: () =>
-            ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_options")
+        getReferenceToOptions: () => ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_options")
         // biome-ignore lint/suspicious/noExplicitAny: test mock for GeneratedSdkClientClassImpl
     } as any;
 }
@@ -44,8 +43,13 @@ function createMockContext(opts?: { wrappedClassName?: string; serviceClassName?
     return {
         sdkClientClass: {
             getGeneratedSdkClientClass: () => ({
-                instantiate: ({ referenceToClient, referenceToOptions }: { referenceToClient: ts.Expression; referenceToOptions: ts.Expression }) =>
-                    ts.factory.createNewExpression(referenceToClient, undefined, [referenceToOptions])
+                instantiate: ({
+                    referenceToClient,
+                    referenceToOptions
+                }: {
+                    referenceToClient: ts.Expression;
+                    referenceToOptions: ts.Expression;
+                }) => ts.factory.createNewExpression(referenceToClient, undefined, [referenceToOptions])
             }),
             getReferenceToClientClass: (_id: unknown, importOpts?: { importAlias?: string }) => ({
                 getTypeNode: (opts?: { isForComment?: boolean }) =>
@@ -103,12 +107,16 @@ describe("GeneratedWrappedService", () => {
 
             // Should add a protected cached property
             expect(class_.properties).toHaveLength(1);
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(class_.properties[0]!.name).toBe("_users");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(class_.properties[0]!.scope).toBe(Scope.Protected);
 
             // Should add a public getter
             expect(class_.getAccessors).toHaveLength(1);
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(class_.getAccessors[0]!.name).toBe("users");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(class_.getAccessors[0]!.scope).toBe(Scope.Public);
         });
 
@@ -124,6 +132,7 @@ describe("GeneratedWrappedService", () => {
 
             service.addToServiceClass({ isRoot: true, class_, context });
 
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             const getter = class_.getAccessors[0]!;
             expect(getter.statements).toBeDefined();
             const statementsText = (getter.statements as string[]).join("\n");
@@ -144,6 +153,7 @@ describe("GeneratedWrappedService", () => {
 
             service.addToServiceClass({ isRoot: true, class_, context });
 
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             const prop = class_.properties[0]!;
             expect(prop.type).toContain("undefined");
             expect(prop.type).toContain("UsersClient");
@@ -163,6 +173,7 @@ describe("GeneratedWrappedService", () => {
             service.addToServiceClass({ isRoot: false, class_, context });
 
             // When names collide, should use import alias with "_" suffix
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             const prop = class_.properties[0]!;
             expect(prop.type).toContain("UsersClient_");
         });
@@ -179,6 +190,7 @@ describe("GeneratedWrappedService", () => {
 
             service.addToServiceClass({ isRoot: true, class_, context });
 
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             const prop = class_.properties[0]!;
             // Should use the original name without alias
             expect(prop.type).toContain("UsersClient");
@@ -199,6 +211,7 @@ describe("GeneratedWrappedService", () => {
 
             service.addToServiceClass({ isRoot: true, class_, context });
 
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(class_.getAccessors[0]!.name).toBe("users");
         });
 
@@ -228,7 +241,9 @@ describe("GeneratedWrappedService", () => {
             service.addToServiceClass({ isRoot: false, class_, context });
 
             // Should use last part of fernFilepath
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(class_.getAccessors[0]!.name).toBe("permissions");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(class_.properties[0]!.name).toBe("_permissions");
         });
 
@@ -274,7 +289,9 @@ describe("GeneratedWrappedService", () => {
 
             service.addToServiceClass({ isRoot: true, class_, context });
 
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(class_.properties[0]!.name).toBe("_orders");
+            // biome-ignore lint/style/noNonNullAssertion: Safe - value asserted above
             expect(class_.getAccessors[0]!.name).toBe("orders");
         });
     });
