@@ -321,6 +321,47 @@ func (r *RawClient) GetAndReturnWithUnknownField(
 	}, nil
 }
 
+func (r *RawClient) GetAndReturnWithDocumentedUnknownType(
+	ctx context.Context,
+	request *types.ObjectWithDocumentedUnknownType,
+	opts ...option.RequestOption,
+) (*core.Response[*types.ObjectWithDocumentedUnknownType], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/object/get-and-return-with-documented-unknown-type"
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *types.ObjectWithDocumentedUnknownType
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*types.ObjectWithDocumentedUnknownType]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
 func (r *RawClient) GetAndReturnWithDatetimeLikeString(
 	ctx context.Context,
 	request *types.ObjectWithDatetimeLikeString,
