@@ -262,6 +262,9 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         if (projectConfig.version === "*") {
             return cliContext.environment.packageVersion;
         }
+        if (projectConfig.version === "latest") {
+            return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
+        }
         return projectConfig.version;
     }
     return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });

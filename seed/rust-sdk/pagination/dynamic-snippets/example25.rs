@@ -11,7 +11,7 @@ async fn main() {
     client
         .users
         .list_with_cursor_pagination(
-            &ListWithCursorPaginationQueryRequest2 {
+            &UsersListWithCursorPaginationQueryRequest {
                 starting_after: Some("starting_after".to_string()),
                 page: None,
                 per_page: None,
