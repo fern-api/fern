@@ -39,6 +39,18 @@ export class WireTestSetupGenerator {
         // Post-process mappings to fix unit type responses
         this.fixUnitTypeResponses(wireMockConfigContent);
 
+        // Post-process mappings to strip milliseconds from datetime strings.
+        // The Rust SDK serializes datetimes using chrono's SecondsFormat::Secs,
+        // which produces "2024-01-15T09:30:00Z" (no milliseconds), but
+        // mock-utils' toISOString() produces "2024-01-15T09:30:00.000Z".
+        this.stripDatetimeMilliseconds(wireMockConfigContent);
+
+        // Add fallback mappings for bytes endpoints. mock-utils skips bytes
+        // endpoints entirely, but the SDK generates tests for them. Add a
+        // low-priority mapping (without query params) for each bytes endpoint
+        // by copying the response from a sibling endpoint at the same path.
+        this.addBytesEndpointFallbackMappings(wireMockConfigContent);
+
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
@@ -138,6 +150,98 @@ export class WireTestSetupGenerator {
             path = "/" + path;
         }
         return path;
+    }
+
+    private static readonly DATETIME_WITH_ZERO_MILLIS_REGEX =
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.000(Z|[+-]\d{2}:\d{2})$/;
+
+    /**
+     * Strip .000 milliseconds from datetime strings in WireMock mappings.
+     * Rust's chrono serializes with SecondsFormat::Secs (no milliseconds),
+     * but JS Date.toISOString() always includes .000.
+     */
+    private stripDatetimeMilliseconds(wireMockConfig: WireMockStubMapping): void {
+        for (const mapping of wireMockConfig.mappings || []) {
+            // Strip from query parameter matchers
+            if (mapping.request.queryParameters) {
+                for (const [_key, matcher] of Object.entries(mapping.request.queryParameters)) {
+                    const m = matcher as { equalTo?: string };
+                    if (m.equalTo && WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(m.equalTo)) {
+                        m.equalTo = m.equalTo.replace(".000", "");
+                    }
+                }
+            }
+            // Strip from response body
+            if (typeof mapping.response.body === "string") {
+                mapping.response.body = mapping.response.body.replace(
+                    /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})\.000(Z|[+-]\d{2}:\d{2})/g,
+                    "$1$2"
+                );
+            }
+        }
+    }
+
+    /**
+     * Add fallback WireMock mappings for bytes endpoints.
+     *
+     * mock-utils skips endpoints with requestBody.type === "bytes" so they get
+     * no mapping. When a bytes endpoint shares a URL path with another endpoint
+     * (e.g. transcribe_file and transcribe_url both at POST /v1/listen), the
+     * bytes endpoint's test fails because the only mapping requires specific
+     * query parameters that the bytes test doesn't send.
+     *
+     * This method finds bytes endpoints, locates an existing sibling mapping
+     * at the same method+path, and adds a low-priority copy without query
+     * parameters so the bytes endpoint test can match.
+     */
+    private addBytesEndpointFallbackMappings(wireMockConfig: WireMockStubMapping): void {
+        // Collect bytes endpoints that need fallback mappings
+        const bytesEndpoints: Array<{ method: string; path: string }> = [];
+        for (const service of Object.values(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "bytes") {
+                    const path = this.buildEndpointPath(endpoint);
+                    bytesEndpoints.push({ method: endpoint.method, path });
+                }
+            }
+        }
+
+        if (bytesEndpoints.length === 0) {
+            return;
+        }
+
+        // Index existing mappings by method+path
+        const existingByKey = new Map<string, WireMockMapping>();
+        for (const mapping of wireMockConfig.mappings || []) {
+            const key = `${mapping.request.method}:${mapping.request.urlPathTemplate}`;
+            // Keep the first (highest-priority) mapping for each key
+            if (!existingByKey.has(key)) {
+                existingByKey.set(key, mapping);
+            }
+        }
+
+        // Add fallback for each bytes endpoint
+        for (const { method, path } of bytesEndpoints) {
+            const key = `${method}:${path}`;
+            const sibling = existingByKey.get(key);
+            if (sibling) {
+                // Clone the sibling but strip query parameters and set lower priority
+                const fallback: WireMockMapping = {
+                    ...sibling,
+                    id: `${sibling.id.slice(0, -4)}fb00`,
+                    name: `${sibling.name} (bytes fallback)`,
+                    uuid: `${sibling.uuid.slice(0, -4)}fb00`,
+                    priority: 5,
+                    request: {
+                        method: sibling.request.method,
+                        urlPathTemplate: sibling.request.urlPathTemplate
+                        // No queryParameters — matches any request to this path
+                    },
+                    response: { ...sibling.response }
+                };
+                wireMockConfig.mappings.push(fallback);
+            }
+        }
     }
 
     /**

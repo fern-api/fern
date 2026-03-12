@@ -281,10 +281,14 @@ export function convertObject({
             const resolvedPropertySchema = isReferenceObject(propertySchema)
                 ? context.resolveSchemaReference(propertySchema)
                 : propertySchema;
-            const readonly = resolvedPropertySchema.readOnly;
-            const writeonly = resolvedPropertySchema.writeOnly;
+            const readonly =
+                ("readOnly" in propertySchema && propertySchema.readOnly === true) || resolvedPropertySchema.readOnly;
+            const writeonly =
+                ("writeOnly" in propertySchema && propertySchema.writeOnly === true) ||
+                resolvedPropertySchema.writeOnly;
 
-            const isRequired = allRequired.includes(propertyName) && !readonly;
+            const isRequired =
+                allRequired.includes(propertyName) && (!readonly || context.options.respectReadonlySchemas);
             const isPropertyOptional = !isRequired;
 
             const propertyNameOverride = getExtension<string | undefined>(
@@ -336,6 +340,22 @@ export function convertObject({
                     conflicts[parent.schemaId] = { differentSchema: true };
                 } else if (parentPropertySchema != null) {
                     conflicts[parent.schemaId] = { differentSchema: false };
+                }
+            }
+            // Apply top-level required to inlined allOf properties that may have been
+            // marked optional by their inline member's own (missing) required array.
+            if (
+                allRequired.includes(property.key) &&
+                (property.schema.type === "optional" || property.schema.type === "nullable")
+            ) {
+                const isPropertyReadonly = property.readonly;
+                const isRequired = !isPropertyReadonly || context.options.respectReadonlySchemas;
+                if (isRequired) {
+                    return {
+                        ...property,
+                        schema: property.schema.value,
+                        conflict: conflicts
+                    };
                 }
             }
             return {
