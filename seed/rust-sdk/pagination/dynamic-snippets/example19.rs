@@ -11,7 +11,7 @@ async fn main() {
     client
         .users
         .list_with_double_offset_pagination(
-            &ListWithDoubleOffsetPaginationQueryRequest2 {
+            &UsersListWithDoubleOffsetPaginationQueryRequest {
                 page: Some(1.1),
                 per_page: Some(1.1),
                 order: Some(Order::Asc),
