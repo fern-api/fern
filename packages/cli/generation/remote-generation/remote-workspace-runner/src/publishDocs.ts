@@ -610,7 +610,7 @@ async function startDocsRegisterFailed(
         }
     });
 
-    const errorObj = error as Record<string, unknown>;
+    const errorObj = error as unknown as Record<string, unknown>;
     const errorContent = errorObj?.content as Record<string, unknown> | undefined;
     if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
         throw new DocsPublishConflictError();
