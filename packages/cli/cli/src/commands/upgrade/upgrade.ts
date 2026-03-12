@@ -13,7 +13,6 @@ import { writeFile } from "fs/promises";
 import { produce } from "immer";
 
 import { CliContext } from "../../cli-context/CliContext.js";
-import { getLatestVersionOfCli } from "../../cli-context/upgrade-utils/getLatestVersionOfCli.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
@@ -174,17 +173,6 @@ async function resolveSourceVersion({
     projectConfig: { version: string };
     isLocalDev: boolean;
 }): Promise<string> {
-    // If config version is "latest" or "*", these aren't valid semver for migrations.
-    // Resolve "latest" to the actual latest published npm version; "*" uses the current CLI version.
-    let effectiveConfigVersion: string;
-    if (projectConfig.version === "latest") {
-        effectiveConfigVersion = await getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
-    } else if (projectConfig.version === "*") {
-        effectiveConfigVersion = cliContext.environment.packageVersion;
-    } else {
-        effectiveConfigVersion = projectConfig.version;
-    }
-
     let resolvedFromVersion = fromVersion?.trim();
     const envVersion = process.env[PREVIOUS_VERSION_ENV_VAR]?.trim();
 
@@ -209,19 +197,19 @@ async function resolveSourceVersion({
             }
             resolvedFromVersion = gitResult.version;
         } else {
-            // Fallback to effectiveConfigVersion if git retrieval fails
+            // Fallback to projectConfig.version if git retrieval fails
             if (hasFaultyUpgrade) {
                 const reason = getGitFailureMessage(gitResult.failureReason);
                 cliContext.logger.warn(
-                    `Detected potential faulty upgrade but could not retrieve version from git history${reason}. Using current config version: ${effectiveConfigVersion}`
+                    `Detected potential faulty upgrade but could not retrieve version from git history${reason}. Using current config version: ${projectConfig.version}`
                 );
-                resolvedFromVersion = effectiveConfigVersion;
+                resolvedFromVersion = projectConfig.version;
             } else if (fromGit) {
                 const reason = getGitFailureMessage(gitResult.failureReason);
                 cliContext.logger.debug(`Could not retrieve version from git${reason}. Falling back to config.`);
-                resolvedFromVersion = resolvedFromVersion || effectiveConfigVersion;
+                resolvedFromVersion = resolvedFromVersion || projectConfig.version;
             } else {
-                resolvedFromVersion = resolvedFromVersion || effectiveConfigVersion;
+                resolvedFromVersion = resolvedFromVersion || projectConfig.version;
             }
         }
     }
@@ -416,10 +404,8 @@ export async function upgrade({
         });
         await cliContext.exitIfFailed();
 
-        // Preserve "latest" in config if that's what the user had, otherwise write the resolved version
-        const versionToWrite = projectConfig.rawConfig.version === "latest" ? "latest" : resolvedTargetVersion;
         const newProjectConfig = produce(projectConfig.rawConfig, (draft) => {
-            draft.version = versionToWrite;
+            draft.version = resolvedTargetVersion;
         });
         await writeFile(
             projectConfig._absolutePath,
