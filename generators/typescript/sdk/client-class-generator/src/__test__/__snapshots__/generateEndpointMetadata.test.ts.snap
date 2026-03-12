@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`generateEndpointMetadata > generates const variable declaration for metadata 1`] = `"const _metadata: EndpointMetadata = { security: [{ bearerAuth: [] }] };"`;
+
+exports[`generateEndpointMetadata > generates metadata with empty security array 1`] = `"const _metadata: EndpointMetadata = { security: [] };"`;
+
+exports[`generateEndpointMetadata > generates metadata with multiple security requirements 1`] = `"const _metadata: EndpointMetadata = { security: [{ apiKeyScheme: [], myOAuthScheme: ["read", "write"] }, { anotherApiKeyScheme: [] }] };"`;
+
+exports[`generateEndpointMetadata > generates metadata with single security requirement with no scopes 1`] = `"const _metadata: EndpointMetadata = { security: [{ apiKeyScheme: [] }] };"`;
+
+exports[`generateEndpointMetadata > generates metadata with single security requirement with scopes 1`] = `"const _metadata: EndpointMetadata = { security: [{ myOAuthScheme: ["read", "write"] }] };"`;
+
+exports[`generateEndpointMetadata > generates metadata with undefined security when security is undefined 1`] = `"const _metadata: EndpointMetadata = { security: undefined };"`;
