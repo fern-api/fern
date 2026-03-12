@@ -2,7 +2,12 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { GoFile } from "@fern-api/go-base";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getClientAccessPath, getEndpointPath, getInferredAuthScheme } from "../authUtils.js";
+import {
+    getClientAccessPath,
+    getEndpointPath,
+    getInferredAuthCredentialParams,
+    getInferredAuthScheme
+} from "../authUtils.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
@@ -168,40 +173,9 @@ export class InferredAuthWireTestGenerator {
 
     /**
      * Gets credential parameters from the token endpoint (non-literal body/header params).
-     * Matches the logic in ClientGenerator.getInferredAuthCredentialParameters.
      */
     private getCredentialParameters(endpoint: FernIr.HttpEndpoint): Array<{ fieldName: string; isOptional: boolean }> {
-        const params: Array<{ fieldName: string; isOptional: boolean }> = [];
-
-        // Add non-literal endpoint headers
-        for (const header of endpoint.headers) {
-            if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
-                continue;
-            }
-            params.push({
-                fieldName: this.context.getFieldName(header.name.name),
-                isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional"
-            });
-        }
-
-        // Add non-literal, non-optional body properties
-        if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
-            for (const prop of endpoint.requestBody.properties) {
-                if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
-                    continue;
-                }
-                const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
-                if (isOptional) {
-                    continue;
-                }
-                params.push({
-                    fieldName: this.context.getFieldName(prop.name.name),
-                    isOptional: false
-                });
-            }
-        }
-
-        return params;
+        return getInferredAuthCredentialParams(endpoint, this.context.ir.types, this.context);
     }
 
     private generateTestFile(serviceInfo: InferredAuthServiceInfo, testEndpoint: TestEndpointInfo): go.CodeBlock {

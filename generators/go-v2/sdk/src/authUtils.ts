@@ -103,3 +103,71 @@ export function getEndpointPath(endpoint: FernIr.HttpEndpoint): string {
     }
     return path;
 }
+
+/**
+ * Resolves body properties for a token endpoint, handling both inlined
+ * request bodies and referenced type declarations.
+ */
+export function resolveTokenEndpointBodyProperties(
+    tokenEndpoint: FernIr.HttpEndpoint,
+    irTypes: Record<string, FernIr.TypeDeclaration>
+): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
+    if (tokenEndpoint.requestBody == null) {
+        return [];
+    }
+    if (tokenEndpoint.requestBody.type === "inlinedRequestBody") {
+        return tokenEndpoint.requestBody.properties;
+    }
+    if (tokenEndpoint.requestBody.type === "reference") {
+        const typeRef = tokenEndpoint.requestBody.requestBodyType;
+        if (typeRef.type === "named") {
+            const typeDecl = irTypes[typeRef.typeId];
+            if (typeDecl?.shape.type === "object") {
+                return typeDecl.shape.properties;
+            }
+        }
+    }
+    return [];
+}
+
+/**
+ * Gets credential parameters from a token endpoint (non-literal body/header params).
+ * Used by both ClientGenerator and InferredAuthWireTestGenerator.
+ */
+export function getInferredAuthCredentialParams(
+    tokenEndpoint: FernIr.HttpEndpoint,
+    irTypes: Record<string, FernIr.TypeDeclaration>,
+    context: { getFieldName(name: FernIr.Name): string }
+): Array<{ fieldName: string; isOptional: boolean }> {
+    const params: Array<{ fieldName: string; isOptional: boolean }> = [];
+
+    // Add non-literal endpoint headers
+    for (const header of tokenEndpoint.headers) {
+        if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
+            continue;
+        }
+        params.push({
+            fieldName: context.getFieldName(header.name.name),
+            isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional"
+        });
+    }
+
+    // Add non-literal, non-optional body properties.
+    // Handles both inlined request bodies and referenced type declarations.
+    const bodyProperties = resolveTokenEndpointBodyProperties(tokenEndpoint, irTypes);
+    for (const prop of bodyProperties) {
+        if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
+            continue;
+        }
+        const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
+        if (isOptional) {
+            continue;
+        }
+        params.push({
+            fieldName: context.getFieldName(prop.name.name),
+            isOptional: false
+        });
+    }
+
+    return params;
+}

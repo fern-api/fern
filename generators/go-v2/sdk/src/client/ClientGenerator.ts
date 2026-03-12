@@ -4,11 +4,13 @@ import { FileGenerator, GoFile } from "@fern-api/go-base";
 import { FernIr } from "@fern-fern/ir-sdk";
 
 import {
+    getInferredAuthCredentialParams,
     getInferredAuthScheme,
     getOAuthClientCredentialsScheme,
     getRequestPropertyFieldName,
     isRequestPropertyOptional,
-    isTypeReferenceOptional
+    isTypeReferenceOptional,
+    resolveTokenEndpointBodyProperties
 } from "../authUtils.js";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig.js";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
@@ -775,43 +777,21 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             return [];
         }
 
-        const params: Array<{
-            fieldName: string;
-            isOptional: boolean;
-            envVar: string | undefined;
-        }> = [];
+        // Get base credential params from shared utility
+        const baseParams = getInferredAuthCredentialParams(tokenEndpoint, this.context.ir.types, this.context);
 
-        // Add non-literal endpoint headers
+        // Enrich with envVar from endpoint headers
+        const headerEnvVars = new Map<string, string>();
         for (const header of tokenEndpoint.headers) {
-            if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
-                continue;
+            if (header.env != null) {
+                headerEnvVars.set(this.context.getFieldName(header.name.name), header.env);
             }
-            params.push({
-                fieldName: this.context.getFieldName(header.name.name),
-                isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
-                envVar: header.env ?? undefined
-            });
         }
 
-        // Add non-literal, non-optional body properties.
-        // These can come from inlined request bodies or referenced type declarations.
-        const bodyProperties = this.resolveTokenEndpointBodyProperties(tokenEndpoint);
-        for (const prop of bodyProperties) {
-            if (prop.valueType.type === "container" && prop.valueType.container.type === "literal") {
-                continue;
-            }
-            const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
-            if (isOptional) {
-                continue;
-            }
-            params.push({
-                fieldName: this.context.getFieldName(prop.name.name),
-                isOptional: false,
-                envVar: undefined
-            });
-        }
-
-        return params;
+        return baseParams.map((param) => ({
+            ...param,
+            envVar: headerEnvVars.get(param.fieldName)
+        }));
     }
 
     /**
@@ -856,22 +836,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
     private resolveTokenEndpointBodyProperties(
         tokenEndpoint: FernIr.HttpEndpoint
     ): Array<{ name: FernIr.NameAndWireValue; valueType: FernIr.TypeReference }> {
-        if (tokenEndpoint.requestBody == null) {
-            return [];
-        }
-        if (tokenEndpoint.requestBody.type === "inlinedRequestBody") {
-            return tokenEndpoint.requestBody.properties;
-        }
-        if (tokenEndpoint.requestBody.type === "reference") {
-            const typeRef = tokenEndpoint.requestBody.requestBodyType;
-            if (typeRef.type === "named") {
-                const typeDecl = this.context.ir.types[typeRef.typeId];
-                if (typeDecl?.shape.type === "object") {
-                    return typeDecl.shape.properties;
-                }
-            }
-        }
-        return [];
+        return resolveTokenEndpointBodyProperties(tokenEndpoint, this.context.ir.types);
     }
 
     private writeEnvConditional({

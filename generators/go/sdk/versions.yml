@@ -11,7 +11,7 @@
         The generator produces `WithXxx()` client options for each credential parameter
         defined on the token endpoint (e.g., `WithClientId`, `WithClientSecret`,
         `WithXApiKey`), environment variable fallbacks when configured, and a
-        `core/inferred_auth.go` provider with thread-safe caching.
+        `core/token_provider.go` with thread-safe caching.
 
         To use inferred auth, define an inferred auth scheme in your Fern API definition:
 
