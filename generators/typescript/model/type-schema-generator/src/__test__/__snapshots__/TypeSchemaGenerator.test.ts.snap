@@ -209,6 +209,41 @@ export declare namespace Value {
 "
 `;
 
+exports[`GeneratedUnionTypeSchemaImpl > generateRawTypeDeclaration > generates raw type declaration for samePropertiesAsObject union 1`] = `
+"export declare namespace Shape {
+    export type Raw = Shape.Circle;
+
+    export interface Circle extends RawNamedType {
+        type: "circle";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeSchemaImpl > generateRawTypeDeclaration > generates raw type declaration in module for noProperties union 1`] = `
+"export declare namespace Event {
+    export type Raw = Event.Click;
+
+    export interface Click {
+        type: "click";
+    }
+}
+"
+`;
+
+exports[`GeneratedUnionTypeSchemaImpl > writeSchemaToFile > calls writeSchemaToFile which delegates to generatedUnionSchema 1`] = `
+"export const Event: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
+
+export declare namespace Event {
+    export type Raw = Event.Click;
+
+    export interface Click {
+        type: "click";
+    }
+}
+"
+`;
+
 exports[`GeneratedUnionTypeSchemaImpl > writeToFile > generates schema output for mixed union type variants 1`] = `
 "export const Response: Schema<serializers.Raw, ParsedUnion> = union({}).transform();
 
