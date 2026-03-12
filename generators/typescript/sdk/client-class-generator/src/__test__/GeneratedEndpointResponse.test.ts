@@ -352,7 +352,12 @@ describe("GeneratedThrowingEndpointResponse", () => {
             endpoint.method = opts.method;
         }
         if (opts?.response != null) {
-            endpoint.response = { body: opts.response, statusCode: undefined, isWildcardStatusCode: undefined, docs: undefined };
+            endpoint.response = {
+                body: opts.response,
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: undefined
+            };
         }
 
         return new GeneratedThrowingEndpointResponse({
@@ -831,7 +836,12 @@ describe("GeneratedThrowingEndpointResponse", () => {
         it("generates file download with content headers", () => {
             const fileResponse = FernIr.HttpResponseBody.fileDownload({ docs: undefined, v2Examples: undefined });
             const endpoint = createHttpEndpoint();
-            endpoint.response = { body: fileResponse, statusCode: undefined, isWildcardStatusCode: undefined, docs: undefined };
+            endpoint.response = {
+                body: fileResponse,
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: undefined
+            };
             const instance = new GeneratedThrowingEndpointResponse({
                 packageId: { isRoot: true },
                 endpoint,
@@ -872,7 +882,12 @@ describe("GeneratedNonThrowingEndpointResponse", () => {
             endpoint.errors = opts.errors;
         }
         if (opts?.response != null) {
-            endpoint.response = { body: opts.response, statusCode: undefined, isWildcardStatusCode: undefined, docs: undefined };
+            endpoint.response = {
+                body: opts.response,
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: undefined
+            };
         }
 
         return new GeneratedNonThrowingEndpointResponse({
@@ -939,7 +954,12 @@ describe("GeneratedNonThrowingEndpointResponse", () => {
                 })
             );
             const endpoint = createHttpEndpoint();
-            endpoint.response = { body: jsonResponse, statusCode: undefined, isWildcardStatusCode: undefined, docs: undefined };
+            endpoint.response = {
+                body: jsonResponse,
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: undefined
+            };
             const instance = new GeneratedNonThrowingEndpointResponse({
                 packageId: { isRoot: true },
                 endpoint,
