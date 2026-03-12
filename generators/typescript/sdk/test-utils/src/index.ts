@@ -27,3 +27,7 @@ export {
     createMockTypeContext,
     createMockTypeSchemaContext
 } from "./mock-context.js";
+export { createMockReference } from "./mock-reference.js";
+export { createMockZurgObjectSchema, createMockZurgSchema } from "./mock-zurg.js";
+export { serializeStatements } from "./serialization-helpers.js";
+export { namedTypeRefNode, optionalTypeRefNode, primitiveTypeRefNode, readWriteTypeRefNode } from "./type-ref-nodes.js";

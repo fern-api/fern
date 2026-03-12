@@ -44,6 +44,7 @@
           "generatedName": "UnauthorizedError",
           "schema": {
             "generatedName": "UnauthorizedErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Unauthorized",
@@ -56,6 +57,7 @@
           "generatedName": "NotFoundError",
           "schema": {
             "generatedName": "NotFoundErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "User not found",
@@ -168,6 +170,7 @@
           "generatedName": "UnauthorizedError",
           "schema": {
             "generatedName": "UnauthorizedErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Unauthorized",
@@ -180,6 +183,7 @@
           "generatedName": "NotFoundError",
           "schema": {
             "generatedName": "NotFoundErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "User not found",
@@ -291,6 +295,7 @@
           "generatedName": "UnauthorizedError",
           "schema": {
             "generatedName": "UnauthorizedErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Unauthorized",

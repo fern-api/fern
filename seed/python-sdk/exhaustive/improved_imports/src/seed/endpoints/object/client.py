@@ -6,9 +6,11 @@ import uuid
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.object.types.documented_unknown_type import DocumentedUnknownType
 from ...types.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ...types.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
 from ...types.object.types.object_with_datetime_like_string import ObjectWithDatetimeLikeString
+from ...types.object.types.object_with_documented_unknown_type import ObjectWithDocumentedUnknownType
 from ...types.object.types.object_with_map_of_map import ObjectWithMapOfMap
 from ...types.object.types.object_with_optional_field import ObjectWithOptionalField
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
@@ -449,6 +451,38 @@ class ObjectClient:
         )
         """
         _response = self._raw_client.get_and_return_with_unknown_field(unknown=unknown, request_options=request_options)
+        return _response.data
+
+    def get_and_return_with_documented_unknown_type(
+        self, *, documented_unknown_type: DocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
+    ) -> ObjectWithDocumentedUnknownType:
+        """
+        Parameters
+        ----------
+        documented_unknown_type : DocumentedUnknownType
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithDocumentedUnknownType
+
+        Examples
+        --------
+        from seed import SeedExhaustive
+
+        client = SeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.endpoints.object.get_and_return_with_documented_unknown_type(
+            documented_unknown_type={"key": "value"},
+        )
+        """
+        _response = self._raw_client.get_and_return_with_documented_unknown_type(
+            documented_unknown_type=documented_unknown_type, request_options=request_options
+        )
         return _response.data
 
     def get_and_return_with_datetime_like_string(
@@ -986,6 +1020,46 @@ class AsyncObjectClient:
         """
         _response = await self._raw_client.get_and_return_with_unknown_field(
             unknown=unknown, request_options=request_options
+        )
+        return _response.data
+
+    async def get_and_return_with_documented_unknown_type(
+        self, *, documented_unknown_type: DocumentedUnknownType, request_options: typing.Optional[RequestOptions] = None
+    ) -> ObjectWithDocumentedUnknownType:
+        """
+        Parameters
+        ----------
+        documented_unknown_type : DocumentedUnknownType
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithDocumentedUnknownType
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedExhaustive
+
+        client = AsyncSeedExhaustive(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.endpoints.object.get_and_return_with_documented_unknown_type(
+                documented_unknown_type={"key": "value"},
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_and_return_with_documented_unknown_type(
+            documented_unknown_type=documented_unknown_type, request_options=request_options
         )
         return _response.data
 

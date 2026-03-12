@@ -92,6 +92,9 @@ seed/python-sdk/**/output.prof
 
 **/vitest.config.ts.*.mjs
 
+# coverage
+**/coverage/
+
 .local
 
 # Seed build artifacts and caches

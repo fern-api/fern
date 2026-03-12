@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.8
+  changelogEntry:
+    - summary: |
+        Add `equals()`, `hashCode()`, and `toString()` methods to
+        interface-based discriminated union wrapper classes. Previously,
+        the outer wrapper class fell back to `Object.equals()` (reference
+        identity), breaking equality for any type that transitively
+        contained the union. The methods now delegate to the inner `Value`
+        field.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
 - version: 3.42.7
   changelogEntry:
     - summary: |

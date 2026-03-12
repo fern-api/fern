@@ -174,7 +174,7 @@ export async function startContainer({
     imageName,
     runner
 }: {
-    logger: Logger;
+    logger?: Logger;
     imageName: string;
     runner?: ContainerRunner;
 }): Promise<string> {
@@ -331,7 +331,7 @@ export async function stopContainer({
     containerId,
     runner
 }: {
-    logger: Logger;
+    logger?: Logger;
     containerId: string;
     runner?: ContainerRunner;
 }): Promise<void> {

@@ -10,6 +10,29 @@
   createdAt: "2026-03-11"
   irVersion: 65
 
+- version: 3.53.15
+  changelogEntry:
+    - summary: |
+        Fix `BinaryResponse.bytes` type to use `Promise<Uint8Array>` instead of
+        `ReturnType<Response["bytes"]>`. The previous type referenced `Response.bytes()`,
+        which only exists in `undici-types@7.x` (`@types/node@25.x`). Consumers using
+        `@types/node@18`/`20`/`22` with `skipLibCheck: false` would get `TS2339: Property
+        'bytes' does not exist on type 'Response'`. The new type is equivalent and compatible
+        with all Node.js versions.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 3.53.14
+  changelogEntry:
+    - summary: |
+        Remove `baseUrl` from the generated test `tsconfig.json`. The `baseUrl` compiler
+        option is unnecessary for test compilation and can interfere with module resolution
+        in consuming projects.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
 - version: 3.53.13
   changelogEntry:
     - summary: |

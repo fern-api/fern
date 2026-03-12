@@ -3680,6 +3680,7 @@
                         },
                         "value": {
                           "generatedName": "GameExtraFieldsItemValueValue",
+                          "groupName": [],
                           "type": "unknown"
                         },
                         "generatedName": "GameExtraFieldsItemValue",
@@ -4210,6 +4211,7 @@
                                   },
                                   "value": {
                                     "generatedName": "GroupGamesItemExtraFieldsItemValueValue",
+                                    "groupName": [],
                                     "type": "unknown"
                                   },
                                   "generatedName": "GroupGamesItemExtraFieldsItemValue",
@@ -4579,6 +4581,7 @@
                                 },
                                 "value": {
                                   "generatedName": "GroupPlayersItemExtraFieldsItemValueValue",
+                                  "groupName": [],
                                   "type": "unknown"
                                 },
                                 "generatedName": "GroupPlayersItemExtraFieldsItemValue",
@@ -4986,6 +4989,7 @@
                         },
                         "value": {
                           "generatedName": "PlayerExtraFieldsItemValueValue",
+                          "groupName": [],
                           "type": "unknown"
                         },
                         "generatedName": "PlayerExtraFieldsItemValue",
