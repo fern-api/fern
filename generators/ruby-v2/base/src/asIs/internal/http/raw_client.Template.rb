@@ -46,6 +46,9 @@ module <%= gem_namespace %>
           response = nil
 
           loop do
+            # Merge headers to get the final set that will be sent
+            request_headers = @default_headers.merge(request.encode_headers)
+
             http_request = build_http_request(
               url:,
               method: request.method,
@@ -56,7 +59,7 @@ module <%= gem_namespace %>
             @logging_middleware.log_request(
               method: request.method,
               url: url,
-              headers: request.encode_headers,
+              headers: request_headers,
               has_body: request.respond_to?(:encode_body) && !request.encode_body.nil?
             )
 

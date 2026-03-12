@@ -4,26 +4,9 @@
   changelogEntry:
     - summary: |
         Add configurable logging support to generated Ruby SDKs. Logging is silent by default
-        and can be enabled via the root client's `logging` parameter.
-
-        Added 6 new core utility files:
-        - `LogLevel` — module with DEBUG, INFO, WARN, ERROR constants
-        - `ILogger` — interface module for custom logger backends
-        - `ConsoleLogger` — default implementation via Ruby’s built-in Logger
-        - `LogConfig` — configuration class (level, logger, silent)
-        - `Logger` — main logger with level filtering and silent-by-default
-        - `LoggingMiddleware` — HTTP middleware with sensitive header redaction
-
-        Wired `logging_config` through `RawClient` so HTTP requests/responses are automatically
-        logged at debug level with sensitive headers redacted. Matches the architecture of the
-        Java and Python SDK logging systems.
-
-        Usage:
-        ```ruby
-        client = MySDK::Client.new(
-          logging: { level: :debug, silent: false }
-        )
-        ```
+        and can be enabled via the `logging` parameter when initializing the client. Supports
+        custom log levels, custom logger backends, and automatic HTTP request/response logging
+        with sensitive header redaction
       type: feat
   createdAt: "2026-03-12"
   irVersion: 61

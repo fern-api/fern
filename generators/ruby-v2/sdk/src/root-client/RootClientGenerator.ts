@@ -64,9 +64,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
         const loggingParameter = ruby.parameters.keyword({
             name: "logging",
-            type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.untyped())),
+            type: ruby.Type.untyped(),
             initializer: ruby.nilValue(),
-            docs: "Logging configuration. Set { silent: false } to enable logging, or pass a LogConfig / Hash with :level, :logger, and :silent"
+            docs: "Logging configuration. Pass a `LogConfig`, `Hash`, or `nil`. Set `{ silent: false }` to enable logging, or pass a `LogConfig` / `Hash` with `:level`, `:logger`, and `:silent`"
         });
         parameters.push(loggingParameter);
 
