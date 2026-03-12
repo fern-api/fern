@@ -33,9 +33,16 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
                 if (context.generation.settings.enableReadonlyConstants) {
                     const resolvedType = aliasDeclaration.resolvedType;
                     if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
-                        const structName = typeDeclaration.name.name.pascalCase.safeName;
+                        const rawStructName = typeDeclaration.name.name.pascalCase.safeName;
                         const namespace = context.getNamespaceForTypeId(typeId);
                         const directory = context.getDirectoryForTypeId(typeId);
+                        // Register the name through the name registry so the raw file uses the
+                        // same (possibly collision-resolved) name that ClassReference lookups will.
+                        const registeredRef = context.csharp.classReference({
+                            name: rawStructName,
+                            namespace
+                        });
+                        const structName = registeredRef.name;
                         literalTypeFiles.push(
                             generateLiteralType({
                                 structName,

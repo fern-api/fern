@@ -1211,6 +1211,14 @@ export class NameRegistry {
                     modified = true;
                     continue conflictResolution;
                 }
+                // Nested type: also check if the dotted form conflicts with an existing namespace
+                // (the check at line 1186 uses the raw FQN which contains '+', so it won't match
+                // namespaces which only use '.' separators)
+                if (this.namespaceRegistry.has(dottedFqn)) {
+                    name = `${name}_`;
+                    modified = true;
+                    continue conflictResolution;
+                }
             } else {
                 // Non-nested type: check if a nested type with the same path exists
                 // e.g., "A.B.C" could collide with "A.B+C" (one level of nesting)
