@@ -59,7 +59,7 @@ func (l *ConsoleLogger) Error(msg string) {
 func (l *ConsoleLogger) log(level, msg string) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
-	fmt.Fprintf(l.output, "%s - %s\n", level, msg)
+	_, _ = fmt.Fprintf(l.output, "%s - %s\n", level, msg)
 }
 
 // Ensure ConsoleLogger implements ILogger interface.

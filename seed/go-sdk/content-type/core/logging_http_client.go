@@ -107,7 +107,7 @@ func (c *LoggingHTTPClient) logRequest(req *http.Request) {
 
 	sb.WriteString("}")
 	sb.WriteString(" has_body=")
-	sb.WriteString(fmt.Sprintf("%v", req.Body != nil))
+	fmt.Fprintf(&sb, "%v", req.Body != nil)
 
 	c.logger.Debug(sb.String())
 }
@@ -116,7 +116,7 @@ func (c *LoggingHTTPClient) logRequest(req *http.Request) {
 func (c *LoggingHTTPClient) logResponse(resp *http.Response) {
 	var sb strings.Builder
 	sb.WriteString("HTTP Response: status=")
-	sb.WriteString(fmt.Sprintf("%d", resp.StatusCode))
+	fmt.Fprintf(&sb, "%d", resp.StatusCode)
 	sb.WriteString(" url=")
 	sb.WriteString(resp.Request.URL.String())
 	sb.WriteString(" headers={")
