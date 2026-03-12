@@ -630,10 +630,18 @@ export class EndpointSnippetGenerator {
         // - Referenced body WITHOUT query params → uses inner type directly
         // - Referenced body WITH query params → creates wrapper type
         // - Inlined body (properties) → creates wrapper type
+        // - Bytes body WITH query params → individual params for each query param + bytes body
         const body = request.body;
         const isReferencedBodyOnly = body != null && !hasQueryParams && body.type === "referenced";
+        const isBytesWithQueryParams = hasQueryParams && body != null &&
+            body.type === "referenced" && body.bodyType.type === "bytes";
 
-        if (isReferencedBodyOnly && body.type === "referenced") {
+        if (isBytesWithQueryParams) {
+            // Bytes endpoints with query params: SDK generates individual &Option<T> params
+            // for each query parameter, then &Vec<u8> for body (not a struct).
+            // This matches SubClientGenerator's addIndividualQueryParameters behavior.
+            args.push(...this.getBytesEndpointArgs({ request, snippet }));
+        } else if (isReferencedBodyOnly && body.type === "referenced") {
             // Use inner type directly - match SDK generator's behavior for referenced body without query params
             const bodyExpr = this.getReferencedRequestBodyPropertyExpression({
                 body: body.bodyType,
@@ -654,6 +662,51 @@ export class EndpointSnippetGenerator {
             args.push(rust.Expression.functionCall("Some", [this.getRequestOptionsWithHeaders({ request, snippet })]));
         } else {
             args.push(rust.Expression.raw("None"));
+        }
+
+        return args;
+    }
+
+    private getBytesEndpointArgs({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): rust.Expression[] {
+        const args: rust.Expression[] = [];
+
+        // Build a map of provided query parameter values
+        const queryParameters = this.context.associateQueryParametersByWireValue({
+            parameters: request.queryParameters ?? [],
+            values: snippet.queryParameters ?? {}
+        });
+        const providedValues = new Map<string, rust.Expression>();
+        for (const qp of queryParameters) {
+            const fieldName = this.context.getPropertyName(qp.name.name);
+            providedValues.set(fieldName, this.context.dynamicTypeLiteralMapper.convert(qp));
+        }
+
+        // Generate individual &Option<T> arguments for each query parameter
+        // Order matches the SDK's addIndividualQueryParameters (definition order)
+        const allQueryParams = request.queryParameters ?? [];
+        for (const param of allQueryParams) {
+            const fieldName = this.context.getPropertyName(param.name.name);
+            const value = providedValues.get(fieldName);
+            if (value != null) {
+                args.push(rust.Expression.referenceOf(value));
+            } else {
+                args.push(rust.Expression.referenceOf(rust.Expression.raw("None")));
+            }
+        }
+
+        // Add bytes body argument: &vec![] for empty, or &bytes for provided value
+        if (snippet.requestBody != null && typeof snippet.requestBody === "string" && snippet.requestBody !== "") {
+            args.push(rust.Expression.referenceOf(
+                rust.Expression.raw(`"${snippet.requestBody}".as_bytes().to_vec()`)
+            ));
+        } else {
+            args.push(rust.Expression.referenceOf(rust.Expression.raw("vec![]")));
         }
 
         return args;
