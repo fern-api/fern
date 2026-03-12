@@ -3,7 +3,6 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    endpoints "github.com/exhaustive/fern/endpoints"
     context "context"
 )
 
@@ -16,12 +15,8 @@ func do() {
             "<token>",
         ),
     )
-    request := &endpoints.GetWithQuery{
-        Query: "query",
-        Number: 1,
-    }
-    client.Endpoints.Params.GetWithQuery(
+    client.Endpoints.Params.GetWithPath(
         context.TODO(),
-        request,
+        "param",
     )
 }

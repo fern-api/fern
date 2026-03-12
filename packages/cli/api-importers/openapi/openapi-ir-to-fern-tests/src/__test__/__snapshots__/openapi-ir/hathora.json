@@ -4360,6 +4360,7 @@
                 },
                 "value": {
                   "generatedName": "CreatePrivateLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreatePrivateLobbyRequestInitialConfig",
@@ -4780,6 +4781,7 @@
                 },
                 "value": {
                   "generatedName": "CreatePublicLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreatePublicLobbyRequestInitialConfig",
@@ -5200,6 +5202,7 @@
                 },
                 "value": {
                   "generatedName": "CreateLocalLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreateLocalLobbyRequestInitialConfig",
@@ -5652,6 +5655,7 @@
                 },
                 "value": {
                   "generatedName": "CreateLobbyRequestInitialConfigValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "CreateLobbyRequestInitialConfig",
@@ -6495,6 +6499,7 @@
                 },
                 "value": {
                   "generatedName": "SetLobbyStateRequestStateValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "SetLobbyStateRequestState",
@@ -10819,6 +10824,7 @@
                 },
                 "value": {
                   "generatedName": "LobbyStateValue",
+                  "groupName": [],
                   "type": "unknown"
                 },
                 "generatedName": "LobbyState",
@@ -10845,6 +10851,7 @@
               },
               "value": {
                 "generatedName": "LobbyInitialConfigValue",
+                "groupName": [],
                 "type": "unknown"
               },
               "generatedName": "LobbyInitialConfig",

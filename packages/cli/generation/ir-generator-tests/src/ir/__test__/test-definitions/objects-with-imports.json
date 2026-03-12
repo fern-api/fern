@@ -6185,7 +6185,8 @@
                         "availability": null,
                         "docs": "A directory (e.g. foo/)."
                     }
-                ]
+                ],
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {

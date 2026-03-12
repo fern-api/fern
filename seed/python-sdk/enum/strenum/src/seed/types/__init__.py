@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
     from .color_or_operand import ColorOrOperand
     from .enum_with_custom import EnumWithCustom
     from .enum_with_special_characters import EnumWithSpecialCharacters
+    from .forward_compatible_enum import ForwardCompatibleEnum
     from .operand import Operand
     from .special_enum import SpecialEnum
 _dynamic_imports: typing.Dict[str, str] = {
@@ -17,6 +18,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ColorOrOperand": ".color_or_operand",
     "EnumWithCustom": ".enum_with_custom",
     "EnumWithSpecialCharacters": ".enum_with_special_characters",
+    "ForwardCompatibleEnum": ".forward_compatible_enum",
     "Operand": ".operand",
     "SpecialEnum": ".special_enum",
 }
@@ -43,4 +45,12 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["Color", "ColorOrOperand", "EnumWithCustom", "EnumWithSpecialCharacters", "Operand", "SpecialEnum"]
+__all__ = [
+    "Color",
+    "ColorOrOperand",
+    "EnumWithCustom",
+    "EnumWithSpecialCharacters",
+    "ForwardCompatibleEnum",
+    "Operand",
+    "SpecialEnum",
+]

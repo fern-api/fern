@@ -74,6 +74,12 @@ service:
               unknown:
                 "\\$ref": "https://example.com/schema"
 
+    getAndReturnWithDocumentedUnknownType:
+      path: /get-and-return-with-documented-unknown-type
+      method: POST
+      request: objects.ObjectWithDocumentedUnknownType
+      response: objects.ObjectWithDocumentedUnknownType
+
     getAndReturnWithDatetimeLikeString:
       docs: |
         Tests that string fields containing datetime-like values are NOT reformatted.

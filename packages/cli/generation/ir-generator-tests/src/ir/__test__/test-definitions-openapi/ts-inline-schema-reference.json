@@ -1405,7 +1405,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "forwardCompatible": null
             },
             "referencedTypes": [],
             "encoding": {

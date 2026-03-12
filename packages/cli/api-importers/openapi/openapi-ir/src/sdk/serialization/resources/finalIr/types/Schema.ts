@@ -3,11 +3,11 @@
 import * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { WithName } from "../../commons/types/WithName.js";
 import { EnumSchema } from "./EnumSchema.js";
 import { LiteralSchema } from "./LiteralSchema.js";
 import { PrimitiveSchema } from "./PrimitiveSchema.js";
 import { ReferencedSchema } from "./ReferencedSchema.js";
+import { UnknownSchema } from "./UnknownSchema.js";
 
 export const Schema: core.serialization.Schema<serializers.Schema.Raw, FernOpenapiIr.Schema> = core.serialization
     .union("type", {
@@ -23,7 +23,7 @@ export const Schema: core.serialization.Schema<serializers.Schema.Raw, FernOpena
             value: core.serialization.lazy(() => serializers.OneOfSchema),
         }),
         nullable: core.serialization.lazyObject(() => serializers.NullableSchema),
-        unknown: WithName,
+        unknown: UnknownSchema,
     })
     .transform<FernOpenapiIr.Schema>({
         transform: (value) => {
@@ -112,7 +112,7 @@ export declare namespace Schema {
         type: "nullable";
     }
 
-    export interface Unknown extends WithName.Raw {
+    export interface Unknown extends UnknownSchema.Raw {
         type: "unknown";
     }
 }

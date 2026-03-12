@@ -1327,6 +1327,59 @@ await client.endpoints.object.getAndReturnWithUnknownField({
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDocumentedUnknownType</a>({ ...params }) -> SeedExhaustive.ObjectWithDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
+    documentedUnknownType: {
+        "key": "value"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedExhaustive.ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ObjectClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithDatetimeLikeString</a>({ ...params }) -> SeedExhaustive.ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

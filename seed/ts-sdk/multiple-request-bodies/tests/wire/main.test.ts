@@ -9,6 +9,7 @@ describe("SeedApiClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {};
         const rawResponseBody = { author: "author", id: 1, tags: [{ key: "value" }], title: "title" };
+
         server
             .mockEndpoint()
             .post("/documents/upload")

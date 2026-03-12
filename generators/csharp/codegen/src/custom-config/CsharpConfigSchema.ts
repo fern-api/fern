@@ -48,6 +48,7 @@ export const CsharpConfigSchema = z.object({
     // new experimental options
     "experimental-enable-websockets": z.boolean().optional(),
     "experimental-readonly-constants": z.boolean().optional(),
+    "generate-literals": z.boolean().optional(),
     "experimental-explicit-nullable-optional": z.boolean().optional(),
     "use-default-request-parameter-values": z.boolean().optional(),
     "redact-response-body-on-error": z.boolean().optional(),

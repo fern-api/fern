@@ -239,6 +239,10 @@ export class GenerateCommand {
             ? await context.getTokenOrPrompt()
             : undefined;
 
+        if (token != null) {
+            await context.verifyOrgAccess({ organization: workspace.sdks.org, token });
+        }
+
         const runtime = isLocal ? "local" : "remote";
 
         const taskGroup = new SdkTaskGroup({ context });

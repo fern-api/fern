@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "documentedUnknownType": {
+      "$ref": "#/definitions/types.object.DocumentedUnknownType"
+    }
+  },
+  "required": [
+    "documentedUnknownType"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "types.object.DocumentedUnknownType": {
+      "type": [
+        "string",
+        "number",
+        "boolean",
+        "object",
+        "array",
+        "null"
+      ]
+    }
+  }
+}

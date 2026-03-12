@@ -17,8 +17,8 @@ public class Example25
 
         await client.Endpoints.Object.GetAndReturnWithDatetimeLikeStringAsync(
             new ObjectWithDatetimeLikeString {
-                DatetimeLikeString = "datetimeLikeString",
-                ActualDatetime = DateTime.Parse("2024-01-15T09:30:00Z", null, DateTimeStyles.AdjustToUniversal)
+                DatetimeLikeString = "2023-08-31T14:15:22Z",
+                ActualDatetime = DateTime.Parse("2023-08-31T14:15:22Z", null, DateTimeStyles.AdjustToUniversal)
             }
         );
     }

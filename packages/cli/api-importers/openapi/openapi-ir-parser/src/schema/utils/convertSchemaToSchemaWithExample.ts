@@ -151,12 +151,12 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
             return SchemaWithExample.unknown({
                 nameOverride: schema.nameOverride,
                 generatedName: schema.generatedName,
-                title: undefined,
+                title: schema.title,
                 example: undefined,
-                namespace: undefined,
-                groupName: undefined,
-                description: undefined,
-                availability: undefined
+                namespace: schema.namespace,
+                groupName: schema.groupName,
+                description: schema.description,
+                availability: schema.availability
             });
         default:
             assertNever(schema);
@@ -169,12 +169,12 @@ export function convertSchemaWithExampleToOptionalSchema(schema: Schema): Schema
             return SchemaWithExample.optional({
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                title: undefined,
-                description: undefined,
-                availability: undefined,
+                title: schema.title,
+                description: schema.description,
+                availability: schema.availability,
                 value: convertSchemaToSchemaWithExample(schema),
-                namespace: undefined,
-                groupName: undefined,
+                namespace: schema.namespace,
+                groupName: schema.groupName,
                 inline: undefined
             });
         case "object":
