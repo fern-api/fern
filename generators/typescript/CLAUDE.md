@@ -107,6 +107,58 @@ The TypeScript generator supports extensive configuration in `generators.yml`:
 - **Error handling**: Traditional promise/callback patterns alongside modern async/await
 - **Documentation**: JSDoc comments generated from API descriptions
 
+## Unit Tests & Snapshot Testing
+
+The TypeScript SDK generator has comprehensive unit tests using **Vitest** with **inline snapshot assertions** (`toMatchSnapshot()`). These tests live alongside the source code in `__test__/` directories.
+
+### When to Update Tests
+
+- **Adding a new feature or code path**: Add new test cases covering all permutations of the feature (e.g., different config flags, optional fields present/absent, edge cases).
+- **Changing existing code generation output**: Update the corresponding snapshot files. Run `pnpm vitest -u` in the affected package to regenerate snapshots, then review the diff to confirm the output is correct.
+- **Adding a new generator class or component**: Create a new `__test__/<ComponentName>.test.ts` file with snapshot tests that exercise all code paths. Use the shared test utilities from `@fern-typescript/test-utils`.
+
+### Test Structure
+
+Tests follow a consistent pattern:
+1. **Create mock context** using helpers from `@fern-typescript/test-utils` (e.g., `createMockSdkContext`, `createMockReference`, `createMockZurgSchema`)
+2. **Create IR fixtures** using factory functions (e.g., `createDeclaredTypeName`, `createObjectProperty`, `createEndpoint`)
+3. **Instantiate the generator class** with the mock context and IR fixtures
+4. **Call `writeToFile()`** (or similar) to generate code into a ts-morph `SourceFile`
+5. **Assert the output** with `expect(sourceFile.getFullText()).toMatchSnapshot()`
+
+### Shared Test Utilities (`@fern-typescript/test-utils`)
+
+Located at `generators/typescript/sdk/test-utils/`, this package provides:
+- **`createMockSdkContext()`** — Lightweight mock of `SdkContext` that satisfies interface requirements without full `SdkGenerator` machinery
+- **`createMockReference(name)`** — Creates a mock `Reference` with the given name
+- **`createMockZurgSchema(expr)`** / **`createMockZurgObjectSchema(expr)`** — Creates mock Zurg schema expressions
+- **`primitiveTypeRefNode`**, **`optionalTypeRefNode`**, **`namedTypeRefNode`**, etc. — Pre-built `TypeReferenceNode` mocks
+- **`serializeStatements(statements)`** — Serializes `ts.Statement[]` to a string for snapshot comparison
+- **IR factory helpers** (`createDeclaredTypeName`, `createNameAndWireValue`, `createObjectProperty`, etc.)
+
+When writing new tests, always check if `@fern-typescript/test-utils` already provides the helpers you need before creating local duplicates.
+
+### Test Locations
+
+```
+generators/typescript/sdk/<package>/src/__test__/<Component>.test.ts
+generators/typescript/sdk/<package>/src/__test__/__snapshots__/<Component>.test.ts.snap
+generators/typescript/model/<package>/src/__test__/<Component>.test.ts
+```
+
+### Running Tests
+
+```bash
+# Run all TypeScript generator tests
+cd generators/typescript && pnpm vitest run
+
+# Run tests for a specific package
+cd generators/typescript/sdk/client-class-generator && pnpm vitest run
+
+# Update snapshots after intentional output changes
+cd generators/typescript/sdk/client-class-generator && pnpm vitest -u
+```
+
 ## Comparison to Modern Generators
 
 Unlike the modern TypeScript-based generators (java-v2, csharp, etc.):
