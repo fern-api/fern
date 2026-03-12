@@ -430,14 +430,25 @@ export class AutoVersioningService {
      * 1 = deletion-only, 2 = mixed with signatures, 3 = mixed,
      * 4 = addition-only, 5 = context-only
      */
+    private static isDiffHeader(line: string): boolean {
+        return (
+            line.startsWith("--- a/") ||
+            line.startsWith("--- /dev/null") ||
+            line === "---" ||
+            line.startsWith("+++ b/") ||
+            line.startsWith("+++ /dev/null") ||
+            line === "+++"
+        );
+    }
+
     private classifySection(section: FileSection): number {
         let hasAdditions = false;
         let hasDeletions = false;
         let hasSignature = false;
 
         for (const line of section.lines) {
-            const isAddition = line.startsWith("+") && !line.startsWith("+++");
-            const isDeletion = line.startsWith("-") && !line.startsWith("---");
+            const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
+            const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
 
             if (isAddition) {
                 hasAdditions = true;
@@ -527,8 +538,8 @@ export class AutoVersioningService {
 
         let hasChanges = false;
         for (const line of processedContent) {
-            const isAddition = line.startsWith("+") && !line.startsWith("+++");
-            const isDeletion = line.startsWith("-") && !line.startsWith("---");
+            const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
+            const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
             if (isAddition || isDeletion) {
                 hasChanges = true;
                 break;
@@ -595,7 +606,7 @@ export class AutoVersioningService {
     }
 
     private isDeletionLine(line: string): boolean {
-        return line.startsWith("-") && !line.startsWith("---");
+        return line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
     }
 
     private findMatchingAdditionLine(lines: string[], startIndex: number, mappedMagicVersion: string): number {
@@ -624,7 +635,7 @@ export class AutoVersioningService {
     }
 
     private isAdditionLine(line: string): boolean {
-        return line.startsWith("+") && !line.startsWith("+++");
+        return line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
     }
 
     private shouldStopSearching(line: string): boolean {
@@ -632,8 +643,7 @@ export class AutoVersioningService {
             line.startsWith("@@") ||
             line.startsWith("diff --git") ||
             line.startsWith("index ") ||
-            line.startsWith("---") ||
-            line.startsWith("+++")
+            AutoVersioningService.isDiffHeader(line)
         );
     }
 
