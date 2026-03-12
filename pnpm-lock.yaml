@@ -3695,6 +3695,9 @@ importers:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../../../packages/commons/casings-generator
+      '@fern-typescript/commons':
+        specifier: workspace:*
+        version: link:../../utils/commons
       ts-morph:
         specifier: 'catalog:'
         version: 27.0.2
@@ -17318,22 +17321,6 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.0.18(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
-    dependencies:
-      '@vitest/spy': 4.0.18
-      estree-walker: 3.0.3
-      magic-string: 0.30.21
-    optionalDependencies:
-      vite: 7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
-
-  '@vitest/mocker@4.0.18(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
-    dependencies:
-      '@vitest/spy': 4.0.18
-      estree-walker: 3.0.3
-      magic-string: 0.30.21
-    optionalDependencies:
-      vite: 7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3)
-
   '@vitest/mocker@4.0.18(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))':
     dependencies:
       '@vitest/spy': 4.0.18
@@ -21827,7 +21814,7 @@ snapshots:
   vitest@4.0.18(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3):
     dependencies:
       '@vitest/expect': 4.0.18
-      '@vitest/mocker': 4.0.18(vite@7.3.1(@types/node@18.15.3)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+      '@vitest/mocker': 4.0.18(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       '@vitest/pretty-format': 4.0.18
       '@vitest/runner': 4.0.18
       '@vitest/snapshot': 4.0.18
@@ -21864,7 +21851,7 @@ snapshots:
   vitest@4.0.18(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3):
     dependencies:
       '@vitest/expect': 4.0.18
-      '@vitest/mocker': 4.0.18(vite@7.3.1(@types/node@22.19.11)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
+      '@vitest/mocker': 4.0.18(vite@7.3.1(@types/node@25.2.1)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.3.3))
       '@vitest/pretty-format': 4.0.18
       '@vitest/runner': 4.0.18
       '@vitest/snapshot': 4.0.18

@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getTextOfTsNode } from "@fern-typescript/commons";
-import { createHttpEndpoint } from "@fern-typescript/test-utils";
+import { createHttpEndpoint, serializeStatements } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { assert, describe, expect, it } from "vitest";
 import type { GeneratedEndpointRequest } from "../endpoint-request/GeneratedEndpointRequest.js";
@@ -10,10 +10,6 @@ import { GeneratedFileDownloadEndpointImplementation } from "../endpoints/Genera
 // ──────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ──────────────────────────────────────────────────────────────────────────────
-
-function serializeStatements(statements: ts.Statement[]): string {
-    return statements.map((s) => getTextOfTsNode(s)).join("\n");
-}
 
 /**
  * Creates a mock GeneratedEndpointRequest for file download endpoint tests.

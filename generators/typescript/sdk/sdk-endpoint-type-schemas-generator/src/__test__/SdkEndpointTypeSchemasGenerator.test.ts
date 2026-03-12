@@ -1,9 +1,12 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
+import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import {
     casingsGenerator,
     createHttpEndpoint,
     createHttpService,
+    createMockReference,
+    createMockZurgObjectSchema,
+    createMockZurgSchema,
     createNameAndWireValue
 } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
@@ -15,45 +18,6 @@ import { SdkEndpointTypeSchemasGenerator } from "../SdkEndpointTypeSchemasGenera
 // ────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ────────────────────────────────────────────────────────────────────────────
-
-function createMockReference(name: string): Reference {
-    return {
-        getExpression: () => ts.factory.createIdentifier(name),
-        getTypeNode: () => ts.factory.createTypeReferenceNode(name),
-        getEntityName: () => ts.factory.createIdentifier(name)
-        // biome-ignore lint/suspicious/noExplicitAny: test mock
-    } as any;
-}
-
-function createMockZurgSchema(exprText: string): Zurg.Schema {
-    const base: Zurg.BaseSchema = {
-        isOptional: false,
-        isNullable: false,
-        toExpression: () => ts.factory.createIdentifier(exprText)
-    };
-    return {
-        ...base,
-        parse: (raw: ts.Expression) => raw,
-        json: (parsed: ts.Expression) => parsed,
-        parseOrThrow: (raw: ts.Expression) =>
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(exprText), "parseOrThrow"),
-                undefined,
-                [raw]
-            ),
-        jsonOrThrow: (parsed: ts.Expression) =>
-            ts.factory.createCallExpression(
-                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(exprText), "jsonOrThrow"),
-                undefined,
-                [parsed]
-            ),
-        nullable: () => createMockZurgSchema(`${exprText}.nullable()`),
-        optional: () => createMockZurgSchema(`${exprText}.optional()`),
-        optionalNullable: () => createMockZurgSchema(`${exprText}.optionalNullable()`),
-        transform: () => createMockZurgSchema(`${exprText}.transform()`)
-        // biome-ignore lint/suspicious/noExplicitAny: test mock
-    } as any;
-}
 
 function createMockSdkContext() {
     const project = new Project({ useInMemoryFileSystem: true });
@@ -109,17 +73,6 @@ function createMockSdkContext() {
                     }) as any
             })
         }
-        // biome-ignore lint/suspicious/noExplicitAny: test mock
-    } as any;
-}
-
-function createMockZurgObjectSchema(exprText: string): Zurg.ObjectSchema {
-    const base = createMockZurgSchema(exprText);
-    return {
-        ...base,
-        withParsedProperties: () => createMockZurgObjectSchema(`${exprText}.withParsedProperties()`),
-        extend: () => createMockZurgObjectSchema(`${exprText}.extend()`),
-        passthrough: () => createMockZurgObjectSchema(`${exprText}.passthrough()`)
         // biome-ignore lint/suspicious/noExplicitAny: test mock
     } as any;
 }

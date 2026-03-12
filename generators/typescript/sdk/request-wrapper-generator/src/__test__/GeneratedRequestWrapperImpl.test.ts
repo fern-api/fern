@@ -13,7 +13,8 @@ import {
     createObjectProperty,
     createPathParameter,
     createQueryParameter,
-    createSdkRequestWrapper
+    createSdkRequestWrapper,
+    serializeStatements
 } from "@fern-typescript/test-utils";
 import { Project, ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
@@ -1200,10 +1201,6 @@ describe("GeneratedRequestWrapperImpl", () => {
     // ── withQueryParameter ─────────────────────────────────────────────
 
     describe("withQueryParameter", () => {
-        function serializeStatements(statements: ts.Statement[]): string {
-            return statements.map((stmt) => getTextOfTsNode(stmt)).join("\n");
-        }
-
         const dummySetter = (ref: ts.Expression) => [
             ts.factory.createExpressionStatement(
                 ts.factory.createCallExpression(ts.factory.createIdentifier("_setParam"), undefined, [ref])
