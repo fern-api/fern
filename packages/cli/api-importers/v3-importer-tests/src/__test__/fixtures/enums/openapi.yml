@@ -13,6 +13,16 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ExampleResponse"
+  /open-ended:
+    get:
+      summary: Get Open Ended Enum
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpenEndedEnumResponse"
 components:
   schemas:
     ExampleResponse:
@@ -41,3 +51,29 @@ components:
         - UNAUTHORIZED
         - BAD_REQUEST
       description: Error codes
+    OpenEndedEnumResponse:
+      type: object
+      properties:
+        status:
+          $ref: "#/components/schemas/OpenEndedStatus"
+        category:
+          $ref: "#/components/schemas/OpenEndedCategory"
+    OpenEndedStatus:
+      description: A status enum that explicitly allows unknown values
+      oneOf:
+        - type: string
+          enum:
+            - ACTIVE
+            - INACTIVE
+        - type: string
+    OpenEndedCategory:
+      description: A category enum using anyOf for open-endedness
+      anyOf:
+        - $ref: "#/components/schemas/CategoryEnum"
+        - type: string
+    CategoryEnum:
+      type: string
+      enum:
+        - BUG
+        - FEATURE
+        - IMPROVEMENT

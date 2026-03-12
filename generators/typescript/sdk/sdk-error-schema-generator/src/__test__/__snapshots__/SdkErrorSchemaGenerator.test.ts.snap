@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedSdkErrorSchemaImpl > deserializeBody > casts named type when serde layer is disabled 1`] = `"rawBody as string"`;
+
+exports[`GeneratedSdkErrorSchemaImpl > deserializeBody > casts to type when serde layer is disabled 1`] = `"rawBody as string"`;
+
+exports[`GeneratedSdkErrorSchemaImpl > deserializeBody > deserializes container error body with serde layer 1`] = `"ErrorSchema.parseOrThrow(rawBody)"`;
+
+exports[`GeneratedSdkErrorSchemaImpl > deserializeBody > deserializes named error body with serde layer 1`] = `"namedTypeSchema.parseOrThrow(rawBody)"`;
+
+exports[`GeneratedSdkErrorSchemaImpl > deserializeBody > deserializes primitive error body with serde layer 1`] = `"ErrorSchema.parseOrThrow(rawBody)"`;
+
+exports[`GeneratedSdkErrorSchemaImpl > writeToFile > writes schema for container error type 1`] = `
+"export const BatchError: Schema<ErrorSchema.Raw, string> = typeRefSchema;
+
+export declare namespace BatchError {
+    export type Raw = string;
+}
+"
+`;
+
+exports[`GeneratedSdkErrorSchemaImpl > writeToFile > writes schema for primitive error type 1`] = `
+"export const BadRequestError: Schema<ErrorSchema.Raw, string> = typeRefSchema;
+
+export declare namespace BadRequestError {
+    export type Raw = string;
+}
+"
+`;
