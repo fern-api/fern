@@ -587,3 +587,58 @@ func (o *ObjectWithUnknownField) String() string {
 	}
 	return fmt.Sprintf("%#v", o)
 }
+
+// Tests that unknown types are able to preserve their type names.
+type ObjectWithDocumentedUnknownType struct {
+	DocumentedUnknownType DocumentedUnknownType `json:"documentedUnknownType" url:"documentedUnknownType"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (o *ObjectWithDocumentedUnknownType) GetDocumentedUnknownType() DocumentedUnknownType {
+	if o == nil {
+		return nil
+	}
+	return o.DocumentedUnknownType
+}
+
+func (o *ObjectWithDocumentedUnknownType) GetExtraProperties() map[string]any {
+	if o == nil {
+		return nil
+	}
+	return o.extraProperties
+}
+
+func (o *ObjectWithDocumentedUnknownType) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ObjectWithDocumentedUnknownType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*o = ObjectWithDocumentedUnknownType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *o)
+	if err != nil {
+		return err
+	}
+	o.extraProperties = extraProperties
+	o.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (o *ObjectWithDocumentedUnknownType) String() string {
+	if len(o.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// Tests that unknown types are able to preserve their docstrings.
+type DocumentedUnknownType = any
