@@ -15,7 +15,7 @@ func do() {
             "<token>",
         ),
     )
-    client.NoReqBody.PostWithNoRequestBody(
+    client.NoReqBody.GetWithNoRequestBody(
         context.TODO(),
     )
 }
