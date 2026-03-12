@@ -113,6 +113,17 @@
                 "vitest.config.{js,mjs,mts,ts,cjs,cts}"
             ]
         },
+        "test:coverage": {
+            "dependsOn": ["^compile", "compile"],
+            "outputs": ["coverage/**"],
+            "inputs": [
+                "$TURBO_ROOT$/packages/configs/**",
+                "src/**",
+                "tests/**",
+                "tsconfig.json",
+                "vitest.config.{js,mjs,mts,ts,cjs,cts}"
+            ]
+        },
         "dist:cli": {
             "outputs": ["dist/**"],
             "dependsOn": ["^compile", "compile"],
