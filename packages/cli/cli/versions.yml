@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.26.1
+  changelogEntry:
+    - summary: |
+        Fix `fern diff` running out of memory on very large IR files (>2 GB).
+        The command now uses streaming JSON parsing and automatically re-spawns
+        Node with an increased heap limit (8 GB) when running `fern diff`,
+        allowing the full IR to be parsed and validated in memory. This removes
+        both the V8 string-size limit and the heap allocation limit.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
 - version: 4.26.0
   changelogEntry:
     - summary: |
@@ -25,6 +37,7 @@
       type: feat
   createdAt: "2026-03-12"
   irVersion: 65
+
 - version: 4.24.1
   changelogEntry:
     - summary: |
