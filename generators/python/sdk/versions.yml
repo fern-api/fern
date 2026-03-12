@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.63.6
+  changelogEntry:
+    - summary: |
+        Raise the default minimum Python version from `^3.8` to `^3.9` in generated
+        `pyproject.toml`. This allows the dependency resolver to pick Pydantic 2.11+ and
+        pydantic-core 2.33+, which ship pre-built wheels for Python 3.14, fixing
+        installation failures on Python 3.14.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
 - version: 4.63.5
   changelogEntry:
     - summary: |

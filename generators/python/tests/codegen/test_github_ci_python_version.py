@@ -5,8 +5,8 @@ from fern_python.version import GithubCIPythonVersionResolver, PythonVersion
 
 class TestGithubCIPythonVersionResolver:
     def test_resolve_default_constraint_returns_3_9(self) -> None:
-        """Default pyproject_python_version (^3.8) should resolve to 3.9 for CI."""
-        default_python_version_constraint = "^3.8"
+        """Default pyproject_python_version (^3.9) should resolve to 3.9 for CI."""
+        default_python_version_constraint = "^3.9"
         result = GithubCIPythonVersionResolver.resolve(default_python_version_constraint)
         assert result == PythonVersion.PY3_9
 
