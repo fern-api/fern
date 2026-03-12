@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@fern-api/casings-generator": "workspace:*",
+    "@fern-typescript/commons": "workspace:*",
     "ts-morph": "catalog:"
   },
   "peerDependencies": {

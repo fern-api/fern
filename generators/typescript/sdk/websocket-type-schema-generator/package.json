@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@fern-typescript/test-utils": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

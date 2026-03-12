@@ -3498,6 +3498,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-typescript/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
@@ -3695,6 +3698,9 @@ importers:
       '@fern-api/casings-generator':
         specifier: workspace:*
         version: link:../../../../packages/commons/casings-generator
+      '@fern-typescript/commons':
+        specifier: workspace:*
+        version: link:../../utils/commons
       ts-morph:
         specifier: 'catalog:'
         version: 27.0.2
@@ -3733,6 +3739,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../../packages/configs
+      '@fern-typescript/test-utils':
+        specifier: workspace:*
+        version: link:../test-utils
       '@types/node':
         specifier: 'catalog:'
         version: 18.15.3
