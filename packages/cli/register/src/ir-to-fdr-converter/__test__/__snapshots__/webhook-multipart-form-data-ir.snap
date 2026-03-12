@@ -1,7 +1,25 @@
 {
   "apiDisplayName": "Webhook Multipart Form Data Test",
   "apiDocs": undefined,
-  "apiName": "Webhook Multipart Form Data Test",
+  "apiName": {
+    "camelCase": {
+      "safeName": "webhookMultipartFormDataTest",
+      "unsafeName": "webhookMultipartFormDataTest",
+    },
+    "originalName": "Webhook Multipart Form Data Test",
+    "pascalCase": {
+      "safeName": "WebhookMultipartFormDataTest",
+      "unsafeName": "WebhookMultipartFormDataTest",
+    },
+    "screamingSnakeCase": {
+      "safeName": "WEBHOOK_MULTIPART_FORM_DATA_TEST",
+      "unsafeName": "WEBHOOK_MULTIPART_FORM_DATA_TEST",
+    },
+    "snakeCase": {
+      "safeName": "webhook_multipart_form_data_test",
+      "unsafeName": "webhook_multipart_form_data_test",
+    },
+  },
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -13,7 +31,28 @@
   "basePath": undefined,
   "casingsConfig": undefined,
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId",
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
   },
   "dynamic": undefined,
   "environments": {
@@ -26,7 +65,25 @@
           "defaultUrl": undefined,
           "docs": "Production server",
           "id": "Production server",
-          "name": "Production server",
+          "name": {
+            "camelCase": {
+              "safeName": "productionServer",
+              "unsafeName": "productionServer",
+            },
+            "originalName": "Production server",
+            "pascalCase": {
+              "safeName": "ProductionServer",
+              "unsafeName": "ProductionServer",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PRODUCTION_SERVER",
+              "unsafeName": "PRODUCTION_SERVER",
+            },
+            "snakeCase": {
+              "safeName": "production_server",
+              "unsafeName": "production_server",
+            },
+          },
           "url": "https://api.example.com/v1",
           "urlTemplate": undefined,
           "urlVariables": undefined,
@@ -93,13 +150,67 @@
       "errors": [],
       "fernFilepath": {
         "allParts": [
-          "documentManagement",
+          {
+            "camelCase": {
+              "safeName": "documentManagement",
+              "unsafeName": "documentManagement",
+            },
+            "originalName": "documentManagement",
+            "pascalCase": {
+              "safeName": "DocumentManagement",
+              "unsafeName": "DocumentManagement",
+            },
+            "screamingSnakeCase": {
+              "safeName": "DOCUMENT_MANAGEMENT",
+              "unsafeName": "DOCUMENT_MANAGEMENT",
+            },
+            "snakeCase": {
+              "safeName": "document_management",
+              "unsafeName": "document_management",
+            },
+          },
         ],
-        "file": "documentManagement",
+        "file": {
+          "camelCase": {
+            "safeName": "documentManagement",
+            "unsafeName": "documentManagement",
+          },
+          "originalName": "documentManagement",
+          "pascalCase": {
+            "safeName": "DocumentManagement",
+            "unsafeName": "DocumentManagement",
+          },
+          "screamingSnakeCase": {
+            "safeName": "DOCUMENT_MANAGEMENT",
+            "unsafeName": "DOCUMENT_MANAGEMENT",
+          },
+          "snakeCase": {
+            "safeName": "document_management",
+            "unsafeName": "document_management",
+          },
+        },
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
-      "name": "documentManagement",
+      "name": {
+        "camelCase": {
+          "safeName": "documentManagement",
+          "unsafeName": "documentManagement",
+        },
+        "originalName": "documentManagement",
+        "pascalCase": {
+          "safeName": "DocumentManagement",
+          "unsafeName": "DocumentManagement",
+        },
+        "screamingSnakeCase": {
+          "safeName": "DOCUMENT_MANAGEMENT",
+          "unsafeName": "DOCUMENT_MANAGEMENT",
+        },
+        "snakeCase": {
+          "safeName": "document_management",
+          "unsafeName": "document_management",
+        },
+      },
       "navigationConfig": undefined,
       "service": undefined,
       "subpackages": [],
@@ -122,7 +233,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "DocumentUploadEvent",
+        "name": {
+          "camelCase": {
+            "safeName": "documentUploadEvent",
+            "unsafeName": "documentUploadEvent",
+          },
+          "originalName": "DocumentUploadEvent",
+          "pascalCase": {
+            "safeName": "DocumentUploadEvent",
+            "unsafeName": "DocumentUploadEvent",
+          },
+          "screamingSnakeCase": {
+            "safeName": "DOCUMENT_UPLOAD_EVENT",
+            "unsafeName": "DOCUMENT_UPLOAD_EVENT",
+          },
+          "snakeCase": {
+            "safeName": "document_upload_event",
+            "unsafeName": "document_upload_event",
+          },
+        },
         "typeId": "DocumentUploadEvent",
       },
       "referencedTypes": Set {
@@ -137,7 +266,28 @@
           {
             "availability": undefined,
             "docs": "Unique event identifier",
-            "name": "eventId",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "eventId",
+                  "unsafeName": "eventId",
+                },
+                "originalName": "eventId",
+                "pascalCase": {
+                  "safeName": "EventId",
+                  "unsafeName": "EventId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT_ID",
+                  "unsafeName": "EVENT_ID",
+                },
+                "snakeCase": {
+                  "safeName": "event_id",
+                  "unsafeName": "event_id",
+                },
+              },
+              "wireValue": "eventId",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -167,7 +317,28 @@
           {
             "availability": undefined,
             "docs": "Type of the event",
-            "name": "eventType",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "eventType",
+                  "unsafeName": "eventType",
+                },
+                "originalName": "eventType",
+                "pascalCase": {
+                  "safeName": "EventType",
+                  "unsafeName": "EventType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT_TYPE",
+                  "unsafeName": "EVENT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "event_type",
+                  "unsafeName": "event_type",
+                },
+              },
+              "wireValue": "eventType",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -185,7 +356,25 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": "DocumentUploadEventEventType",
+              "name": {
+                "camelCase": {
+                  "safeName": "documentUploadEventEventType",
+                  "unsafeName": "documentUploadEventEventType",
+                },
+                "originalName": "DocumentUploadEventEventType",
+                "pascalCase": {
+                  "safeName": "DocumentUploadEventEventType",
+                  "unsafeName": "DocumentUploadEventEventType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DOCUMENT_UPLOAD_EVENT_EVENT_TYPE",
+                  "unsafeName": "DOCUMENT_UPLOAD_EVENT_EVENT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "document_upload_event_event_type",
+                  "unsafeName": "document_upload_event_event_type",
+                },
+              },
               "type": "named",
               "typeId": "DocumentUploadEventEventType",
             },
@@ -193,7 +382,28 @@
           {
             "availability": undefined,
             "docs": "The uploaded document file",
-            "name": "document",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "document",
+                  "unsafeName": "document",
+                },
+                "originalName": "document",
+                "pascalCase": {
+                  "safeName": "Document",
+                  "unsafeName": "Document",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DOCUMENT",
+                  "unsafeName": "DOCUMENT",
+                },
+                "snakeCase": {
+                  "safeName": "document",
+                  "unsafeName": "document",
+                },
+              },
+              "wireValue": "document",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -223,7 +433,28 @@
           {
             "availability": undefined,
             "docs": "Optional thumbnail image of the document",
-            "name": "thumbnail",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "thumbnail",
+                  "unsafeName": "thumbnail",
+                },
+                "originalName": "thumbnail",
+                "pascalCase": {
+                  "safeName": "Thumbnail",
+                  "unsafeName": "Thumbnail",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "THUMBNAIL",
+                  "unsafeName": "THUMBNAIL",
+                },
+                "snakeCase": {
+                  "safeName": "thumbnail",
+                  "unsafeName": "thumbnail",
+                },
+              },
+              "wireValue": "thumbnail",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -261,7 +492,28 @@
           {
             "availability": undefined,
             "docs": "JSON-encoded metadata about the document",
-            "name": "metadata",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "wireValue": "metadata",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -299,7 +551,28 @@
           {
             "availability": undefined,
             "docs": "User ID who uploaded the document",
-            "name": "uploadedBy",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "uploadedBy",
+                  "unsafeName": "uploadedBy",
+                },
+                "originalName": "uploadedBy",
+                "pascalCase": {
+                  "safeName": "UploadedBy",
+                  "unsafeName": "UploadedBy",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "UPLOADED_BY",
+                  "unsafeName": "UPLOADED_BY",
+                },
+                "snakeCase": {
+                  "safeName": "uploaded_by",
+                  "unsafeName": "uploaded_by",
+                },
+              },
+              "wireValue": "uploadedBy",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -329,7 +602,28 @@
           {
             "availability": undefined,
             "docs": "Tags associated with the document",
-            "name": "tags",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "tags",
+                  "unsafeName": "tags",
+                },
+                "originalName": "tags",
+                "pascalCase": {
+                  "safeName": "Tags",
+                  "unsafeName": "Tags",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TAGS",
+                  "unsafeName": "TAGS",
+                },
+                "snakeCase": {
+                  "safeName": "tags",
+                  "unsafeName": "tags",
+                },
+              },
+              "wireValue": "tags",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -379,7 +673,28 @@
           {
             "availability": undefined,
             "docs": "When the upload occurred",
-            "name": "timestamp",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "timestamp",
+                  "unsafeName": "timestamp",
+                },
+                "originalName": "timestamp",
+                "pascalCase": {
+                  "safeName": "Timestamp",
+                  "unsafeName": "Timestamp",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TIMESTAMP",
+                  "unsafeName": "TIMESTAMP",
+                },
+                "snakeCase": {
+                  "safeName": "timestamp",
+                  "unsafeName": "timestamp",
+                },
+              },
+              "wireValue": "timestamp",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -402,7 +717,28 @@
           {
             "availability": undefined,
             "docs": "Whether the document is private",
-            "name": "isPrivate",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "isPrivate",
+                  "unsafeName": "isPrivate",
+                },
+                "originalName": "isPrivate",
+                "pascalCase": {
+                  "safeName": "IsPrivate",
+                  "unsafeName": "IsPrivate",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "IS_PRIVATE",
+                  "unsafeName": "IS_PRIVATE",
+                },
+                "snakeCase": {
+                  "safeName": "is_private",
+                  "unsafeName": "is_private",
+                },
+              },
+              "wireValue": "isPrivate",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -462,7 +798,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "DocumentUploadEventEventType",
+        "name": {
+          "camelCase": {
+            "safeName": "documentUploadEventEventType",
+            "unsafeName": "documentUploadEventEventType",
+          },
+          "originalName": "DocumentUploadEventEventType",
+          "pascalCase": {
+            "safeName": "DocumentUploadEventEventType",
+            "unsafeName": "DocumentUploadEventEventType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "DOCUMENT_UPLOAD_EVENT_EVENT_TYPE",
+            "unsafeName": "DOCUMENT_UPLOAD_EVENT_EVENT_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "document_upload_event_event_type",
+            "unsafeName": "document_upload_event_event_type",
+          },
+        },
         "typeId": "DocumentUploadEventEventType",
       },
       "referencedTypes": Set {},
@@ -476,7 +830,28 @@
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "document.uploaded",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "documentUploaded",
+                  "unsafeName": "documentUploaded",
+                },
+                "originalName": "document.uploaded",
+                "pascalCase": {
+                  "safeName": "DocumentUploaded",
+                  "unsafeName": "DocumentUploaded",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DOCUMENT_UPLOADED",
+                  "unsafeName": "DOCUMENT_UPLOADED",
+                },
+                "snakeCase": {
+                  "safeName": "document_uploaded",
+                  "unsafeName": "document_uploaded",
+                },
+              },
+              "wireValue": "document.uploaded",
+            },
           },
         ],
       },
@@ -502,7 +877,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+        "name": {
+          "camelCase": {
+            "safeName": "webhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+            "unsafeName": "webhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+          },
+          "originalName": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+          "pascalCase": {
+            "safeName": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+            "unsafeName": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "WEBHOOKS_DOCUMENT_UPLOADED_WEBHOOK_PAYLOAD_CONTENT_MULTIPART_FORM_DATA_SCHEMA_EVENT_TYPE",
+            "unsafeName": "WEBHOOKS_DOCUMENT_UPLOADED_WEBHOOK_PAYLOAD_CONTENT_MULTIPART_FORM_DATA_SCHEMA_EVENT_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "webhooks_document_uploaded_webhook_payload_content_multipart_form_data_schema_event_type",
+            "unsafeName": "webhooks_document_uploaded_webhook_payload_content_multipart_form_data_schema_event_type",
+          },
+        },
         "typeId": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
       },
       "referencedTypes": Set {},
@@ -516,7 +909,28 @@
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "document.uploaded",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "documentUploaded",
+                  "unsafeName": "documentUploaded",
+                },
+                "originalName": "document.uploaded",
+                "pascalCase": {
+                  "safeName": "DocumentUploaded",
+                  "unsafeName": "DocumentUploaded",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DOCUMENT_UPLOADED",
+                  "unsafeName": "DOCUMENT_UPLOADED",
+                },
+                "snakeCase": {
+                  "safeName": "document_uploaded",
+                  "unsafeName": "document_uploaded",
+                },
+              },
+              "wireValue": "document.uploaded",
+            },
           },
         ],
       },
@@ -541,14 +955,53 @@
         "fileUploadPayload": {
           "contentType": "multipart/form-data",
           "docs": undefined,
-          "name": "Document Management_documentUploadedWebhook_Request",
+          "name": {
+            "camelCase": {
+              "safeName": "documentManagementDocumentUploadedWebhookRequest",
+              "unsafeName": "documentManagementDocumentUploadedWebhookRequest",
+            },
+            "originalName": "Document Management_documentUploadedWebhook_Request",
+            "pascalCase": {
+              "safeName": "DocumentManagementDocumentUploadedWebhookRequest",
+              "unsafeName": "DocumentManagementDocumentUploadedWebhookRequest",
+            },
+            "screamingSnakeCase": {
+              "safeName": "DOCUMENT_MANAGEMENT_DOCUMENT_UPLOADED_WEBHOOK_REQUEST",
+              "unsafeName": "DOCUMENT_MANAGEMENT_DOCUMENT_UPLOADED_WEBHOOK_REQUEST",
+            },
+            "snakeCase": {
+              "safeName": "document_management_document_uploaded_webhook_request",
+              "unsafeName": "document_management_document_uploaded_webhook_request",
+            },
+          },
           "properties": [
             {
               "_visit": [Function],
               "availability": undefined,
               "contentType": "multipart/form-data",
               "docs": "Unique event identifier",
-              "name": "eventId",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "eventId",
+                    "unsafeName": "eventId",
+                  },
+                  "originalName": "eventId",
+                  "pascalCase": {
+                    "safeName": "EventId",
+                    "unsafeName": "EventId",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "EVENT_ID",
+                    "unsafeName": "EVENT_ID",
+                  },
+                  "snakeCase": {
+                    "safeName": "event_id",
+                    "unsafeName": "event_id",
+                  },
+                },
+                "wireValue": "eventId",
+              },
               "propertyAccess": undefined,
               "style": undefined,
               "type": "bodyProperty",
@@ -582,7 +1035,28 @@
               "availability": undefined,
               "contentType": "multipart/form-data",
               "docs": "Type of the event",
-              "name": "eventType",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "eventType",
+                    "unsafeName": "eventType",
+                  },
+                  "originalName": "eventType",
+                  "pascalCase": {
+                    "safeName": "EventType",
+                    "unsafeName": "EventType",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "EVENT_TYPE",
+                    "unsafeName": "EVENT_TYPE",
+                  },
+                  "snakeCase": {
+                    "safeName": "event_type",
+                    "unsafeName": "event_type",
+                  },
+                },
+                "wireValue": "eventType",
+              },
               "propertyAccess": undefined,
               "style": undefined,
               "type": "bodyProperty",
@@ -602,7 +1076,25 @@
                   "packagePath": [],
                 },
                 "inline": false,
-                "name": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+                "name": {
+                  "camelCase": {
+                    "safeName": "webhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+                    "unsafeName": "webhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+                  },
+                  "originalName": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+                  "pascalCase": {
+                    "safeName": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+                    "unsafeName": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "WEBHOOKS_DOCUMENT_UPLOADED_WEBHOOK_PAYLOAD_CONTENT_MULTIPART_FORM_DATA_SCHEMA_EVENT_TYPE",
+                    "unsafeName": "WEBHOOKS_DOCUMENT_UPLOADED_WEBHOOK_PAYLOAD_CONTENT_MULTIPART_FORM_DATA_SCHEMA_EVENT_TYPE",
+                  },
+                  "snakeCase": {
+                    "safeName": "webhooks_document_uploaded_webhook_payload_content_multipart_form_data_schema_event_type",
+                    "unsafeName": "webhooks_document_uploaded_webhook_payload_content_multipart_form_data_schema_event_type",
+                  },
+                },
                 "type": "named",
                 "typeId": "WebhooksDocumentUploadedWebhookPayloadContentMultipartFormDataSchemaEventType",
               },
@@ -615,7 +1107,28 @@
                 "contentType": "multipart/form-data",
                 "docs": "The uploaded document file",
                 "isOptional": false,
-                "key": "document",
+                "key": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "document",
+                      "unsafeName": "document",
+                    },
+                    "originalName": "document",
+                    "pascalCase": {
+                      "safeName": "Document",
+                      "unsafeName": "Document",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DOCUMENT",
+                      "unsafeName": "DOCUMENT",
+                    },
+                    "snakeCase": {
+                      "safeName": "document",
+                      "unsafeName": "document",
+                    },
+                  },
+                  "wireValue": "document",
+                },
                 "type": "file",
               },
             },
@@ -627,7 +1140,28 @@
                 "contentType": "multipart/form-data",
                 "docs": "Optional thumbnail image of the document",
                 "isOptional": true,
-                "key": "thumbnail",
+                "key": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "thumbnail",
+                      "unsafeName": "thumbnail",
+                    },
+                    "originalName": "thumbnail",
+                    "pascalCase": {
+                      "safeName": "Thumbnail",
+                      "unsafeName": "Thumbnail",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "THUMBNAIL",
+                      "unsafeName": "THUMBNAIL",
+                    },
+                    "snakeCase": {
+                      "safeName": "thumbnail",
+                      "unsafeName": "thumbnail",
+                    },
+                  },
+                  "wireValue": "thumbnail",
+                },
                 "type": "file",
               },
             },
@@ -636,7 +1170,28 @@
               "availability": undefined,
               "contentType": "multipart/form-data",
               "docs": "JSON-encoded metadata about the document",
-              "name": "metadata",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "metadata",
+                    "unsafeName": "metadata",
+                  },
+                  "originalName": "metadata",
+                  "pascalCase": {
+                    "safeName": "Metadata",
+                    "unsafeName": "Metadata",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "METADATA",
+                    "unsafeName": "METADATA",
+                  },
+                  "snakeCase": {
+                    "safeName": "metadata",
+                    "unsafeName": "metadata",
+                  },
+                },
+                "wireValue": "metadata",
+              },
               "propertyAccess": undefined,
               "style": undefined,
               "type": "bodyProperty",
@@ -678,7 +1233,28 @@
               "availability": undefined,
               "contentType": "multipart/form-data",
               "docs": "User ID who uploaded the document",
-              "name": "uploadedBy",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "uploadedBy",
+                    "unsafeName": "uploadedBy",
+                  },
+                  "originalName": "uploadedBy",
+                  "pascalCase": {
+                    "safeName": "UploadedBy",
+                    "unsafeName": "UploadedBy",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "UPLOADED_BY",
+                    "unsafeName": "UPLOADED_BY",
+                  },
+                  "snakeCase": {
+                    "safeName": "uploaded_by",
+                    "unsafeName": "uploaded_by",
+                  },
+                },
+                "wireValue": "uploadedBy",
+              },
               "propertyAccess": undefined,
               "style": undefined,
               "type": "bodyProperty",
@@ -712,7 +1288,28 @@
               "availability": undefined,
               "contentType": "multipart/form-data",
               "docs": "Tags associated with the document",
-              "name": "tags",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "tags",
+                    "unsafeName": "tags",
+                  },
+                  "originalName": "tags",
+                  "pascalCase": {
+                    "safeName": "Tags",
+                    "unsafeName": "Tags",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TAGS",
+                    "unsafeName": "TAGS",
+                  },
+                  "snakeCase": {
+                    "safeName": "tags",
+                    "unsafeName": "tags",
+                  },
+                },
+                "wireValue": "tags",
+              },
               "propertyAccess": undefined,
               "style": undefined,
               "type": "bodyProperty",
@@ -766,7 +1363,28 @@
               "availability": undefined,
               "contentType": "multipart/form-data",
               "docs": "When the upload occurred",
-              "name": "timestamp",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "timestamp",
+                    "unsafeName": "timestamp",
+                  },
+                  "originalName": "timestamp",
+                  "pascalCase": {
+                    "safeName": "Timestamp",
+                    "unsafeName": "Timestamp",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TIMESTAMP",
+                    "unsafeName": "TIMESTAMP",
+                  },
+                  "snakeCase": {
+                    "safeName": "timestamp",
+                    "unsafeName": "timestamp",
+                  },
+                },
+                "wireValue": "timestamp",
+              },
               "propertyAccess": undefined,
               "style": undefined,
               "type": "bodyProperty",
@@ -793,7 +1411,28 @@
               "availability": undefined,
               "contentType": "multipart/form-data",
               "docs": "Whether the document is private",
-              "name": "isPrivate",
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "isPrivate",
+                    "unsafeName": "isPrivate",
+                  },
+                  "originalName": "isPrivate",
+                  "pascalCase": {
+                    "safeName": "IsPrivate",
+                    "unsafeName": "IsPrivate",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "IS_PRIVATE",
+                    "unsafeName": "IS_PRIVATE",
+                  },
+                  "snakeCase": {
+                    "safeName": "is_private",
+                    "unsafeName": "is_private",
+                  },
+                },
+                "wireValue": "isPrivate",
+              },
               "propertyAccess": undefined,
               "style": undefined,
               "type": "bodyProperty",
@@ -841,11 +1480,47 @@
         "headers": [],
         "id": "Document Management.documentUploadedWebhook",
         "method": "POST",
-        "name": "documentUploadedWebhook",
+        "name": {
+          "camelCase": {
+            "safeName": "documentUploadedWebhook",
+            "unsafeName": "documentUploadedWebhook",
+          },
+          "originalName": "documentUploadedWebhook",
+          "pascalCase": {
+            "safeName": "DocumentUploadedWebhook",
+            "unsafeName": "DocumentUploadedWebhook",
+          },
+          "screamingSnakeCase": {
+            "safeName": "DOCUMENT_UPLOADED_WEBHOOK",
+            "unsafeName": "DOCUMENT_UPLOADED_WEBHOOK",
+          },
+          "snakeCase": {
+            "safeName": "document_uploaded_webhook",
+            "unsafeName": "document_uploaded_webhook",
+          },
+        },
         "payload": {
           "_visit": [Function],
           "extends": [],
-          "name": "Document Management_documentUploadedWebhook_Request",
+          "name": {
+            "camelCase": {
+              "safeName": "documentManagementDocumentUploadedWebhookRequest",
+              "unsafeName": "documentManagementDocumentUploadedWebhookRequest",
+            },
+            "originalName": "Document Management_documentUploadedWebhook_Request",
+            "pascalCase": {
+              "safeName": "DocumentManagementDocumentUploadedWebhookRequest",
+              "unsafeName": "DocumentManagementDocumentUploadedWebhookRequest",
+            },
+            "screamingSnakeCase": {
+              "safeName": "DOCUMENT_MANAGEMENT_DOCUMENT_UPLOADED_WEBHOOK_REQUEST",
+              "unsafeName": "DOCUMENT_MANAGEMENT_DOCUMENT_UPLOADED_WEBHOOK_REQUEST",
+            },
+            "snakeCase": {
+              "safeName": "document_management_document_uploaded_webhook_request",
+              "unsafeName": "document_management_document_uploaded_webhook_request",
+            },
+          },
           "properties": [],
           "type": "inlinedPayload",
         },

@@ -1,7 +1,25 @@
 {
   "apiDisplayName": "OneOf References Mapping Test API",
   "apiDocs": undefined,
-  "apiName": "OneOf References Mapping Test API",
+  "apiName": {
+    "camelCase": {
+      "safeName": "oneOfReferencesMappingTestApi",
+      "unsafeName": "oneOfReferencesMappingTestApi",
+    },
+    "originalName": "OneOf References Mapping Test API",
+    "pascalCase": {
+      "safeName": "OneOfReferencesMappingTestApi",
+      "unsafeName": "OneOfReferencesMappingTestApi",
+    },
+    "screamingSnakeCase": {
+      "safeName": "ONE_OF_REFERENCES_MAPPING_TEST_API",
+      "unsafeName": "ONE_OF_REFERENCES_MAPPING_TEST_API",
+    },
+    "snakeCase": {
+      "safeName": "one_of_references_mapping_test_api",
+      "unsafeName": "one_of_references_mapping_test_api",
+    },
+  },
   "apiPlayground": undefined,
   "apiVersion": undefined,
   "audiences": undefined,
@@ -13,7 +31,28 @@
   "basePath": undefined,
   "casingsConfig": undefined,
   "constants": {
-    "errorInstanceIdKey": "errorInstanceId",
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
   },
   "dynamic": undefined,
   "environments": {
@@ -26,7 +65,25 @@
           "defaultUrl": undefined,
           "docs": undefined,
           "id": "https://api.example.com/v1",
-          "name": "https://api.example.com/v1",
+          "name": {
+            "camelCase": {
+              "safeName": "httpsApiExampleComV1",
+              "unsafeName": "httpsApiExampleComV1",
+            },
+            "originalName": "https://api.example.com/v1",
+            "pascalCase": {
+              "safeName": "HttpsApiExampleComV1",
+              "unsafeName": "HttpsApiExampleComV1",
+            },
+            "screamingSnakeCase": {
+              "safeName": "HTTPS_API_EXAMPLE_COM_V_1",
+              "unsafeName": "HTTPS_API_EXAMPLE_COM_V_1",
+            },
+            "snakeCase": {
+              "safeName": "https_api_example_com_v_1",
+              "unsafeName": "https_api_example_com_v_1",
+            },
+          },
           "url": "https://api.example.com/v1",
           "urlTemplate": undefined,
           "urlVariables": undefined,
@@ -42,7 +99,25 @@
   "errors": {
     "CreateEventRequestBadRequestError": {
       "discriminantValue": {
-        "name": "CreateEventRequestBadRequestError",
+        "name": {
+          "camelCase": {
+            "safeName": "createEventRequestBadRequestError",
+            "unsafeName": "createEventRequestBadRequestError",
+          },
+          "originalName": "CreateEventRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateEventRequestBadRequestError",
+            "unsafeName": "CreateEventRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_event_request_bad_request_error",
+            "unsafeName": "create_event_request_bad_request_error",
+          },
+        },
         "wireValue": "CreateEventRequestBadRequestError",
       },
       "displayName": "BadRequestError",
@@ -57,7 +132,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "CreateEventRequestBadRequestError",
+        "name": {
+          "camelCase": {
+            "safeName": "createEventRequestBadRequestError",
+            "unsafeName": "createEventRequestBadRequestError",
+          },
+          "originalName": "CreateEventRequestBadRequestError",
+          "pascalCase": {
+            "safeName": "CreateEventRequestBadRequestError",
+            "unsafeName": "CreateEventRequestBadRequestError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+            "unsafeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "create_event_request_bad_request_error",
+            "unsafeName": "create_event_request_bad_request_error",
+          },
+        },
       },
       "statusCode": 400,
       "type": {
@@ -70,7 +163,25 @@
           "packagePath": [],
         },
         "inline": false,
-        "name": "Error",
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
         "type": "named",
         "typeId": "Error",
       },
@@ -159,7 +270,25 @@
                   "file": undefined,
                   "packagePath": [],
                 },
-                "name": "CreateEventRequestBadRequestError",
+                "name": {
+                  "camelCase": {
+                    "safeName": "createEventRequestBadRequestError",
+                    "unsafeName": "createEventRequestBadRequestError",
+                  },
+                  "originalName": "CreateEventRequestBadRequestError",
+                  "pascalCase": {
+                    "safeName": "CreateEventRequestBadRequestError",
+                    "unsafeName": "CreateEventRequestBadRequestError",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+                    "unsafeName": "CREATE_EVENT_REQUEST_BAD_REQUEST_ERROR",
+                  },
+                  "snakeCase": {
+                    "safeName": "create_event_request_bad_request_error",
+                    "unsafeName": "create_event_request_bad_request_error",
+                  },
+                },
               },
             },
           ],
@@ -171,7 +300,25 @@
           "id": "endpoint_.createEvent",
           "idempotent": false,
           "method": "POST",
-          "name": "createEvent",
+          "name": {
+            "camelCase": {
+              "safeName": "createEvent",
+              "unsafeName": "createEvent",
+            },
+            "originalName": "createEvent",
+            "pascalCase": {
+              "safeName": "CreateEvent",
+              "unsafeName": "CreateEvent",
+            },
+            "screamingSnakeCase": {
+              "safeName": "CREATE_EVENT",
+              "unsafeName": "CREATE_EVENT",
+            },
+            "snakeCase": {
+              "safeName": "create_event",
+              "unsafeName": "create_event",
+            },
+          },
           "pagination": undefined,
           "path": {
             "head": "/events",
@@ -193,7 +340,25 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": "EventRequest",
+              "name": {
+                "camelCase": {
+                  "safeName": "eventRequest",
+                  "unsafeName": "eventRequest",
+                },
+                "originalName": "EventRequest",
+                "pascalCase": {
+                  "safeName": "EventRequest",
+                  "unsafeName": "EventRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT_REQUEST",
+                  "unsafeName": "EVENT_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "event_request",
+                  "unsafeName": "event_request",
+                },
+              },
               "type": "named",
               "typeId": "EventRequest",
             },
@@ -226,7 +391,25 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": "EventResponse",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "eventResponse",
+                      "unsafeName": "eventResponse",
+                    },
+                    "originalName": "EventResponse",
+                    "pascalCase": {
+                      "safeName": "EventResponse",
+                      "unsafeName": "EventResponse",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EVENT_RESPONSE",
+                      "unsafeName": "EVENT_RESPONSE",
+                    },
+                    "snakeCase": {
+                      "safeName": "event_response",
+                      "unsafeName": "event_response",
+                    },
+                  },
                   "type": "named",
                   "typeId": "EventResponse",
                 },
@@ -324,7 +507,25 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": "EventRequest",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "eventRequest",
+                      "unsafeName": "eventRequest",
+                    },
+                    "originalName": "EventRequest",
+                    "pascalCase": {
+                      "safeName": "EventRequest",
+                      "unsafeName": "EventRequest",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "EVENT_REQUEST",
+                      "unsafeName": "EVENT_REQUEST",
+                    },
+                    "snakeCase": {
+                      "safeName": "event_request",
+                      "unsafeName": "event_request",
+                    },
+                  },
                   "type": "named",
                   "typeId": "EventRequest",
                 },
@@ -361,7 +562,25 @@
                         "packagePath": [],
                       },
                       "inline": false,
-                      "name": "EventResponse",
+                      "name": {
+                        "camelCase": {
+                          "safeName": "eventResponse",
+                          "unsafeName": "eventResponse",
+                        },
+                        "originalName": "EventResponse",
+                        "pascalCase": {
+                          "safeName": "EventResponse",
+                          "unsafeName": "EventResponse",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "EVENT_RESPONSE",
+                          "unsafeName": "EVENT_RESPONSE",
+                        },
+                        "snakeCase": {
+                          "safeName": "event_response",
+                          "unsafeName": "event_response",
+                        },
+                      },
                       "type": "named",
                       "typeId": "EventResponse",
                     },
@@ -419,7 +638,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "Error",
+        "name": {
+          "camelCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+          "originalName": "Error",
+          "pascalCase": {
+            "safeName": "Error_",
+            "unsafeName": "Error",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR",
+            "unsafeName": "ERROR",
+          },
+          "snakeCase": {
+            "safeName": "error",
+            "unsafeName": "error",
+          },
+        },
         "typeId": "Error",
       },
       "referencedTypes": Set {},
@@ -432,7 +669,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "code",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+                "originalName": "code",
+                "pascalCase": {
+                  "safeName": "Code",
+                  "unsafeName": "Code",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CODE",
+                  "unsafeName": "CODE",
+                },
+                "snakeCase": {
+                  "safeName": "code",
+                  "unsafeName": "code",
+                },
+              },
+              "wireValue": "code",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -462,7 +720,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "message",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -517,7 +796,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "ErrorEvent",
+        "name": {
+          "camelCase": {
+            "safeName": "errorEvent",
+            "unsafeName": "errorEvent",
+          },
+          "originalName": "ErrorEvent",
+          "pascalCase": {
+            "safeName": "ErrorEvent",
+            "unsafeName": "ErrorEvent",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR_EVENT",
+            "unsafeName": "ERROR_EVENT",
+          },
+          "snakeCase": {
+            "safeName": "error_event",
+            "unsafeName": "error_event",
+          },
+        },
         "typeId": "ErrorEvent",
       },
       "referencedTypes": Set {
@@ -533,7 +830,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "type",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+                "originalName": "type",
+                "pascalCase": {
+                  "safeName": "Type",
+                  "unsafeName": "Type",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPE",
+                  "unsafeName": "TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+              },
+              "wireValue": "type",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -551,7 +869,25 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": "ErrorEventType",
+              "name": {
+                "camelCase": {
+                  "safeName": "errorEventType",
+                  "unsafeName": "errorEventType",
+                },
+                "originalName": "ErrorEventType",
+                "pascalCase": {
+                  "safeName": "ErrorEventType",
+                  "unsafeName": "ErrorEventType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR_EVENT_TYPE",
+                  "unsafeName": "ERROR_EVENT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "error_event_type",
+                  "unsafeName": "error_event_type",
+                },
+              },
               "type": "named",
               "typeId": "ErrorEventType",
             },
@@ -559,7 +895,28 @@
           {
             "availability": undefined,
             "docs": "Unique code identifying the error type",
-            "name": "errorCode",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "errorCode",
+                  "unsafeName": "errorCode",
+                },
+                "originalName": "errorCode",
+                "pascalCase": {
+                  "safeName": "ErrorCode",
+                  "unsafeName": "ErrorCode",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR_CODE",
+                  "unsafeName": "ERROR_CODE",
+                },
+                "snakeCase": {
+                  "safeName": "error_code",
+                  "unsafeName": "error_code",
+                },
+              },
+              "wireValue": "errorCode",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -589,7 +946,28 @@
           {
             "availability": undefined,
             "docs": "Human-readable error message",
-            "name": "message",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -619,7 +997,28 @@
           {
             "availability": undefined,
             "docs": "Severity level of the error",
-            "name": "severity",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "severity",
+                  "unsafeName": "severity",
+                },
+                "originalName": "severity",
+                "pascalCase": {
+                  "safeName": "Severity",
+                  "unsafeName": "Severity",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SEVERITY",
+                  "unsafeName": "SEVERITY",
+                },
+                "snakeCase": {
+                  "safeName": "severity",
+                  "unsafeName": "severity",
+                },
+              },
+              "wireValue": "severity",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -641,7 +1040,25 @@
                     "packagePath": [],
                   },
                   "inline": false,
-                  "name": "ErrorEventSeverity",
+                  "name": {
+                    "camelCase": {
+                      "safeName": "errorEventSeverity",
+                      "unsafeName": "errorEventSeverity",
+                    },
+                    "originalName": "ErrorEventSeverity",
+                    "pascalCase": {
+                      "safeName": "ErrorEventSeverity",
+                      "unsafeName": "ErrorEventSeverity",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ERROR_EVENT_SEVERITY",
+                      "unsafeName": "ERROR_EVENT_SEVERITY",
+                    },
+                    "snakeCase": {
+                      "safeName": "error_event_severity",
+                      "unsafeName": "error_event_severity",
+                    },
+                  },
                   "type": "named",
                   "typeId": "ErrorEventSeverity",
                 },
@@ -679,7 +1096,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "ErrorEventSeverity",
+        "name": {
+          "camelCase": {
+            "safeName": "errorEventSeverity",
+            "unsafeName": "errorEventSeverity",
+          },
+          "originalName": "ErrorEventSeverity",
+          "pascalCase": {
+            "safeName": "ErrorEventSeverity",
+            "unsafeName": "ErrorEventSeverity",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR_EVENT_SEVERITY",
+            "unsafeName": "ERROR_EVENT_SEVERITY",
+          },
+          "snakeCase": {
+            "safeName": "error_event_severity",
+            "unsafeName": "error_event_severity",
+          },
+        },
         "typeId": "ErrorEventSeverity",
       },
       "referencedTypes": Set {},
@@ -693,25 +1128,109 @@
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "low",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "low",
+                  "unsafeName": "low",
+                },
+                "originalName": "low",
+                "pascalCase": {
+                  "safeName": "Low",
+                  "unsafeName": "Low",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "LOW",
+                  "unsafeName": "LOW",
+                },
+                "snakeCase": {
+                  "safeName": "low",
+                  "unsafeName": "low",
+                },
+              },
+              "wireValue": "low",
+            },
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "medium",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "medium",
+                  "unsafeName": "medium",
+                },
+                "originalName": "medium",
+                "pascalCase": {
+                  "safeName": "Medium",
+                  "unsafeName": "Medium",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MEDIUM",
+                  "unsafeName": "MEDIUM",
+                },
+                "snakeCase": {
+                  "safeName": "medium",
+                  "unsafeName": "medium",
+                },
+              },
+              "wireValue": "medium",
+            },
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "high",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "high",
+                  "unsafeName": "high",
+                },
+                "originalName": "high",
+                "pascalCase": {
+                  "safeName": "High",
+                  "unsafeName": "High",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "HIGH",
+                  "unsafeName": "HIGH",
+                },
+                "snakeCase": {
+                  "safeName": "high",
+                  "unsafeName": "high",
+                },
+              },
+              "wireValue": "high",
+            },
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "critical",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "critical",
+                  "unsafeName": "critical",
+                },
+                "originalName": "critical",
+                "pascalCase": {
+                  "safeName": "Critical",
+                  "unsafeName": "Critical",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CRITICAL",
+                  "unsafeName": "CRITICAL",
+                },
+                "snakeCase": {
+                  "safeName": "critical",
+                  "unsafeName": "critical",
+                },
+              },
+              "wireValue": "critical",
+            },
           },
         ],
       },
@@ -737,7 +1256,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "ErrorEventType",
+        "name": {
+          "camelCase": {
+            "safeName": "errorEventType",
+            "unsafeName": "errorEventType",
+          },
+          "originalName": "ErrorEventType",
+          "pascalCase": {
+            "safeName": "ErrorEventType",
+            "unsafeName": "ErrorEventType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERROR_EVENT_TYPE",
+            "unsafeName": "ERROR_EVENT_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "error_event_type",
+            "unsafeName": "error_event_type",
+          },
+        },
         "typeId": "ErrorEventType",
       },
       "referencedTypes": Set {},
@@ -751,7 +1288,28 @@
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "error",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "error",
+                  "unsafeName": "error",
+                },
+                "originalName": "error",
+                "pascalCase": {
+                  "safeName": "Error_",
+                  "unsafeName": "Error",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR",
+                  "unsafeName": "ERROR",
+                },
+                "snakeCase": {
+                  "safeName": "error",
+                  "unsafeName": "error",
+                },
+              },
+              "wireValue": "error",
+            },
           },
         ],
       },
@@ -777,7 +1335,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "EventRequest",
+        "name": {
+          "camelCase": {
+            "safeName": "eventRequest",
+            "unsafeName": "eventRequest",
+          },
+          "originalName": "EventRequest",
+          "pascalCase": {
+            "safeName": "EventRequest",
+            "unsafeName": "EventRequest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EVENT_REQUEST",
+            "unsafeName": "EVENT_REQUEST",
+          },
+          "snakeCase": {
+            "safeName": "event_request",
+            "unsafeName": "event_request",
+          },
+        },
         "typeId": "EventRequest",
       },
       "referencedTypes": Set {
@@ -789,14 +1365,56 @@
       "shape": {
         "_visit": [Function],
         "baseProperties": [],
-        "discriminant": "type",
+        "discriminant": {
+          "name": {
+            "camelCase": {
+              "safeName": "type_",
+              "unsafeName": "type",
+            },
+            "originalName": "type",
+            "pascalCase": {
+              "safeName": "Type",
+              "unsafeName": "Type",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPE",
+              "unsafeName": "TYPE",
+            },
+            "snakeCase": {
+              "safeName": "type_",
+              "unsafeName": "type",
+            },
+          },
+          "wireValue": "type",
+        },
         "discriminatorContext": undefined,
         "extends": [],
         "type": "union",
         "types": [
           {
             "availability": undefined,
-            "discriminantValue": "user",
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+                "originalName": "user",
+                "pascalCase": {
+                  "safeName": "User",
+                  "unsafeName": "User",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER",
+                  "unsafeName": "USER",
+                },
+                "snakeCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+              },
+              "wireValue": "user",
+            },
             "displayName": "user",
             "docs": undefined,
             "shape": {
@@ -807,14 +1425,53 @@
                 "file": undefined,
                 "packagePath": [],
               },
-              "name": "UserEvent",
+              "name": {
+                "camelCase": {
+                  "safeName": "userEvent",
+                  "unsafeName": "userEvent",
+                },
+                "originalName": "UserEvent",
+                "pascalCase": {
+                  "safeName": "UserEvent",
+                  "unsafeName": "UserEvent",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER_EVENT",
+                  "unsafeName": "USER_EVENT",
+                },
+                "snakeCase": {
+                  "safeName": "user_event",
+                  "unsafeName": "user_event",
+                },
+              },
               "propertiesType": "samePropertiesAsObject",
               "typeId": "UserEvent",
             },
           },
           {
             "availability": undefined,
-            "discriminantValue": "system",
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "system",
+                  "unsafeName": "system",
+                },
+                "originalName": "system",
+                "pascalCase": {
+                  "safeName": "System",
+                  "unsafeName": "System",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SYSTEM",
+                  "unsafeName": "SYSTEM",
+                },
+                "snakeCase": {
+                  "safeName": "system",
+                  "unsafeName": "system",
+                },
+              },
+              "wireValue": "system",
+            },
             "displayName": "system",
             "docs": undefined,
             "shape": {
@@ -825,14 +1482,53 @@
                 "file": undefined,
                 "packagePath": [],
               },
-              "name": "SystemEvent",
+              "name": {
+                "camelCase": {
+                  "safeName": "systemEvent",
+                  "unsafeName": "systemEvent",
+                },
+                "originalName": "SystemEvent",
+                "pascalCase": {
+                  "safeName": "SystemEvent",
+                  "unsafeName": "SystemEvent",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SYSTEM_EVENT",
+                  "unsafeName": "SYSTEM_EVENT",
+                },
+                "snakeCase": {
+                  "safeName": "system_event",
+                  "unsafeName": "system_event",
+                },
+              },
               "propertiesType": "samePropertiesAsObject",
               "typeId": "SystemEvent",
             },
           },
           {
             "availability": undefined,
-            "discriminantValue": "error",
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "error",
+                  "unsafeName": "error",
+                },
+                "originalName": "error",
+                "pascalCase": {
+                  "safeName": "Error_",
+                  "unsafeName": "Error",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR",
+                  "unsafeName": "ERROR",
+                },
+                "snakeCase": {
+                  "safeName": "error",
+                  "unsafeName": "error",
+                },
+              },
+              "wireValue": "error",
+            },
             "displayName": "error",
             "docs": undefined,
             "shape": {
@@ -843,7 +1539,25 @@
                 "file": undefined,
                 "packagePath": [],
               },
-              "name": "ErrorEvent",
+              "name": {
+                "camelCase": {
+                  "safeName": "errorEvent",
+                  "unsafeName": "errorEvent",
+                },
+                "originalName": "ErrorEvent",
+                "pascalCase": {
+                  "safeName": "ErrorEvent",
+                  "unsafeName": "ErrorEvent",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ERROR_EVENT",
+                  "unsafeName": "ERROR_EVENT",
+                },
+                "snakeCase": {
+                  "safeName": "error_event",
+                  "unsafeName": "error_event",
+                },
+              },
               "propertiesType": "samePropertiesAsObject",
               "typeId": "ErrorEvent",
             },
@@ -876,7 +1590,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "EventRequestDiscriminatorMappingErrorSeverity",
+        "name": {
+          "camelCase": {
+            "safeName": "eventRequestDiscriminatorMappingErrorSeverity",
+            "unsafeName": "eventRequestDiscriminatorMappingErrorSeverity",
+          },
+          "originalName": "EventRequestDiscriminatorMappingErrorSeverity",
+          "pascalCase": {
+            "safeName": "EventRequestDiscriminatorMappingErrorSeverity",
+            "unsafeName": "EventRequestDiscriminatorMappingErrorSeverity",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EVENT_REQUEST_DISCRIMINATOR_MAPPING_ERROR_SEVERITY",
+            "unsafeName": "EVENT_REQUEST_DISCRIMINATOR_MAPPING_ERROR_SEVERITY",
+          },
+          "snakeCase": {
+            "safeName": "event_request_discriminator_mapping_error_severity",
+            "unsafeName": "event_request_discriminator_mapping_error_severity",
+          },
+        },
         "typeId": "EventRequestDiscriminatorMappingErrorSeverity",
       },
       "referencedTypes": Set {},
@@ -890,25 +1622,109 @@
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "low",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "low",
+                  "unsafeName": "low",
+                },
+                "originalName": "low",
+                "pascalCase": {
+                  "safeName": "Low",
+                  "unsafeName": "Low",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "LOW",
+                  "unsafeName": "LOW",
+                },
+                "snakeCase": {
+                  "safeName": "low",
+                  "unsafeName": "low",
+                },
+              },
+              "wireValue": "low",
+            },
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "medium",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "medium",
+                  "unsafeName": "medium",
+                },
+                "originalName": "medium",
+                "pascalCase": {
+                  "safeName": "Medium",
+                  "unsafeName": "Medium",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MEDIUM",
+                  "unsafeName": "MEDIUM",
+                },
+                "snakeCase": {
+                  "safeName": "medium",
+                  "unsafeName": "medium",
+                },
+              },
+              "wireValue": "medium",
+            },
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "high",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "high",
+                  "unsafeName": "high",
+                },
+                "originalName": "high",
+                "pascalCase": {
+                  "safeName": "High",
+                  "unsafeName": "High",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "HIGH",
+                  "unsafeName": "HIGH",
+                },
+                "snakeCase": {
+                  "safeName": "high",
+                  "unsafeName": "high",
+                },
+              },
+              "wireValue": "high",
+            },
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "critical",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "critical",
+                  "unsafeName": "critical",
+                },
+                "originalName": "critical",
+                "pascalCase": {
+                  "safeName": "Critical",
+                  "unsafeName": "Critical",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CRITICAL",
+                  "unsafeName": "CRITICAL",
+                },
+                "snakeCase": {
+                  "safeName": "critical",
+                  "unsafeName": "critical",
+                },
+              },
+              "wireValue": "critical",
+            },
           },
         ],
       },
@@ -934,7 +1750,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "EventResponse",
+        "name": {
+          "camelCase": {
+            "safeName": "eventResponse",
+            "unsafeName": "eventResponse",
+          },
+          "originalName": "EventResponse",
+          "pascalCase": {
+            "safeName": "EventResponse",
+            "unsafeName": "EventResponse",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EVENT_RESPONSE",
+            "unsafeName": "EVENT_RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "event_response",
+            "unsafeName": "event_response",
+          },
+        },
         "typeId": "EventResponse",
       },
       "referencedTypes": Set {
@@ -949,7 +1783,28 @@
           {
             "availability": undefined,
             "docs": "Unique identifier for the created event",
-            "name": "id",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -979,7 +1834,28 @@
           {
             "availability": undefined,
             "docs": "Status of the event processing",
-            "name": "status",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+                "originalName": "status",
+                "pascalCase": {
+                  "safeName": "Status",
+                  "unsafeName": "Status",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "STATUS",
+                  "unsafeName": "STATUS",
+                },
+                "snakeCase": {
+                  "safeName": "status",
+                  "unsafeName": "status",
+                },
+              },
+              "wireValue": "status",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -997,7 +1873,25 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": "EventResponseStatus",
+              "name": {
+                "camelCase": {
+                  "safeName": "eventResponseStatus",
+                  "unsafeName": "eventResponseStatus",
+                },
+                "originalName": "EventResponseStatus",
+                "pascalCase": {
+                  "safeName": "EventResponseStatus",
+                  "unsafeName": "EventResponseStatus",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT_RESPONSE_STATUS",
+                  "unsafeName": "EVENT_RESPONSE_STATUS",
+                },
+                "snakeCase": {
+                  "safeName": "event_response_status",
+                  "unsafeName": "event_response_status",
+                },
+              },
               "type": "named",
               "typeId": "EventResponseStatus",
             },
@@ -1005,7 +1899,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "event",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "event",
+                  "unsafeName": "event",
+                },
+                "originalName": "event",
+                "pascalCase": {
+                  "safeName": "Event",
+                  "unsafeName": "Event",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT",
+                  "unsafeName": "EVENT",
+                },
+                "snakeCase": {
+                  "safeName": "event",
+                  "unsafeName": "event",
+                },
+              },
+              "wireValue": "event",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -1028,7 +1943,25 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": "EventRequest",
+              "name": {
+                "camelCase": {
+                  "safeName": "eventRequest",
+                  "unsafeName": "eventRequest",
+                },
+                "originalName": "EventRequest",
+                "pascalCase": {
+                  "safeName": "EventRequest",
+                  "unsafeName": "EventRequest",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "EVENT_REQUEST",
+                  "unsafeName": "EVENT_REQUEST",
+                },
+                "snakeCase": {
+                  "safeName": "event_request",
+                  "unsafeName": "event_request",
+                },
+              },
               "type": "named",
               "typeId": "EventRequest",
             },
@@ -1066,7 +1999,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "EventResponseStatus",
+        "name": {
+          "camelCase": {
+            "safeName": "eventResponseStatus",
+            "unsafeName": "eventResponseStatus",
+          },
+          "originalName": "EventResponseStatus",
+          "pascalCase": {
+            "safeName": "EventResponseStatus",
+            "unsafeName": "EventResponseStatus",
+          },
+          "screamingSnakeCase": {
+            "safeName": "EVENT_RESPONSE_STATUS",
+            "unsafeName": "EVENT_RESPONSE_STATUS",
+          },
+          "snakeCase": {
+            "safeName": "event_response_status",
+            "unsafeName": "event_response_status",
+          },
+        },
         "typeId": "EventResponseStatus",
       },
       "referencedTypes": Set {},
@@ -1080,19 +2031,82 @@
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "created",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "created",
+                  "unsafeName": "created",
+                },
+                "originalName": "created",
+                "pascalCase": {
+                  "safeName": "Created",
+                  "unsafeName": "Created",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "CREATED",
+                  "unsafeName": "CREATED",
+                },
+                "snakeCase": {
+                  "safeName": "created",
+                  "unsafeName": "created",
+                },
+              },
+              "wireValue": "created",
+            },
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "processed",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "processed",
+                  "unsafeName": "processed",
+                },
+                "originalName": "processed",
+                "pascalCase": {
+                  "safeName": "Processed",
+                  "unsafeName": "Processed",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "PROCESSED",
+                  "unsafeName": "PROCESSED",
+                },
+                "snakeCase": {
+                  "safeName": "processed",
+                  "unsafeName": "processed",
+                },
+              },
+              "wireValue": "processed",
+            },
           },
           {
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "failed",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "failed",
+                  "unsafeName": "failed",
+                },
+                "originalName": "failed",
+                "pascalCase": {
+                  "safeName": "Failed",
+                  "unsafeName": "Failed",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FAILED",
+                  "unsafeName": "FAILED",
+                },
+                "snakeCase": {
+                  "safeName": "failed",
+                  "unsafeName": "failed",
+                },
+              },
+              "wireValue": "failed",
+            },
           },
         ],
       },
@@ -1118,7 +2132,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "SystemEvent",
+        "name": {
+          "camelCase": {
+            "safeName": "systemEvent",
+            "unsafeName": "systemEvent",
+          },
+          "originalName": "SystemEvent",
+          "pascalCase": {
+            "safeName": "SystemEvent",
+            "unsafeName": "SystemEvent",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SYSTEM_EVENT",
+            "unsafeName": "SYSTEM_EVENT",
+          },
+          "snakeCase": {
+            "safeName": "system_event",
+            "unsafeName": "system_event",
+          },
+        },
         "typeId": "SystemEvent",
       },
       "referencedTypes": Set {
@@ -1133,7 +2165,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "type",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+                "originalName": "type",
+                "pascalCase": {
+                  "safeName": "Type",
+                  "unsafeName": "Type",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPE",
+                  "unsafeName": "TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+              },
+              "wireValue": "type",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -1151,7 +2204,25 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": "SystemEventType",
+              "name": {
+                "camelCase": {
+                  "safeName": "systemEventType",
+                  "unsafeName": "systemEventType",
+                },
+                "originalName": "SystemEventType",
+                "pascalCase": {
+                  "safeName": "SystemEventType",
+                  "unsafeName": "SystemEventType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SYSTEM_EVENT_TYPE",
+                  "unsafeName": "SYSTEM_EVENT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "system_event_type",
+                  "unsafeName": "system_event_type",
+                },
+              },
               "type": "named",
               "typeId": "SystemEventType",
             },
@@ -1159,7 +2230,28 @@
           {
             "availability": undefined,
             "docs": "Name of the service that generated the event",
-            "name": "service",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
+              "wireValue": "service",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -1189,7 +2281,28 @@
           {
             "availability": undefined,
             "docs": "The system operation performed",
-            "name": "operation",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "operation",
+                  "unsafeName": "operation",
+                },
+                "originalName": "operation",
+                "pascalCase": {
+                  "safeName": "Operation",
+                  "unsafeName": "Operation",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "OPERATION",
+                  "unsafeName": "OPERATION",
+                },
+                "snakeCase": {
+                  "safeName": "operation",
+                  "unsafeName": "operation",
+                },
+              },
+              "wireValue": "operation",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -1219,7 +2332,28 @@
           {
             "availability": undefined,
             "docs": "Additional system metadata",
-            "name": "metadata",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+                "originalName": "metadata",
+                "pascalCase": {
+                  "safeName": "Metadata",
+                  "unsafeName": "Metadata",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "METADATA",
+                  "unsafeName": "METADATA",
+                },
+                "snakeCase": {
+                  "safeName": "metadata",
+                  "unsafeName": "metadata",
+                },
+              },
+              "wireValue": "metadata",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {
@@ -1304,7 +2438,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "SystemEventType",
+        "name": {
+          "camelCase": {
+            "safeName": "systemEventType",
+            "unsafeName": "systemEventType",
+          },
+          "originalName": "SystemEventType",
+          "pascalCase": {
+            "safeName": "SystemEventType",
+            "unsafeName": "SystemEventType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "SYSTEM_EVENT_TYPE",
+            "unsafeName": "SYSTEM_EVENT_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "system_event_type",
+            "unsafeName": "system_event_type",
+          },
+        },
         "typeId": "SystemEventType",
       },
       "referencedTypes": Set {},
@@ -1318,7 +2470,28 @@
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "system",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "system",
+                  "unsafeName": "system",
+                },
+                "originalName": "system",
+                "pascalCase": {
+                  "safeName": "System",
+                  "unsafeName": "System",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SYSTEM",
+                  "unsafeName": "SYSTEM",
+                },
+                "snakeCase": {
+                  "safeName": "system",
+                  "unsafeName": "system",
+                },
+              },
+              "wireValue": "system",
+            },
           },
         ],
       },
@@ -1344,7 +2517,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "UserEvent",
+        "name": {
+          "camelCase": {
+            "safeName": "userEvent",
+            "unsafeName": "userEvent",
+          },
+          "originalName": "UserEvent",
+          "pascalCase": {
+            "safeName": "UserEvent",
+            "unsafeName": "UserEvent",
+          },
+          "screamingSnakeCase": {
+            "safeName": "USER_EVENT",
+            "unsafeName": "USER_EVENT",
+          },
+          "snakeCase": {
+            "safeName": "user_event",
+            "unsafeName": "user_event",
+          },
+        },
         "typeId": "UserEvent",
       },
       "referencedTypes": Set {
@@ -1359,7 +2550,28 @@
           {
             "availability": undefined,
             "docs": undefined,
-            "name": "type",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+                "originalName": "type",
+                "pascalCase": {
+                  "safeName": "Type",
+                  "unsafeName": "Type",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TYPE",
+                  "unsafeName": "TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "type_",
+                  "unsafeName": "type",
+                },
+              },
+              "wireValue": "type",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -1377,7 +2589,25 @@
                 "packagePath": [],
               },
               "inline": false,
-              "name": "UserEventType",
+              "name": {
+                "camelCase": {
+                  "safeName": "userEventType",
+                  "unsafeName": "userEventType",
+                },
+                "originalName": "UserEventType",
+                "pascalCase": {
+                  "safeName": "UserEventType",
+                  "unsafeName": "UserEventType",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER_EVENT_TYPE",
+                  "unsafeName": "USER_EVENT_TYPE",
+                },
+                "snakeCase": {
+                  "safeName": "user_event_type",
+                  "unsafeName": "user_event_type",
+                },
+              },
               "type": "named",
               "typeId": "UserEventType",
             },
@@ -1385,7 +2615,28 @@
           {
             "availability": undefined,
             "docs": "ID of the user who triggered the event",
-            "name": "userId",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "userId",
+                  "unsafeName": "userId",
+                },
+                "originalName": "userId",
+                "pascalCase": {
+                  "safeName": "UserId",
+                  "unsafeName": "UserId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER_ID",
+                  "unsafeName": "USER_ID",
+                },
+                "snakeCase": {
+                  "safeName": "user_id",
+                  "unsafeName": "user_id",
+                },
+              },
+              "wireValue": "userId",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -1415,7 +2666,28 @@
           {
             "availability": undefined,
             "docs": "The action performed by the user",
-            "name": "action",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "action",
+                  "unsafeName": "action",
+                },
+                "originalName": "action",
+                "pascalCase": {
+                  "safeName": "Action",
+                  "unsafeName": "Action",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ACTION",
+                  "unsafeName": "ACTION",
+                },
+                "snakeCase": {
+                  "safeName": "action",
+                  "unsafeName": "action",
+                },
+              },
+              "wireValue": "action",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -1445,7 +2717,28 @@
           {
             "availability": undefined,
             "docs": "When the event occurred",
-            "name": "timestamp",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "timestamp",
+                  "unsafeName": "timestamp",
+                },
+                "originalName": "timestamp",
+                "pascalCase": {
+                  "safeName": "Timestamp",
+                  "unsafeName": "Timestamp",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "TIMESTAMP",
+                  "unsafeName": "TIMESTAMP",
+                },
+                "snakeCase": {
+                  "safeName": "timestamp",
+                  "unsafeName": "timestamp",
+                },
+              },
+              "wireValue": "timestamp",
+            },
             "propertyAccess": undefined,
             "v2Examples": {
               "autogeneratedExamples": {},
@@ -1502,7 +2795,25 @@
           "file": undefined,
           "packagePath": [],
         },
-        "name": "UserEventType",
+        "name": {
+          "camelCase": {
+            "safeName": "userEventType",
+            "unsafeName": "userEventType",
+          },
+          "originalName": "UserEventType",
+          "pascalCase": {
+            "safeName": "UserEventType",
+            "unsafeName": "UserEventType",
+          },
+          "screamingSnakeCase": {
+            "safeName": "USER_EVENT_TYPE",
+            "unsafeName": "USER_EVENT_TYPE",
+          },
+          "snakeCase": {
+            "safeName": "user_event_type",
+            "unsafeName": "user_event_type",
+          },
+        },
         "typeId": "UserEventType",
       },
       "referencedTypes": Set {},
@@ -1516,7 +2827,28 @@
             "availability": undefined,
             "casing": undefined,
             "docs": undefined,
-            "name": "user",
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+                "originalName": "user",
+                "pascalCase": {
+                  "safeName": "User",
+                  "unsafeName": "User",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "USER",
+                  "unsafeName": "USER",
+                },
+                "snakeCase": {
+                  "safeName": "user",
+                  "unsafeName": "user",
+                },
+              },
+              "wireValue": "user",
+            },
           },
         ],
       },
