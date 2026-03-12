@@ -105,7 +105,10 @@ export async function publishDocs({
         context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
     }
 
-    const fdr = createFdrService({ token: token.value });
+    const fdr = createFdrService({
+        token: token.value,
+        ...(cliVersion != null && { headers: { "X-CLI-Version": cliVersion } })
+    });
     const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
 
     if (excludeApis) {
@@ -267,8 +270,7 @@ export async function publishDocs({
                     orgId: CjsFdrSdk.OrgId(organization),
                     filepaths: filepaths,
                     images,
-                    ...(isBasepathAware && { basepathAware: true }),
-                    ...(cliVersion != null && { cliVersion })
+                    ...(isBasepathAware && { basepathAware: true })
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
