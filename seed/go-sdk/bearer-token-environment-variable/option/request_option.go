@@ -72,23 +72,6 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithLogging configures logging for the SDK.
-// By default, logging is silent — no log output unless explicitly configured.
-//
-// Example:
-//
-//	client := NewClient(
-//	  option.WithLogging(core.NewLogConfigBuilder().
-//	    Level(core.LogLevelDebug).
-//	    Silent(false).
-//	    Build()),
-//	)
-func WithLogging(logging *core.LogConfig) *core.LoggingOption {
-	return &core.LoggingOption{
-		Logging: logging,
-	}
-}
-
 // WithApiKey sets the 'Authorization: Bearer <apiKey>' request header.
 func WithApiKey(apiKey string) *core.ApiKeyOption {
 	return &core.ApiKeyOption{

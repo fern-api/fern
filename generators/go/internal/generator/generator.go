@@ -587,11 +587,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		if hasOAuthScheme(ir.Auth) {
 			files = append(files, newOAuthFile(g.coordinator))
 		}
-		files = append(files, newLogLevelFile(g.coordinator))
-		files = append(files, newLoggerFile(g.coordinator))
-		files = append(files, newConsoleLoggerFile(g.coordinator))
-		files = append(files, newLogConfigFile(g.coordinator))
-		files = append(files, newLoggingHTTPClientFile(g.coordinator))
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
 		files = append(files, newHttpInternalFile(g.coordinator))
@@ -1286,46 +1281,6 @@ func newOAuthFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/oauth.go",
 		[]byte(oauthFile),
-	)
-}
-
-func newLogLevelFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"core/log_level.go",
-		[]byte(logLevelFile),
-	)
-}
-
-func newLoggerFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"core/logger.go",
-		[]byte(loggerFile),
-	)
-}
-
-func newConsoleLoggerFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"core/console_logger.go",
-		[]byte(consoleLoggerFile),
-	)
-}
-
-func newLogConfigFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"core/log_config.go",
-		[]byte(logConfigFile),
-	)
-}
-
-func newLoggingHTTPClientFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"core/logging_http_client.go",
-		[]byte(loggingHTTPClientFile),
 	)
 }
 
