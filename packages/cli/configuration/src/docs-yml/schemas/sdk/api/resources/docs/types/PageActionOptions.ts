@@ -42,7 +42,7 @@ export interface PageActionOptions {
     /**
      * When enabled, displays a "Connect to Claude Code" button that allows users to install the MCP server on Claude Code for AI-powered assistance.
      *
-     * @default: false
+     * @default: true
      */
     claudeCode?: boolean;
     /**
