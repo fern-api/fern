@@ -29,6 +29,7 @@ export { relative } from "./relative.js";
 export { relativize } from "./relativize.js";
 export { resolve } from "./resolve.js";
 export { splitPath } from "./splitPath.js";
+export { streamFieldsFromFile } from "./streamFieldsFromFile.js";
 export { streamObjectFromFile } from "./streamObjectFromFile.js";
 export { streamObjectToFile } from "./streamObjectToFile.js";
 export { stringifyLargeObject } from "./stringifyLargeObject.js";

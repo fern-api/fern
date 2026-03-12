@@ -99,12 +99,22 @@ export class IntermediateRepresentationChangeDetector {
         from: IntermediateRepresentation;
         to: IntermediateRepresentation;
     }): Promise<IntermediateRepresentationChangeDetector.Result> {
-        const fromInternal = this.toInternalIr(from);
-        const toInternal = this.toInternalIr(to);
+        return this.checkFromInternalIr({
+            from: this.toInternalIr(from),
+            to: this.toInternalIr(to)
+        });
+    }
 
+    public async checkFromInternalIr({
+        from,
+        to
+    }: {
+        from: IntermediateRepresentationChangeDetector.InternalIr;
+        to: IntermediateRepresentationChangeDetector.InternalIr;
+    }): Promise<IntermediateRepresentationChangeDetector.Result> {
         // Hash the pruned IRs to check if they're identical
-        const fromHash = hashJSON(fromInternal);
-        const toHash = hashJSON(toInternal);
+        const fromHash = hashJSON(from);
+        const toHash = hashJSON(to);
 
         if (fromHash === toHash) {
             return {
@@ -114,7 +124,7 @@ export class IntermediateRepresentationChangeDetector {
             };
         }
 
-        const result = this.checkBreaking({ from: fromInternal, to: toInternal });
+        const result = this.checkBreaking({ from, to });
         return {
             bump: result.isBreaking ? "major" : "minor",
             isBreaking: result.isBreaking,

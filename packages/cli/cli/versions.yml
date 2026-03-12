@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.24.3
+  changelogEntry:
+    - summary: |
+        Fix `fern diff` running out of memory on very large IR files (>2 GB).
+        The command now streams only the `types`, `errors`, and `services` fields
+        needed for change detection instead of loading the entire IR into memory,
+        avoiding Node.js's heap allocation limit.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
 - version: 4.24.2
   changelogEntry:
     - summary: |
