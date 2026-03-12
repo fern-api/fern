@@ -642,3 +642,6 @@ func (o *ObjectWithDocumentedUnknownType) String() string {
 
 // Tests that unknown types are able to preserve their docstrings.
 type DocumentedUnknownType = any
+
+// Tests that map value types with unknown types don't get spurious | undefined.
+type MapOfDocumentedUnknownType = map[string]DocumentedUnknownType

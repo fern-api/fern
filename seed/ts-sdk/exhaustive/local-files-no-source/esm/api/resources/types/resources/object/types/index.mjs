@@ -1,5 +1,6 @@
 export * from "./DocumentedUnknownType.mjs";
 export * from "./DoubleOptional.mjs";
+export * from "./MapOfDocumentedUnknownType.mjs";
 export * from "./NestedObjectWithOptionalField.mjs";
 export * from "./NestedObjectWithRequiredField.mjs";
 export * from "./ObjectWithDatetimeLikeString.mjs";

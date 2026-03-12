@@ -98,6 +98,9 @@ func (d *DoubleOptional) String() string {
 	return fmt.Sprintf("%#v", d)
 }
 
+// Tests that map value types with unknown types don't get spurious | undefined.
+type MapOfDocumentedUnknownType = map[string]DocumentedUnknownType
+
 var (
 	nestedObjectWithOptionalFieldFieldFieldString  = big.NewInt(1 << 0)
 	nestedObjectWithOptionalFieldFieldNestedObject = big.NewInt(1 << 1)

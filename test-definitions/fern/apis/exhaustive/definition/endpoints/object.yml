@@ -80,6 +80,12 @@ service:
       request: objects.ObjectWithDocumentedUnknownType
       response: objects.ObjectWithDocumentedUnknownType
 
+    getAndReturnMapOfDocumentedUnknownType:
+      path: /get-and-return-map-of-documented-unknown-type
+      method: POST
+      request: objects.MapOfDocumentedUnknownType
+      response: objects.MapOfDocumentedUnknownType
+
     getAndReturnWithDatetimeLikeString:
       docs: |
         Tests that string fields containing datetime-like values are NOT reformatted.
