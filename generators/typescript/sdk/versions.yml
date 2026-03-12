@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.53.14
+  changelogEntry:
+    - summary: |
+        Remove `baseUrl` from the generated test `tsconfig.json`. The `baseUrl` compiler
+        option is unnecessary for test compilation and can interfere with module resolution
+        in consuming projects.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
 - version: 3.53.13
   changelogEntry:
     - summary: |

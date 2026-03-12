@@ -1,6 +1,7 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { APIS_DIRECTORY, FERN_DIRECTORY, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
 import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import path from "path";
@@ -25,6 +26,7 @@ export declare namespace TestRunner {
         keepContainer: boolean;
         inspect: boolean;
         workspaceCache?: WorkspaceCache;
+        logLevel: LogLevel;
     }
 
     interface RunArgs {
@@ -37,6 +39,12 @@ export declare namespace TestRunner {
         outputDir?: AbsoluteFilePath;
         /** Generator invocation with per-generator API overrides **/
         generatorInvocation?: GeneratorInvocation;
+        /** Organization name override (e.g. from customer's fern.config.json) **/
+        organization?: string;
+        /** Absolute path to fern.config.json (used for license path resolution) **/
+        absolutePathToFernConfig?: AbsoluteFilePath;
+        /** If true, use lenient parsing for generators config (tolerates unrecognized keys) */
+        lenient?: boolean;
     }
 
     interface DoRunArgs {
@@ -62,6 +70,10 @@ export declare namespace TestRunner {
         inspect: boolean | undefined;
         license?: unknown;
         smartCasing?: boolean;
+        /** Organization name override (e.g. from customer's fern.config.json) **/
+        organization?: string;
+        /** Absolute path to fern.config.json (used for license path resolution) **/
+        absolutePathToFernConfig?: AbsoluteFilePath;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -116,6 +128,7 @@ export abstract class TestRunner {
     private readonly keepContainer: boolean;
     private scriptRunner: ScriptRunner | undefined;
     private readonly workspaceCache: WorkspaceCache | undefined;
+    protected readonly logLevel: LogLevel;
 
     constructor({
         generator,
@@ -124,7 +137,8 @@ export abstract class TestRunner {
         skipScripts,
         keepContainer,
         scriptRunner,
-        workspaceCache
+        workspaceCache,
+        logLevel
     }: TestRunner.Args) {
         this.generator = generator;
         this.lock = lock;
@@ -133,6 +147,11 @@ export abstract class TestRunner {
         this.keepContainer = keepContainer;
         this.scriptRunner = scriptRunner;
         this.workspaceCache = workspaceCache;
+        this.logLevel = logLevel;
+    }
+
+    protected shouldPipeOutput(): boolean {
+        return this.logLevel === LogLevel.Debug || this.logLevel === LogLevel.Trace;
     }
 
     public abstract build(): Promise<void>;
@@ -151,7 +170,10 @@ export abstract class TestRunner {
         inspect,
         absolutePathToApiDefinition,
         outputDir,
-        generatorInvocation
+        generatorInvocation,
+        organization,
+        absolutePathToFernConfig,
+        lenient
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         let lockAcquired = false;
         try {
@@ -214,7 +236,8 @@ export abstract class TestRunner {
                 const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
                     absolutePathToAPIDefinition: absolutePathToApiDefinition,
                     taskContext,
-                    fixture
+                    fixture,
+                    lenient
                 });
                 const workspaceSettings =
                     generatorInvocation != null
@@ -268,7 +291,9 @@ export abstract class TestRunner {
                         !disableDynamicSnippetTests && workspaceShouldGenerateDynamicSnippetTests(this.generator),
                     inspect,
                     license,
-                    smartCasing
+                    smartCasing,
+                    organization,
+                    absolutePathToFernConfig
                 });
 
                 generationStopwatch.stop();

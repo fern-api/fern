@@ -147,6 +147,7 @@ types:
     properties:
       default: optional<string>
       enum: list<EnumValue>
+      forward-compatible: optional<boolean>
 
   EnumValue:
     discriminated: false
