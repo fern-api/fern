@@ -228,9 +228,7 @@ describe("getSuccessReturnType", () => {
             });
             expect(getTextOfTsNode(result)).toBe("ReadableStream<Uint8Array>");
         });
-    });
 
-    describe("when response is bytes", () => {
         it("returns stream type for bytes response with wrapper stream type", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
