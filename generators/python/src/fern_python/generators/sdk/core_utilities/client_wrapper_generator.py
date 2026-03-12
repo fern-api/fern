@@ -497,8 +497,9 @@ class ClientWrapperGenerator:
         project: Project,
     ) -> CodeWriterFunction:
         def _write_get_headers_body(writer: AST.NodeWriter) -> None:
-            writer.write_line("import platform")
-            writer.write_line("")
+            if not self._context.custom_config.omit_fern_headers:
+                writer.write_line("import platform")
+                writer.write_line("")
             writer.write("headers: ")
             writer.write_node(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
             writer.write_line("= {")
