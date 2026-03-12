@@ -180,7 +180,9 @@ describe("ReadmeSnippetBuilder", () => {
             // Usage should use the default endpoint snippet
             assert(Array.isArray(snippets[FernGeneratorCli.StructuredFeatureId.Usage]));
             expect(snippets[FernGeneratorCli.StructuredFeatureId.Usage]).toHaveLength(1);
-            expect(snippets[FernGeneratorCli.StructuredFeatureId.Usage]?.[0]).toContain("createUser");
+            const usageArr = snippets[FernGeneratorCli.StructuredFeatureId.Usage];
+            assert(Array.isArray(usageArr));
+            expect(usageArr[0]).toContain("createUser");
 
             // Authentication should be explicitly false
             expect(snippets.AUTHENTICATION).toBe(false);
@@ -455,9 +457,9 @@ describe("ReadmeSnippetBuilder", () => {
             const endpoint = createEndpoint("ep1", "listUsers", {
                 pagination: {
                     type: "cursor",
-                    page: { type: "query" } as FernIr.CursorPaginationPage,
-                    next: {} as FernIr.CursorPaginationNext,
-                    results: {} as FernIr.CursorPaginationResults
+                    page: {} as FernIr.RequestProperty,
+                    next: {} as FernIr.ResponseProperty,
+                    results: {} as FernIr.ResponseProperty
                     // biome-ignore lint/suspicious/noExplicitAny: IR mock
                 } as any
             });
@@ -486,9 +488,9 @@ describe("ReadmeSnippetBuilder", () => {
             const endpoint = createEndpoint("ep1", "listUsers", {
                 pagination: {
                     type: "cursor",
-                    page: { type: "query" } as FernIr.CursorPaginationPage,
-                    next: {} as FernIr.CursorPaginationNext,
-                    results: {} as FernIr.CursorPaginationResults
+                    page: {} as FernIr.RequestProperty,
+                    next: {} as FernIr.ResponseProperty,
+                    results: {} as FernIr.ResponseProperty
                     // biome-ignore lint/suspicious/noExplicitAny: IR mock
                 } as any
             });
@@ -515,9 +517,9 @@ describe("ReadmeSnippetBuilder", () => {
             const endpoint = createEndpoint("ep1", "listUsers", {
                 pagination: {
                     type: "cursor",
-                    page: { type: "query" } as FernIr.CursorPaginationPage,
-                    next: {} as FernIr.CursorPaginationNext,
-                    results: {} as FernIr.CursorPaginationResults
+                    page: {} as FernIr.RequestProperty,
+                    next: {} as FernIr.ResponseProperty,
+                    results: {} as FernIr.ResponseProperty
                     // biome-ignore lint/suspicious/noExplicitAny: IR mock
                 } as any
             });
@@ -563,7 +565,7 @@ describe("ReadmeSnippetBuilder", () => {
                 response: {
                     body: {
                         type: "streaming",
-                        dataEventType: {} as FernIr.StreamingResponseChunkType,
+                        dataEventType: {} as FernIr.TypeReference,
                         terminator: undefined
                     },
                     statusCode: undefined,
@@ -620,10 +622,13 @@ describe("ReadmeSnippetBuilder", () => {
         it("generates request type snippet when wrapper endpoint exists", () => {
             const endpoint = createEndpoint("ep1", "createUser", {
                 sdkRequest: {
+                    streamParameter: undefined,
                     requestParameterName: createName("request"),
                     shape: FernIr.SdkRequestShape.wrapper({
                         wrapperName: createName("CreateUserRequest"),
-                        bodyKey: createName("body")
+                        bodyKey: createName("body"),
+                        includePathParameters: undefined,
+                        onlyPathParameters: undefined
                     })
                 }
             });
@@ -793,7 +798,8 @@ describe("ReadmeSnippetBuilder", () => {
                 requestBody: FernIr.HttpRequestBody.bytes({
                     isOptional: false,
                     contentType: undefined,
-                    docs: undefined
+                    docs: undefined,
+                    v2Examples: undefined
                 })
             });
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
@@ -828,9 +834,8 @@ describe("ReadmeSnippetBuilder", () => {
                 requestBody: FernIr.HttpRequestBody.fileUpload({
                     name: createName("UploadDocumentRequest"),
                     properties: [
-                        {
-                            type: "file",
-                            value: FernIr.FileProperty.file({
+                        FernIr.FileUploadRequestProperty.file(
+                            FernIr.FileProperty.file({
                                 key: {
                                     wireValue: "file",
                                     name: createName("file")
@@ -839,9 +844,11 @@ describe("ReadmeSnippetBuilder", () => {
                                 contentType: undefined,
                                 docs: undefined
                             })
-                        }
+                        )
                     ],
-                    docs: undefined
+                    docs: undefined,
+                    v2Examples: undefined,
+                    contentType: undefined
                 })
             });
             const service = createService("svc1", createFernFilepath([]), [endpoint]);
@@ -898,7 +905,8 @@ describe("ReadmeSnippetBuilder", () => {
             const endpoint = createEndpoint("ep1", "downloadFile", {
                 response: {
                     body: FernIr.HttpResponseBody.fileDownload({
-                        docs: undefined
+                        docs: undefined,
+                        v2Examples: undefined
                     }),
                     statusCode: undefined,
                     docs: undefined
@@ -934,7 +942,8 @@ describe("ReadmeSnippetBuilder", () => {
             const endpoint = createEndpoint("ep1", "downloadFile", {
                 response: {
                     body: FernIr.HttpResponseBody.fileDownload({
-                        docs: undefined
+                        docs: undefined,
+                        v2Examples: undefined
                     }),
                     statusCode: undefined,
                     docs: undefined
@@ -1030,6 +1039,7 @@ describe("ReadmeSnippetBuilder", () => {
                 packageName: "@acme/sdk",
                 authSchemes: [
                     FernIr.AuthScheme.bearer({
+                        key: "bearer",
                         token: {
                             originalName: "token",
                             pascalCase: { unsafeName: "Token", safeName: "Token" },
@@ -1289,10 +1299,13 @@ describe("ReadmeSnippetBuilder", () => {
         it("matches snapshot for comprehensive feature set", () => {
             const ep1 = createEndpoint("ep1", "createUser", {
                 sdkRequest: {
+                    streamParameter: undefined,
                     requestParameterName: createName("request"),
                     shape: FernIr.SdkRequestShape.wrapper({
                         wrapperName: createName("CreateUserRequest"),
-                        bodyKey: createName("body")
+                        bodyKey: createName("body"),
+                        includePathParameters: undefined,
+                        onlyPathParameters: undefined
                     })
                 }
             });
@@ -1300,7 +1313,7 @@ describe("ReadmeSnippetBuilder", () => {
                 response: {
                     body: {
                         type: "streaming",
-                        dataEventType: {} as FernIr.StreamingResponseChunkType,
+                        dataEventType: {} as FernIr.TypeReference,
                         terminator: undefined
                     },
                     statusCode: undefined,
@@ -1311,9 +1324,9 @@ describe("ReadmeSnippetBuilder", () => {
             const ep3 = createEndpoint("ep3", "listUsers", {
                 pagination: {
                     type: "cursor",
-                    page: { type: "query" } as FernIr.CursorPaginationPage,
-                    next: {} as FernIr.CursorPaginationNext,
-                    results: {} as FernIr.CursorPaginationResults
+                    page: {} as FernIr.RequestProperty,
+                    next: {} as FernIr.ResponseProperty,
+                    results: {} as FernIr.ResponseProperty
                     // biome-ignore lint/suspicious/noExplicitAny: IR mock
                 } as any
             });

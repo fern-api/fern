@@ -167,11 +167,11 @@ function createMockSdkContext(overrides?: {
     } as any;
 }
 
-function createFeatureConfig(features: FernGeneratorCli.Feature[]): FernGeneratorCli.FeatureConfig {
+function createFeatureConfig(features: FernGeneratorCli.FeatureSpec[]): FernGeneratorCli.FeatureConfig {
     return { features };
 }
 
-function createFeature(id: string, overrides?: Partial<FernGeneratorCli.Feature>): FernGeneratorCli.Feature {
+function createFeature(id: string, overrides?: Partial<FernGeneratorCli.FeatureSpec>): FernGeneratorCli.FeatureSpec {
     return {
         id,
         description: undefined,
@@ -216,6 +216,7 @@ describe("ReadmeConfigBuilder", () => {
 
             expect(result.organization).toBe("acme");
             expect(result.referenceMarkdownPath).toBe("./reference.md");
+            assert(result.features != null);
             expect(result.features).toHaveLength(3);
             expect(result.features.map((f) => f.id)).toEqual([
                 FernGeneratorCli.StructuredFeatureId.Usage,
@@ -252,6 +253,7 @@ describe("ReadmeConfigBuilder", () => {
             const result = builder.build({ context, remote: undefined, featureConfig });
 
             // Only usage should remain
+            assert(result.features != null);
             expect(result.features.map((f) => f.id)).toEqual([FernGeneratorCli.StructuredFeatureId.Usage]);
         });
 
@@ -286,6 +288,7 @@ describe("ReadmeConfigBuilder", () => {
 
             const result = builder.build({ context, remote: undefined, featureConfig });
 
+            assert(result.features != null);
             const authFeature = result.features.find((f) => f.id === "AUTHENTICATION");
             assert(authFeature != null);
             expect(authFeature.description).toContain("OAuth Client Credentials Flow");
@@ -314,6 +317,7 @@ describe("ReadmeConfigBuilder", () => {
 
             const result = builder.build({ context, remote: undefined, featureConfig });
 
+            assert(result.features != null);
             expect(result.features.find((f) => f.id === "AUTHENTICATION")).toBeUndefined();
         });
 
@@ -334,11 +338,12 @@ describe("ReadmeConfigBuilder", () => {
                 generateSubpackageExports: false
             });
 
-            const remote: FernGeneratorCli.Remote = {
-                type: "github",
+            const remote = {
+                type: "github" as const,
                 repoUrl: "https://github.com/acme/sdk-typescript",
                 installationToken: "token123"
-            };
+                // biome-ignore lint/suspicious/noExplicitAny: mock
+            } as any as FernGeneratorCli.Remote;
 
             const result = builder.build({
                 context,
@@ -467,6 +472,7 @@ describe("ReadmeConfigBuilder", () => {
 
             const result = builder.build({ context, remote: undefined, featureConfig });
 
+            assert(result.features != null);
             const usageFeature = result.features.find((f) => f.id === FernGeneratorCli.StructuredFeatureId.Usage);
             assert(usageFeature != null);
             expect(usageFeature.description).toBe("Uses native for HTTP");
@@ -497,6 +503,7 @@ describe("ReadmeConfigBuilder", () => {
 
             const result = builder.build({ context, remote: undefined, featureConfig });
 
+            assert(result.features != null);
             const usageFeature = result.features.find((f) => f.id === FernGeneratorCli.StructuredFeatureId.Usage);
             assert(usageFeature != null);
             expect(usageFeature.description).toBe("Uses node-fetch for HTTP");
@@ -525,6 +532,7 @@ describe("ReadmeConfigBuilder", () => {
 
             const result = builder.build({ context, remote: undefined, featureConfig });
 
+            assert(result.features != null);
             const retryFeature = result.features.find((f) => f.id === FernGeneratorCli.StructuredFeatureId.Retries);
             assert(retryFeature != null);
             expect(retryFeature.advanced).toBe(true);
