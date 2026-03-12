@@ -6,7 +6,6 @@ import {
     AutoVersioningException,
     AutoVersioningService,
     countFilesInDiff,
-    DIFF_SIZE_LIMIT,
     formatSizeKB
 } from "../AutoVersioningService.js";
 
@@ -2415,11 +2414,5 @@ describe("formatSizeKB", () => {
 
     it("formats small sizes", () => {
         expect(formatSizeKB(500)).toBe("0.5");
-    });
-});
-
-describe("DIFF_SIZE_LIMIT", () => {
-    it("is 100,000 characters", () => {
-        expect(DIFF_SIZE_LIMIT).toBe(100_000);
     });
 });

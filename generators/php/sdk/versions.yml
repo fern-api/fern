@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.1.12
+  changelogEntry:
+    - summary: |
+        Fix WireMock datetime mismatch in wire tests. The mock-utils package generates datetime
+        query parameter values with milliseconds (e.g., `2022-01-02T00:00:00.000Z`) via
+        `Date.toISOString()`, but PHP's `DateTimeInterface::RFC3339` format omits fractional
+        seconds (e.g., `2022-01-02T00:00:00Z`). Since WireMock's `equalTo` is an exact-match,
+        the stubs never fired. Now strips zero milliseconds from WireMock datetime query
+        parameter values to match the PHP SDK's serialization format.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 62
+
 - version: 2.1.11
   changelogEntry:
     - summary: |

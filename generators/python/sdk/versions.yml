@@ -1,12 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.63.6
+- version: 5.0.0
   changelogEntry:
     - summary: |
         Raise the default minimum Python version from `^3.8` to `^3.9` in generated
         `pyproject.toml`. This allows the dependency resolver to pick Pydantic 2.11+ and
         pydantic-core 2.33+, which ship pre-built wheels for Python 3.14, fixing
         installation failures on Python 3.14.
+    type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.63.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for types with required fields missing from examples.
+        When an OpenAPI example omits required fields on a nested object type, the generated
+        test code now synthesizes reasonable default values (e.g., `""` for strings, `1` for
+        integers, `[]` for lists) instead of emitting empty constructors like `ClassName()`
+        that cause Pydantic `ValidationError` at runtime.
       type: fix
   createdAt: "2026-03-12"
   irVersion: 65
