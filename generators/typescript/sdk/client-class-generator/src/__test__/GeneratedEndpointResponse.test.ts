@@ -751,7 +751,12 @@ describe("GeneratedThrowingEndpointResponse", () => {
                 })
             );
             const endpoint = createHttpEndpoint();
-            endpoint.response = { body: jsonResponse, statusCode: undefined, isWildcardStatusCode: undefined, docs: undefined };
+            endpoint.response = {
+                body: jsonResponse,
+                statusCode: undefined,
+                isWildcardStatusCode: undefined,
+                docs: undefined
+            };
             const instance = new GeneratedThrowingEndpointResponse({
                 packageId: { isRoot: true },
                 endpoint,
