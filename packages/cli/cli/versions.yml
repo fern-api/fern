@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 4.24.3
+- version: 4.25.1
   changelogEntry:
     - summary: |
         Fix `fern diff` running out of memory on very large IR files (>2 GB).
@@ -7,6 +7,18 @@
         needed for change detection instead of loading the entire IR into memory,
         avoiding Node.js's heap allocation limit.
       type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.25.0
+  changelogEntry:
+    - summary: |
+        Handle 409 Conflict responses from FDR during `fern generate --docs`.
+        When another docs publish is already in progress for the same domain,
+        the CLI now fails fast with a clear error message. The CLI version is
+        sent to FDR so that the server can gate the concurrent-publish check
+        on CLI versions that support 409 handling.
+      type: feat
   createdAt: "2026-03-12"
   irVersion: 65
 
@@ -19,7 +31,6 @@
       type: fix
   createdAt: "2026-03-12"
   irVersion: 65
-
 - version: 4.24.1
   changelogEntry:
     - summary: |

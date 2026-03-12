@@ -25,8 +25,8 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
-	HeaderTokenAuth string
 	Logging         *LogConfig
+	HeaderTokenAuth string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -127,15 +127,6 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
-// HeaderTokenAuthOption implements the RequestOption interface.
-type HeaderTokenAuthOption struct {
-	HeaderTokenAuth string
-}
-
-func (h *HeaderTokenAuthOption) applyRequestOptions(opts *RequestOptions) {
-	opts.HeaderTokenAuth = h.HeaderTokenAuth
-}
-
 // LoggingOption implements the RequestOption interface.
 type LoggingOption struct {
 	Logging *LogConfig
@@ -143,4 +134,13 @@ type LoggingOption struct {
 
 func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Logging = l.Logging
+}
+
+// HeaderTokenAuthOption implements the RequestOption interface.
+type HeaderTokenAuthOption struct {
+	HeaderTokenAuth string
+}
+
+func (h *HeaderTokenAuthOption) applyRequestOptions(opts *RequestOptions) {
+	opts.HeaderTokenAuth = h.HeaderTokenAuth
 }

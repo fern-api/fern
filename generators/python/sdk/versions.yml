@@ -1,5 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.63.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for types with required fields missing from examples.
+        When an OpenAPI example omits required fields on a nested object type, the generated
+        test code now synthesizes reasonable default values (e.g., `""` for strings, `1` for
+        integers, `[]` for lists) instead of emitting empty constructors like `ClassName()`
+        that cause Pydantic `ValidationError` at runtime.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
 - version: 4.63.5
   changelogEntry:
     - summary: |

@@ -72,14 +72,6 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.
-func WithBasicAuth(username, accessToken string) *core.BasicAuthOption {
-	return &core.BasicAuthOption{
-		Username:    username,
-		AccessToken: accessToken,
-	}
-}
-
 // WithLogging configures logging for the SDK.
 // By default, logging is silent — no log output unless explicitly configured.
 //
@@ -94,5 +86,13 @@ func WithBasicAuth(username, accessToken string) *core.BasicAuthOption {
 func WithLogging(logging *core.LogConfig) *core.LoggingOption {
 	return &core.LoggingOption{
 		Logging: logging,
+	}
+}
+
+// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.
+func WithBasicAuth(username, accessToken string) *core.BasicAuthOption {
+	return &core.BasicAuthOption{
+		Username:    username,
+		AccessToken: accessToken,
 	}
 }

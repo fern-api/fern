@@ -25,8 +25,8 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
-	Token           string
 	Logging         *LogConfig
+	Token           string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -127,6 +127,15 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
+// LoggingOption implements the RequestOption interface.
+type LoggingOption struct {
+	Logging *LogConfig
+}
+
+func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Logging = l.Logging
+}
+
 // EnvironmentOption implements the RequestOption interface.
 type EnvironmentOption struct {
 	Environment interface{}
@@ -143,13 +152,4 @@ type TokenOption struct {
 
 func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Token = t.Token
-}
-
-// LoggingOption implements the RequestOption interface.
-type LoggingOption struct {
-	Logging *LogConfig
-}
-
-func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
-	opts.Logging = l.Logging
 }

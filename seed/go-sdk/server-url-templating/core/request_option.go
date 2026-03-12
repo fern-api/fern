@@ -120,15 +120,6 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
 }
 
-// EnvironmentOption implements the RequestOption interface.
-type EnvironmentOption struct {
-	Environment interface{}
-}
-
-func (e *EnvironmentOption) applyRequestOptions(opts *RequestOptions) {
-	opts.Environment = e.Environment
-}
-
 // LoggingOption implements the RequestOption interface.
 type LoggingOption struct {
 	Logging *LogConfig
@@ -136,4 +127,13 @@ type LoggingOption struct {
 
 func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
 	opts.Logging = l.Logging
+}
+
+// EnvironmentOption implements the RequestOption interface.
+type EnvironmentOption struct {
+	Environment interface{}
+}
+
+func (e *EnvironmentOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Environment = e.Environment
 }
