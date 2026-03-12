@@ -107,8 +107,7 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     }
 
     /**
-     * If true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent)
-     * from generated SDK requests.
+     * If true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests.
      */
     @Value.Default
     @JsonProperty("omit-fern-headers")
