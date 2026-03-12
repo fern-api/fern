@@ -1161,19 +1161,19 @@ describe("GeneratedSdkEndpointTypeSchemasImpl", () => {
                 ...endpoint,
                 response: {
                     body: FernIr.HttpResponseBody.streamParameter({
-                        nonStreamResponse: FernIr.JsonResponse.response({
-                            responseBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
-                            v2Examples: undefined,
-                            docs: undefined
-                        }),
+                        nonStreamResponse: FernIr.NonStreamHttpResponseBody.json(
+                            FernIr.JsonResponse.response({
+                                responseBodyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                v2Examples: undefined,
+                                docs: undefined
+                            })
+                        ),
                         streamResponse: FernIr.StreamingResponse.json({
                             payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                             terminator: undefined,
                             v2Examples: undefined,
                             docs: undefined
-                        }),
-                        v2Examples: undefined,
-                        docs: undefined
+                        })
                     }),
                     statusCode: undefined,
                     isWildcardStatusCode: undefined,
@@ -1276,7 +1276,8 @@ describe("RawSinglePropertyErrorSingleUnionType", () => {
             discriminantValue: createNameAndWireValue("BadRequest", "BadRequest"),
             errorName,
             discriminationStrategy
-        });
+            // biome-ignore lint/suspicious/noExplicitAny: TS can't resolve base class Init from union-schema-generator
+        } as any);
     }
 
     it("getExtends returns empty array", () => {
@@ -1370,7 +1371,8 @@ describe("RawSinglePropertyErrorSingleUnionType", () => {
             discriminantValue: createNameAndWireValue("NotFound", "NotFound"),
             errorName,
             discriminationStrategy
-        });
+            // biome-ignore lint/suspicious/noExplicitAny: TS can't resolve base class Init from union-schema-generator
+        } as any);
         // The protected methods are called through the schema generation pipeline
         expect(unionType).toBeDefined();
     });
