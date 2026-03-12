@@ -9,14 +9,14 @@ import (
 	big "math/big"
 )
 
-type MyAlias = interface{}
+type MyAlias = any
 
 var (
 	myObjectFieldUnknown = big.NewInt(1 << 0)
 )
 
 type MyObject struct {
-	Unknown interface{} `json:"unknown" url:"unknown"`
+	Unknown any `json:"unknown" url:"unknown"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -25,7 +25,7 @@ type MyObject struct {
 	rawJSON         json.RawMessage
 }
 
-func (m *MyObject) GetUnknown() interface{} {
+func (m *MyObject) GetUnknown() any {
 	if m == nil {
 		return nil
 	}
@@ -48,7 +48,7 @@ func (m *MyObject) require(field *big.Int) {
 
 // SetUnknown sets the Unknown field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (m *MyObject) SetUnknown(unknown interface{}) {
+func (m *MyObject) SetUnknown(unknown any) {
 	m.Unknown = unknown
 	m.require(myObjectFieldUnknown)
 }
