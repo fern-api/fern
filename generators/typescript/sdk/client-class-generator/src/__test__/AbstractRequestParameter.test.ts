@@ -1,6 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
-import { casingsGenerator, createHttpEndpoint, createHttpService, createMinimalIR } from "@fern-typescript/test-utils";
+import { PackageId } from "@fern-typescript/commons";
+import { casingsGenerator, createHttpEndpoint, createHttpService } from "@fern-typescript/test-utils";
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
