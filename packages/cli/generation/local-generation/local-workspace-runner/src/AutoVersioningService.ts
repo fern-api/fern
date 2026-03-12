@@ -434,10 +434,8 @@ export class AutoVersioningService {
         return (
             line.startsWith("--- a/") ||
             line.startsWith("--- /dev/null") ||
-            line === "---" ||
             line.startsWith("+++ b/") ||
-            line.startsWith("+++ /dev/null") ||
-            line === "+++"
+            line.startsWith("+++ /dev/null")
         );
     }
 
