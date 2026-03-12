@@ -165,25 +165,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             return AST.Expression(f'"{escaped}"')
         return None
 
-    def get_single_value_enum_string(self, type_reference: ir_types.TypeReference) -> Optional[str]:
-        """If the type reference resolves to a single-value enum, return the wire value string.
-        Follows aliases. Returns None otherwise."""
-        union = type_reference.get_as_union()
-        if union.type == "named":
-            type_declaration = self.get_declaration_for_type_id(union.type_id)
-            shape = type_declaration.shape.get_as_union()
-            if shape.type == "enum" and len(shape.values) == 1:
-                return shape.values[0].name.wire_value
-            if shape.type == "alias":
-                return self.get_single_value_enum_string(shape.alias_of)
-        if union.type == "container":
-            container = union.container.get_as_union()
-            if container.type == "optional":
-                return self.get_single_value_enum_string(container.optional)
-            if container.type == "nullable":
-                return self.get_single_value_enum_string(container.nullable)
-        return None
-
     def get_class_reference_for_type_id(
         self,
         type_id: ir_types.TypeId,

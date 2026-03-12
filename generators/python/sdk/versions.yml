@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.63.6
+- version: 4.64.0
   changelogEntry:
     - summary: |
         Single-value enums (originating from OpenAPI `const` fields) are now treated as

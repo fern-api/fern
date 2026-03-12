@@ -274,9 +274,8 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
                 resolved_type = shape.resolved_type.get_as_union()
                 if resolved_type.type == "container":
                     return self._get_literal_value(resolved_type.container)
-                # Also check if the alias resolves to a named type (e.g. single-value enum)
-                if resolved_type.type == "named":
-                    return self.get_literal_value(ir_types.TypeReference.factory.named(resolved_type.name))
+                # Follow the alias chain to check the underlying type (e.g. single-value enum)
+                return self.get_literal_value(shape.alias_of)
         if type.type == "container":
             container = type.container.get_as_union()
             # Unwrap optional/nullable to check inner type
