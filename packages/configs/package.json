@@ -8,6 +8,7 @@
     "./*": "./*"
   },
   "devDependencies": {
+    "@vitest/coverage-v8": "catalog:",
     "esbuild-plugin-polyfill-node": "catalog:",
     "tsup": "catalog:",
     "vitest": "catalog:"

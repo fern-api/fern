@@ -17,6 +17,7 @@ describe("AuthClient", () => {
         });
         const rawRequestBody = { client_id: "client_id", client_secret: "client_secret" };
         const rawResponseBody = { access_token: "access_token", expires_in: 3600 };
+
         server
             .mockEndpoint()
             .post("/token")

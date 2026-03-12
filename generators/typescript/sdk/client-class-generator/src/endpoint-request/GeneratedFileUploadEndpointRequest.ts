@@ -346,6 +346,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         return statements;
     }
 
+    public getBuildHeaderStatements(context: SdkContext): ts.Statement[] {
+        return this.initializeHeaders(context);
+    }
+
     public getFetcherRequestArgs(
         context: SdkContext
     ): Pick<Fetcher.Args, "headers" | "queryParameters" | "body" | "contentType" | "requestType" | "duplex"> {

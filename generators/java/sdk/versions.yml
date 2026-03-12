@@ -1,4 +1,68 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.42.9
+  changelogEntry:
+    - summary: |
+        Update bundled npm tar package from 7.5.10 to 7.5.11.
+      type: chore
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 3.42.8
+  changelogEntry:
+    - summary: |
+        Add `equals()`, `hashCode()`, and `toString()` methods to
+        interface-based discriminated union wrapper classes. Previously,
+        the outer wrapper class fell back to `Object.equals()` (reference
+        identity), breaking equality for any type that transitively
+        contained the union. The methods now delegate to the inner `Value`
+        field.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 3.42.7
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 3.42.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 3.42.5
+  changelogEntry:
+    - summary: |
+        Fix `custom-interceptors` support for OAuth staged builders. When
+        `custom-interceptors: true` is enabled, the `_Builder` inner class now
+        generates an `interceptors` field, `addInterceptor(Interceptor)` method,
+        and forwards interceptors to `_TokenAuth` and `_CredentialsAuth` via
+        `token()` and `credentials()` methods. Previously, only the root builder
+        received interceptor support, causing OAuth staged builders to lose
+        interceptor configuration.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 3.42.4
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 65
+
 - version: 3.42.3
   changelogEntry:
     - summary: |

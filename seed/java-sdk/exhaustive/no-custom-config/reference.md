@@ -1289,6 +1289,53 @@ client.endpoints().object().getAndReturnWithUnknownField(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.getAndReturnWithDocumentedUnknownType(request) -> ObjectWithDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithDocumentedUnknownType(
+    ObjectWithDocumentedUnknownType
+        .builder()
+        .documentedUnknownType(new 
+            HashMap<String, Object>() {{put("key", "value");
+            }})
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.object.getAndReturnWithDatetimeLikeString(request) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

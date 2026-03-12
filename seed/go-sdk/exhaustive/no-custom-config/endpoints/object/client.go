@@ -146,6 +146,22 @@ func (c *Client) GetAndReturnWithUnknownField(
 	return response.Body, nil
 }
 
+func (c *Client) GetAndReturnWithDocumentedUnknownType(
+	ctx context.Context,
+	request *types.ObjectWithDocumentedUnknownType,
+	opts ...option.RequestOption,
+) (*types.ObjectWithDocumentedUnknownType, error) {
+	response, err := c.WithRawResponse.GetAndReturnWithDocumentedUnknownType(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
 // Tests that string fields containing datetime-like values are NOT reformatted.
 // The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
 // without being converted to "2023-08-31T14:15:22.000Z".

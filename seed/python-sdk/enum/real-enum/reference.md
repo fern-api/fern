@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -13,15 +13,16 @@
 <dd>
 
 ```python
-from seed import Color, Operand, SeedEnum
+from seed import SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.headers.send(
-    operand=Operand.GREATER_THAN,
-    maybe_operand=Operand.GREATER_THAN,
-    operand_or_color=Color.RED,
+    operand=">",
+    maybe_operand=">",
+    operand_or_color="red",
 )
 
 ```
@@ -83,7 +84,7 @@ client.headers.send(
 </details>
 
 ## InlinedRequest
-<details><summary><code>client.inlined_request.<a href="src/seed/inlined_request/client.py">send</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.inlined_request.<a href="src/seed/inlined_request/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -96,14 +97,15 @@ client.headers.send(
 <dd>
 
 ```python
-from seed import Color, Operand, SeedEnum
+from seed import SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.inlined_request.send(
-    operand=Operand.GREATER_THAN,
-    operand_or_color=Color.RED,
+    operand=">",
+    operand_or_color="red",
 )
 
 ```
@@ -165,8 +167,7 @@ client.inlined_request.send(
 </details>
 
 ## MultipartForm
-## PathParam
-<details><summary><code>client.path_param.<a href="src/seed/path_param/client.py">send</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.multipart_form.<a href="src/seed/multipart_form/client.py">multipart_form</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -179,14 +180,88 @@ client.inlined_request.send(
 <dd>
 
 ```python
-from seed import Color, Operand, SeedEnum
+client.multipart_form.multipart_form(...)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**color:** `Color` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**color_list:** `typing.List[Color]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maybe_color:** `typing.Optional[Color]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**maybe_color_list:** `typing.Optional[typing.List[Color]]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## PathParam
+<details><summary><code>client.path_param.<a href="src/seed/path_param/client.py">send</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.path_param.send(
-    operand=Operand.GREATER_THAN,
-    operand_or_color=Color.RED,
+    operand=">",
+    operand_or_color="red",
 )
 
 ```
@@ -232,7 +307,7 @@ client.path_param.send(
 </details>
 
 ## QueryParam
-<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -245,14 +320,15 @@ client.path_param.send(
 <dd>
 
 ```python
-from seed import Color, Operand, SeedEnum
+from seed import SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.query_param.send(
-    operand=Operand.GREATER_THAN,
-    operand_or_color=Color.RED,
+    operand=">",
+    operand_or_color="red",
 )
 
 ```
@@ -313,7 +389,7 @@ client.query_param.send(
 </dl>
 </details>
 
-<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send_list</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send_list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -326,16 +402,25 @@ client.query_param.send(
 <dd>
 
 ```python
-from seed import Color, Operand, SeedEnum
+from seed import SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.query_param.send_list(
-    operand=Operand.GREATER_THAN,
-    maybe_operand=Operand.GREATER_THAN,
-    operand_or_color=Color.RED,
-    maybe_operand_or_color=Color.RED,
+    operand=[
+        ">"
+    ],
+    maybe_operand=[
+        ">"
+    ],
+    operand_or_color=[
+        "red"
+    ],
+    maybe_operand_or_color=[
+        "red"
+    ],
 )
 
 ```

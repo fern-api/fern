@@ -1254,6 +1254,7 @@ describe("AutoVersioningService", () => {
             await runCommand(["git", "init"], tempDir);
             await runCommand(["git", "config", "user.name", "Test User"], tempDir);
             await runCommand(["git", "config", "user.email", "test@example.com"], tempDir);
+            await runCommand(["git", "config", "commit.gpgsign", "false"], tempDir);
 
             // Create initial files
             await fs.writeFile(path.join(tempDir, "package.json"), '{\n  "name": "test-sdk",\n  "version": "1.0.0"\n}');
@@ -1290,6 +1291,7 @@ describe("AutoVersioningService", () => {
             await runCommand(["git", "init"], tempDir);
             await runCommand(["git", "config", "user.name", "Test User"], tempDir);
             await runCommand(["git", "config", "user.email", "test@example.com"], tempDir);
+            await runCommand(["git", "config", "commit.gpgsign", "false"], tempDir);
 
             await fs.writeFile(path.join(tempDir, "package.json"), '{\n  "name": "test-sdk",\n  "version": "1.0.0"\n}');
             await fs.mkdir(path.join(tempDir, ".fern"), { recursive: true });
@@ -1328,6 +1330,7 @@ describe("AutoVersioningService", () => {
             await runCommand(["git", "init"], tempDir);
             await runCommand(["git", "config", "user.name", "Test User"], tempDir);
             await runCommand(["git", "config", "user.email", "test@example.com"], tempDir);
+            await runCommand(["git", "config", "commit.gpgsign", "false"], tempDir);
 
             await fs.mkdir(path.join(tempDir, ".fern"), { recursive: true });
             await fs.writeFile(path.join(tempDir, ".fern", "metadata.json"), '{"cliVersion": "0.40.0"}');

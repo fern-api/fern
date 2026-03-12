@@ -654,6 +654,86 @@ export class ObjectClient {
     }
 
     /**
+     * @param {SeedExhaustive.types.ObjectWithDocumentedUnknownType} request
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.endpoints.object.getAndReturnWithDocumentedUnknownType({
+     *         documentedUnknownType: {
+     *             "key": "value"
+     *         }
+     *     })
+     */
+    public getAndReturnWithDocumentedUnknownType(
+        request: SeedExhaustive.types.ObjectWithDocumentedUnknownType,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithDocumentedUnknownType> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__getAndReturnWithDocumentedUnknownType(request, requestOptions),
+        );
+    }
+
+    private async __getAndReturnWithDocumentedUnknownType(
+        request: SeedExhaustive.types.ObjectWithDocumentedUnknownType,
+        requestOptions?: ObjectClient.RequestOptions,
+    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithDocumentedUnknownType>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)),
+                "/object/get-and-return-with-documented-unknown-type",
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.types.ObjectWithDocumentedUnknownType.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.types.ObjectWithDocumentedUnknownType.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/object/get-and-return-with-documented-unknown-type",
+        );
+    }
+
+    /**
      * Tests that string fields containing datetime-like values are NOT reformatted.
      * The datetimeLikeString field should preserve its exact value "2023-08-31T14:15:22Z"
      * without being converted to "2023-08-31T14:15:22.000Z".

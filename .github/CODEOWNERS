@@ -1,21 +1,19 @@
 # Specific rules for generators
-generators/go/* @musicpulpite @tjb9dc
-generators/go-v2/* @musicpulpite @tjb9dc
-generators/php/* @dsinghvi @tjb9dc
-generators/commons/* @Swimburger @tjb9dc
-generators/csharp/* @fearthecowboy @Swimburger @tjb9dc
-generators/typescript/* @Swimburger @tjb9dc
-generators/typescript-v2/* @Swimburger @tjb9dc
-generators/java/* @tstanmay13 @tjb9dc
-generators/python/* @tjb9dc
-generators/python-v2/* @tjb9dc
-generators/ruby/* @tjb9dc
-generators/swift/* @kafkas @tjb9dc
-generators/postman/* @dsinghvi @tjb9dc
-generators/openapi/* @dsinghvi @tjb9dc
+generators/commons/* @Swimburger
+generators/csharp/* @Swimburger
+generators/go/* @amckinney
+generators/go-v2/* @amckinney
+generators/java/* @tstanmay13
+generators/openapi/* @dsinghvi @amckinney
+generators/php/* @amckinney
+generators/postman/* @dsinghvi @amckinney
+generators/python/* @amckinney
+generators/python-v2/* @amckinney
+generators/ruby-v2/* @iamnamananand996
+generators/rust/* @iamnamananand996
+generators/swift/* @kafkas
+generators/typescript/* @Swimburger
+generators/typescript-v2/* @Swimburger
 
 # Specific rules for packages
-packages/cli/* @dsinghvi @tjb9dc
-packages/cli/api-importers/* @eyw520 @tjb9dc
-packages/cli/api-importers/* @sahil485 @tjb9dc
-packages/cli/docs-importers/* @eyw520 @tjb9dc
+packages/cli/* @dsinghvi @amckinney

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">extended_inline_request_body</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py">extended_inline_request_body</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -17,10 +17,11 @@ from seed import SeedExtends
 client = SeedExtends(
     base_url="https://yourhost.com/path/to/api",
 )
+
 client.extended_inline_request_body(
-    unique="unique",
     name="name",
     docs="docs",
+    unique="unique",
 )
 
 ```
@@ -37,14 +38,6 @@ client.extended_inline_request_body(
 <dl>
 <dd>
 
-**unique:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **name:** `str` 
     
 </dd>
@@ -54,6 +47,14 @@ client.extended_inline_request_body(
 <dd>
 
 **docs:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**unique:** `str` 
     
 </dd>
 </dl>

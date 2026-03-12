@@ -146,6 +146,7 @@
                   },
                   "value": {
                     "generatedName": "StartIgnitionRequestMetadataValue",
+                    "groupName": [],
                     "type": "unknown"
                   },
                   "generatedName": "StartIgnitionRequestMetadata",
@@ -528,6 +529,7 @@
                       "description": "List of unique ids for the Policy objects. If Ignition is configured to select a single policy (as is the default), the list will only contain 1 item.",
                       "value": {
                         "generatedName": "ExchangeTokenResponseDataPolicies",
+                        "groupName": [],
                         "type": "unknown"
                       },
                       "generatedName": "ExchangeTokenResponseDataPolicies",

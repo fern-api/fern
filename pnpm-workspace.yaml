@@ -128,7 +128,7 @@ catalog:
   esutils: ^2.0.3
   express: ^4.22.0
   fast-levenshtein: ^3.0.0
-  file-type: ^19.0.0
+  file-type: ^21.3.1
   find-up: ^6.3.0
   form-data: 4.0.4
   fs-extra: ^11.1.1
@@ -187,14 +187,14 @@ catalog:
   remark-mdx: ^3.0.1
   remark-stringify: ^11.0.0
   semver-diff: ^4.0.0
-  simple-git: ^3.24.0
+  simple-git: ^3.32.3
   sort-package-json: 3.6.1
   stream-json: ^1.8.0
   strip-ansi: ^7.1.0
   stylelint-config-prettier-scss: ^0.0.1
   stylelint-config-standard-scss: ^5.0.0
   swagger2openapi: 7.0.8
-  tar: ^7.5.10
+  tar: ^7.5.11
   terminal-link: ^3.0.0
   tinycolor2: ^1.6.0
   title: ^3.5.3
@@ -214,6 +214,7 @@ catalog:
   url-join: ^4.0.1
   uuid: ^9.0.1
   validate-npm-package-name: ^5.0.1
+  "@vitest/coverage-v8": ^4.0.18
   vitest: ^4.0.18
   watcher: ^2.3.1
   whatwg-mimetype: ^4.0.0

@@ -21,15 +21,18 @@ import Exhaustive
             token: "<token>",
             urlSession: stub.urlSession
         )
-        let expectedResponse = .dog(
+        let expectedResponse = Animal.dog(
             .init(
                 name: "name",
-                likesToWoof: true
+                likesToWoof: true,
+                additionalProperties: [
+                    "animal": JSONValue.string("dog")
+                ]
             )
         )
         let response = try await client.endpoints.union.getAndReturnUnion(
             request: Animal.dog(
-                .init(
+                Dog(
                     name: "name",
                     likesToWoof: true
                 )

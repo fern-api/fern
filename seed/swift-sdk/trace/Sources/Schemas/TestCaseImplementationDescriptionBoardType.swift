@@ -1,17 +1,17 @@
 import Foundation
 
 public enum TestCaseImplementationDescriptionBoardType: Codable, Hashable, Sendable {
-    case html(Html)
-    case paramId(ParamId)
+    case html(String)
+    case paramId(ParameterIdType)
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let discriminant = try container.decode(String.self, forKey: .type)
         switch discriminant {
         case "html":
-            self = .html(try Html(from: decoder))
+            self = .html(try container.decode(String.self, forKey: .value))
         case "paramId":
-            self = .paramId(try ParamId(from: decoder))
+            self = .paramId(try container.decode(ParameterIdType.self, forKey: .value))
         default:
             throw DecodingError.dataCorrupted(
                 DecodingError.Context(
@@ -23,83 +23,19 @@ public enum TestCaseImplementationDescriptionBoardType: Codable, Hashable, Senda
     }
 
     public func encode(to encoder: Encoder) throws -> Void {
+        var container = encoder.container(keyedBy: CodingKeys.self)
         switch self {
         case .html(let data):
-            try data.encode(to: encoder)
+            try container.encode("html", forKey: .type)
+            try container.encode(data, forKey: .value)
         case .paramId(let data):
-            try data.encode(to: encoder)
-        }
-    }
-
-    public struct Html: Codable, Hashable, Sendable {
-        public let type: String = "html"
-        public let value: String
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            value: String,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.value = value
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(String.self, forKey: .value)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.value, forKey: .value)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case value
-        }
-    }
-
-    public struct ParamId: Codable, Hashable, Sendable {
-        public let type: String = "paramId"
-        public let value: ParameterIdType
-        /// Additional properties that are not explicitly defined in the schema
-        public let additionalProperties: [String: JSONValue]
-
-        public init(
-            value: ParameterIdType,
-            additionalProperties: [String: JSONValue] = .init()
-        ) {
-            self.value = value
-            self.additionalProperties = additionalProperties
-        }
-
-        public init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.value = try container.decode(ParameterIdType.self, forKey: .value)
-            self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
-        }
-
-        public func encode(to encoder: Encoder) throws -> Void {
-            var container = encoder.container(keyedBy: CodingKeys.self)
-            try encoder.encodeAdditionalProperties(self.additionalProperties)
-            try container.encode(self.type, forKey: .type)
-            try container.encode(self.value, forKey: .value)
-        }
-
-        /// Keys for encoding/decoding struct properties.
-        enum CodingKeys: String, CodingKey, CaseIterable {
-            case type
-            case value
+            try container.encode("paramId", forKey: .type)
+            try container.encode(data, forKey: .value)
         }
     }
 
     enum CodingKeys: String, CodingKey, CaseIterable {
         case type
+        case value
     }
 }

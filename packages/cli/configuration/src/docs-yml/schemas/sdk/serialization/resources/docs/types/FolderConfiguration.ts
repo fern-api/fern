@@ -20,7 +20,7 @@ export const FolderConfiguration: core.serialization.ObjectSchema<
         icon: core.serialization.string().optional(),
         hidden: core.serialization.boolean().optional(),
         skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
-        collapsed: core.serialization.boolean().optional(),
+        collapsed: core.serialization.undiscriminatedUnion([core.serialization.boolean(), core.serialization.stringLiteral("open-by-default")]).optional(),
         collapsible: core.serialization.boolean().optional(),
         collapsedByDefault: core.serialization.property(
             "collapsed-by-default",
@@ -40,7 +40,7 @@ export declare namespace FolderConfiguration {
         icon?: string | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
-        collapsed?: boolean | null;
+        collapsed?: boolean | "open-by-default" | null;
         collapsible?: boolean | null;
         "collapsed-by-default"?: boolean | null;
         availability?: Availability.Raw | null;

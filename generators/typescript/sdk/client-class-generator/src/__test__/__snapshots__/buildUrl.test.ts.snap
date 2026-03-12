@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`buildUrl > generates template literal for path with multiple parameters 1`] = `"\`/orgs/\${orgId}/users/\${userId}\`"`;
+
+exports[`buildUrl > generates template literal for path with one parameter 1`] = `"\`/users/\${userId}\`"`;
+
+exports[`buildUrl > generates template literal with trailing path after parameter 1`] = `"\`/users/\${userId}/profile\`"`;
+
+exports[`buildUrl > retains original casing when retainOriginalCasing is true 1`] = `"\`/users/\${user_id}\`"`;
+
+exports[`buildUrl > uses root path parameter reference for ROOT location 1`] = `"\`/tenants/\${this.tenantId}/data\`"`;

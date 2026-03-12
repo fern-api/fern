@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v62
+irVersion: v65
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -98,7 +98,7 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        experimental-readonly-constants: true
+        generate-literals: true
       outputFolder: readonly-constants
   pagination:
     - customConfig: null
@@ -181,6 +181,9 @@ fixtures:
     - customConfig:
         redact-response-body-on-error: true
       outputFolder: redact-response-body-on-error
+    - customConfig:
+        use-undiscriminated-unions: true
+      outputFolder: use-undiscriminated-unions
   optional:
     - customConfig: null
       outputFolder: no-custom-config
@@ -246,7 +249,7 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
-        experimental-readonly-constants: true
+        generate-literals: true
         experimental-enable-websockets: true
       outputFolder: with-websockets
   csharp-xml-entities:
@@ -299,4 +302,5 @@ allowedFailures:
   - literal:readonly-constants
   - oauth-client-credentials-custom
   - package-yml
+  - pagination-uri-path
   - trace

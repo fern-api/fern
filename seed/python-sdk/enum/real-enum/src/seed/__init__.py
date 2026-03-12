@@ -6,7 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import Color, ColorOrOperand, EnumWithCustom, EnumWithSpecialCharacters, Operand, SpecialEnum
+    from .types import (
+        Color,
+        ColorOrOperand,
+        EnumWithCustom,
+        EnumWithSpecialCharacters,
+        ForwardCompatibleEnum,
+        Operand,
+        SpecialEnum,
+    )
     from . import headers, inlined_request, multipart_form, path_param, query_param, unknown
     from .client import AsyncSeedEnum, SeedEnum
     from .unknown import Status
@@ -17,6 +25,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ColorOrOperand": ".types",
     "EnumWithCustom": ".types",
     "EnumWithSpecialCharacters": ".types",
+    "ForwardCompatibleEnum": ".types",
     "Operand": ".types",
     "SeedEnum": ".client",
     "SpecialEnum": ".types",
@@ -58,6 +67,7 @@ __all__ = [
     "ColorOrOperand",
     "EnumWithCustom",
     "EnumWithSpecialCharacters",
+    "ForwardCompatibleEnum",
     "Operand",
     "SeedEnum",
     "SpecialEnum",

@@ -1,0 +1,202 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedEnumTypeImpl > buildExample > builds example for type declaration comment 1`] = `"PlantType.Succulent"`;
+
+exports[`GeneratedEnumTypeImpl > buildExample > falls back to first value when wire value does not match 1`] = `"PlantType.Succulent"`;
+
+exports[`GeneratedEnumTypeImpl > generateForInlineUnion > generates inline union type for basic enum 1`] = `"("succulent" | "fern")"`;
+
+exports[`GeneratedEnumTypeImpl > generateForInlineUnion > generates inline union type with string for forward-compatible enum 1`] = `"("succulent" | "fern" | string)"`;
+
+exports[`GeneratedEnumTypeImpl > generateModule > generates visitor interface module 1`] = `
+"export namespace PlantType {
+    export interface Visitor<R> {
+        succulent: () => R;
+        fern: () => R;
+        cactus: () => R;
+        _other: () => R;
+    }
+}
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates basic enum without utils 1`] = `
+"export const PlantType = {
+        Succulent: "succulent",
+        Fern: "fern",
+        Cactus: "cactus"
+    } as const;
+export type PlantType = typeof PlantType[keyof typeof PlantType];
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates enum with docs on values 1`] = `
+"export const WaterFrequency = {
+        /**
+     * Water once per day */
+    Daily: "daily",
+        /**
+     * Water once per week */
+    Weekly: "weekly",
+        Monthly: "monthly"
+    } as const;
+export type WaterFrequency = typeof WaterFrequency[keyof typeof WaterFrequency];
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates enum with retainOriginalCasing 1`] = `
+"export const PlantType = {
+        Succulent: "succulent",
+        Fern: "fern"
+    } as const;
+export type PlantType = typeof PlantType[keyof typeof PlantType];
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates enum with single value 1`] = `
+"export const Sunlight = {
+        Full: "full"
+    } as const;
+export type Sunlight = typeof Sunlight[keyof typeof Sunlight];
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates enum with top-level docs and examples 1`] = `
+"/**
+ * Represents different types of plants.
+ *
+ * @example
+ *     PlantType.Succulent
+ */
+export const PlantType = {
+        Succulent: "succulent",
+        Fern: "fern"
+    } as const;
+export type PlantType = typeof PlantType[keyof typeof PlantType];
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates enum with top-level docs and utils 1`] = `
+"/**
+ * Represents different types of plants.
+ *
+ * @example
+ *     PlantType.Succulent
+ */
+const PlantTypeValues = {
+        Succulent: "succulent",
+        Fern: "fern"
+    } as const;
+export type PlantType = typeof PlantTypeValues[keyof typeof PlantTypeValues];
+export const PlantType: typeof PlantTypeValues & {
+        _visit: <R>(value: PlantType, visitor: PlantType.Visitor<R>) => R;
+    } = {
+        ...PlantTypeValues,
+        _visit: <R>(value: PlantType, visitor: PlantType.Visitor<R>): R => {
+            switch (value) {
+                case PlantType.Succulent: return visitor.succulent();
+                case PlantType.Fern: return visitor.fern();
+                default: return visitor._other();
+            }
+        }
+    };
+
+export namespace PlantType {
+    export interface Visitor<R> {
+        succulent: () => R;
+        fern: () => R;
+        _other: () => R;
+    }
+}
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates enum with top-level type docs 1`] = `
+"/** Represents different types of plants. */
+export const PlantType = {
+        Succulent: "succulent",
+        Fern: "fern"
+    } as const;
+export type PlantType = typeof PlantType[keyof typeof PlantType];
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates enum with utils (visitor pattern) 1`] = `
+"const PlantTypeValues = {
+        Succulent: "succulent",
+        Fern: "fern",
+        Cactus: "cactus"
+    } as const;
+export type PlantType = typeof PlantTypeValues[keyof typeof PlantTypeValues];
+export const PlantType: typeof PlantTypeValues & {
+        _visit: <R>(value: PlantType, visitor: PlantType.Visitor<R>) => R;
+    } = {
+        ...PlantTypeValues,
+        _visit: <R>(value: PlantType, visitor: PlantType.Visitor<R>): R => {
+            switch (value) {
+                case PlantType.Succulent: return visitor.succulent();
+                case PlantType.Fern: return visitor.fern();
+                case PlantType.Cactus: return visitor.cactus();
+                default: return visitor._other();
+            }
+        }
+    };
+
+export namespace PlantType {
+    export interface Visitor<R> {
+        succulent: () => R;
+        fern: () => R;
+        cactus: () => R;
+        _other: () => R;
+    }
+}
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates enum with wire values differing from names 1`] = `
+"export const SoilType = {
+        WellDraining: "well-draining",
+        MoistRetaining: "moist-retaining",
+        Sandy: "SANDY"
+    } as const;
+export type SoilType = typeof SoilType[keyof typeof SoilType];
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates forward-compatible enum (adds | string) 1`] = `
+"export const PlantType = {
+        Succulent: "succulent",
+        Fern: "fern"
+    } as const;
+export type PlantType = typeof PlantType[keyof typeof PlantType] | string;
+"
+`;
+
+exports[`GeneratedEnumTypeImpl > generateStatements > generates forward-compatible enum with utils 1`] = `
+"const PlantTypeValues = {
+        Succulent: "succulent",
+        Fern: "fern"
+    } as const;
+export type PlantType = typeof PlantTypeValues[keyof typeof PlantTypeValues] | string;
+export const PlantType: typeof PlantTypeValues & {
+        _visit: <R>(value: PlantType, visitor: PlantType.Visitor<R>) => R;
+    } = {
+        ...PlantTypeValues,
+        _visit: <R>(value: PlantType, visitor: PlantType.Visitor<R>): R => {
+            switch (value) {
+                case PlantType.Succulent: return visitor.succulent();
+                case PlantType.Fern: return visitor.fern();
+                default: return visitor._other();
+            }
+        }
+    };
+
+export namespace PlantType {
+    export interface Visitor<R> {
+        succulent: () => R;
+        fern: () => R;
+        _other: () => R;
+    }
+}
+"
+`;
