@@ -159,7 +159,8 @@ export class Generation {
         /** @deprecated Use `generateLiterals` instead. When true, generates readonly constants instead of static properties. Default: false. */
         enableReadonlyConstants: () => this.customConfig["experimental-readonly-constants"] ?? false,
         /** When true, generates literal struct types for literal properties. If `experimental-readonly-constants` is also set, this takes precedence. Default: false. */
-        generateLiterals: () => this.customConfig["generate-literals"] ?? this.customConfig["experimental-readonly-constants"] ?? false,
+        generateLiterals: () =>
+            this.customConfig["generate-literals"] ?? this.customConfig["experimental-readonly-constants"] ?? false,
         /** When true, uses explicit nullable/optional attributes and Optional<T?> wrapper for better null handling. Default: false. */
         enableExplicitNullableOptional: () => this.customConfig["experimental-explicit-nullable-optional"] ?? false,
         /** When true, generates Defaults nested class and WithDefaults() method for request records with default values. Default: false. */
