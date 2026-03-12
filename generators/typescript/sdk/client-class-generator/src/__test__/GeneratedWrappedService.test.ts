@@ -20,6 +20,7 @@ function createSubpackage(name: string): FernIr.Subpackage {
     return {
         fernFilepath: createFernFilepath([name]),
         name: casingsGenerator.generateName(name),
+        displayName: undefined,
         service: undefined,
         types: [],
         errors: [],
@@ -27,6 +28,7 @@ function createSubpackage(name: string): FernIr.Subpackage {
         hasEndpointsInTree: true,
         websocket: undefined,
         webhooks: undefined,
+        navigationConfig: undefined,
         docs: undefined
     };
 }
@@ -219,6 +221,7 @@ describe("GeneratedWrappedService", () => {
             const nestedSubpackage: FernIr.Subpackage = {
                 fernFilepath: createFernFilepath(["admin", "permissions"]),
                 name: casingsGenerator.generateName("permissions"),
+                displayName: undefined,
                 service: undefined,
                 types: [],
                 errors: [],
@@ -226,6 +229,7 @@ describe("GeneratedWrappedService", () => {
                 hasEndpointsInTree: true,
                 websocket: undefined,
                 webhooks: undefined,
+                navigationConfig: undefined,
                 docs: undefined
             };
 
@@ -251,6 +255,7 @@ describe("GeneratedWrappedService", () => {
             const emptyFilepathSubpackage: FernIr.Subpackage = {
                 fernFilepath: { allParts: [], packagePath: [], file: undefined },
                 name: casingsGenerator.generateName("empty"),
+                displayName: undefined,
                 service: undefined,
                 types: [],
                 errors: [],
@@ -258,6 +263,7 @@ describe("GeneratedWrappedService", () => {
                 hasEndpointsInTree: true,
                 websocket: undefined,
                 webhooks: undefined,
+                navigationConfig: undefined,
                 docs: undefined
             };
 

@@ -22,7 +22,9 @@ function createResponseProperty(name: string, valueType?: FernIr.TypeReference):
             name: createNameAndWireValue(name),
             valueType: valueType ?? LIST_STRING_TYPE,
             availability: undefined,
-            docs: undefined
+            docs: undefined,
+            propertyAccess: undefined,
+            v2Examples: undefined
         },
         propertyPath: []
     };
@@ -30,12 +32,14 @@ function createResponseProperty(name: string, valueType?: FernIr.TypeReference):
 
 function createRequestProperty(name: string, valueType?: FernIr.TypeReference): FernIr.RequestProperty {
     return {
-        property: {
+        property: FernIr.RequestPropertyValue.body({
             name: createNameAndWireValue(name),
             valueType: valueType ?? STRING_TYPE,
             availability: undefined,
-            docs: undefined
-        },
+            docs: undefined,
+            propertyAccess: undefined,
+            v2Examples: undefined
+        }),
         propertyPath: []
     };
 }
@@ -348,7 +352,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
             endpoint.method = opts.method;
         }
         if (opts?.response != null) {
-            endpoint.response = { body: opts.response };
+            endpoint.response = { body: opts.response, statusCode: undefined, isWildcardStatusCode: undefined, docs: undefined };
         }
 
         return new GeneratedThrowingEndpointResponse({
@@ -388,7 +392,7 @@ describe("GeneratedThrowingEndpointResponse", () => {
 
         it("returns string for text response", () => {
             const instance = createInstance({
-                response: { type: "text", value: undefined } as FernIr.HttpResponseBody.Text
+                response: FernIr.HttpResponseBody.text({ docs: undefined, v2Examples: undefined })
             });
             const context = createMockContext();
             const result = instance.getReturnType(context);
@@ -617,8 +621,6 @@ describe("GeneratedThrowingEndpointResponse", () => {
                             v1: "INTEGER",
                             v2: FernIr.PrimitiveTypeV2.integer({
                                 default: 5,
-                                minimum: undefined,
-                                maximum: undefined,
                                 validation: undefined
                             })
                         })
@@ -669,8 +671,6 @@ describe("GeneratedThrowingEndpointResponse", () => {
                                     v1: "INTEGER",
                                     v2: FernIr.PrimitiveTypeV2.integer({
                                         default: 3,
-                                        minimum: undefined,
-                                        maximum: undefined,
                                         validation: undefined
                                     })
                                 })
@@ -703,8 +703,6 @@ describe("GeneratedThrowingEndpointResponse", () => {
                                     v1: "INTEGER",
                                     v2: FernIr.PrimitiveTypeV2.integer({
                                         default: 7,
-                                        minimum: undefined,
-                                        maximum: undefined,
                                         validation: undefined
                                     })
                                 })
@@ -740,15 +738,15 @@ describe("GeneratedThrowingEndpointResponse", () => {
         });
 
         it("generates return statements for json response", () => {
-            const jsonResponse: FernIr.HttpResponseBody = {
-                type: "json",
-                value: {
+            const jsonResponse = FernIr.HttpResponseBody.json(
+                FernIr.JsonResponse.response({
                     responseBodyType: STRING_TYPE,
-                    docs: undefined
-                }
-            } as FernIr.HttpResponseBody.Json;
+                    docs: undefined,
+                    v2Examples: undefined
+                })
+            );
             const endpoint = createHttpEndpoint();
-            endpoint.response = { body: jsonResponse };
+            endpoint.response = { body: jsonResponse, statusCode: undefined, isWildcardStatusCode: undefined, docs: undefined };
             const instance = new GeneratedThrowingEndpointResponse({
                 packageId: { isRoot: true },
                 endpoint,
@@ -831,12 +829,9 @@ describe("GeneratedThrowingEndpointResponse", () => {
         });
 
         it("generates file download with content headers", () => {
-            const fileResponse: FernIr.HttpResponseBody = {
-                type: "fileDownload",
-                value: undefined
-            } as FernIr.HttpResponseBody.FileDownload;
+            const fileResponse = FernIr.HttpResponseBody.fileDownload({ docs: undefined, v2Examples: undefined });
             const endpoint = createHttpEndpoint();
-            endpoint.response = { body: fileResponse };
+            endpoint.response = { body: fileResponse, statusCode: undefined, isWildcardStatusCode: undefined, docs: undefined };
             const instance = new GeneratedThrowingEndpointResponse({
                 packageId: { isRoot: true },
                 endpoint,
@@ -877,7 +872,7 @@ describe("GeneratedNonThrowingEndpointResponse", () => {
             endpoint.errors = opts.errors;
         }
         if (opts?.response != null) {
-            endpoint.response = { body: opts.response };
+            endpoint.response = { body: opts.response, statusCode: undefined, isWildcardStatusCode: undefined, docs: undefined };
         }
 
         return new GeneratedNonThrowingEndpointResponse({
@@ -936,15 +931,15 @@ describe("GeneratedNonThrowingEndpointResponse", () => {
         });
 
         it("generates ok response with deserialized body for json response", () => {
-            const jsonResponse: FernIr.HttpResponseBody = {
-                type: "json",
-                value: {
+            const jsonResponse = FernIr.HttpResponseBody.json(
+                FernIr.JsonResponse.response({
                     responseBodyType: STRING_TYPE,
-                    docs: undefined
-                }
-            } as FernIr.HttpResponseBody.Json;
+                    docs: undefined,
+                    v2Examples: undefined
+                })
+            );
             const endpoint = createHttpEndpoint();
-            endpoint.response = { body: jsonResponse };
+            endpoint.response = { body: jsonResponse, statusCode: undefined, isWildcardStatusCode: undefined, docs: undefined };
             const instance = new GeneratedNonThrowingEndpointResponse({
                 packageId: { isRoot: true },
                 endpoint,

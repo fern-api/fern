@@ -9,7 +9,8 @@ import { generateEndpointMetadata } from "../endpoints/utils/generateEndpointMet
 function createMockContext() {
     const coreUtilities = createMockCoreUtilities();
     // Add EndpointMetadata which is not in the default mock
-    coreUtilities.fetcher.EndpointMetadata = {
+    // biome-ignore lint/suspicious/noExplicitAny: test mock - EndpointMetadata not in default mock type
+    (coreUtilities.fetcher as any).EndpointMetadata = {
         _getReferenceToType: () => ts.factory.createTypeReferenceNode("EndpointMetadata")
     };
     return {

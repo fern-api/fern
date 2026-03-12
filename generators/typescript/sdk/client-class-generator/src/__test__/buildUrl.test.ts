@@ -242,7 +242,8 @@ describe("buildUrl", () => {
                     pascalCase: { unsafeName: "UserId", safeName: "UserId" }
                 },
                 default: undefined,
-                inline: undefined
+                inline: undefined,
+                displayName: undefined
             })
         };
 

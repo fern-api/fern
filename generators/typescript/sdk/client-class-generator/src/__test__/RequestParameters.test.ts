@@ -183,13 +183,13 @@ describe("RequestBodyParameter", () => {
     it("getInitialStatements returns empty array", () => {
         const param = createInstance();
         const context = createMockContext();
-        expect(param.getInitialStatements(context, { variablesInScope: [] })).toEqual([]);
+        expect(param.getInitialStatements()).toEqual([]);
     });
 
     it("getReferenceToRequestBody returns identifier for request parameter name", () => {
         const param = createInstance();
         const context = createMockContext();
-        const ref = param.getReferenceToRequestBody(context);
+        const ref = param.getReferenceToRequestBody();
         expect(getTextOfTsNode(ref)).toBe("request");
     });
 
@@ -198,7 +198,7 @@ describe("RequestBodyParameter", () => {
         // biome-ignore lint/suspicious/noExplicitAny: test mock
         const header = {} as any;
         const context = createMockContext();
-        expect(() => param.getReferenceToNonLiteralHeader(header, context)).toThrow(
+        expect(() => param.getReferenceToNonLiteralHeader()).toThrow(
             "Cannot get reference to header because request is not wrapped"
         );
     });
@@ -206,7 +206,7 @@ describe("RequestBodyParameter", () => {
     it("getAllQueryParameters returns empty array", () => {
         const param = createInstance();
         const context = createMockContext();
-        expect(param.getAllQueryParameters(context)).toEqual([]);
+        expect(param.getAllQueryParameters()).toEqual([]);
     });
 
     it("withQueryParameter throws", () => {
@@ -214,20 +214,15 @@ describe("RequestBodyParameter", () => {
         // biome-ignore lint/suspicious/noExplicitAny: test mock
         const qp = {} as any;
         const context = createMockContext();
-        expect(() =>
-            param.withQueryParameter(
-                qp,
-                context,
-                () => [],
-                () => []
-            )
-        ).toThrow("Cannot reference query parameter because request is not wrapped");
+        expect(() => param.withQueryParameter()).toThrow(
+            "Cannot reference query parameter because request is not wrapped"
+        );
     });
 
     it("getReferenceToPathParameter throws", () => {
         const param = createInstance();
         const context = createMockContext();
-        expect(() => param.getReferenceToPathParameter("userId", context)).toThrow(
+        expect(() => param.getReferenceToPathParameter()).toThrow(
             "Cannot reference path parameter because request is not wrapped"
         );
     });
@@ -235,7 +230,7 @@ describe("RequestBodyParameter", () => {
     it("getReferenceToQueryParameter throws", () => {
         const param = createInstance();
         const context = createMockContext();
-        expect(() => param.getReferenceToQueryParameter("limit", context)).toThrow(
+        expect(() => param.getReferenceToQueryParameter()).toThrow(
             "Cannot reference query parameter because request is not wrapped"
         );
     });
@@ -275,6 +270,7 @@ describe("RequestBodyParameter", () => {
             const result = param.generateExample({
                 context,
                 example: {
+                    id: undefined,
                     name: undefined,
                     url: "/test",
                     rootPathParameters: [],
@@ -284,7 +280,7 @@ describe("RequestBodyParameter", () => {
                     serviceHeaders: [],
                     queryParameters: [],
                     request: undefined,
-                    response: { type: "ok", value: undefined },
+                    response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body(undefined)),
                     docs: undefined
                 },
                 opts: { isForComment: true }
@@ -298,6 +294,7 @@ describe("RequestBodyParameter", () => {
             const result = param.generateExample({
                 context,
                 example: {
+                    id: undefined,
                     name: undefined,
                     url: "/test",
                     rootPathParameters: [],
@@ -308,9 +305,10 @@ describe("RequestBodyParameter", () => {
                     queryParameters: [],
                     request: FernIr.ExampleRequestBody.inlinedRequestBody({
                         jsonExample: undefined,
-                        properties: []
+                        properties: [],
+                        extraProperties: undefined
                     }),
-                    response: { type: "ok", value: undefined },
+                    response: FernIr.ExampleResponse.ok(FernIr.ExampleEndpointSuccessResponse.body(undefined)),
                     docs: undefined
                 },
                 opts: { isForComment: true }
@@ -386,7 +384,8 @@ describe("FileUploadRequestParameter", () => {
             valueType: STRING_TYPE,
             env: undefined,
             availability: undefined,
-            docs: undefined
+            docs: undefined,
+            v2Examples: undefined
         };
         const ref = param.getReferenceToNonLiteralHeader(header, context);
         expect(getTextOfTsNode(ref)).toContain(".");
@@ -408,7 +407,8 @@ describe("FileUploadRequestParameter", () => {
             valueType: STRING_TYPE,
             env: undefined,
             availability: undefined,
-            docs: undefined
+            docs: undefined,
+            v2Examples: undefined
         };
         const ref = param.getReferenceToNonLiteralHeader(header, context);
         const text = getTextOfTsNode(ref);
@@ -447,7 +447,9 @@ describe("FileUploadRequestParameter", () => {
             name: createNameAndWireValue("data"),
             valueType: STRING_TYPE,
             docs: undefined,
-            availability: undefined
+            availability: undefined,
+            v2Examples: undefined,
+            propertyAccess: undefined
         };
         const ref = param.getReferenceToBodyProperty(bodyProp, context);
         expect(getTextOfTsNode(ref)).toContain("data");
@@ -665,8 +667,6 @@ describe("RequestWrapperParameter", () => {
                                         v1: "INTEGER",
                                         v2: FernIr.PrimitiveTypeV2.integer({
                                             default: 10,
-                                            minimum: undefined,
-                                            maximum: undefined,
                                             validation: undefined
                                         })
                                     })
@@ -698,9 +698,6 @@ describe("RequestWrapperParameter", () => {
                                         v1: "STRING",
                                         v2: FernIr.PrimitiveTypeV2.string({
                                             default: "asc",
-                                            minLength: undefined,
-                                            maxLength: undefined,
-                                            pattern: undefined,
                                             validation: undefined
                                         })
                                     })
@@ -762,8 +759,6 @@ describe("RequestWrapperParameter", () => {
                                         v1: "LONG",
                                         v2: FernIr.PrimitiveTypeV2.long({
                                             default: 9007199254740991,
-                                            minimum: undefined,
-                                            maximum: undefined,
                                             validation: undefined
                                         })
                                     })
@@ -795,8 +790,6 @@ describe("RequestWrapperParameter", () => {
                                         v1: "DOUBLE",
                                         v2: FernIr.PrimitiveTypeV2.double({
                                             default: 0.5,
-                                            minimum: undefined,
-                                            maximum: undefined,
                                             validation: undefined
                                         })
                                     })
@@ -916,8 +909,6 @@ describe("RequestWrapperParameter", () => {
                                                 v1: "INTEGER",
                                                 v2: FernIr.PrimitiveTypeV2.integer({
                                                     default: 25,
-                                                    minimum: undefined,
-                                                    maximum: undefined,
                                                     validation: undefined
                                                 })
                                             })

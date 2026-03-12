@@ -23,7 +23,8 @@ function createHeader(valueType?: FernIr.TypeReference): FernIr.HttpHeader {
         valueType: valueType ?? FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
         env: undefined,
         availability: undefined,
-        docs: undefined
+        docs: undefined,
+        v2Examples: undefined
     };
 }
 

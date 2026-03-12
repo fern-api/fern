@@ -586,7 +586,8 @@ describe("generateHeaders", () => {
                     pascalCase: { unsafeName: "Timestamp", safeName: "Timestamp" }
                 },
                 default: undefined,
-                inline: undefined
+                inline: undefined,
+                displayName: undefined
             }),
             { wireValue: "X-Timestamp" }
         );
@@ -613,7 +614,7 @@ describe("generateHeaders", () => {
     it("generates header without stringify for named enum type", () => {
         const mockContext = createMockContext();
         mockContext.type.getTypeDeclaration = () => ({
-            shape: FernIr.Type.enum({ values: [] })
+            shape: FernIr.Type.enum({ values: [], default: undefined })
         });
 
         const namedEnumHeader = createHttpHeader(
@@ -629,7 +630,8 @@ describe("generateHeaders", () => {
                     pascalCase: { unsafeName: "Status", safeName: "Status" }
                 },
                 default: undefined,
-                inline: undefined
+                inline: undefined,
+                displayName: undefined
             }),
             { wireValue: "X-Status" }
         );
@@ -711,7 +713,8 @@ describe("generateHeaders", () => {
                     pascalCase: { unsafeName: "NullableString", safeName: "NullableString" }
                 },
                 default: undefined,
-                inline: undefined
+                inline: undefined,
+                displayName: undefined
             }),
             { wireValue: "X-NullableAlias" }
         );
@@ -818,7 +821,8 @@ describe("generateHeaders", () => {
                     pascalCase: { unsafeName: "Config", safeName: "Config" }
                 },
                 default: undefined,
-                inline: undefined
+                inline: undefined,
+                displayName: undefined
             }),
             { wireValue: "X-Config" }
         );

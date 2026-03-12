@@ -98,9 +98,8 @@ describe("getSuccessReturnType", () => {
         it("returns the response body type", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const jsonResponse: FernIr.HttpResponseBody.Json = {
-                type: "json",
-                value: {
+            const jsonResponse = FernIr.HttpResponseBody.json(
+                FernIr.JsonResponse.response({
                     responseBodyType: FernIr.TypeReference.named({
                         typeId: "type_User" as FernIr.TypeId,
                         fernFilepath: {
@@ -116,11 +115,13 @@ describe("getSuccessReturnType", () => {
                             pascalCase: { unsafeName: "User", safeName: "User" }
                         },
                         default: undefined,
-                        inline: undefined
+                        inline: undefined,
+                        displayName: undefined
                     }),
-                    docs: undefined
-                }
-            };
+                    docs: undefined,
+                    v2Examples: undefined
+                })
+            );
             const result = getSuccessReturnType(endpoint, jsonResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "wrapper",
@@ -134,10 +135,10 @@ describe("getSuccessReturnType", () => {
         it("returns string type", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const textResponse: FernIr.HttpResponseBody.Text = {
-                type: "text",
-                value: undefined
-            };
+            const textResponse = FernIr.HttpResponseBody.text({
+                docs: undefined,
+                v2Examples: undefined
+            });
             const result = getSuccessReturnType(endpoint, textResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "wrapper",
@@ -151,10 +152,10 @@ describe("getSuccessReturnType", () => {
         it("returns Readable for wrapper stream type", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const fileResponse: FernIr.HttpResponseBody.FileDownload = {
-                type: "fileDownload",
-                value: undefined
-            };
+            const fileResponse = FernIr.HttpResponseBody.fileDownload({
+                docs: undefined,
+                v2Examples: undefined
+            });
             const result = getSuccessReturnType(endpoint, fileResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "wrapper",
@@ -166,10 +167,10 @@ describe("getSuccessReturnType", () => {
         it("returns ReadableStream<Uint8Array> for web stream type", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const fileResponse: FernIr.HttpResponseBody.FileDownload = {
-                type: "fileDownload",
-                value: undefined
-            };
+            const fileResponse = FernIr.HttpResponseBody.fileDownload({
+                docs: undefined,
+                v2Examples: undefined
+            });
             const result = getSuccessReturnType(endpoint, fileResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "web",
@@ -181,10 +182,10 @@ describe("getSuccessReturnType", () => {
         it("returns BinaryResponse for binary-response file type", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const fileResponse: FernIr.HttpResponseBody.FileDownload = {
-                type: "fileDownload",
-                value: undefined
-            };
+            const fileResponse = FernIr.HttpResponseBody.fileDownload({
+                docs: undefined,
+                v2Examples: undefined
+            });
             const result = getSuccessReturnType(endpoint, fileResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "wrapper",
@@ -196,10 +197,10 @@ describe("getSuccessReturnType", () => {
         it("returns type literal with content headers when includeContentHeadersOnResponse is true", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const fileResponse: FernIr.HttpResponseBody.FileDownload = {
-                type: "fileDownload",
-                value: undefined
-            };
+            const fileResponse = FernIr.HttpResponseBody.fileDownload({
+                docs: undefined,
+                v2Examples: undefined
+            });
             const result = getSuccessReturnType(endpoint, fileResponse, context, {
                 includeContentHeadersOnResponse: true,
                 streamType: "wrapper",
@@ -216,10 +217,10 @@ describe("getSuccessReturnType", () => {
         it("returns stream type for bytes response", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const bytesResponse: FernIr.HttpResponseBody.Bytes = {
-                type: "bytes",
-                value: undefined
-            };
+            const bytesResponse = FernIr.HttpResponseBody.bytes({
+                docs: undefined,
+                v2Examples: undefined
+            });
             const result = getSuccessReturnType(endpoint, bytesResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "web",
@@ -233,10 +234,10 @@ describe("getSuccessReturnType", () => {
         it("returns stream type for bytes response with wrapper stream type", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const bytesResponse: FernIr.HttpResponseBody.Bytes = {
-                type: "bytes",
-                value: undefined
-            };
+            const bytesResponse = FernIr.HttpResponseBody.bytes({
+                docs: undefined,
+                v2Examples: undefined
+            });
             const result = getSuccessReturnType(endpoint, bytesResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "wrapper",
@@ -248,10 +249,10 @@ describe("getSuccessReturnType", () => {
         it("returns BinaryResponse for bytes response with binary-response file type", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const bytesResponse: FernIr.HttpResponseBody.Bytes = {
-                type: "bytes",
-                value: undefined
-            };
+            const bytesResponse = FernIr.HttpResponseBody.bytes({
+                docs: undefined,
+                v2Examples: undefined
+            });
             const result = getSuccessReturnType(endpoint, bytesResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "wrapper",
@@ -263,10 +264,10 @@ describe("getSuccessReturnType", () => {
         it("returns type literal with content headers for bytes when includeContentHeadersOnResponse is true", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const bytesResponse: FernIr.HttpResponseBody.Bytes = {
-                type: "bytes",
-                value: undefined
-            };
+            const bytesResponse = FernIr.HttpResponseBody.bytes({
+                docs: undefined,
+                v2Examples: undefined
+            });
             const result = getSuccessReturnType(endpoint, bytesResponse, context, {
                 includeContentHeadersOnResponse: true,
                 streamType: "wrapper",
@@ -283,9 +284,8 @@ describe("getSuccessReturnType", () => {
         it("returns Stream<type> for SSE streaming", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const streamingResponse: FernIr.HttpResponseBody.Streaming = {
-                type: "streaming",
-                value: FernIr.StreamingResponse.sse({
+            const streamingResponse = FernIr.HttpResponseBody.streaming(
+                FernIr.StreamingResponse.sse({
                     payload: FernIr.TypeReference.named({
                         typeId: "type_Event" as FernIr.TypeId,
                         fernFilepath: {
@@ -301,12 +301,14 @@ describe("getSuccessReturnType", () => {
                             pascalCase: { unsafeName: "Event", safeName: "Event" }
                         },
                         default: undefined,
-                        inline: undefined
+                        inline: undefined,
+                        displayName: undefined
                     }),
                     docs: undefined,
-                    terminator: undefined
+                    terminator: undefined,
+                    v2Examples: undefined
                 })
-            };
+            );
             const result = getSuccessReturnType(endpoint, streamingResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "wrapper",
@@ -318,14 +320,14 @@ describe("getSuccessReturnType", () => {
         it("returns Stream<type> for JSON streaming", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const streamingResponse: FernIr.HttpResponseBody.Streaming = {
-                type: "streaming",
-                value: FernIr.StreamingResponse.json({
+            const streamingResponse = FernIr.HttpResponseBody.streaming(
+                FernIr.StreamingResponse.json({
                     payload: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
                     docs: undefined,
-                    terminator: undefined
+                    terminator: undefined,
+                    v2Examples: undefined
                 })
-            };
+            );
             const result = getSuccessReturnType(endpoint, streamingResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "wrapper",
@@ -337,12 +339,12 @@ describe("getSuccessReturnType", () => {
         it("returns Stream<string> for text streaming", () => {
             const endpoint = createHttpEndpoint();
             const context = createMockContext();
-            const streamingResponse: FernIr.HttpResponseBody.Streaming = {
-                type: "streaming",
-                value: FernIr.StreamingResponse.text({
-                    docs: undefined
+            const streamingResponse = FernIr.HttpResponseBody.streaming(
+                FernIr.StreamingResponse.text({
+                    docs: undefined,
+                    v2Examples: undefined
                 })
-            };
+            );
             const result = getSuccessReturnType(endpoint, streamingResponse, context, {
                 includeContentHeadersOnResponse: false,
                 streamType: "wrapper",

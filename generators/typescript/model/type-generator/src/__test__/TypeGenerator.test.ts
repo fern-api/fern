@@ -80,7 +80,7 @@ describe("TypeGenerator", () => {
                     {
                         name: createNameAndWireValue("Active", "ACTIVE"),
                         docs: undefined,
-                        availability: undefined,
+                        availability: undefined
                     }
                 ],
                 default: undefined

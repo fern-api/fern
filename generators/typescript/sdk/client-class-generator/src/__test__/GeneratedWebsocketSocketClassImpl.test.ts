@@ -22,10 +22,9 @@ function createWebSocketMessage(
     const bodyType = opts?.bodyType ?? FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined });
     const body: FernIr.WebSocketMessageBody = opts?.isInlined
         ? FernIr.WebSocketMessageBody.inlinedBody({
+              name: casingsGenerator.generateName(type),
               extends: [],
-              properties: [],
-              extraProperties: false,
-              extendedProperties: undefined
+              properties: []
           })
         : FernIr.WebSocketMessageBody.reference({ bodyType, docs: undefined });
     return {
@@ -35,9 +34,7 @@ function createWebSocketMessage(
         body,
         methodName: opts?.methodName ?? undefined,
         docs: undefined,
-        availability: undefined,
-        v2Examples: undefined,
-        examples: undefined
+        availability: undefined
     };
 }
 
@@ -45,6 +42,8 @@ function createChannel(opts?: { messages?: FernIr.WebSocketMessage[] }): FernIr.
     return {
         name: casingsGenerator.generateName("ChatChannel"),
         displayName: undefined,
+        connectMethodName: undefined,
+        baseUrl: undefined,
         path: { head: "/ws", parts: [] },
         auth: false,
         headers: [],
@@ -351,11 +350,10 @@ describe("GeneratedWebsocketSocketClassImpl", () => {
         it("generates bytes send method for binary format string type", () => {
             const binaryStringType = FernIr.TypeReference.primitive({
                 v1: "STRING",
-                v2: {
-                    type: "string",
-                    validation: { format: "binary", minLength: undefined, maxLength: undefined, pattern: undefined },
-                    default: undefined
-                }
+                v2: FernIr.PrimitiveTypeV2.string({
+                    default: undefined,
+                    validation: { format: "binary", minLength: undefined, maxLength: undefined, pattern: undefined }
+                })
             });
             const channel = createChannel({
                 messages: [createWebSocketMessage("sendFile", "client", { bodyType: binaryStringType })]

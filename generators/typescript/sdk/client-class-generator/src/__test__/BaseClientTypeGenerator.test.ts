@@ -41,7 +41,8 @@ function createHeader(opts: {
         valueType: opts.valueType ?? FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
         env: undefined,
         availability: undefined,
-        docs: undefined
+        docs: undefined,
+        v2Examples: undefined
     };
 }
 
@@ -326,11 +327,11 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
                         key: "oauth",
-                        configuration: {
-                            type: "clientCredentials",
+                        configuration: FernIr.OAuthConfiguration.clientCredentials({
                             clientIdEnvVar: undefined,
                             clientSecretEnvVar: undefined,
                             tokenPrefix: undefined,
+                            tokenHeader: undefined,
                             scopes: undefined,
                             tokenEndpoint: {
                                 endpointReference: {
@@ -341,26 +342,39 @@ describe("BaseClientTypeGenerator", () => {
                                 requestProperties: {
                                     clientId: {
                                         propertyPath: undefined,
-                                        property: {
-                                            name: casingsGenerator.generateName("clientId"),
-                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-                                        }
+                                        property: FernIr.RequestPropertyValue.body({
+                                            name: createNameAndWireValue("clientId"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            availability: undefined,
+                                            docs: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
+                                        })
                                     },
                                     clientSecret: {
                                         propertyPath: undefined,
-                                        property: {
-                                            name: casingsGenerator.generateName("clientSecret"),
-                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-                                        }
+                                        property: FernIr.RequestPropertyValue.body({
+                                            name: createNameAndWireValue("clientSecret"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            availability: undefined,
+                                            docs: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
+                                        })
                                     },
-                                    scopes: undefined
+                                    scopes: undefined,
+                                    customProperties: undefined
                                 },
                                 responseProperties: {
                                     accessToken: {
                                         propertyPath: undefined,
                                         property: {
-                                            name: casingsGenerator.generateName("accessToken"),
-                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                                            name: createNameAndWireValue("accessToken"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            availability: undefined,
+                                            docs: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
                                         }
                                     },
                                     expiresIn: undefined,
@@ -368,7 +382,7 @@ describe("BaseClientTypeGenerator", () => {
                                 }
                             },
                             refreshEndpoint: undefined
-                        },
+                        }),
                         docs: undefined
                     })
                 ]
@@ -388,11 +402,11 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
                         key: "oauth",
-                        configuration: {
-                            type: "clientCredentials",
+                        configuration: FernIr.OAuthConfiguration.clientCredentials({
                             clientIdEnvVar: undefined,
                             clientSecretEnvVar: undefined,
                             tokenPrefix: undefined,
+                            tokenHeader: undefined,
                             scopes: undefined,
                             tokenEndpoint: {
                                 endpointReference: {
@@ -403,26 +417,39 @@ describe("BaseClientTypeGenerator", () => {
                                 requestProperties: {
                                     clientId: {
                                         propertyPath: undefined,
-                                        property: {
-                                            name: casingsGenerator.generateName("clientId"),
-                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-                                        }
+                                        property: FernIr.RequestPropertyValue.body({
+                                            name: createNameAndWireValue("clientId"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            availability: undefined,
+                                            docs: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
+                                        })
                                     },
                                     clientSecret: {
                                         propertyPath: undefined,
-                                        property: {
-                                            name: casingsGenerator.generateName("clientSecret"),
-                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-                                        }
+                                        property: FernIr.RequestPropertyValue.body({
+                                            name: createNameAndWireValue("clientSecret"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            availability: undefined,
+                                            docs: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
+                                        })
                                     },
-                                    scopes: undefined
+                                    scopes: undefined,
+                                    customProperties: undefined
                                 },
                                 responseProperties: {
                                     accessToken: {
                                         propertyPath: undefined,
                                         property: {
-                                            name: casingsGenerator.generateName("accessToken"),
-                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                                            name: createNameAndWireValue("accessToken"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            availability: undefined,
+                                            docs: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
                                         }
                                     },
                                     expiresIn: undefined,
@@ -430,7 +457,7 @@ describe("BaseClientTypeGenerator", () => {
                                 }
                             },
                             refreshEndpoint: undefined
-                        },
+                        }),
                         docs: undefined
                     })
                 ]
@@ -450,14 +477,15 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
-                        authSchemes: [
-                            FernIr.AuthScheme.bearer({
-                                key: "bearer",
-                                token: casingsGenerator.generateName("token"),
-                                tokenEnvVar: undefined,
-                                docs: undefined
-                            })
-                        ],
+                        tokenEndpoint: {
+                            endpoint: {
+                                endpointId: "getToken",
+                                serviceId: "auth",
+                                subpackageId: undefined
+                            },
+                            expiryProperty: undefined,
+                            authenticatedRequestHeaders: []
+                        },
                         docs: undefined
                     })
                 ]
@@ -725,7 +753,15 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
-                        authSchemes: [],
+                        tokenEndpoint: {
+                            endpoint: {
+                                endpointId: "getToken",
+                                serviceId: "auth",
+                                subpackageId: undefined
+                            },
+                            expiryProperty: undefined,
+                            authenticatedRequestHeaders: []
+                        },
                         docs: undefined
                     })
                 ],
@@ -746,11 +782,11 @@ describe("BaseClientTypeGenerator", () => {
                 authSchemes: [
                     FernIr.AuthScheme.oauth({
                         key: "oauth",
-                        configuration: {
-                            type: "clientCredentials",
+                        configuration: FernIr.OAuthConfiguration.clientCredentials({
                             clientIdEnvVar: undefined,
                             clientSecretEnvVar: undefined,
                             tokenPrefix: undefined,
+                            tokenHeader: undefined,
                             scopes: undefined,
                             tokenEndpoint: {
                                 endpointReference: {
@@ -761,26 +797,39 @@ describe("BaseClientTypeGenerator", () => {
                                 requestProperties: {
                                     clientId: {
                                         propertyPath: undefined,
-                                        property: {
-                                            name: casingsGenerator.generateName("clientId"),
-                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-                                        }
+                                        property: FernIr.RequestPropertyValue.body({
+                                            name: createNameAndWireValue("clientId"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            availability: undefined,
+                                            docs: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
+                                        })
                                     },
                                     clientSecret: {
                                         propertyPath: undefined,
-                                        property: {
-                                            name: casingsGenerator.generateName("clientSecret"),
-                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
-                                        }
+                                        property: FernIr.RequestPropertyValue.body({
+                                            name: createNameAndWireValue("clientSecret"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            availability: undefined,
+                                            docs: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
+                                        })
                                     },
-                                    scopes: undefined
+                                    scopes: undefined,
+                                    customProperties: undefined
                                 },
                                 responseProperties: {
                                     accessToken: {
                                         propertyPath: undefined,
                                         property: {
-                                            name: casingsGenerator.generateName("accessToken"),
-                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+                                            name: createNameAndWireValue("accessToken"),
+                                            valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                            availability: undefined,
+                                            docs: undefined,
+                                            propertyAccess: undefined,
+                                            v2Examples: undefined
                                         }
                                     },
                                     expiresIn: undefined,
@@ -788,7 +837,7 @@ describe("BaseClientTypeGenerator", () => {
                                 }
                             },
                             refreshEndpoint: undefined
-                        },
+                        }),
                         docs: undefined
                     })
                 ],
@@ -1021,7 +1070,7 @@ describe("BaseClientTypeGenerator", () => {
         it("includes custom userAgent header when configured in IR", () => {
             const ir = createIR();
             ir.sdkConfig.platformHeaders.userAgent = {
-                header: "X-Custom-Agent",
+                header: "User-Agent",
                 value: "my-sdk/1.0"
             };
             const gen = createGenerator({ ir, omitFernHeaders: false });
@@ -1031,7 +1080,7 @@ describe("BaseClientTypeGenerator", () => {
             const normalizeFunc = context._captured.statements.find((s: string) =>
                 s.includes("normalizeClientOptions")
             );
-            expect(normalizeFunc).toContain("X-Custom-Agent");
+            expect(normalizeFunc).toContain("User-Agent");
             expect(normalizeFunc).toContain("my-sdk/1.0");
         });
 
@@ -1080,7 +1129,15 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
-                        authSchemes: [],
+                        tokenEndpoint: {
+                            endpoint: {
+                                endpointId: "getToken",
+                                serviceId: "auth",
+                                subpackageId: undefined
+                            },
+                            expiryProperty: undefined,
+                            authenticatedRequestHeaders: []
+                        },
                         docs: undefined
                     })
                 ],
@@ -1122,7 +1179,15 @@ describe("BaseClientTypeGenerator", () => {
                     }),
                     FernIr.AuthScheme.inferred({
                         key: "inferred",
-                        authSchemes: [],
+                        tokenEndpoint: {
+                            endpoint: {
+                                endpointId: "getToken",
+                                serviceId: "auth",
+                                subpackageId: undefined
+                            },
+                            expiryProperty: undefined,
+                            authenticatedRequestHeaders: []
+                        },
                         docs: undefined
                     })
                 ],

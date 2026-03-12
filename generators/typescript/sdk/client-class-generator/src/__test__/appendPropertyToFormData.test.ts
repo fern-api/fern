@@ -634,13 +634,15 @@ describe("appendPropertyToFormData", () => {
             const enumType = createNamedType(
                 "MyEnum",
                 FernIr.Type.enum({
-                    values: []
+                    values: [],
+                    default: undefined
                 })
             );
             const property = createBodyProperty("status", enumType);
             const context = createMockContextWithDeclarations({
                 type_MyEnum: FernIr.Type.enum({
-                    values: []
+                    values: [],
+                    default: undefined
                 })
             });
             const stmt = appendPropertyToFormData({
@@ -665,7 +667,8 @@ describe("appendPropertyToFormData", () => {
                     discriminant: createNameAndWireValue("type"),
                     extends: [],
                     baseProperties: [],
-                    types: []
+                    types: [],
+                    discriminatorContext: undefined
                 })
             );
             const property = createBodyProperty("variant", unionType);
@@ -674,7 +677,8 @@ describe("appendPropertyToFormData", () => {
                     discriminant: createNameAndWireValue("type"),
                     extends: [],
                     baseProperties: [],
-                    types: []
+                    types: [],
+                    discriminatorContext: undefined
                 })
             });
             const stmt = appendPropertyToFormData({
