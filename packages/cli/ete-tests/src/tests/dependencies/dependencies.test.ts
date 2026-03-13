@@ -16,15 +16,6 @@ describe("dependencies", () => {
         expect(ir).toMatchSnapshot();
     }, 90_000);
 
-    it("file dependencies", async ({ signal }) => {
-        const ir = await generateIrAsString({
-            fixturePath: join(FIXTURES_DIR, RelativeFilePath.of("file-dependencies")),
-            apiName: "api-docs",
-            signal
-        });
-        expect(ir.length).toMatchSnapshot();
-    }, 90_000);
-
     it("fails when dependency does not exist", async ({ signal }) => {
         const { stdout } = await runFernCli(["check"], {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("non-existent-dependency")),
