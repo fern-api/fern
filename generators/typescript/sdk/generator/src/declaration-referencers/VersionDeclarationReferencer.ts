@@ -53,7 +53,7 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
     }
 
     public getExportedNameOfVersionEnum(): string {
-        return `${this.namespaceExport}Version`;
+        return this.namingOverride ?? `${this.namespaceExport}Version`;
     }
 
     public getExportedNameOfFirstVersionEnum(): string | undefined {

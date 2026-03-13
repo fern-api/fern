@@ -1,3 +1,13 @@
+export interface NamingConfig {
+    namespace?: string;
+    client?: string;
+    error?: string;
+    timeoutError?: string;
+    environment?: string;
+    environmentUrls?: string;
+    version?: string;
+}
+
 // this is the parsed config shape. to view the allowed options for generators.yml,
 // see SdkCustomConfigSchema.ts
 export interface SdkCustomConfig {
@@ -5,6 +15,7 @@ export interface SdkCustomConfig {
     isPackagePrivate: boolean;
     neverThrowErrors: boolean;
     namespaceExport: string | undefined;
+    naming: NamingConfig | undefined;
     outputEsm: boolean;
     outputSourceFiles: boolean;
     outputSrcOnly: boolean;

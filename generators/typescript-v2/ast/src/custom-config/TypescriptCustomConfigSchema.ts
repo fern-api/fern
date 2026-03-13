@@ -1,6 +1,18 @@
 import { z } from "zod";
 import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
+export const NamingConfigSchema = z.strictObject({
+    namespace: z.optional(z.string()),
+    client: z.optional(z.string()),
+    error: z.optional(z.string()),
+    timeoutError: z.optional(z.string()),
+    environment: z.optional(z.string()),
+    environmentUrls: z.optional(z.string()),
+    version: z.optional(z.string())
+});
+
+export type NamingConfigSchema = z.infer<typeof NamingConfigSchema>;
+
 // The full set of configuration options supported by the TypeScript SDK generator.
 export const TypescriptCustomConfigSchema = z.strictObject({
     neverThrowErrors: z.optional(z.boolean()),
@@ -50,6 +62,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     enableInlineTypes: z.optional(z.boolean()),
     inlineFileProperties: z.optional(z.boolean()),
     inlinePathParameters: z.optional(z.boolean()),
+    naming: z.optional(NamingConfigSchema),
     namespaceExport: z.optional(z.string()),
     noSerdeLayer: z.optional(z.boolean()),
     private: z.optional(z.boolean()),

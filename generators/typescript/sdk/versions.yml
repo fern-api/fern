@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.56.0
+  changelogEntry:
+    - summary: |
+        Add a `naming` configuration object that allows users to independently control the
+        namespace export and PascalCase class/type names (client, error, timeout error,
+        environment, environment URLs, version). When individual overrides are not provided,
+        they are derived from the namespace value using the existing `${PascalCase(namespace)}Suffix`
+        pattern. The existing `namespaceExport` config continues to work for backwards compatibility.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
 - version: 3.55.0
   changelogEntry:
     - summary: |

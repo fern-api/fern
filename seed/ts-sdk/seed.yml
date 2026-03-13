@@ -441,6 +441,16 @@ fixtures:
     - outputFolder: allow-custom-fetcher
       customConfig:
         allowCustomFetcher: true
+    - outputFolder: naming
+      customConfig:
+        naming:
+          namespace: xai
+          client: XAiClient
+          error: XAiError
+          timeoutError: XAiTimeoutError
+          environment: XAiEnvironment
+          environmentUrls: XAiEnvironmentUrls
+          version: XAiVersion
   enum:
     - outputFolder: no-custom-config
       customConfig: null
