@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Put;
 
-[JsonConverter(typeof(StringEnumSerializer<ErrorCode>))]
+[JsonConverter(typeof(ErrorCode.ErrorCodeSerializer))]
 [Serializable]
 public readonly record struct ErrorCode : IStringEnum
 {
@@ -67,6 +68,32 @@ public readonly record struct ErrorCode : IStringEnum
     public static explicit operator string(ErrorCode value) => value.Value;
 
     public static explicit operator ErrorCode(string value) => new(value);
+
+    internal class ErrorCodeSerializer : JsonConverter<ErrorCode>
+    {
+        public override ErrorCode Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new ErrorCode(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ErrorCode value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values
