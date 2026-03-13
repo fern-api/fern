@@ -61,6 +61,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.Stream);
         }
 
+        files.push(
+            AsIsFiles.LogLevel,
+            AsIsFiles.Logger,
+            AsIsFiles.ConsoleLogger,
+            AsIsFiles.LogConfig,
+            AsIsFiles.LoggingHttpClient
+        );
+
         return files;
     }
 
