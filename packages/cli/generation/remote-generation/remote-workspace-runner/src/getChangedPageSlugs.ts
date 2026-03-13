@@ -159,6 +159,22 @@ export async function getChangedPageSlugs({
         return undefined;
     }
 
+    // Normalize file paths to be relative to the fern project directory.
+    // Git diff returns paths relative to git root (e.g., "myproject/fern/docs/pages/welcome.mdx"),
+    // but the slug resolution API expects paths relative to the fern directory
+    // (e.g., "docs/pages/welcome.mdx" or "fern/docs/pages/welcome.mdx").
+    const docsRelativeToGitRoot = path.relative(gitRoot, docsWorkspacePath);
+    const fernParentRelative = path.dirname(docsRelativeToGitRoot);
+    const normalizedPageFiles = pageFiles.map((file) => {
+        if (fernParentRelative !== "." && file.startsWith(fernParentRelative + "/")) {
+            // Strip everything before the fern directory name
+            return file.slice(fernParentRelative.length + 1);
+        }
+        return file;
+    });
+
+    context.logger.debug(`Normalized page files for slug resolution: ${normalizedPageFiles.join(", ")}`);
+
     try {
         // Normalize the preview URL (strip protocol and path if present)
         let normalizedPreviewUrl = previewUrl;
@@ -174,7 +190,7 @@ export async function getChangedPageSlugs({
 
         const slugResponse = await getSlugForFiles({
             previewUrl: normalizedPreviewUrl,
-            files: pageFiles,
+            files: normalizedPageFiles,
             token
         });
 
