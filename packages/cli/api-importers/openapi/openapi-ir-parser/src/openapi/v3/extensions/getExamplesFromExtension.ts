@@ -59,10 +59,18 @@ function resolveCodeSamples(codeSamples: unknown, baseDir: string | undefined): 
         const sampleRecord = sample as Record<string, unknown>;
         const code = maybeResolveCodeReference(sampleRecord.code, baseDir);
         if (code != null) {
-            resolved.push({
+            const resolvedSample: Record<string, unknown> = {
                 ...sample,
                 code
-            } as RawSchemas.ExampleCodeSampleSchema);
+            };
+            // Support sample-name as an alias for name (see https://github.com/fern-api/fern/issues/5550).
+            // When sample-name is present, it is used as the display label in the dropdown,
+            // while language is used purely for syntax highlighting.
+            if (resolvedSample["sample-name"] != null && resolvedSample.name == null) {
+                resolvedSample.name = resolvedSample["sample-name"];
+            }
+            delete resolvedSample["sample-name"];
+            resolved.push(resolvedSample as RawSchemas.ExampleCodeSampleSchema);
         }
     }
 

@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.27.1
+  changelogEntry:
+    - summary: |
+        Support `sample-name` field on `x-fern-examples` code samples. When
+        `sample-name` is specified, it is used as the dropdown display label
+        while `language` is used purely for syntax highlighting. This allows
+        users to set descriptive names like "Python SDK" in the dropdown
+        without breaking syntax highlighting. The existing `name` field
+        continues to work the same way.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
 - version: 4.27.0
   changelogEntry:
     - summary: |

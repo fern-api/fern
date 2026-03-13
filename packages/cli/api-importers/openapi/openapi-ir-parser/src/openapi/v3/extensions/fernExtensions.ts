@@ -375,6 +375,18 @@ export const FernOpenAPIExtension = {
      *              console.log(response);
      *            name: Console Log My Endpoint
      *            description: This is a code sample that logs the response
+     *
+     * Use `name` (or `sample-name`) to decouple the dropdown label from the
+     * syntax-highlighting language. When `name`/`sample-name` is set, the
+     * `language` field is used purely for syntax highlighting:
+     *
+     *        code-samples:
+     *          - sample-name: Python SDK
+     *            language: python
+     *            code: |
+     *              from my_client import MyClient
+     *              client = MyClient()
+     *              response = client.get_plant(plant_id="plant-abc123")
      */
     EXAMPLES: "x-fern-examples",
 
