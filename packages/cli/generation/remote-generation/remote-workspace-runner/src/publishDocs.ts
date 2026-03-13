@@ -79,7 +79,8 @@ export async function publishDocs({
     excludeApis = false,
     targetAudiences,
     docsUrl,
-    cliVersion
+    cliVersion,
+    changedPages
 }: {
     token: FernToken;
     organization: string;
@@ -99,6 +100,7 @@ export async function publishDocs({
     targetAudiences?: string[];
     docsUrl?: string;
     cliVersion?: string;
+    changedPages?: boolean;
 }): Promise<string> {
     const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
@@ -520,8 +522,8 @@ export async function publishDocs({
         const link = terminalLink(url, url);
         context.logger.info(chalk.green(`Published docs to ${link}`));
 
-        // For preview deployments, try to detect changed pages and log direct links
-        if (preview) {
+        // For preview deployments with --changed-pages, detect changed pages and log direct links
+        if (preview && changedPages) {
             try {
                 const changedSlugs = await getChangedPageSlugs({
                     previewUrl: urlToOutput,

@@ -22,7 +22,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     preview,
     disableTemplates,
     skipUpload,
-    cliVersion
+    cliVersion,
+    changedPages
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -35,6 +36,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     disableTemplates: boolean | undefined;
     skipUpload: boolean | undefined;
     cliVersion?: string;
+    changedPages?: boolean;
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -118,7 +120,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                         : [maybeInstance.audiences]
                     : undefined,
                 docsUrl: maybeInstance.url,
-                cliVersion
+                cliVersion,
+                changedPages
             });
 
         for (let attempt = 0; ; attempt++) {

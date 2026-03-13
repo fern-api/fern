@@ -19,7 +19,8 @@ export async function generateDocsWorkspace({
     strictBrokenLinks,
     disableTemplates,
     noPrompt,
-    skipUpload
+    skipUpload,
+    changedPages
 }: {
     project: Project;
     cliContext: CliContext;
@@ -30,6 +31,7 @@ export async function generateDocsWorkspace({
     disableTemplates: boolean | undefined;
     noPrompt?: boolean;
     skipUpload: boolean | undefined;
+    changedPages: boolean | undefined;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -116,7 +118,8 @@ export async function generateDocsWorkspace({
             preview,
             disableTemplates,
             skipUpload,
-            cliVersion: cliContext.environment.packageVersion
+            cliVersion: cliContext.environment.packageVersion,
+            changedPages
         });
         const generationTime = performance.now() - generationStart;
         context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);

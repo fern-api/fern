@@ -2,11 +2,11 @@
 - version: 4.28.0
   changelogEntry:
     - summary: |
-        Add changed page links to docs preview output. When running
-        `fern generate --docs --preview`, the CLI now detects which docs
-        pages were modified (via git diff) and logs direct preview URLs
-        for each changed page. The returned preview URL also points to
-        the first changed page instead of the site root.
+        Add `--changed-pages` flag for `fern generate --docs --preview`.
+        When enabled, the CLI detects which docs pages were modified
+        (via git diff) and logs direct preview URLs for each changed
+        page. The returned preview URL also points to the first changed
+        page instead of the site root.
       type: feat
   createdAt: "2026-03-13"
   irVersion: 65

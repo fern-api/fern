@@ -730,6 +730,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description:
                         "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                })
+                .option("changed-pages", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "When used with --preview and --docs, detect changed pages via git diff and output direct preview links to each changed page"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -821,7 +827,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets,
                     noPrompt: !argv.prompt,
-                    skipUpload: argv.skipUpload
+                    skipUpload: argv.skipUpload,
+                    changedPages: argv.changedPages
                 });
             }
             // default to loading api workspace to preserve legacy behavior
