@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
 
-[JsonConverter(typeof(StringEnumSerializer<FileInfo>))]
+[JsonConverter(typeof(FileInfo.FileInfoSerializer))]
 [Serializable]
 public readonly record struct FileInfo : IStringEnum
 {
@@ -55,6 +56,32 @@ public readonly record struct FileInfo : IStringEnum
     public static explicit operator string(FileInfo value) => value.Value;
 
     public static explicit operator FileInfo(string value) => new(value);
+
+    internal class FileInfoSerializer : JsonConverter<FileInfo>
+    {
+        public override FileInfo Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new FileInfo(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            FileInfo value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values
