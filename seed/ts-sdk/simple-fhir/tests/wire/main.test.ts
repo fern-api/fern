@@ -1281,6 +1281,7 @@ describe("SeedApiClient", () => {
                 },
             },
         };
+
         server
             .mockEndpoint()
             .get("/account/account_id")

@@ -108,8 +108,10 @@ export class ClassReference extends Node implements Type {
         this.namespaceSegments = this.namespace.split(".");
         this.isCollection = isCollection ?? false;
         if (enclosingType != null) {
+            // Use '+' separator for nested types to match the registry key format
+            // (structurally distinguishes nested types from sub-namespace types)
             this.fullyQualifiedName = enclosingType.fullyQualifiedName
-                ? `${enclosingType.fullyQualifiedName}.${name}`
+                ? `${enclosingType.fullyQualifiedName}+${name}`
                 : name;
         } else {
             this.fullyQualifiedName = fullyQualifiedName ? fullyQualifiedName : name;
@@ -126,6 +128,15 @@ export class ClassReference extends Node implements Type {
 
     public writeAsAttribute(writer: Writer): void {
         this.writeInternal(writer, true);
+    }
+
+    /**
+     * Returns the C# source-code form of the fully qualified name.
+     * Converts the internal '+' separator (used for nested types in the registry)
+     * back to '.' for valid C# syntax.
+     */
+    public get csharpQualifiedName(): string {
+        return this.fullyQualifiedName.replaceAll("+", ".");
     }
 
     public get scopedName() {
@@ -161,7 +172,7 @@ export class ClassReference extends Node implements Type {
 
         // the fully qualified name of the type (with global:: qualifier if it necessary)
         // For attributes, strip the "Attribute" suffix from the fully qualified name
-        let fqNameBase = this.fullyQualifiedName;
+        let fqNameBase = this.csharpQualifiedName;
         if (isAttribute && fqNameBase.endsWith("Attribute")) {
             // Replace the last occurrence of "Attribute" with empty string
             const lastDotIndex = fqNameBase.lastIndexOf(".");

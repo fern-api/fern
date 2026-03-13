@@ -131,8 +131,8 @@ ${this.buffer}`;
                     !this.generation.registry.isNamespaceImplicit(ns) // filter out implicitly imported namespaces.
             )
             .map(
-                ([, refs]) =>
-                    `using ${refs.some((ref) => ref?.global) ? "global::" : ""}${(refs[0] as ClassReference).resolveNamespace()};`
+                ([ns, refs]) =>
+                    `using ${refs.some((ref) => ref?.global) ? "global::" : ""}${refs.length > 0 ? (refs[0] as ClassReference).resolveNamespace() : ns};`
             )
             .join("\n");
 

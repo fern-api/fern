@@ -159,6 +159,20 @@ cd generators/typescript/sdk/client-class-generator && pnpm vitest run
 cd generators/typescript/sdk/client-class-generator && pnpm vitest -u
 ```
 
+### Code Coverage
+
+Code coverage is configured using **@vitest/coverage-v8**. Each test package has a `test:coverage` script.
+
+```bash
+# Run coverage for a specific package
+pnpm --filter @fern-typescript/sdk-client-class-generator test:coverage
+
+# Run coverage for all packages with test:coverage scripts
+pnpm run test:coverage
+```
+
+Coverage reports are generated in `text`, `json-summary`, and `html` formats. HTML reports are written to `coverage/` in each package directory (gitignored). The shared coverage configuration lives in `packages/configs/vitest/base.mjs` (coverage settings are only activated when `--coverage` is passed).
+
 ## Comparison to Modern Generators
 
 Unlike the modern TypeScript-based generators (java-v2, csharp, etc.):

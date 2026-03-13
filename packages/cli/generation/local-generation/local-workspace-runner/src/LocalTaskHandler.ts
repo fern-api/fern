@@ -16,10 +16,9 @@ import {
     AutoVersioningService,
     AutoVersionResult,
     countFilesInDiff,
-    DIFF_SIZE_LIMIT,
     formatSizeKB
 } from "./AutoVersioningService.js";
-import { isAutoVersion } from "./VersionUtils.js";
+import { isAutoVersion, MAX_AI_DIFF_BYTES, MAX_CHUNKS, MAX_RAW_DIFF_BYTES, maxVersionBump } from "./VersionUtils.js";
 
 export declare namespace LocalTaskHandler {
     export interface Init {
@@ -207,42 +206,133 @@ export class LocalTaskHandler {
                 return null;
             }
 
-            if (cleanedDiff.length > DIFF_SIZE_LIMIT) {
-                this.context.logger.warn(
-                    `Cleaned diff is too large for AI analysis ` +
-                        `(${cleanedDiff.length.toLocaleString()} chars / ${cleanedDiffSizeKB}KB, ${cleanedFileCount} files). ` +
-                        `The AI endpoint limit is 100,000 characters. ` +
-                        `Lock files, test files, and generated docs are already excluded. ` +
-                        `Consider splitting the SDK into smaller packages or reducing the number of endpoints.`
-                );
-            }
-
             // Read spec repo commit message for AI context
             const specCommitMessage = await this.readSpecCommitMessage();
             if (specCommitMessage) {
                 this.context.logger.debug(`Spec repo commit message: ${specCommitMessage}`);
             }
 
-            // Call AI (or reuse cached analysis) to determine version bump
+            // Reject absurdly large diffs before chunking to prevent excessive resource usage
+            const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
+            if (cleanedDiffBytes > MAX_RAW_DIFF_BYTES) {
+                this.context.logger.warn(
+                    `Diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
+                        `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Falling back to PATCH increment.`
+                );
+                const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
+                const fallbackMessage = this.isWhitelabel
+                    ? "SDK regeneration"
+                    : "SDK regeneration\n\n🌿 Generated with Fern";
+                return {
+                    version: newVersion,
+                    commitMessage: fallbackMessage
+                };
+            }
+
+            // Split diff into chunks and analyze each one with the AI
+            const chunks = autoVersioningService.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
+
+            // Cap at MAX_CHUNKS to bound latency/cost for very large diffs.
+            // Chunks are ranked by semantic priority, so skipped chunks are
+            // low-priority (addition-only) sections.
+            const cappedChunks = chunks.slice(0, MAX_CHUNKS);
+            const skippedChunks = chunks.length - cappedChunks.length;
+
+            if (chunks.length > 1) {
+                this.context.logger.info(
+                    `Diff too large for single AI call (${cleanedDiffBytes} bytes). ` +
+                        `Split into ${chunks.length} chunks for analysis` +
+                        (skippedChunks > 0
+                            ? ` (capped at ${MAX_CHUNKS}, skipping ${skippedChunks} low-priority chunks).`
+                            : ".")
+                );
+            }
+
             let analysis: CachedAnalysis | null;
             try {
-                analysis = await this.getAnalysis(
-                    cleanedDiff,
-                    this.generatorLanguage ?? "unknown",
-                    previousVersion ?? "0.0.0",
-                    priorChangelog,
-                    specCommitMessage
-                );
+                if (cappedChunks.length <= 1) {
+                    // Single chunk (or small diff): use normal path with caching
+                    analysis = await this.getAnalysis(
+                        cleanedDiff,
+                        this.generatorLanguage ?? "unknown",
+                        previousVersion ?? "0.0.0",
+                        priorChangelog,
+                        specCommitMessage
+                    );
+                } else {
+                    // Multiple chunks: analyze each sequentially, merge results.
+                    // Sequential (not parallel) to avoid burst API cost and simplify
+                    // error handling. Worst case: 40 chunks × ~3s = ~2 min.
+                    // We process ALL chunks so that every changelog entry is captured.
+                    let bestBump: string = VersionBump.NO_CHANGE;
+                    let bestMessage = "";
+                    const allChangelogEntries: string[] = [];
+
+                    for (let i = 0; i < cappedChunks.length; i++) {
+                        const chunk = cappedChunks[i];
+                        if (chunk == null) {
+                            continue;
+                        }
+                        this.context.logger.debug(
+                            `Analyzing chunk ${i + 1}/${cappedChunks.length} ` +
+                                `(${Buffer.byteLength(chunk, "utf-8")} bytes)`
+                        );
+
+                        const chunkAnalysis = await this.getAnalysis(
+                            chunk,
+                            this.generatorLanguage ?? "unknown",
+                            previousVersion ?? "0.0.0",
+                            priorChangelog,
+                            specCommitMessage
+                        );
+
+                        if (chunkAnalysis == null) {
+                            this.context.logger.debug(`Chunk ${i + 1} result: NO_CHANGE`);
+                            continue;
+                        }
+
+                        const prevBest = bestBump;
+                        bestBump = maxVersionBump(bestBump, chunkAnalysis.versionBump);
+
+                        // Keep the commit message from the chunk that produced the highest bump
+                        if (bestBump !== prevBest) {
+                            bestMessage = chunkAnalysis.message;
+                        }
+
+                        // Collect all non-empty changelog entries so the final
+                        // changelog reflects changes from every chunk.
+                        const entry = chunkAnalysis.changelogEntry?.trim();
+                        if (entry) {
+                            allChangelogEntries.push(entry);
+                        }
+
+                        this.context.logger.debug(
+                            `Chunk ${i + 1} result: ${chunkAnalysis.versionBump}` +
+                                (bestBump !== prevBest ? ` (new highest: ${bestBump})` : "")
+                        );
+                    }
+
+                    if (bestBump === VersionBump.NO_CHANGE) {
+                        analysis = null;
+                    } else {
+                        analysis = {
+                            versionBump: bestBump as VersionBump,
+                            message: bestMessage,
+                            changelogEntry:
+                                allChangelogEntries.length > 1
+                                    ? allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n")
+                                    : (allChangelogEntries[0] ?? "")
+                        };
+                    }
+                }
             } catch (aiError) {
                 const errorMessage = aiError instanceof Error ? aiError.message : String(aiError);
                 this.context.logger.warn(
                     `AI analysis failed, falling back to PATCH increment. ` +
                         `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
                         `(${cleanedDiffSizeKB}KB cleaned, ${rawDiffSizeKB}KB raw), ${cleanedFileCount} files remaining. ` +
-                        (cleanedDiff.length > DIFF_SIZE_LIMIT
-                            ? `The diff exceeds the AI endpoint's 100,000 character limit. ` +
-                              `Lock files, test files, and generated docs are already excluded. ` +
-                              `Consider splitting the SDK into smaller packages or reducing the number of endpoints. `
+                        (cappedChunks.length > 1
+                            ? `The diff was split into ${cappedChunks.length} chunks but analysis still failed. `
                             : "") +
                         `Error: ${errorMessage}`
                 );

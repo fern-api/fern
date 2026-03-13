@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.54.0
+  changelogEntry:
+    - summary: |
+        Add support for URI and path-based pagination. Endpoints configured with
+        `next_uri` or `next_path` pagination now generate `Page<T, R>` return types
+        that automatically follow the next URL from the response body to load
+        subsequent pages.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 65
+
 - version: 3.53.15
   changelogEntry:
     - summary: |

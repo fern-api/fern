@@ -1,5 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.19.4
+  changelogEntry:
+    - summary: |
+        Handle bytes endpoints, query name collisions, and WireMock mapping fixes
+        for wire test generation. Bytes endpoints with query params now generate
+        individual parameter arguments instead of a struct. Query request type names
+        include subpackage prefixes when collisions exist. WireMock mappings strip
+        .000 milliseconds from datetime strings and add fallback mappings for bytes
+        endpoints. Allow-multiple query parameters are now correctly wrapped in list types.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 62
+
 - version: 0.19.3
   changelogEntry:
     - summary: |

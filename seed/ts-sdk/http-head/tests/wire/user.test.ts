@@ -22,6 +22,7 @@ describe("UserClient", () => {
             { name: "name", tags: ["tags", "tags"] },
             { name: "name", tags: ["tags", "tags"] },
         ];
+
         server.mockEndpoint().get("/users").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.user.list({
