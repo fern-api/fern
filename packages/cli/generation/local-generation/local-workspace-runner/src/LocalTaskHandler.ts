@@ -318,38 +318,38 @@ export class LocalTaskHandler {
                         let changelogEntry: string;
                         let prDescription: string | undefined;
                         let versionBumpReason: string | undefined;
-                            if (allChangelogEntries.length > 1) {
-                                // Consolidate repetitive multi-chunk entries via AI rollup
-                                const rawEntries = allChangelogEntries
-                                    .map((e) => (e.startsWith("- ") ? e : `- ${e}`))
-                                    .join("\n");
-                                try {
-                                    this.context.logger.debug(
-                                        `Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`
-                                    );
-                                    const rollup = await BamlClient.withOptions({
-                                        clientRegistry: await this.getClientRegistry()
-                                    }).ConsolidateChangelog(rawEntries, bestBump, this.generatorLanguage ?? "unknown");
-                                    changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
-                                    prDescription = rollup.pr_description?.trim() || undefined;
-                                    versionBumpReason = rollup.version_bump_reason?.trim() || undefined;
-                                } catch (rollupError) {
-                                    this.context.logger.warn(
-                                        `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`
-                                    );
-                                    changelogEntry = rawEntries;
-                                }
-                            } else {
-                                changelogEntry = allChangelogEntries[0] ?? "";
+                        if (allChangelogEntries.length > 1) {
+                            // Consolidate repetitive multi-chunk entries via AI rollup
+                            const rawEntries = allChangelogEntries
+                                .map((e) => (e.startsWith("- ") ? e : `- ${e}`))
+                                .join("\n");
+                            try {
+                                this.context.logger.debug(
+                                    `Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`
+                                );
+                                const rollup = await BamlClient.withOptions({
+                                    clientRegistry: await this.getClientRegistry()
+                                }).ConsolidateChangelog(rawEntries, bestBump, this.generatorLanguage ?? "unknown");
+                                changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
+                                prDescription = rollup.pr_description?.trim() || undefined;
+                                versionBumpReason = rollup.version_bump_reason?.trim() || undefined;
+                            } catch (rollupError) {
+                                this.context.logger.warn(
+                                    `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`
+                                );
+                                changelogEntry = rawEntries;
                             }
+                        } else {
+                            changelogEntry = allChangelogEntries[0] ?? "";
+                        }
 
-                            analysis = {
-                                versionBump: bestBump as VersionBump,
-                                message: bestMessage,
-                                changelogEntry,
-                                prDescription,
-                                versionBumpReason
-                            };
+                        analysis = {
+                            versionBump: bestBump as VersionBump,
+                            message: bestMessage,
+                            changelogEntry,
+                            prDescription,
+                            versionBumpReason
+                        };
                     }
                 }
             } catch (aiError) {

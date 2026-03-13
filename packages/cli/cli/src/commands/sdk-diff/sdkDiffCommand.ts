@@ -100,7 +100,8 @@ export async function sdkDiffCommand({
         return {
             message: "No changes detected between the directories",
             changelog_entry: "",
-            version_bump: VersionBump.NO_CHANGE
+            version_bump: VersionBump.NO_CHANGE,
+            version_bump_reason: "No functional changes detected."
         };
     }
 
@@ -188,7 +189,8 @@ export async function sdkDiffCommand({
             return {
                 version_bump: VersionBump.NO_CHANGE,
                 message: "No changes detected between the directories",
-                changelog_entry: ""
+                changelog_entry: "",
+                version_bump_reason: "No functional changes detected."
             };
         }
 
