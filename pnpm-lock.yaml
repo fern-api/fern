@@ -568,8 +568,8 @@ catalogs:
       specifier: ^1.0.37
       version: 1.0.41
     undici:
-      specifier: ^6.23.0
-      version: 6.23.0
+      specifier: ^6.24.0
+      version: 6.24.0
     unified:
       specifier: ^11.0.5
       version: 11.0.5
@@ -4910,7 +4910,7 @@ importers:
         version: 5.9.3
       undici:
         specifier: 'catalog:'
-        version: 6.23.0
+        version: 6.24.0
       url-join:
         specifier: ^4.0.1
         version: 4.0.1
@@ -14463,8 +14463,8 @@ packages:
   undici-types@7.16.0:
     resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
-  undici@6.23.0:
-    resolution: {integrity: sha512-VfQPToRA5FZs/qJxLIinmU59u0r7LXqoJkCzinq3ckNJp3vKEh7jTWN589YQ5+aoAC/TGRLyJLCPKcLQbM8r9g==}
+  undici@6.24.0:
+    resolution: {integrity: sha512-lVLNosgqo5EkGqh5XUDhGfsMSoO8K0BAN0TyJLvwNRSl4xWGZlCVYsAIpa/OpA3TvmnM01GWcoKmc3ZWo5wKKA==}
     engines: {node: '>=18.17'}
 
   unicode-canonical-property-names-ecmascript@2.0.1:
@@ -21828,7 +21828,7 @@ snapshots:
 
   undici-types@7.16.0: {}
 
-  undici@6.23.0: {}
+  undici@6.24.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.1: {}
 

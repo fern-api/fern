@@ -208,7 +208,7 @@ catalog:
   turbo: ^2.8.10
   typescript: 5.9.3
   ua-parser-js: ^1.0.37
-  undici: ^6.23.0
+  undici: ^6.24.0
   unified: ^11.0.5
   unist-util-visit: ^5.0.0
   url-join: ^4.0.1
