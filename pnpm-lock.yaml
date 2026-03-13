@@ -627,7 +627,6 @@ overrides:
   form-data: ^4.0.4
   '@fern-api/ui-core-utils': 0.145.12-b50d999d1
   vite: ^7.0.0
-  flatted: '>=3.4.0'
 
 importers:
 
