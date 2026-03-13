@@ -6,11 +6,11 @@
             "id": {
                 "path": "/users",
                 "method": "POST",
-                "identifier_override": "endpoint_userservice.create"
+                "identifier_override": "endpoint_userService.Create"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Userservice.CreateAsync(new CreateRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.UserService.CreateAsync(new CreateRequest());\n"
             }
         }
     ]

@@ -1,12 +1,7 @@
 namespace SeedApi;
 
-public partial interface IDataserviceClient
+public partial interface IDataServiceClient
 {
-    WithRawResponseTask<Dictionary<string, object?>> FooAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    );
-
     Task<UploadResponse> UploadAsync(
         UploadRequest request,
         GrpcRequestOptions? options = null,

@@ -4,25 +4,13 @@
         {
             "example_identifier": null,
             "id": {
-                "path": "/foo",
-                "method": "POST",
-                "identifier_override": "endpoint_dataservice.foo"
-            },
-            "snippet": {
-                "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.FooAsync();\n"
-            }
-        },
-        {
-            "example_identifier": null,
-            "id": {
                 "path": "/data",
                 "method": "POST",
-                "identifier_override": "endpoint_dataservice.upload"
+                "identifier_override": "endpoint_dataService.Upload"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.UploadAsync(\n    new UploadRequest\n    {\n        Columns = new List<SeedApi.Column>()\n        {\n            new SeedApi.Column\n            {\n                Id = \"id\",\n                Values = new List<float>() { 1.1f },\n            },\n        },\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.UploadAsync(\n    new UploadRequest\n    {\n        Columns = new List<SeedApi.Column>()\n        {\n            new SeedApi.Column\n            {\n                Id = \"id\",\n                Values = new List<float>() { 1.1f },\n            },\n        },\n    }\n);\n"
             }
         },
         {
@@ -30,11 +18,11 @@
             "id": {
                 "path": "/data/delete",
                 "method": "POST",
-                "identifier_override": "endpoint_dataservice.delete"
+                "identifier_override": "endpoint_dataService.Delete"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.DeleteAsync(new DeleteRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.DeleteAsync(new DeleteRequest());\n"
             }
         },
         {
@@ -42,11 +30,11 @@
             "id": {
                 "path": "/data/describe",
                 "method": "POST",
-                "identifier_override": "endpoint_dataservice.describe"
+                "identifier_override": "endpoint_dataService.Describe"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.DescribeAsync(new DescribeRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.DescribeAsync(new DescribeRequest());\n"
             }
         },
         {
@@ -54,11 +42,11 @@
             "id": {
                 "path": "/data/fetch",
                 "method": "GET",
-                "identifier_override": "endpoint_dataservice.fetch"
+                "identifier_override": "endpoint_dataService.Fetch"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.FetchAsync(new FetchRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.FetchAsync(new FetchRequest());\n"
             }
         },
         {
@@ -66,11 +54,11 @@
             "id": {
                 "path": "/data/list",
                 "method": "GET",
-                "identifier_override": "endpoint_dataservice.list"
+                "identifier_override": "endpoint_dataService.List"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.ListAsync(new ListRequest());\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.ListAsync(new ListRequest());\n"
             }
         },
         {
@@ -78,11 +66,11 @@
             "id": {
                 "path": "/data/query",
                 "method": "POST",
-                "identifier_override": "endpoint_dataservice.query"
+                "identifier_override": "endpoint_dataService.Query"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.QueryAsync(new QueryRequest { TopK = 1 });\n"
             }
         },
         {
@@ -90,11 +78,23 @@
             "id": {
                 "path": "/data/update",
                 "method": "POST",
-                "identifier_override": "endpoint_dataservice.update"
+                "identifier_override": "endpoint_dataService.Update"
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Dataservice.UpdateAsync(new UpdateRequest { Id = \"id\" });\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.DataService.UpdateAsync(new UpdateRequest { Id = \"id\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/foo",
+                "method": "POST",
+                "identifier_override": "endpoint_.postFoo"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.PostFooAsync();\n"
             }
         }
     ]

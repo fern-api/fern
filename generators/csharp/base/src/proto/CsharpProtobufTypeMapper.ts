@@ -983,6 +983,9 @@ function getValueForLiteral({ literal }: { literal: Literal }, csharp: CSharp): 
 /*
  * Protobuf enums remove the stutter in their generated enum value names.
  * For example, the enum value `Status.StatusActive` becomes `Status.Active`.
+ *
+ * If the resulting name starts with a digit, protobuf's C# codegen prepends
+ * an underscore (e.g., `VIDEO_ASPECT_RATIO_1_1` becomes `_11`).
  */
 function getProtobufEnumValueName({
     generation,
@@ -994,5 +997,9 @@ function getProtobufEnumValueName({
     enumValue: EnumValue;
 }): string {
     const enumValueName = enumValue.name.name.pascalCase.safeName;
-    return enumValueName.replace(classReference.name, "");
+    const stripped = enumValueName.replace(classReference.name, "");
+    if (/^\d/.test(stripped)) {
+        return `_${stripped}`;
+    }
+    return stripped;
 }

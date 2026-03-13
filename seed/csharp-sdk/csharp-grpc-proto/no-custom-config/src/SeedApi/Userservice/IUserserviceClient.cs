@@ -1,6 +1,6 @@
 namespace SeedApi;
 
-public partial interface IUserserviceClient
+public partial interface IUserServiceClient
 {
     Task<CreateResponse> CreateAsync(
         CreateRequest request,

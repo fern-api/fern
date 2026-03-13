@@ -1,6 +1,5 @@
 # Reference
-## DataService
-<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">FooAsync</a>() -> WithRawResponseTask&lt;Dictionary&lt;string, object?&gt;&gt;</code></summary>
+<details><summary><code>client.<a href="/src/SeedApi/SeedApiClient.cs">PostFooAsync</a>() -> WithRawResponseTask&lt;Dictionary&lt;string, object?&gt;&gt;</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +12,7 @@
 <dd>
 
 ```csharp
-await client.Dataservice.FooAsync();
+await client.PostFooAsync();
 ```
 </dd>
 </dl>
@@ -25,7 +24,8 @@ await client.Dataservice.FooAsync();
 </dl>
 </details>
 
-<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">UploadAsync</a>(UploadRequest { ... }) -> WithRawResponseTask&lt;UploadResponse&gt;</code></summary>
+## DataService
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">UploadAsync</a>(UploadRequest { ... }) -> WithRawResponseTask&lt;UploadResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -38,7 +38,7 @@ await client.Dataservice.FooAsync();
 <dd>
 
 ```csharp
-await client.Dataservice.UploadAsync(
+await client.DataService.UploadAsync(
     new UploadRequest
     {
         Columns = new List<SeedApi.Column>()
@@ -73,7 +73,7 @@ await client.Dataservice.UploadAsync(
 </dl>
 </details>
 
-<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">DeleteAsync</a>(DeleteRequest { ... }) -> WithRawResponseTask&lt;DeleteResponse&gt;</code></summary>
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">DeleteAsync</a>(DeleteRequest { ... }) -> WithRawResponseTask&lt;DeleteResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -86,7 +86,7 @@ await client.Dataservice.UploadAsync(
 <dd>
 
 ```csharp
-await client.Dataservice.DeleteAsync(new DeleteRequest());
+await client.DataService.DeleteAsync(new DeleteRequest());
 ```
 </dd>
 </dl>
@@ -113,7 +113,7 @@ await client.Dataservice.DeleteAsync(new DeleteRequest());
 </dl>
 </details>
 
-<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">DescribeAsync</a>(DescribeRequest { ... }) -> WithRawResponseTask&lt;DescribeResponse&gt;</code></summary>
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">DescribeAsync</a>(DescribeRequest { ... }) -> WithRawResponseTask&lt;DescribeResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -126,7 +126,7 @@ await client.Dataservice.DeleteAsync(new DeleteRequest());
 <dd>
 
 ```csharp
-await client.Dataservice.DescribeAsync(new DescribeRequest());
+await client.DataService.DescribeAsync(new DescribeRequest());
 ```
 </dd>
 </dl>
@@ -153,7 +153,7 @@ await client.Dataservice.DescribeAsync(new DescribeRequest());
 </dl>
 </details>
 
-<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">FetchAsync</a>(FetchRequest { ... }) -> WithRawResponseTask&lt;FetchResponse&gt;</code></summary>
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">FetchAsync</a>(FetchRequest { ... }) -> WithRawResponseTask&lt;FetchResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -166,7 +166,7 @@ await client.Dataservice.DescribeAsync(new DescribeRequest());
 <dd>
 
 ```csharp
-await client.Dataservice.FetchAsync(new FetchRequest());
+await client.DataService.FetchAsync(new FetchRequest());
 ```
 </dd>
 </dl>
@@ -193,7 +193,7 @@ await client.Dataservice.FetchAsync(new FetchRequest());
 </dl>
 </details>
 
-<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">ListAsync</a>(ListRequest { ... }) -> WithRawResponseTask&lt;ListResponse&gt;</code></summary>
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">ListAsync</a>(ListRequest { ... }) -> WithRawResponseTask&lt;ListResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -206,7 +206,7 @@ await client.Dataservice.FetchAsync(new FetchRequest());
 <dd>
 
 ```csharp
-await client.Dataservice.ListAsync(new ListRequest());
+await client.DataService.ListAsync(new ListRequest());
 ```
 </dd>
 </dl>
@@ -233,7 +233,7 @@ await client.Dataservice.ListAsync(new ListRequest());
 </dl>
 </details>
 
-<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">QueryAsync</a>(QueryRequest { ... }) -> WithRawResponseTask&lt;QueryResponse&gt;</code></summary>
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">QueryAsync</a>(QueryRequest { ... }) -> WithRawResponseTask&lt;QueryResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -246,7 +246,7 @@ await client.Dataservice.ListAsync(new ListRequest());
 <dd>
 
 ```csharp
-await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });
+await client.DataService.QueryAsync(new QueryRequest { TopK = 1 });
 ```
 </dd>
 </dl>
@@ -273,7 +273,7 @@ await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });
 </dl>
 </details>
 
-<details><summary><code>client.Dataservice.<a href="/src/SeedApi/Dataservice/DataserviceClient.cs">UpdateAsync</a>(UpdateRequest { ... }) -> WithRawResponseTask&lt;UpdateResponse&gt;</code></summary>
+<details><summary><code>client.DataService.<a href="/src/SeedApi/DataService/DataServiceClient.cs">UpdateAsync</a>(UpdateRequest { ... }) -> WithRawResponseTask&lt;UpdateResponse&gt;</code></summary>
 <dl>
 <dd>
 
@@ -286,7 +286,7 @@ await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });
 <dd>
 
 ```csharp
-await client.Dataservice.UpdateAsync(new UpdateRequest { Id = "id" });
+await client.DataService.UpdateAsync(new UpdateRequest { Id = "id" });
 ```
 </dd>
 </dl>

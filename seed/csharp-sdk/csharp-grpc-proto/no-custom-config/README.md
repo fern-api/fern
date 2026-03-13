@@ -40,7 +40,7 @@ Instantiate and use the client with the following:
 using SeedApi;
 
 var client = new SeedApiClient();
-await client.Userservice.CreateAsync(new CreateRequest());
+await client.UserService.CreateAsync(new CreateRequest());
 ```
 
 ## Exception Handling
@@ -52,7 +52,7 @@ will be thrown.
 using SeedApi;
 
 try {
-    var response = await client.Userservice.CreateAsync(...);
+    var response = await client.UserService.CreateAsync(...);
 } catch (SeedApiApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -76,7 +76,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Userservice.CreateAsync(
+var response = await client.UserService.CreateAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -89,7 +89,7 @@ var response = await client.Userservice.CreateAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Userservice.CreateAsync(
+var response = await client.UserService.CreateAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s
@@ -102,7 +102,7 @@ var response = await client.Userservice.CreateAsync(
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
 
 ```csharp
-var response = await client.Userservice.CreateAsync(
+var response = await client.UserService.CreateAsync(
     ...,
     new RequestOptions {
         AdditionalHeaders = new Dictionary<string, string?>

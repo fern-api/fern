@@ -32,6 +32,9 @@ public record UpdateRequest
     [JsonPropertyName("index_types")]
     public IEnumerable<IndexType>? IndexTypes { get; set; }
 
+    [JsonPropertyName("aspect_ratio")]
+    public AspectRatio? AspectRatio { get; set; }
+
     /// <summary>
     /// Maps the UpdateRequest type into its Protobuf-equivalent representation.
     /// </summary>
@@ -88,6 +91,20 @@ public record UpdateRequest
                     }
                 )
             );
+        }
+        if (AspectRatio != null)
+        {
+            result.AspectRatio = AspectRatio.Value.Value switch
+            {
+                SeedApi.AspectRatio.Values.AspectRatioUnspecified => ProtoDataV1Grpc
+                    .AspectRatio
+                    .Unspecified,
+                SeedApi.AspectRatio.Values.AspectRatio11 => ProtoDataV1Grpc.AspectRatio._11,
+                SeedApi.AspectRatio.Values.AspectRatio169 => ProtoDataV1Grpc.AspectRatio._169,
+                SeedApi.AspectRatio.Values.AspectRatio916 => ProtoDataV1Grpc.AspectRatio._916,
+                SeedApi.AspectRatio.Values.AspectRatio43 => ProtoDataV1Grpc.AspectRatio._43,
+                _ => throw new ArgumentException($"Unknown enum value: {AspectRatio.Value.Value}"),
+            };
         }
         return result;
     }

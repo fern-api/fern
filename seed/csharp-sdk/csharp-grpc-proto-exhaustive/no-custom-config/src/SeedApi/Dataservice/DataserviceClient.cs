@@ -1,11 +1,10 @@
-using System.Text.Json;
 using Data.V1.Grpc;
 using Grpc.Core;
 using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class DataserviceClient : IDataserviceClient
+public partial class DataServiceClient : IDataServiceClient
 {
     private readonly RawClient _client;
 
@@ -13,94 +12,15 @@ public partial class DataserviceClient : IDataserviceClient
 
     private DataService.DataServiceClient _dataService;
 
-    internal DataserviceClient(RawClient client)
+    internal DataServiceClient(RawClient client)
     {
         _client = client;
         _grpc = _client.Grpc;
         _dataService = new DataService.DataServiceClient(_grpc.Channel);
     }
 
-    private async Task<WithRawResponse<Dictionary<string, object?>>> FooAsyncCore(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        var _headers = await new SeedApi.Core.HeadersBuilder.Builder()
-            .Add(_client.Options.Headers)
-            .Add(_client.Options.AdditionalHeaders)
-            .Add(options?.AdditionalHeaders)
-            .BuildAsync()
-            .ConfigureAwait(false);
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    Method = HttpMethod.Post,
-                    Path = "foo",
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            try
-            {
-                var responseData = JsonUtils.Deserialize<Dictionary<string, object?>>(
-                    responseBody
-                )!;
-                return new WithRawResponse<Dictionary<string, object?>>()
-                {
-                    Data = responseData,
-                    RawResponse = new RawResponse()
-                    {
-                        StatusCode = response.Raw.StatusCode,
-                        Url = response.Raw.RequestMessage?.RequestUri ?? new Uri("about:blank"),
-                        Headers = ResponseHeaders.FromHttpResponseMessage(response.Raw),
-                    },
-                };
-            }
-            catch (JsonException e)
-            {
-                throw new SeedApiApiException(
-                    "Failed to deserialize response",
-                    response.StatusCode,
-                    responseBody,
-                    e
-                );
-            }
-        }
-        {
-            var responseBody = await response
-                .Raw.Content.ReadAsStringAsync(cancellationToken)
-                .ConfigureAwait(false);
-            throw new SeedApiApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
-    }
-
     /// <example><code>
-    /// await client.Dataservice.FooAsync();
-    /// </code></example>
-    public WithRawResponseTask<Dictionary<string, object?>> FooAsync(
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return new WithRawResponseTask<Dictionary<string, object?>>(
-            FooAsyncCore(options, cancellationToken)
-        );
-    }
-
-    /// <example><code>
-    /// await client.Dataservice.UploadAsync(
+    /// await client.DataService.UploadAsync(
     ///     new UploadRequest
     ///     {
     ///         Columns = new List&lt;SeedApi.Column&gt;()
@@ -170,7 +90,7 @@ public partial class DataserviceClient : IDataserviceClient
     }
 
     /// <example><code>
-    /// await client.Dataservice.DeleteAsync(new DeleteRequest());
+    /// await client.DataService.DeleteAsync(new DeleteRequest());
     /// </code></example>
     public async Task<DeleteResponse> DeleteAsync(
         DeleteRequest request,
@@ -228,7 +148,7 @@ public partial class DataserviceClient : IDataserviceClient
     }
 
     /// <example><code>
-    /// await client.Dataservice.DescribeAsync(new DescribeRequest());
+    /// await client.DataService.DescribeAsync(new DescribeRequest());
     /// </code></example>
     public async Task<DescribeResponse> DescribeAsync(
         DescribeRequest request,
@@ -286,7 +206,7 @@ public partial class DataserviceClient : IDataserviceClient
     }
 
     /// <example><code>
-    /// await client.Dataservice.FetchAsync(new FetchRequest());
+    /// await client.DataService.FetchAsync(new FetchRequest());
     /// </code></example>
     public async Task<FetchResponse> FetchAsync(
         FetchRequest request,
@@ -344,7 +264,7 @@ public partial class DataserviceClient : IDataserviceClient
     }
 
     /// <example><code>
-    /// await client.Dataservice.ListAsync(new ListRequest());
+    /// await client.DataService.ListAsync(new ListRequest());
     /// </code></example>
     public async Task<ListResponse> ListAsync(
         ListRequest request,
@@ -402,7 +322,7 @@ public partial class DataserviceClient : IDataserviceClient
     }
 
     /// <example><code>
-    /// await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });
+    /// await client.DataService.QueryAsync(new QueryRequest { TopK = 1 });
     /// </code></example>
     public async Task<QueryResponse> QueryAsync(
         QueryRequest request,
@@ -460,7 +380,7 @@ public partial class DataserviceClient : IDataserviceClient
     }
 
     /// <example><code>
-    /// await client.Dataservice.UpdateAsync(new UpdateRequest { Id = "id" });
+    /// await client.DataService.UpdateAsync(new UpdateRequest { Id = "id" });
     /// </code></example>
     public async Task<UpdateResponse> UpdateAsync(
         UpdateRequest request,

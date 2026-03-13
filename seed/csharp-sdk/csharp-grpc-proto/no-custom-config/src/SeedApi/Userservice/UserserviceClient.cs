@@ -4,7 +4,7 @@ using User.V1;
 
 namespace SeedApi;
 
-public partial class UserserviceClient : IUserserviceClient
+public partial class UserServiceClient : IUserServiceClient
 {
     private readonly RawClient _client;
 
@@ -12,7 +12,7 @@ public partial class UserserviceClient : IUserserviceClient
 
     private UserService.UserServiceClient _userService;
 
-    internal UserserviceClient(RawClient client)
+    internal UserServiceClient(RawClient client)
     {
         _client = client;
         _grpc = _client.Grpc;
@@ -20,7 +20,7 @@ public partial class UserserviceClient : IUserserviceClient
     }
 
     /// <example><code>
-    /// await client.Userservice.CreateAsync(new CreateRequest());
+    /// await client.UserService.CreateAsync(new CreateRequest());
     /// </code></example>
     public async Task<CreateResponse> CreateAsync(
         CreateRequest request,
