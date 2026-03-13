@@ -572,9 +572,8 @@ public abstract class AbstractWebSocketChannelWriter {
     }
 
     /**
-     * Returns the method name for a server message handler, avoiding
-     * collisions with lifecycle methods that share the same erasure
-     * ({@code Consumer<?>}).
+     * Returns the method name for a server message handler, avoiding collisions with lifecycle methods that share the
+     * same erasure ({@code Consumer<?>}).
      */
     protected String getMessageMethodName(String messageType) {
         String baseName = "on" + toPascalCase(messageType);
