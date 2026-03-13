@@ -97,7 +97,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
             });
 
             class_.addField({
-                origin: class_.explicit(this.members.grpcClientName),
+                origin: class_.explicit(this.grpcClientInfo.privatePropertyName),
                 access: ast.Access.Private,
                 type: this.grpcClientInfo.classReference
             });
@@ -169,13 +169,13 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
                     innerWriter.writeLine(`${this.members.clientName} = client;`);
 
                     if (this.grpcClientInfo != null) {
-                        innerWriter.writeLine(`${this.members.grpcClient} = ${this.members.clientName}.Grpc;`);
+                        innerWriter.writeLine(`${this.members.grpcClientName} = ${this.members.clientName}.Grpc;`);
                         innerWriter.write(this.grpcClientInfo.privatePropertyName);
                         innerWriter.write(" = ");
                         innerWriter.writeNodeStatement(
                             this.csharp.instantiateClass({
                                 classReference: this.grpcClientInfo.classReference,
-                                arguments_: [this.csharp.codeblock(`${this.members.grpcClient}.Channel`)]
+                                arguments_: [this.csharp.codeblock(`${this.members.grpcClientName}.Channel`)]
                             })
                         );
                     }

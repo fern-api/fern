@@ -207,6 +207,14 @@ export async function writeFilesToDiskAndRunGenerator({
     // Extract LICENSE file path for Docker mounting
     const absolutePathToLicenseFile = extractLicenseFilePath(generatorInvocation, absolutePathToFernConfig);
 
+    const sourceMounts = workspace
+        .getSources()
+        .filter((source): source is IdentifiableSource & { type: "protobuf" } => source.type === "protobuf")
+        .map((source) => ({
+            hostPath: source.absoluteFilePath,
+            containerPath: `${CONTAINER_SOURCES_DIRECTORY}/${source.id}`
+        }));
+
     await environment.execute({
         generatorName: generatorInvocation.name,
         irPath: absolutePathToIr,
@@ -215,6 +223,7 @@ export async function writeFilesToDiskAndRunGenerator({
         snippetPath: absolutePathToTmpSnippetJSON,
         snippetTemplatePath: absolutePathToTmpSnippetTemplatesJSON,
         licenseFilePath: absolutePathToLicenseFile,
+        sourceMounts,
         context,
         inspect,
         runner

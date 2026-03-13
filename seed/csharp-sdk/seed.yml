@@ -68,7 +68,10 @@ scripts:
           fi
 
           dotnet build "$solution_file" -c Release
-          dotnet build src/*DynamicSnippets/*.csproj -c Release
+          dynamic_snippets="$(find src -maxdepth 2 -name '*DynamicSnippets*.csproj' | head -n 1)"
+          if [ -n "$dynamic_snippets" ]; then
+            dotnet build "$dynamic_snippets" -c Release
+          fi
       test:
         - |
           # Find the solution file
@@ -199,19 +202,27 @@ fixtures:
     - customConfig:
         inline-path-parameters: false
       outputFolder: no-inline-path-parameters
+  csharp-grpc-proto:
+    - customConfig: null
+      outputFolder: no-custom-config
+      disableDynamicSnippetTests: true
   csharp-grpc-proto-exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
+      disableDynamicSnippetTests: true
     - customConfig:
         package-id: Seed.Client
       outputFolder: package-id
+      disableDynamicSnippetTests: true
     - customConfig:
         read-only-memory-types:
           - float
       outputFolder: read-only-memory
+      disableDynamicSnippetTests: true
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
+      disableDynamicSnippetTests: true
   oauth-client-credentials:
     - customConfig: null
       outputFolder: no-custom-config

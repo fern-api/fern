@@ -15,9 +15,8 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
-  - [Raw Response](#raw-response)
   - [Additional Headers](#additional-headers)
-  - [Additional Query Parameters](#additional-query-parameters)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -99,34 +98,6 @@ var response = await client.Dataservice.FooAsync(
 );
 ```
 
-### Raw Response
-
-Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
-
-```csharp
-using SeedApi;
-
-// Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Dataservice.FooAsync(...).WithRawResponse();
-
-// Access the parsed data
-var data = result.Data;
-
-// Access raw response metadata
-var statusCode = result.RawResponse.StatusCode;
-var headers = result.RawResponse.Headers;
-var url = result.RawResponse.Url;
-
-// Access specific headers (case-insensitive)
-if (headers.TryGetValue("X-Request-Id", out var requestId))
-{
-    System.Console.WriteLine($"Request ID: {requestId}");
-}
-
-// For the default behavior, simply await without .WithRawResponse()
-var data = await client.Dataservice.FooAsync(...);
-```
-
 ### Additional Headers
 
 If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
@@ -143,20 +114,33 @@ var response = await client.Dataservice.FooAsync(
 );
 ```
 
-### Additional Query Parameters
+### Forward Compatible Enums
 
-If you would like to send additional query parameters as part of the request, use the `AdditionalQueryParameters` request option.
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
 
 ```csharp
-var response = await client.Dataservice.FooAsync(
-    ...,
-    new RequestOptions {
-        AdditionalQueryParameters = new Dictionary<string, string>
-        {
-            { "custom_param", "custom-value" }
-        }
-    }
-);
+using SeedApi;
+
+// Using a built-in value
+var indexType = IndexType.IndexTypeInvalid;
+
+// Using a custom value
+var customIndexType = IndexType.FromCustom("custom-value");
+
+// Using in a switch statement
+switch (indexType.Value)
+{
+    case IndexType.Values.IndexTypeInvalid:
+        Console.WriteLine("IndexTypeInvalid");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {indexType.Value}");
+        break;
+}
+
+// Explicit casting
+string indexTypeString = (string)IndexType.IndexTypeInvalid;
+IndexType indexTypeFromString = (IndexType)"INDEX_TYPE_INVALID";
 ```
 
 ## Contributing
