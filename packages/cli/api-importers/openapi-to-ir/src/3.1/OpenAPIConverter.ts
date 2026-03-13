@@ -1,3 +1,4 @@
+import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
 import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
@@ -313,6 +314,19 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
 
     private overrideOpenApiAuthWithGeneratorsAuth(): void {
         if (!this.context.authOverrides?.["auth-schemes"]) {
+            return;
+        }
+
+        const shouldOverrideOpenApiSecurity =
+            this.context.authOverrides.auth == null
+                ? true
+                : visitRawApiAuth(this.context.authOverrides.auth, {
+                      single: () => true,
+                      any: () => true,
+                      // endpoint-security means the OpenAPI spec is already the source of truth.
+                      endpointSecurity: () => false
+                  });
+        if (!shouldOverrideOpenApiSecurity) {
             return;
         }
 

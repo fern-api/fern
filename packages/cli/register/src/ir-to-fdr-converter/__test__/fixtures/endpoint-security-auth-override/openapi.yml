@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Endpoint Security Auth Override Test API
+  version: 1.0.0
+  description: OpenAPI spec with per-operation security and generators.yml endpoint-security auth.
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /protected:
+    get:
+      operationId: getProtected
+      summary: Get protected resource
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Protected resource accessed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - ok
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+
+  /token:
+    post:
+      operationId: createToken
+      summary: Exchange credentials for a token
+      security: []
+      responses:
+        "200":
+          description: Token issued successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - access_token
+                properties:
+                  access_token:
+                    type: string
+                    example: test-token
+
+  /public:
+    get:
+      operationId: getPublic
+      summary: Get public resource
+      responses:
+        "200":
+          description: Public resource accessed successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: public data
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT Bearer token authentication

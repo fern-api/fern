@@ -1,4 +1,4 @@
-import { RawSchemas } from "@fern-api/fern-definition-schema";
+import { RawSchemas, visitRawApiAuth } from "@fern-api/fern-definition-schema";
 import {
     FernIr,
     HttpEndpoint,
@@ -492,9 +492,18 @@ export class OperationConverter extends AbstractOperationConverter {
             return [];
         }
 
-        // When auth overrides are specified, use them instead of OpenAPI security
-        if (this.context.authOverrides?.auth != null) {
-            return this.getDefaultSecurityFromAuthOverrides();
+        const authOverride = this.context.authOverrides?.auth;
+        if (authOverride != null) {
+            const defaultSecurity = visitRawApiAuth(authOverride, {
+                single: () => this.getDefaultSecurityFromAuthOverrides(),
+                any: () => this.getDefaultSecurityFromAuthOverrides(),
+                // endpoint-security means the OpenAPI spec owns per-operation security.
+                endpointSecurity: () => undefined
+            });
+
+            if (defaultSecurity != null) {
+                return defaultSecurity;
+            }
         }
 
         // Fall back to OpenAPI security
@@ -507,7 +516,17 @@ export class OperationConverter extends AbstractOperationConverter {
      * @returns Array of HTTP headers derived from the security schemes
      */
     private shouldApplyDefaultAuthOverrides(): boolean {
-        if (!this.context.authOverrides?.auth) {
+        const authOverride = this.context.authOverrides?.auth;
+        if (authOverride == null) {
+            return false;
+        }
+
+        const shouldApply = visitRawApiAuth(authOverride, {
+            single: () => true,
+            any: () => true,
+            endpointSecurity: () => false
+        });
+        if (!shouldApply) {
             return false;
         }
 

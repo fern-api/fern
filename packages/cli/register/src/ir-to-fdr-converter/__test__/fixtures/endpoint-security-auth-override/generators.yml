@@ -1,0 +1,12 @@
+auth-schemes:
+  bearerAuth:
+    scheme: bearer
+    token:
+      name: token
+      env: TEST_BEARER_TOKEN
+
+api:
+  auth:
+    endpoint-security: {}
+  specs:
+    - openapi: openapi.yml

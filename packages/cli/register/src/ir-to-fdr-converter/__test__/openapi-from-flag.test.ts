@@ -845,6 +845,89 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-scheme-override-ir.snap");
     });
 
+    it("should preserve per-operation security when generators.yml uses endpoint-security auth", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/endpoint-security-auth-override")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "endpoint-security-auth-override"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        const service = Object.values(intermediateRepresentation.services)[0];
+        expect(service).toBeDefined();
+        assert(service != null);
+
+        const protectedEndpoint = service.endpoints.find((endpoint) => endpoint.name.originalName === "getProtected");
+        const tokenEndpoint = service.endpoints.find((endpoint) => endpoint.name.originalName === "createToken");
+        const publicEndpoint = service.endpoints.find((endpoint) => endpoint.name.originalName === "getPublic");
+
+        expect(protectedEndpoint?.auth).toBe(true);
+        expect(protectedEndpoint?.security).toEqual([{ bearerAuth: [] }]);
+
+        expect(tokenEndpoint?.auth).toBe(false);
+        expect(tokenEndpoint?.security).toEqual([]);
+
+        expect(publicEndpoint?.auth).toBe(false);
+        expect(publicEndpoint?.security).toBeUndefined();
+
+        const fdrEndpoints = fdrApiDefinition.rootPackage.endpoints;
+        const protectedFdrEndpoint = fdrEndpoints.find((endpoint) => endpoint.id === "getProtected");
+        const tokenFdrEndpoint = fdrEndpoints.find((endpoint) => endpoint.id === "createToken");
+        const publicFdrEndpoint = fdrEndpoints.find((endpoint) => endpoint.id === "getPublic");
+
+        expect(protectedFdrEndpoint?.auth).toBe(true);
+        expect(protectedFdrEndpoint?.authV2).toEqual(["bearerAuth"]);
+        expect(protectedFdrEndpoint?.multiAuth).toEqual([{ schemes: ["bearerAuth"] }]);
+
+        expect(tokenFdrEndpoint?.auth).toBe(false);
+        expect(tokenFdrEndpoint?.authV2).toEqual([]);
+        expect(tokenFdrEndpoint?.multiAuth).toEqual([]);
+
+        expect(publicFdrEndpoint?.auth).toBe(false);
+        expect(publicFdrEndpoint?.authV2).toBeUndefined();
+        expect(publicFdrEndpoint?.multiAuth).toBeUndefined();
+    });
+
     it("should handle auth scheme name collision between OpenAPI and generators.yml", async () => {
         // Test what happens when OpenAPI has a security scheme with the same name as generators.yml
         // Both have "bearerAuth" but with different configurations
