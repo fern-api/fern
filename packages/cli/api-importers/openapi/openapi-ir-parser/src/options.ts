@@ -116,6 +116,14 @@ export interface ParseOpenAPIOptions {
      * Defaults to false.
      */
     inferForwardCompatible: boolean;
+
+    /**
+     * Controls how `const` values in OpenAPI specs are represented.
+     * - `literals`: Convert const values directly to literals with defaults.
+     * - `enums`: Convert const values to single-element enums (current behavior).
+     * Defaults to `enums`.
+     */
+    coerceConstsTo: "literals" | "enums";
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -152,7 +160,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     defaultIntegerFormat: generatorsYml.DefaultIntegerFormat.Int32,
     pathParameterOrder: generatorsYml.PathParameterOrder.UrlOrder,
     resolveSchemaCollisions: false,
-    inferForwardCompatible: false
+    inferForwardCompatible: false,
+    coerceConstsTo: "enums"
 };
 
 function mergeOptions<T extends object>(params: {
