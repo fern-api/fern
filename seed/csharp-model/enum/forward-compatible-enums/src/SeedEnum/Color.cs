@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedEnum.Core;
 
 namespace SeedEnum;
 
-[JsonConverter(typeof(StringEnumSerializer<Color>))]
+[JsonConverter(typeof(Color.ColorSerializer))]
 [Serializable]
 public readonly record struct Color : IStringEnum
 {
@@ -49,6 +50,32 @@ public readonly record struct Color : IStringEnum
     public static explicit operator string(Color value) => value.Value;
 
     public static explicit operator Color(string value) => new(value);
+
+    internal class ColorSerializer : JsonConverter<Color>
+    {
+        public override Color Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new Color(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            Color value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values
