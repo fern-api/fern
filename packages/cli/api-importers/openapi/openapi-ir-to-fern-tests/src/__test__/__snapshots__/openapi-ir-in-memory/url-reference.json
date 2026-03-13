@@ -72,6 +72,7 @@
     "defaultIntegerFormat": "int32",
     "pathParameterOrder": "url-order",
     "resolveSchemaCollisions": false,
-    "inferForwardCompatible": false
+    "inferForwardCompatible": false,
+    "coerceConstsTo": "enums"
   }
 }

@@ -6,14 +6,13 @@ using WireMock.Settings;
 
 namespace SeedMixedFileDirectory.Test.Unit.MockServer;
 
-[SetUpFixture]
 public class BaseMockServerTest
 {
-    protected static WireMockServer Server { get; set; } = null!;
+    protected WireMockServer Server { get; set; } = null!;
 
-    protected static SeedMixedFileDirectoryClient Client { get; set; } = null!;
+    protected SeedMixedFileDirectoryClient Client { get; set; } = null!;
 
-    protected static RequestOptions RequestOptions { get; set; } = new();
+    protected RequestOptions RequestOptions { get; set; } = new();
 
     [OneTimeSetUp]
     public void GlobalSetup()

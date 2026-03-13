@@ -5,6 +5,7 @@ using SeedPackageYml.Test.Utils;
 namespace SeedPackageYml.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class EchoTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

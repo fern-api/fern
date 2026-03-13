@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedValidation.Core;
 
 namespace SeedValidation;
 
-[JsonConverter(typeof(StringEnumSerializer<Shape>))]
+[JsonConverter(typeof(Shape.ShapeSerializer))]
 [Serializable]
 public readonly record struct Shape : IStringEnum
 {
@@ -51,6 +52,32 @@ public readonly record struct Shape : IStringEnum
     public static explicit operator string(Shape value) => value.Value;
 
     public static explicit operator Shape(string value) => new(value);
+
+    internal class ShapeSerializer : JsonConverter<Shape>
+    {
+        public override Shape Read(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new Shape(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            Shape value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

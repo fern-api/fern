@@ -5,6 +5,7 @@ using SeedCrossPackageTypeNames.Test.Utils;
 namespace SeedCrossPackageTypeNames.Test.Unit.MockServer.FolderA.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetDirectThreadTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

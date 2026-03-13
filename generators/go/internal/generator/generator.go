@@ -1,12 +1,14 @@
 package generator
 
 import (
+	"cmp"
 	_ "embed"
 	"encoding/json"
 	"fmt"
 	"os"
 	"path"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 
@@ -71,7 +73,8 @@ type SubpackageToGenerate struct {
 // NewSubpackagesToGenerate returns a slice of subpackages to generate from the given IR.
 func NewSubpackagesToGenerate(ir *fernir.IntermediateRepresentation) []*SubpackageToGenerate {
 	var subpackagesToGenerate []*SubpackageToGenerate
-	for _, irSubpackage := range ir.Subpackages {
+	for _, subpackageId := range sortedMapKeys(ir.Subpackages) {
+		irSubpackage := ir.Subpackages[subpackageId]
 		originalFernFilepath := irSubpackage.FernFilepath
 		if len(irSubpackage.Subpackages) > 0 && irSubpackage.FernFilepath.File != nil {
 			// This represents a nested root package, so we need to deposit
@@ -166,7 +169,8 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 	}
 	files := make([]*File, 0, len(fileInfoToTypes))
 	var generatedRootClients []*GeneratedClient
-	for fileInfo, typesToGenerate := range fileInfoToTypes {
+	for _, fileInfo := range sortedFileInfoKeys(fileInfoToTypes) {
+		typesToGenerate := fileInfoToTypes[fileInfo]
 		writer := newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
@@ -310,7 +314,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		writer.WriteDocs(ir.RootPackage.Docs)
 		files = append(files, writer.DocsFile())
 	}
-	for _, subpackage := range ir.Subpackages {
+	for _, subpackageId := range sortedMapKeys(ir.Subpackages) {
+		subpackage := ir.Subpackages[subpackageId]
 		if subpackage.Docs == nil || len(*subpackage.Docs) == 0 {
 			continue
 		}
@@ -617,7 +622,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 		files = append(files, clientTestFile)
 		// Generate the error types, if any.
-		for fileInfo, irErrors := range fileInfoToErrors(rootPackageName, ir.Errors) {
+		errorsByFileInfo := fileInfoToErrors(rootPackageName, ir.Errors)
+		for _, fileInfo := range sortedFileInfoKeys(errorsByFileInfo) {
+			irErrors := errorsByFileInfo[fileInfo]
 			writer := newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
@@ -1721,7 +1728,8 @@ func fileInfoToTypes(
 ) (map[fileInfo][]*typeToGenerate, error) {
 	result := make(map[fileInfo][]*typeToGenerate)
 
-	for _, irService := range irServices {
+	for _, serviceId := range sortedMapKeys(irServices) {
+		irService := irServices[serviceId]
 		subpackageFileInfo := fileInfoForType(rootPackageName, irService.Name.FernFilepath)
 		for _, irEndpoint := range irService.Endpoints {
 			if shouldSkipRequestType(irEndpoint, irService.Headers, inlinePathParameters, inlineFileProperties, omitEmptyRequestWrappers) {
@@ -1754,7 +1762,8 @@ func fileInfoToTypes(
 	if irServiceTypeReferenceInfo == nil {
 		// If the service type reference info isn't provided, default
 		// to the file-per-type naming convention.
-		for _, irType := range irTypes {
+		for _, typeId := range sortedMapKeys(irTypes) {
+			irType := irTypes[typeId]
 			fileInfo := fileInfoForType(rootPackageName, irType.Name.FernFilepath)
 			result[fileInfo] = append(
 				result[fileInfo],
@@ -1790,7 +1799,8 @@ func fileInfoToTypes(
 				},
 			)
 		}
-		for serviceId, typeIds := range irServiceTypeReferenceInfo.TypesReferencedOnlyByService {
+		for _, serviceId := range sortedMapKeys(irServiceTypeReferenceInfo.TypesReferencedOnlyByService) {
+			typeIds := irServiceTypeReferenceInfo.TypesReferencedOnlyByService[serviceId]
 			if serviceId == "service_" {
 				// The root service requires special handling.
 				continue
@@ -1863,7 +1873,8 @@ func fileInfoToErrors(
 	irErrorDeclarations map[fernir.ErrorId]*fernir.ErrorDeclaration,
 ) map[fileInfo][]*fernir.ErrorDeclaration {
 	result := make(map[fileInfo][]*fernir.ErrorDeclaration)
-	for _, irErrorDeclaration := range irErrorDeclarations {
+	for _, errorId := range sortedMapKeys(irErrorDeclarations) {
+		irErrorDeclaration := irErrorDeclarations[errorId]
 		var elements []string
 		for _, packageName := range irErrorDeclaration.Name.FernFilepath.PackagePath {
 			elements = append(elements, strings.ToLower(packageName.CamelCase.SafeName))
@@ -1883,6 +1894,21 @@ func fileInfoToErrors(
 		sort.Slice(result[fileInfo], func(i, j int) bool { return result[fileInfo][i].Name.ErrorId < result[fileInfo][j].Name.ErrorId })
 	}
 	return result
+}
+
+// sortedFileInfoKeys returns the keys of a map keyed by fileInfo, sorted by filename.
+func sortedFileInfoKeys[V any](m map[fileInfo]V) []fileInfo {
+	keys := make([]fileInfo, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	slices.SortFunc(keys, func(a, b fileInfo) int {
+		if c := cmp.Compare(a.filename, b.filename); c != 0 {
+			return c
+		}
+		return cmp.Compare(a.packageName, b.packageName)
+	})
+	return keys
 }
 
 func stringSetToSortedSlice(set map[string]struct{}) []string {
@@ -2045,6 +2071,16 @@ var pointerFunctionNames = map[string]struct{}{
 	"Uintptr":    struct{}{},
 	"Time":       struct{}{},
 	// TODO: Add support for BigInteger.
+}
+
+// sortedMapKeys returns the keys of the given map in sorted order.
+func sortedMapKeys[K ~string, V any](m map[K]V) []K {
+	keys := make([]K, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	slices.SortFunc(keys, func(a, b K) int { return cmp.Compare(a, b) })
+	return keys
 }
 
 // valueOf dereferences the given value, or returns the zero value if nil.

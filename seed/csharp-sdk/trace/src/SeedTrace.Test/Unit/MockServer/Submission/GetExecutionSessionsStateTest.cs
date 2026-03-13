@@ -5,6 +5,7 @@ using SeedTrace.Test_.Utils;
 namespace SeedTrace.Test_.Unit.MockServer.Submission;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetExecutionSessionsStateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

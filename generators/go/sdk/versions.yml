@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.30.1
+  changelogEntry:
+    - summary: |
+        Fix non-deterministic ordering in generated requests.go and requests_test.go.
+        Go maps randomize iteration order, causing type ordering to vary across runs
+        when exportAllRequestsAtRoot is enabled. Map keys are now sorted before
+        iteration to ensure deterministic output.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 61
+
 - version: 1.30.0
   changelogEntry:
     - summary: |

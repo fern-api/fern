@@ -2,6 +2,7 @@ import { AbstractProject, FernGeneratorExec, File, SourceFetcher } from "@fern-a
 import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
+import { createHash } from "crypto";
 import { Eta } from "eta";
 import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
@@ -153,7 +154,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
                 .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
         );
 
-        // call dotnet format on the solution file using absolute path
+        // call dotnet format on the solution file using absolute path (always use .slnx for dotnet format)
         const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
         await loggingExeca(this.context.logger, "dotnet", ["format", solutionFile, "--severity", "error"], {
             doNotPipeOutput: false
@@ -435,8 +436,10 @@ dotnet_diagnostic.IDE0005.severity = error
     }
 
     /**
-     * Generates the .slnx solution file directly as XML, avoiding dotnet CLI overhead.
+     * Generates the solution file directly as a template, avoiding dotnet CLI overhead.
      * Computes relative paths from the solution directory to both project .csproj files.
+     * When `sln-format` is "sln", generates both .sln and .slnx files.
+     * When `sln-format` is "slnx" (default), generates only .slnx.
      */
     private async createSolutionFile({
         absolutePathToSolutionDirectory,
@@ -456,6 +459,7 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(`${testProjectName}.csproj`)
         );
 
+        // Always generate .slnx format
         const libraryCsprojRelative = path
             .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
             .replace(/\\/g, "/");
@@ -469,8 +473,53 @@ dotnet_diagnostic.IDE0005.severity = error
 </Solution>
 `;
 
-        const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-        await writeFile(solutionFilePath, slnxContents);
+        const slnxFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await writeFile(slnxFilePath, slnxContents);
+
+        // When sln-format is "sln", also generate the legacy .sln file
+        if (this.settings.slnFormat === "sln") {
+            const libraryCsprojRelativeBackslash = path
+                .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
+                .replace(/\//g, "\\");
+            const testCsprojRelativeBackslash = path
+                .relative(absolutePathToSolutionDirectory, testCsprojAbsolute)
+                .replace(/\//g, "\\");
+
+            const projectTypeGuid = "FAE04EC0-301F-11D3-BF4B-00C04F79EFBC";
+            const libraryProjectGuid = generateDeterministicGuid(this.name);
+            const testProjectGuid = generateDeterministicGuid(testProjectName);
+
+            const slnContents = [
+                "Microsoft Visual Studio Solution File, Format Version 12.00",
+                "# Visual Studio Version 17",
+                "VisualStudioVersion = 17.0.31903.59",
+                "MinimumVisualStudioVersion = 10.0.40219.1",
+                `Project("{${projectTypeGuid}}") = "${this.name}", "${libraryCsprojRelativeBackslash}", "{${libraryProjectGuid}}"`,
+                "EndProject",
+                `Project("{${projectTypeGuid}}") = "${testProjectName}", "${testCsprojRelativeBackslash}", "{${testProjectGuid}}"`,
+                "EndProject",
+                "Global",
+                "\tGlobalSection(SolutionConfigurationPlatforms) = preSolution",
+                "\t\tDebug|Any CPU = Debug|Any CPU",
+                "\t\tRelease|Any CPU = Release|Any CPU",
+                "\tEndGlobalSection",
+                "\tGlobalSection(ProjectConfigurationPlatforms) = postSolution",
+                `\t\t{${libraryProjectGuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU`,
+                `\t\t{${libraryProjectGuid}}.Release|Any CPU.Build.0 = Release|Any CPU`,
+                `\t\t{${testProjectGuid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU`,
+                `\t\t{${testProjectGuid}}.Debug|Any CPU.Build.0 = Debug|Any CPU`,
+                `\t\t{${testProjectGuid}}.Release|Any CPU.ActiveCfg = Release|Any CPU`,
+                `\t\t{${testProjectGuid}}.Release|Any CPU.Build.0 = Release|Any CPU`,
+                "\tEndGlobalSection",
+                "EndGlobal",
+                ""
+            ].join("\n");
+
+            const slnFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.sln`));
+            await writeFile(slnFilePath, slnContents);
+        }
     }
 
     private async createCoreDirectory({
@@ -704,6 +753,16 @@ function replaceTemplate({ contents, variables }: { contents: string; variables:
 
 function getAsIsFilepath(filename: string): string {
     return AbsoluteFilePath.of(path.join(__dirname, "asIs", filename));
+}
+
+/**
+ * Generates a deterministic GUID from a project name using MD5 hashing.
+ * This ensures the same project name always produces the same GUID,
+ * making .sln files reproducible across generation runs.
+ */
+function generateDeterministicGuid(name: string): string {
+    const hash = createHash("md5").update(name).digest("hex");
+    return `${hash.slice(0, 8)}-${hash.slice(8, 12)}-${hash.slice(12, 16)}-${hash.slice(16, 20)}-${hash.slice(20, 32)}`.toUpperCase();
 }
 
 declare namespace CsProj {

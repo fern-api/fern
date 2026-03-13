@@ -4,6 +4,7 @@ using SeedPagination.Test.Unit.MockServer;
 namespace SeedPagination.Test.Unit.MockServer.InlineUsers.InlineUsers;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ListWithExtendedResultsAndOptionalDataTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

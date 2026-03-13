@@ -6,6 +6,7 @@ using SeedInferredAuthImplicit.Test.Utils;
 namespace SeedInferredAuthImplicit.Test.Unit.MockServer.Auth;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RefreshTokenTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -6,6 +6,7 @@ using SeedIdempotencyHeaders.Test.Utils;
 namespace SeedIdempotencyHeaders.Test.Unit.MockServer.Payment;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CreateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
