@@ -96,7 +96,7 @@ fixtures:
           other: lib/SeedApi
     - outputFolder: use-sln-format
       customConfig:
-        use-sln-format: true
+        sln-format: sln
   literal:
     - customConfig: null
       outputFolder: no-custom-config

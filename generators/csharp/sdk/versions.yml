@@ -2,16 +2,16 @@
 - version: 2.27.0
   changelogEntry:
     - summary: |
-        Add `use-sln-format` configuration option. When enabled, the generator produces
-        a legacy `.sln` solution file instead of the default `.slnx` format. This is
-        useful for teams that need compatibility with older .NET tooling or CI systems
-        that do not yet support the `.slnx` format introduced in .NET 10.
+        Add `sln-format` configuration option. Set to `"sln"` to generate both a legacy
+        `.sln` solution file and the modern `.slnx` file. The default value `"slnx"` generates
+        only the `.slnx` file. This is useful for teams that need compatibility with older
+        .NET tooling or CI systems that do not yet support the `.slnx` format.
 
         ```yaml
         generators:
           - name: fernapi/fern-csharp-sdk
             config:
-              use-sln-format: true
+              sln-format: sln
         ```
       type: feat
   createdAt: "2026-03-13"

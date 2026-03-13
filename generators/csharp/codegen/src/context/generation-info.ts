@@ -216,8 +216,8 @@ export class Generation {
         omitFernHeaders: () => this.customConfig["omit-fern-headers"] ?? false,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
-        /** When true, generates the legacy .sln solution file format instead of the default .slnx format. Default: false. */
-        useSlnFormat: () => this.customConfig["use-sln-format"] ?? false,
+        /** Solution file format: "sln" generates both .sln and .slnx, "slnx" (default) generates only .slnx. */
+        slnFormat: () => this.customConfig["sln-format"] ?? "slnx",
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
         /**

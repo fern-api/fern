@@ -154,9 +154,8 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
                 .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
         );
 
-        // call dotnet format on the solution file using absolute path
-        const solutionExt = this.settings.useSlnFormat ? "sln" : "slnx";
-        const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.${solutionExt}`));
+        // call dotnet format on the solution file using absolute path (always use .slnx for dotnet format)
+        const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
         await loggingExeca(this.context.logger, "dotnet", ["format", solutionFile, "--severity", "error"], {
             doNotPipeOutput: false
         });
@@ -439,7 +438,8 @@ dotnet_diagnostic.IDE0005.severity = error
     /**
      * Generates the solution file directly as a template, avoiding dotnet CLI overhead.
      * Computes relative paths from the solution directory to both project .csproj files.
-     * Supports both .slnx (default) and legacy .sln formats based on the `useSlnFormat` setting.
+     * When `sln-format` is "sln", generates both .sln and .slnx files.
+     * When `sln-format` is "slnx" (default), generates only .slnx.
      */
     private async createSolutionFile({
         absolutePathToSolutionDirectory,
@@ -459,12 +459,29 @@ dotnet_diagnostic.IDE0005.severity = error
             RelativeFilePath.of(`${testProjectName}.csproj`)
         );
 
-        if (this.settings.useSlnFormat) {
-            // Generate legacy .sln format with backslash paths (Windows convention)
-            const libraryCsprojRelative = path
+        // Always generate .slnx format
+        const libraryCsprojRelative = path
+            .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
+            .replace(/\\/g, "/");
+        const testCsprojRelative = path
+            .relative(absolutePathToSolutionDirectory, testCsprojAbsolute)
+            .replace(/\\/g, "/");
+
+        const slnxContents = `<Solution>
+  <Project Path="${testCsprojRelative}" />
+  <Project Path="${libraryCsprojRelative}" />
+</Solution>
+`;
+
+        const slnxFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await writeFile(slnxFilePath, slnxContents);
+
+        // When sln-format is "sln", also generate the legacy .sln file
+        if (this.settings.slnFormat === "sln") {
+            const libraryCsprojRelativeBackslash = path
                 .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
                 .replace(/\//g, "\\");
-            const testCsprojRelative = path
+            const testCsprojRelativeBackslash = path
                 .relative(absolutePathToSolutionDirectory, testCsprojAbsolute)
                 .replace(/\//g, "\\");
 
@@ -473,14 +490,13 @@ dotnet_diagnostic.IDE0005.severity = error
             const testProjectGuid = generateDeterministicGuid(testProjectName);
 
             const slnContents = [
-                "",
                 "Microsoft Visual Studio Solution File, Format Version 12.00",
                 "# Visual Studio Version 17",
                 "VisualStudioVersion = 17.0.31903.59",
                 "MinimumVisualStudioVersion = 10.0.40219.1",
-                `Project("{${projectTypeGuid}}") = "${this.name}", "${libraryCsprojRelative}", "{${libraryProjectGuid}}"`,
+                `Project("{${projectTypeGuid}}") = "${this.name}", "${libraryCsprojRelativeBackslash}", "{${libraryProjectGuid}}"`,
                 "EndProject",
-                `Project("{${projectTypeGuid}}") = "${testProjectName}", "${testCsprojRelative}", "{${testProjectGuid}}"`,
+                `Project("{${projectTypeGuid}}") = "${testProjectName}", "${testCsprojRelativeBackslash}", "{${testProjectGuid}}"`,
                 "EndProject",
                 "Global",
                 "\tGlobalSection(SolutionConfigurationPlatforms) = preSolution",
@@ -501,25 +517,8 @@ dotnet_diagnostic.IDE0005.severity = error
                 ""
             ].join("\n");
 
-            const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.sln`));
-            await writeFile(solutionFilePath, slnContents);
-        } else {
-            // Generate .slnx format (default)
-            const libraryCsprojRelative = path
-                .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
-                .replace(/\\/g, "/");
-            const testCsprojRelative = path
-                .relative(absolutePathToSolutionDirectory, testCsprojAbsolute)
-                .replace(/\\/g, "/");
-
-            const slnxContents = `<Solution>
-  <Project Path="${testCsprojRelative}" />
-  <Project Path="${libraryCsprojRelative}" />
-</Solution>
-`;
-
-            const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-            await writeFile(solutionFilePath, slnxContents);
+            const slnFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.sln`));
+            await writeFile(slnFilePath, slnContents);
         }
     }
 

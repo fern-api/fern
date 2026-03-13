@@ -109,10 +109,10 @@ export const CsharpConfigSchema = z.object({
     "experimental-enable-forward-compatible-enums": z.boolean().optional(),
 
     // Solution file format option.
-    // When true, generates the legacy .sln solution file format instead of the
-    // default .slnx format. This is useful for teams that need compatibility
-    // with older .NET tooling or CI systems that do not yet support .slnx.
-    "use-sln-format": z.boolean().optional()
+    // "sln" generates both .sln and .slnx files for compatibility with older
+    // .NET tooling or CI systems that do not yet support .slnx.
+    // "slnx" (default) generates only the modern .slnx format.
+    "sln-format": z.enum(["sln", "slnx"]).optional()
 });
 
 export type CsharpConfigSchema = z.infer<typeof CsharpConfigSchema>;
