@@ -89,74 +89,6 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
 
         stringEnum.addNestedClass(valuesClass);
 
-        // Generate nested serializer class (no reflection)
-        const serializerClass = this.csharp.class_({
-            origin: serializerOrigin,
-            access: ast.Access.Internal,
-            type: ast.Class.ClassType.Class,
-            namespace: stringEnum.reference.namespace,
-            enclosingType: stringEnum.reference,
-            parentClassReference: this.csharp.classReference({
-                name: `JsonConverter<${this.classReference.name}>`,
-                namespace: "System.Text.Json.Serialization"
-            })
-        });
-
-        serializerClass.addMethod({
-            access: ast.Access.Public,
-            name: "Read",
-            return_: this.classReference,
-            override: true,
-            type: ast.MethodType.INSTANCE,
-            parameters: [
-                this.csharp.parameter({
-                    name: "reader",
-                    type: this.csharp.classReference({ name: "Utf8JsonReader", namespace: "System.Text.Json" }),
-                    ref: true
-                }),
-                this.csharp.parameter({
-                    name: "typeToConvert",
-                    type: this.csharp.classReference({ name: "Type", namespace: "System" })
-                }),
-                this.csharp.parameter({
-                    name: "options",
-                    type: this.csharp.classReference({ name: "JsonSerializerOptions", namespace: "System.Text.Json" })
-                })
-            ],
-            body: this.csharp.codeblock((writer) => {
-                writer.writeLine(
-                    `var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");`
-                );
-                writer.writeTextStatement(`return new ${this.classReference.name}(stringValue)`);
-            })
-        });
-
-        serializerClass.addMethod({
-            access: ast.Access.Public,
-            name: "Write",
-            override: true,
-            type: ast.MethodType.INSTANCE,
-            parameters: [
-                this.csharp.parameter({
-                    name: "writer",
-                    type: this.csharp.classReference({ name: "Utf8JsonWriter", namespace: "System.Text.Json" })
-                }),
-                this.csharp.parameter({
-                    name: "value",
-                    type: this.classReference
-                }),
-                this.csharp.parameter({
-                    name: "options",
-                    type: this.csharp.classReference({ name: "JsonSerializerOptions", namespace: "System.Text.Json" })
-                })
-            ],
-            body: this.csharp.codeblock((writer) => {
-                writer.writeTextStatement("writer.WriteStringValue(value.Value)");
-            })
-        });
-
-        stringEnum.addNestedClass(serializerClass);
-
         stringEnum
             .addMethod({
                 access: ast.Access.Public,
@@ -291,6 +223,75 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
                 initializer: this.csharp.codeblock(`${valueProperty.name}`)
             });
         }
+
+        // Generate nested serializer class (no reflection)
+        // Must be created after valueProperty so we can reference its potentially renamed name
+        const serializerClass = this.csharp.class_({
+            origin: serializerOrigin,
+            access: ast.Access.Internal,
+            type: ast.Class.ClassType.Class,
+            namespace: stringEnum.reference.namespace,
+            enclosingType: stringEnum.reference,
+            parentClassReference: this.csharp.classReference({
+                name: `JsonConverter<${this.classReference.name}>`,
+                namespace: "System.Text.Json.Serialization"
+            })
+        });
+
+        serializerClass.addMethod({
+            access: ast.Access.Public,
+            name: "Read",
+            return_: this.classReference,
+            override: true,
+            type: ast.MethodType.INSTANCE,
+            parameters: [
+                this.csharp.parameter({
+                    name: "reader",
+                    type: this.csharp.classReference({ name: "Utf8JsonReader", namespace: "System.Text.Json" }),
+                    ref: true
+                }),
+                this.csharp.parameter({
+                    name: "typeToConvert",
+                    type: this.csharp.classReference({ name: "Type", namespace: "System" })
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.csharp.classReference({ name: "JsonSerializerOptions", namespace: "System.Text.Json" })
+                })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine(
+                    `var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");`
+                );
+                writer.writeTextStatement(`return new ${this.classReference.name}(stringValue)`);
+            })
+        });
+
+        serializerClass.addMethod({
+            access: ast.Access.Public,
+            name: "Write",
+            override: true,
+            type: ast.MethodType.INSTANCE,
+            parameters: [
+                this.csharp.parameter({
+                    name: "writer",
+                    type: this.csharp.classReference({ name: "Utf8JsonWriter", namespace: "System.Text.Json" })
+                }),
+                this.csharp.parameter({
+                    name: "value",
+                    type: this.classReference
+                }),
+                this.csharp.parameter({
+                    name: "options",
+                    type: this.csharp.classReference({ name: "JsonSerializerOptions", namespace: "System.Text.Json" })
+                })
+            ],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeTextStatement(`writer.WriteStringValue(value.${valueProperty.name})`);
+            })
+        });
+
+        stringEnum.addNestedClass(serializerClass);
 
         return new CSharpFile({
             clazz: stringEnum,
