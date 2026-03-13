@@ -6,17 +6,6 @@ import { type Document, parseDocument } from "yaml";
 import { CliError } from "../../errors/CliError.js";
 import { FERN_YML_FILENAME, REF_KEY } from "./constants.js";
 
-/**
- * Converts a YAML Document node (YAMLMap, YAMLSeq, Scalar) to its plain JS value.
- * Primitives and null/undefined pass through as-is.
- */
-function nodeToJS(value: unknown): unknown {
-    if (value == null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
-        return value;
-    }
-    return (value as { toJSON(): unknown }).toJSON();
-}
-
 export interface OverrideEdit {
     /** 1-based line number where the edit occurred */
     line: number;
@@ -428,4 +417,15 @@ export class FernYmlEditor {
         }
         return 1;
     }
+}
+
+/**
+ * Converts a YAML Document node (YAMLMap, YAMLSeq, Scalar) to its plain JS value.
+ * Primitives and null/undefined pass through as-is.
+ */
+function nodeToJS(value: unknown): unknown {
+    if (value == null || typeof value === "string" || typeof value === "number" || typeof value === "boolean") {
+        return value;
+    }
+    return (value as { toJSON(): unknown }).toJSON();
 }
