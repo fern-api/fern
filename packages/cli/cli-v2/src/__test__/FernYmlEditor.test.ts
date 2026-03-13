@@ -471,6 +471,54 @@ sdks:
             const after = await readFile(fernYmlPath, "utf8");
             expect(after).toBe(original);
         });
+
+        it("preserves comments and formatting when adding overrides", async () => {
+            const fernYmlPath = AbsoluteFilePath.of(join(testDir, "fern.yml"));
+            const specFilePath = AbsoluteFilePath.of(join(testDir, "openapi.yml"));
+            await writeFile(
+                fernYmlPath,
+                `# API configuration
+api:
+  specs:
+    # Main spec
+    - openapi: ./openapi.yml
+`
+            );
+
+            const editor = await FernYmlEditor.load({ fernYmlPath });
+            const overridePath = AbsoluteFilePath.of(join(testDir, "overrides.yml"));
+            await editor.addOverride(specFilePath, overridePath);
+            await editor.save();
+
+            const result = await readFile(fernYmlPath, "utf8");
+            expect(result).toContain("# API configuration");
+            expect(result).toContain("# Main spec");
+            expect(result).toContain("overrides: ./overrides.yml");
+        });
+
+        it("preserves comments and formatting when removing overrides", async () => {
+            const fernYmlPath = AbsoluteFilePath.of(join(testDir, "fern.yml"));
+            const specFilePath = AbsoluteFilePath.of(join(testDir, "openapi.yml"));
+            await writeFile(
+                fernYmlPath,
+                `# API configuration
+api:
+  specs:
+    # Main spec
+    - openapi: ./openapi.yml
+      overrides: ./overrides.yml
+`
+            );
+
+            const editor = await FernYmlEditor.load({ fernYmlPath });
+            await editor.removeOverrides(specFilePath);
+            await editor.save();
+
+            const result = await readFile(fernYmlPath, "utf8");
+            expect(result).toContain("# API configuration");
+            expect(result).toContain("# Main spec");
+            expect(result).not.toContain("overrides");
+        });
     });
 
     describe("addOverride — api $ref section", () => {
