@@ -6,6 +6,7 @@ using SeedExamples.Core;
 namespace SeedExamples.Test_;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ExceptionInfoTest
 {
     [NUnit.Framework.Test]
