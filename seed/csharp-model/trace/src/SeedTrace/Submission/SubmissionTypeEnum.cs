@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedTrace.Core;
 
 namespace SeedTrace;
 
-[JsonConverter(typeof(StringEnumSerializer<SubmissionTypeEnum>))]
+[JsonConverter(typeof(SubmissionTypeEnum.SubmissionTypeEnumSerializer))]
 [Serializable]
 public readonly record struct SubmissionTypeEnum : IStringEnum
 {
@@ -49,6 +50,32 @@ public readonly record struct SubmissionTypeEnum : IStringEnum
     public static explicit operator string(SubmissionTypeEnum value) => value.Value;
 
     public static explicit operator SubmissionTypeEnum(string value) => new(value);
+
+    internal class SubmissionTypeEnumSerializer : JsonConverter<SubmissionTypeEnum>
+    {
+        public override SubmissionTypeEnum Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new SubmissionTypeEnum(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            SubmissionTypeEnum value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values

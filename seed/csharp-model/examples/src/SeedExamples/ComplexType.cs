@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedExamples.Core;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(StringEnumSerializer<ComplexType>))]
+[JsonConverter(typeof(ComplexType.ComplexTypeSerializer))]
 [Serializable]
 public readonly record struct ComplexType : IStringEnum
 {
@@ -53,6 +54,32 @@ public readonly record struct ComplexType : IStringEnum
     public static explicit operator string(ComplexType value) => value.Value;
 
     public static explicit operator ComplexType(string value) => new(value);
+
+    internal class ComplexTypeSerializer : JsonConverter<ComplexType>
+    {
+        public override ComplexType Read(
+            ref Utf8JsonReader reader,
+            System.Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new ComplexType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ComplexType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values
