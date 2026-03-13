@@ -6,8 +6,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
-from ...core.jsonable_encoder import jsonable_encoder
 from ...core.parse_error import ParsingError
+from ...core.path_encoder import encode_path_parameter
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...types.object.types.object_with_required_field import ObjectWithRequiredField
@@ -39,7 +39,7 @@ class RawParamsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{encode_path_parameter(param)}",
             method="GET",
             request_options=request_options,
         )
@@ -80,7 +80,7 @@ class RawParamsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{encode_path_parameter(param)}",
             method="GET",
             request_options=request_options,
         )
@@ -207,7 +207,7 @@ class RawParamsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path-query/{jsonable_encoder(param)}",
+            f"params/path-query/{encode_path_parameter(param)}",
             method="GET",
             params={
                 "query": query,
@@ -246,7 +246,7 @@ class RawParamsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path-query/{jsonable_encoder(param)}",
+            f"params/path-query/{encode_path_parameter(param)}",
             method="GET",
             params={
                 "query": query,
@@ -285,7 +285,7 @@ class RawParamsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{encode_path_parameter(param)}",
             method="PUT",
             json=request,
             request_options=request_options,
@@ -330,7 +330,7 @@ class RawParamsClient:
         HttpResponse[str]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{encode_path_parameter(param)}",
             method="PUT",
             json=request,
             request_options=request_options,
@@ -379,7 +379,7 @@ class RawParamsClient:
         HttpResponse[ObjectWithRequiredField]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{encode_path_parameter(param)}",
             method="POST",
             content=request,
             request_options=request_options,
@@ -427,7 +427,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{encode_path_parameter(param)}",
             method="GET",
             request_options=request_options,
         )
@@ -468,7 +468,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{encode_path_parameter(param)}",
             method="GET",
             request_options=request_options,
         )
@@ -595,7 +595,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path-query/{jsonable_encoder(param)}",
+            f"params/path-query/{encode_path_parameter(param)}",
             method="GET",
             params={
                 "query": query,
@@ -634,7 +634,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path-query/{jsonable_encoder(param)}",
+            f"params/path-query/{encode_path_parameter(param)}",
             method="GET",
             params={
                 "query": query,
@@ -673,7 +673,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{encode_path_parameter(param)}",
             method="PUT",
             json=request,
             request_options=request_options,
@@ -718,7 +718,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[str]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{encode_path_parameter(param)}",
             method="PUT",
             json=request,
             request_options=request_options,
@@ -767,7 +767,7 @@ class AsyncRawParamsClient:
         AsyncHttpResponse[ObjectWithRequiredField]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"params/path/{jsonable_encoder(param)}",
+            f"params/path/{encode_path_parameter(param)}",
             method="POST",
             content=request,
             request_options=request_options,

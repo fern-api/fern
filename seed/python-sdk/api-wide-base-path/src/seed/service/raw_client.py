@@ -6,8 +6,8 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.parse_error import ParsingError
+from ..core.path_encoder import encode_path_parameter
 from ..core.request_options import RequestOptions
 from pydantic import ValidationError
 
@@ -44,7 +44,7 @@ class RawServiceClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}/{jsonable_encoder(resource_param)}",
+            f"test/{encode_path_parameter(path_param)}/{encode_path_parameter(service_param)}/{encode_path_parameter(endpoint_param)}/{encode_path_parameter(resource_param)}",
             method="POST",
             request_options=request_options,
         )
@@ -93,7 +93,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}/{jsonable_encoder(resource_param)}",
+            f"test/{encode_path_parameter(path_param)}/{encode_path_parameter(service_param)}/{encode_path_parameter(endpoint_param)}/{encode_path_parameter(resource_param)}",
             method="POST",
             request_options=request_options,
         )

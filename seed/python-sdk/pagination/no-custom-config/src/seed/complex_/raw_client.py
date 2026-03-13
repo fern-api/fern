@@ -5,9 +5,9 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.parse_error import ParsingError
+from ..core.path_encoder import encode_path_parameter
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
@@ -50,7 +50,7 @@ class RawComplexClient:
         SyncPager[Conversation, PaginatedConversationResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(index)}/conversations/search",
+            f"{encode_path_parameter(index)}/conversations/search",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
@@ -127,7 +127,7 @@ class AsyncRawComplexClient:
         AsyncPager[Conversation, PaginatedConversationResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"{jsonable_encoder(index)}/conversations/search",
+            f"{encode_path_parameter(index)}/conversations/search",
             method="POST",
             json={
                 "pagination": convert_and_respect_annotation_metadata(
