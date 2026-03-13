@@ -29,6 +29,11 @@ export interface AutoVersionResult {
      * Undefined for PATCH changes, present for MINOR/MAJOR.
      */
     changelogEntry?: string;
+    /**
+     * PR description with breaking changes (Before/After code fences) and What's New sections.
+     * Undefined for PATCH changes or when consolidation is not performed.
+     */
+    prDescription?: string;
 }
 
 /**

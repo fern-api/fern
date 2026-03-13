@@ -146,7 +146,7 @@ export class BamlSyncClient {
       throw toBamlError(error);
     }
   }
-
+  
   ConsolidateChangelog(
       raw_entries: string,version_bump: string,language: string,
       __baml_options__?: BamlCallOptions<never>
@@ -159,6 +159,7 @@ export class BamlSyncClient {
         throw new BamlAbortError('Operation was aborted', __signal__.reason);
       }
 
+      // Check if onTick is provided and reject for sync operations
       if (__options__.onTick) {
         throw new Error("onTick is not supported for synchronous functions. Please use the async client instead.");
       }
@@ -169,6 +170,7 @@ export class BamlSyncClient {
         Object.entries(__rawEnv__).filter(([_, value]) => value !== undefined) as [string, string][]
       );
 
+      // Resolve client option to clientRegistry (client takes precedence)
       let __clientRegistry__ = __options__.clientRegistry;
       if (__options__.client) {
         __clientRegistry__ = __clientRegistry__ || new ClientRegistry();

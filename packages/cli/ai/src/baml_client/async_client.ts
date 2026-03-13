@@ -152,7 +152,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
             throw toBamlError(error);
             }
             }
-
+            
         async ConsolidateChangelog(
         raw_entries: string,version_bump: string,language: string,
         __baml_options__?: BamlCallOptions<never>
@@ -165,6 +165,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
           throw new BamlAbortError('Operation was aborted', __signal__.reason);
           }
 
+          // Check if onTick is provided - route through streaming if so
           if (__options__.onTick) {
           const __stream__ = this.stream.ConsolidateChangelog(
           raw_entries,version_bump,language,
@@ -181,6 +182,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
             Object.entries(__rawEnv__).filter(([_, value]) => value !== undefined) as [string, string][]
             );
 
+            // Resolve client option to clientRegistry (client takes precedence)
             let __clientRegistry__ = __options__.clientRegistry;
             if (__options__.client) {
               __clientRegistry__ = __clientRegistry__ || new ClientRegistry();
@@ -294,7 +296,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
                   throw toBamlError(error);
                   }
                   }
-
+                  
             ConsolidateChangelog(
             raw_entries: string,version_bump: string,language: string,
             __baml_options__?: BamlCallOptions<never>
@@ -313,6 +315,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
 
               let __onTickWrapper__: (() => void) | undefined;
 
+              // Create collector and wrap onTick if provided
               if (__options__.onTick) {
               const __tickCollector__ = new Collector("on-tick-collector");
               __collector__ = [...__collector__, __tickCollector__];
@@ -334,6 +337,7 @@ export type RecursivePartialNull<T> = MovedRecursivePartialNull<T>
                 Object.entries(__rawEnv__).filter(([_, value]) => value !== undefined) as [string, string][]
                 );
 
+                // Resolve client option to clientRegistry (client takes precedence)
                 let __clientRegistry__ = __options__.clientRegistry;
                 if (__options__.client) {
                   __clientRegistry__ = __clientRegistry__ || new ClientRegistry();

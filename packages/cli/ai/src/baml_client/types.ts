@@ -68,5 +68,6 @@ export interface AnalyzeCommitDiffResponse {
 
 export interface ConsolidateChangelogResponse {
   consolidated_changelog: string
+  pr_description: string
   
 }

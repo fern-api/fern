@@ -316,6 +316,7 @@ export class LocalTaskHandler {
                         analysis = null;
                     } else {
                         let changelogEntry: string;
+                        let prDescription: string | undefined;
                         if (allChangelogEntries.length > 1) {
                             // Consolidate repetitive multi-chunk entries via AI rollup
                             const rawEntries = allChangelogEntries
@@ -329,6 +330,7 @@ export class LocalTaskHandler {
                                     clientRegistry: await this.getClientRegistry()
                                 }).ConsolidateChangelog(rawEntries, bestBump, this.generatorLanguage ?? "unknown");
                                 changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
+                                prDescription = rollup.pr_description?.trim() || undefined;
                             } catch (rollupError) {
                                 this.context.logger.warn(
                                     `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`
@@ -342,7 +344,8 @@ export class LocalTaskHandler {
                         analysis = {
                             versionBump: bestBump as VersionBump,
                             message: bestMessage,
-                            changelogEntry
+                            changelogEntry,
+                            prDescription
                         };
                     }
                 }
@@ -376,6 +379,7 @@ export class LocalTaskHandler {
             const finalBump = analysis.versionBump;
             const finalMessage = analysis.message;
             const finalChangelogEntry = analysis.changelogEntry;
+            const finalPrDescription = analysis.prDescription;
 
             const newVersion = this.incrementVersion(previousVersion, finalBump);
             this.context.logger.info(`Version bump: ${finalBump}, new version: ${newVersion}`);
@@ -384,11 +388,13 @@ export class LocalTaskHandler {
 
             // changelogEntry is populated for MINOR/MAJOR, undefined for PATCH (empty string from AI)
             const changelogEntry = finalChangelogEntry?.trim() || undefined;
+            const prDescription = finalPrDescription?.trim() || undefined;
 
             return {
                 version: newVersion,
                 commitMessage,
-                changelogEntry
+                changelogEntry,
+                prDescription
             };
         } catch (error) {
             if (error instanceof AutoVersioningException) {

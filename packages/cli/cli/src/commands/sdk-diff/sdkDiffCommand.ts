@@ -200,6 +200,7 @@ export async function sdkDiffCommand({
                 context.logger.debug(`Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`);
                 const rollup = await bamlClient.ConsolidateChangelog(rawEntries, bestBump, "unknown");
                 changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
+                // pr_description is available via rollup.pr_description if needed downstream
             } catch (rollupError) {
                 context.logger.warn(
                     `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`

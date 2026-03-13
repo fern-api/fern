@@ -46,5 +46,6 @@ export namespace partial_types {
     }
     export interface ConsolidateChangelogResponse {
       consolidated_changelog?: string | null
+      pr_description?: string | null
     }
 }

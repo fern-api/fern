@@ -23,7 +23,7 @@ import type { BamlRuntime, BamlCtxManager, Image, Audio, Pdf, Video, FunctionLog
 import { toBamlError, HTTPRequest, ClientRegistry } from "@boundaryml/baml"
 import type { Checked, Check } from "./types"
 import type * as types from "./types"
-import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, ConsolidateChangelogResponse, VersionBump} from "./types"
 import type TypeBuilder from "./type_builder"
 import type * as events from "./events"
 
@@ -75,6 +75,39 @@ env?: Record<string, string | undefined>
       }
       }
       
+  async ConsolidateChangelog(
+  raw_entries: string,version_bump: string,language: string,
+  __baml_options__?: BamlCallOptions<never>
+  ): Promise<HTTPRequest> {
+    try {
+    const __rawEnv__ = __baml_options__?.env ? { ...process.env, ...__baml_options__.env } : { ...process.env };
+    const __env__: Record<string, string> = Object.fromEntries(
+      Object.entries(__rawEnv__).filter(([_, value]) => value !== undefined) as [string, string][]
+      );
+
+      // Resolve client option to clientRegistry (client takes precedence)
+      let __clientRegistry__ = __baml_options__?.clientRegistry;
+      if (__baml_options__?.client) {
+        __clientRegistry__ = __clientRegistry__ || new ClientRegistry();
+        __clientRegistry__.setPrimary(__baml_options__.client);
+      }
+
+      return await this.runtime.buildRequest(
+      "ConsolidateChangelog",
+      {
+      "raw_entries": raw_entries,"version_bump": version_bump,"language": language
+      },
+      this.ctxManager.cloneContext(),
+      __baml_options__?.tb?.__tb(),
+      __clientRegistry__,
+      false,
+      __env__
+      )
+      } catch (error) {
+      throw toBamlError(error);
+      }
+      }
+      
       }
 
       export class AsyncHttpStreamRequest {
@@ -102,6 +135,39 @@ env?: Record<string, string | undefined>
           "AnalyzeSdkDiff",
           {
           "diff": diff,"language": language,"previous_version": previous_version,"prior_changelog": prior_changelog,"spec_commit_message": spec_commit_message
+          },
+          this.ctxManager.cloneContext(),
+          __baml_options__?.tb?.__tb(),
+          __clientRegistry__,
+          true,
+          __env__
+          )
+          } catch (error) {
+          throw toBamlError(error);
+          }
+          }
+          
+      async ConsolidateChangelog(
+      raw_entries: string,version_bump: string,language: string,
+      __baml_options__?: BamlCallOptions<never>
+      ): Promise<HTTPRequest> {
+        try {
+        const __rawEnv__ = __baml_options__?.env ? { ...process.env, ...__baml_options__.env } : { ...process.env };
+        const __env__: Record<string, string> = Object.fromEntries(
+          Object.entries(__rawEnv__).filter(([_, value]) => value !== undefined) as [string, string][]
+          );
+
+          // Resolve client option to clientRegistry (client takes precedence)
+          let __clientRegistry__ = __baml_options__?.clientRegistry;
+          if (__baml_options__?.client) {
+            __clientRegistry__ = __clientRegistry__ || new ClientRegistry();
+            __clientRegistry__.setPrimary(__baml_options__.client);
+          }
+
+          return await this.runtime.buildRequest(
+          "ConsolidateChangelog",
+          {
+          "raw_entries": raw_entries,"version_bump": version_bump,"language": language
           },
           this.ctxManager.cloneContext(),
           __baml_options__?.tb?.__tb(),

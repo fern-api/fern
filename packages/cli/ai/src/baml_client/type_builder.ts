@@ -31,6 +31,8 @@ export default class TypeBuilder {
     
     AnalyzeCommitDiffResponse: ClassViewer<'AnalyzeCommitDiffResponse', "message" | "changelog_entry" | "version_bump">;
     
+    ConsolidateChangelogResponse: ClassViewer<'ConsolidateChangelogResponse', "consolidated_changelog" | "pr_description">;
+    
     
     VersionBump: EnumViewer<'VersionBump', "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE">;
     
@@ -38,7 +40,7 @@ export default class TypeBuilder {
     constructor() {
         this.tb = new _TypeBuilder({
           classes: new Set([
-            "AnalyzeCommitDiffRequest","AnalyzeCommitDiffResponse",
+            "AnalyzeCommitDiffRequest","AnalyzeCommitDiffResponse","ConsolidateChangelogResponse",
           ]),
           enums: new Set([
             "VersionBump",
@@ -52,6 +54,10 @@ export default class TypeBuilder {
         
         this.AnalyzeCommitDiffResponse = this.tb.classViewer("AnalyzeCommitDiffResponse", [
           "message","changelog_entry","version_bump",
+        ]);
+        
+        this.ConsolidateChangelogResponse = this.tb.classViewer("ConsolidateChangelogResponse", [
+          "consolidated_changelog","pr_description",
         ]);
         
         

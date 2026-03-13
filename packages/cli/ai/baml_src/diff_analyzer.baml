@@ -621,7 +621,10 @@ function AnalyzeSdkDiff(
 
 class ConsolidateChangelogResponse {
     consolidated_changelog string
-        @description("The consolidated, well-formatted changelog text with category headers and emojis. Return ONLY the formatted changelog content.")
+        @description("CHANGELOG.md entry in Keep a Changelog format. Group under ### Breaking Changes, ### Added, ### Changed, ### Fixed. Bold symbol names, one tight sentence per bullet. Prose only, no code fences. Append migration action inline for breaking changes.")
+
+    pr_description string
+        @description("PR description with ## Breaking Changes section (if any) containing ### per breaking change with Before/After code fences and Migration line, then ## What's New section summarizing features in prose paragraphs grouped by theme. Do NOT list every class individually — summarize repetitive changes as a single entry.")
 }
 
 function ConsolidateChangelog(
@@ -632,42 +635,40 @@ function ConsolidateChangelog(
   client DefaultClient
 
   prompt #"
-    You are consolidating changelog entries for an SDK release. Multiple AI analyses of
-    different parts of a large code diff have produced these raw changelog entries:
+    You are a technical writer formatting release notes for a {{language}} SDK.
 
+    The raw change notes below are noisy and repetitive — many bullets describe the same
+    change across different packages. Deduplicate aggressively: if the same feature appears
+    multiple times, merge into one entry.
+
+    Raw changelog entries:
     ---
     {{raw_entries}}
     ---
 
     Overall version bump: {{version_bump}}
-    SDK language: {{language}}
 
-    Consolidate these entries into a single, well-formatted changelog that:
+    Produce two outputs:
 
-    1. REMOVE DUPLICATES: Many entries describe the same change (e.g. "New additionalProperty()
-       methods" repeated 20 times). Merge them into ONE bullet point.
+    ---
 
-    2. GROUP under category headers with emojis (only include categories that have entries):
-       ### 💥 Breaking Changes
-       (removals, renames, type changes, removed methods/fields)
+    ## 1. CHANGELOG.md entry (Keep a Changelog format)
 
-       ### ✨ Enhancements
-       (new features, new methods, new types, new endpoints)
+    - Group under: `### Breaking Changes`, `### Added`, `### Changed`, `### Fixed`
+    - Only include sections with entries
+    - **Bold the symbol name** first, then one tight sentence for SDK consumers
+    - No code fences — prose only
+    - For breaking changes, append the migration action inline
 
-       ### 🔧 Improvements
-       (refactoring, compatibility, internal changes, provider additions)
+    ## 2. PR Description
 
-    3. FORMAT each entry as a markdown bullet point:
-       - Use backticks for code references (`methodName()`, `ClassName`)
-       - Be concise: one sentence per bullet point
-       - Write for SDK consumers, not internal engineers
-       - Write in third person ("The SDK now supports..." not "Add support for...")
+    - `## Breaking Changes` section at top (if any)
+      - One `###` per breaking change with **Before/After** code fences and a **Migration:** line
+    - `## What's New` section summarizing added/changed features in prose paragraphs,
+      grouped by theme (e.g. logging, streaming, pagination, builder improvements)
+    - Do NOT list every class that got the same method — summarize as a single entry
 
-    4. Keep it concise: aim for 5-15 bullet points total across all categories.
-       Aggressively deduplicate and merge related entries.
-
-    Return ONLY the formatted changelog text (the category headers and bullet points).
-    Do not include any preamble or explanation.
+    ---
 
     {{ ctx.output_format }}
   "#
