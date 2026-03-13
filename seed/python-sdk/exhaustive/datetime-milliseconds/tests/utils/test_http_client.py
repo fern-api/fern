@@ -11,6 +11,7 @@ from seed.core.http_client import (
     get_request_body,
     remove_none_from_dict,
 )
+from seed.core.path_encoder import encode_path_parameter
 from seed.core.request_options import RequestOptions
 
 
@@ -298,3 +299,43 @@ def test_preserves_base_url_path_prefix_trailing_slash() -> None:
     """Test that path prefixes in base URL are preserved."""
     result = _build_url("https://cloud.example.com/org/tenant/api/", "/users")
     assert result == "https://cloud.example.com/org/tenant/api/users"
+
+
+def _encode_path_param(value: object) -> str:
+    """Wrapper around the actual path encoder utility."""
+    return encode_path_parameter(value)
+
+
+def test_path_parameter_encoding_hash() -> None:
+    """Test that '#' in path parameters is encoded to prevent URL fragment truncation."""
+    assert _encode_path_param("my#tenant") == "my%23tenant"
+
+
+def test_path_parameter_encoding_question_mark() -> None:
+    """Test that '?' in path parameters is encoded to prevent query string injection."""
+    assert _encode_path_param("user?name") == "user%3Fname"
+
+
+def test_path_parameter_encoding_slash() -> None:
+    """Test that '/' in path parameters is encoded to prevent path segment splitting."""
+    assert _encode_path_param("a/b/c") == "a%2Fb%2Fc"
+
+
+def test_path_parameter_encoding_ampersand() -> None:
+    """Test that '&' in path parameters is encoded."""
+    assert _encode_path_param("foo&bar") == "foo%26bar"
+
+
+def test_path_parameter_encoding_multiple_special_chars() -> None:
+    """Test encoding of a value with multiple special characters."""
+    assert _encode_path_param("user?with/special&chars") == "user%3Fwith%2Fspecial%26chars"
+
+
+def test_path_parameter_encoding_plain_string() -> None:
+    """Test that plain strings pass through without unnecessary encoding."""
+    assert _encode_path_param("simple-tenant_123") == "simple-tenant_123"
+
+
+def test_path_parameter_encoding_integer() -> None:
+    """Test that integer path parameters are converted to string and returned as-is."""
+    assert _encode_path_param(42) == "42"

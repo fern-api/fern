@@ -1,7 +1,8 @@
+import typing
 import urllib.parse
 
+from .jsonable_encoder import jsonable_encoder
 
-def encode_path(path: str) -> str:
-    path_part, _, query = path.partition("?")
-    encoded = urllib.parse.quote(path_part, safe="/")
-    return f"{encoded}?{query}" if query else encoded
+
+def encode_path_parameter(value: typing.Any) -> str:
+    return urllib.parse.quote(str(jsonable_encoder(value)), safe="")

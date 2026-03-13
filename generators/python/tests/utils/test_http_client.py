@@ -11,6 +11,7 @@ from core_utilities.shared.http_client import (
     remove_none_from_dict,
 )
 from core_utilities.shared.jsonable_encoder import jsonable_encoder
+from core_utilities.shared.path_encoder import encode_path_parameter
 from core_utilities.shared.request_options import RequestOptions
 
 
@@ -300,8 +301,8 @@ def test_preserves_base_url_path_prefix_trailing_slash() -> None:
     assert result == "https://cloud.example.com/org/tenant/api/users"
 
 def _encode_path_param(value: object) -> str:
-    """Reproduce the encoding pattern used in generated SDK code."""
-    return urllib.parse.quote(str(jsonable_encoder(value)), safe="")
+    """Wrapper around the actual path encoder utility."""
+    return encode_path_parameter(value)
 
 
 def test_path_parameter_encoding_hash() -> None:

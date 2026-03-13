@@ -622,9 +622,18 @@ class CoreUtilities:
         )
 
     def encode_path_parameter(self, obj: AST.Expression) -> AST.Expression:
-        from fern_python.external_dependencies.urllib_parse import UrlLibParse
-
-        return UrlLibParse.quote(obj)
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "path_encoder"),
+                        named_import="encode_path_parameter",
+                    ),
+                ),
+                args=[obj],
+            )
+        )
 
     def serialize_datetime(self, datetime: AST.Expression) -> AST.Expression:
         return AST.Expression(
