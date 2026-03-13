@@ -106,6 +106,22 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             }) ?? [];
 
         const auth = this.hasServerSecurity() || this.context.authOverrides?.auth != null;
+        if (this.channelPath === "lightningV31Stream") {
+            this.context.logger.info(`AsyncAPI v3 Channel ${this.channelPath} auth: ${auth}`);
+            this.context.logger.info(`AsyncAPI v3 Channel ${this.channelPath} object:`, JSON.stringify(this, null, 2));
+        }
+        // this.context.logger.info(
+        //     `AsyncAPI v3 Channel ${this.channelPath} auth:`,
+        //     JSON.stringify(
+        //         {
+        //             hasServerSecurity: this.hasServerSecurity(),
+        //             hasAuthOverrides: this.context.authOverrides?.auth != null,
+        //             auth: auth
+        //         },
+        //         null,
+        //         2
+        //     )
+        // );
 
         return {
             channel: {
@@ -138,7 +154,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         };
     }
 
-    private hasServerSecurity(): boolean {
+    protected hasServerSecurity(): boolean {
         const spec = this.context.spec as AsyncAPIV3.DocumentV3;
         const servers = spec.servers ?? {};
 

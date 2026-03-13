@@ -1,4 +1,5 @@
-import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { convertApiAuth } from "@fern-api/ir-utils";
 import { AbstractConverter, AbstractSpecConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3 } from "openapi-types";
 import { ChannelConverter2_X } from "./2.x/channel/ChannelConverter2_X.js";
@@ -42,9 +43,20 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
 
         this.convertServers();
 
+        this.convertSecuritySchemes();
+
         this.convertChannels();
 
-        return this.finalizeIr();
+        const finalIr = this.finalizeIr();
+
+        // Log the auth section of the final IR
+        if (finalIr.auth) {
+            this.context.logger.info("AsyncAPI Final IR Auth:", JSON.stringify(finalIr.auth, null, 2));
+        } else {
+            this.context.logger.info("AsyncAPI Final IR: No auth section found");
+        }
+
+        return finalIr;
     }
 
     private isAsyncAPIV3(context: AsyncAPIConverterContext): boolean {
@@ -158,6 +170,57 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             convertedServers = serversConverter.convert();
         }
         this.addEnvironmentsToIr({ environmentConfig: convertedServers });
+    }
+
+    private convertSecuritySchemes(): void {
+        if (this.context.authOverrides) {
+            // this.context.logger.info(
+            //     "AsyncAPI Processing authOverrides:",
+            //     JSON.stringify(this.context.authOverrides, null, 2)
+            // );
+
+            const overrideAuth = convertApiAuth({
+                rawApiFileSchema: this.context.authOverrides,
+                casingsGenerator: this.context.casingsGenerator
+            });
+
+            // this.context.logger.info(
+            //     "AsyncAPI Converted auth schemes:",
+            //     JSON.stringify(
+            //         {
+            //             requirement: overrideAuth.requirement,
+            //             schemes: overrideAuth.schemes,
+            //             docs: overrideAuth.docs
+            //         },
+            //         null,
+            //         2
+            //     )
+            // );
+
+            this.addAuthToIR({
+                requirement: overrideAuth.requirement,
+                schemes: overrideAuth.schemes,
+                docs: overrideAuth.docs
+            });
+            return;
+        }
+
+        // Handle native AsyncAPI security schemes if no overrides provided
+        const asyncApiSchemes = this.convertAsyncApiSecuritySchemes();
+        if (asyncApiSchemes.length > 0) {
+            this.addAuthToIR({
+                requirement: asyncApiSchemes.length === 1 ? "ALL" : "ANY",
+                schemes: asyncApiSchemes,
+                docs: undefined
+            });
+        }
+    }
+
+    private convertAsyncApiSecuritySchemes(): AuthScheme[] {
+        // TODO: Implement conversion of native AsyncAPI security schemes
+        // This would parse this.context.spec.components?.securitySchemes
+        // For now, return empty array as authOverrides is the primary method
+        return [];
     }
 
     private convertChannels(): void {

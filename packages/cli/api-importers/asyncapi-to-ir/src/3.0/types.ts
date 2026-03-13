@@ -11,6 +11,7 @@ export interface DocumentV3 {
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
         messages?: Record<string, ChannelMessage>;
+        securitySchemes?: Record<string, OpenAPIV3.SecuritySchemeObject>;
     };
 }
 

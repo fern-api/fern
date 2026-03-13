@@ -9,6 +9,7 @@ export interface DocumentV2 {
     components?: {
         schemas?: Record<string, OpenAPIV3.SchemaObject>;
         messages?: Record<MessageId, MessageV2>;
+        securitySchemes?: Record<string, OpenAPIV3.SecuritySchemeObject>;
     };
     tags?: Tag[];
 }
