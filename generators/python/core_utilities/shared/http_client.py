@@ -11,6 +11,7 @@ from .file import File, convert_file_dict_to_httpx_tuples
 from .force_multipart import FORCE_MULTIPART
 from .jsonable_encoder import jsonable_encoder
 from .logging import LogConfig, Logger, create_logger
+from .path_encoder import encode_path
 from .query_encoder import encode_query
 from .remove_none_from_dict import remove_none_from_dict as remove_none_from_dict
 from .request_options import RequestOptions
@@ -168,7 +169,7 @@ def _build_url(base_url: str, path: typing.Optional[str]) -> str:
     """
     if not path:
         return base_url
-    return f"{base_url.rstrip('/')}/{path.lstrip('/')}"
+    return f"{base_url.rstrip('/')}/{encode_path(path.lstrip('/'))}"
 
 
 def _maybe_filter_none_from_multipart_data(

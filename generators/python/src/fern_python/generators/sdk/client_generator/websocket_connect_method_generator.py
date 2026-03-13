@@ -539,7 +539,7 @@ class WebsocketConnectMethodGenerator:
 
                     writer.write("{")
                     writer.write_node(
-                        self._context.core_utilities.encode_path_parameter(
+                        self._context.core_utilities.jsonable_encoder(
                             self.convert_and_respect_annotation_metadata_raw(
                                 context=self._context,
                                 object_=parameter,

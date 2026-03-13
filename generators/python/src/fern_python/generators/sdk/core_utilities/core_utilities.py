@@ -233,6 +233,15 @@ class CoreUtilities:
             ),
             exports={"encode_query"} if not self._exclude_types_from_init_exports else set(),
         )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="path_encoder.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="path_encoder"),
+            ),
+            exports=set(),
+        )
 
         self._copy_file_to_project(
             project=project,
@@ -615,13 +624,7 @@ class CoreUtilities:
     def encode_path_parameter(self, obj: AST.Expression) -> AST.Expression:
         from fern_python.external_dependencies.urllib_parse import UrlLibParse
 
-        # Build str(jsonable_encoder(obj)) using a CodeWriter since str is a built-in
-        def write_str_call(writer: AST.NodeWriter) -> None:
-            writer.write("str(")
-            writer.write_node(self.jsonable_encoder(obj))
-            writer.write(")")
-
-        return UrlLibParse.quote(AST.Expression(AST.CodeWriter(write_str_call)))
+        return UrlLibParse.quote(obj)
 
     def serialize_datetime(self, datetime: AST.Expression) -> AST.Expression:
         return AST.Expression(

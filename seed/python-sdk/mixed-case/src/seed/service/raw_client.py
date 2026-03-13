@@ -2,7 +2,6 @@
 
 import datetime as dt
 import typing
-import urllib.parse
 from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
@@ -36,7 +35,7 @@ class RawServiceClient:
         HttpResponse[Resource]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"resource/{urllib.parse.quote(str(jsonable_encoder(resource_id)), safe='')}",
+            f"resource/{jsonable_encoder(resource_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -125,7 +124,7 @@ class AsyncRawServiceClient:
         AsyncHttpResponse[Resource]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"resource/{urllib.parse.quote(str(jsonable_encoder(resource_id)), safe='')}",
+            f"resource/{jsonable_encoder(resource_id)}",
             method="GET",
             request_options=request_options,
         )
