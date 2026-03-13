@@ -13,6 +13,8 @@ import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
 import com.fern.java.generators.AuthGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
+import com.fern.java.generators.NullableGenerator;
+import com.fern.java.generators.NullableNonemptyFilterGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.Rfc2822DateTimeDeserializerGenerator;
 import com.fern.java.generators.TypesGenerator;
@@ -96,9 +98,15 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
         this.addGeneratedFile(objectMapper);
 
+        NullableGenerator nullableGenerator = new NullableGenerator(context);
+        this.addGeneratedFile(nullableGenerator.generateFile());
+
         OptionalNullableGenerator optionalNullableGenerator = new OptionalNullableGenerator(context);
         GeneratedJavaFile optionalNullable = optionalNullableGenerator.generateFile();
         this.addGeneratedFile(optionalNullable);
+
+        NullableNonemptyFilterGenerator nullableNonemptyFilterGenerator = new NullableNonemptyFilterGenerator(context);
+        this.addGeneratedFile(nullableNonemptyFilterGenerator.generateFile());
 
         ApiExceptionGenerator apiExceptionGenerator = new ApiExceptionGenerator(context);
         GeneratedJavaFile apiException = apiExceptionGenerator.generateFile();
