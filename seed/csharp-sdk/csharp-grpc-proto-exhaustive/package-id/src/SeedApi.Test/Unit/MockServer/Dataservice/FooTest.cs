@@ -5,6 +5,7 @@ using SeedApi.Test.Utils;
 namespace SeedApi.Test.Unit.MockServer.Dataservice;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class FooTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

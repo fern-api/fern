@@ -4,6 +4,7 @@ using SeedBytesDownload.Test.Unit.MockServer;
 namespace SeedBytesDownload.Test.Unit.MockServer.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class SimpleTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

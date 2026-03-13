@@ -6,6 +6,7 @@ using SeedExhaustive.Types;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnMapOfPrimToObjectTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

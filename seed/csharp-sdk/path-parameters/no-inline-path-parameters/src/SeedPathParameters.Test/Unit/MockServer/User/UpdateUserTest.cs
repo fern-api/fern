@@ -6,6 +6,7 @@ using SeedPathParameters.Test.Utils;
 namespace SeedPathParameters.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class UpdateUserTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

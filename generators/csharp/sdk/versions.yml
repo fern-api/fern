@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.25.1
+  changelogEntry:
+    - summary: |
+        Generate a separate WireMock server for each test fixture instead of sharing
+        a single global server across all mock server tests. Each test class now starts
+        and stops its own `WireMockServer` in `[OneTimeSetUp]`/`[OneTimeTearDown]`,
+        and test fixtures are annotated with `[Parallelizable(ParallelScope.Self)]`
+        so NUnit can run them in parallel.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
 - version: 2.25.0
   changelogEntry:
     - summary: |

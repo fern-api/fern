@@ -5,6 +5,7 @@ using SeedTrace.Test_.Utils;
 namespace SeedTrace.Test_.Unit.MockServer.Sysprop;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetNumWarmInstancesTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

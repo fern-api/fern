@@ -6,6 +6,7 @@ using SeedExhaustive.Types.Object;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Container;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnOptionalTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

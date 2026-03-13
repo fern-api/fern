@@ -5,6 +5,7 @@ using SeedErrorProperty.Test.Utils;
 namespace SeedErrorProperty.Test.Unit.MockServer.PropertyBasedError;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ThrowErrorTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

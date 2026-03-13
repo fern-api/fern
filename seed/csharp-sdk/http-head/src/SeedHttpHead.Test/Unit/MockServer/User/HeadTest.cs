@@ -5,6 +5,7 @@ using SeedHttpHead.Test.Unit.MockServer;
 namespace SeedHttpHead.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class HeadTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
