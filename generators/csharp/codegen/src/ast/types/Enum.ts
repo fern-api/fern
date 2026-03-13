@@ -129,7 +129,9 @@ export class Enum extends Node {
 
     private writeSerializerClass(writer: Writer): void {
         writer.newLine();
-        writer.writeLine(`internal class ${this.name}Serializer : global::System.Text.Json.Serialization.JsonConverter<${this.name}>`);
+        writer.writeLine(
+            `internal class ${this.name}Serializer : global::System.Text.Json.Serialization.JsonConverter<${this.name}>`
+        );
         writer.pushScope();
 
         // Write Read method
@@ -161,9 +163,7 @@ export class Enum extends Node {
         for (const field of this.fields) {
             writer.writeLine(`${this.name}.${field.name} => ${JSON.stringify(field.wireValue)},`);
         }
-        writer.writeLine(
-            `_ => throw new global::System.ArgumentOutOfRangeException(nameof(value), value, null)`
-        );
+        writer.writeLine(`_ => throw new global::System.ArgumentOutOfRangeException(nameof(value), value, null)`);
         writer.popScope(false);
         writer.writeLine(");");
         writer.popScope();

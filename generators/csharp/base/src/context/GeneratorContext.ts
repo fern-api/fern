@@ -868,19 +868,13 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
 
                         // Register nested serializer class reference
                         this.csharp.classReference({
-                            origin: this.model.explicit(
-                                typeDeclaration,
-                                `${enclosingType.name}Serializer`
-                            ),
+                            origin: this.model.explicit(typeDeclaration, `${enclosingType.name}Serializer`),
                             enclosingType
                         });
                     } else {
                         // Register companion serializer class reference for regular enums
                         this.csharp.classReference({
-                            origin: this.model.explicit(
-                                typeDeclaration,
-                                `${enclosingType.name}Serializer`
-                            ),
+                            origin: this.model.explicit(typeDeclaration, `${enclosingType.name}Serializer`),
                             namespace: enclosingType.namespace
                         });
                     }

@@ -29,10 +29,7 @@ export class StringEnumGenerator extends FileGenerator<CSharpFile, ModelGenerato
 
     protected doGenerate(): CSharpFile {
         // Create the serializer origin for the nested serializer class
-        const serializerOrigin = this.model.explicit(
-            this.typeDeclaration,
-            `${this.classReference.name}Serializer`
-        );
+        const serializerOrigin = this.model.explicit(this.typeDeclaration, `${this.classReference.name}Serializer`);
 
         const stringEnum = this.csharp.class_({
             reference: this.classReference,
