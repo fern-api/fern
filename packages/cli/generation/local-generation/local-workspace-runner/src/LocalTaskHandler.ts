@@ -326,7 +326,7 @@ export class LocalTaskHandler {
                                     `Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`
                                 );
                                 const rollup = await BamlClient.withOptions({
-                                    clientRegistry: this.getClientRegistry()
+                                    clientRegistry: await this.getClientRegistry()
                                 }).ConsolidateChangelog(rawEntries, bestBump, this.generatorLanguage ?? "unknown");
                                 changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
                             } catch (rollupError) {
