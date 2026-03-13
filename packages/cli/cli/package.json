@@ -50,6 +50,7 @@
     "@boundaryml/baml": "catalog:",
     "@bufbuild/protobuf": "catalog:",
     "@fern-api/api-workspace-commons": "workspace:*",
+    "@fern-api/api-workspace-validator": "workspace:*",
     "@fern-api/auth": "workspace:*",
     "@fern-api/casings-generator": "workspace:*",
     "@fern-api/cli-ai": "workspace:*",
@@ -115,7 +116,7 @@
     "@types/semver": "catalog:",
     "@types/tar": "catalog:",
     "@types/url-join": "4.0.1",
-    "@types/validate-npm-package-name": "catalog:",
+
     "@types/ws": "catalog:",
     "@types/yargs": "^17.0.28",
     "axios": "catalog:",
@@ -140,7 +141,7 @@
     "typescript": "catalog:",
     "undici": "catalog:",
     "url-join": "catalog:",
-    "validate-npm-package-name": "catalog:",
+
     "vitest": "catalog:",
     "ws": "catalog:",
     "yaml": "catalog:",

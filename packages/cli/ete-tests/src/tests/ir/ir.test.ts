@@ -34,7 +34,7 @@ const FIXTURES: Fixture[] = [
     },
     {
         name: "migration",
-        version: "v1"
+        version: "v53"
     },
     {
         name: "extended-examples"
@@ -89,7 +89,7 @@ describe("ir", () => {
 
     it.concurrent("works with latest version", async ({ expect, signal }) => {
         const tmpFile = await tmp.file({ postfix: ".json" });
-        const { stdout } = await runFernCli(["ir", tmpFile.path, "--version", "v27"], {
+        const { stdout } = await runFernCli(["ir", tmpFile.path, "--version", "v53"], {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
             reject: false,
             signal

@@ -12,7 +12,6 @@
     "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "types": "./dist/cjs/index.d.ts",
             "import": {
                 "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
@@ -24,7 +23,6 @@
             "default": "./dist/cjs/index.js"
         },
         "./serialization": {
-            "types": "./dist/cjs/serialization/index.d.ts",
             "import": {
                 "types": "./dist/esm/serialization/index.d.mts",
                 "default": "./dist/esm/serialization/index.mjs"
@@ -36,7 +34,6 @@
             "default": "./dist/cjs/serialization/index.js"
         },
         "./folderA": {
-            "types": "./dist/cjs/api/resources/folderA/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/folderA/exports.d.mts",
                 "default": "./dist/esm/api/resources/folderA/exports.mjs"
@@ -48,7 +45,6 @@
             "default": "./dist/cjs/api/resources/folderA/exports.js"
         },
         "./folderA/service": {
-            "types": "./dist/cjs/api/resources/folderA/resources/service/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/folderA/resources/service/exports.d.mts",
                 "default": "./dist/esm/api/resources/folderA/resources/service/exports.mjs"
@@ -60,7 +56,6 @@
             "default": "./dist/cjs/api/resources/folderA/resources/service/exports.js"
         },
         "./folderB": {
-            "types": "./dist/cjs/api/resources/folderB/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/folderB/exports.d.mts",
                 "default": "./dist/esm/api/resources/folderB/exports.mjs"
@@ -72,7 +67,6 @@
             "default": "./dist/cjs/api/resources/folderB/exports.js"
         },
         "./folderC": {
-            "types": "./dist/cjs/api/resources/folderC/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/folderC/exports.d.mts",
                 "default": "./dist/esm/api/resources/folderC/exports.mjs"
@@ -84,7 +78,6 @@
             "default": "./dist/cjs/api/resources/folderC/exports.js"
         },
         "./folderD": {
-            "types": "./dist/cjs/api/resources/folderD/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/folderD/exports.d.mts",
                 "default": "./dist/esm/api/resources/folderD/exports.mjs"
@@ -96,7 +89,6 @@
             "default": "./dist/cjs/api/resources/folderD/exports.js"
         },
         "./folderD/service": {
-            "types": "./dist/cjs/api/resources/folderD/resources/service/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/folderD/resources/service/exports.d.mts",
                 "default": "./dist/esm/api/resources/folderD/resources/service/exports.mjs"
@@ -108,7 +100,6 @@
             "default": "./dist/cjs/api/resources/folderD/resources/service/exports.js"
         },
         "./foo": {
-            "types": "./dist/cjs/api/resources/foo/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/foo/exports.d.mts",
                 "default": "./dist/esm/api/resources/foo/exports.mjs"

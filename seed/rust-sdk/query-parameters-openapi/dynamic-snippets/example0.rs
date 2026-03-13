@@ -47,6 +47,8 @@ async fn main() {
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 })],
                 filter: vec![Some("filter".to_string())],
+                tags: vec![Some("tags".to_string())],
+                optional_tags: vec![Some("optionalTags".to_string())],
                 neighbor: Some(SearchRequestNeighbor::User(User {
                     name: Some("name".to_string()),
                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),

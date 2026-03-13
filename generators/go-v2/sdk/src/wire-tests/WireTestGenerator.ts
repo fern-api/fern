@@ -97,6 +97,13 @@ export class WireTestGenerator {
     ): Promise<GoFile> {
         const endpointTestCases = new Map<string, string>();
         for (const endpoint of endpoints) {
+            // Skip bytes request body endpoints — they cannot be properly exercised in wire tests
+            // and have no corresponding wiremock mappings (wiremock mapping generation also skips them).
+            if (endpoint.requestBody?.type === "bytes") {
+                this.context.logger.debug(`Skipping wire test for endpoint ${endpoint.id} - bytes request body`);
+                continue;
+            }
+
             // Skip endpoints that return primitive date types due to Go SDK date parsing issue
             // (Go's time.Time JSON unmarshaling expects RFC3339 datetime format, not date-only)
             if (this.endpointReturnsPrimitiveDate(endpoint)) {
@@ -127,7 +134,7 @@ export class WireTestGenerator {
         imports.set("http", "net/http");
         imports.set("bytes", "bytes");
         imports.set("encoding/json", "encoding/json");
-        imports.set("os", "os"); // For reading WIREMOCK_PORT env var
+        imports.set("os", "os"); // For reading WIREMOCK_URL env var
 
         // Track test function name counts to generate unique names for duplicates (e.g., Test1, Test2, Test3)
         const testFunctionNameCounts = new Map<string, number>();
@@ -195,7 +202,7 @@ export class WireTestGenerator {
             filename: serviceName + "_test.go",
             packageName: `${serviceName}_test`,
             rootImportPath: this.context.getRootImportPath(),
-            importPath: "", // unecessary for wire tests since nothing will import FROM this file
+            importPath: "", // unnecessary for wire tests since nothing will import FROM this file
             customConfig: this.context.customConfig ?? {},
             formatter: undefined
         });
@@ -234,10 +241,10 @@ export class WireTestGenerator {
                 return_: [],
                 body: go.codeblock((writer) => {
                     // Build the request body for WireMock's requests/find endpoint
-                    // Use WIREMOCK_PORT env var if set (for parallel test execution), otherwise default to 8080
+                    // Use WIREMOCK_URL env var if set (for orchestration), otherwise default to http://localhost:8080
                     writer.writeNode(
                         go.codeblock(
-                            'wiremockPort := os.Getenv("WIREMOCK_PORT")\n\tif wiremockPort == "" {\n\t\twiremockPort = "8080"\n\t}\n\tWiremockAdminURL := "http://localhost:" + wiremockPort + "/__admin"'
+                            'wiremockURL := os.Getenv("WIREMOCK_URL")\n\tif wiremockURL == "" {\n\t\twiremockURL = "http://localhost:8080"\n\t}\n\tWiremockAdminURL := wiremockURL + "/__admin"'
                         )
                     );
                     writer.newLine();
@@ -340,10 +347,10 @@ export class WireTestGenerator {
                     ],
                     return_: [],
                     body: go.codeblock((writer) => {
-                        // Use WIREMOCK_PORT env var if set (for parallel test execution), otherwise default to 8080
+                        // Use WIREMOCK_URL env var if set (for orchestration), otherwise default to http://localhost:8080
                         writer.writeNode(
                             go.codeblock(
-                                'wiremockPort := os.Getenv("WIREMOCK_PORT")\n\tif wiremockPort == "" {\n\t\twiremockPort = "8080"\n\t}\n\tWireMockBaseURL := "http://localhost:" + wiremockPort'
+                                'WireMockBaseURL := os.Getenv("WIREMOCK_URL")\n\tif WireMockBaseURL == "" {\n\t\tWireMockBaseURL = "http://localhost:8080"\n\t}'
                             )
                         );
                         writer.newLine();
@@ -742,11 +749,31 @@ export class WireTestGenerator {
             return "nil";
         }
 
+        // Build a set of query parameter wire names that have datetime type so we can
+        // normalize their values to include millisecond precision (matching RFC3339Milli
+        // format used by the Go SDK's query.go serialization).
+        const datetimeQueryParams = new Set<string>();
+        for (const qp of endpoint.queryParameters) {
+            const primitive = this.context.maybePrimitive(qp.valueType);
+            if (primitive === FernIr.PrimitiveTypeV1.DateTime) {
+                datetimeQueryParams.add(qp.name.wireValue);
+            }
+        }
+
         const queryParamEntries: string[] = [];
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
             if (paramValue != null) {
                 const key = JSON.stringify(paramName);
-                const value = JSON.stringify(String(paramValue));
+                let stringValue = String(paramValue);
+                // Normalize datetime values to always include milliseconds, matching the
+                // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
+                if (datetimeQueryParams.has(paramName)) {
+                    const date = new Date(stringValue);
+                    if (!isNaN(date.getTime())) {
+                        stringValue = date.toISOString();
+                    }
+                }
+                const value = JSON.stringify(stringValue);
                 queryParamEntries.push(`${key}: ${value}`);
             }
         }

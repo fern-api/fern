@@ -2,26 +2,27 @@ namespace SeedCsharpNamespaceCollision.Core;
 
 internal sealed class HeaderValue
 {
-    private readonly object _value;
-    private readonly string _type;
-
-    private HeaderValue(object value, string type)
-    {
-        _value = value;
-        _type = type;
-    }
+    private readonly Func<ValueTask<string>> _resolver;
 
     public HeaderValue(string value)
-        : this(value, "string") { }
+    {
+        _resolver = () => new ValueTask<string>(value);
+    }
 
     public HeaderValue(Func<string> value)
-        : this(value, "func") { }
+    {
+        _resolver = () => new ValueTask<string>(value());
+    }
 
     public HeaderValue(Func<ValueTask<string>> value)
-        : this(value, "valueTask") { }
+    {
+        _resolver = value;
+    }
 
     public HeaderValue(Func<Task<string>> value)
-        : this(value, "task") { }
+    {
+        _resolver = () => new ValueTask<string>(value());
+    }
 
     public static implicit operator HeaderValue(string value) => new(value);
 
@@ -39,15 +40,5 @@ internal sealed class HeaderValue
 
     public static HeaderValue FromTaskFunc(Func<Task<string>> value) => new(value);
 
-    internal ValueTask<string> ResolveAsync()
-    {
-        return _type switch
-        {
-            "string" => new ValueTask<string>((string)_value),
-            "func" => new ValueTask<string>(((Func<string>)_value)()),
-            "valueTask" => ((Func<ValueTask<string>>)_value)(),
-            "task" => new ValueTask<string>(((Func<Task<string>>)_value)()),
-            _ => throw new InvalidOperationException($"Unknown header value type: {_type}"),
-        };
-    }
+    internal ValueTask<string> ResolveAsync() => _resolver();
 }

@@ -882,4 +882,161 @@ describe("ExampleConverter", () => {
             expect(result.errors.length).toBeGreaterThanOrEqual(3);
         });
     });
+
+    describe("anyOf unions", () => {
+        const mockContextWithResolve = {
+            ...mockContext,
+            resolveMaybeReference: vi
+                .fn()
+                .mockImplementation(({ schemaOrReference }: { schemaOrReference: unknown }) => schemaOrReference)
+        } as unknown as AbstractConverterContext<object>;
+
+        it("should select the correct variant when example matches a non-first anyOf variant", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                anyOf: [
+                    {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", enum: ["waiting"], default: "waiting" }
+                        }
+                    },
+                    {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", enum: ["progress"], default: "progress" },
+                            total: { type: "number" },
+                            done: { type: "number" }
+                        }
+                    },
+                    {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", enum: ["success"], default: "success" },
+                            uuid: { type: "string" }
+                        }
+                    }
+                ]
+            };
+
+            const progressExample = { status: "progress", total: 732434, done: 134427 };
+
+            const conv = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example: progressExample
+            });
+
+            const result = conv.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toEqual(expect.objectContaining({ status: "progress" }));
+        });
+
+        it("should select the last variant when example matches only the last anyOf variant", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                anyOf: [
+                    {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", enum: ["waiting"], default: "waiting" }
+                        }
+                    },
+                    {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", enum: ["error"], default: "error" },
+                            error: { type: "string" }
+                        }
+                    },
+                    {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", enum: ["unknown"], default: "unknown" }
+                        }
+                    }
+                ]
+            };
+
+            const unknownExample = { status: "unknown" };
+
+            const conv = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example: unknownExample
+            });
+
+            const result = conv.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.usedProvidedExample).toBe(true);
+            expect(result.validExample).toEqual(expect.objectContaining({ status: "unknown" }));
+        });
+
+        it("should fall back to first valid variant when example matches no variant", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                anyOf: [
+                    {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", enum: ["waiting"], default: "waiting" }
+                        }
+                    },
+                    {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", enum: ["progress"], default: "progress" }
+                        }
+                    }
+                ]
+            };
+
+            const nomatchExample = { status: "nonexistent" };
+
+            const conv = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example: nomatchExample
+            });
+
+            const result = conv.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.usedProvidedExample).toBe(false);
+        });
+
+        it("should produce a valid result when no example is provided (auto-generation)", () => {
+            const schema: OpenAPIV3_1.SchemaObject = {
+                anyOf: [
+                    {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", enum: ["waiting"], default: "waiting" }
+                        }
+                    },
+                    {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", enum: ["progress"], default: "progress" }
+                        }
+                    }
+                ]
+            };
+
+            const conv = new ExampleConverter({
+                breadcrumbs: [],
+                context: mockContextWithResolve,
+                schema,
+                example: undefined
+            });
+
+            const result = conv.convert();
+
+            expect(result.isValid).toBe(true);
+            expect(result.usedProvidedExample).toBe(false);
+        });
+    });
 });

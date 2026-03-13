@@ -6,6 +6,7 @@ import { ExecutionEnvironment } from "./ExecutionEnvironment.js";
  * Executes generators natively on the host system using provided commands.
  */
 export class NativeExecutionEnvironment implements ExecutionEnvironment {
+    public readonly usesContainerPaths = false;
     private readonly commands: string[];
     private readonly workingDirectory?: string;
     private readonly env?: Record<string, string>;

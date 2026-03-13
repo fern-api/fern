@@ -294,12 +294,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
             switch (document.type) {
                 case "openapi": {
+                    const spec = document.value as OpenAPIV3_1.Document;
+                    const namespace =
+                        document.namespace ??
+                        ((spec as Record<string, unknown>)["x-fern-sdk-namespace"] as string | undefined);
                     const converterContext = new OpenAPIConverterContext3_1({
-                        namespace: document.namespace,
+                        namespace,
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
-                        spec: document.value as OpenAPIV3_1.Document,
+                        spec,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
                         authOverrides,
@@ -315,8 +319,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     break;
                 }
                 case "asyncapi": {
+                    const asyncApiNamespace =
+                        document.namespace ??
+                        ((document.value as unknown as Record<string, unknown>)["x-fern-sdk-namespace"] as
+                            | string
+                            | undefined);
                     const converterContext = new AsyncAPIConverterContext({
-                        namespace: document.namespace,
+                        namespace: asyncApiNamespace,
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
@@ -533,7 +542,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
     }
 
-    private async convertSpecsOverrideToSpecs(
+    protected async convertSpecsOverrideToSpecs(
         specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<Spec[]> {
         // Handle conjure schema case
@@ -546,9 +555,28 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
                 const absoluteFilepath = join(this.absoluteFilePath, RelativeFilePath.of(spec.openapi));
-                const absoluteFilepathToOverrides = spec.overrides
-                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides))
-                    : undefined;
+                // Handle both single override path and array of override paths
+                let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+                const specOverridePaths: AbsoluteFilePath[] = [];
+
+                // Add spec-level overrides
+                if (spec.overrides != null) {
+                    if (Array.isArray(spec.overrides)) {
+                        specOverridePaths.push(
+                            ...spec.overrides.map((override) =>
+                                join(this.absoluteFilePath, RelativeFilePath.of(override))
+                            )
+                        );
+                    } else {
+                        specOverridePaths.push(join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides)));
+                    }
+                }
+
+                // Set the final overrides array
+                if (specOverridePaths.length > 0) {
+                    absoluteFilepathToOverrides =
+                        specOverridePaths.length === 1 ? specOverridePaths[0] : specOverridePaths;
+                }
                 const absoluteFilepathToOverlays = spec.overlays
                     ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overlays))
                     : undefined;
@@ -584,10 +612,17 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         return [
             this.absoluteFilePath,
             ...this.allSpecs
-                .flatMap((spec) => [
-                    spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,
-                    spec.absoluteFilepathToOverrides
-                ])
+                .flatMap((spec) => {
+                    const mainPath =
+                        spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath;
+                    // Handle both single override path and array of override paths
+                    const overridePaths = Array.isArray(spec.absoluteFilepathToOverrides)
+                        ? spec.absoluteFilepathToOverrides
+                        : spec.absoluteFilepathToOverrides != null
+                          ? [spec.absoluteFilepathToOverrides]
+                          : [];
+                    return [mainPath, ...overridePaths];
+                })
                 .filter(isNonNullish)
         ];
     }

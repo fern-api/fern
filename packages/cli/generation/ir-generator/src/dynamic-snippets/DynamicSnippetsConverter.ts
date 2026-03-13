@@ -924,6 +924,23 @@ export class DynamicSnippetsConverter {
         return url.startsWith("/") ? url : `/${url}`;
     }
 
+    private getGlobalHeaderExampleValues(): Record<string, unknown> {
+        const values: Record<string, unknown> = {};
+        for (const header of this.ir.headers) {
+            // Skip literal headers (e.g. "X-API-Version") - they are set automatically.
+            if (header.valueType.type === "container" && header.valueType.container.type === "literal") {
+                continue;
+            }
+            // Skip optional headers - they are not required and should not be included
+            // in examples by default.
+            if (header.valueType.type === "container" && header.valueType.container.type === "optional") {
+                continue;
+            }
+            values[header.name.wireValue] = `<${header.name.wireValue}>`;
+        }
+        return values;
+    }
+
     private getEndpointSnippetRequests({
         endpoint,
         location
@@ -953,13 +970,16 @@ export class DynamicSnippetsConverter {
                 baseUrl: undefined,
                 environment: undefined,
                 auth: this.authValues,
-                headers: Object.fromEntries(
-                    [...(example.example?.serviceHeaders ?? []), ...(example.example?.endpointHeaders ?? [])].map(
-                        (header) => {
-                            return [header.name.wireValue, header.value.jsonExample];
-                        }
+                headers: {
+                    ...this.getGlobalHeaderExampleValues(),
+                    ...Object.fromEntries(
+                        [...(example.example?.serviceHeaders ?? []), ...(example.example?.endpointHeaders ?? [])].map(
+                            (header) => {
+                                return [header.name.wireValue, header.value.jsonExample];
+                            }
+                        )
                     )
-                ),
+                },
                 pathParameters: Object.fromEntries(
                     pathParameterExamples.map((parameter) => {
                         return [parameter.name.originalName, parameter.value.jsonExample];

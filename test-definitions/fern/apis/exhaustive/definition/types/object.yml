@@ -54,6 +54,24 @@ types:
         type: datetime
         docs: An actual datetime field for comparison
 
+  ObjectWithUnknownField:
+    docs: |
+      Tests that unknown/any values containing backslashes in map keys
+      are properly escaped in Go string literals.
+    properties:
+      unknown: unknown
+
+  ObjectWithDocumentedUnknownType:
+    docs: |
+      Tests that unknown types are able to preserve their type names.
+    properties:
+      documentedUnknownType: DocumentedUnknownType
+
+  DocumentedUnknownType:
+    docs: |
+      Tests that unknown types are able to preserve their docstrings.
+    type: unknown
+
 errors:
   ObjectWithOptionalFieldError:
     status-code: 400

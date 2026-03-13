@@ -1,4 +1,8 @@
-import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import {
+    checkVersionDoesNotAlreadyExist,
+    computeSemanticVersion,
+    getOriginGitCommit
+} from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
@@ -35,7 +39,8 @@ export async function runRemoteGenerationForGenerator({
     absolutePathToPreview,
     readme,
     fernignorePath,
-    dynamicIrOnly
+    dynamicIrOnly,
+    retryRateLimited
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -52,6 +57,7 @@ export async function runRemoteGenerationForGenerator({
     readme: generatorsYml.ReadmeSchema | undefined;
     fernignorePath: string | undefined;
     dynamicIrOnly: boolean;
+    retryRateLimited: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -80,6 +86,24 @@ export async function runRemoteGenerationForGenerator({
 
     const resolvedVersion = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
 
+    // Fail fast if the target version already exists on the package registry.
+    // Only check when the user explicitly provided a version (not auto-computed).
+    if (version != null) {
+        if (isPreview) {
+            interactiveTaskContext.logger.warn(
+                "Skipping version availability check in preview mode. " +
+                    `Version ${version} may already exist on the package registry.`
+            );
+        } else {
+            await checkVersionDoesNotAlreadyExist({
+                version,
+                packageName,
+                generatorInvocation,
+                context: interactiveTaskContext
+            });
+        }
+    }
+
     const ir = generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
@@ -101,7 +125,8 @@ export async function runRemoteGenerationForGenerator({
             cliVersion: workspace.cliVersion,
             generatorName: generatorInvocation.name,
             generatorVersion: generatorInvocation.version,
-            generatorConfig: generatorInvocation.config
+            generatorConfig: generatorInvocation.config,
+            originGitCommit: getOriginGitCommit()
         }
     });
 
@@ -233,7 +258,8 @@ export async function runRemoteGenerationForGenerator({
         whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
         irVersionOverride,
         absolutePathToPreview,
-        fernignorePath
+        fernignorePath,
+        retryRateLimited
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
@@ -354,11 +380,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     exampleStyle: undefined
 };
 
-/**
- * Uploads dynamic IR for SDK generation to enable dynamic snippets.
- * This calls the getSdkDynamicIrUploadUrls endpoint to get presigned S3 URLs,
- * generates the dynamic IR, and uploads it.
- */
 async function uploadDynamicIRForSdkGeneration({
     fdr,
     organization,

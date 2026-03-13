@@ -191,14 +191,27 @@ function getValueExpressionForHeader({
         throw new Error(`Cannot reference header ${header.name.wireValue} because request parameter is not defined.`);
     } else {
         const needsStringify = typeNeedsStringify(header.valueType, context);
+        let valueExpression: ts.Expression;
         if (!needsStringify) {
-            return requestParameter.getReferenceToNonLiteralHeader(header, context);
+            valueExpression = requestParameter.getReferenceToNonLiteralHeader(header, context);
+        } else {
+            valueExpression = context.type.stringify(
+                requestParameter.getReferenceToNonLiteralHeader(header, context),
+                header.valueType,
+                { includeNullCheckIfOptional: true }
+            );
         }
-        return context.type.stringify(
-            requestParameter.getReferenceToNonLiteralHeader(header, context),
-            header.valueType,
-            { includeNullCheckIfOptional: true }
-        );
+        // If the header type is nullable, convert null to undefined using ?? undefined.
+        // HTTP headers don't have a "null" concept — they're either present with a value
+        // or absent. This ensures null values are treated as "don't send the header".
+        if (typeContainsNullable(header.valueType, context)) {
+            return ts.factory.createBinaryExpression(
+                valueExpression,
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                ts.factory.createIdentifier("undefined")
+            );
+        }
+        return valueExpression;
     }
 }
 
@@ -219,16 +232,29 @@ function getValueExpressionForIdempotencyHeader({
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(header.name.name.camelCase.unsafeName)
         );
+        let valueExpression: ts.Expression;
         if (!needsStringify) {
-            return reference;
+            valueExpression = reference;
+        } else {
+            valueExpression = context.type.stringify(
+                reference,
+                // since we know request options is optional, the entire expression is optional
+                // so we wrap the valuetype in an optional container to force null check
+                FernIr.TypeReference.container(FernIr.ContainerType.optional(header.valueType)),
+                { includeNullCheckIfOptional: true }
+            );
         }
-        return context.type.stringify(
-            reference,
-            // since we know request options is optional, the entire expression is optional
-            // so we wrap the valuetype in an optional container to force null check
-            FernIr.TypeReference.container(FernIr.ContainerType.optional(header.valueType)),
-            { includeNullCheckIfOptional: true }
-        );
+        // If the header type is nullable, convert null to undefined using ?? undefined.
+        // HTTP headers don't have a "null" concept — they're either present with a value
+        // or absent. This ensures null values are treated as "don't send the header".
+        if (typeContainsNullable(header.valueType, context)) {
+            return ts.factory.createBinaryExpression(
+                valueExpression,
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                ts.factory.createIdentifier("undefined")
+            );
+        }
+        return valueExpression;
     }
 }
 
@@ -334,6 +360,29 @@ function isAuthorizationHeader(header: FernIr.HttpHeader | FernIr.HeaderAuthSche
 
 function getOptionKeyForHeader(header: FernIr.HttpHeader): string {
     return header.name.name.camelCase.unsafeName;
+}
+
+function typeContainsNullable(type: FernIr.TypeReference, context: SdkContext): boolean {
+    switch (type.type) {
+        case "container":
+            switch (type.container.type) {
+                case "nullable":
+                    return true;
+                case "optional":
+                    return typeContainsNullable(type.container.optional, context);
+                default:
+                    return false;
+            }
+        case "named": {
+            const declaration = context.type.getTypeDeclaration(type);
+            if (declaration.shape.type === "alias") {
+                return typeContainsNullable(declaration.shape.aliasOf, context);
+            }
+            return false;
+        }
+        default:
+            return false;
+    }
 }
 
 function typeNeedsStringify(type: FernIr.TypeReference, context: SdkContext): boolean {

@@ -151,7 +151,7 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
             return {
                 ...spec,
                 openapi: adjustPath(spec.openapi, apiName),
-                overrides: spec.overrides != null ? adjustPath(spec.overrides, apiName) : undefined,
+                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined,
                 overlays: spec.overlays != null ? adjustPath(spec.overlays, apiName) : undefined
             };
         }
@@ -159,7 +159,7 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
             return {
                 ...spec,
                 asyncapi: adjustPath(spec.asyncapi, apiName),
-                overrides: spec.overrides != null ? adjustPath(spec.overrides, apiName) : undefined
+                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined
             };
         }
         if ("fern" in spec) {
@@ -178,7 +178,7 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
             return {
                 ...spec,
                 openrpc: adjustPath(spec.openrpc, apiName),
-                overrides: spec.overrides != null ? adjustPath(spec.overrides, apiName) : undefined
+                overrides: spec.overrides != null ? adjustPathOrPaths(spec.overrides, apiName) : undefined
             };
         }
         if ("proto" in spec) {
@@ -187,7 +187,8 @@ function adjustSpecPaths(specs: schemas.ApiSpecSchema[], apiName: string): schem
                 proto: {
                     ...spec.proto,
                     root: adjustPath(spec.proto.root, apiName),
-                    overrides: spec.proto.overrides != null ? adjustPath(spec.proto.overrides, apiName) : undefined
+                    overrides:
+                        spec.proto.overrides != null ? adjustPathOrPaths(spec.proto.overrides, apiName) : undefined
                 }
             };
         }
@@ -203,6 +204,13 @@ function adjustPath(path: string, apiName: string): string {
         return `./${FERN_DIRECTORY}/${APIS_DIRECTORY}/${apiName}/${path.slice(2)}`;
     }
     return `./${FERN_DIRECTORY}/${APIS_DIRECTORY}/${apiName}/${path}`;
+}
+
+function adjustPathOrPaths(paths: string | string[], apiName: string): string | string[] {
+    if (Array.isArray(paths)) {
+        return paths.map((p) => adjustPath(p, apiName));
+    }
+    return adjustPath(paths, apiName);
 }
 
 /**

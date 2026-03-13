@@ -5,8 +5,4 @@ client = Seed::MyClient.new(
   base_url: "https://api.fern.com"
 )
 
-client.req_with_headers.get_with_custom_header(
-  x_test_service_header: "X-TEST-SERVICE-HEADER",
-  x_test_endpoint_header: "X-TEST-ENDPOINT-HEADER",
-  body: "string"
-)
+client.no_auth.post_with_no_auth

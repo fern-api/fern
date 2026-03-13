@@ -1,5 +1,209 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.63.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for types with required fields missing from examples.
+        When an OpenAPI example omits required fields on a nested object type, the generated
+        test code now synthesizes reasonable default values (e.g., `""` for strings, `1` for
+        integers, `[]` for lists) instead of emitting empty constructors like `ClassName()`
+        that cause Pydantic `ValidationError` at runtime.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.63.5
+  changelogEntry:
+    - summary: |
+        Fix Python 3.14 compatibility by fully eliminating all `pydantic.v1` imports from the
+        Pydantic V2 code path. The previous fix (4.55.4) replaced `pydantic.v1.datetime_parse`
+        but left other `pydantic.v1` imports (typing utilities, json encoders, fields) that still
+        trigger the "Core Pydantic V1 functionality isn't compatible with Python 3.14" warning.
+        All `pydantic.v1` usages are now replaced with standard library equivalents
+        (`typing.get_args`, `typing.get_origin`, `typing_extensions.Literal`), Pydantic V2 APIs
+        (`pydantic.fields.FieldInfo`), and an inlined `encoders_by_type` dictionary.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 4.63.4
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 4.63.3
+  changelogEntry:
+    - summary: |
+        Make wire test datetime normalization type-aware. String-typed query parameters
+        that look like datetimes (e.g., `created_after: str`) are no longer incorrectly
+        normalized with `.000` milliseconds. Only `DATE_TIME`-typed parameters are affected
+        by the `datetime_milliseconds` config.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 4.63.2
+  changelogEntry:
+    - summary: |
+        Fix wire test datetime format mismatch. When `datetime_milliseconds` is false (default),
+        WireMock stubs are now stripped of `.000` milliseconds to match the SDK's default
+        `serialize_datetime` output. When true, test verification values include `.000` to match
+        millisecond-precision output. Fixes wire test failures for APIs with datetime query parameters.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.63.1
+  changelogEntry:
+    - summary: |
+        Fix socket client generation to use keyword arguments when calling `construct_type`.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.63.0
+  changelogEntry:
+    - summary: |
+        Add `datetime_milliseconds` custom config option. When set to `true`,
+        `serialize_datetime` always includes millisecond precision in ISO 8601 output
+        (e.g., `2008-01-02T00:00:00.000Z` instead of `2008-01-02T00:00:00Z`).
+        Useful for APIs that require a fixed-width datetime format with fractional seconds.
+        Default behavior is unchanged.
+      type: feat
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.62.4
+  changelogEntry:
+    - summary: |
+        Re-throw errors after logging for README.md and reference.md generation failures.
+        Documentation generation errors now break the generation flow so they are treated
+        as important to fix.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 4.62.3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 4.62.2
+  changelogEntry:
+    - summary: |
+        Improve error logging for reference.md generation failures. The generator
+        now logs the actual error message and stack trace instead of a generic
+        "this is OK" message, making it easier to diagnose generation issues.
+      type: chore
+  createdAt: "2026-03-09"
+  irVersion: 65
+
+- version: 4.62.1
+  changelogEntry:
+    - summary: |
+        SDK clients now catch `pydantic.ValidationError` during response parsing and
+        wrap it in `ParsingError` with the response body, headers, status code and cause. Previously,
+        validation errors from `parse_obj_as` would bubble up raw, preventing users from
+        inspecting the actual API response.
+      type: fix
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 4.62.0
+  changelogEntry:
+    - summary: |
+        Add `README.md` and `reference.md` generation to the python-v2 SDK generator.
+        The v2 generator now produces README documentation with feature snippets
+        (installation, usage, timeouts, custom client, exception handling, raw responses,
+        websockets, custom sections) and endpoint reference documentation.
+      type: feat
+    - summary: |
+        Format AST output with trailing commas in multiline function calls and
+        inline list/dict formatting for improved code readability.
+      type: chore
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.61.5
+  changelogEntry:
+    - summary: |
+        Fix WebSocket client generation to respect `pydantic_config.skip_validation: true`.
+        Previously, socket clients always used `parse_obj_as` (full Pydantic validation)
+        regardless of the skip_validation flag. They now correctly use `construct_type`
+        (no validation) when the flag is enabled, matching the behavior of HTTP clients.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 4.61.4
+  changelogEntry:
+    - summary: |
+        WebSocket clients now gracefully handle unknown message types instead of crashing.
+        When the server sends a message type not yet in the SDK's union, the client logs a
+        warning and skips the message rather than killing the connection with a validation error.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 4.61.3
+  changelogEntry:
+    - summary: |
+        Standardize WireMock configuration to use `WIREMOCK_URL` environment variable
+        (e.g., `http://localhost:8080`) instead of `WIREMOCK_PORT`. The conftest plugin
+        now sets `WIREMOCK_URL` after discovering the dynamically assigned port. Falls
+        back to `http://localhost:8080` if the variable is not set.
+      type: chore
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 4.61.2
+  changelogEntry:
+    - summary: |
+        Re-add `@fern-api/generator-cli` to Python SDK Docker image. The CLI was inadvertently
+        removed in 4.60.1 when JS-based generators migrated to using the generator-cli JS API
+        directly. The Python generator still relies on the CLI binary via subprocess for
+        README.md and reference.md generation.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 4.61.1
+  changelogEntry:
+    - summary: |
+        Fix `positional_single_property_constructors` breaking pydantic response deserialization.
+        The custom `__init__` now uses `@typing.overload` with a permissive `*args, **kwargs` runtime
+        signature, so pydantic can pass alias-keyed data freely during deserialization while still
+        allowing positional construction like `Wrapper("value")`.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 4.61.0
+  changelogEntry:
+    - summary: |
+        Add support for `DATE_TIME_RFC_2822` primitive type. Fields with `format: date-time-rfc-2822`
+        in OpenAPI specs now generate as `Rfc2822DateTime` (a `datetime.datetime` subclass) that
+        parses RFC 2822 date strings (e.g., "Wed, 02 Oct 2002 13:00:00 GMT") using Python's
+        `email.utils.parsedate_to_datetime`. Compatible with both Pydantic V1 (`__get_validators__`)
+        and V2 (`__get_pydantic_core_schema__`), passing mypy strict type checking.
+      type: feat
+    - summary: |
+        Fix code snippet generation for RFC 2822 datetime fields to use
+        `email.utils.parsedate_to_datetime()` with RFC 2822 format strings instead of
+        `datetime.fromisoformat()` with ISO 8601 format.
+      type: fix
+  createdAt: "2026-02-26"
+  irVersion: 65
+
 - version: 4.60.2
   changelogEntry:
     - summary: |
@@ -10,7 +214,6 @@
       type: fix
   createdAt: "2026-02-26"
   irVersion: 65
-
 - version: 4.60.1
   changelogEntry:
     - summary: |
@@ -29,7 +232,6 @@
       type: feat
   createdAt: "2026-02-25"
   irVersion: 65
-
 - version: 4.59.4
   changelogEntry:
     - summary: |

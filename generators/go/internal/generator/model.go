@@ -588,7 +588,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		if unionType.Shape.SingleProperty != nil {
 			isLiteral = isLiteralType(unionType.Shape.SingleProperty.Type, t.writer.types)
 			isOptional = isOptionalType(unionType.Shape.SingleProperty.Type, t.writer.types)
-			date = maybeDate(unionType.Shape.SingleProperty.Type, isOptional)
+			date = maybeDate(unionType.Shape.SingleProperty.Type, isOptional, t.writer.types)
 		}
 		zeroValue := "nil"
 		if unionType.Shape.PropertiesType == "singleProperty" {
@@ -720,7 +720,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		if unionType.Shape.SingleProperty != nil {
 			isLiteral = isLiteralType(unionType.Shape.SingleProperty.Type, t.writer.types)
 			isOptional = isOptionalType(unionType.Shape.SingleProperty.Type, t.writer.types)
-			date = maybeDate(unionType.Shape.SingleProperty.Type, isOptional)
+			date = maybeDate(unionType.Shape.SingleProperty.Type, isOptional, t.writer.types)
 		}
 		zeroValue := "nil"
 		if unionType.Shape.PropertiesType == "singleProperty" {
@@ -771,7 +771,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		if unionType.Shape.SingleProperty != nil {
 			isLiteral = isLiteralType(unionType.Shape.SingleProperty.Type, t.writer.types)
 			isOptional = isOptionalType(unionType.Shape.SingleProperty.Type, t.writer.types)
-			date = maybeDate(unionType.Shape.SingleProperty.Type, isOptional)
+			date = maybeDate(unionType.Shape.SingleProperty.Type, isOptional, t.writer.types)
 		}
 		zeroValue := "nil"
 		if unionType.Shape.PropertiesType == "singleProperty" {
@@ -896,7 +896,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		hasLiteral = hasLiteral || isLiteral
 
 		isOptional := isOptionalType(unionMember.Type, t.writer.types)
-		date := maybeDate(unionMember.Type, isOptional)
+		date := maybeDate(unionMember.Type, isOptional, t.writer.types)
 
 		var (
 			valueMarshalerValue          = ""
@@ -1229,7 +1229,7 @@ func (t *typeVisitor) visitObjectProperties(
 			names = append(names, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 		}
 		t.writer.WriteDocs(property.Docs)
-		if date := maybeDateProperty(property.ValueType, property.Name, false); date != nil {
+		if date := maybeDateProperty(property.ValueType, property.Name, false, t.writer.types); date != nil {
 			dates = append(dates, date)
 		}
 		goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, includeOptionals)
@@ -1596,7 +1596,7 @@ func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *ir.Sing
 	c.goType = typeReferenceToGoType(property.Type, c.types, c.scope, c.baseImportPath, c.importPath, false)
 	c.zeroValue = zeroValueForTypeReference(property.Type, c.types)
 
-	if date := maybeDateProperty(property.Type, property.Name, false); date != nil {
+	if date := maybeDateProperty(property.Type, property.Name, false, c.types); date != nil {
 		c.valueMarshalerGoType = date.TypeDeclaration
 		c.valueMarshalerConstructor = date.Constructor
 		c.valueUnmarshalerMethodSuffix = fmt.Sprintf(".%s", date.TimeMethod)
@@ -1961,7 +1961,7 @@ func urlTagForType(
 		`json:"-"`,
 	}
 	structTags = append(structTags, fmt.Sprintf(tagFormat, "url", wireValue))
-	if formatStructTag := maybeFormatStructTag(valueType); formatStructTag != "" {
+	if formatStructTag := maybeFormatStructTag(valueType, types); formatStructTag != "" {
 		structTags = append(structTags, formatStructTag)
 	}
 	return fmt.Sprintf("`%s`", strings.Join(structTags, " "))
@@ -1986,7 +1986,7 @@ func structTagForType(
 	for _, tag := range ignoreTags {
 		structTags = append(structTags, fmt.Sprintf(`%s:"-"`, tag))
 	}
-	if formatStructTag := maybeFormatStructTag(valueType); formatStructTag != "" {
+	if formatStructTag := maybeFormatStructTag(valueType, types); formatStructTag != "" {
 		structTags = append(structTags, formatStructTag)
 	}
 	if len(structTags) == 0 {
@@ -2140,7 +2140,7 @@ func primitiveToUndiscriminatedUnionField(primitive *ir.PrimitiveType) string {
 	}
 }
 
-func maybeDateProperty(valueType *ir.TypeReference, name *common.NameAndWireValue, isOptional bool) *date {
+func maybeDateProperty(valueType *ir.TypeReference, name *common.NameAndWireValue, isOptional bool, types map[common.TypeId]*ir.TypeDeclaration) *date {
 	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1Date {
 		var (
 			typeDeclaration = "*internal.Date"
@@ -2186,9 +2186,18 @@ func maybeDateProperty(valueType *ir.TypeReference, name *common.NameAndWireValu
 			IsDateTime:      true,
 		}
 	}
+	// Resolve named type aliases (e.g. DatetimeAlias -> datetime) so that
+	// alias fields get the same custom marshal/unmarshal helpers as their
+	// underlying primitive date/datetime types.
+	if valueType.Named != nil && types != nil {
+		typeDeclaration := types[valueType.Named.TypeId]
+		if typeDeclaration != nil && typeDeclaration.Shape.Alias != nil {
+			return maybeDateProperty(typeDeclaration.Shape.Alias.AliasOf, name, isOptional, types)
+		}
+	}
 	optionalOrNullableContainer := getOptionalOrNullableContainer(valueType)
 	if optionalOrNullableContainer != nil {
-		return maybeDateProperty(optionalOrNullableContainer, name, true)
+		return maybeDateProperty(optionalOrNullableContainer, name, true, types)
 	}
 	return nil
 }
@@ -2196,7 +2205,7 @@ func maybeDateProperty(valueType *ir.TypeReference, name *common.NameAndWireValu
 // maybeDate retrieves the type information for the given date, excluding
 // any property-oriented information. This is tailored to the undiscriminated
 // union use case.
-func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
+func maybeDate(valueType *ir.TypeReference, isOptional bool, types map[common.TypeId]*ir.TypeDeclaration) *date {
 	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1Date {
 		var (
 			typeDeclaration = "*internal.Date"
@@ -2234,9 +2243,16 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 			IsDateTime:      true,
 		}
 	}
+	// Resolve named type aliases (e.g. DatetimeAlias -> datetime).
+	if valueType.Named != nil && types != nil {
+		typeDeclaration := types[valueType.Named.TypeId]
+		if typeDeclaration != nil && typeDeclaration.Shape.Alias != nil {
+			return maybeDate(typeDeclaration.Shape.Alias.AliasOf, isOptional, types)
+		}
+	}
 	optionalOrNullableContainer := getOptionalOrNullableContainer(valueType)
 	if optionalOrNullableContainer != nil {
-		return maybeDate(optionalOrNullableContainer, true)
+		return maybeDate(optionalOrNullableContainer, true, types)
 	}
 	return nil
 }
@@ -2244,24 +2260,31 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 // maybeFormatStructTag returns the layout struct tag for [optional] date types.
 // Note that we don't need to include a custom layout for DateTime because that
 // is the default format used for time.Time types.
-func maybeFormatStructTag(valueType *ir.TypeReference) string {
+func maybeFormatStructTag(valueType *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) string {
 	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1Date {
 		return `format:"date"`
+	}
+	// Resolve named type aliases (e.g. DateAlias -> date).
+	if valueType.Named != nil && types != nil {
+		typeDeclaration := types[valueType.Named.TypeId]
+		if typeDeclaration != nil && typeDeclaration.Shape.Alias != nil {
+			return maybeFormatStructTag(typeDeclaration.Shape.Alias.AliasOf, types)
+		}
 	}
 	if valueType.Type != "container" {
 		return ""
 	}
 	switch valueType.Container.Type {
 	case "list":
-		return maybeFormatStructTag(valueType.Container.List)
+		return maybeFormatStructTag(valueType.Container.List, types)
 	case "map":
-		return maybeFormatStructTag(valueType.Container.Map.ValueType)
+		return maybeFormatStructTag(valueType.Container.Map.ValueType, types)
 	case "nullable":
-		return maybeFormatStructTag(valueType.Container.Nullable)
+		return maybeFormatStructTag(valueType.Container.Nullable, types)
 	case "optional":
-		return maybeFormatStructTag(valueType.Container.Optional)
+		return maybeFormatStructTag(valueType.Container.Optional, types)
 	case "set":
-		return maybeFormatStructTag(valueType.Container.Set)
+		return maybeFormatStructTag(valueType.Container.Set, types)
 	}
 	return ""
 }

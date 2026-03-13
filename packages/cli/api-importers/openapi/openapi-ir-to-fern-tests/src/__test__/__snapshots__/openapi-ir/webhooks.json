@@ -77,6 +77,50 @@
         "file": "../openapi.yml",
         "type": "openapi"
       }
+    },
+    {
+      "audiences": [],
+      "method": "POST",
+      "operationId": "newPet",
+      "tags": [],
+      "headers": [],
+      "generatedPayloadName": "PostNewPetPayload",
+      "payload": {
+        "generatedName": "PostNewPetPayload",
+        "schema": "Pet",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "examples": [
+        {
+          "payload": {
+            "properties": {
+              "id": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              },
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
     }
   ],
   "channels": {},

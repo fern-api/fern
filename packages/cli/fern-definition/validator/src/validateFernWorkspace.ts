@@ -8,7 +8,7 @@ import { createDefinitionFileAstVisitorForRules } from "./createDefinitionFileAs
 import { createPackageMarkerAstVisitorForRules } from "./createPackageMarkerAstVisitorForRules.js";
 import { createRootApiFileAstVisitorForRules } from "./createRootApiFileAstVisitorForRules.js";
 import { getAllEnabledRules } from "./getAllRules.js";
-import { Rule, RuleVisitors } from "./Rule.js";
+import { NamedRuleVisitors, Rule } from "./Rule.js";
 import { ValidationViolation } from "./ValidationViolation.js";
 
 export function validateFernWorkspace(workspace: FernWorkspace, logger: Logger): ValidationViolation[] {
@@ -27,7 +27,10 @@ export function runRulesOnWorkspace({
 }): ValidationViolation[] {
     const violations: ValidationViolation[] = [];
 
-    const allRuleVisitors = rules.map((rule) => rule.create({ workspace, logger }));
+    const allRuleVisitors: NamedRuleVisitors[] = rules.map((rule) => ({
+        name: rule.name,
+        visitors: rule.create({ workspace, logger })
+    }));
 
     const violationsForRoot = validateRootApiFile({
         contents: workspace.definition.rootApiFile.contents,
@@ -63,7 +66,7 @@ function validateDefinitionFile({
 }: {
     relativeFilepath: RelativeFilePath;
     contents: DefinitionFileSchema;
-    allRuleVisitors: RuleVisitors[];
+    allRuleVisitors: NamedRuleVisitors[];
 }): ValidationViolation[] {
     const violations: ValidationViolation[] = [];
 
@@ -85,7 +88,7 @@ function validateRootApiFile({
     allRuleVisitors
 }: {
     contents: RootApiFileSchema;
-    allRuleVisitors: RuleVisitors[];
+    allRuleVisitors: NamedRuleVisitors[];
 }): ValidationViolation[] {
     const violations: ValidationViolation[] = [];
 
@@ -109,7 +112,7 @@ function validatePackageMarker({
 }: {
     relativeFilepath: RelativeFilePath;
     contents: PackageMarkerFileSchema;
-    allRuleVisitors: RuleVisitors[];
+    allRuleVisitors: NamedRuleVisitors[];
 }): ValidationViolation[] {
     const violations: ValidationViolation[] = [];
 

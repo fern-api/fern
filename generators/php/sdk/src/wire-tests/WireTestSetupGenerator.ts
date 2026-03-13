@@ -1,6 +1,6 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock } from "@fern-api/mock-utils";
+import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -33,8 +33,47 @@ export class WireTestSetupGenerator {
         return new WireMock().convertToWireMock(ir);
     }
 
+    /**
+     * ISO 8601 datetime pattern that matches values with `.000` milliseconds.
+     * Example: "2008-01-02T00:00:00.000Z" or "2008-01-02T00:00:00.000+05:00"
+     */
+    private static readonly DATETIME_WITH_ZERO_MILLIS_REGEX =
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.000(Z|[+-]\d{2}:\d{2})$/;
+
+    /**
+     * Strips ".000" milliseconds from all datetime query parameter values in WireMock stub mappings.
+     * PHP's DateTimeInterface::RFC3339 format does not include fractional seconds, so the SDK
+     * serializes datetimes as e.g. "2022-01-02T00:00:00Z" while mock-utils generates
+     * "2022-01-02T00:00:00.000Z" (via Date.toISOString()). Since WireMock's equalTo matcher
+     * is exact-match, the stubs never fire unless we strip the zero milliseconds.
+     *
+     * Mutates the input in-place for efficiency.
+     */
+    private static stripDatetimeMilliseconds(stubMapping: WireMockStubMapping): void {
+        for (const mapping of stubMapping.mappings) {
+            if (mapping.request.queryParameters) {
+                for (const [, value] of Object.entries(mapping.request.queryParameters)) {
+                    const paramValue = value as { equalTo: string };
+                    if (
+                        paramValue.equalTo != null &&
+                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
+                    ) {
+                        paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    }
+                }
+            }
+        }
+    }
+
     private generateWireMockConfigFile(): void {
         const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+
+        // mock-utils generates datetime values using Date.toISOString() which always includes
+        // ".000Z" milliseconds. PHP's DateTimeInterface::RFC3339 format omits fractional seconds,
+        // so the SDK sends e.g. "2022-01-02T00:00:00Z". Strip the zero milliseconds from WireMock
+        // stubs so that equalTo exact-matching works correctly.
+        WireTestSetupGenerator.stripDatetimeMilliseconds(wireMockConfigContent);
+
         this.context.project.addRawFiles(
             new File(
                 "wiremock-mappings.json",
@@ -65,7 +104,7 @@ export class WireTestSetupGenerator {
   wiremock:
     image: wiremock/wiremock:3.9.1
     ports:
-      - "8080:8080"
+      - "0:8080"  # Use dynamic port to avoid conflicts with concurrent tests
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
     command: ["--global-response-templating", "--verbose"]
@@ -146,7 +185,8 @@ abstract class WireMockTestCase extends TestCase
             }
         }
 
-        $request = $requestFactory->createRequest('POST', 'http://localhost:8080/__admin/requests/find')
+        $wiremockUrl = getenv('WIREMOCK_URL') ?: 'http://localhost:8080';
+        $request = $requestFactory->createRequest('POST', $wiremockUrl . '/__admin/requests/find')
             ->withHeader('Content-Type', 'application/json')
             ->withBody($streamFactory->createStream(JsonEncoder::encode($body)));
         $response = $client->sendRequest($request);
@@ -208,6 +248,11 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 $projectRoot = \\dirname(__DIR__, 2);
 $dockerComposeFile = $projectRoot . '/wiremock/docker-compose.test.yml';
 
+// If WIREMOCK_URL is already set (external orchestration), skip container management
+if (getenv('WIREMOCK_URL') !== false) {
+    return;
+}
+
 echo "\\nStarting WireMock container...\\n";
 $cmd = sprintf(
     'docker compose -f %s up -d --wait 2>&1',
@@ -217,7 +262,22 @@ exec($cmd, $output, $exitCode);
 if ($exitCode !== 0) {
     throw new \\RuntimeException("Failed to start WireMock: " . implode("\\n", $output));
 }
-echo "WireMock container is ready\\n";
+
+// Discover the dynamically assigned port
+$portCmd = sprintf(
+    'docker compose -f %s port wiremock 8080 2>&1',
+    escapeshellarg($dockerComposeFile)
+);
+exec($portCmd, $portOutput, $portExitCode);
+if ($portExitCode === 0 && !empty($portOutput[0])) {
+    $parts = explode(':', $portOutput[0]);
+    $port = end($parts);
+    putenv("WIREMOCK_URL=http://localhost:{$port}");
+    echo "WireMock container is ready on port {$port}\\n";
+} else {
+    putenv('WIREMOCK_URL=http://localhost:8080');
+    echo "WireMock container is ready (default port 8080)\\n";
+}
 
 // Register shutdown function to stop the container after all tests complete
 register_shutdown_function(function () use ($dockerComposeFile) {

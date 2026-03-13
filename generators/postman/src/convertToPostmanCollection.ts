@@ -15,10 +15,12 @@ import { ORIGIN_VARIABLE_NAME } from "./utils.js";
 
 export function convertToPostmanCollection({
     ir,
-    collectionName
+    collectionName,
+    collectionDescription
 }: {
     ir: FernIr.IntermediateRepresentation;
     collectionName: string;
+    collectionDescription: string | undefined;
 }): PostmanCollectionSchema {
     const authSchemes = filterAuthSchemes(ir.auth);
     const authHeaders = getAuthHeaders(authSchemes);
@@ -27,7 +29,7 @@ export function convertToPostmanCollection({
         info: {
             name: collectionName,
             schema: "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-            description: ir.apiDocs ?? undefined
+            description: collectionDescription ?? ir.apiDocs ?? undefined
         },
         variable: [
             {

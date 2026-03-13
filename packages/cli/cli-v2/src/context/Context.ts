@@ -1,4 +1,10 @@
-import { FernToken, FernUserToken, getAccessToken, verifyAndDecodeJwt } from "@fern-api/auth";
+import {
+    checkOrganizationMembership,
+    FernToken,
+    FernUserToken,
+    getAccessToken,
+    verifyAndDecodeJwt
+} from "@fern-api/auth";
 import { Log, TtyAwareLogger } from "@fern-api/cli-logger";
 import { schemas } from "@fern-api/config";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -181,6 +187,37 @@ export class Context {
         this.stderr.info(`${Icons.success} Logged in as ${chalk.bold(email)}`);
 
         return { type: "user", value: accessToken };
+    }
+
+    /**
+     * Verify that the current user has access to the given organization.
+     *
+     * Organization tokens are already scoped to an organization, so this is a no-op.
+     * User tokens are checked for membership via the Venus API.
+     *
+     * @throws CliError if the organization doesn't exist or the user doesn't have access
+     */
+    public async verifyOrgAccess({ organization, token }: { organization: string; token: FernToken }): Promise<void> {
+        if (token.type === "organization") {
+            return;
+        }
+
+        const result = await checkOrganizationMembership({ organization, token });
+
+        switch (result.type) {
+            case "member":
+                return;
+            case "not-found":
+                throw CliError.notFound(
+                    `Organization "${organization}" does not exist.\n\n  To create it, run: fern org create ${organization}`
+                );
+            case "no-access":
+                throw CliError.unauthorized(
+                    `You do not have access to organization "${organization}".\n\n  Contact an organization admin to request access.`
+                );
+            case "unknown-error":
+                throw CliError.internalError(`Failed to verify access to organization "${organization}".`);
+        }
     }
 
     public resolveTargetOutputs(target: Target): string[] | undefined {

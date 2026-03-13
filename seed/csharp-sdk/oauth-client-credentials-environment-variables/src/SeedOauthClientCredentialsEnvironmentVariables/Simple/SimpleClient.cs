@@ -4,7 +4,7 @@ namespace SeedOauthClientCredentialsEnvironmentVariables;
 
 public partial class SimpleClient : ISimpleClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal SimpleClient(RawClient client)
     {
@@ -30,7 +30,6 @@ public partial class SimpleClient : ISimpleClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "/get-something",
                     Headers = _headers,
@@ -44,7 +43,9 @@ public partial class SimpleClient : ISimpleClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedOauthClientCredentialsEnvironmentVariablesApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

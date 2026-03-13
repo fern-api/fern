@@ -8,36 +8,83 @@ from collections import defaultdict
 import typing_extensions
 
 import pydantic
+from pydantic.fields import FieldInfo as _FieldInfo
 
 from .datetime_utils import serialize_datetime
 
 IS_PYDANTIC_V2 = pydantic.VERSION.startswith("2.")
 
 if IS_PYDANTIC_V2:
-    # isort will try to reformat the comments on these imports, which breaks mypy
-    # isort: off
-    from pydantic.v1.datetime_parse import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
-        parse_date as parse_date,
+    # Avoid importing from pydantic.v1 to maintain Python 3.14 compatibility.
+    _datetime_adapter = pydantic.TypeAdapter(dt.datetime)  # type: ignore # Pydantic v2
+    _date_adapter = pydantic.TypeAdapter(dt.date)  # type: ignore # Pydantic v2
+
+    def parse_datetime(value: typing.Any) -> dt.datetime:  # type: ignore[misc]
+        if isinstance(value, dt.datetime):
+            return value
+        return _datetime_adapter.validate_python(value)
+
+    def parse_date(value: typing.Any) -> dt.date:  # type: ignore[misc]
+        if isinstance(value, dt.datetime):
+            return value.date()
+        if isinstance(value, dt.date):
+            return value
+        return _date_adapter.validate_python(value)
+
+    from typing import get_args as get_args  # type: ignore[assignment]
+    from typing import get_origin as get_origin  # type: ignore[assignment]
+
+    def is_literal_type(tp: typing.Optional[typing.Type[typing.Any]]) -> bool:  # type: ignore[misc]
+        return typing_extensions.get_origin(tp) is typing_extensions.Literal
+
+    def is_union(tp: typing.Optional[typing.Type[typing.Any]]) -> bool:  # type: ignore[misc]
+        return tp is typing.Union or typing_extensions.get_origin(tp) is typing.Union  # type: ignore[comparison-overlap]
+
+    from pydantic.fields import FieldInfo as ModelField  # type: ignore[no-redef, assignment]
+
+    import re as _re
+    from collections import deque as _deque
+    from decimal import Decimal as _Decimal
+    from enum import Enum as _Enum
+    from ipaddress import (
+        IPv4Address as _IPv4Address,
+        IPv4Interface as _IPv4Interface,
+        IPv4Network as _IPv4Network,
+        IPv6Address as _IPv6Address,
+        IPv6Interface as _IPv6Interface,
+        IPv6Network as _IPv6Network,
     )
-    from pydantic.v1.datetime_parse import (  # pyright: ignore[reportMissingImports] # Pydantic v2
-        parse_datetime as parse_datetime,
-    )
-    from pydantic.v1.json import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
-        ENCODERS_BY_TYPE as encoders_by_type,
-    )
-    from pydantic.v1.typing import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
-        get_args as get_args,
-    )
-    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
-        get_origin as get_origin,
-    )
-    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
-        is_literal_type as is_literal_type,
-    )
-    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
-        is_union as is_union,
-    )
-    from pydantic.v1.fields import ModelField as ModelField  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pathlib import Path as _Path
+    from types import GeneratorType as _GeneratorType
+    from uuid import UUID as _UUID
+
+    def _decimal_encoder(dec_value: typing.Any) -> typing.Any:
+        if dec_value.as_tuple().exponent >= 0:
+            return int(dec_value)
+        return float(dec_value)
+
+    encoders_by_type: typing.Dict[typing.Type[typing.Any], typing.Callable[[typing.Any], typing.Any]] = {  # type: ignore[no-redef]
+        bytes: lambda o: o.decode(),
+        dt.date: lambda o: o.isoformat(),
+        dt.datetime: lambda o: o.isoformat(),
+        dt.time: lambda o: o.isoformat(),
+        dt.timedelta: lambda td: td.total_seconds(),
+        _Decimal: _decimal_encoder,
+        _Enum: lambda o: o.value,
+        frozenset: list,
+        _deque: list,
+        _GeneratorType: list,
+        _IPv4Address: str,
+        _IPv4Interface: str,
+        _IPv4Network: str,
+        _IPv6Address: str,
+        _IPv6Interface: str,
+        _IPv6Network: str,
+        _Path: str,
+        _re.Pattern: lambda o: o.pattern,
+        set: list,
+        _UUID: str,
+    }
 else:
     from pydantic.datetime_parse import parse_date as parse_date  # type: ignore # Pydantic v1
     from pydantic.datetime_parse import parse_datetime as parse_datetime  # type: ignore # Pydantic v1
@@ -47,8 +94,6 @@ else:
     from pydantic.typing import get_origin as get_origin  # type: ignore # Pydantic v1
     from pydantic.typing import is_literal_type as is_literal_type  # type: ignore # Pydantic v1
     from pydantic.typing import is_union as is_union  # type: ignore # Pydantic v1
-
-    # isort: on
 
 
 T = typing.TypeVar("T")
@@ -219,7 +264,7 @@ def universal_field_validator(field_name: str, pre: bool = False) -> typing.Call
     return decorator
 
 
-PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]
+PydanticField = typing.Union[ModelField, _FieldInfo]
 
 
 def _get_model_fields(

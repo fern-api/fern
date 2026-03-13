@@ -32,6 +32,3 @@ base64 = "0.22"
 ctor = "0.2"
 tokio-test = "0.4"
 
-[features]
-multipart = []
-sse = []

@@ -53,7 +53,7 @@ public final class ApiClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func search(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: User? = nil, optionalDeadline: Date? = nil, keyValue: [String: String]? = nil, optionalString: String? = nil, nestedUser: NestedUser? = nil, optionalUser: User? = nil, excludeUser: User? = nil, filter: String? = nil, neighbor: SearchRequestNeighbor? = nil, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions? = nil) async throws -> SearchResponse {
+    public func search(limit: Int, id: String, date: CalendarDate, deadline: Date, bytes: String, user: User, userList: User? = nil, optionalDeadline: Date? = nil, keyValue: [String: String]? = nil, optionalString: String? = nil, nestedUser: NestedUser? = nil, optionalUser: User? = nil, excludeUser: User? = nil, filter: String? = nil, tags: String? = nil, optionalTags: String? = nil, neighbor: SearchRequestNeighbor? = nil, neighborRequired: SearchRequestNeighborRequired, requestOptions: RequestOptions? = nil) async throws -> SearchResponse {
         return try await httpClient.performRequest(
             method: .get,
             path: "/user/getUsername",
@@ -72,6 +72,8 @@ public final class ApiClient: Sendable {
                 "optionalUser": optionalUser.map { .unknown($0) }, 
                 "excludeUser": excludeUser.map { .unknown($0) }, 
                 "filter": filter.map { .string($0) }, 
+                "tags": tags.map { .string($0) }, 
+                "optionalTags": optionalTags.map { .string($0) }, 
                 "neighbor": neighbor.map { .unknown($0) }, 
                 "neighborRequired": .unknown(neighborRequired)
             ],

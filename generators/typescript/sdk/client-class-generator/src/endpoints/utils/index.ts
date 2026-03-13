@@ -3,6 +3,7 @@ export * from "./buildUrl.js";
 export * from "./GeneratedQueryParams.js";
 export * from "./generateEndpointMetadata.js";
 export * from "./generateHeaders.js";
+export * from "./getAvailabilityDocs.js";
 export * from "./getNonVariablePathParameters.js";
 export * from "./getParameterNameForFile.js";
 export * from "./getPathParametersForEndpointSignature.js";

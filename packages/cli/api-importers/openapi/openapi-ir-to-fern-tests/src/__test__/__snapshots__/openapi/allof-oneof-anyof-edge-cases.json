@@ -136,7 +136,10 @@
               "Base",
             ],
             "inline": undefined,
-            "properties": {},
+            "properties": {
+              "typeA": "optional<string>",
+              "typeB": "optional<double>",
+            },
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -291,6 +294,31 @@
             "properties": {
               "data": "optional<string>",
               "success": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SendTransacSms": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "content": {
+                "docs": "Content of the message",
+                "type": "optional<string>",
+              },
+              "recipient": {
+                "docs": "Mobile number to send SMS with the country code",
+                "type": "string",
+              },
+              "sender": {
+                "docs": "Name of the sender",
+                "type": "string",
+              },
+              "templateId": {
+                "docs": "Template ID to send SMS",
+                "type": "optional<integer>",
+              },
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -460,9 +488,27 @@ types:
     source:
       openapi: ../openapi.yml
   Complex:
-    properties: {}
+    properties:
+      typeA: optional<string>
+      typeB: optional<double>
     extends:
       - Base
+    source:
+      openapi: ../openapi.yml
+  SendTransacSms:
+    properties:
+      recipient:
+        type: string
+        docs: Mobile number to send SMS with the country code
+      sender:
+        type: string
+        docs: Name of the sender
+      templateId:
+        type: optional<integer>
+        docs: Template ID to send SMS
+      content:
+        type: optional<string>
+        docs: Content of the message
     source:
       openapi: ../openapi.yml
 ",

@@ -20,5 +20,8 @@ fixtures:
     - customConfig:
         collection-name: GA Imdb Collection
       outputFolder: collection-name
+    - customConfig:
+        collection-description: The IMDb API allows you to search for movies and retrieve their details.
+      outputFolder: collection-description
 generatorType: Documentation
 defaultOutputMode: local_files

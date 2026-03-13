@@ -6,7 +6,7 @@ namespace SeedExhaustive.Endpoints;
 
 public partial class ContentTypeClient : IContentTypeClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal ContentTypeClient(RawClient client)
     {
@@ -49,7 +49,6 @@ public partial class ContentTypeClient : IContentTypeClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/foo/bar",
                     Body = request,
@@ -65,7 +64,9 @@ public partial class ContentTypeClient : IContentTypeClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -110,7 +111,6 @@ public partial class ContentTypeClient : IContentTypeClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/foo/baz",
                     Body = request,
@@ -126,7 +126,9 @@ public partial class ContentTypeClient : IContentTypeClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedExhaustiveApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

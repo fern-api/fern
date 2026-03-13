@@ -1,11 +1,12 @@
 using System.Net.ServerSentEvents;
+using System.Text.Json;
 using SeedServerSentEvents.Core;
 
 namespace SeedServerSentEvents;
 
 public partial class CompletionsClient : ICompletionsClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal CompletionsClient(RawClient client)
     {
@@ -31,7 +32,6 @@ public partial class CompletionsClient : ICompletionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "stream",
                     Body = request,
@@ -71,7 +71,21 @@ public partial class CompletionsClient : ICompletionsClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                switch (response.StatusCode)
+                {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<string>(responseBody));
+                }
+            }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -99,7 +113,6 @@ public partial class CompletionsClient : ICompletionsClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "stream-events",
                     Body = request,
@@ -139,7 +152,21 @@ public partial class CompletionsClient : ICompletionsClient
             yield break;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
+            try
+            {
+                switch (response.StatusCode)
+                {
+                    case 400:
+                        throw new BadRequestError(JsonUtils.Deserialize<string>(responseBody));
+                }
+            }
+            catch (JsonException)
+            {
+                // unable to map error response, throwing generic error
+            }
             throw new SeedServerSentEventsApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

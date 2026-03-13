@@ -4,7 +4,7 @@ namespace SeedOauthClientCredentialsWithVariables.NestedNoAuth;
 
 public partial class NestedNoAuthClient : INestedNoAuthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal NestedNoAuthClient(RawClient client)
     {

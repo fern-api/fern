@@ -3,7 +3,7 @@ import { Generation, WithGeneration } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { Eta } from "eta";
-import { access, mkdir, readFile, unlink, writeFile } from "fs/promises";
+import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 import { AsIsFiles } from "../AsIs.js";
 import { GeneratorContext } from "../context/GeneratorContext.js";
@@ -25,6 +25,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     private coreTestFiles: File[] = [];
     private publicCoreFiles: File[] = [];
     private publicCoreTestFiles: File[] = [];
+    private sourceRawFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private sourceFetcher: SourceFetcher;
 
@@ -115,6 +116,10 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
 
     public addSourceFiles(file: CSharpFile): void {
         this.sourceFiles.push(file);
+    }
+
+    public addSourceRawFile(file: File): void {
+        this.sourceRawFiles.push(file);
     }
 
     public addTestFiles(file: CSharpFile): void {
@@ -212,30 +217,29 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         const createProjectStartTime = Date.now();
         const absolutePathToProjectDirectory = await this.createProject({
             absolutePathToLibraryDirectory,
-            absolutePathToSolutionDirectory,
-            absolutePathToOtherDirectory,
-            libraryPath,
-            solutionPath
+            absolutePathToOtherDirectory
         });
         this.context.logger.debug(`[TIMING] createProject took ${Date.now() - createProjectStartTime}ms`);
         const createTestProjectStartTime = Date.now();
         const absolutePathToTestProjectDirectory = await this.createTestProject({
             absolutePathToTestDirectory,
-            absolutePathToSolutionDirectory,
             absolutePathToProjectDirectory
         });
         this.context.logger.debug(`[TIMING] createTestProject took ${Date.now() - createTestProjectStartTime}ms`);
 
+        // Generate the .slnx solution file directly as XML instead of using dotnet CLI
+        await this.createSolutionFile({
+            absolutePathToSolutionDirectory,
+            absolutePathToProjectDirectory,
+            absolutePathToTestProjectDirectory
+        });
+
         const writeSourceFilesStartTime = Date.now();
-        for (const file of this.sourceFiles) {
-            await file.write(absolutePathToProjectDirectory);
-        }
+        await this.writeFilesInBatches([...this.sourceFiles, ...this.sourceRawFiles], absolutePathToProjectDirectory);
         this.context.logger.debug(`[TIMING] writeSourceFiles took ${Date.now() - writeSourceFilesStartTime}ms`);
 
         const writeTestFilesStartTime = Date.now();
-        for (const file of this.testFiles) {
-            await file.write(absolutePathToTestProjectDirectory);
-        }
+        await this.writeFilesInBatches(this.testFiles, absolutePathToTestProjectDirectory);
         this.context.logger.debug(`[TIMING] writeTestFiles took ${Date.now() - writeTestFilesStartTime}ms`);
 
         await this.createRawFiles();
@@ -350,30 +354,11 @@ dotnet_diagnostic.IDE0005.severity = error
 
     private async createProject({
         absolutePathToLibraryDirectory,
-        absolutePathToSolutionDirectory,
-        absolutePathToOtherDirectory,
-        libraryPath,
-        solutionPath
+        absolutePathToOtherDirectory
     }: {
         absolutePathToLibraryDirectory: AbsoluteFilePath;
-        absolutePathToSolutionDirectory: AbsoluteFilePath;
         absolutePathToOtherDirectory: AbsoluteFilePath;
-        libraryPath: string;
-        solutionPath: string;
     }): Promise<AbsoluteFilePath> {
-        // Create solution file in the solution directory using absolute paths
-        const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-        await access(solutionFilePath).catch(() =>
-            loggingExeca(
-                this.context.logger,
-                "dotnet",
-                ["new", "sln", "-n", this.name, "-o", absolutePathToSolutionDirectory, "--no-update-check"],
-                {
-                    doNotPipeOutput: true
-                }
-            )
-        );
-
         const absolutePathToProjectDirectory = join(absolutePathToLibraryDirectory, RelativeFilePath.of(this.name));
         this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);
         await mkdir(absolutePathToProjectDirectory, { recursive: true });
@@ -410,39 +395,34 @@ dotnet_diagnostic.IDE0005.severity = error
             (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString()
         );
 
-        // Add library project to solution using absolute paths
-        // Use --in-root to place project at solution root without folder nesting
-        await loggingExeca(
-            this.context.logger,
-            "dotnet",
-            ["sln", solutionFilePath, "add", libraryCsprojPath, "--in-root"],
-            {
-                doNotPipeOutput: true
-            }
-        );
-
         return absolutePathToProjectDirectory;
     }
 
     private async createTestProject({
         absolutePathToTestDirectory,
-        absolutePathToSolutionDirectory,
         absolutePathToProjectDirectory
     }: {
         absolutePathToTestDirectory: AbsoluteFilePath;
-        absolutePathToSolutionDirectory: AbsoluteFilePath;
         absolutePathToProjectDirectory: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
         const testProjectName = this.names.files.testProject;
         const absolutePathToTestProject = join(absolutePathToTestDirectory, RelativeFilePath.of(testProjectName));
         await mkdir(absolutePathToTestProject, { recursive: true });
 
+        // Compute the relative path from the test project to the library .csproj
+        // Use win32.normalize to produce backslash paths matching dotnet CLI conventions
+        const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+        const projectReferenceRelativePath = path.win32.normalize(
+            path.relative(absolutePathToTestProject, libraryCsprojPath)
+        );
+
         const testCsProjTemplateContents = (
             await readFile(getAsIsFilepath(AsIsFiles.Test.TemplateTestCsProj))
         ).toString();
         const testCsProjContents = eta.renderString(testCsProjTemplateContents, {
             projectName: this.name,
-            testProjectName
+            testProjectName,
+            projectReferencePath: projectReferenceRelativePath
         });
         const testCsprojPath = join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`));
         await writeFile(testCsprojPath, testCsProjContents);
@@ -451,38 +431,46 @@ dotnet_diagnostic.IDE0005.severity = error
             (await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps))).toString()
         );
 
-        // Add test project to solution using absolute paths
-        // Use --in-root to place project at solution root without folder nesting
-        const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-        await loggingExeca(
-            this.context.logger,
-            "dotnet",
-            ["sln", solutionFilePath, "add", testCsprojPath, "--in-root"],
-            {
-                doNotPipeOutput: true
-            }
+        return absolutePathToTestProject;
+    }
+
+    /**
+     * Generates the .slnx solution file directly as XML, avoiding dotnet CLI overhead.
+     * Computes relative paths from the solution directory to both project .csproj files.
+     */
+    private async createSolutionFile({
+        absolutePathToSolutionDirectory,
+        absolutePathToProjectDirectory,
+        absolutePathToTestProjectDirectory
+    }: {
+        absolutePathToSolutionDirectory: AbsoluteFilePath;
+        absolutePathToProjectDirectory: AbsoluteFilePath;
+        absolutePathToTestProjectDirectory: AbsoluteFilePath;
+    }): Promise<void> {
+        const testProjectName = this.names.files.testProject;
+
+        // Compute relative paths from the solution directory to each .csproj file
+        const libraryCsprojAbsolute = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+        const testCsprojAbsolute = join(
+            absolutePathToTestProjectDirectory,
+            RelativeFilePath.of(`${testProjectName}.csproj`)
         );
 
-        // Update project reference in test project to point to the library project using absolute paths
-        const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+        const libraryCsprojRelative = path
+            .relative(absolutePathToSolutionDirectory, libraryCsprojAbsolute)
+            .replace(/\\/g, "/");
+        const testCsprojRelative = path
+            .relative(absolutePathToSolutionDirectory, testCsprojAbsolute)
+            .replace(/\\/g, "/");
 
-        // First remove the old reference (from template), then add the correct one
-        await loggingExeca(
-            this.context.logger,
-            "dotnet",
-            ["remove", testCsprojPath, "reference", `../${this.name}/${this.name}.csproj`],
-            {
-                doNotPipeOutput: true
-            }
-        ).catch(() => {
-            // Ignore error if reference doesn't exist
-        });
+        const slnxContents = `<Solution>
+  <Project Path="${testCsprojRelative}" />
+  <Project Path="${libraryCsprojRelative}" />
+</Solution>
+`;
 
-        await loggingExeca(this.context.logger, "dotnet", ["add", testCsprojPath, "reference", libraryCsprojPath], {
-            doNotPipeOutput: true
-        });
-
-        return absolutePathToTestProject;
+        const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await writeFile(solutionFilePath, slnxContents);
     }
 
     private async createCoreDirectory({
@@ -497,9 +485,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToCoreDirectory}`);
         await mkdir(absolutePathToCoreDirectory, { recursive: true });
 
-        for (const file of this.coreFiles) {
-            await file.write(absolutePathToCoreDirectory);
-        }
+        await this.writeFilesInBatches(this.coreFiles, absolutePathToCoreDirectory);
 
         return absolutePathToCoreDirectory;
     }
@@ -516,9 +502,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToCoreTestDirectory}`);
         await mkdir(absolutePathToCoreTestDirectory, { recursive: true });
 
-        for (const file of this.coreTestFiles) {
-            await file.write(absolutePathToCoreTestDirectory);
-        }
+        await this.writeFilesInBatches(this.coreTestFiles, absolutePathToCoreTestDirectory);
 
         return absolutePathToCoreTestDirectory;
     }
@@ -539,9 +523,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToPublicCoreTestDirectory}`);
         await mkdir(absolutePathToPublicCoreTestDirectory, { recursive: true });
 
-        for (const file of this.publicCoreTestFiles) {
-            await file.write(absolutePathToPublicCoreTestDirectory);
-        }
+        await this.writeFilesInBatches(this.publicCoreTestFiles, absolutePathToPublicCoreTestDirectory);
 
         return absolutePathToPublicCoreTestDirectory;
     }
@@ -558,9 +540,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToTestUtilsDirectory}`);
         await mkdir(absolutePathToTestUtilsDirectory, { recursive: true });
 
-        for (const file of this.testUtilFiles) {
-            await file.write(absolutePathToTestUtilsDirectory);
-        }
+        await this.writeFilesInBatches(this.testUtilFiles, absolutePathToTestUtilsDirectory);
 
         return absolutePathToTestUtilsDirectory;
     }
@@ -578,9 +558,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToPublicCoreDirectory}`);
         await mkdir(absolutePathToPublicCoreDirectory, { recursive: true });
 
-        for (const file of this.publicCoreFiles) {
-            await file.write(absolutePathToPublicCoreDirectory);
-        }
+        await this.writeFilesInBatches(this.publicCoreFiles, absolutePathToPublicCoreDirectory);
 
         return absolutePathToPublicCoreDirectory;
     }
@@ -595,6 +573,7 @@ dotnet_diagnostic.IDE0005.severity = error
                 variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    hasBaseUrl: this.context.hasBaseUrl(),
                     namespace,
                     testNamespace: this.namespaces.test,
                     additionalProperties: true,
@@ -615,6 +594,7 @@ dotnet_diagnostic.IDE0005.severity = error
                 variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    hasBaseUrl: this.context.hasBaseUrl(),
                     namespace,
                     additionalProperties: true,
                     context: this.context,
@@ -643,6 +623,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                        hasBaseUrl: this.context.hasBaseUrl(),
                         namespace: this.namespaces.core,
                         additionalProperties: true,
                         context: this.context,
@@ -658,6 +639,7 @@ dotnet_diagnostic.IDE0005.severity = error
                     variables: {
                         grpc: this.context.hasGrpcEndpoints(),
                         idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                        hasBaseUrl: this.context.hasBaseUrl(),
                         namespace: this.namespaces.core,
                         additionalProperties: true,
                         context: this.context,
@@ -678,6 +660,7 @@ dotnet_diagnostic.IDE0005.severity = error
                 variables: {
                     grpc: this.context.hasGrpcEndpoints(),
                     idempotencyHeaders: this.context.hasIdempotencyHeaders(),
+                    hasBaseUrl: this.context.hasBaseUrl(),
                     namespace: this.namespaces.testUtils,
                     testNamespace: this.namespaces.test,
                     additionalProperties: true,
@@ -686,6 +669,19 @@ dotnet_diagnostic.IDE0005.severity = error
                 }
             })
         );
+    }
+
+    private static readonly FILE_WRITE_BATCH_SIZE = 100;
+
+    /**
+     * Writes files in batches with bounded concurrency to avoid exhausting file descriptors
+     * while still being significantly faster than sequential writes.
+     */
+    private async writeFilesInBatches(files: File[], directoryPrefix: AbsoluteFilePath): Promise<void> {
+        for (let i = 0; i < files.length; i += CsharpProject.FILE_WRITE_BATCH_SIZE) {
+            const batch = files.slice(i, i + CsharpProject.FILE_WRITE_BATCH_SIZE);
+            await Promise.all(batch.map((file) => file.write(directoryPrefix)));
+        }
     }
 
     private async createRawFiles(): Promise<void> {

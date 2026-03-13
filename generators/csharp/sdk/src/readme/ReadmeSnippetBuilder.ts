@@ -24,6 +24,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static FORWARD_COMPATIBLE_ENUMS_FEATURE_ID: FernGeneratorCli.FeatureId = "FORWARD_COMPATIBLE_ENUMS";
     private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "RAW_RESPONSE";
+    private static ADDITIONAL_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_HEADERS";
+    private static ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_QUERY_PARAMETERS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
@@ -113,6 +115,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID] = this.buildRawResponseSnippets();
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
+        snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID] =
+            this.buildAdditionalQueryParametersSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
@@ -219,6 +224,42 @@ var data = await ${this.getMethodCall(rawResponseEndpoint)}(...);
             return snippet != null ? [snippet] : [];
         }
         return [];
+    }
+
+    private buildAdditionalHeadersSnippets(): string[] {
+        const headerEndpoints = this.getEndpointsForFeature(ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID);
+        return headerEndpoints.map((headerEndpoint) =>
+            this.writeCode(`
+var response = await ${this.getMethodCall(headerEndpoint)}(
+    ...,
+    new ${this.requestOptionsName} {
+        AdditionalHeaders = new Dictionary<string, string?>
+        {
+            { "X-Custom-Header", "custom-value" }
+        }
+    }
+);
+`)
+        );
+    }
+
+    private buildAdditionalQueryParametersSnippets(): string[] {
+        const queryParameterEndpoints = this.getEndpointsForFeature(
+            ReadmeSnippetBuilder.ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID
+        );
+        return queryParameterEndpoints.map((queryParameterEndpoint) =>
+            this.writeCode(`
+var response = await ${this.getMethodCall(queryParameterEndpoint)}(
+    ...,
+    new ${this.requestOptionsName} {
+        AdditionalQueryParameters = new Dictionary<string, string>
+        {
+            { "custom_param", "custom-value" }
+        }
+    }
+);
+`)
+        );
     }
 
     private buildForwardCompatibleEnumSnippets(): string[] {

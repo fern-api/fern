@@ -10,7 +10,7 @@ export const WorkspaceStarterFilesResponse: core.serialization.ObjectSchema<
     serializers.WorkspaceStarterFilesResponse.Raw,
     SeedTrace.WorkspaceStarterFilesResponse
 > = core.serialization.object({
-    files: core.serialization.record(Language, WorkspaceFiles.optional()),
+    files: core.serialization.partialRecord(Language, WorkspaceFiles.optional()),
 });
 
 export declare namespace WorkspaceStarterFilesResponse {

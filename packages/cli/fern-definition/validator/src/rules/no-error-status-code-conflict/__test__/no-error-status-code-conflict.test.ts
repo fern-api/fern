@@ -15,12 +15,14 @@ describe("no-duplicate-declarations", () => {
         });
         expect(violations).toEqual([
             {
+                name: "no-error-status-code-conflict",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["service", "endpoints", "get"],
                 message: "Multiple errors have status-code 401: D, D"
             },
             {
+                name: "no-error-status-code-conflict",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("1.yml"),
                 nodePath: ["service", "endpoints", "update"],

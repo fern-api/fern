@@ -12,6 +12,7 @@ import { camelCase, startCase } from "lodash-es";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { AsyncAPIConverterContext } from "../../AsyncAPIConverterContext.js";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter.js";
+import { AbstractServerConverter } from "../../converters/AbstractServerConverter.js";
 import { ParameterConverter } from "../../converters/ParameterConverter.js";
 import { ChannelAddressExtension } from "../../extensions/x-fern-channel-address.js";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name.js";
@@ -91,7 +92,9 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
         });
         const channelAddressExtensionValue = channelAddressExtension.convert();
         const channelAddress = this.transformToValidPath(channelAddressExtensionValue ?? this.channelPath);
-        const baseUrl = this.channel.servers?.[0] ?? Object.keys(this.context.spec.servers ?? {})[0];
+        const baseUrl =
+            this.resolveServerName(this.channel.servers?.[0]) ??
+            this.resolveServerName(Object.keys(this.context.spec.servers ?? {})[0]);
         const path = constructHttpPath(channelAddress);
         const groupName = camelCase(this.channelPath);
 
@@ -296,6 +299,22 @@ export class ChannelConverter2_X extends AbstractChannelConverter<AsyncAPIV2.Cha
                 }
             }
         }
+    }
+
+    /**
+     * Resolves the effective server name by looking up the server in the spec
+     * and checking for x-fern-server-name extension.
+     */
+    private resolveServerName(serverKey: string | undefined): string | undefined {
+        if (serverKey == null) {
+            return undefined;
+        }
+        const specServers = this.context.spec.servers;
+        if (specServers != null && serverKey in specServers) {
+            const server = specServers[serverKey];
+            return AbstractServerConverter.getServerName(serverKey, server);
+        }
+        return serverKey;
     }
 
     private convertBindingQueryParameters({

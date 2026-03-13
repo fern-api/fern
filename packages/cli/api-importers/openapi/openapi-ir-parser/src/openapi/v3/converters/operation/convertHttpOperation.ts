@@ -44,7 +44,7 @@ export function convertHttpOperation({
     streamTerminator?: string;
     source: Source;
 }): EndpointWithExample[] {
-    const { document, operation, path, method, baseBreadcrumbs } = operationContext;
+    const { document, operation, path, method, baseBreadcrumbs, pathItem } = operationContext;
 
     const idempotent = getExtension<boolean>(operation, FernOpenAPIExtension.IDEMPOTENT);
     const requestNameOverride = getExtension<string>(operation, [
@@ -343,7 +343,7 @@ export function convertHttpOperation({
         servers:
             serverName != null
                 ? [{ name: serverName, url: undefined, audiences: undefined }]
-                : (operation.servers ?? []).map((server) =>
+                : (operation.servers ?? pathItem.servers ?? []).map((server) =>
                       convertServer(server, { groupMultiApiEnvironments: context.options.groupMultiApiEnvironments })
                   ),
         description: operation.description,

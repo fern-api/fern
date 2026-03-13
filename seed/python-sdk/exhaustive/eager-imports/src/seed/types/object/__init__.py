@@ -3,13 +3,16 @@
 # isort: skip_file
 
 from .types import (
+    DocumentedUnknownType,
     DoubleOptional,
     NestedObjectWithOptionalField,
     NestedObjectWithRequiredField,
     ObjectWithDatetimeLikeString,
+    ObjectWithDocumentedUnknownType,
     ObjectWithMapOfMap,
     ObjectWithOptionalField,
     ObjectWithRequiredField,
+    ObjectWithUnknownField,
     OptionalAlias,
 )
 from .errors import (
@@ -20,16 +23,19 @@ from .errors import (
 )
 
 __all__ = [
+    "DocumentedUnknownType",
     "DoubleOptional",
     "NestedObjectWithOptionalField",
     "NestedObjectWithOptionalFieldError",
     "NestedObjectWithRequiredField",
     "NestedObjectWithRequiredFieldError",
     "ObjectWithDatetimeLikeString",
+    "ObjectWithDocumentedUnknownType",
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithOptionalFieldError",
     "ObjectWithRequiredField",
     "ObjectWithRequiredFieldError",
+    "ObjectWithUnknownField",
     "OptionalAlias",
 ]

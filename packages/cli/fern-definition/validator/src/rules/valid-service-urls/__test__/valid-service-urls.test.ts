@@ -18,6 +18,7 @@ describe("valid-service-urls", () => {
                 message: '"url" cannot be configured unless you specify multiple URLs for each environment in api.yml',
                 nodePath: ["service", "url"],
                 relativeFilepath: RelativeFilePath.of("with-url.yml"),
+                name: "valid-service-urls",
                 severity: "fatal"
             }
         ];
@@ -43,6 +44,7 @@ describe("valid-service-urls", () => {
   - C`,
                 nodePath: ["service", "url"],
                 relativeFilepath: RelativeFilePath.of("with-invalid-url.yml"),
+                name: "valid-service-urls",
                 severity: "fatal"
             },
             {
@@ -52,6 +54,7 @@ describe("valid-service-urls", () => {
   - C`,
                 nodePath: ["service", "endpoints", "test", "url"],
                 relativeFilepath: RelativeFilePath.of("without-url.yml"),
+                name: "valid-service-urls",
                 severity: "fatal"
             }
         ];

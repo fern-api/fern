@@ -10,6 +10,8 @@ use Seed\Types\Object\Types\ObjectWithRequiredField;
 use Seed\Types\Object\Types\ObjectWithMapOfMap;
 use Seed\Types\Object\Types\NestedObjectWithOptionalField;
 use Seed\Types\Object\Types\NestedObjectWithRequiredField;
+use Seed\Types\Object\Types\ObjectWithUnknownField;
+use Seed\Types\Object\Types\ObjectWithDocumentedUnknownType;
 use Seed\Types\Object\Types\ObjectWithDatetimeLikeString;
 
 class EndpointsObjectWireTest extends WireMockTestCase
@@ -276,6 +278,56 @@ class EndpointsObjectWireTest extends WireMockTestCase
 
     /**
      */
+    public function testGetAndReturnWithUnknownField(): void {
+        $testId = 'endpoints.object.get_and_return_with_unknown_field.0';
+        $this->client->endpoints->object->getAndReturnWithUnknownField(
+            new ObjectWithUnknownField([
+                'unknown' => [
+                    '$ref' => "https://example.com/schema",
+                ],
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.object.get_and_return_with_unknown_field.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/object/get-and-return-with-unknown-field",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
+    public function testGetAndReturnWithDocumentedUnknownType(): void {
+        $testId = 'endpoints.object.get_and_return_with_documented_unknown_type.0';
+        $this->client->endpoints->object->getAndReturnWithDocumentedUnknownType(
+            new ObjectWithDocumentedUnknownType([
+                'documentedUnknownType' => [
+                    'key' => "value",
+                ],
+            ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.object.get_and_return_with_documented_unknown_type.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/object/get-and-return-with-documented-unknown-type",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
     public function testGetAndReturnWithDatetimeLikeString(): void {
         $testId = 'endpoints.object.get_and_return_with_datetime_like_string.0';
         $this->client->endpoints->object->getAndReturnWithDatetimeLikeString(
@@ -305,7 +357,7 @@ class EndpointsObjectWireTest extends WireMockTestCase
         $this->client = new SeedClient(
             token: 'test-token',
         options: [
-            'baseUrl' => 'http://localhost:8080',
+            'baseUrl' => getenv('WIREMOCK_URL') ?: 'http://localhost:8080',
         ],
         );
     }

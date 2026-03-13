@@ -14,6 +14,7 @@ export interface Websocket {
             options: ts.ObjectLiteralExpression;
             headers: ts.Expression;
             queryParameters: ts.Expression;
+            abortSignal?: ts.Expression;
         }) => ts.Expression;
     };
     readonly CloseEvent: {
@@ -64,16 +65,22 @@ export class WebsocketImpl extends CoreUtility implements Websocket {
                     options: ts.ObjectLiteralExpression;
                     headers: ts.Expression;
                     queryParameters: ts.Expression;
-                }) =>
-                    ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
-                        ts.factory.createObjectLiteralExpression([
-                            ts.factory.createPropertyAssignment("url", args.url),
-                            ts.factory.createPropertyAssignment("protocols", args.protocols),
-                            ts.factory.createPropertyAssignment("queryParameters", args.queryParameters),
-                            ts.factory.createPropertyAssignment("headers", args.headers),
-                            ts.factory.createPropertyAssignment("options", args.options)
-                        ])
-                    ])
+                    abortSignal?: ts.Expression;
+                }) => {
+                    const properties = [
+                        ts.factory.createPropertyAssignment("url", args.url),
+                        ts.factory.createPropertyAssignment("protocols", args.protocols),
+                        ts.factory.createPropertyAssignment("queryParameters", args.queryParameters),
+                        ts.factory.createPropertyAssignment("headers", args.headers),
+                        ts.factory.createPropertyAssignment("options", args.options)
+                    ];
+                    if (args.abortSignal != null) {
+                        properties.push(ts.factory.createPropertyAssignment("abortSignal", args.abortSignal));
+                    }
+                    return ts.factory.createNewExpression(ReconnectingWebSocket.getExpression(), undefined, [
+                        ts.factory.createObjectLiteralExpression(properties)
+                    ]);
+                }
         )
     };
 

@@ -48,7 +48,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     removeDiscriminantsFromSchemas: undefined,
     pathParameterOrder: undefined,
     defaultIntegerFormat: undefined,
-    resolveSchemaCollisions: undefined
+    resolveSchemaCollisions: undefined,
+    inferForwardCompatible: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -177,7 +178,8 @@ export function parseBaseApiDefinitionSettingsSchema(
             settings?.["remove-discriminants-from-schemas"]
         ),
         pathParameterOrder: settings?.["path-parameter-order"],
-        resolveSchemaCollisions: settings?.["resolve-schema-collisions"]
+        resolveSchemaCollisions: settings?.["resolve-schema-collisions"],
+        inferForwardCompatible: settings?.["infer-forward-compatible"]
     };
 }
 
@@ -633,15 +635,31 @@ async function convertGenerator({
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
         settings: generator.api?.settings ?? undefined,
-        apiOverride:
-            generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null
-                ? {
-                      specs: generator.api?.specs,
-                      auth: generator.api?.auth,
-                      "auth-schemes": generator.api?.["auth-schemes"]
-                  }
-                : undefined
+        apiOverride: getApiOverride({ generator })
     };
+}
+
+function getApiOverride({
+    generator
+}: {
+    generator: generatorsYml.GeneratorInvocationSchema;
+}): generatorsYml.GeneratorInvocation["apiOverride"] {
+    // Generator-level overrides take priority
+    if (
+        generator.api?.specs != null ||
+        generator.api?.auth != null ||
+        generator.api?.["auth-schemes"] != null ||
+        generator.api?.headers != null
+    ) {
+        return {
+            specs: generator.api?.specs,
+            auth: generator.api?.auth,
+            "auth-schemes": generator.api?.["auth-schemes"],
+            headers: generator.api?.headers
+        };
+    }
+
+    return undefined;
 }
 
 function getPublishMetadata({

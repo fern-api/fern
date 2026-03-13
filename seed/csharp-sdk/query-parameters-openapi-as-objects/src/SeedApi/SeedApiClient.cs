@@ -35,7 +35,7 @@ public partial class SeedApiClient : ISeedApiClient
         CancellationToken cancellationToken = default
     )
     {
-        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 16)
+        var _queryString = new SeedApi.Core.QueryStringBuilder.Builder(capacity: 18)
             .Add("limit", request.Limit)
             .Add("id", request.Id)
             .Add("date", request.Date)
@@ -50,6 +50,8 @@ public partial class SeedApiClient : ISeedApiClient
             .AddDeepObject("optionalUser", request.OptionalUser)
             .AddDeepObject("excludeUser", request.ExcludeUser)
             .Add("filter", request.Filter)
+            .Add("tags", request.Tags)
+            .Add("optionalTags", request.OptionalTags)
             .AddDeepObject("neighbor", request.Neighbor)
             .AddDeepObject("neighborRequired", request.NeighborRequired)
             .MergeAdditional(options?.AdditionalQueryParameters)
@@ -64,7 +66,6 @@ public partial class SeedApiClient : ISeedApiClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "user/getUsername",
                     QueryString = _queryString,
@@ -76,7 +77,9 @@ public partial class SeedApiClient : ISeedApiClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<SearchResponse>(responseBody)!;
@@ -102,7 +105,9 @@ public partial class SeedApiClient : ISeedApiClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,
@@ -159,6 +164,8 @@ public partial class SeedApiClient : ISeedApiClient
     ///             },
     ///         ],
     ///         Filter = ["filter"],
+    ///         Tags = ["tags"],
+    ///         OptionalTags = ["optionalTags"],
     ///         Neighbor = new User
     ///         {
     ///             Name = "name",

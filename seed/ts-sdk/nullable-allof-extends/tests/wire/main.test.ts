@@ -9,6 +9,7 @@ describe("SeedApiClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { normalField: "normalField" };
+
         server.mockEndpoint().get("/test").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.getTest();
@@ -22,6 +23,7 @@ describe("SeedApiClient", () => {
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {};
         const rawResponseBody = { normalField: "normalField" };
+
         server
             .mockEndpoint()
             .post("/test")

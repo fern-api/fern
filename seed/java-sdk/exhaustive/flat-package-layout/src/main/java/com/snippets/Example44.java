@@ -1,8 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
-import com.seed.exhaustive.types.types.Animal;
-import com.seed.exhaustive.types.types.Dog;
+import java.util.UUID;
 
 public class Example44 {
     public static void main(String[] args) {
@@ -11,9 +10,6 @@ public class Example44 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints()
-                .union()
-                .getAndReturnUnion(
-                        Animal.dog(Dog.builder().name("name").likesToWoof(true).build()));
+        client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"));
     }
 }

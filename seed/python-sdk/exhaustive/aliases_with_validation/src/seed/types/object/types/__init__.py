@@ -6,22 +6,28 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .documented_unknown_type import DocumentedUnknownType
     from .double_optional import DoubleOptional
     from .nested_object_with_optional_field import NestedObjectWithOptionalField
     from .nested_object_with_required_field import NestedObjectWithRequiredField
     from .object_with_datetime_like_string import ObjectWithDatetimeLikeString
+    from .object_with_documented_unknown_type import ObjectWithDocumentedUnknownType
     from .object_with_map_of_map import ObjectWithMapOfMap
     from .object_with_optional_field import ObjectWithOptionalField
     from .object_with_required_field import ObjectWithRequiredField
+    from .object_with_unknown_field import ObjectWithUnknownField
     from .optional_alias import OptionalAlias
 _dynamic_imports: typing.Dict[str, str] = {
+    "DocumentedUnknownType": ".documented_unknown_type",
     "DoubleOptional": ".double_optional",
     "NestedObjectWithOptionalField": ".nested_object_with_optional_field",
     "NestedObjectWithRequiredField": ".nested_object_with_required_field",
     "ObjectWithDatetimeLikeString": ".object_with_datetime_like_string",
+    "ObjectWithDocumentedUnknownType": ".object_with_documented_unknown_type",
     "ObjectWithMapOfMap": ".object_with_map_of_map",
     "ObjectWithOptionalField": ".object_with_optional_field",
     "ObjectWithRequiredField": ".object_with_required_field",
+    "ObjectWithUnknownField": ".object_with_unknown_field",
     "OptionalAlias": ".optional_alias",
 }
 
@@ -48,12 +54,15 @@ def __dir__():
 
 
 __all__ = [
+    "DocumentedUnknownType",
     "DoubleOptional",
     "NestedObjectWithOptionalField",
     "NestedObjectWithRequiredField",
     "ObjectWithDatetimeLikeString",
+    "ObjectWithDocumentedUnknownType",
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithRequiredField",
+    "ObjectWithUnknownField",
     "OptionalAlias",
 ]

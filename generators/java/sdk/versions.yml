@@ -1,4 +1,243 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.0
+  changelogEntry:
+    - summary: |
+        Fix WebSocket client compilation error when a server message type
+        produces the same method name as a lifecycle handler. For example,
+        a message type `error` generated `onError(Consumer<Error>)` which
+        clashed with the lifecycle `onError(Consumer<Exception>)` due to
+        Java generics type erasure. Colliding message handler methods are
+        now suffixed with `Message` (e.g. `onErrorMessage`).
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 3.42.9
+  changelogEntry:
+    - summary: |
+        Update bundled npm tar package from 7.5.10 to 7.5.11.
+      type: chore
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 3.42.8
+  changelogEntry:
+    - summary: |
+        Add `equals()`, `hashCode()`, and `toString()` methods to
+        interface-based discriminated union wrapper classes. Previously,
+        the outer wrapper class fell back to `Object.equals()` (reference
+        identity), breaking equality for any type that transitively
+        contained the union. The methods now delegate to the inner `Value`
+        field.
+      type: fix
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 3.42.7
+  changelogEntry:
+    - summary: |
+        Add concurrency configuration to generated CI workflow with cancel-in-progress: false
+        to prevent stacked runs from being cancelled when a newer run starts.
+      type: chore
+  createdAt: "2026-03-11"
+  irVersion: 65
+
+- version: 3.42.6
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to include global headers in generated code examples.
+        Previously, required global headers (e.g., `X-Organization-ID`) configured via
+        `x-fern-global-headers` were missing from dynamic snippet output. Also fixes
+        header value lookup to use wire values instead of a non-existent property.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+
+- version: 3.42.5
+  changelogEntry:
+    - summary: |
+        Fix `custom-interceptors` support for OAuth staged builders. When
+        `custom-interceptors: true` is enabled, the `_Builder` inner class now
+        generates an `interceptors` field, `addInterceptor(Interceptor)` method,
+        and forwards interceptors to `_TokenAuth` and `_CredentialsAuth` via
+        `token()` and `credentials()` methods. Previously, only the root builder
+        received interceptor support, causing OAuth staged builders to lose
+        interceptor configuration.
+      type: fix
+  createdAt: "2026-03-10"
+  irVersion: 65
+- version: 3.42.4
+  changelogEntry:
+    - summary: |
+        Parallelize endpoint snippet generation in `populateSnippetsCache()`. All
+        endpoints are now processed concurrently via `Promise.all` instead of
+        sequentially, reducing snippet generation time for large APIs.
+      type: chore
+  createdAt: "2026-03-07"
+  irVersion: 65
+
+- version: 3.42.3
+  changelogEntry:
+    - summary: |
+        Update bundled npm tar package from 7.5.8 to 7.5.10 to fix
+        GHSA-qffp-2rhf-9h96 (Hardlink Path Traversal via Drive-Relative
+        Linkpath).
+      type: chore
+  createdAt: "2026-03-06"
+  irVersion: 65
+
+- version: 3.42.2
+  changelogEntry:
+    - summary: |
+        Fix `custom-plugins` configuration not being applied when running in
+        local/download-files mode (`fern generate --local`). The download-files
+        config class was missing the `customPlugins` field, causing the values
+        to be silently dropped during deserialization.
+      type: fix
+  createdAt: "2026-03-05"
+  irVersion: 65
+
+- version: 3.42.1
+  changelogEntry:
+    - summary: |
+        Fix compilation error for objects with many properties that exceed the
+        JVM 255-parameter-slot limit. Types like CMS-1500 claim forms caused
+        `too many parameters` javac errors. The generator now computes precise
+        JVM slot counts (`long`/`double` consume two slots, all other types one)
+        and, when the threshold is exceeded, generates a constructor that accepts
+        the Builder as a single parameter, keeping the public API unchanged.
+      type: fix
+  createdAt: "2026-03-04"
+  irVersion: 65
+
+- version: 3.42.0
+  changelogEntry:
+    - summary: |
+        Add support for custom Gradle plugins via the `custom-plugins` configuration
+        option. Users can now specify custom Gradle plugins (with optional versions)
+        that will be added to the generated build.gradle file. Format:
+        `["plugin-id:version", "plugin-id"]`. Plugins are applied after built-in
+        plugins (java-library, maven-publish, spotless).
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
+- version: 3.41.0
+  changelogEntry:
+    - summary: |
+        Add `custom-interceptors` configuration option for the Java SDK generator.
+        When enabled (`custom-interceptors: true` in `generators.yml`), the generated
+        client builder exposes an `addInterceptor(Interceptor)` method that allows SDK
+        users to add custom OkHttp interceptors. Interceptors are applied to the
+        OkHttpClient when the client is built. This enables use cases like PKCV (Public
+        Key Client Validation), custom request signing, and other HTTP-level
+        customizations via custom code protected by `.fernignore`.
+      type: feat
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for form-urlencoded request bodies: objects
+        now serialize as Java's `Map.toString()` format (`{key=value}`) instead
+        of JSON (`{"key":"value"}`), and ISO 8601 dates with zero seconds drop
+        the `:00` to match Java's `OffsetDateTime.toString()` output (e.g.
+        `2015-07-30T20:00Z` instead of `2015-07-30T20:00:00Z`).
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.8
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to convert RFC 2822 dates to ISO 8601 in both
+        the mock response body (served by MockWebServer) and the expected response
+        assertion. Previously, only the expected response was converted, leaving
+        RFC 2822 dates in the mock response which caused `DateTimeParseException`
+        during Jackson deserialization for fields typed as `dateTime` (not
+        `dateTimeRfc2822`). The conversion now happens upfront so a single
+        normalized resource file is shared by both mock setup and validation.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.7
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for URI and path paginated endpoints returning
+        wrong type. The published `@fern-fern/ir-sdk` doesn't include `uri`/`path`
+        as `Pagination` union members, so the raw IR JSON passes through
+        undeserialized with `_type` discriminant fields instead of `type`. The
+        generator now normalizes raw IR JSON (`_type` → `type`) before extracting
+        the pagination item type, so wire tests correctly use
+        `SyncPagingIterable<T>` instead of the raw response type.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.6
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for form-urlencoded request body encoding.
+        The generator now uses `+` for spaces (matching Java's `URLEncoder.encode()`)
+        instead of `%20` (from `encodeURIComponent`), serializes arrays as
+        `[val1, val2]` (matching Java's `List.toString()`), and serializes objects
+        as JSON strings.
+      type: fix
+    - summary: |
+        Fix wire test generation for RFC 2822 date fields. The expected response
+        body in wire tests now converts RFC 2822 dates (e.g.
+        `Thu, 30 Jul 2015 20:00:00 +0000`) to ISO 8601 with Z suffix (e.g.
+        `2015-07-30T20:00:00Z`) to match Jackson's `JavaTimeModule` serialization
+        of `OffsetDateTime`. The mock response body retains RFC 2822 dates since
+        the SDK's `Rfc2822DateTimeDeserializer` handles them correctly.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.5
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for URI and path paginated endpoints. The generated
+        wire tests incorrectly used the raw response type (e.g. `ListMessagesResponse`)
+        instead of the paginated return type (`SyncPagingIterable<T>`) for endpoints
+        using URI or path-based pagination, causing compilation failures.
+      type: fix
+  createdAt: "2026-03-03"
+  irVersion: 65
+
+- version: 3.40.4
+  changelogEntry:
+    - summary: |
+        Bump Jackson from 2.18.2 to 2.18.6 to fix GHSA-72hv-8253-57qq
+        (Number Length Constraint Bypass in Async Parser leading to potential DoS).
+      type: fix
+  createdAt: "2026-03-02"
+  irVersion: 65
+
+- version: 3.40.3
+  changelogEntry:
+    - summary: |
+        Make OAuth authentication section a stable feature block in generated READMEs.
+        Previously, the authentication documentation was injected as an addendum to the
+        Usage block with a `## Authentication` heading, which the BlockMerger parsed as
+        a separate top-level block on subsequent merges. The authentication content is
+        now registered as a proper AUTHENTICATION feature with a stable block ID, making
+        README merges deterministic.
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
+- version: 3.40.2
+  changelogEntry:
+    - summary: |
+        Patch minimatch to 10.2.3 in container to fix GHSA-7r86-cg39-jmmj (ReDoS via
+        combinatorial backtracking in matchOne()) and GHSA-23c5-xmqv-rm74 (ReDoS via
+        nested *() extglobs).
+      type: fix
+  createdAt: "2026-02-27"
+  irVersion: 65
+
 - version: 3.40.1
   changelogEntry:
     - summary: |

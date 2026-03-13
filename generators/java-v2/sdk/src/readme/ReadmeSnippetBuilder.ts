@@ -19,6 +19,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CUSTOM_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_HEADERS";
     private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static WEBSOCKET_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKET";
+    private static AUTHENTICATION_FEATURE_ID: FernGeneratorCli.FeatureId = "AUTHENTICATION";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
     private static ELLIPSES = java.codeblock("...");
 
@@ -135,13 +136,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
         // Always show OAuth token override documentation when OAuth client credentials are present
         if (this.hasOAuthClientCredentials()) {
-            const oauthDoc = this.getOAuthTokenOverrideDocumentation();
-            // Append to existing Usage addendum or create new one
-            if (addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage]) {
-                addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] += "\n\n" + oauthDoc;
-            } else {
-                addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = oauthDoc;
-            }
+            addendumsByFeatureId[ReadmeSnippetBuilder.AUTHENTICATION_FEATURE_ID] =
+                this.getOAuthTokenOverrideDocumentation();
         }
 
         return addendumsByFeatureId;
@@ -185,9 +181,7 @@ UpdateRequest request = UpdateRequest.builder()
 
     private getOAuthTokenOverrideDocumentation(): string {
         const clientClassName = this.context.getRootClientClassName();
-        return `## Authentication
-
-This SDK supports two authentication methods:
+        return `This SDK supports two authentication methods:
 
 ### Option 1: Direct Bearer Token
 

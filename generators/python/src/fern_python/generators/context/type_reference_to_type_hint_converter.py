@@ -241,6 +241,7 @@ class TypeReferenceToTypeHintConverter:
             boolean=AST.TypeHint.bool_,
             long_=AST.TypeHint.int_,
             date_time=AST.TypeHint.datetime,
+            date_time_rfc_2822=AST.TypeHint.datetime,
             uuid_=AST.TypeHint.uuid,
             date=AST.TypeHint.date,
             base_64=AST.TypeHint.str_,

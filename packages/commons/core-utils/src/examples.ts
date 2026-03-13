@@ -8,6 +8,8 @@ export const DATE = "2023-01-15";
 
 export const DATE_TIME = "2024-01-15T09:30:00Z";
 
+export const DATE_TIME_RFC_2822 = "Tue, 15 Jan 2024 09:30:00 +0000";
+
 export const DOUBLE = 1.1;
 
 export const FLOAT = 1.1;

@@ -1,4 +1,5 @@
 using SeedExhaustive;
+using SeedExhaustive.Endpoints.Put;
 
 namespace Usage;
 
@@ -12,7 +13,11 @@ public class Example46
             }
         );
 
-        await client.Endpoints.Urls.NoEndingSlashAsync();
+        await client.Endpoints.Put.AddAsync(
+            new PutRequest {
+                Id = "id"
+            }
+        );
     }
 
 }

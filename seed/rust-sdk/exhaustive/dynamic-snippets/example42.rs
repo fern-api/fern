@@ -11,10 +11,8 @@ async fn main() {
     client
         .endpoints
         .primitive
-        .get_and_return_base_64(
-            &base64::engine::general_purpose::STANDARD
-                .decode("SGVsbG8gd29ybGQh")
-                .unwrap(),
+        .get_and_return_datetime(
+            &DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z").unwrap(),
             None,
         )
         .await;

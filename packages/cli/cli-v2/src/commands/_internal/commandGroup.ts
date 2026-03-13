@@ -25,7 +25,7 @@ export function commandGroup(
             add(yargs, name);
         }
         return yargs
-            .usage(`$0 ${name}\n\n${description}`)
+            .usage(description)
             .demandCommand(1)
             .fail((msg, err, y) => {
                 if (err != null) {

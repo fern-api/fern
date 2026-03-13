@@ -1,7 +1,7 @@
 import { File } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { WireMock } from "@fern-api/mock-utils";
+import { WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
@@ -34,8 +34,138 @@ export class WireTestSetupGenerator {
         return new WireMock().convertToWireMock(ir);
     }
 
+    /**
+     * ISO 8601 datetime pattern that matches values with `.000` milliseconds.
+     * Example: "2008-01-02T00:00:00.000Z" or "2008-01-02T00:00:00.000+05:00"
+     */
+    private static readonly DATETIME_WITH_ZERO_MILLIS_REGEX =
+        /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.000(Z|[+-]\d{2}:\d{2})$/;
+
+    /**
+     * Strips ".000" milliseconds from all datetime values in WireMock stub mappings.
+     * This is used when datetime_milliseconds is false (default) so that WireMock stubs
+     * match the SDK's default serialize_datetime output (which omits zero fractional seconds).
+     *
+     * Mutates the input in-place for efficiency.
+     */
+    public static stripDatetimeMilliseconds(stubMapping: WireMockStubMapping): void {
+        for (const mapping of stubMapping.mappings) {
+            // Strip from query parameters
+            if (mapping.request.queryParameters) {
+                for (const [, value] of Object.entries(mapping.request.queryParameters)) {
+                    const paramValue = value as { equalTo: string };
+                    if (
+                        paramValue.equalTo != null &&
+                        WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
+                    ) {
+                        paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Strips ".000" milliseconds only from string-typed query parameters in WireMock stub mappings.
+     * When datetime_milliseconds is true, datetime-typed params should keep ".000" (because
+     * serialize_datetime will output milliseconds), but string-typed params should have ".000"
+     * stripped (because the SDK passes strings through as-is without millisecond normalization).
+     *
+     * Mutates the input in-place for efficiency.
+     */
+    private stripDatetimeMillisecondsForStringParams(
+        stubMapping: WireMockStubMapping,
+        ir: FernIr.IntermediateRepresentation
+    ): void {
+        // Build a lookup: mapping key -> set of datetime-typed query param wire names
+        const datetimeParamsByEndpoint = new Map<string, Set<string>>();
+        for (const service of Object.values(ir.services)) {
+            for (const endpoint of service.endpoints) {
+                let path = endpoint.fullPath.head;
+                for (const part of endpoint.fullPath.parts) {
+                    path += `{${part.pathParameter}}${part.tail}`;
+                }
+                if (!path.startsWith("/")) {
+                    path = "/" + path;
+                }
+                // Strip URL fragments (mock-utils strips them too)
+                const fragmentIndex = path.indexOf("#");
+                if (fragmentIndex !== -1) {
+                    path = path.substring(0, fragmentIndex);
+                }
+                const key = `${endpoint.method} - ${path}`;
+                const datetimeParams = new Set<string>();
+                for (const qp of endpoint.queryParameters) {
+                    if (WireTestSetupGenerator.isDatetimeTypeReference(qp.valueType)) {
+                        datetimeParams.add(qp.name.wireValue);
+                    }
+                }
+                datetimeParamsByEndpoint.set(key, datetimeParams);
+            }
+        }
+
+        for (const mapping of stubMapping.mappings) {
+            if (!mapping.request.queryParameters) {
+                continue;
+            }
+            const mappingKey = `${mapping.request.method} - ${mapping.request.urlPathTemplate}`;
+            const datetimeParams = datetimeParamsByEndpoint.get(mappingKey) ?? new Set<string>();
+
+            for (const [paramName, value] of Object.entries(mapping.request.queryParameters)) {
+                // Skip datetime-typed params — they should keep .000 when datetime_milliseconds is true
+                if (datetimeParams.has(paramName)) {
+                    continue;
+                }
+                const paramValue = value as { equalTo: string };
+                if (
+                    paramValue.equalTo != null &&
+                    WireTestSetupGenerator.DATETIME_WITH_ZERO_MILLIS_REGEX.test(paramValue.equalTo)
+                ) {
+                    paramValue.equalTo = paramValue.equalTo.replace(".000", "");
+                }
+            }
+        }
+    }
+
+    /**
+     * Recursively checks if a TypeReference resolves to a datetime primitive.
+     * Unwraps optional/nullable containers to check the inner type.
+     */
+    private static isDatetimeTypeReference(typeRef: FernIr.TypeReference): boolean {
+        if (typeRef.type === "primitive") {
+            return typeRef.primitive.v1 === "DATE_TIME";
+        }
+        if (typeRef.type === "container") {
+            if (typeRef.container.type === "optional") {
+                return WireTestSetupGenerator.isDatetimeTypeReference(typeRef.container.optional);
+            }
+            if (typeRef.container.type === "nullable") {
+                return WireTestSetupGenerator.isDatetimeTypeReference(typeRef.container.nullable);
+            }
+        }
+        return false;
+    }
+
     private generateWireMockConfigFile(): void {
         const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+
+        // mock-utils always generates datetime values using Date.toISOString() which includes
+        // ".000Z". We need to normalize these based on the datetime_milliseconds config and
+        // the actual parameter types:
+        //
+        // When datetime_milliseconds is false (default): strip ".000" from ALL datetime query
+        // param values, since the SDK's default serialize_datetime (isoformat()) omits zero
+        // fractional seconds.
+        //
+        // When datetime_milliseconds is true: keep ".000" for datetime-typed params (because
+        // serialize_datetime will output milliseconds), but strip ".000" for string-typed params
+        // (because the SDK passes strings through as-is without calling serialize_datetime).
+        if (!this.context.customConfig.datetime_milliseconds) {
+            WireTestSetupGenerator.stripDatetimeMilliseconds(wireMockConfigContent);
+        } else {
+            this.stripDatetimeMillisecondsForStringParams(wireMockConfigContent, this.ir);
+        }
+
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
             RelativeFilePath.of("wiremock"),
@@ -139,9 +269,8 @@ except (TypeError, ValueError):
 
 
 def _get_wiremock_base_url() -> str:
-    """Returns the WireMock base URL using the dynamically assigned port."""
-    port = os.environ.get("WIREMOCK_PORT", "8080")
-    return f"http://localhost:{port}"
+    """Returns the WireMock base URL from the WIREMOCK_URL environment variable."""
+    return os.environ.get("WIREMOCK_URL", "http://localhost:8080")
 
 
 def get_client(test_id: str) -> ${clientClassName}:
@@ -255,7 +384,7 @@ import subprocess
 import pytest
 
 _STARTED: bool = False
-_WIREMOCK_PORT: str = "8080"  # Default, will be updated after container starts
+_WIREMOCK_URL: str = "http://localhost:8080"  # Default, will be updated after container starts
 _PROJECT_NAME: str = "${projectName}"
 
 # This file lives at tests/conftest.py, so the project root is one level up.
@@ -281,7 +410,7 @@ def _get_wiremock_port() -> str:
 
 def _start_wiremock() -> None:
     """Starts the WireMock container using docker-compose."""
-    global _STARTED, _WIREMOCK_PORT
+    global _STARTED, _WIREMOCK_URL
     if _STARTED:
         return
 
@@ -294,8 +423,9 @@ def _start_wiremock() -> None:
             text=True,
         )
         _WIREMOCK_PORT = _get_wiremock_port()
-        os.environ["WIREMOCK_PORT"] = _WIREMOCK_PORT
-        print(f"WireMock container is ready on port {_WIREMOCK_PORT}")
+        _WIREMOCK_URL = f"http://localhost:{_WIREMOCK_PORT}"
+        os.environ["WIREMOCK_URL"] = _WIREMOCK_URL
+        print(f"WireMock container is ready at {_WIREMOCK_URL}")
         _STARTED = True
     except subprocess.CalledProcessError as e:
         print(f"Failed to start WireMock: {e.stderr}")

@@ -5,7 +5,7 @@ namespace SeedBasicAuth;
 
 public partial class BasicAuthClient : IBasicAuthClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal BasicAuthClient(RawClient client)
     {
@@ -27,7 +27,6 @@ public partial class BasicAuthClient : IBasicAuthClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Get,
                     Path = "basic-auth",
                     Headers = _headers,
@@ -38,7 +37,9 @@ public partial class BasicAuthClient : IBasicAuthClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -64,7 +65,9 @@ public partial class BasicAuthClient : IBasicAuthClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 switch (response.StatusCode)
@@ -103,7 +106,6 @@ public partial class BasicAuthClient : IBasicAuthClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "basic-auth",
                     Body = request,
@@ -115,7 +117,9 @@ public partial class BasicAuthClient : IBasicAuthClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<bool>(responseBody)!;
@@ -141,7 +145,9 @@ public partial class BasicAuthClient : IBasicAuthClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 switch (response.StatusCode)

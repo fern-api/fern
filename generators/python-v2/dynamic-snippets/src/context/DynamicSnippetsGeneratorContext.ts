@@ -84,6 +84,19 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
+    public getTypeClassReference(declaration: FernIr.dynamic.Declaration): python.Reference {
+        const className = this.getClassName(declaration.name);
+        const modulePath = [
+            ...this.getRootModulePath(),
+            ...declaration.fernFilepath.allParts.map((part) => part.snakeCase.safeName)
+        ];
+        return python.reference({ name: className, modulePath });
+    }
+
+    public useTypedDictRequests(): boolean {
+        return this.customConfig.use_typeddict_requests === true;
+    }
+
     public getRootClientClassName(): string {
         if (this.customConfig.client?.exported_class_name != null) {
             return this.customConfig.client.exported_class_name;

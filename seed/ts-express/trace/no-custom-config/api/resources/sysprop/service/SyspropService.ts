@@ -24,9 +24,9 @@ export interface SyspropServiceMethods {
         next: express.NextFunction,
     ): void | Promise<void>;
     getNumWarmInstances(
-        req: express.Request<never, Record<SeedTrace.Language, number | undefined>, never, never>,
+        req: express.Request<never, Partial<Record<SeedTrace.Language, number>>, never, never>,
         res: {
-            send: (responseBody: Record<SeedTrace.Language, number | undefined>) => Promise<void>;
+            send: (responseBody: Partial<Record<SeedTrace.Language, number>>) => Promise<void>;
             cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
             locals: any;
         },

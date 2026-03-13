@@ -19,7 +19,7 @@
       "request": {
         "description": null,
         "url": {
-          "raw": "{{baseUrl}}/user/getUsername?limit=1&id=id&date=2023-01-15&deadline=2024-01-15T09%3A30%3A00Z&bytes=bytes&user=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&userList=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&optionalDeadline=2024-01-15T09%3A30%3A00Z&keyValue=%7B%22keyValue%22%3A%22keyValue%22%7D&optionalString=optionalString&nestedUser=%7B%22name%22%3A%22name%22%2C%22user%22%3A%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%7D&optionalUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&excludeUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&filter=filter&neighbor=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&neighborRequired=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D",
+          "raw": "{{baseUrl}}/user/getUsername?limit=1&id=id&date=2023-01-15&deadline=2024-01-15T09%3A30%3A00Z&bytes=bytes&user=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&userList=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&optionalDeadline=2024-01-15T09%3A30%3A00Z&keyValue=%7B%22keyValue%22%3A%22keyValue%22%7D&optionalString=optionalString&nestedUser=%7B%22name%22%3A%22name%22%2C%22user%22%3A%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%7D&optionalUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&excludeUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&filter=filter&tags=tags&optionalTags=optionalTags&neighbor=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&neighborRequired=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D",
           "host": [
             "{{baseUrl}}"
           ],
@@ -107,6 +107,18 @@
               "disabled": true
             },
             {
+              "key": "tags",
+              "description": "List of tags. Serialized as a comma-separated list.",
+              "value": "tags",
+              "disabled": true
+            },
+            {
+              "key": "optionalTags",
+              "description": "Optional list of tags. Serialized as a comma-separated list.",
+              "value": "optionalTags",
+              "disabled": true
+            },
+            {
               "key": "neighbor",
               "description": null,
               "value": "{\"name\":\"name\",\"tags\":[\"tags\",\"tags\"]}",
@@ -139,7 +151,7 @@
           "originalRequest": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/user/getUsername?limit=1&id=id&date=2023-01-15&deadline=2024-01-15T09%3A30%3A00Z&bytes=bytes&user=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&userList=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&optionalDeadline=2024-01-15T09%3A30%3A00Z&keyValue=%7B%22keyValue%22%3A%22keyValue%22%7D&optionalString=optionalString&nestedUser=%7B%22name%22%3A%22name%22%2C%22user%22%3A%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%7D&optionalUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&excludeUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&filter=filter&neighbor=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&neighborRequired=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D",
+              "raw": "{{baseUrl}}/user/getUsername?limit=1&id=id&date=2023-01-15&deadline=2024-01-15T09%3A30%3A00Z&bytes=bytes&user=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&userList=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&optionalDeadline=2024-01-15T09%3A30%3A00Z&keyValue=%7B%22keyValue%22%3A%22keyValue%22%7D&optionalString=optionalString&nestedUser=%7B%22name%22%3A%22name%22%2C%22user%22%3A%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D%7D&optionalUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&excludeUser=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&filter=filter&tags=tags&optionalTags=optionalTags&neighbor=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D&neighborRequired=%7B%22name%22%3A%22name%22%2C%22tags%22%3A%5B%22tags%22%2C%22tags%22%5D%7D",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -224,6 +236,18 @@
                   "key": "filter",
                   "description": null,
                   "value": "filter",
+                  "disabled": true
+                },
+                {
+                  "key": "tags",
+                  "description": "List of tags. Serialized as a comma-separated list.",
+                  "value": "tags",
+                  "disabled": true
+                },
+                {
+                  "key": "optionalTags",
+                  "description": "Optional list of tags. Serialized as a comma-separated list.",
+                  "value": "optionalTags",
                   "disabled": true
                 },
                 {

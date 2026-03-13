@@ -192,7 +192,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     }
 
     private convertWebhooks(): void {
-        for (const [, webhookItem] of Object.entries(this.context.spec.webhooks ?? {})) {
+        for (const [webhookName, webhookItem] of Object.entries(this.context.spec.webhooks ?? {})) {
             if (webhookItem == null) {
                 this.context.errorCollector.collect({
                     message: "Skipping empty webhook",
@@ -201,7 +201,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 continue;
             }
 
-            if (!("post" in webhookItem)) {
+            if (!("post" in webhookItem) || webhookItem.post == null) {
                 this.context.errorCollector.collect({
                     message: "Skipping webhook as it is not a POST method",
                     path: this.breadcrumbs
@@ -209,19 +209,13 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 continue;
             }
 
-            if (webhookItem.post?.operationId == null) {
-                this.context.errorCollector.collect({
-                    message: "Skipping webhook as no operationId is present",
-                    path: this.breadcrumbs
-                });
-                continue;
-            }
-
-            const operationId = webhookItem.post.operationId;
+            const operationId = webhookItem.post.operationId ?? webhookName;
+            const operation =
+                webhookItem.post.operationId != null ? webhookItem.post : { ...webhookItem.post, operationId };
             const webHookConverter = new WebhookConverter({
                 context: this.context,
                 breadcrumbs: ["webhooks", operationId],
-                operation: webhookItem.post,
+                operation,
                 method: OpenAPIV3.HttpMethods.POST,
                 path: operationId
             });

@@ -5,5 +5,6 @@
   "generatorConfig": {
     "package_path": "matryoshka/doll/structure"
   },
+  "originGitCommit": "DUMMY",
   "sdkVersion": "0.0.1"
 }

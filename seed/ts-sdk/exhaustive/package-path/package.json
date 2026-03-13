@@ -12,7 +12,6 @@
     "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "types": "./dist/cjs/index.d.ts",
             "import": {
                 "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
@@ -24,7 +23,6 @@
             "default": "./dist/cjs/index.js"
         },
         "./endpoints": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/exports.mjs"
@@ -36,7 +34,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/exports.js"
         },
         "./endpoints/container": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/container/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/container/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/container/exports.mjs"
@@ -48,7 +45,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/container/exports.js"
         },
         "./endpoints/contentType": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/contentType/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/contentType/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/contentType/exports.mjs"
@@ -60,7 +56,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/contentType/exports.js"
         },
         "./endpoints/enum_": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/enum/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/enum/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/enum/exports.mjs"
@@ -72,7 +67,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/enum/exports.js"
         },
         "./endpoints/httpMethods": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.mjs"
@@ -84,7 +78,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/httpMethods/exports.js"
         },
         "./endpoints/object": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/object/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/object/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/object/exports.mjs"
@@ -96,7 +89,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/object/exports.js"
         },
         "./endpoints/pagination": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/pagination/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/pagination/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/pagination/exports.mjs"
@@ -108,7 +100,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/pagination/exports.js"
         },
         "./endpoints/params": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/params/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/params/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/params/exports.mjs"
@@ -120,7 +111,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/params/exports.js"
         },
         "./endpoints/primitive": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/primitive/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/primitive/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/primitive/exports.mjs"
@@ -132,7 +122,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/primitive/exports.js"
         },
         "./endpoints/put": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/put/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/put/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/put/exports.mjs"
@@ -144,7 +133,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/put/exports.js"
         },
         "./endpoints/union": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/union/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/union/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/union/exports.mjs"
@@ -156,7 +144,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/union/exports.js"
         },
         "./endpoints/urls": {
-            "types": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/urls/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/endpoints/resources/urls/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/endpoints/resources/urls/exports.mjs"
@@ -168,7 +155,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/endpoints/resources/urls/exports.js"
         },
         "./inlinedRequests": {
-            "types": "./dist/cjs/test-packagePath/api/resources/inlinedRequests/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/inlinedRequests/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/inlinedRequests/exports.mjs"
@@ -180,7 +166,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/inlinedRequests/exports.js"
         },
         "./noAuth": {
-            "types": "./dist/cjs/test-packagePath/api/resources/noAuth/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/noAuth/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/noAuth/exports.mjs"
@@ -192,7 +177,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/noAuth/exports.js"
         },
         "./noReqBody": {
-            "types": "./dist/cjs/test-packagePath/api/resources/noReqBody/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/noReqBody/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/noReqBody/exports.mjs"
@@ -204,7 +188,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/noReqBody/exports.js"
         },
         "./reqWithHeaders": {
-            "types": "./dist/cjs/test-packagePath/api/resources/reqWithHeaders/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/reqWithHeaders/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/reqWithHeaders/exports.mjs"
@@ -216,7 +199,6 @@
             "default": "./dist/cjs/test-packagePath/api/resources/reqWithHeaders/exports.js"
         },
         "./types": {
-            "types": "./dist/cjs/test-packagePath/api/resources/types/exports.d.ts",
             "import": {
                 "types": "./dist/esm/test-packagePath/api/resources/types/exports.d.mts",
                 "default": "./dist/esm/test-packagePath/api/resources/types/exports.mjs"

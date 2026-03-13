@@ -12,7 +12,6 @@
     "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "types": "./dist/cjs/index.d.ts",
             "import": {
                 "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
@@ -24,7 +23,6 @@
             "default": "./dist/cjs/index.js"
         },
         "./headers": {
-            "types": "./dist/cjs/api/resources/headers/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/headers/exports.d.mts",
                 "default": "./dist/esm/api/resources/headers/exports.mjs"
@@ -36,7 +34,6 @@
             "default": "./dist/cjs/api/resources/headers/exports.js"
         },
         "./inlinedRequest": {
-            "types": "./dist/cjs/api/resources/inlinedRequest/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/inlinedRequest/exports.d.mts",
                 "default": "./dist/esm/api/resources/inlinedRequest/exports.mjs"
@@ -48,7 +45,6 @@
             "default": "./dist/cjs/api/resources/inlinedRequest/exports.js"
         },
         "./multipartForm": {
-            "types": "./dist/cjs/api/resources/multipartForm/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/multipartForm/exports.d.mts",
                 "default": "./dist/esm/api/resources/multipartForm/exports.mjs"
@@ -60,7 +56,6 @@
             "default": "./dist/cjs/api/resources/multipartForm/exports.js"
         },
         "./pathParam": {
-            "types": "./dist/cjs/api/resources/pathParam/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/pathParam/exports.d.mts",
                 "default": "./dist/esm/api/resources/pathParam/exports.mjs"
@@ -72,7 +67,6 @@
             "default": "./dist/cjs/api/resources/pathParam/exports.js"
         },
         "./queryParam": {
-            "types": "./dist/cjs/api/resources/queryParam/exports.d.ts",
             "import": {
                 "types": "./dist/esm/api/resources/queryParam/exports.d.mts",
                 "default": "./dist/esm/api/resources/queryParam/exports.mjs"

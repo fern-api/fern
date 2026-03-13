@@ -1,0 +1,6 @@
+edition: 2026-01-01
+org: test-org
+
+api:
+  specs:
+    - fern: ./definition

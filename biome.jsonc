@@ -224,7 +224,7 @@
         "includes": ["**", "!docker/seed/**", "!packages/ir-sdk/**", "!packages/seed/*/**"]
     },
     "javascript": {
-        "globals": ["expect", "describe", "it", "beforeEach", "test", "beforeAll"],
+        "globals": ["expect", "describe", "it", "beforeEach", "test", "beforeAll", "afterAll", "afterEach"],
         "formatter": {
             "jsxQuoteStyle": "double",
             "quoteProperties": "asNeeded",

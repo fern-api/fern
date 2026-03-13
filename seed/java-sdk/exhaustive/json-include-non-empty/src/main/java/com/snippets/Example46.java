@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.resources.endpoints.put.requests.PutRequest;
 
 public class Example46 {
     public static void main(String[] args) {
@@ -9,6 +10,6 @@ public class Example46 {
                 .url("https://api.fern.com")
                 .build();
 
-        client.endpoints().urls().noEndingSlash();
+        client.endpoints().put().add(PutRequest.builder().id("id").build());
     }
 }

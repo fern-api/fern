@@ -49,7 +49,10 @@ export class SdkWireTestGenerator {
             return;
         }
 
-        const convertedIr = convertIr(dynamicIr);
+        // Type cast needed: java-v2/sdk uses ir-sdk@65.4.0, dynamic-snippets uses dynamic-ir-sdk@61.7.0.
+        // Runtime data shapes are compatible; only TS types diverge across SDK versions.
+        // biome-ignore lint/suspicious/noExplicitAny: version boundary cast
+        const convertedIr: any = convertIr(dynamicIr);
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertedIr,
             config: this.context.config
