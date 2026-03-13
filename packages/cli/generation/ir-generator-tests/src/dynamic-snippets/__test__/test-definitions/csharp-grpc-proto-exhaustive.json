@@ -2521,11 +2521,11 @@
             },
             "examples": null
         },
-        "endpoint_dataservice.upload": {
+        "endpoint_dataService.Upload": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "upload",
+                    "originalName": "Upload",
                     "camelCase": {
                         "unsafeName": "upload",
                         "safeName": "upload"
@@ -2546,43 +2546,43 @@
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "dataservice",
+                        "originalName": "dataService",
                         "camelCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "dataService",
+                            "safeName": "dataService"
                         },
                         "snakeCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "data_service",
+                            "safeName": "data_service"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "DATASERVICE",
-                            "safeName": "DATASERVICE"
+                            "unsafeName": "DATA_SERVICE",
+                            "safeName": "DATA_SERVICE"
                         },
                         "pascalCase": {
-                            "unsafeName": "Dataservice",
-                            "safeName": "Dataservice"
+                            "unsafeName": "DataService",
+                            "safeName": "DataService"
                         }
                     }
                 }
@@ -2616,43 +2616,43 @@
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "dataservice",
+                                "originalName": "dataService",
                                 "camelCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "dataService",
+                                    "safeName": "dataService"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "data_service",
+                                    "safeName": "data_service"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "DATASERVICE",
-                                    "safeName": "DATASERVICE"
+                                    "unsafeName": "DATA_SERVICE",
+                                    "safeName": "DATA_SERVICE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Dataservice",
-                                    "safeName": "Dataservice"
+                                    "unsafeName": "DataService",
+                                    "safeName": "DataService"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     }
@@ -2741,11 +2741,11 @@
             },
             "examples": null
         },
-        "endpoint_dataservice.delete": {
+        "endpoint_dataService.Delete": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "delete",
+                    "originalName": "Delete",
                     "camelCase": {
                         "unsafeName": "delete",
                         "safeName": "delete"
@@ -2766,43 +2766,43 @@
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "dataservice",
+                        "originalName": "dataService",
                         "camelCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "dataService",
+                            "safeName": "dataService"
                         },
                         "snakeCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "data_service",
+                            "safeName": "data_service"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "DATASERVICE",
-                            "safeName": "DATASERVICE"
+                            "unsafeName": "DATA_SERVICE",
+                            "safeName": "DATA_SERVICE"
                         },
                         "pascalCase": {
-                            "unsafeName": "Dataservice",
-                            "safeName": "Dataservice"
+                            "unsafeName": "DataService",
+                            "safeName": "DataService"
                         }
                     }
                 }
@@ -2836,43 +2836,43 @@
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "dataservice",
+                                "originalName": "dataService",
                                 "camelCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "dataService",
+                                    "safeName": "dataService"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "data_service",
+                                    "safeName": "data_service"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "DATASERVICE",
-                                    "safeName": "DATASERVICE"
+                                    "unsafeName": "DATA_SERVICE",
+                                    "safeName": "DATA_SERVICE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Dataservice",
-                                    "safeName": "Dataservice"
+                                    "unsafeName": "DataService",
+                                    "safeName": "DataService"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     }
@@ -3030,11 +3030,11 @@
             },
             "examples": null
         },
-        "endpoint_dataservice.describe": {
+        "endpoint_dataService.Describe": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "describe",
+                    "originalName": "Describe",
                     "camelCase": {
                         "unsafeName": "describe",
                         "safeName": "describe"
@@ -3055,43 +3055,43 @@
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "dataservice",
+                        "originalName": "dataService",
                         "camelCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "dataService",
+                            "safeName": "dataService"
                         },
                         "snakeCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "data_service",
+                            "safeName": "data_service"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "DATASERVICE",
-                            "safeName": "DATASERVICE"
+                            "unsafeName": "DATA_SERVICE",
+                            "safeName": "DATA_SERVICE"
                         },
                         "pascalCase": {
-                            "unsafeName": "Dataservice",
-                            "safeName": "Dataservice"
+                            "unsafeName": "DataService",
+                            "safeName": "DataService"
                         }
                     }
                 }
@@ -3125,43 +3125,43 @@
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "dataservice",
+                                "originalName": "dataService",
                                 "camelCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "dataService",
+                                    "safeName": "dataService"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "data_service",
+                                    "safeName": "data_service"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "DATASERVICE",
-                                    "safeName": "DATASERVICE"
+                                    "unsafeName": "DATA_SERVICE",
+                                    "safeName": "DATA_SERVICE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Dataservice",
-                                    "safeName": "Dataservice"
+                                    "unsafeName": "DataService",
+                                    "safeName": "DataService"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     }
@@ -3250,11 +3250,11 @@
             },
             "examples": null
         },
-        "endpoint_dataservice.fetch": {
+        "endpoint_dataService.Fetch": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "fetch",
+                    "originalName": "Fetch",
                     "camelCase": {
                         "unsafeName": "fetch",
                         "safeName": "fetch"
@@ -3275,43 +3275,43 @@
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "dataservice",
+                        "originalName": "dataService",
                         "camelCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "dataService",
+                            "safeName": "dataService"
                         },
                         "snakeCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "data_service",
+                            "safeName": "data_service"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "DATASERVICE",
-                            "safeName": "DATASERVICE"
+                            "unsafeName": "DATA_SERVICE",
+                            "safeName": "DATA_SERVICE"
                         },
                         "pascalCase": {
-                            "unsafeName": "Dataservice",
-                            "safeName": "Dataservice"
+                            "unsafeName": "DataService",
+                            "safeName": "DataService"
                         }
                     }
                 }
@@ -3345,43 +3345,43 @@
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "dataservice",
+                                "originalName": "dataService",
                                 "camelCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "dataService",
+                                    "safeName": "dataService"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "data_service",
+                                    "safeName": "data_service"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "DATASERVICE",
-                                    "safeName": "DATASERVICE"
+                                    "unsafeName": "DATA_SERVICE",
+                                    "safeName": "DATA_SERVICE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Dataservice",
-                                    "safeName": "Dataservice"
+                                    "unsafeName": "DataService",
+                                    "safeName": "DataService"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     }
@@ -3470,11 +3470,11 @@
             },
             "examples": null
         },
-        "endpoint_dataservice.list": {
+        "endpoint_dataService.List": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "list",
+                    "originalName": "List",
                     "camelCase": {
                         "unsafeName": "list",
                         "safeName": "list"
@@ -3495,43 +3495,43 @@
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "dataservice",
+                        "originalName": "dataService",
                         "camelCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "dataService",
+                            "safeName": "dataService"
                         },
                         "snakeCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "data_service",
+                            "safeName": "data_service"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "DATASERVICE",
-                            "safeName": "DATASERVICE"
+                            "unsafeName": "DATA_SERVICE",
+                            "safeName": "DATA_SERVICE"
                         },
                         "pascalCase": {
-                            "unsafeName": "Dataservice",
-                            "safeName": "Dataservice"
+                            "unsafeName": "DataService",
+                            "safeName": "DataService"
                         }
                     }
                 }
@@ -3565,43 +3565,43 @@
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "dataservice",
+                                "originalName": "dataService",
                                 "camelCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "dataService",
+                                    "safeName": "dataService"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "data_service",
+                                    "safeName": "data_service"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "DATASERVICE",
-                                    "safeName": "DATASERVICE"
+                                    "unsafeName": "DATA_SERVICE",
+                                    "safeName": "DATA_SERVICE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Dataservice",
-                                    "safeName": "Dataservice"
+                                    "unsafeName": "DataService",
+                                    "safeName": "DataService"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     }
@@ -3753,11 +3753,11 @@
             },
             "examples": null
         },
-        "endpoint_dataservice.query": {
+        "endpoint_dataService.Query": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "query",
+                    "originalName": "Query",
                     "camelCase": {
                         "unsafeName": "query",
                         "safeName": "query"
@@ -3778,43 +3778,43 @@
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "dataservice",
+                        "originalName": "dataService",
                         "camelCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "dataService",
+                            "safeName": "dataService"
                         },
                         "snakeCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "data_service",
+                            "safeName": "data_service"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "DATASERVICE",
-                            "safeName": "DATASERVICE"
+                            "unsafeName": "DATA_SERVICE",
+                            "safeName": "DATA_SERVICE"
                         },
                         "pascalCase": {
-                            "unsafeName": "Dataservice",
-                            "safeName": "Dataservice"
+                            "unsafeName": "DataService",
+                            "safeName": "DataService"
                         }
                     }
                 }
@@ -3848,43 +3848,43 @@
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "dataservice",
+                                "originalName": "dataService",
                                 "camelCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "dataService",
+                                    "safeName": "dataService"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "data_service",
+                                    "safeName": "data_service"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "DATASERVICE",
-                                    "safeName": "DATASERVICE"
+                                    "unsafeName": "DATA_SERVICE",
+                                    "safeName": "DATA_SERVICE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Dataservice",
-                                    "safeName": "Dataservice"
+                                    "unsafeName": "DataService",
+                                    "safeName": "DataService"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     }
@@ -4207,11 +4207,11 @@
             },
             "examples": null
         },
-        "endpoint_dataservice.update": {
+        "endpoint_dataService.Update": {
             "auth": null,
             "declaration": {
                 "name": {
-                    "originalName": "update",
+                    "originalName": "Update",
                     "camelCase": {
                         "unsafeName": "update",
                         "safeName": "update"
@@ -4232,43 +4232,43 @@
                 "fernFilepath": {
                     "allParts": [
                         {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     ],
                     "packagePath": [],
                     "file": {
-                        "originalName": "dataservice",
+                        "originalName": "dataService",
                         "camelCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "dataService",
+                            "safeName": "dataService"
                         },
                         "snakeCase": {
-                            "unsafeName": "dataservice",
-                            "safeName": "dataservice"
+                            "unsafeName": "data_service",
+                            "safeName": "data_service"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "DATASERVICE",
-                            "safeName": "DATASERVICE"
+                            "unsafeName": "DATA_SERVICE",
+                            "safeName": "DATA_SERVICE"
                         },
                         "pascalCase": {
-                            "unsafeName": "Dataservice",
-                            "safeName": "Dataservice"
+                            "unsafeName": "DataService",
+                            "safeName": "DataService"
                         }
                     }
                 }
@@ -4302,43 +4302,43 @@
                     "fernFilepath": {
                         "allParts": [
                             {
-                                "originalName": "dataservice",
+                                "originalName": "dataService",
                                 "camelCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "dataService",
+                                    "safeName": "dataService"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "dataservice",
-                                    "safeName": "dataservice"
+                                    "unsafeName": "data_service",
+                                    "safeName": "data_service"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "DATASERVICE",
-                                    "safeName": "DATASERVICE"
+                                    "unsafeName": "DATA_SERVICE",
+                                    "safeName": "DATA_SERVICE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Dataservice",
-                                    "safeName": "Dataservice"
+                                    "unsafeName": "DataService",
+                                    "safeName": "DataService"
                                 }
                             }
                         ],
                         "packagePath": [],
                         "file": {
-                            "originalName": "dataservice",
+                            "originalName": "dataService",
                             "camelCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "dataService",
+                                "safeName": "dataService"
                             },
                             "snakeCase": {
-                                "unsafeName": "dataservice",
-                                "safeName": "dataservice"
+                                "unsafeName": "data_service",
+                                "safeName": "data_service"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "DATASERVICE",
-                                "safeName": "DATASERVICE"
+                                "unsafeName": "DATA_SERVICE",
+                                "safeName": "DATA_SERVICE"
                             },
                             "pascalCase": {
-                                "unsafeName": "Dataservice",
-                                "safeName": "Dataservice"
+                                "unsafeName": "DataService",
+                                "safeName": "DataService"
                             }
                         }
                     }
