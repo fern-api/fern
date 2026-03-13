@@ -303,39 +303,34 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningChangelogEntry,
                     autoVersioningPrDescription,
                     autoVersioningVersionBumpReason
-                } =
-                    await writeFilesToDiskAndRunGenerator({
-                        organization: projectConfig.organization,
-                        absolutePathToFernConfig: projectConfig._absolutePath,
-                        workspace: fernWorkspace,
-                        generatorInvocation,
-                        absolutePathToLocalOutput,
-                        absolutePathToLocalSnippetJSON,
-                        absolutePathToLocalSnippetTemplateJSON: undefined,
-                        version,
-                        audiences: generatorGroup.audiences,
-                        workspaceTempDir,
-                        keepDocker,
-                        context: interactiveTaskContext,
-                        irVersionOverride: generatorInvocation.irVersionOverride,
-                        outputVersionOverride: version,
-                        writeUnitTests: true,
-                        generateOauthClients: organization.ok
-                            ? (organization?.body.oauthClientEnabled ?? false)
-                            : false,
-                        generatePaginatedClients: organization.ok
-                            ? (organization?.body.paginationEnabled ?? false)
-                            : false,
-                        includeOptionalRequestPropertyExamples: false,
-                        inspect,
-                        executionEnvironment: undefined, // This should use the Docker fallback with proper image name
-                        ir: intermediateRepresentation,
-                        whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
-                        runner,
-                        ai,
-                        autoVersioningCache,
-                        absolutePathToSpecRepo: dirname(workspace.absoluteFilePath)
-                    });
+                } = await writeFilesToDiskAndRunGenerator({
+                    organization: projectConfig.organization,
+                    absolutePathToFernConfig: projectConfig._absolutePath,
+                    workspace: fernWorkspace,
+                    generatorInvocation,
+                    absolutePathToLocalOutput,
+                    absolutePathToLocalSnippetJSON,
+                    absolutePathToLocalSnippetTemplateJSON: undefined,
+                    version,
+                    audiences: generatorGroup.audiences,
+                    workspaceTempDir,
+                    keepDocker,
+                    context: interactiveTaskContext,
+                    irVersionOverride: generatorInvocation.irVersionOverride,
+                    outputVersionOverride: version,
+                    writeUnitTests: true,
+                    generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
+                    generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
+                    includeOptionalRequestPropertyExamples: false,
+                    inspect,
+                    executionEnvironment: undefined, // This should use the Docker fallback with proper image name
+                    ir: intermediateRepresentation,
+                    whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
+                    runner,
+                    ai,
+                    autoVersioningCache,
+                    absolutePathToSpecRepo: dirname(workspace.absoluteFilePath)
+                });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
