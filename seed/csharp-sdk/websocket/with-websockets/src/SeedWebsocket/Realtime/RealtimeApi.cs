@@ -45,6 +45,12 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
     public readonly Event<ReceiveEvent3> ReceiveEvent3 = new();
 
     /// <summary>
+    /// Event handler for ErrorEvent.
+    /// Use ErrorEvent.Subscribe(...) to receive messages.
+    /// </summary>
+    public readonly Event<ErrorEvent> ErrorEvent = new();
+
+    /// <summary>
     /// Constructor with options
     /// </summary>
     public RealtimeApi(RealtimeApi.Options options)
@@ -91,6 +97,7 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
         ReceiveSnakeCase.Dispose();
         ReceiveEvent2.Dispose();
         ReceiveEvent3.Dispose();
+        ErrorEvent.Dispose();
     }
 
     /// <summary>
@@ -136,6 +143,14 @@ public partial class RealtimeApi : IAsyncDisposable, IDisposable, INotifyPropert
             if (JsonUtils.TryDeserialize(json, out ReceiveEvent3? message))
             {
                 await ReceiveEvent3.RaiseEvent(message!).ConfigureAwait(false);
+                return;
+            }
+        }
+
+        {
+            if (JsonUtils.TryDeserialize(json, out ErrorEvent? message))
+            {
+                await ErrorEvent.RaiseEvent(message!).ConfigureAwait(false);
                 return;
             }
         }
