@@ -147,6 +147,7 @@ export async function sdkDiffCommand({
         // Multi-chunk analysis — analyze each chunk, merge results
         let bestBump: string = VersionBump.NO_CHANGE;
         let bestMessage = "";
+        let bestVersionBumpReason = "";
         const allChangelogEntries: string[] = [];
 
         for (let i = 0; i < cappedChunks.length; i++) {
@@ -170,6 +171,7 @@ export async function sdkDiffCommand({
 
             if (bestBump !== prevBest) {
                 bestMessage = chunkAnalysis.message;
+                bestVersionBumpReason = chunkAnalysis.version_bump_reason?.trim() || "";
             }
 
             const entry = chunkAnalysis.changelog_entry?.trim();
@@ -195,7 +197,7 @@ export async function sdkDiffCommand({
         }
 
         let changelogEntry: string;
-        let versionBumpReason = "";
+        let versionBumpReason = bestVersionBumpReason;
         if (allChangelogEntries.length > 1) {
             // Consolidate repetitive multi-chunk entries via AI rollup
             const rawEntries = allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n");
@@ -212,6 +214,7 @@ export async function sdkDiffCommand({
             }
         } else {
             changelogEntry = allChangelogEntries[0] ?? "";
+            versionBumpReason = bestVersionBumpReason;
         }
 
         return {

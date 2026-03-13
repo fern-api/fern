@@ -266,6 +266,7 @@ export class LocalTaskHandler {
                     // We process ALL chunks so that every changelog entry is captured.
                     let bestBump: string = VersionBump.NO_CHANGE;
                     let bestMessage = "";
+                    let bestVersionBumpReason: string | undefined;
                     const allChangelogEntries: string[] = [];
 
                     for (let i = 0; i < cappedChunks.length; i++) {
@@ -294,9 +295,10 @@ export class LocalTaskHandler {
                         const prevBest = bestBump;
                         bestBump = maxVersionBump(bestBump, chunkAnalysis.versionBump);
 
-                        // Keep the commit message from the chunk that produced the highest bump
+                        // Keep the commit message and bump reason from the chunk that produced the highest bump
                         if (bestBump !== prevBest) {
                             bestMessage = chunkAnalysis.message;
+                            bestVersionBumpReason = chunkAnalysis.versionBumpReason;
                         }
 
                         // Collect all non-empty changelog entries so the final
@@ -317,7 +319,7 @@ export class LocalTaskHandler {
                     } else {
                         let changelogEntry: string;
                         let prDescription: string | undefined;
-                        let versionBumpReason: string | undefined;
+                        let versionBumpReason: string | undefined = bestVersionBumpReason;
                         if (allChangelogEntries.length > 1) {
                             // Consolidate repetitive multi-chunk entries via AI rollup
                             const rawEntries = allChangelogEntries
@@ -341,6 +343,7 @@ export class LocalTaskHandler {
                             }
                         } else {
                             changelogEntry = allChangelogEntries[0] ?? "";
+                            versionBumpReason = bestVersionBumpReason;
                         }
 
                         analysis = {

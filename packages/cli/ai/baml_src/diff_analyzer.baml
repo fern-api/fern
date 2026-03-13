@@ -660,7 +660,7 @@ function ConsolidateChangelog(
 
     Overall version bump: {{version_bump}}
 
-    Produce two outputs:
+    Produce three outputs:
 
     ---
 
