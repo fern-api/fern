@@ -13,12 +13,14 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
  */
 
 // Use vi.hoisted so mock fns are available in vi.mock factories (which are hoisted)
-const { mockAnalyzeSdkDiff, mockWithOptions } = vi.hoisted(() => {
+const { mockAnalyzeSdkDiff, mockWithOptions, mockChunkDiff } = vi.hoisted(() => {
     const mockAnalyzeSdkDiff = vi.fn();
     const mockWithOptions = vi.fn().mockReturnValue({
         AnalyzeSdkDiff: mockAnalyzeSdkDiff
     });
-    return { mockAnalyzeSdkDiff, mockWithOptions };
+    // Configurable chunkDiff mock — defaults to single chunk
+    const mockChunkDiff = vi.fn().mockReturnValue(["cleaned diff content"]);
+    return { mockAnalyzeSdkDiff, mockWithOptions, mockChunkDiff };
 });
 
 // Mock @boundaryml/baml (must be before @fern-api/cli-ai mock since it depends on it)
@@ -175,6 +177,9 @@ vi.mock("../AutoVersioningService.js", () => ({
         cleanDiffForAI() {
             return "cleaned diff content";
         }
+        chunkDiff(...args: unknown[]) {
+            return mockChunkDiff(...args);
+        }
         replaceMagicVersion() {
             return Promise.resolve(undefined);
         }
@@ -185,7 +190,6 @@ vi.mock("../AutoVersioningService.js", () => ({
             this.name = "AutoVersioningException";
         }
     },
-    DIFF_SIZE_LIMIT: 100_000,
     countFilesInDiff: (diff: string) => {
         return (diff.match(/diff --git/g) ?? []).length;
     },
@@ -224,10 +228,14 @@ vi.mock("../AutoVersioningCache.js", () => ({
     }
 }));
 
-// Mock VersionUtils
-vi.mock("../VersionUtils.js", () => ({
-    isAutoVersion: vi.fn().mockReturnValue(true)
-}));
+// Mock VersionUtils — pass through real exports, only override isAutoVersion
+vi.mock("../VersionUtils.js", async () => {
+    const actual = await vi.importActual("../VersionUtils.js");
+    return {
+        ...actual,
+        isAutoVersion: vi.fn().mockReturnValue(true)
+    };
+});
 
 // Import after mocks are set up
 import { VersionBump } from "@fern-api/cli-ai";
@@ -260,6 +268,7 @@ describe("LocalTaskHandler - Unified Behavioral Analysis", () => {
         mockWithOptions.mockReturnValue({
             AnalyzeSdkDiff: mockAnalyzeSdkDiff
         });
+        mockChunkDiff.mockReturnValue(["cleaned diff content"]);
     });
 
     // Helper to import LocalTaskHandler fresh for each test
@@ -428,6 +437,7 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
         mockWithOptions.mockReturnValue({
             AnalyzeSdkDiff: mockAnalyzeSdkDiff
         });
+        mockChunkDiff.mockReturnValue(["cleaned diff content"]);
     });
 
     async function createCachedTaskHandler(overrides: Record<string, unknown> = {}) {
@@ -525,5 +535,272 @@ describe("LocalTaskHandler - Unified Analysis with Cache", () => {
 
         // Check that cache hit was logged
         expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("Cache hit"));
+    });
+});
+
+describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+        // Reset implementations (clears mockResolvedValueOnce queues from prior tests)
+        mockAnalyzeSdkDiff.mockReset();
+        mockChunkDiff.mockReset();
+        mockWithOptions.mockReset();
+        mockWithOptions.mockReturnValue({
+            AnalyzeSdkDiff: mockAnalyzeSdkDiff
+        });
+    });
+
+    async function createTaskHandler(overrides: Record<string, unknown> = {}) {
+        const { LocalTaskHandler } = await import("../LocalTaskHandler.js");
+        return new LocalTaskHandler({
+            // biome-ignore lint/suspicious/noExplicitAny: mock context for testing
+            context: mockContext as any,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToTmpOutputDirectory: "/tmp/output" as any,
+            absolutePathToTmpSnippetJSON: undefined,
+            absolutePathToLocalSnippetTemplateJSON: undefined,
+            // biome-ignore lint/suspicious/noExplicitAny: mock path for testing
+            absolutePathToLocalOutput: "/tmp/local-output" as any,
+            absolutePathToLocalSnippetJSON: undefined,
+            absolutePathToTmpSnippetTemplatesJSON: undefined,
+            version: "505.503.4455",
+            ai: { provider: "anthropic", model: "claude-sonnet-4-5-20250929" },
+            isWhitelabel: false,
+            generatorLanguage: "typescript",
+            absolutePathToSpecRepo: undefined,
+            ...overrides
+        });
+    }
+
+    it("merges version bumps across chunks — highest bump wins", async () => {
+        // chunkDiff returns 3 chunks
+        mockChunkDiff.mockReturnValue(["chunk1 diff", "chunk2 diff", "chunk3 diff"]);
+
+        // Chunk 1: PATCH, Chunk 2: MINOR, Chunk 3: PATCH
+        mockAnalyzeSdkDiff
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.PATCH,
+                message: "fix: minor fix in chunk 1",
+                changelog_entry: ""
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.MINOR,
+                message: "feat: new feature in chunk 2",
+                changelog_entry: "New feature added in chunk 2."
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.PATCH,
+                message: "fix: minor fix in chunk 3",
+                changelog_entry: ""
+            });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        // MINOR is the highest bump
+        expect(result?.version).toBe("1.1.0");
+        // Message should come from the MINOR chunk (chunk 2)
+        expect(result?.commitMessage).toContain("feat: new feature in chunk 2");
+        // Changelog aggregates non-empty entries from all chunks
+        expect(result?.changelogEntry).toBe("New feature added in chunk 2.");
+        // All 3 chunks should have been analyzed
+        expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(3);
+    });
+
+    it("processes all chunks even after MAJOR bump to collect all changelog entries", async () => {
+        // chunkDiff returns 4 chunks
+        mockChunkDiff.mockReturnValue(["chunk1 diff", "chunk2 diff", "chunk3 diff", "chunk4 diff"]);
+
+        // Chunk 1: PATCH, Chunk 2: MAJOR, Chunk 3: MINOR, Chunk 4: PATCH
+        mockAnalyzeSdkDiff
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.PATCH,
+                message: "fix: small fix",
+                changelog_entry: ""
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.MAJOR,
+                message: "break: removed public API",
+                changelog_entry: "Public API removed. Migration guide: ..."
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.MINOR,
+                message: "feat: new helper",
+                changelog_entry: "Added new helper methods."
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.PATCH,
+                message: "fix: typo",
+                changelog_entry: ""
+            });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("2.0.0");
+        expect(result?.commitMessage).toContain("break: removed public API");
+        // Changelog aggregates all non-empty entries from every chunk
+        expect(result?.changelogEntry).toBe("- Public API removed. Migration guide: ...\n- Added new helper methods.");
+        // All 4 chunks analyzed (no short-circuit)
+        expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(4);
+    });
+
+    it("returns null when all chunks produce NO_CHANGE", async () => {
+        mockChunkDiff.mockReturnValue(["chunk1 diff", "chunk2 diff"]);
+
+        // Both chunks return NO_CHANGE (getAnalysis converts this to null internally)
+        mockAnalyzeSdkDiff
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.NO_CHANGE,
+                message: "",
+                changelog_entry: ""
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.NO_CHANGE,
+                message: "",
+                changelog_entry: ""
+            });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).toBeNull();
+        expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(2);
+    });
+
+    it("keeps message from highest-bump chunk, aggregates changelog from all chunks", async () => {
+        mockChunkDiff.mockReturnValue(["chunk1 diff", "chunk2 diff"]);
+
+        // Chunk 1: MINOR with some changelog, Chunk 2: MAJOR with different changelog
+        mockAnalyzeSdkDiff
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.MINOR,
+                message: "feat: added new helper",
+                changelog_entry: "New helper method added."
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.MAJOR,
+                message: "break: removed deprecated endpoint",
+                changelog_entry: "The deprecated endpoint has been removed."
+            });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("2.0.0");
+        // Commit message comes from highest-bump chunk (MAJOR)
+        expect(result?.commitMessage).toContain("break: removed deprecated endpoint");
+        // Changelog aggregates entries from both chunks
+        expect(result?.changelogEntry).toBe("- New helper method added.\n- The deprecated endpoint has been removed.");
+    });
+
+    it("handles mix of NO_CHANGE and non-null chunk results", async () => {
+        mockChunkDiff.mockReturnValue(["chunk1 diff", "chunk2 diff", "chunk3 diff"]);
+
+        // Chunk 1: NO_CHANGE, Chunk 2: MINOR, Chunk 3: NO_CHANGE
+        mockAnalyzeSdkDiff
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.NO_CHANGE,
+                message: "",
+                changelog_entry: ""
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.MINOR,
+                message: "feat: new feature",
+                changelog_entry: "New feature added."
+            })
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.NO_CHANGE,
+                message: "",
+                changelog_entry: ""
+            });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.1.0");
+        expect(result?.changelogEntry).toBe("New feature added.");
+    });
+
+    it("logs info when diff is split into multiple chunks", async () => {
+        mockChunkDiff.mockReturnValue(["chunk1 diff", "chunk2 diff"]);
+
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "fix: small fix",
+            changelog_entry: ""
+        });
+
+        const handler = await createTaskHandler();
+        await callHandleAutoVersioning(handler);
+
+        // Should log that the diff was split
+        expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("Split into 2 chunks"));
+    });
+
+    it("does not log split message for single chunk", async () => {
+        mockChunkDiff.mockReturnValue(["single chunk diff"]);
+
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "fix: small fix",
+            changelog_entry: ""
+        });
+
+        const handler = await createTaskHandler();
+        await callHandleAutoVersioning(handler);
+
+        // Should NOT log split message
+        const infoCalls = mockLogger.info.mock.calls.map((c: unknown[]) => c[0]);
+        const splitMessages = infoCalls.filter((msg: unknown) => typeof msg === "string" && msg.includes("Split into"));
+        expect(splitMessages).toHaveLength(0);
+    });
+
+    it("caps chunks at MAX_CHUNKS and logs skipped count", async () => {
+        // Generate 45 chunks (exceeds MAX_CHUNKS = 40)
+        const manyChunks = Array.from({ length: 45 }, (_, i) => `chunk${i + 1} diff`);
+        mockChunkDiff.mockReturnValue(manyChunks);
+
+        // All chunks return PATCH
+        mockAnalyzeSdkDiff.mockResolvedValue({
+            version_bump: VersionBump.PATCH,
+            message: "fix: small fix",
+            changelog_entry: ""
+        });
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.0.1");
+        // Only MAX_CHUNKS (40) should be analyzed, not all 45
+        expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(40);
+        // Log should mention the cap
+        expect(mockLogger.info).toHaveBeenCalledWith(expect.stringContaining("skipping 5 low-priority chunks"));
+    });
+
+    it("falls back to PATCH on AI error during multi-chunk analysis", async () => {
+        mockChunkDiff.mockReturnValue(["chunk1 diff", "chunk2 diff"]);
+
+        // First chunk succeeds, second throws
+        mockAnalyzeSdkDiff
+            .mockResolvedValueOnce({
+                version_bump: VersionBump.MINOR,
+                message: "feat: something",
+                changelog_entry: "Something."
+            })
+            .mockRejectedValueOnce(new Error("AI endpoint timeout"));
+
+        const handler = await createTaskHandler();
+        const result = await callHandleAutoVersioning(handler);
+
+        // Should fall back to PATCH (the outer catch block)
+        expect(result).not.toBeNull();
+        expect(result?.version).toBe("1.0.1");
+        expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("AI analysis failed"));
     });
 });

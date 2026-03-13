@@ -150,14 +150,15 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             // Build gRPC metadata from headers
             writer.writeLine("var metadata = new global::Grpc.Core.Metadata();");
 
-            // Add client-level headers (includes lazy auth headers)
+            // Add client-level headers (includes lazy auth headers).
+            // HeaderValue requires async resolution via ResolveAsync().
             writer.writeLine("foreach (var header in _client.Options.Headers)");
             writer.pushScope();
-            writer.writeLine("var value = header.Value?.Match(str => str, func => func.Invoke());");
-            writer.writeLine("if (value != null) metadata.Add(header.Key, value);");
+            writer.writeLine("var value = await header.Value.ResolveAsync().ConfigureAwait(false);");
+            writer.writeLine("metadata.Add(header.Key, value);");
             writer.popScope();
 
-            // Add client-level additional headers
+            // Add client-level additional headers (string-based)
             writer.writeLine("if (_client.Options.AdditionalHeaders != null)");
             writer.pushScope();
             writer.writeLine("foreach (var header in _client.Options.AdditionalHeaders)");
@@ -295,6 +296,6 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
         serviceId: string;
         endpoint: HttpEndpoint;
     }): EndpointSignatureInfo {
-        return super.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
+        return super.getUnpagedEndpointSignatureInfo({ serviceId, endpoint, isGrpc: true });
     }
 }

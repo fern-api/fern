@@ -13,6 +13,7 @@ describe("UserClient", () => {
         });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .get("/tenant_id/user/user_id")
@@ -39,6 +40,7 @@ describe("UserClient", () => {
         });
         const rawRequestBody = { name: "name", tags: ["tags", "tags"] };
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .post("/tenant_id/user/")
@@ -67,6 +69,7 @@ describe("UserClient", () => {
         });
         const rawRequestBody = { name: "name", tags: ["tags", "tags"] };
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .patch("/tenant_id/user/user_id")
@@ -101,6 +104,7 @@ describe("UserClient", () => {
             { name: "name", tags: ["tags", "tags"] },
             { name: "name", tags: ["tags", "tags"] },
         ];
+
         server
             .mockEndpoint()
             .get("/tenant_id/user/user_id/search")
@@ -134,6 +138,7 @@ describe("UserClient", () => {
         });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .get("/tenant_id/user/user_id/metadata/v1")
@@ -161,6 +166,7 @@ describe("UserClient", () => {
         });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+
         server
             .mockEndpoint()
             .get("/tenant_id/user/user_id/specifics/1/thought")

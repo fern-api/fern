@@ -11,7 +11,7 @@ paths:
         application/json:
           schema:
             properties:
-              indexType:
+              index_type:
                 $ref: "#/components/schemas/IndexType"
               details:
                 $ref: "#/components/schemas/Any"
@@ -64,11 +64,11 @@ components:
           $ref: "#/components/schemas/Metadata"
     UpdateRequest:
       properties:
-        setMetadata:
+        set_metadata:
           $ref: "#/components/schemas/Metadata"
-        indexType:
+        index_type:
           $ref: "#/components/schemas/IndexType"
-        indexTypes:
+        index_types:
           type: array
           items:
             $ref: "#/components/schemas/IndexType"
@@ -76,11 +76,11 @@ components:
           $ref: "#/components/schemas/Any"
     UpdateResponse:
       properties:
-        indexType:
+        index_type:
           $ref: "#/components/schemas/IndexType"
         details:
           $ref: "#/components/schemas/Any"
-        indexTypes:
+        index_types:
           type: array
           items:
             $ref: "#/components/schemas/IndexType"

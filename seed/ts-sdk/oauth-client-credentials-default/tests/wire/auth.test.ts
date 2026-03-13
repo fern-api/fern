@@ -21,6 +21,7 @@ describe("AuthClient", () => {
             grant_type: "client_credentials",
         };
         const rawResponseBody = { access_token: "access_token", expires_in: 1 };
+
         server
             .mockEndpoint()
             .post("/token")

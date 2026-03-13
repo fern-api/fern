@@ -23,6 +23,7 @@ describe("SeedObjectClient", () => {
             fooSet: [{ foo: "foo", ref: { foo: "foo" } }],
             ref: { foo: "foo" },
         };
+
         server
             .mockEndpoint()
             .post("/root/root")

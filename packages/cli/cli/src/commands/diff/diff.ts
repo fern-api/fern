@@ -1,9 +1,8 @@
 import { diffSemverOrThrow } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, resolve, streamObjectFromFile } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
 import { FernCliError } from "@fern-api/task-context";
-import { readFile } from "fs/promises";
 import semver from "semver";
 
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -77,8 +76,8 @@ async function readIr({
         context.failWithoutThrowing(`File not found: ${absoluteFilepath}`);
         throw new FernCliError();
     }
-    const ir = await readFile(absoluteFilepath, "utf-8");
-    const parsed = serialization.IntermediateRepresentation.parse(JSON.parse(ir));
+    const ir = await streamObjectFromFile(absoluteFilepath);
+    const parsed = serialization.IntermediateRepresentation.parse(ir);
     if (!parsed.ok) {
         context.failWithoutThrowing(`Invalid --${flagName}; expected a filepath containing a valid IR`);
         throw new FernCliError();

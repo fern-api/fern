@@ -21,6 +21,7 @@
     "@fern-typescript/*",
     "@fern-fern/*",
     "vitest",
+    "@vitest/coverage-v8",
     "typescript",
     "@types/*",
     "ws",

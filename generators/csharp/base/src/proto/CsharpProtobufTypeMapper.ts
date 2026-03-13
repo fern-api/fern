@@ -320,7 +320,8 @@ class ToProtoPropertyMapper extends WithGeneration {
                 enum_: resolvedType.shape,
                 classReference: enumClassReference,
                 protobufClassReference,
-                propertyName
+                propertyName,
+                wrapperType
             });
         }
         if (wrapperType === WrapperType.List) {
@@ -361,11 +362,13 @@ class ToProtoPropertyMapper extends WithGeneration {
         propertyName: string;
     }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.writeLine(`${propertyName}.Select(type => type switch`);
+            // Switch on the string Value property using const string patterns from Values class,
+            // since the enum is a readonly record struct (static readonly fields aren't constant patterns).
+            writer.writeLine(`${propertyName}.Select(type => type.Value switch`);
             writer.writeLine("{");
             for (const enumValue of enum_.values) {
                 writer.writeNode(classReference);
-                writer.write(".");
+                writer.write(".Values.");
                 writer.write(enumValue.name.name.pascalCase.safeName);
                 writer.write(" => ");
                 writer.writeNode(protobufClassReference);
@@ -382,19 +385,25 @@ class ToProtoPropertyMapper extends WithGeneration {
         enum_,
         classReference,
         protobufClassReference,
-        propertyName
+        propertyName,
+        wrapperType
     }: {
         enum_: EnumTypeDeclaration;
         classReference: ast.ClassReference;
         protobufClassReference: ast.ClassReference;
         propertyName: string;
+        wrapperType?: WrapperType;
     }): ast.CodeBlock {
         return this.csharp.codeblock((writer) => {
-            writer.writeLine(`${propertyName}.Value switch`);
+            // Switch on the string Value property using const string patterns from Values class,
+            // since the enum is a readonly record struct (static readonly fields aren't constant patterns).
+            // For optional enums, .Value does the nullable unwrap, so we need .Value.Value to get the string.
+            const valueAccess = wrapperType === WrapperType.Optional ? ".Value.Value" : ".Value";
+            writer.writeLine(`${propertyName}${valueAccess} switch`);
             writer.writeLine("{");
             for (const enumValue of enum_.values) {
                 writer.writeNode(classReference);
-                writer.write(".");
+                writer.write(".Values.");
                 writer.write(enumValue.name.name.pascalCase.safeName);
                 writer.write(" => ");
                 writer.writeNode(protobufClassReference);
@@ -402,7 +411,9 @@ class ToProtoPropertyMapper extends WithGeneration {
                 writer.write(getProtobufEnumValueName({ generation: this.generation, classReference, enumValue }));
                 writer.writeLine(",");
             }
-            writer.writeLine(` _ => throw new ArgumentException($"Unknown enum value: {${propertyName}.Value}")`);
+            writer.writeLine(
+                ` _ => throw new ArgumentException($"Unknown enum value: {${propertyName}${valueAccess}}")`
+            );
             writer.write("}");
         });
     }

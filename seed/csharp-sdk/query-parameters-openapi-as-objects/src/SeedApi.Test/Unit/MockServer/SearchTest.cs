@@ -6,6 +6,7 @@ using SeedApi.Test.Utils;
 namespace SeedApi.Test.Unit.MockServer;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class SearchTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

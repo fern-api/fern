@@ -10,6 +10,7 @@ describe("UserClient", () => {
         const client = new SeedSimpleApiClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
         
         const rawResponseBody = { "id" : "id" , "name" : "name" , "email" : "email" };
+        
         server
             .mockEndpoint()
             .get("/users/id").respondWith()

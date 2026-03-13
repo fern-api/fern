@@ -490,6 +490,157 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             return statements;
         }
 
+        // URI/path pagination
+        if (paginationInfo != null && (paginationInfo.type === "uri" || paginationInfo.type === "path")) {
+            const urlParamIdentifier = ts.factory.createIdentifier("_requestUrl");
+            // For URI/path pagination, subsequent page requests should only send headers
+            // (auth, custom headers), not query params or body. The next URL already contains
+            // all necessary parameters. This matches the Python and Java SDK behavior.
+            const uriBody = [
+                ...(this.generateEndpointMetadata
+                    ? generateEndpointMetadata({
+                          httpEndpoint: this.endpoint,
+                          context
+                      })
+                    : []),
+                ...this.request.getBuildHeaderStatements(context),
+                ...this.invokeFetcherAndReturnResponse(context, urlParamIdentifier, {
+                    headersOnly: true
+                })
+            ];
+
+            const listFn = ts.factory.createVariableDeclarationList(
+                [
+                    ts.factory.createVariableDeclaration(
+                        ts.factory.createIdentifier("list"),
+                        undefined,
+                        undefined,
+                        context.coreUtilities.fetcher.HttpResponsePromise.interceptFunction(
+                            ts.factory.createArrowFunction(
+                                [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                                undefined,
+                                [
+                                    ts.factory.createParameterDeclaration(
+                                        undefined,
+                                        undefined,
+                                        urlParamIdentifier,
+                                        undefined,
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                        undefined
+                                    )
+                                ],
+                                ts.factory.createTypeReferenceNode("Promise", [
+                                    context.coreUtilities.fetcher.RawResponse.WithRawResponse._getReferenceToType(
+                                        responseReturnType
+                                    )
+                                ]),
+                                ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                ts.factory.createBlock(uriBody, undefined)
+                            )
+                        )
+                    )
+                ],
+                ts.NodeFlags.Const
+            );
+
+            const statements: ts.Statement[] = [ts.factory.createVariableStatement(undefined, listFn)];
+
+            // For path pagination, store the base URL for combining with the path later
+            if (paginationInfo.type === "path") {
+                statements.push(
+                    ts.factory.createVariableStatement(
+                        undefined,
+                        ts.factory.createVariableDeclarationList(
+                            [
+                                ts.factory.createVariableDeclaration(
+                                    ts.factory.createIdentifier("_baseUrl"),
+                                    undefined,
+                                    undefined,
+                                    this.generatedSdkClientClass.getBaseUrl(this.endpoint, context)
+                                )
+                            ],
+                            ts.NodeFlags.Const
+                        )
+                    )
+                );
+            }
+
+            // Initial call: list(endpointUrl)
+            // For path pagination, reuse the already-emitted _baseUrl identifier instead of
+            // re-evaluating getBaseUrl() (which would produce a duplicate Supplier.get call).
+            const initialUrl =
+                paginationInfo.type === "path"
+                    ? (() => {
+                          const endpointPath = buildUrl({
+                              endpoint: this.endpoint,
+                              generatedClientClass: this.generatedSdkClientClass,
+                              context,
+                              includeSerdeLayer: this.includeSerdeLayer,
+                              retainOriginalCasing: this.retainOriginalCasing,
+                              omitUndefined: this.omitUndefined,
+                              getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
+                                  return this.request.getReferenceToPathParameter(
+                                      pathParameter.name.originalName,
+                                      context
+                                  );
+                              },
+                              parameterNaming: this.parameterNaming
+                          });
+                          const baseUrlIdentifier = ts.factory.createIdentifier("_baseUrl");
+                          return endpointPath != null
+                              ? context.coreUtilities.urlUtils.join._invoke([baseUrlIdentifier, endpointPath])
+                              : baseUrlIdentifier;
+                      })()
+                    : this.getReferenceToBaseUrl(context);
+            const initialResponseVar = ts.factory.createIdentifier("dataWithRawResponse");
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                initialResponseVar,
+                                undefined,
+                                undefined,
+                                ts.factory.createAwaitExpression(
+                                    ts.factory.createCallExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createCallExpression(
+                                                ts.factory.createIdentifier("list"),
+                                                undefined,
+                                                [initialUrl]
+                                            ),
+                                            ts.factory.createIdentifier("withRawResponse")
+                                        ),
+                                        undefined,
+                                        []
+                                    )
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+
+            statements.push(
+                ts.factory.createReturnStatement(
+                    context.coreUtilities.pagination.Page._construct({
+                        itemType: paginationInfo.itemType,
+                        responseType: paginationInfo.responseType,
+                        response: ts.factory.createPropertyAccessExpression(initialResponseVar, "data"),
+                        rawResponse: ts.factory.createPropertyAccessExpression(initialResponseVar, "rawResponse"),
+                        hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
+                        getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
+                        loadPage: this.createLambdaWithResponse({
+                            body: ts.factory.createBlock(paginationInfo.loadPage)
+                        })
+                    })
+                )
+            );
+            return statements;
+        }
+
         // Non-custom pagination or no pagination
         const listFnName = "list";
         const body = [
@@ -710,8 +861,15 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         );
     }
 
-    public invokeFetcherAndReturnResponse(context: SdkContext): ts.Statement[] {
-        return [...this.invokeFetcher(context), ...this.response.getReturnResponseStatements(context)];
+    public invokeFetcherAndReturnResponse(
+        context: SdkContext,
+        urlOverride?: ts.Expression,
+        options?: { headersOnly?: boolean }
+    ): ts.Statement[] {
+        return [
+            ...this.invokeFetcher(context, urlOverride, options),
+            ...this.response.getReturnResponseStatements(context)
+        ];
     }
 
     private getReferenceToBaseUrl(context: SdkContext): ts.Expression {
@@ -735,10 +893,20 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
     }
 
-    private invokeFetcher(context: SdkContext): ts.Statement[] {
+    private invokeFetcher(
+        context: SdkContext,
+        urlOverride?: ts.Expression,
+        options?: { headersOnly?: boolean }
+    ): ts.Statement[] {
+        const requestArgs = this.request.getFetcherRequestArgs(context);
         const fetcherArgs: Fetcher.Args = {
-            ...this.request.getFetcherRequestArgs(context),
-            url: this.getReferenceToBaseUrl(context),
+            ...requestArgs,
+            // When headersOnly is true (URI/path pagination), exclude query params and body
+            // since the next URL already contains all necessary parameters.
+            ...(options?.headersOnly
+                ? { queryParameters: undefined, body: undefined, contentType: undefined, requestType: undefined }
+                : {}),
+            url: urlOverride ?? this.getReferenceToBaseUrl(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
             timeoutInSeconds: getTimeoutExpression({
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,

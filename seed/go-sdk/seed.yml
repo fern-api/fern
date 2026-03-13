@@ -140,6 +140,9 @@ fixtures:
     - outputFolder: deep-package-path
       customConfig:
         packagePath: all/the/way/in/here/please
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
   undiscriminated-unions:
     - outputFolder: no-custom-config
       outputVersion: 0.0.1

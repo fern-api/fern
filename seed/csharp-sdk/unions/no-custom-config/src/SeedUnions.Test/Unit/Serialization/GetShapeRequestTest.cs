@@ -6,6 +6,7 @@ using SeedUnions.Core;
 namespace SeedUnions.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetShapeRequestTest
 {
     [NUnit.Framework.Test]

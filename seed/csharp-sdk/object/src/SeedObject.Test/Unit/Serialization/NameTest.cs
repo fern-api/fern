@@ -6,6 +6,7 @@ using SeedObject.Core;
 namespace SeedObject.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class NameTest
 {
     [NUnit.Framework.Test]

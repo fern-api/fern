@@ -250,6 +250,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -262,6 +263,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -679,6 +681,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -691,6 +694,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -1041,6 +1045,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -1053,6 +1058,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -2177,6 +2183,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -2189,6 +2196,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -3312,6 +3320,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -3324,6 +3333,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -4476,6 +4486,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -4488,6 +4499,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -4731,6 +4743,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -4743,6 +4756,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -5110,6 +5124,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -5122,6 +5137,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -5511,6 +5527,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -5523,6 +5540,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -5876,6 +5894,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -5888,6 +5907,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -6171,6 +6191,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -6183,6 +6204,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -6463,6 +6485,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -6475,6 +6498,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -6767,6 +6791,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -6779,6 +6804,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -7105,6 +7131,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -7117,6 +7144,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -7409,6 +7437,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -7421,6 +7450,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",
@@ -7718,6 +7748,7 @@
           "generatedName": "ServiceUnavailableError",
           "schema": {
             "generatedName": "ServiceUnavailableErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Service Unavailable",
@@ -7730,6 +7761,7 @@
           "generatedName": "GatewayTimeoutError",
           "schema": {
             "generatedName": "GatewayTimeoutErrorBody",
+            "groupName": [],
             "type": "unknown"
           },
           "description": "Gateway Timeout",

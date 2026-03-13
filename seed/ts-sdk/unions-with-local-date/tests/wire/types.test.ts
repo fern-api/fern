@@ -9,6 +9,7 @@ describe("TypesClient", () => {
         const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { type: "date", value: "1994-01-01" };
+
         server.mockEndpoint().get("/time/date-example").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.types.get("date-example");
@@ -23,6 +24,7 @@ describe("TypesClient", () => {
         const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { type: "datetime", value: "1994-01-01T01:01:01Z" };
+
         server
             .mockEndpoint()
             .get("/time/datetime-example")
@@ -43,6 +45,7 @@ describe("TypesClient", () => {
         const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { type: "date", value: "1994-01-01" };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .patch("/time")
@@ -64,6 +67,7 @@ describe("TypesClient", () => {
         const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { type: "datetime", value: "1994-01-01T01:01:01Z" };
         const rawResponseBody = true;
+
         server
             .mockEndpoint()
             .patch("/time")

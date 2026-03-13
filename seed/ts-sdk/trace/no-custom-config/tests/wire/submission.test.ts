@@ -19,6 +19,7 @@ describe("SubmissionClient", () => {
             language: "JAVA",
             status: "CREATING_CONTAINER",
         };
+
         server
             .mockEndpoint()
             .post("/sessions/create-session/JAVA")
@@ -51,6 +52,7 @@ describe("SubmissionClient", () => {
             language: "JAVA",
             status: "CREATING_CONTAINER",
         };
+
         server
             .mockEndpoint()
             .get("/sessions/sessionId")
@@ -106,6 +108,7 @@ describe("SubmissionClient", () => {
             numWarmingInstances: 1,
             warmingSessionIds: ["warmingSessionIds", "warmingSessionIds"],
         };
+
         server
             .mockEndpoint()
             .get("/sessions/execution-sessions-state")

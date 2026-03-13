@@ -329,7 +329,8 @@ function addTestCommand(cli: Argv) {
                         scriptRunner,
                         keepContainer: false, // not used for local
                         inspect: argv.inspect,
-                        workspaceCache: new WorkspaceCache()
+                        workspaceCache: new WorkspaceCache(),
+                        logLevel: argv["log-level"]
                     });
                 } else {
                     scriptRunner = new ContainerScriptRunner(
@@ -349,7 +350,8 @@ function addTestCommand(cli: Argv) {
                         inspect: argv.inspect,
                         runner: argv.containerRuntime as "docker" | "podman" | undefined,
                         parallelism: argv.parallel,
-                        workspaceCache: new WorkspaceCache()
+                        workspaceCache: new WorkspaceCache(),
+                        logLevel: argv["log-level"]
                     });
                 }
 

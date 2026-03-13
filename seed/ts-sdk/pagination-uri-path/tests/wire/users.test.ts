@@ -15,10 +15,16 @@ describe("UsersClient", () => {
             ],
             next: "next",
         };
-        server.mockEndpoint().get("/users/uri").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        const mockResponseBody = { ...rawResponseBody, next: `${server.baseUrl}/users/uri` };
+        server
+            .mockEndpoint({ once: false })
+            .get("/users/uri")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(mockResponseBody)
+            .build();
 
-        const response = await client.users.listWithUriPagination();
-        expect(response).toEqual({
+        const expected = {
             data: [
                 {
                     name: "name",
@@ -30,7 +36,13 @@ describe("UsersClient", () => {
                 },
             ],
             next: "next",
-        });
+        };
+        const page = await client.users.listWithUriPagination();
+
+        expect(expected.data).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
     });
 
     test("listWithPathPagination", async () => {
@@ -44,10 +56,16 @@ describe("UsersClient", () => {
             ],
             next: "next",
         };
-        server.mockEndpoint().get("/users/path").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        const mockResponseBody = { ...rawResponseBody, next: "/users/path" };
+        server
+            .mockEndpoint({ once: false })
+            .get("/users/path")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(mockResponseBody)
+            .build();
 
-        const response = await client.users.listWithPathPagination();
-        expect(response).toEqual({
+        const expected = {
             data: [
                 {
                     name: "name",
@@ -59,6 +77,12 @@ describe("UsersClient", () => {
                 },
             ],
             next: "next",
-        });
+        };
+        const page = await client.users.listWithPathPagination();
+
+        expect(expected.data).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.data).toEqual(nextPage.data);
     });
 });
