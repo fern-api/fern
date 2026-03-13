@@ -115,7 +115,8 @@ export async function generateDocsWorkspace({
             instanceUrl: instance,
             preview,
             disableTemplates,
-            skipUpload
+            skipUpload,
+            cliVersion: cliContext.environment.packageVersion
         });
         const generationTime = performance.now() - generationStart;
         context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);

@@ -10,7 +10,15 @@ import { ClientRegistry } from "@boundaryml/baml";
 import { AnalyzeCommitDiffResponse, b as BamlClient, configureBamlClient, VersionBump } from "@fern-api/cli-ai";
 import { loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
-import { countFilesInDiff, DIFF_SIZE_LIMIT, formatSizeKB } from "@fern-api/local-workspace-runner";
+import {
+    AutoVersioningService,
+    countFilesInDiff,
+    formatSizeKB,
+    MAX_AI_DIFF_BYTES,
+    MAX_CHUNKS,
+    MAX_RAW_DIFF_BYTES,
+    maxVersionBump
+} from "@fern-api/local-workspace-runner";
 import { Project } from "@fern-api/project-loader";
 import { FernCliError, TaskContext } from "@fern-api/task-context";
 import { exec } from "child_process";
@@ -100,30 +108,105 @@ export async function sdkDiffCommand({
     const fileCount = countFilesInDiff(gitDiff);
     context.logger.debug(`Generated diff: ${diffSizeKB}KB (${gitDiff.length} chars), ${fileCount} files changed`);
 
-    if (gitDiff.length > DIFF_SIZE_LIMIT) {
-        context.logger.warn(
-            `Diff is too large for AI analysis ` +
-                `(${gitDiff.length.toLocaleString()} chars / ${diffSizeKB}KB, ${fileCount} files). ` +
-                `The AI endpoint limit is 100,000 characters.`
+    // Reject absurdly large diffs before chunking
+    const service = new AutoVersioningService({ logger: context.logger });
+    const diffBytes = Buffer.byteLength(gitDiff, "utf-8");
+    if (diffBytes > MAX_RAW_DIFF_BYTES) {
+        return context.failAndThrow(
+            `Diff too large for analysis (${(diffBytes / 1_000_000).toFixed(1)}MB, ` +
+                `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Try excluding generated files or splitting the comparison.`
+        );
+    }
+
+    // Chunk the diff if it exceeds the per-call limit
+    const chunks = diffBytes > MAX_AI_DIFF_BYTES ? service.chunkDiff(gitDiff, MAX_AI_DIFF_BYTES) : [gitDiff];
+    const cappedChunks = chunks.slice(0, MAX_CHUNKS);
+    const skippedChunks = chunks.length - cappedChunks.length;
+
+    if (cappedChunks.length > 1) {
+        context.logger.info(
+            `Diff too large for single AI call (${diffBytes} bytes). ` +
+                `Split into ${chunks.length} chunks for analysis` +
+                (skippedChunks > 0 ? ` (capped at ${MAX_CHUNKS}, skipping ${skippedChunks} low-priority chunks).` : ".")
         );
     }
 
     // Analyze the diff using LLM with the configured client
     context.logger.info("Analyzing diff with LLM...");
     try {
-        // Create a BAML client with options if we have a custom registry
         const bamlClient = BamlClient.withOptions({ clientRegistry });
 
-        const analysis = await bamlClient.AnalyzeSdkDiff(gitDiff, "unknown", "0.0.0", "", "");
-        context.logger.debug("Analysis complete");
-        return analysis;
+        if (cappedChunks.length <= 1) {
+            // Single chunk — standard path
+            const analysis = await bamlClient.AnalyzeSdkDiff(cappedChunks[0] ?? gitDiff, "unknown", "0.0.0", "", "");
+            context.logger.debug("Analysis complete");
+            return analysis;
+        }
+
+        // Multi-chunk analysis — analyze each chunk, merge results
+        let bestBump: string = VersionBump.NO_CHANGE;
+        let bestMessage = "";
+        const allChangelogEntries: string[] = [];
+
+        for (let i = 0; i < cappedChunks.length; i++) {
+            const chunk = cappedChunks[i];
+            if (chunk == null) {
+                continue;
+            }
+            context.logger.debug(
+                `Analyzing chunk ${i + 1}/${cappedChunks.length} ` + `(${Buffer.byteLength(chunk, "utf-8")} bytes)`
+            );
+
+            const chunkAnalysis = await bamlClient.AnalyzeSdkDiff(chunk, "unknown", "0.0.0", "", "");
+
+            if (chunkAnalysis.version_bump === VersionBump.NO_CHANGE) {
+                context.logger.debug(`Chunk ${i + 1} result: NO_CHANGE`);
+                continue;
+            }
+
+            const prevBest = bestBump;
+            bestBump = maxVersionBump(bestBump, chunkAnalysis.version_bump);
+
+            if (bestBump !== prevBest) {
+                bestMessage = chunkAnalysis.message;
+            }
+
+            const entry = chunkAnalysis.changelog_entry?.trim();
+            if (entry) {
+                allChangelogEntries.push(entry);
+            }
+
+            context.logger.debug(
+                `Chunk ${i + 1} result: ${chunkAnalysis.version_bump}` +
+                    (bestBump !== prevBest ? ` (new highest: ${bestBump})` : "")
+            );
+        }
+
+        context.logger.debug("Multi-chunk analysis complete");
+
+        if (bestBump === VersionBump.NO_CHANGE) {
+            return {
+                version_bump: VersionBump.NO_CHANGE,
+                message: "No changes detected between the directories",
+                changelog_entry: ""
+            };
+        }
+
+        return {
+            version_bump: bestBump as VersionBump,
+            message: bestMessage || "SDK regeneration",
+            changelog_entry:
+                allChangelogEntries.length > 1
+                    ? allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n")
+                    : (allChangelogEntries[0] ?? "")
+        };
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         context.failWithoutThrowing(
             `Failed to analyze SDK diff. ` +
                 `Diff stats: ${gitDiff.length.toLocaleString()} chars, ${diffSizeKB}KB, ${fileCount} files changed. ` +
-                (gitDiff.length > DIFF_SIZE_LIMIT
-                    ? `The diff exceeds the AI endpoint's 100,000 character limit. `
+                (cappedChunks.length > 1
+                    ? `The diff was split into ${cappedChunks.length} chunks but analysis still failed. `
                     : "") +
                 `Error: ${errorMessage}`
         );
