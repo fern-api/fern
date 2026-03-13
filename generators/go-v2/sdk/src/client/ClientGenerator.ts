@@ -196,6 +196,9 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
                     writer.newLine();
                 }
                 this.writeEnvironmentVariables({ writer });
+                if (this.isRootClient) {
+                    this.writeLoggingHttpClientWrapping({ writer });
+                }
                 writer.write("return ");
                 writer.writeNode(
                     go.TypeInstantiation.structPointer({
@@ -593,6 +596,25 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
             }
         }
         return undefined;
+    }
+
+    private writeLoggingHttpClientWrapping({ writer }: { writer: go.Writer }): void {
+        writer.writeLine("if options.Logging != nil && !options.Logging.Silent() {");
+        writer.indent();
+        writer.write("options.HTTPClient = ");
+        writer.writeNode(
+            go.invokeFunc({
+                func: go.typeReference({
+                    name: "NewLoggingHTTPClient",
+                    importPath: this.context.getCoreImportPath()
+                }),
+                arguments_: [go.codeblock("options.HTTPClient"), go.codeblock("options.Logging")],
+                multiline: false
+            })
+        );
+        writer.newLine();
+        writer.dedent();
+        writer.writeLine("}");
     }
 
     private writeEnvConditional({
