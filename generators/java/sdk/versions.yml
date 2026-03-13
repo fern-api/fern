@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.43.0
+  changelogEntry:
+    - summary: |
+        Fix WebSocket client compilation error when a server message type
+        produces the same method name as a lifecycle handler. For example,
+        a message type `error` generated `onError(Consumer<Error>)` which
+        clashed with the lifecycle `onError(Consumer<Exception>)` due to
+        Java generics type erasure. Colliding message handler methods are
+        now suffixed with `Message` (e.g. `onErrorMessage`).
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
 - version: 3.42.9
   changelogEntry:
     - summary: |
