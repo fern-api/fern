@@ -95,6 +95,7 @@ export const CsharpConfigSchema = z.object({
     "include-exception-handler": z.boolean().optional(),
     "exception-interceptor-class-name": z.string().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
+    "omit-fern-headers": z.boolean().optional(),
 
     // Deprecated.
     "extra-dependencies": z
