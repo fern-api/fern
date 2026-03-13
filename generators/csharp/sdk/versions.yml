@@ -1,13 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.27.0
+- version: 2.28.0
   changelogEntry:
     - summary: |
         Rework enum JSON serialization to eliminate reflection. Regular enums now
-        generate a companion serializer class with compile-time switch statements
+        generate a companion serializer class with dictionary lookups
         instead of using the generic `EnumSerializer<T>` that relied on
         `Enum.GetValues`, `GetField`, and `GetCustomAttributes`. String enums now
         generate a nested serializer class instead of using
         `StringEnumSerializer<T>` which relied on `Activator.CreateInstance`.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 2.27.0
+  changelogEntry:
+    - summary: |
+        Improve gRPC code generation with the following:
+         1. Updated enum representation and .ToProto + .FromProto mappers.
+         2. Fix an issue with rendering the gRPC client reference.
+         3. Update protoc-gen-openapi to unwrap synthetic oneof types (re: https://github.com/fern-api/protoc-gen-openapi/releases/tag/v0.1.7)
       type: feat
   createdAt: "2026-03-13"
   irVersion: 65
