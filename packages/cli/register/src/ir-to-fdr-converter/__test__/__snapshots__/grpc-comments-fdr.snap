@@ -102,7 +102,7 @@
             },
           ],
           "headers": [],
-          "id": "createcomment",
+          "id": "CreateComment",
           "includeInApiExplorer": undefined,
           "method": "POST",
           "multiAuth": [
@@ -113,7 +113,7 @@
             },
           ],
           "name": "Add a Comment",
-          "originalEndpointId": "endpoint_commentsService.createcomment",
+          "originalEndpointId": "endpoint_commentsService.CreateComment",
           "path": {
             "parts": [
               {
