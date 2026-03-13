@@ -18,6 +18,26 @@ public enum Operand
 
 internal class OperandSerializer : global::System.Text.Json.Serialization.JsonConverter<Operand>
 {
+    private static readonly global::System.Collections.Generic.Dictionary<
+        string,
+        Operand
+    > _stringToEnum = new()
+    {
+        { ">", Operand.GreaterThan },
+        { "=", Operand.EqualTo },
+        { "less_than", Operand.LessThan },
+    };
+
+    private static readonly global::System.Collections.Generic.Dictionary<
+        Operand,
+        string
+    > _enumToString = new()
+    {
+        { Operand.GreaterThan, ">" },
+        { Operand.EqualTo, "=" },
+        { Operand.LessThan, "less_than" },
+    };
+
     public override Operand Read(
         ref global::System.Text.Json.Utf8JsonReader reader,
         global::System.Type typeToConvert,
@@ -27,13 +47,7 @@ internal class OperandSerializer : global::System.Text.Json.Serialization.JsonCo
         var stringValue =
             reader.GetString()
             ?? throw new global::System.Exception("The JSON value could not be read as a string.");
-        return stringValue switch
-        {
-            ">" => Operand.GreaterThan,
-            "=" => Operand.EqualTo,
-            "less_than" => Operand.LessThan,
-            _ => default,
-        };
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
     }
 
     public override void Write(
@@ -43,17 +57,7 @@ internal class OperandSerializer : global::System.Text.Json.Serialization.JsonCo
     )
     {
         writer.WriteStringValue(
-            value switch
-            {
-                Operand.GreaterThan => ">",
-                Operand.EqualTo => "=",
-                Operand.LessThan => "less_than",
-                _ => throw new global::System.ArgumentOutOfRangeException(
-                    nameof(value),
-                    value,
-                    null
-                ),
-            }
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
         );
     }
 }

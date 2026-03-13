@@ -16,6 +16,24 @@ public enum ForwardCompatibleEnum
 internal class ForwardCompatibleEnumSerializer
     : global::System.Text.Json.Serialization.JsonConverter<ForwardCompatibleEnum>
 {
+    private static readonly global::System.Collections.Generic.Dictionary<
+        string,
+        ForwardCompatibleEnum
+    > _stringToEnum = new()
+    {
+        { "active", ForwardCompatibleEnum.Active },
+        { "inactive", ForwardCompatibleEnum.Inactive },
+    };
+
+    private static readonly global::System.Collections.Generic.Dictionary<
+        ForwardCompatibleEnum,
+        string
+    > _enumToString = new()
+    {
+        { ForwardCompatibleEnum.Active, "active" },
+        { ForwardCompatibleEnum.Inactive, "inactive" },
+    };
+
     public override ForwardCompatibleEnum Read(
         ref global::System.Text.Json.Utf8JsonReader reader,
         global::System.Type typeToConvert,
@@ -25,12 +43,7 @@ internal class ForwardCompatibleEnumSerializer
         var stringValue =
             reader.GetString()
             ?? throw new global::System.Exception("The JSON value could not be read as a string.");
-        return stringValue switch
-        {
-            "active" => ForwardCompatibleEnum.Active,
-            "inactive" => ForwardCompatibleEnum.Inactive,
-            _ => default,
-        };
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
     }
 
     public override void Write(
@@ -40,16 +53,7 @@ internal class ForwardCompatibleEnumSerializer
     )
     {
         writer.WriteStringValue(
-            value switch
-            {
-                ForwardCompatibleEnum.Active => "active",
-                ForwardCompatibleEnum.Inactive => "inactive",
-                _ => throw new global::System.ArgumentOutOfRangeException(
-                    nameof(value),
-                    value,
-                    null
-                ),
-            }
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
         );
     }
 }

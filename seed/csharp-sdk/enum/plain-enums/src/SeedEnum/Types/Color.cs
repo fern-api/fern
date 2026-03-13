@@ -15,6 +15,16 @@ public enum Color
 
 internal class ColorSerializer : global::System.Text.Json.Serialization.JsonConverter<Color>
 {
+    private static readonly global::System.Collections.Generic.Dictionary<
+        string,
+        Color
+    > _stringToEnum = new() { { "red", Color.Red }, { "blue", Color.Blue } };
+
+    private static readonly global::System.Collections.Generic.Dictionary<
+        Color,
+        string
+    > _enumToString = new() { { Color.Red, "red" }, { Color.Blue, "blue" } };
+
     public override Color Read(
         ref global::System.Text.Json.Utf8JsonReader reader,
         global::System.Type typeToConvert,
@@ -24,12 +34,7 @@ internal class ColorSerializer : global::System.Text.Json.Serialization.JsonConv
         var stringValue =
             reader.GetString()
             ?? throw new global::System.Exception("The JSON value could not be read as a string.");
-        return stringValue switch
-        {
-            "red" => Color.Red,
-            "blue" => Color.Blue,
-            _ => default,
-        };
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
     }
 
     public override void Write(
@@ -39,16 +44,7 @@ internal class ColorSerializer : global::System.Text.Json.Serialization.JsonConv
     )
     {
         writer.WriteStringValue(
-            value switch
-            {
-                Color.Red => "red",
-                Color.Blue => "blue",
-                _ => throw new global::System.ArgumentOutOfRangeException(
-                    nameof(value),
-                    value,
-                    null
-                ),
-            }
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
         );
     }
 }

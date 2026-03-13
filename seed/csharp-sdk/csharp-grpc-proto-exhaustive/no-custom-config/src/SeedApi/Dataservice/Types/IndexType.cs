@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 
 namespace SeedApi;
 
-[JsonConverter(typeof(StringEnumSerializer<IndexType>))]
+[JsonConverter(typeof(IndexType.IndexTypeSerializer))]
 [Serializable]
 public readonly record struct IndexType : IStringEnum
 {
@@ -51,6 +52,32 @@ public readonly record struct IndexType : IStringEnum
     public static explicit operator string(IndexType value) => value.Value;
 
     public static explicit operator IndexType(string value) => new(value);
+
+    internal class IndexTypeSerializer : JsonConverter<IndexType>
+    {
+        public override IndexType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new IndexType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            IndexType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values
