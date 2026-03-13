@@ -29,9 +29,9 @@ export default class TypeBuilder {
     
     AnalyzeCommitDiffRequest: ClassViewer<'AnalyzeCommitDiffRequest', "diff">;
     
-    AnalyzeCommitDiffResponse: ClassViewer<'AnalyzeCommitDiffResponse', "message" | "changelog_entry" | "version_bump">;
+    AnalyzeCommitDiffResponse: ClassViewer<'AnalyzeCommitDiffResponse', "message" | "changelog_entry" | "version_bump" | "version_bump_reason">;
     
-    ConsolidateChangelogResponse: ClassViewer<'ConsolidateChangelogResponse', "consolidated_changelog" | "pr_description">;
+    ConsolidateChangelogResponse: ClassViewer<'ConsolidateChangelogResponse', "consolidated_changelog" | "pr_description" | "version_bump_reason">;
     
     
     VersionBump: EnumViewer<'VersionBump', "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE">;
@@ -53,11 +53,11 @@ export default class TypeBuilder {
         ]);
         
         this.AnalyzeCommitDiffResponse = this.tb.classViewer("AnalyzeCommitDiffResponse", [
-          "message","changelog_entry","version_bump",
+          "message","changelog_entry","version_bump","version_bump_reason",
         ]);
         
         this.ConsolidateChangelogResponse = this.tb.classViewer("ConsolidateChangelogResponse", [
-          "consolidated_changelog","pr_description",
+          "consolidated_changelog","pr_description","version_bump_reason",
         ]);
         
         

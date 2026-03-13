@@ -21,6 +21,9 @@ class AnalyzeCommitDiffResponse {
 
     version_bump VersionBump
         @description("The recommended semantic version bump: MAJOR for breaking changes, MINOR for new features, PATCH for bug fixes and other changes, NO_CHANGE for empty diffs")
+
+    version_bump_reason string
+        @description("One sentence explaining WHY this version bump was chosen. For MAJOR: name the specific breaking symbol(s). For MINOR: name the new capability. For PATCH: describe the fix. For NO_CHANGE: 'No functional changes detected.' Example: 'MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`.'")
 }
 
 // Main function that analyzes SDK diffs
@@ -612,10 +615,16 @@ function AnalyzeSdkDiff(
     - Do not use conventional commit prefixes (no "feat:", "fix:", etc.)
     - Write in third person ("The SDK now supports..." not "Add support for...")
 
-    Remember again that YOU MUST return a structured JSON response with these three fields:
+    Remember again that YOU MUST return a structured JSON response with these four fields:
     - message: A git commit message formatted like the example previously provided
     - changelog_entry: A user-facing release note (empty string for PATCH)
     - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
+    - version_bump_reason: One sentence explaining WHY this bump level was chosen.
+      For MAJOR, name the specific breaking symbol(s) and explain why existing callers break.
+      For MINOR, name the new capability added.
+      For PATCH, describe what was fixed or improved.
+      For NO_CHANGE, say "No functional changes detected."
+      Example: "MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`, breaking existing callers."
   "#
 }
 
@@ -625,6 +634,9 @@ class ConsolidateChangelogResponse {
 
     pr_description string
         @description("PR description with ## Breaking Changes section (if any) containing ### per breaking change with Before/After code fences and Migration line, then ## What's New section summarizing features in prose paragraphs grouped by theme. Do NOT list every class individually — summarize repetitive changes as a single entry.")
+
+    version_bump_reason string
+        @description("One sentence explaining WHY the overall version bump was chosen. For MAJOR: name the specific breaking symbol(s). For MINOR: name the new capability. For PATCH: describe the fix. Example: 'MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`.'")
 }
 
 function ConsolidateChangelog(
@@ -667,6 +679,14 @@ function ConsolidateChangelog(
     - `## What's New` section summarizing added/changed features in prose paragraphs,
       grouped by theme (e.g. logging, streaming, pagination, builder improvements)
     - Do NOT list every class that got the same method — summarize as a single entry
+
+    ## 3. Version Bump Reason
+
+    - One sentence explaining WHY the overall version bump ({{version_bump}}) was chosen
+    - For MAJOR: name the specific breaking symbol(s) and explain why existing callers break
+    - For MINOR: name the new capability added
+    - For PATCH: describe what was fixed or improved
+    - Example: "MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`, breaking existing callers."
 
     ---
 

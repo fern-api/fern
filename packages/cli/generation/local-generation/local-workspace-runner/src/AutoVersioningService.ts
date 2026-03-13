@@ -34,6 +34,11 @@ export interface AutoVersionResult {
      * Undefined for PATCH changes or when consolidation is not performed.
      */
     prDescription?: string;
+    /**
+     * One sentence explaining WHY the version bump was chosen.
+     * E.g., "MAJOR because `parserCreateJob` InputStream overloads were removed from `RawLabReportClient`."
+     */
+    versionBumpReason?: string;
 }
 
 /**

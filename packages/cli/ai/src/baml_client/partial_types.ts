@@ -43,9 +43,11 @@ export namespace partial_types {
       message?: string | null
       changelog_entry?: string | null
       version_bump?: types.VersionBump | null
+      version_bump_reason?: string | null
     }
     export interface ConsolidateChangelogResponse {
       consolidated_changelog?: string | null
       pr_description?: string | null
+      version_bump_reason?: string | null
     }
 }

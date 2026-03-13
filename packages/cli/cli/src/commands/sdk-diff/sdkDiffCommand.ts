@@ -193,6 +193,7 @@ export async function sdkDiffCommand({
         }
 
         let changelogEntry: string;
+        let versionBumpReason = "";
         if (allChangelogEntries.length > 1) {
             // Consolidate repetitive multi-chunk entries via AI rollup
             const rawEntries = allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n");
@@ -200,7 +201,7 @@ export async function sdkDiffCommand({
                 context.logger.debug(`Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`);
                 const rollup = await bamlClient.ConsolidateChangelog(rawEntries, bestBump, "unknown");
                 changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
-                // pr_description is available via rollup.pr_description if needed downstream
+                versionBumpReason = rollup.version_bump_reason?.trim() || "";
             } catch (rollupError) {
                 context.logger.warn(
                     `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`
@@ -214,7 +215,8 @@ export async function sdkDiffCommand({
         return {
             version_bump: bestBump as VersionBump,
             message: bestMessage || "SDK regeneration",
-            changelog_entry: changelogEntry
+            changelog_entry: changelogEntry,
+            version_bump_reason: versionBumpReason
         };
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
