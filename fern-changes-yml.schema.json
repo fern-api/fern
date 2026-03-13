@@ -1,36 +1,11 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "Changelog File",
-    "description": "Schema for changelog entries in the unreleased directory. Supports either a plain array of entries (rc defaults to false) or an object with an optional top-level 'rc' flag.",
-    "oneOf": [
-        {
-            "type": "array",
-            "description": "List of changelog entries (rc defaults to false)",
-            "items": {
-                "$ref": "#/definitions/ChangelogEntry"
-            }
-        },
-        {
-            "type": "object",
-            "additionalProperties": false,
-            "description": "Changelog file with optional release candidate flag",
-            "properties": {
-                "rc": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "When true, creates a release candidate version (e.g., 3.15.0-rc0). If the current version is already an RC of the same target, the RC counter is incremented (e.g., 3.15.0-rc1)."
-                },
-                "changes": {
-                    "type": "array",
-                    "description": "List of changelog entries",
-                    "items": {
-                        "$ref": "#/definitions/ChangelogEntry"
-                    }
-                }
-            },
-            "required": ["changes"]
-        }
-    ],
+        "title": "Changelog Entry",
+        "description": "Schema for changelog entries in the unreleased directory",
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/ChangelogEntry"
+    },
     "definitions": {
         "ChangelogEntry": {
             "type": "object",

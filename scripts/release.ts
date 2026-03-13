@@ -21,8 +21,6 @@ interface ChangelogEntry {
 
 const VALID_CHANGELOG_TYPES = new Set(["fix", "chore", "feat", "internal", "break"]);
 
-type ChangelogFileContent = ChangelogEntry[] | { rc?: boolean; changes: ChangelogEntry[] };
-
 type Severity = "major" | "minor" | "patch";
 
 function getSeverityFromType(type: ChangelogEntry["type"]): Severity {
@@ -82,47 +80,6 @@ function validateChangelogEntry(entry: unknown, filename: string, index: number)
     }
 }
 
-/**
- * Validates and parses the top-level structure of a changelog file.
- * Supports either an array of entries (legacy) or an object with optional `rc` and required `changes`.
- */
-function parseChangelogFile(parsed: unknown, filename: string): { rc: boolean; entries: ChangelogEntry[] } {
-    if (Array.isArray(parsed)) {
-        return { rc: false, entries: parsed as ChangelogEntry[] };
-    }
-
-    if (typeof parsed !== "object" || parsed === null) {
-        console.error(
-            `Error: Invalid format in ${filename}. Expected an array of changelog entries or an object with a "changes" field.`
-        );
-        process.exit(1);
-    }
-
-    const obj = parsed as Record<string, unknown>;
-
-    if (obj.rc !== undefined && typeof obj.rc !== "boolean") {
-        console.error(`Error in ${filename}: "rc" field must be a boolean, got ${typeof obj.rc}`);
-        process.exit(1);
-    }
-
-    if (!Array.isArray(obj.changes)) {
-        console.error(`Error in ${filename}: "changes" field must be an array of changelog entries.`);
-        process.exit(1);
-    }
-
-    const allowedKeys = new Set(["rc", "changes"]);
-    for (const key of Object.keys(obj)) {
-        if (!allowedKeys.has(key)) {
-            console.error(
-                `Error in ${filename}: Unknown top-level field "${key}". Only "rc" and "changes" are allowed.`
-            );
-            process.exit(1);
-        }
-    }
-
-    return { rc: (obj.rc as boolean | undefined) ?? false, entries: obj.changes as ChangelogEntry[] };
-}
-
 interface VersionEntry {
     version: string;
     changelogEntry: Array<{ summary: string; type: string }>;
@@ -133,7 +90,6 @@ interface VersionEntry {
 interface UnreleasedChange {
     filename: string;
     entries: ChangelogEntry[];
-    rc: boolean;
 }
 
 function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
@@ -156,21 +112,25 @@ function readUnreleasedChanges(unreleasedDir: string): UnreleasedChange[] {
     for (const file of files) {
         const filePath = join(unreleasedDir, file);
         const content = readFileSync(filePath, "utf-8");
-        const parsed = parseYaml(content) as ChangelogFileContent;
-        const { rc, entries } = parseChangelogFile(parsed, file);
+        const entries = parseYaml(content) as ChangelogEntry[];
+
+        if (!Array.isArray(entries)) {
+            console.error(`Error: Invalid format in ${file}. Expected an array of changelog entries.`);
+            process.exit(1);
+        }
 
         // Validate each entry against the changelog schema
         for (let i = 0; i < entries.length; i++) {
             validateChangelogEntry(entries[i], file, i);
         }
 
-        changes.push({ filename: file, entries, rc });
+        changes.push({ filename: file, entries });
     }
 
     return changes;
 }
 
-function computeBaseNextVersion(baseVersion: string, changes: UnreleasedChange[]): string {
+function determineNextVersion(currentVersion: string, changes: UnreleasedChange[]): string {
     let highestSeverity: Severity = "patch";
 
     for (const change of changes) {
@@ -184,7 +144,7 @@ function computeBaseNextVersion(baseVersion: string, changes: UnreleasedChange[]
         }
     }
 
-    const [major, minor, patch] = baseVersion.split(".").map(Number);
+    const [major, minor, patch] = currentVersion.split(".").map(Number);
 
     if (
         major === undefined ||
@@ -206,33 +166,6 @@ function computeBaseNextVersion(baseVersion: string, changes: UnreleasedChange[]
         case "patch":
             return `${major}.${minor}.${patch + 1}`;
     }
-}
-
-function determineNextVersion(currentVersion: string, changes: UnreleasedChange[]): string {
-    const isRc = changes.some((change) => change.rc);
-
-    // If the current version is already an RC (e.g., "3.15.0-rc0"), we stay on the same
-    // target base version — we don't re-compute it from change types. Subsequent RC releases
-    // simply increment the RC counter. Finalizing (rc: false) returns the bare base version.
-    const rcMatch = currentVersion.match(/^(.+)-rc(\d+)$/);
-    if (rcMatch) {
-        const targetBase = rcMatch[1]; // e.g., "3.15.0"
-        const currentRcNum = parseInt(rcMatch[2], 10); // e.g., 0
-        if (isRc) {
-            return `${targetBase}-rc${currentRcNum + 1}`;
-        }
-        // Finalizing the RC: return the bare base version
-        return targetBase;
-    }
-
-    // Not currently in an RC — compute the next base version normally
-    const baseNextVersion = computeBaseNextVersion(currentVersion, changes);
-
-    if (isRc) {
-        return `${baseNextVersion}-rc0`;
-    }
-
-    return baseNextVersion;
 }
 
 function getCurrentVersion(versionsFile: string): string {
@@ -347,14 +280,14 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
         process.exit(1);
     }
 
-    // Detect and pull latest for the current branch (caller controls which branch to release from)
-    const currentBranch = execSync("git rev-parse --abbrev-ref HEAD", { encoding: "utf-8" }).trim();
-    console.log(`🔄 Pulling latest for branch "${currentBranch}"...`);
+    // Checkout main and pull latest
+    console.log("🔄 Checking out main and pulling latest...");
     try {
-        execSync(`git pull origin ${currentBranch}`, { stdio: "inherit" });
-        console.log(`   ✅ Up to date on ${currentBranch}\n`);
+        execSync("git checkout main", { stdio: "inherit" });
+        execSync("git pull origin main", { stdio: "inherit" });
+        console.log("   ✅ On main with latest changes\n");
     } catch (error) {
-        console.error(`❌ Error pulling latest for ${currentBranch}:`, error);
+        console.error("❌ Error updating main branch:", error);
         process.exit(1);
     }
 
@@ -404,11 +337,11 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
     // Pull again to check for conflicts
     console.log("🔄 Checking for remote changes...");
     try {
-        execSync(`git pull origin ${currentBranch}`, { stdio: "inherit" });
+        execSync("git pull origin main", { stdio: "inherit" });
         const afterCommit = execSync("git rev-parse HEAD~1", { encoding: "utf-8" }).trim();
 
         if (beforeCommit !== afterCommit) {
-            console.error(`\n❌ Error: Someone else committed to ${currentBranch} while preparing this release.`);
+            console.error("\n❌ Error: Someone else committed to main while preparing this release.");
             console.error("   Rolling back changes...");
             execSync("git reset --hard HEAD~1", { stdio: "inherit" });
             console.error("   ✅ Changes rolled back. Please try again.");
@@ -416,7 +349,7 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
         }
         console.log("   ✅ No conflicts detected\n");
     } catch (error) {
-        console.error(`❌ Error pulling from ${currentBranch}:`, error);
+        console.error("❌ Error pulling from main:", error);
         console.error("   Rolling back changes...");
         try {
             execSync("git reset --hard HEAD~1", { stdio: "inherit" });
@@ -435,14 +368,14 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
     console.log("\n📝 Changed files:");
     console.log(`   - ${config.versionsFile}`);
     console.log(`   - ${getChangelogFolder(config)}/${nextVersion}/`);
-    console.log(`\n⚠️  This will push directly to ${currentBranch}!`);
+    console.log("\n⚠️  This will push directly to main!");
 
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
     });
 
-    rl.question(`\n❓ Do you want to push these changes to ${currentBranch}? (yes/no): `, (answer: string) => {
+    rl.question("\n❓ Do you want to push these changes to main? (yes/no): ", (answer: string) => {
         rl.close();
 
         if (answer.toLowerCase() !== "yes") {
@@ -456,15 +389,16 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
             process.exit(0);
         }
 
-        console.log(`\n📤 Pushing to ${currentBranch}...`);
+        // Push to main
+        console.log("\n📤 Pushing to main...");
         try {
-            execSync(`git push origin ${currentBranch}`, { stdio: "inherit" });
-            console.log(`   ✅ Successfully pushed to ${currentBranch}\n`);
+            execSync("git push origin main", { stdio: "inherit" });
+            console.log("   ✅ Successfully pushed to main\n");
             console.log(`🎉 Release ${nextVersion} completed successfully!`);
         } catch (error) {
-            console.error(`❌ Error pushing to ${currentBranch}:`, error);
-            console.error(`\n⚠️  The commit is still on your local ${currentBranch} branch.`);
-            console.error(`   You can manually push with: git push origin ${currentBranch}`);
+            console.error("❌ Error pushing to main:", error);
+            console.error("\n⚠️  The commit is still on your local main branch.");
+            console.error("   You can manually push with: git push origin main");
             process.exit(1);
         }
     });
