@@ -6,6 +6,7 @@ using SeedNullable.Test.Utils;
 namespace SeedNullable.Test.Unit.MockServer.Nullable;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetUsersTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -4,6 +4,7 @@ using SeedApi.Test.Unit.MockServer;
 namespace SeedApi.Test.Unit.MockServer.Folder.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class UnknownRequestTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -6,6 +6,7 @@ using SeedClientSideParams.Test.Utils;
 namespace SeedClientSideParams.Test.Unit.MockServer.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetConnectionTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

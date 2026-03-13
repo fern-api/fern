@@ -6,6 +6,7 @@ using SeedExhaustive.Test.Utils;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Put;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class AddTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -5,6 +5,7 @@ using SeedNurseryApi.Test.Unit.MockServer;
 namespace SeedNurseryApi.Test.Unit.MockServer.Package;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class TestTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

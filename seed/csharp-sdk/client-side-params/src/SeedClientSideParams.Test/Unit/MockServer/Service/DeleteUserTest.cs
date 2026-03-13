@@ -4,6 +4,7 @@ using SeedClientSideParams.Test.Unit.MockServer;
 namespace SeedClientSideParams.Test.Unit.MockServer.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class DeleteUserTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

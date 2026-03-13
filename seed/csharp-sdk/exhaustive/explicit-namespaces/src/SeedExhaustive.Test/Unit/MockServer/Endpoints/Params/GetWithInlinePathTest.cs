@@ -6,6 +6,7 @@ using SeedExhaustive.Test.Utils;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Params;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetWithInlinePathTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

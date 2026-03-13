@@ -5,6 +5,7 @@ using SeedPagination.Test.Unit.MockServer;
 namespace SeedPagination.Test.Unit.MockServer.Users;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class ListWithTopLevelBodyCursorPaginationTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
