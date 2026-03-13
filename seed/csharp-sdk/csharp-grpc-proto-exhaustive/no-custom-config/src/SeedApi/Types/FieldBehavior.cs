@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedApi.Core;
 
 namespace SeedApi;
 
-[JsonConverter(typeof(StringEnumSerializer<FieldBehavior>))]
+[JsonConverter(typeof(FieldBehavior.FieldBehaviorSerializer))]
 [Serializable]
 public readonly record struct FieldBehavior : IStringEnum
 {
@@ -67,6 +68,32 @@ public readonly record struct FieldBehavior : IStringEnum
     public static explicit operator string(FieldBehavior value) => value.Value;
 
     public static explicit operator FieldBehavior(string value) => new(value);
+
+    internal class FieldBehaviorSerializer : JsonConverter<FieldBehavior>
+    {
+        public override FieldBehavior Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new FieldBehavior(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            FieldBehavior value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values
