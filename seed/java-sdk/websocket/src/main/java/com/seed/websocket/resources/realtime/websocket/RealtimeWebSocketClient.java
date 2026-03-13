@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.websocket.core.ClientOptions;
 import com.seed.websocket.core.ObjectMappers;
 import com.seed.websocket.core.ReconnectingWebSocketListener;
+import com.seed.websocket.resources.realtime.types.ErrorEvent;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent2;
 import com.seed.websocket.resources.realtime.types.ReceiveEvent3;
@@ -67,6 +68,8 @@ public class RealtimeWebSocketClient {
     private Consumer<ReceiveEvent2> receive2Handler;
 
     private Consumer<ReceiveEvent3> receive3Handler;
+
+    private Consumer<ErrorEvent> errorHandler;
 
     /**
      * Creates a new async WebSocket client for the realtime channel.
@@ -263,6 +266,14 @@ public class RealtimeWebSocketClient {
     }
 
     /**
+     * Registers a handler for error messages from the server.
+     * @param handler the handler to invoke when a message is received
+     */
+    public void onErrorMessage(Consumer<ErrorEvent> handler) {
+        this.errorHandler = handler;
+    }
+
+    /**
      * Registers a handler called when the connection is established.
      * @param handler the handler to invoke when connected
      */
@@ -368,6 +379,14 @@ public class RealtimeWebSocketClient {
                         ReceiveEvent3 event = objectMapper.treeToValue(body, ReceiveEvent3.class);
                         if (event != null) {
                             receive3Handler.accept(event);
+                        }
+                    }
+                    break;
+                case "error":
+                    if (errorHandler != null) {
+                        ErrorEvent event = objectMapper.treeToValue(body, ErrorEvent.class);
+                        if (event != null) {
+                            errorHandler.accept(event);
                         }
                     }
                     break;

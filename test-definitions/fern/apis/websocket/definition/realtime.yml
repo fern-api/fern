@@ -40,6 +40,10 @@ channel:
       display-name: Receive3
       origin: server
       body: ReceiveEvent3
+    error:
+      display-name: Error
+      origin: server
+      body: ErrorEvent
   examples:
     - name: Default example
       path-parameters:
@@ -91,3 +95,7 @@ types:
   ReceiveEvent3:
     properties:
       receiveText3: string
+  ErrorEvent:
+    properties:
+      errorCode: integer
+      errorMessage: string

@@ -72,23 +72,6 @@ func WithMaxStreamBufSize(size int) *core.MaxBufSizeOption {
 	}
 }
 
-// WithLogging configures logging for the SDK.
-// By default, logging is silent — no log output unless explicitly configured.
-//
-// Example:
-//
-//	client := NewClient(
-//	  option.WithLogging(core.NewLogConfigBuilder().
-//	    Level(core.LogLevelDebug).
-//	    Silent(false).
-//	    Build()),
-//	)
-func WithLogging(logging *core.LogConfig) *core.LoggingOption {
-	return &core.LoggingOption{
-		Logging: logging,
-	}
-}
-
 // WithClientID sets the clientID auth request parameter.
 func WithClientID(clientID string) *core.ClientIDOption {
 	return &core.ClientIDOption{
