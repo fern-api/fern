@@ -15,6 +15,16 @@ public enum Status
 
 internal class StatusSerializer : global::System.Text.Json.Serialization.JsonConverter<Status>
 {
+    private static readonly global::System.Collections.Generic.Dictionary<
+        string,
+        Status
+    > _stringToEnum = new() { { "Known", Status.Known }, { "Unknown", Status.Unknown } };
+
+    private static readonly global::System.Collections.Generic.Dictionary<
+        Status,
+        string
+    > _enumToString = new() { { Status.Known, "Known" }, { Status.Unknown, "Unknown" } };
+
     public override Status Read(
         ref global::System.Text.Json.Utf8JsonReader reader,
         global::System.Type typeToConvert,
@@ -24,12 +34,7 @@ internal class StatusSerializer : global::System.Text.Json.Serialization.JsonCon
         var stringValue =
             reader.GetString()
             ?? throw new global::System.Exception("The JSON value could not be read as a string.");
-        return stringValue switch
-        {
-            "Known" => Status.Known,
-            "Unknown" => Status.Unknown,
-            _ => default,
-        };
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
     }
 
     public override void Write(
@@ -39,16 +44,7 @@ internal class StatusSerializer : global::System.Text.Json.Serialization.JsonCon
     )
     {
         writer.WriteStringValue(
-            value switch
-            {
-                Status.Known => "Known",
-                Status.Unknown => "Unknown",
-                _ => throw new global::System.ArgumentOutOfRangeException(
-                    nameof(value),
-                    value,
-                    null
-                ),
-            }
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
         );
     }
 }

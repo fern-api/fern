@@ -16,6 +16,24 @@ public enum EnumWithSpecialCharacters
 internal class EnumWithSpecialCharactersSerializer
     : global::System.Text.Json.Serialization.JsonConverter<EnumWithSpecialCharacters>
 {
+    private static readonly global::System.Collections.Generic.Dictionary<
+        string,
+        EnumWithSpecialCharacters
+    > _stringToEnum = new()
+    {
+        { "\\$bla", EnumWithSpecialCharacters.Bla },
+        { "\\$yo", EnumWithSpecialCharacters.Yo },
+    };
+
+    private static readonly global::System.Collections.Generic.Dictionary<
+        EnumWithSpecialCharacters,
+        string
+    > _enumToString = new()
+    {
+        { EnumWithSpecialCharacters.Bla, "\\$bla" },
+        { EnumWithSpecialCharacters.Yo, "\\$yo" },
+    };
+
     public override EnumWithSpecialCharacters Read(
         ref global::System.Text.Json.Utf8JsonReader reader,
         global::System.Type typeToConvert,
@@ -25,12 +43,7 @@ internal class EnumWithSpecialCharactersSerializer
         var stringValue =
             reader.GetString()
             ?? throw new global::System.Exception("The JSON value could not be read as a string.");
-        return stringValue switch
-        {
-            "\\$bla" => EnumWithSpecialCharacters.Bla,
-            "\\$yo" => EnumWithSpecialCharacters.Yo,
-            _ => default,
-        };
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
     }
 
     public override void Write(
@@ -40,16 +53,7 @@ internal class EnumWithSpecialCharactersSerializer
     )
     {
         writer.WriteStringValue(
-            value switch
-            {
-                EnumWithSpecialCharacters.Bla => "\\$bla",
-                EnumWithSpecialCharacters.Yo => "\\$yo",
-                _ => throw new global::System.ArgumentOutOfRangeException(
-                    nameof(value),
-                    value,
-                    null
-                ),
-            }
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
         );
     }
 }
