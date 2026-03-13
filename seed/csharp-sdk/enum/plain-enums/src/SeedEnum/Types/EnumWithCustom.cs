@@ -16,6 +16,24 @@ public enum EnumWithCustom
 internal class EnumWithCustomSerializer
     : global::System.Text.Json.Serialization.JsonConverter<EnumWithCustom>
 {
+    private static readonly global::System.Collections.Generic.Dictionary<
+        string,
+        EnumWithCustom
+    > _stringToEnum = new()
+    {
+        { "safe", EnumWithCustom.Safe },
+        { "Custom", EnumWithCustom.Custom },
+    };
+
+    private static readonly global::System.Collections.Generic.Dictionary<
+        EnumWithCustom,
+        string
+    > _enumToString = new()
+    {
+        { EnumWithCustom.Safe, "safe" },
+        { EnumWithCustom.Custom, "Custom" },
+    };
+
     public override EnumWithCustom Read(
         ref global::System.Text.Json.Utf8JsonReader reader,
         global::System.Type typeToConvert,
@@ -25,12 +43,7 @@ internal class EnumWithCustomSerializer
         var stringValue =
             reader.GetString()
             ?? throw new global::System.Exception("The JSON value could not be read as a string.");
-        return stringValue switch
-        {
-            "safe" => EnumWithCustom.Safe,
-            "Custom" => EnumWithCustom.Custom,
-            _ => default,
-        };
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
     }
 
     public override void Write(
@@ -40,16 +53,7 @@ internal class EnumWithCustomSerializer
     )
     {
         writer.WriteStringValue(
-            value switch
-            {
-                EnumWithCustom.Safe => "safe",
-                EnumWithCustom.Custom => "Custom",
-                _ => throw new global::System.ArgumentOutOfRangeException(
-                    nameof(value),
-                    value,
-                    null
-                ),
-            }
+            _enumToString.TryGetValue(value, out var stringValue) ? stringValue : null
         );
     }
 }

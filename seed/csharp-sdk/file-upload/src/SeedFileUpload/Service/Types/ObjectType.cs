@@ -1,9 +1,10 @@
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
 
-[JsonConverter(typeof(StringEnumSerializer<ObjectType>))]
+[JsonConverter(typeof(ObjectType.ObjectTypeSerializer))]
 [Serializable]
 public readonly record struct ObjectType : IStringEnum
 {
@@ -50,6 +51,32 @@ public readonly record struct ObjectType : IStringEnum
     public static explicit operator string(ObjectType value) => value.Value;
 
     public static explicit operator ObjectType(string value) => new(value);
+
+    internal class ObjectTypeSerializer : JsonConverter<ObjectType>
+    {
+        public override ObjectType Read(
+            ref Utf8JsonReader reader,
+            Type typeToConvert,
+            JsonSerializerOptions options
+        )
+        {
+            var stringValue =
+                reader.GetString()
+                ?? throw new global::System.Exception(
+                    "The JSON value could not be read as a string."
+                );
+            return new ObjectType(stringValue);
+        }
+
+        public override void Write(
+            Utf8JsonWriter writer,
+            ObjectType value,
+            JsonSerializerOptions options
+        )
+        {
+            writer.WriteStringValue(value.Value);
+        }
+    }
 
     /// <summary>
     /// Constant strings for enum values
