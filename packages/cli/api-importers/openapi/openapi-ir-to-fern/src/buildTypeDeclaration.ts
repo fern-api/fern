@@ -29,7 +29,6 @@ import {
     buildUnknownTypeReference
 } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
-import { State } from "./State.js";
 import { convertAvailability } from "./utils/convertAvailability.js";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema.js";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
@@ -45,7 +44,8 @@ export function buildTypeDeclaration({
     context,
     declarationFile,
     namespace,
-    declarationDepth
+    declarationDepth,
+    variant
 }: {
     schema: Schema;
     context: OpenApiIrConverterContext;
@@ -53,6 +53,7 @@ export function buildTypeDeclaration({
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
     declarationDepth: number;
+    variant?: "read" | "write";
 }): ConvertedTypeDeclaration {
     let typeDeclaration: ConvertedTypeDeclaration;
     switch (schema.type) {
@@ -78,7 +79,7 @@ export function buildTypeDeclaration({
             });
             break;
         case "reference":
-            typeDeclaration = buildReferenceTypeDeclaration({ schema, context, declarationFile, namespace });
+            typeDeclaration = buildReferenceTypeDeclaration({ schema, context, declarationFile, namespace, variant });
             break;
         case "unknown":
             typeDeclaration = buildUnknownTypeDeclaration(
@@ -117,7 +118,8 @@ export function buildTypeDeclaration({
                 context,
                 declarationFile,
                 namespace,
-                declarationDepth
+                declarationDepth,
+                variant
             });
             break;
         case "oneOf":
@@ -126,7 +128,8 @@ export function buildTypeDeclaration({
                 context,
                 declarationFile,
                 namespace,
-                declarationDepth
+                declarationDepth,
+                variant
             });
             break;
         default:
@@ -140,20 +143,19 @@ export function buildObjectTypeDeclaration({
     context,
     declarationFile,
     namespace,
-    declarationDepth
+    declarationDepth,
+    skipReadonlyProperties,
+    variant
 }: {
     schema: ObjectSchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
     declarationDepth: number;
+    skipReadonlyProperties?: boolean;
+    variant?: "read" | "write";
 }): ConvertedTypeDeclaration {
-    const isInRequestState = context.isInState(State.Request);
-    const respectReadonlySchemas = context.options.respectReadonlySchemas;
-    const endpointMethod = context.getEndpointMethod();
-    const isWriteMethod = endpointMethod === "POST" || endpointMethod === "PUT" || endpointMethod === "PATCH";
-
-    const shouldSkipReadonly = isInRequestState && respectReadonlySchemas && isWriteMethod;
+    const shouldSkipReadonly = skipReadonlyProperties === true || variant === "write";
 
     let readOnlyPropertyPresent = false;
     const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
@@ -192,7 +194,8 @@ export function buildObjectTypeDeclaration({
             context,
             fileContainingReference: declarationFile,
             namespace,
-            declarationDepth: declarationDepth + 1
+            declarationDepth: declarationDepth + 1,
+            variant
         });
 
         const audiences = property.audiences;
@@ -230,7 +233,8 @@ export function buildObjectTypeDeclaration({
             context,
             fileContainingReference: declarationFile,
             namespace,
-            declarationDepth: declarationDepth + 1
+            declarationDepth: declarationDepth + 1,
+            variant
         });
         extendedSchemas.push(stripNullableWrapperForExtends(getTypeFromTypeReference(allOfTypeReference)));
     }
@@ -247,7 +251,8 @@ export function buildObjectTypeDeclaration({
                     context,
                     fileContainingReference: declarationFile,
                     namespace,
-                    declarationDepth: declarationDepth + 1
+                    declarationDepth: declarationDepth + 1,
+                    variant
                 });
             }
         }
@@ -260,7 +265,8 @@ export function buildObjectTypeDeclaration({
                 context,
                 fileContainingReference: declarationFile,
                 namespace,
-                declarationDepth: declarationDepth + 1
+                declarationDepth: declarationDepth + 1,
+                variant
             });
             extendedSchemas.push(stripNullableWrapperForExtends(getTypeFromTypeReference(extendedSchemaTypeReference)));
         }
@@ -304,13 +310,14 @@ export function buildObjectTypeDeclaration({
     objectTypeDeclaration.inline = getInline(schema, declarationDepth);
 
     const name = schema.nameOverride ?? schema.generatedName;
+    // Only add "Read" suffix when the schema has a read variant registered (i.e., it needs both variants)
     const finalName =
-        readOnlyPropertyPresent && context.options.respectReadonlySchemas && !shouldSkipReadonly ? `${name}Read` : name;
-
-    // Record the final name mapping for reference resolution
-    if (finalName !== name) {
-        context.setSchemaFinalName(name, finalName);
-    }
+        variant === "read" &&
+        readOnlyPropertyPresent &&
+        context.options.respectReadonlySchemas &&
+        context.hasReadVariant(name)
+            ? `${name}Read`
+            : name;
 
     return {
         name: finalName,
@@ -542,12 +549,14 @@ export function buildReferenceTypeDeclaration({
     schema,
     context,
     declarationFile,
-    namespace
+    namespace,
+    variant
 }: {
     schema: ReferencedSchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
+    variant?: "read" | "write";
 }): ConvertedTypeDeclaration {
     return {
         name: schema.nameOverride ?? schema.generatedName,
@@ -555,7 +564,8 @@ export function buildReferenceTypeDeclaration({
             schema,
             context,
             fileContainingReference: declarationFile,
-            namespace
+            namespace,
+            variant
         })
     };
 }
@@ -658,13 +668,15 @@ export function buildOneOfTypeDeclaration({
     context,
     declarationFile,
     namespace,
-    declarationDepth
+    declarationDepth,
+    variant
 }: {
     schema: OneOfSchema;
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
     namespace: string | undefined;
     declarationDepth: number;
+    variant?: "read" | "write";
 }): ConvertedTypeDeclaration {
     const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
     if (schema.type === "discriminated") {
@@ -675,7 +687,8 @@ export function buildOneOfTypeDeclaration({
                 fileContainingReference: declarationFile,
                 context,
                 namespace,
-                declarationDepth: declarationDepth + 1
+                declarationDepth: declarationDepth + 1,
+                variant
             });
         }
         const union: Record<string, RawSchemas.SingleUnionTypeSchema> = {};
@@ -685,7 +698,8 @@ export function buildOneOfTypeDeclaration({
                 context,
                 fileContainingReference: declarationFile,
                 namespace,
-                declarationDepth: declarationDepth + 1
+                declarationDepth: declarationDepth + 1,
+                variant
             });
         }
         return {
@@ -714,7 +728,8 @@ export function buildOneOfTypeDeclaration({
                 fileContainingReference: declarationFile,
                 context,
                 namespace,
-                declarationDepth: declarationDepth + 1
+                declarationDepth: declarationDepth + 1,
+                variant
             })
         );
     }

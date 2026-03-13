@@ -23,6 +23,7 @@ describe("ComplexClient", () => {
             total_count: 1,
             type: "conversation.list",
         };
+
         server
             .mockEndpoint({ once: false })
             .post("/index/conversations/search")

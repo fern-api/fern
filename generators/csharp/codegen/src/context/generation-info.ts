@@ -156,8 +156,11 @@ export class Generation {
         useDotnetFormat: () => this.customConfig["experimental-dotnet-format"] ?? false,
         /** When true, enables WebSocket support in the generated SDK. Default: false. */
         enableWebsockets: () => this.customConfig["experimental-enable-websockets"] ?? false,
-        /** When true, generates readonly constants instead of static properties. Default: false. */
+        /** @deprecated Use `generateLiterals` instead. When true, generates readonly constants instead of static properties. Default: false. */
         enableReadonlyConstants: () => this.customConfig["experimental-readonly-constants"] ?? false,
+        /** When true, generates literal struct types for literal properties. If `experimental-readonly-constants` is also set, this takes precedence. Default: false. */
+        generateLiterals: () =>
+            this.customConfig["generate-literals"] ?? this.customConfig["experimental-readonly-constants"] ?? false,
         /** When true, uses explicit nullable/optional attributes and Optional<T?> wrapper for better null handling. Default: false. */
         enableExplicitNullableOptional: () => this.customConfig["experimental-explicit-nullable-optional"] ?? false,
         /** When true, generates Defaults nested class and WithDefaults() method for request records with default values. Default: false. */
@@ -209,6 +212,8 @@ export class Generation {
             this.customConfig["root-client-class-access"] == "internal" ? ast.Access.Internal : ast.Access.Public,
         /** Additional NuGet package dependencies to include in the generated project. Default: {}. */
         extraDependencies: () => this.customConfig["extra-dependencies"] ?? {},
+        /** When true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests. Default: false. */
+        omitFernHeaders: () => this.customConfig["omit-fern-headers"] ?? false,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */

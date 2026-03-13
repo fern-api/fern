@@ -32,13 +32,6 @@ export interface AutoVersionResult {
 }
 
 /**
- * Maximum diff size in characters that the FAI /sdks/analyze-commit-diff endpoint accepts.
- * Roughly 100KB ≈ 25k–30k tokens for Claude. Diffs exceeding this are rejected with HTTP 413.
- * This constant is the single source of truth — LocalTaskHandler and sdkDiffCommand both reference it.
- */
-export const DIFF_SIZE_LIMIT = 100_000;
-
-/**
  * Counts the number of files changed in a git diff by scanning for "diff --git" headers.
  * Uses indexOf-based scanning instead of regex to avoid O(n) regex overhead on large diffs.
  */
@@ -326,6 +319,173 @@ export class AutoVersioningService {
     }
 
     /**
+     * Known patterns for API-surface signatures (function/method/class declarations).
+     * Used by truncateDiff to prioritise sections with signature-like changes.
+     *
+     * Covers all languages Fern generates SDKs for:
+     * - TypeScript/JavaScript: export function, export class, export interface, export type
+     * - Java/C#: public class, public interface, public void, protected, internal
+     * - Python: def method_name, class ClassName
+     * - Go: func ExportedName (uppercase = exported)
+     * - Ruby: def method_name, class ClassName, module ModuleName
+     * - Swift: public func, public class, open class
+     * - Rust: pub fn, pub struct, pub enum, pub trait
+     * - PHP: public function, class ClassName
+     */
+    private static readonly SIGNATURE_PATTERNS: RegExp[] = [
+        // TypeScript / JavaScript
+        /^[+-]\s*export\s+/,
+        // Java / C# / Swift / PHP — access modifiers
+        /^[+-]\s*public\s+/,
+        /^[+-]\s*protected\s+/,
+        /^[+-]\s*internal\s+/,
+        /^[+-]\s*open\s+(class|func)\s+/,
+        // Python / Ruby
+        /^[+-]\s*def\s+/,
+        /^[+-]\s*class\s+[A-Z]/,
+        /^[+-]\s*module\s+[A-Z]/,
+        // Go — exported identifiers start with uppercase
+        /^[+-]\s*func\s+[A-Z]/,
+        /^[+-]\s*func\s+\([^)]+\)\s+[A-Z]/,
+        /^[+-]\s*type\s+[A-Z]/,
+        // Rust
+        /^[+-]\s*pub\s+(fn|struct|enum|trait|type|mod)\s+/,
+        // PHP
+        /^[+-]\s*function\s+/
+    ];
+
+    /**
+     * Splits a cleaned diff into chunks that each fit within a byte budget.
+     * File sections are ranked by semantic priority (same 5-tier system as
+     * classifySection) so the first chunk always contains the highest-signal
+     * sections. Each chunk contains only complete file sections — no partial
+     * files.
+     *
+     * If a single file section exceeds `maxBytesPerChunk`, it is placed alone
+     * in its own chunk so no information is lost.
+     *
+     * @param diff The cleaned diff string (output of cleanDiffForAI)
+     * @param maxBytesPerChunk Maximum byte size for each chunk
+     * @return Array of diff chunk strings (at least one element for non-empty diffs)
+     */
+    public chunkDiff(diff: string, maxBytesPerChunk: number): string[] {
+        const lines = diff.split("\n");
+        const fileSections = this.parseFileSections(lines);
+
+        if (fileSections.length === 0) {
+            return [diff];
+        }
+
+        // Classify and rank each file section (highest priority first)
+        const ranked = fileSections
+            .map((section) => ({
+                text: section.lines.join("\n"),
+                priority: this.classifySection(section)
+            }))
+            .sort((a, b) => a.priority - b.priority);
+
+        const chunks: string[] = [];
+        let currentChunkTexts: string[] = [];
+        let currentChunkBytes = 0;
+
+        for (const entry of ranked) {
+            const sectionBytes = Buffer.byteLength(entry.text, "utf-8");
+            const newlineBytes = currentChunkTexts.length > 0 ? 1 : 0; // Account for \n separator
+
+            // If this section alone exceeds the budget, give it its own chunk
+            if (sectionBytes > maxBytesPerChunk) {
+                // Flush any accumulated sections first
+                if (currentChunkTexts.length > 0) {
+                    chunks.push(currentChunkTexts.join("\n"));
+                    currentChunkTexts = [];
+                }
+                currentChunkBytes = 0;
+                chunks.push(entry.text);
+                continue;
+            }
+
+            // If adding this section would exceed the budget, start a new chunk
+            if (currentChunkBytes + sectionBytes + newlineBytes > maxBytesPerChunk && currentChunkTexts.length > 0) {
+                chunks.push(currentChunkTexts.join("\n"));
+                currentChunkTexts = [];
+                currentChunkBytes = 0;
+            }
+
+            currentChunkTexts.push(entry.text);
+            currentChunkBytes += sectionBytes + (currentChunkTexts.length > 1 ? 1 : 0);
+        }
+
+        // Flush remaining sections
+        if (currentChunkTexts.length > 0) {
+            chunks.push(currentChunkTexts.join("\n"));
+        }
+
+        return chunks;
+    }
+
+    /**
+     * Classifies a file section into a priority bucket for truncation ranking.
+     * Lower number = higher priority (included first).
+     *
+     * 1 = deletion-only, 2 = mixed with signatures, 3 = mixed,
+     * 4 = addition-only, 5 = context-only
+     */
+    private static isDiffHeader(line: string): boolean {
+        return (
+            line.startsWith("--- a/") ||
+            line.startsWith("--- /dev/null") ||
+            line.startsWith("+++ b/") ||
+            line.startsWith("+++ /dev/null")
+        );
+    }
+
+    private classifySection(section: FileSection): number {
+        let hasAdditions = false;
+        let hasDeletions = false;
+        let hasSignature = false;
+
+        for (const line of section.lines) {
+            const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
+            const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
+
+            if (isAddition) {
+                hasAdditions = true;
+            }
+            if (isDeletion) {
+                hasDeletions = true;
+            }
+
+            if (isAddition || isDeletion) {
+                for (const pattern of AutoVersioningService.SIGNATURE_PATTERNS) {
+                    if (pattern.test(line)) {
+                        hasSignature = true;
+                        break;
+                    }
+                }
+            }
+
+            // Early exit: once we know all three flags, the classification is determined
+            if (hasAdditions && hasDeletions && hasSignature) {
+                break;
+            }
+        }
+
+        if (hasDeletions && !hasAdditions) {
+            return 1; // deletion-only
+        }
+        if (hasDeletions && hasAdditions && hasSignature) {
+            return 2; // mixed with signatures
+        }
+        if (hasDeletions && hasAdditions) {
+            return 3; // mixed
+        }
+        if (hasAdditions) {
+            return 4; // addition-only
+        }
+        return 5; // context-only
+    }
+
+    /**
      * Parses a diff into file sections, where each section starts with "diff --git".
      */
     private parseFileSections(lines: string[]): FileSection[] {
@@ -376,8 +536,8 @@ export class AutoVersioningService {
 
         let hasChanges = false;
         for (const line of processedContent) {
-            const isAddition = line.startsWith("+") && !line.startsWith("+++");
-            const isDeletion = line.startsWith("-") && !line.startsWith("---");
+            const isAddition = line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
+            const isDeletion = line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
             if (isAddition || isDeletion) {
                 hasChanges = true;
                 break;
@@ -444,7 +604,7 @@ export class AutoVersioningService {
     }
 
     private isDeletionLine(line: string): boolean {
-        return line.startsWith("-") && !line.startsWith("---");
+        return line.startsWith("-") && !AutoVersioningService.isDiffHeader(line);
     }
 
     private findMatchingAdditionLine(lines: string[], startIndex: number, mappedMagicVersion: string): number {
@@ -473,7 +633,7 @@ export class AutoVersioningService {
     }
 
     private isAdditionLine(line: string): boolean {
-        return line.startsWith("+") && !line.startsWith("+++");
+        return line.startsWith("+") && !AutoVersioningService.isDiffHeader(line);
     }
 
     private shouldStopSearching(line: string): boolean {
@@ -481,8 +641,7 @@ export class AutoVersioningService {
             line.startsWith("@@") ||
             line.startsWith("diff --git") ||
             line.startsWith("index ") ||
-            line.startsWith("---") ||
-            line.startsWith("+++")
+            AutoVersioningService.isDiffHeader(line)
         );
     }
 

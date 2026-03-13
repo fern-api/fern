@@ -74,7 +74,8 @@ export class LegacyDocsPublisher {
                 instanceUrl,
                 preview,
                 disableTemplates: undefined,
-                skipUpload
+                skipUpload,
+                cliVersion: process.env.CLI_VERSION
             });
 
             if (taskContext.getResult() === TaskResult.Failure) {

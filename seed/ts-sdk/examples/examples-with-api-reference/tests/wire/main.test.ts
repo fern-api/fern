@@ -9,6 +9,7 @@ describe("SeedExamplesClient", () => {
         const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "Hello world!\\n\\nwith\\n\\tnewlines";
         const rawResponseBody = "Hello world!\\n\\nwith\\n\\tnewlines";
+
         server
             .mockEndpoint()
             .post("/")
@@ -27,6 +28,7 @@ describe("SeedExamplesClient", () => {
         const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "primitive";
         const rawResponseBody = { type: "primitive", value: "value", label: "label" };
+
         server
             .mockEndpoint()
             .post("")

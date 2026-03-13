@@ -1834,4 +1834,680 @@ describe("GeneratedRequestWrapperImpl", () => {
             expect(sourceFile.getText()).toMatchSnapshot();
         });
     });
+
+    // ── getNonBodyKeysWithData ─────────────────────────────────────────
+
+    describe("getNonBodyKeysWithData", () => {
+        it("returns query and header keys with original parameter data", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("cursor", STRING_TYPE)],
+                    headers: [createHttpHeader("xToken", STRING_TYPE, { wireValue: "X-Token" })],
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            const keys = wrapper.getNonBodyKeysWithData(context);
+            expect(keys).toHaveLength(2);
+            expect(keys[0]?.originalParameter?.type).toBe("query");
+            expect(keys[1]?.originalParameter?.type).toBe("header");
+        });
+
+        it("includes path parameter keys when shouldInlinePathParameters=true", () => {
+            const init = createDefaultInit({
+                shouldInlinePathParameters: true,
+                endpoint: createHttpEndpoint({
+                    pathParameters: [createPathParameter("gardenId")],
+                    queryParameters: [createQueryParameter("name", STRING_TYPE)],
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext({ shouldInlinePathParameters: true });
+            const keys = wrapper.getNonBodyKeysWithData(context);
+            expect(keys).toHaveLength(2);
+            expect(keys[0]?.originalParameter?.type).toBe("path");
+            expect(keys[1]?.originalParameter?.type).toBe("query");
+        });
+
+        it("includes file property keys when inlineFileProperties=true", () => {
+            const fileBody = createFileUploadRequestBody({
+                properties: [createFileProperty("photo"), createBodyPropertyForUpload("title", STRING_TYPE)]
+            });
+            const init = createDefaultInit({
+                inlineFileProperties: true,
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("name", STRING_TYPE)],
+                    requestBody: fileBody,
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            const keys = wrapper.getNonBodyKeysWithData(context);
+            // file key + query key
+            expect(keys).toHaveLength(2);
+            expect(keys[0]?.originalParameter?.type).toBe("file");
+            expect(keys[1]?.originalParameter?.type).toBe("query");
+        });
+
+        it("excludes file property keys when inlineFileProperties=false", () => {
+            const fileBody = createFileUploadRequestBody({
+                properties: [createFileProperty("photo")]
+            });
+            const init = createDefaultInit({
+                inlineFileProperties: false,
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("name", STRING_TYPE)],
+                    requestBody: fileBody,
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            const keys = wrapper.getNonBodyKeysWithData(context);
+            expect(keys).toHaveLength(1);
+            expect(keys[0]?.originalParameter?.type).toBe("query");
+        });
+    });
+
+    // ── areAllPropertiesOptional ───────────────────────────────────────
+
+    describe("areAllPropertiesOptional", () => {
+        it("returns true when no properties exist", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({ sdkRequest: createSdkRequestWrapper() })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(true);
+        });
+
+        it("returns false when required query parameter exists", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("name", STRING_TYPE)],
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(false);
+        });
+
+        it("returns true when all query parameters are optional", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [
+                        createQueryParameter("cursor", OPTIONAL_STRING_TYPE),
+                        createQueryParameter("limit", OPTIONAL_INT_TYPE)
+                    ],
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(true);
+        });
+
+        it("returns false when required header exists", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("cursor", OPTIONAL_STRING_TYPE)],
+                    headers: [createHttpHeader("xAuth", STRING_TYPE, { wireValue: "X-Auth" })],
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(false);
+        });
+
+        it("returns false when required path parameter exists with shouldInlinePathParameters", () => {
+            const init = createDefaultInit({
+                shouldInlinePathParameters: true,
+                endpoint: createHttpEndpoint({
+                    pathParameters: [createPathParameter("plantId")],
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext({ shouldInlinePathParameters: true });
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(false);
+        });
+
+        it("returns true when reference body type is optional", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: OPTIONAL_STRING_TYPE,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(true);
+        });
+
+        it("returns false when reference body type is required", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: STRING_TYPE,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(false);
+        });
+
+        it("returns true when all inlined body properties are optional", () => {
+            const body = createInlinedRequestBody({
+                properties: [
+                    createInlinedRequestBodyProperty("name", OPTIONAL_STRING_TYPE),
+                    createInlinedRequestBodyProperty("age", OPTIONAL_INT_TYPE)
+                ]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(true);
+        });
+
+        it("returns false when any inlined body property is required", () => {
+            const body = createInlinedRequestBody({
+                properties: [
+                    createInlinedRequestBodyProperty("name", STRING_TYPE),
+                    createInlinedRequestBodyProperty("age", OPTIONAL_INT_TYPE)
+                ]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(false);
+        });
+
+        it("checks extended type properties for inlined body", () => {
+            const baseTypeName = createDeclaredTypeName("BaseParams");
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("name", OPTIONAL_STRING_TYPE)],
+                extends: [baseTypeName]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext({
+                getGeneratedTypeFn: () => ({
+                    type: "object",
+                    getAllPropertiesIncludingExtensions: () => [{ type: STRING_TYPE }]
+                })
+            });
+            // BaseParams has a required property so should be false
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(false);
+        });
+
+        it("returns true when extended type properties are all optional", () => {
+            const baseTypeName = createDeclaredTypeName("BaseParams");
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("name", OPTIONAL_STRING_TYPE)],
+                extends: [baseTypeName]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext({
+                getGeneratedTypeFn: () => ({
+                    type: "object",
+                    getAllPropertiesIncludingExtensions: () => [{ type: OPTIONAL_STRING_TYPE }]
+                })
+            });
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(true);
+        });
+
+        it("resolves alias extensions before checking properties", () => {
+            const aliasTypeName = createDeclaredTypeName("AliasedBase");
+            const body = createInlinedRequestBody({
+                properties: [],
+                extends: [aliasTypeName]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const realTypeName = createDeclaredTypeName("RealBase");
+            const namedRef = createNamedTypeReference("RealBase");
+            const { context } = createMockContext({
+                getTypeDeclarationFn: () =>
+                    ({
+                        shape: FernIr.Type.alias({
+                            aliasOf: namedRef,
+                            resolvedType: FernIr.ResolvedTypeReference.named({
+                                name: realTypeName,
+                                shape: "OBJECT" as FernIr.ShapeType
+                            })
+                        })
+                        // biome-ignore lint/suspicious/noExplicitAny: test mock
+                    }) as any,
+                getGeneratedTypeFn: () => ({
+                    type: "object",
+                    getAllPropertiesIncludingExtensions: () => [{ type: STRING_TYPE }]
+                })
+            });
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(false);
+        });
+
+        it("returns true when file upload has all optional file and body properties", () => {
+            const fileBody = createFileUploadRequestBody({
+                properties: [
+                    createFileProperty("photo", { isOptional: true }),
+                    createBodyPropertyForUpload("caption", OPTIONAL_STRING_TYPE)
+                ]
+            });
+            const init = createDefaultInit({
+                inlineFileProperties: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: fileBody,
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(true);
+        });
+
+        it("returns false when file upload has required file property", () => {
+            const fileBody = createFileUploadRequestBody({
+                properties: [createFileProperty("photo"), createBodyPropertyForUpload("caption", OPTIONAL_STRING_TYPE)]
+            });
+            const init = createDefaultInit({
+                inlineFileProperties: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: fileBody,
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(false);
+        });
+
+        it("ignores file properties when inlineFileProperties=false", () => {
+            const fileBody = createFileUploadRequestBody({
+                properties: [createFileProperty("photo"), createBodyPropertyForUpload("caption", OPTIONAL_STRING_TYPE)]
+            });
+            const init = createDefaultInit({
+                inlineFileProperties: false,
+                endpoint: createHttpEndpoint({
+                    requestBody: fileBody,
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            // Required file property ignored because inlineFileProperties=false
+            // Only body property (optional caption) is checked
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(true);
+        });
+
+        it("returns false when file upload has required body property", () => {
+            const fileBody = createFileUploadRequestBody({
+                properties: [
+                    createFileProperty("photo", { isOptional: true }),
+                    createBodyPropertyForUpload("title", STRING_TYPE)
+                ]
+            });
+            const init = createDefaultInit({
+                inlineFileProperties: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: fileBody,
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.areAllPropertiesOptional(context)).toBe(false);
+        });
+
+        it("caches result across multiple calls", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    queryParameters: [createQueryParameter("cursor", OPTIONAL_STRING_TYPE)],
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            const first = wrapper.areAllPropertiesOptional(context);
+            const second = wrapper.areAllPropertiesOptional(context);
+            expect(first).toBe(true);
+            expect(second).toBe(true);
+        });
+    });
+
+    // ── getRequestProperties with flattenRequestParameters ─────────────
+
+    describe("getRequestProperties - flattenRequestParameters", () => {
+        it("flattens inlined body properties via getRequestProperties", () => {
+            const body = createInlinedRequestBody({
+                properties: [
+                    createInlinedRequestBodyProperty("name", STRING_TYPE),
+                    createInlinedRequestBodyProperty("email", OPTIONAL_STRING_TYPE)
+                ]
+            });
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            const properties = wrapper.getRequestProperties(context);
+            expect(properties).toHaveLength(2);
+            expect(properties[0]?.isOptional).toBe(false);
+            expect(properties[1]?.isOptional).toBe(true);
+        });
+
+        it("flattens referenced named body properties via getRequestProperties", () => {
+            const namedBodyRef = createNamedTypeReference("UserPayload");
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: namedBodyRef,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const bodyTypeDeclaration: FernIr.TypeDeclaration = {
+                name: createDeclaredTypeName("UserPayload"),
+                shape: FernIr.Type.object({
+                    properties: [createObjectProperty("email", STRING_TYPE), createObjectProperty("age", INTEGER_TYPE)],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                }),
+                autogeneratedExamples: [],
+                userProvidedExamples: [],
+                v2Examples: undefined,
+                referencedTypes: new Set(),
+                encoding: undefined,
+                source: undefined,
+                inline: undefined,
+                docs: undefined,
+                availability: undefined
+            };
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext({
+                getTypeDeclarationFn: () => bodyTypeDeclaration
+            });
+            const properties = wrapper.getRequestProperties(context);
+            expect(properties).toHaveLength(2);
+        });
+
+        it("falls back to single body property for non-named referenced type when flattened", () => {
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: STRING_TYPE,
+                        contentType: undefined,
+                        docs: "The raw body",
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            const properties = wrapper.getRequestProperties(context);
+            // Non-named type can't be flattened, falls back to single body property
+            expect(properties).toHaveLength(1);
+            expect(properties[0]?.docs).toEqual(["The raw body"]);
+        });
+
+        it("returns empty for non-object type declaration when flattened", () => {
+            const namedBodyRef = createNamedTypeReference("AliasPayload");
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: namedBodyRef,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const aliasTypeDeclaration: FernIr.TypeDeclaration = {
+                name: createDeclaredTypeName("AliasPayload"),
+                shape: FernIr.Type.alias({
+                    aliasOf: STRING_TYPE,
+                    resolvedType: FernIr.ResolvedTypeReference.primitive({
+                        v1: "STRING",
+                        v2: undefined
+                    })
+                }),
+                autogeneratedExamples: [],
+                userProvidedExamples: [],
+                v2Examples: undefined,
+                referencedTypes: new Set(),
+                encoding: undefined,
+                source: undefined,
+                inline: undefined,
+                docs: undefined,
+                availability: undefined
+            };
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext({
+                getTypeDeclarationFn: () => aliasTypeDeclaration
+            });
+            const properties = wrapper.getRequestProperties(context);
+            // Alias type can't be flattened into properties
+            expect(properties).toHaveLength(0);
+        });
+
+        it("uses enableInlineTypes createNamespacedPropertyType when flattening named reference body", () => {
+            const namedBodyRef = createNamedTypeReference("InlinePayload");
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                enableInlineTypes: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: namedBodyRef,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const bodyTypeDeclaration: FernIr.TypeDeclaration = {
+                name: createDeclaredTypeName("InlinePayload"),
+                shape: FernIr.Type.object({
+                    properties: [createObjectProperty("color", STRING_TYPE)],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                }),
+                autogeneratedExamples: [],
+                userProvidedExamples: [],
+                v2Examples: undefined,
+                referencedTypes: new Set(),
+                encoding: undefined,
+                source: undefined,
+                inline: undefined,
+                docs: undefined,
+                availability: undefined
+            };
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext({
+                enableInlineTypes: true,
+                getTypeDeclarationFn: () => bodyTypeDeclaration
+            });
+            const properties = wrapper.getRequestProperties(context);
+            expect(properties).toHaveLength(1);
+        });
+    });
+
+    // ── writeToFile - enableInlineTypes with fileUpload body ───────────
+
+    describe("writeToFile - enableInlineTypes with fileUpload body", () => {
+        it("generates namespace module for file upload body with inline named properties", () => {
+            const namedTypeRef = createNamedTypeReference("UploadMeta");
+            const fileBody = createFileUploadRequestBody({
+                properties: [createFileProperty("document"), createBodyPropertyForUpload("metadata", namedTypeRef)]
+            });
+            const init = createDefaultInit({
+                enableInlineTypes: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: fileBody,
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+
+            const inlineTypeDeclaration: FernIr.TypeDeclaration = {
+                name: createDeclaredTypeName("UploadMeta"),
+                shape: FernIr.Type.object({
+                    properties: [createObjectProperty("format", STRING_TYPE)],
+                    extends: [],
+                    extraProperties: false,
+                    extendedProperties: undefined
+                }),
+                autogeneratedExamples: [],
+                userProvidedExamples: [],
+                v2Examples: undefined,
+                referencedTypes: new Set(),
+                encoding: undefined,
+                source: undefined,
+                inline: true,
+                docs: undefined,
+                availability: undefined
+            };
+
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context, sourceFile } = createMockContext({
+                enableInlineTypes: true,
+                getTypeDeclarationFn: () => inlineTypeDeclaration
+            });
+
+            wrapper.writeToFile(context);
+            expect(sourceFile.getText()).toMatchSnapshot();
+        });
+    });
+
+    // ── hasBodyProperty ───────────────────────────────────────────────
+
+    describe("hasBodyProperty", () => {
+        it("returns false for inlined request body", () => {
+            const body = createInlinedRequestBody({
+                properties: [createInlinedRequestBodyProperty("name", STRING_TYPE)]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.inlinedRequestBody(body),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.hasBodyProperty(context)).toBe(false);
+        });
+
+        it("returns true for reference request body when not flattened", () => {
+            const init = createDefaultInit({
+                flattenRequestParameters: false,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: STRING_TYPE,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.hasBodyProperty(context)).toBe(true);
+        });
+
+        it("returns false for reference request body when flattened", () => {
+            const init = createDefaultInit({
+                flattenRequestParameters: true,
+                endpoint: createHttpEndpoint({
+                    requestBody: FernIr.HttpRequestBody.reference({
+                        requestBodyType: STRING_TYPE,
+                        contentType: undefined,
+                        docs: undefined,
+                        v2Examples: undefined
+                    }),
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.hasBodyProperty(context)).toBe(false);
+        });
+
+        it("returns false when no request body", () => {
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({ sdkRequest: createSdkRequestWrapper() })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.hasBodyProperty(context)).toBe(false);
+        });
+
+        it("returns false for file upload body", () => {
+            const fileBody = createFileUploadRequestBody({
+                properties: [createFileProperty("doc")]
+            });
+            const init = createDefaultInit({
+                endpoint: createHttpEndpoint({
+                    requestBody: fileBody,
+                    sdkRequest: createSdkRequestWrapper()
+                })
+            });
+            const wrapper = new GeneratedRequestWrapperImpl(init);
+            const { context } = createMockContext();
+            expect(wrapper.hasBodyProperty(context)).toBe(false);
+        });
+    });
 });

@@ -1,4 +1,120 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.27.0
+  changelogEntry:
+    - summary: |
+        Log detected .fernignore paths when copying generated files. When a
+        .fernignore file is present in the output directory, the CLI now emits
+        a debug-level message listing the preserved paths. This improves
+        observability for both `fern generate` and `pnpm seed run` workflows.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
+- version: 4.26.1
+  changelogEntry:
+    - summary: |
+        Fix `fern diff` running out of memory on very large IR files (>2 GB).
+        The command now uses streaming JSON parsing and automatically re-spawns
+        Node with an increased heap limit (8 GB) when running `fern diff`,
+        allowing the full IR to be parsed and validated in memory. This removes
+        both the V8 string-size limit and the heap allocation limit.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.26.0
+  changelogEntry:
+    - summary: |
+        Add chunked diff analysis for oversized diffs during AUTO versioning.
+        Large SDK diffs (e.g. Java with 700+ generated files) that exceed 40 KB
+        are now split into semantically ranked chunks, each analyzed by the AI
+        separately. Version bumps are merged (takes the maximum) and all changelog
+        entries are aggregated into a markdown list. Analysis is capped at 40
+        chunks to bound latency and cost. Diffs exceeding 10 MB are rejected
+        before chunking to prevent resource exhaustion. Both the local generation
+        path and the CLI `sdk-diff` command now support chunked analysis.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.25.0
+  changelogEntry:
+    - summary: |
+        Handle 409 Conflict responses from FDR during `fern generate --docs`.
+        When another docs publish is already in progress for the same domain,
+        the CLI now fails fast with a clear error message. The CLI version is
+        sent to FDR so that the server can gate the concurrent-publish check
+        on CLI versions that support 409 handling.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
+- version: 4.24.1
+  changelogEntry:
+    - summary: |
+        Redesign `respect-readonly-schemas` to use a post-parse graph-based
+        reachability analysis instead of the previous side-effect-based marking
+        mechanism. When `respect-readonly-schemas` is enabled, the new approach
+        performs a DFS from all endpoint request/response roots to classify
+        schemas as request-only, response-only, or shared, then generates
+        Read/Write variants accordingly. This fixes several structural bugs
+        with the previous design. No behavior change when the option is off.
+      type: fix
+    - summary: |
+        Fix `respect-readonly-schemas` generating required readOnly fields as
+        optional in Read types. When a property is both `readOnly` and in the
+        `required` array, it is now correctly marked required in the generated
+        type.
+      type: fix
+    - summary: |
+        Fix `respect-readonly-schemas` inlining request body `$ref` schemas
+        instead of preserving them as type aliases. Schemas like
+        `UpdateOrganizationDetailsRequestContent` that reference another schema
+        via `$ref` are now kept as `type Foo = Bar` instead of being
+        dereferenced into a standalone interface.
+      type: fix
+    - summary: |
+        Fix `respect-readonly-schemas` generating unnecessary Read/Write
+        variants for schemas only used in responses. Response-only schemas
+        with readOnly properties now generate a single type with all
+        properties instead of splitting into Read and Write variants.
+      type: fix
+    - summary: |
+        Fix `respect-readonly-schemas` resolving response type aliases to the
+        Write variant instead of the Read variant. Schema references in
+        response contexts now correctly resolve to Read variant names.
+      type: fix
+    - summary: |
+        Fix `respect-readonly-schemas` leaking readOnly properties into
+        `allOf`-composed request types. Request types that inherit from schemas
+        with readOnly properties via `allOf` no longer include those properties
+        in Write variants.
+      type: fix
+    - summary: |
+        Fix `allOf` with top-level `required` array not propagating to
+        properties inherited from inline `allOf` members. Properties marked
+        optional by an inline member's own (missing) `required` array are now
+        correctly promoted to required when the outer schema's `required`
+        array includes them.
+      type: fix
+    - summary: |
+        Fix `readOnly` not being detected on `$ref` properties whose
+        referenced schema has `readOnly: true`. The parser now checks both
+        the property-level and resolved schema-level `readOnly` flag.
+      type: fix
+  createdAt: "2026-03-12"
+  irVersion: 65
+- version: 4.24.0
+  changelogEntry:
+    - summary: |
+        Add support for `"latest"` as the `version` value in `fern.config.json`.
+        When set to `"latest"`, the CLI automatically resolves to the most recent
+        published version from npm on every invocation, removing the need to
+        manually run `fern upgrade` to stay current.
+      type: feat
+  createdAt: "2026-03-11"
+  irVersion: 65
+
 - version: 4.23.1
   changelogEntry:
     - summary: |
@@ -21,7 +137,6 @@
       type: feat
   createdAt: "2026-03-10"
   irVersion: 65
-
 - version: 4.22.0
   changelogEntry:
     - summary: |

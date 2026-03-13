@@ -610,6 +610,204 @@
             "availability": null,
             "docs": null
         },
+        "type_:ForwardCompatibleEnum": {
+            "inline": null,
+            "name": {
+                "name": {
+                    "originalName": "ForwardCompatibleEnum",
+                    "camelCase": {
+                        "unsafeName": "forwardCompatibleEnum",
+                        "safeName": "forwardCompatibleEnum"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "forward_compatible_enum",
+                        "safeName": "forward_compatible_enum"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FORWARD_COMPATIBLE_ENUM",
+                        "safeName": "FORWARD_COMPATIBLE_ENUM"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ForwardCompatibleEnum",
+                        "safeName": "ForwardCompatibleEnum"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "displayName": null,
+                "typeId": "type_:ForwardCompatibleEnum"
+            },
+            "shape": {
+                "_type": "enum",
+                "default": null,
+                "values": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "ACTIVE",
+                                "camelCase": {
+                                    "unsafeName": "active",
+                                    "safeName": "active"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "active",
+                                    "safeName": "active"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ACTIVE",
+                                    "safeName": "ACTIVE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Active",
+                                    "safeName": "Active"
+                                }
+                            },
+                            "wireValue": "active"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "INACTIVE",
+                                "camelCase": {
+                                    "unsafeName": "inactive",
+                                    "safeName": "inactive"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "inactive",
+                                    "safeName": "inactive"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "INACTIVE",
+                                    "safeName": "INACTIVE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Inactive",
+                                    "safeName": "Inactive"
+                                }
+                            },
+                            "wireValue": "inactive"
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "forwardCompatible": true
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [
+                {
+                    "name": {
+                        "originalName": "Active",
+                        "camelCase": {
+                            "unsafeName": "active",
+                            "safeName": "active"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "active",
+                            "safeName": "active"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ACTIVE",
+                            "safeName": "ACTIVE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Active",
+                            "safeName": "Active"
+                        }
+                    },
+                    "shape": {
+                        "type": "enum",
+                        "value": {
+                            "name": {
+                                "originalName": "ACTIVE",
+                                "camelCase": {
+                                    "unsafeName": "active",
+                                    "safeName": "active"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "active",
+                                    "safeName": "active"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ACTIVE",
+                                    "safeName": "ACTIVE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Active",
+                                    "safeName": "Active"
+                                }
+                            },
+                            "wireValue": "active"
+                        }
+                    },
+                    "jsonExample": "active",
+                    "docs": null
+                },
+                {
+                    "name": {
+                        "originalName": "Inactive",
+                        "camelCase": {
+                            "unsafeName": "inactive",
+                            "safeName": "inactive"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "inactive",
+                            "safeName": "inactive"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INACTIVE",
+                            "safeName": "INACTIVE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Inactive",
+                            "safeName": "Inactive"
+                        }
+                    },
+                    "shape": {
+                        "type": "enum",
+                        "value": {
+                            "name": {
+                                "originalName": "INACTIVE",
+                                "camelCase": {
+                                    "unsafeName": "inactive",
+                                    "safeName": "inactive"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "inactive",
+                                    "safeName": "inactive"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "INACTIVE",
+                                    "safeName": "INACTIVE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Inactive",
+                                    "safeName": "Inactive"
+                                }
+                            },
+                            "wireValue": "inactive"
+                        }
+                    },
+                    "jsonExample": "inactive",
+                    "docs": null
+                }
+            ],
+            "autogeneratedExamples": [],
+            "v2Examples": null,
+            "availability": null,
+            "docs": "Tests forward-compatible enums that accept\nboth known values and arbitrary strings."
+        },
         "type_:EnumWithSpecialCharacters": {
             "inline": null,
             "name": {
@@ -6638,6 +6836,7 @@
             "type_:Operand",
             "type_:Color",
             "type_:ColorOrOperand",
+            "type_:ForwardCompatibleEnum",
             "type_:EnumWithSpecialCharacters",
             "type_:EnumWithCustom",
             "type_:SpecialEnum",
@@ -6860,6 +7059,81 @@
                     {
                         "type": "named",
                         "value": "type_:Operand"
+                    }
+                ]
+            },
+            "type_:ForwardCompatibleEnum": {
+                "type": "enum",
+                "declaration": {
+                    "name": {
+                        "originalName": "ForwardCompatibleEnum",
+                        "camelCase": {
+                            "unsafeName": "forwardCompatibleEnum",
+                            "safeName": "forwardCompatibleEnum"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "forward_compatible_enum",
+                            "safeName": "forward_compatible_enum"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FORWARD_COMPATIBLE_ENUM",
+                            "safeName": "FORWARD_COMPATIBLE_ENUM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ForwardCompatibleEnum",
+                            "safeName": "ForwardCompatibleEnum"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": [],
+                        "file": null
+                    }
+                },
+                "values": [
+                    {
+                        "name": {
+                            "originalName": "ACTIVE",
+                            "camelCase": {
+                                "unsafeName": "active",
+                                "safeName": "active"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "active",
+                                "safeName": "active"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ACTIVE",
+                                "safeName": "ACTIVE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Active",
+                                "safeName": "Active"
+                            }
+                        },
+                        "wireValue": "active"
+                    },
+                    {
+                        "name": {
+                            "originalName": "INACTIVE",
+                            "camelCase": {
+                                "unsafeName": "inactive",
+                                "safeName": "inactive"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "inactive",
+                                "safeName": "inactive"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INACTIVE",
+                                "safeName": "INACTIVE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Inactive",
+                                "safeName": "Inactive"
+                            }
+                        },
+                        "wireValue": "inactive"
                     }
                 ]
             },
@@ -9887,6 +10161,7 @@
             "type_:Operand",
             "type_:Color",
             "type_:ColorOrOperand",
+            "type_:ForwardCompatibleEnum",
             "type_:EnumWithSpecialCharacters",
             "type_:EnumWithCustom",
             "type_:SpecialEnum"

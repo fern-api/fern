@@ -114,10 +114,13 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
-        snippets[ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID] = this.buildRawResponseSnippets();
+        // gRPC APIs don't support raw response access or additional query parameters
+        if (!this.context.hasGrpcEndpoints()) {
+            snippets[ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID] = this.buildRawResponseSnippets();
+            snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID] =
+                this.buildAdditionalQueryParametersSnippets();
+        }
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
-        snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_PARAMETERS_FEATURE_ID] =
-            this.buildAdditionalQueryParametersSnippets();
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }

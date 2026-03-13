@@ -9,6 +9,7 @@ describe("DummyClient", () => {
         const client = new SeedNoEnvironmentClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
+
         server.mockEndpoint().get("/dummy").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.dummy.getDummy();

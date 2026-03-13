@@ -37,6 +37,7 @@ describe("ObjectClient", () => {
             map: { "1": "map" },
             bigint: "1000000",
         };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-with-optional-field")
@@ -92,6 +93,7 @@ describe("ObjectClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-with-required-field")
@@ -119,6 +121,7 @@ describe("ObjectClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { map: { map: { map: "map" } } };
         const rawResponseBody = { map: { map: { map: "map" } } };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-with-map-of-map")
@@ -188,6 +191,7 @@ describe("ObjectClient", () => {
                 bigint: "1000000",
             },
         };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-nested-with-optional-field")
@@ -283,6 +287,7 @@ describe("ObjectClient", () => {
                 bigint: "1000000",
             },
         };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-nested-with-required-field/string")
@@ -398,6 +403,7 @@ describe("ObjectClient", () => {
                 bigint: "1000000",
             },
         };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-nested-with-required-field-list")
@@ -481,6 +487,7 @@ describe("ObjectClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { unknown: { $ref: "https://example.com/schema" } };
         const rawResponseBody = { unknown: { $ref: "https://example.com/schema" } };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-with-unknown-field")
@@ -512,6 +519,7 @@ describe("ObjectClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { documentedUnknownType: { key: "value" } };
         const rawResponseBody = { documentedUnknownType: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-with-documented-unknown-type")
@@ -543,6 +551,7 @@ describe("ObjectClient", () => {
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { datetimeLikeString: "2023-08-31T14:15:22Z", actualDatetime: "2023-08-31T14:15:22Z" };
         const rawResponseBody = { datetimeLikeString: "2023-08-31T14:15:22Z", actualDatetime: "2023-08-31T14:15:22Z" };
+
         server
             .mockEndpoint()
             .post("/object/get-and-return-with-datetime-like-string")
