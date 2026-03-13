@@ -122,6 +122,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractTypeGenerator 
 
     private MethodSpec getConstructor() {
         return MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
                 .addParameter(valueFieldClassName, VALUE_FIELD_NAME)
                 .addParameter(String.class, STRING_FIELD_NAME)
                 .addStatement("this.value = value")
