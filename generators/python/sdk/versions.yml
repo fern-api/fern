@@ -3,7 +3,7 @@
 - version: 4.63.6
   changelogEntry:
     - summary: |
-        Raise the default minimum Python version from `^3.8` to `^3.9` in generated
+        Raise the default minimum Python version from `^3.8` to `^3.10` in generated
         `pyproject.toml`. This allows the dependency resolver to pick Pydantic 2.11+ and
         pydantic-core 2.33+, which ship pre-built wheels for Python 3.14, fixing
         installation failures on Python 3.14.
