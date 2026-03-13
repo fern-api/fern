@@ -6,19 +6,24 @@ import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import { promisify } from "util";
 import type { Argv } from "yargs";
+import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
+import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
-import { FernYmlApiEditor } from "../utils/fernYmlApiEditor.js";
 import type { SpecEntry } from "../utils/filterSpecs.js";
 import { filterSpecs } from "../utils/filterSpecs.js";
+import { isEnoentError } from "../utils/isEnoentError.js";
 import { loadSpec, parseSpec, serializeSpec } from "../utils/loadSpec.js";
 import { deriveOutputPath, type SplitFormat } from "./deriveOutputPath.js";
 import { generateOverlay, generateOverrides, hasChanges, type OverlayOutputAction } from "./diffSpecs.js";
 
 const execFileAsync = promisify(execFile);
+
+/** 50 MB – large enough for oversized OpenAPI specs retrieved via `git show`. */
+const GIT_MAX_BUFFER_BYTES = 50 * 1024 * 1024;
 
 export declare namespace SplitCommand {
     export interface Args extends GlobalArgs {
@@ -29,11 +34,7 @@ export declare namespace SplitCommand {
 }
 
 export class SplitCommand {
-    private cachedRepoRoot: string | undefined;
-
     public async handle(context: Context, args: SplitCommand.Args): Promise<void> {
-        this.cachedRepoRoot = undefined;
-
         const workspace = await context.loadWorkspaceOrThrow();
 
         if (Object.keys(workspace.apis).length === 0) {
@@ -48,18 +49,25 @@ export class SplitCommand {
         }
 
         const format: SplitFormat = args.format ?? "overlays";
-        const editor = await FernYmlApiEditor.load(context.cwd);
+        const fernYmlPath = workspace.absoluteFilePath;
+        if (fernYmlPath == null) {
+            throw new CliError({
+                message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`
+            });
+        }
+        const editor = await FernYmlEditor.load({ fernYmlPath });
+        const repoRoot = await this.getRepoRoot(fernYmlPath);
         let splitCount = 0;
 
         for (const entry of entries) {
             const [currentContent, originalRaw] = await Promise.all([
                 loadSpec(entry.specFilePath),
-                this.getFileFromGitHead(entry.specFilePath)
+                this.getFileFromGitHead(repoRoot, entry.specFilePath)
             ]);
             const originalContent = parseSpec(originalRaw, entry.specFilePath);
 
             if (!hasChanges(originalContent, currentContent)) {
-                context.stderr.info(chalk.dim(`  ${entry.specFilePath}: no changes from git HEAD, skipping.`));
+                context.stderr.info(chalk.dim(`${entry.specFilePath}: no changes from git HEAD, skipping.`));
                 continue;
             }
 
@@ -71,7 +79,7 @@ export class SplitCommand {
 
             // Restore spec to git HEAD after overlay/overrides are safely written
             await writeFile(entry.specFilePath, originalRaw);
-            context.stderr.info(chalk.dim(`  Restored ${entry.specFilePath} to git HEAD`));
+            context.stderr.debug(chalk.dim(`Restored ${entry.specFilePath} to git HEAD`));
 
             splitCount++;
         }
@@ -85,7 +93,7 @@ export class SplitCommand {
 
     private async splitAsOverlay(
         context: Context,
-        editor: FernYmlApiEditor,
+        editor: FernYmlEditor,
         entry: SpecEntry,
         // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
         originalContent: Record<string, any>,
@@ -96,14 +104,14 @@ export class SplitCommand {
         const overlay = generateOverlay(originalContent, currentContent);
 
         // Check if there's an existing overlay configured in fern.yml
-        const existingOverlayPath = editor.getOverlayPath(entry.specFilePath) ?? entry.overlays;
+        const existingOverlayPath = (await editor.getOverlayPath(entry.specFilePath)) ?? entry.overlays;
 
         let outputPath: AbsoluteFilePath;
         if (existingOverlayPath != null) {
             if (outputArg != null) {
                 context.stderr.info(
                     chalk.yellow(
-                        `  Warning: --output ignored; merging into existing overlay file ${chalk.cyan(existingOverlayPath)}`
+                        `Warning: --output ignored; merging into existing overlay file ${chalk.cyan(existingOverlayPath)}`
                     )
                 );
             }
@@ -126,18 +134,16 @@ export class SplitCommand {
             );
         }
 
-        const edit = editor.addOverlay(entry.specFilePath, outputPath);
+        const edit = await editor.addOverlay(entry.specFilePath, outputPath);
         if (edit != null) {
-            const relPath = path.relative(context.cwd, editor.filePath);
-            context.stderr.info(
-                chalk.dim(`  ${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`)
-            );
+            const relPath = path.relative(context.cwd, await editor.getApiFilePath());
+            context.stderr.info(chalk.dim(`${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`));
         }
     }
 
     private async splitAsOverrides(
         context: Context,
-        editor: FernYmlApiEditor,
+        editor: FernYmlEditor,
         entry: SpecEntry,
         // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
         originalContent: Record<string, any>,
@@ -158,12 +164,10 @@ export class SplitCommand {
             context.stderr.info(`${Icons.success} Overrides written ${chalk.dim("→")} ${chalk.cyan(outputPath)}`);
         }
 
-        const edit = editor.addOverride(entry.specFilePath, outputPath);
+        const edit = await editor.addOverride(entry.specFilePath, outputPath);
         if (edit != null) {
-            const relPath = path.relative(context.cwd, editor.filePath);
-            context.stderr.info(
-                chalk.dim(`  ${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`)
-            );
+            const relPath = path.relative(context.cwd, await editor.getApiFilePath());
+            context.stderr.info(chalk.dim(`${relPath}:${edit.line}: added reference to ${path.basename(outputPath)}`));
         }
     }
 
@@ -178,8 +182,8 @@ export class SplitCommand {
         let raw: string;
         try {
             raw = await readFile(outputPath, "utf8");
-        } catch (error: unknown) {
-            if (error instanceof Error && "code" in error && (error as NodeJS.ErrnoException).code === "ENOENT") {
+        } catch (error) {
+            if (isEnoentError(error)) {
                 return false;
             }
             throw error;
@@ -203,8 +207,8 @@ export class SplitCommand {
         let raw: string;
         try {
             raw = await readFile(outputPath, "utf8");
-        } catch (error: unknown) {
-            if (error instanceof Error && "code" in error && (error as NodeJS.ErrnoException).code === "ENOENT") {
+        } catch (error) {
+            if (isEnoentError(error)) {
                 return false;
             }
             throw error;
@@ -215,15 +219,14 @@ export class SplitCommand {
         return true;
     }
 
-    private async getFileFromGitHead(absolutePath: AbsoluteFilePath): Promise<string> {
+    private async getFileFromGitHead(repoRoot: string, absolutePath: AbsoluteFilePath): Promise<string> {
         try {
-            const repoRoot = await this.getRepoRoot(absolutePath);
             const relativePath = path.relative(repoRoot, absolutePath);
 
             const { stdout } = await execFileAsync("git", ["show", `HEAD:${relativePath}`], {
                 cwd: repoRoot,
                 encoding: "utf8",
-                maxBuffer: 50 * 1024 * 1024
+                maxBuffer: GIT_MAX_BUFFER_BYTES
             });
             return stdout;
         } catch (error: unknown) {
@@ -235,15 +238,11 @@ export class SplitCommand {
     }
 
     private async getRepoRoot(nearPath: AbsoluteFilePath): Promise<string> {
-        if (this.cachedRepoRoot != null) {
-            return this.cachedRepoRoot;
-        }
         const { stdout } = await execFileAsync("git", ["rev-parse", "--show-toplevel"], {
             cwd: path.dirname(nearPath),
             encoding: "utf8"
         });
-        this.cachedRepoRoot = stdout.trim();
-        return this.cachedRepoRoot;
+        return stdout.trim();
     }
 }
 

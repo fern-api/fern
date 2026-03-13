@@ -3,14 +3,16 @@ import chalk from "chalk";
 import { unlink, writeFile } from "fs/promises";
 import path from "path";
 import type { Argv } from "yargs";
+import { FERN_YML_FILENAME } from "../../../config/fern-yml/constants.js";
+import { FernYmlEditor } from "../../../config/fern-yml/FernYmlEditor.js";
 import type { Context } from "../../../context/Context.js";
 import type { GlobalArgs } from "../../../context/GlobalArgs.js";
 import { CliError } from "../../../errors/CliError.js";
 import { Icons } from "../../../ui/format.js";
 import { command } from "../../_internal/command.js";
 import { type OverlayDocument, toOverlay } from "../split/diffSpecs.js";
-import { FernYmlApiEditor } from "../utils/fernYmlApiEditor.js";
 import { filterSpecs } from "../utils/filterSpecs.js";
+import { isEnoentError } from "../utils/isEnoentError.js";
 import { loadSpec, serializeSpec } from "../utils/loadSpec.js";
 
 export declare namespace MergeCommand {
@@ -35,7 +37,16 @@ export class MergeCommand {
             return;
         }
 
-        const editor = args.remove === true ? await FernYmlApiEditor.load(context.cwd) : undefined;
+        let editor: FernYmlEditor | undefined;
+        if (args.remove === true) {
+            const fernYmlPath = workspace.absoluteFilePath;
+            if (fernYmlPath == null) {
+                throw new CliError({
+                    message: `No ${FERN_YML_FILENAME} found. Run 'fern init' to initialize a project.`
+                });
+            }
+            editor = await FernYmlEditor.load({ fernYmlPath });
+        }
         let mergedCount = 0;
 
         for (const entry of entries) {
@@ -43,9 +54,7 @@ export class MergeCommand {
             const overridePaths = entry.overrides != null && entry.overrides.length > 0 ? entry.overrides : undefined;
 
             if (overlayPath == null && overridePaths == null) {
-                context.stderr.info(
-                    chalk.dim(`  ${entry.specFilePath}: no overrides or overlays configured, skipping.`)
-                );
+                context.stderr.info(chalk.dim(`${entry.specFilePath}: no overrides or overlays configured, skipping.`));
                 continue;
             }
 
@@ -79,23 +88,23 @@ export class MergeCommand {
             if (editor != null) {
                 // Clean up overrides
                 if (overridePaths != null) {
-                    const edit = editor.removeOverrides(entry.specFilePath);
+                    const edit = await editor.removeOverrides(entry.specFilePath);
                     await this.cleanupFiles(context, overridePaths);
                     if (edit != null) {
-                        const relPath = path.relative(context.cwd, editor.filePath);
+                        const relPath = path.relative(context.cwd, await editor.getApiFilePath());
                         const names = overridePaths.map((o) => path.basename(o)).join(", ");
-                        context.stderr.info(chalk.dim(`  ${relPath}:${edit.line}: removed reference to ${names}`));
+                        context.stderr.info(chalk.dim(`${relPath}:${edit.line}: removed reference to ${names}`));
                     }
                 }
 
                 // Clean up overlays
                 if (overlayPath != null) {
-                    const edit = editor.removeOverlay(entry.specFilePath);
+                    const edit = await editor.removeOverlay(entry.specFilePath);
                     await this.cleanupFiles(context, [overlayPath]);
                     if (edit != null) {
-                        const relPath = path.relative(context.cwd, editor.filePath);
+                        const relPath = path.relative(context.cwd, await editor.getApiFilePath());
                         context.stderr.info(
-                            chalk.dim(`  ${relPath}:${edit.line}: removed reference to ${path.basename(overlayPath)}`)
+                            chalk.dim(`${relPath}:${edit.line}: removed reference to ${path.basename(overlayPath)}`)
                         );
                     }
                 }
@@ -116,15 +125,9 @@ export class MergeCommand {
             filePaths.map(async (filePath) => {
                 try {
                     await unlink(filePath);
-                    context.stderr.info(chalk.dim(`  Deleted ${filePath}`));
-                } catch (error: unknown) {
-                    if (
-                        !(
-                            error instanceof Error &&
-                            "code" in error &&
-                            (error as NodeJS.ErrnoException).code === "ENOENT"
-                        )
-                    ) {
+                    context.stderr.info(chalk.dim(`Deleted ${filePath}`));
+                } catch (error) {
+                    if (!isEnoentError(error)) {
                         throw error;
                     }
                 }

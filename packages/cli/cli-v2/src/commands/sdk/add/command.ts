@@ -208,7 +208,7 @@ export class AddCommand {
             newTarget.group = [group];
         }
 
-        editor.addTarget(language, newTarget);
+        await editor.addTarget(language, newTarget);
         await editor.save();
     }
 

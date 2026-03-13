@@ -89,7 +89,7 @@ export class UpdateCommand {
         });
         const migrationInfo = new Map<string, GeneratorMigrator.MigrationInfo>();
         for (const update of selectedUpdates) {
-            editor.setTargetVersion(update.name, update.latestVersion);
+            await editor.setTargetVersion(update.name, update.latestVersion);
 
             // Run generator config migrations for this version upgrade.
             const target = targets.find((t) => t.name === update.name);

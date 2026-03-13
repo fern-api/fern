@@ -2,6 +2,7 @@ import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { CliError } from "../../../errors/CliError.js";
+import { isEnoentError } from "./isEnoentError.js";
 
 // biome-ignore lint/suspicious/noExplicitAny: OpenAPI specs can have any shape
 type Spec = Record<string, any>;
@@ -14,8 +15,8 @@ export async function loadSpec(filepath: AbsoluteFilePath): Promise<Spec> {
     let contents: string;
     try {
         contents = await readFile(filepath, "utf8");
-    } catch (error: unknown) {
-        if (error instanceof Error && "code" in error && (error as NodeJS.ErrnoException).code === "ENOENT") {
+    } catch (error) {
+        if (isEnoentError(error)) {
             throw new CliError({ message: `File does not exist: ${filepath}` });
         }
         throw new CliError({ message: `Failed to read file: ${filepath}` });
