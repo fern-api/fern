@@ -1222,6 +1222,52 @@ $client->endpoints->object->getAndReturnWithUnknownField(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDocumentedUnknownType($request) -> ObjectWithDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnWithDocumentedUnknownType(
+    new ObjectWithDocumentedUnknownType([
+        'documentedUnknownType' => [
+            'key' => "value",
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDatetimeLikeString($request) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>

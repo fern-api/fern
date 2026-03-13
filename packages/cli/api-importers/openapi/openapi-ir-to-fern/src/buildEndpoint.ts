@@ -40,8 +40,6 @@ export function buildEndpoint({
     declarationFile: RelativeFilePath;
     endpoint: Endpoint;
 }): ConvertedEndpoint {
-    const { nonRequestReferencedSchemas } = context.ir;
-
     let schemaIdsToExclude: string[] = [];
 
     const names = new Set<string>();
@@ -174,7 +172,6 @@ export function buildEndpoint({
                     ? pathParameters
                     : undefined,
             queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
-            nonRequestReferencedSchemas: Array.from(nonRequestReferencedSchemas),
             headers: Object.keys(headers).length > 0 ? headers : undefined,
             usedNames: names,
             namespace: maybeEndpointNamespace
@@ -496,7 +493,6 @@ function getRequest({
     generatedRequestName,
     pathParameters,
     queryParameters,
-    nonRequestReferencedSchemas,
     headers,
     usedNames,
     namespace
@@ -509,42 +505,32 @@ function getRequest({
     generatedRequestName: string;
     pathParameters?: Record<string, RawSchemas.HttpPathParameterSchema>;
     queryParameters?: Record<string, RawSchemas.HttpQueryParameterSchema>;
-    nonRequestReferencedSchemas: SchemaId[];
     headers?: Record<string, RawSchemas.HttpHeaderSchema>;
     usedNames: Set<string>;
     namespace: string | undefined;
 }): ConvertedRequest {
     if (request.type === "json" || request.type === "formUrlEncoded") {
         const maybeSchemaId = request.schema.type === "reference" ? request.schema.schema : undefined;
-        let resolvedSchema =
+        const resolvedSchema =
             request.schema.type === "reference" ? context.getSchema(request.schema.schema, namespace) : request.schema;
-
-        // When respectReadonlySchemas is enabled and the schema has readOnly properties on a write endpoint,
-        // inline the properties so readOnly ones can be filtered out
-        let shouldInlineForReadonly = false;
-        if (context.options.respectReadonlySchemas && isWriteMethod(endpoint.method)) {
-            let effectiveSchema = resolvedSchema;
-            while (effectiveSchema?.type === "reference") {
-                effectiveSchema = context.getSchema(effectiveSchema.schema, namespace);
-            }
-            if (effectiveSchema?.type === "object" && effectiveSchema.properties.some((p) => p.readonly)) {
-                shouldInlineForReadonly = true;
-                resolvedSchema = effectiveSchema;
-            }
-        }
 
         // the request body is referenced if it is not an object or if other parts of the spec
         // refer to the same type
         if (
             resolvedSchema?.type !== "object" ||
-            (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId) && !shouldInlineForReadonly)
+            (maybeSchemaId != null && context.isResponseReachable(maybeSchemaId))
         ) {
+            // When respectReadonlySchemas is enabled on a write endpoint, resolve schema
+            // references to the write variant (without readOnly properties)
+            const useWriteVariant = context.options.respectReadonlySchemas && isWriteMethod(endpoint.method);
+            const variant: "read" | "write" | undefined = useWriteVariant ? "write" : undefined;
             const requestTypeReference = buildTypeReference({
                 schema: request.schema,
                 fileContainingReference: declarationFile,
                 context,
                 namespace,
-                declarationDepth: 0
+                declarationDepth: 0,
+                variant
             });
             const convertedRequest: ConvertedRequest = {
                 schemaIdsToExclude: [],
@@ -780,7 +766,7 @@ function getRequest({
             convertedRequestValue.docs = request.description;
         }
         return {
-            schemaIdsToExclude: maybeSchemaId != null && !shouldInlineForReadonly ? [maybeSchemaId] : [],
+            schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
             value: convertedRequestValue
         };
     } else if (request.type === "octetStream") {

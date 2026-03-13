@@ -46,6 +46,7 @@ type StreamParams struct {
 	ErrorDecoder       ErrorDecoder
 	Format             core.StreamFormat
 	EventDiscriminator string
+	MaxBufSize         int
 }
 
 // Stream issues an API streaming call according to the given stream parameters.
@@ -116,6 +117,9 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*core.S
 	}
 	if params.EventDiscriminator != "" {
 		opts = append(opts, core.WithEventDiscriminator(params.EventDiscriminator))
+	}
+	if params.MaxBufSize > 0 {
+		opts = append(opts, core.WithMaxBufSize(params.MaxBufSize))
 	}
 
 	return core.NewStream[T](resp, opts...), nil

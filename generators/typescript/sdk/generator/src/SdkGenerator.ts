@@ -1,4 +1,5 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -669,20 +670,20 @@ export class SdkGenerator {
             try {
                 await this.generateReadme();
             } catch (e) {
-                this.context.logger.warn("Failed to generate README.md, this is OK");
+                throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
 
             try {
                 await this.generateReference();
             } catch (e) {
-                this.context.logger.warn("Failed to generate reference.md, this is OK");
+                throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
             }
 
             if (!this.config.whitelabel) {
                 try {
                     await this.generateContributing();
                 } catch (e) {
-                    this.context.logger.warn("Failed to generate CONTRIBUTING.md, this is OK");
+                    throw new Error(`Failed to generate CONTRIBUTING.md: ${extractErrorMessage(e)}`);
                 }
             }
         }

@@ -37,9 +37,8 @@ export class CheckCommand {
 
         if (result.violations.length > 0) {
             for (const v of result.violations) {
-                process.stderr.write(
-                    `${chalk.red(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`
-                );
+                const color = v.severity === "warning" ? chalk.yellow : chalk.red;
+                process.stderr.write(`${color(`${v.displayRelativeFilepath}:${v.line}:${v.column}: ${v.message}`)}\n`);
             }
         }
 
@@ -48,6 +47,7 @@ export class CheckCommand {
         }
 
         if (result.warningCount > 0) {
+            context.stderr.info(`${Icons.warning} ${chalk.yellow(`Found ${result.warningCount} warnings`)}`);
             context.stderr.info(chalk.dim("  Run 'fern sdk check --strict' to treat warnings as errors"));
             return;
         }

@@ -480,7 +480,9 @@ client.create_user(
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(),
+        verification=UserProfileVerification(
+            verified="string",
+        ),
         ssn="ssn",
     ),
 )
@@ -499,9 +501,38 @@ client.create_user(
     password="password",
     profile=UserProfile(
         name="name",
-        verification=UserProfileVerification(),
+        verification=UserProfileVerification(
+            verified="string",
+        ),
         ssn="ssn",
     ),
+)
+"
+`;
+
+exports[`snippets > required-headers > 'GET /plants (simple)' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>",
+    tenant_id="my-tenant-id",
+)
+
+client.plantstore.list()
+"
+`;
+
+exports[`snippets > required-headers > 'POST /plants (simple)' 1`] = `
+"from acme import Acme
+
+client = Acme(
+    token="<YOUR_API_KEY>",
+    tenant_id="my-tenant-id",
+)
+
+client.plantstore.create(
+    name="Fern",
+    price=12.99,
 )
 "
 `;

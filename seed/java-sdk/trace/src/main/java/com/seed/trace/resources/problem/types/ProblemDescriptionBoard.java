@@ -81,6 +81,22 @@ public final class ProblemDescriptionBoard {
         return Optional.empty();
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof ProblemDescriptionBoard && value.equals(((ProblemDescriptionBoard) other).value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return value.toString();
+    }
+
     @JsonValue
     private Value getValue() {
         return this.value;

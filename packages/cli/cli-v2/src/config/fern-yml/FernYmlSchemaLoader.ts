@@ -1,7 +1,7 @@
 import { FernYmlSchema } from "@fern-api/config";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { ValidationIssue, YamlConfigLoader } from "@fern-api/yaml-loader";
-import { ValidationError } from "../../errors/ValidationError.js";
+import { SourcedValidationError } from "../../errors/SourcedValidationError.js";
 import { FileFinder } from "../FileFinder.js";
 
 const FILENAME = "fern.yml";
@@ -50,7 +50,7 @@ export class FernYmlSchemaLoader {
             throw new Error(`${FILENAME} file not found in any parent directory; did you forget to run \`fern init\`?`);
         }
         if (loadResult.type === "failure") {
-            throw new ValidationError(loadResult.issues);
+            throw new SourcedValidationError(loadResult.issues);
         }
         return loadResult;
     }
@@ -70,7 +70,8 @@ export class FernYmlSchemaLoader {
         }
         const result = await this.loader.load({
             absoluteFilePath,
-            schema: FernYmlSchema
+            schema: FernYmlSchema,
+            strict: true
         });
         if (!result.success) {
             return { type: "failure", issues: result.issues };

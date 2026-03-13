@@ -1,15 +1,16 @@
-import { ValidationIssue } from "@fern-api/yaml-loader";
+import type { ValidationViolation } from "./ValidationViolation.js";
 
 /**
- * A validation error that contains source code for each validation issue.
+ * A general-purpose validation error containing violations.
  *
- * When displayed, each issue is shown on its own line with file:line:col prefix.
+ * When displayed, each violation is shown on its own line with filepath prefix
+ * and severity-appropriate coloring.
  */
 export class ValidationError extends Error {
-    public readonly issues: ValidationIssue[];
+    public readonly violations: ValidationViolation[];
 
-    constructor(issues: ValidationIssue[]) {
-        super(issues.map((issue) => issue.toString()).join("\n"));
-        this.issues = issues;
+    constructor(violations: ValidationViolation[]) {
+        super(violations.map((v) => `${v.relativeFilepath}: ${v.message}`).join("\n"));
+        this.violations = violations;
     }
 }

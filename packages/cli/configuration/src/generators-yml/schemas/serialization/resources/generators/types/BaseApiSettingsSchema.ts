@@ -21,6 +21,7 @@ export const BaseApiSettingsSchema: core.serialization.ObjectSchema<
     "remove-discriminants-from-schemas": RemoveDiscriminantsFromSchemas.optional(),
     "path-parameter-order": PathParameterOrder.optional(),
     "resolve-schema-collisions": core.serialization.boolean().optional(),
+    "infer-forward-compatible": core.serialization.boolean().optional(),
 });
 
 export declare namespace BaseApiSettingsSchema {
@@ -36,5 +37,6 @@ export declare namespace BaseApiSettingsSchema {
         "remove-discriminants-from-schemas"?: RemoveDiscriminantsFromSchemas.Raw | null;
         "path-parameter-order"?: PathParameterOrder.Raw | null;
         "resolve-schema-collisions"?: boolean | null;
+        "infer-forward-compatible"?: boolean | null;
     }
 }

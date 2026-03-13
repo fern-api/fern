@@ -24,6 +24,7 @@ type RequestOptions struct {
 	BodyProperties  map[string]interface{}
 	QueryParameters url.Values
 	MaxAttempts     uint
+	MaxBufSize      int
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -107,6 +108,15 @@ type MaxAttemptsOption struct {
 
 func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
+}
+
+// MaxBufSizeOption implements the RequestOption interface.
+type MaxBufSizeOption struct {
+	MaxBufSize int
+}
+
+func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxBufSize = m.MaxBufSize
 }
 
 // EnvironmentOption implements the RequestOption interface.

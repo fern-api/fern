@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
+import com.fern.sdk.resources.endpoints.pagination.requests.ListItemsRequest;
 
 public class Example27 {
     public static void main(String[] args) {
@@ -10,6 +11,12 @@ public class Example27 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().params().getWithPath("param");
+        client.endpoints().pagination().listItems(
+            ListItemsRequest
+                .builder()
+                .cursor("cursor")
+                .limit(1)
+                .build()
+        );
     }
 }

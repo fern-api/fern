@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@fern-api/configuration": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:",

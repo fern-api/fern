@@ -1,6 +1,7 @@
 import {
     checkVersionDoesNotAlreadyExist,
     computeSemanticVersion,
+    getOriginGitCommit,
     getPackageNameFromGeneratorConfig
 } from "@fern-api/api-workspace-commons";
 import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
@@ -137,7 +138,8 @@ export async function runLocalGenerationForWorkspace({
                         cliVersion: workspace.cliVersion,
                         generatorName: generatorInvocation.name,
                         generatorVersion: generatorInvocation.version,
-                        generatorConfig: generatorInvocation.config
+                        generatorConfig: generatorInvocation.config,
+                        originGitCommit: getOriginGitCommit()
                     }
                 });
 

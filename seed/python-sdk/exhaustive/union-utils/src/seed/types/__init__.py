@@ -10,12 +10,14 @@ if typing.TYPE_CHECKING:
     from .docs import ObjectWithDocs
     from .enum import ErrorWithEnumBody, WeatherReport
     from .object import (
+        DocumentedUnknownType,
         DoubleOptional,
         NestedObjectWithOptionalField,
         NestedObjectWithOptionalFieldError,
         NestedObjectWithRequiredField,
         NestedObjectWithRequiredFieldError,
         ObjectWithDatetimeLikeString,
+        ObjectWithDocumentedUnknownType,
         ObjectWithMapOfMap,
         ObjectWithOptionalField,
         ObjectWithOptionalFieldError,
@@ -28,6 +30,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "Animal": ".union",
     "Cat": ".union",
+    "DocumentedUnknownType": ".object",
     "Dog": ".union",
     "DoubleOptional": ".object",
     "ErrorWithEnumBody": ".enum",
@@ -39,6 +42,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NestedObjectWithRequiredFieldError": ".object",
     "ObjectWithDatetimeLikeString": ".object",
     "ObjectWithDocs": ".docs",
+    "ObjectWithDocumentedUnknownType": ".object",
     "ObjectWithMapOfMap": ".object",
     "ObjectWithOptionalField": ".object",
     "ObjectWithOptionalFieldError": ".object",
@@ -78,6 +82,7 @@ def __dir__():
 __all__ = [
     "Animal",
     "Cat",
+    "DocumentedUnknownType",
     "Dog",
     "DoubleOptional",
     "ErrorWithEnumBody",
@@ -89,6 +94,7 @@ __all__ = [
     "NestedObjectWithRequiredFieldError",
     "ObjectWithDatetimeLikeString",
     "ObjectWithDocs",
+    "ObjectWithDocumentedUnknownType",
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithOptionalFieldError",

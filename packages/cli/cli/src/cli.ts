@@ -55,6 +55,7 @@ import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/g
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
+import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
@@ -215,7 +216,7 @@ async function tryRunCli(cliContext: CliContext) {
     addOverridesCommand(cli, cliContext);
     addWriteOverridesCommand(cli, cliContext); // Deprecated: use `fern overrides write` instead
     addTestCommand(cli, cliContext);
-    addUpdateApiSpecCommand(cli, cliContext);
+    addApiCommand(cli, cliContext);
     addSelfUpdateCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
@@ -260,6 +261,9 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         );
         if (projectConfig.version === "*") {
             return cliContext.environment.packageVersion;
+        }
+        if (projectConfig.version === "latest") {
+            return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });
         }
         return projectConfig.version;
     }
@@ -433,6 +437,34 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     }
                 }),
         async (argv) => {
+            // Large IR files (>2 GB) can exceed Node's default heap limit.
+            // If either file exceeds 1 GB and we haven't already re-spawned,
+            // re-spawn with --max-old-space-size so that the full IR can be
+            // parsed and validated in memory.
+            if (process.env.__FERN_DIFF_HEAP_RESPAWNED == null) {
+                const fs = await import("node:fs");
+                const ONE_GB = 1024 * 1024 * 1024;
+                const fromPath = resolve(cwd(), argv.from);
+                const toPath = resolve(cwd(), argv.to);
+                const fromSize = fs.statSync(fromPath, { throwIfNoEntry: false })?.size ?? 0;
+                const toSize = fs.statSync(toPath, { throwIfNoEntry: false })?.size ?? 0;
+
+                if (fromSize > ONE_GB || toSize > ONE_GB) {
+                    const { spawnSync } = await import("child_process");
+                    const HEAP_SIZE_MB = 8192;
+                    const child = spawnSync(
+                        process.execPath,
+                        [`--max-old-space-size=${HEAP_SIZE_MB}`, ...process.execArgv, ...process.argv.slice(1)],
+                        {
+                            env: { ...process.env, __FERN_DIFF_HEAP_RESPAWNED: "1" },
+                            stdio: "inherit"
+                        }
+                    );
+                    await cliContext.exit({ code: child.status ?? 1 });
+                    return;
+                }
+            }
+
             const fromVersion = undefinedIfNullish(argv.fromVersion);
             const generatorVersions = undefinedIfSomeNullish({
                 from: argv.fromGeneratorVersion,
@@ -1237,9 +1269,17 @@ function addDowngradeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
     );
 }
 
+function addApiCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("api", "Commands for managing your API specs", (yargs) => {
+        addUpdateApiSpecCommand(yargs, cliContext);
+        addEnrichCommand(yargs, cliContext);
+        return yargs;
+    });
+}
+
 function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "api update",
+        "update",
         `Pulls the latest OpenAPI spec from the specified origin in ${GENERATORS_CONFIGURATION_FILENAME} and updates the local spec.`,
         (yargs) =>
             yargs
@@ -1969,6 +2009,46 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 cliContext,
                 outputPath: resolve(cwd(), argv.outputPath),
                 indent: argv.indent
+            });
+        }
+    );
+}
+
+function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "enrich <openapi>",
+        false, // Hidden from --help
+        (yargs) =>
+            yargs
+                .positional("openapi", {
+                    type: "string",
+                    description: "Path to the OpenAPI spec",
+                    demandOption: true
+                })
+                .option("file", {
+                    type: "string",
+                    alias: "f",
+                    description: "Path to the overrides file (e.g. ai_examples_overrides.yml)",
+                    demandOption: true
+                })
+                .option("output", {
+                    type: "string",
+                    alias: "o",
+                    description: "Path to write the enriched output file",
+                    demandOption: true
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern api enrich"
+            });
+            const openapiPath = resolve(cwd(), argv.openapi as string);
+            const overridesPath = resolve(cwd(), argv.file);
+            const outputPath = resolve(cwd(), argv.output);
+            await mergeOpenAPIWithOverrides({
+                openapiPath: AbsoluteFilePath.of(openapiPath),
+                overridesPath: AbsoluteFilePath.of(overridesPath),
+                outputPath: AbsoluteFilePath.of(outputPath),
+                cliContext
             });
         }
     );

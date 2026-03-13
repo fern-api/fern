@@ -23,6 +23,7 @@ type RequestOptions struct {
 	BodyProperties  map[string]interface{}
 	QueryParameters url.Values
 	MaxAttempts     uint
+	MaxBufSize      int
 	Token           string
 }
 
@@ -137,6 +138,19 @@ func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 
 func (m *MaxAttemptsOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
+}
+
+// MaxBufSizeOption implements the RequestOption interface.
+type MaxBufSizeOption struct {
+	MaxBufSize int
+}
+
+func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxBufSize = m.MaxBufSize
+}
+
+func (m *MaxBufSizeOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.MaxBufSize = m.MaxBufSize
 }
 
 // TokenOption implements the RequestOption interface.

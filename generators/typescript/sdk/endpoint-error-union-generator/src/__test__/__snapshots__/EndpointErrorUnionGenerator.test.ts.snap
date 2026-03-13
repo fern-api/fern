@@ -1,0 +1,396 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedEndpointErrorUnionImpl > writeToFile > writes error union with multiple errors 1`] = `
+"export type Error = 
+    | EndpointError.NotFound
+    | EndpointError.BadRequest
+    | EndpointError._Unknown;
+
+export namespace Error {
+    export interface NotFound extends _Utils {
+        statusCode: 404;
+        content: string;
+    }
+
+    export interface BadRequest extends _Utils {
+        statusCode: 400;
+    }
+
+    export interface _Unknown extends _Utils {
+        statusCode: void;
+        content: Fetcher.Error;
+    }
+
+    export interface _Utils {
+        _visit: <_Result>(visitor: EndpointError._Visitor<_Result>) => _Result;
+    }
+
+    export interface _Visitor<_Result> {
+        notFound: (value: string) => _Result;
+        badRequest: () => _Result;
+        _other: (value: Fetcher.Error) => _Result;
+    }
+}
+
+export const Error = {
+        notFound: (value: string): EndpointError.NotFound => {
+            return {
+                content: value,
+                statusCode: 404,
+                "_visit": function <_Result>(this: EndpointError.NotFound, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        badRequest: (): EndpointError.BadRequest => {
+            return {
+                statusCode: 400,
+                "_visit": function <_Result>(this: EndpointError.BadRequest, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _unknown: (fetcherError: Fetcher.Error): EndpointError._Unknown => {
+            return {
+                statusCode: undefined,
+                content: fetcherError,
+                "_visit": function <_Result>(this: EndpointError._Unknown, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _visit: <_Result>(value: EndpointError, visitor: EndpointError._Visitor<_Result>): _Result => {
+            switch (value.statusCode) {
+                case 404: return visitor.notFound(value.content);
+                case 400: return visitor.badRequest();
+                default: return visitor._other(value.content);
+            }
+        },
+    } as const;
+"
+`;
+
+exports[`GeneratedEndpointErrorUnionImpl > writeToFile > writes error union with no errors (empty) 1`] = `
+"export type Error = 
+    | EndpointError._Unknown;
+
+export namespace Error {
+    export interface _Unknown extends _Utils {
+        statusCode: void;
+        content: Fetcher.Error;
+    }
+
+    export interface _Utils {
+        _visit: <_Result>(visitor: EndpointError._Visitor<_Result>) => _Result;
+    }
+
+    export interface _Visitor<_Result> {
+        _other: (value: Fetcher.Error) => _Result;
+    }
+}
+
+export const Error = {
+        _unknown: (fetcherError: Fetcher.Error): EndpointError._Unknown => {
+            return {
+                statusCode: undefined,
+                content: fetcherError,
+                "_visit": function <_Result>(this: EndpointError._Unknown, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _visit: <_Result>(value: EndpointError, visitor: EndpointError._Visitor<_Result>): _Result => {
+            switch (value.statusCode) {
+                default: return visitor._other(value.content);
+            }
+        },
+    } as const;
+"
+`;
+
+exports[`GeneratedEndpointErrorUnionImpl > writeToFile > writes error union with property discrimination 1`] = `
+"export type Error = 
+    | EndpointError.BadRequest
+    | EndpointError._Unknown;
+
+export namespace Error {
+    export interface BadRequest extends _Utils {
+        errorName: "BadRequest";
+        body: string;
+    }
+
+    export interface _Unknown extends _Utils {
+        errorName: void;
+        content: Fetcher.Error;
+    }
+
+    export interface _Utils {
+        _visit: <_Result>(visitor: EndpointError._Visitor<_Result>) => _Result;
+    }
+
+    export interface _Visitor<_Result> {
+        badRequest: (value: string) => _Result;
+        _other: (value: Fetcher.Error) => _Result;
+    }
+}
+
+export const Error = {
+        badRequest: (value: string): EndpointError.BadRequest => {
+            return {
+                body: value,
+                errorName: "BadRequest",
+                "_visit": function <_Result>(this: EndpointError.BadRequest, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _unknown: (fetcherError: Fetcher.Error): EndpointError._Unknown => {
+            return {
+                errorName: undefined,
+                content: fetcherError,
+                "_visit": function <_Result>(this: EndpointError._Unknown, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _visit: <_Result>(value: EndpointError, visitor: EndpointError._Visitor<_Result>): _Result => {
+            switch (value.errorName) {
+                case "BadRequest": return visitor.badRequest(value.body);
+                default: return visitor._other(value.content);
+            }
+        },
+    } as const;
+"
+`;
+
+exports[`GeneratedEndpointErrorUnionImpl > writeToFile > writes error union with retainOriginalCasing (statusCode discrimination) 1`] = `
+"export type Error = 
+    | EndpointError.NotFound
+    | EndpointError._Unknown;
+
+export namespace Error {
+    export interface NotFound extends _Utils {
+        statusCode: 404;
+        content: string;
+    }
+
+    export interface _Unknown extends _Utils {
+        statusCode: void;
+        content: Fetcher.Error;
+    }
+
+    export interface _Utils {
+        _visit: <_Result>(visitor: EndpointError._Visitor<_Result>) => _Result;
+    }
+
+    export interface _Visitor<_Result> {
+        NotFound: (value: string) => _Result;
+        _other: (value: Fetcher.Error) => _Result;
+    }
+}
+
+export const Error = {
+        NotFound: (value: string): EndpointError.NotFound => {
+            return {
+                content: value,
+                statusCode: 404,
+                "_visit": function <_Result>(this: EndpointError.NotFound, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _unknown: (fetcherError: Fetcher.Error): EndpointError._Unknown => {
+            return {
+                statusCode: undefined,
+                content: fetcherError,
+                "_visit": function <_Result>(this: EndpointError._Unknown, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _visit: <_Result>(value: EndpointError, visitor: EndpointError._Visitor<_Result>): _Result => {
+            switch (value.statusCode) {
+                case 404: return visitor.NotFound(value.content);
+                default: return visitor._other(value.content);
+            }
+        },
+    } as const;
+"
+`;
+
+exports[`GeneratedEndpointErrorUnionImpl > writeToFile > writes error union with retainOriginalCasing + property discrimination 1`] = `
+"export type Error = 
+    | EndpointError.BadRequest
+    | EndpointError._Unknown;
+
+export namespace Error {
+    export interface BadRequest extends _Utils {
+        errorName: "BadRequest";
+        body: string;
+    }
+
+    export interface _Unknown extends _Utils {
+        errorName: void;
+        content: Fetcher.Error;
+    }
+
+    export interface _Utils {
+        _visit: <_Result>(visitor: EndpointError._Visitor<_Result>) => _Result;
+    }
+
+    export interface _Visitor<_Result> {
+        BadRequest: (value: string) => _Result;
+        _other: (value: Fetcher.Error) => _Result;
+    }
+}
+
+export const Error = {
+        BadRequest: (value: string): EndpointError.BadRequest => {
+            return {
+                body: value,
+                errorName: "BadRequest",
+                "_visit": function <_Result>(this: EndpointError.BadRequest, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _unknown: (fetcherError: Fetcher.Error): EndpointError._Unknown => {
+            return {
+                errorName: undefined,
+                content: fetcherError,
+                "_visit": function <_Result>(this: EndpointError._Unknown, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _visit: <_Result>(value: EndpointError, visitor: EndpointError._Visitor<_Result>): _Result => {
+            switch (value.errorName) {
+                case "BadRequest": return visitor.BadRequest(value.body);
+                default: return visitor._other(value.content);
+            }
+        },
+    } as const;
+"
+`;
+
+exports[`GeneratedEndpointErrorUnionImpl > writeToFile > writes error union with single error using statusCode discrimination 1`] = `
+"export type Error = 
+    | EndpointError.NotFound
+    | EndpointError._Unknown;
+
+export namespace Error {
+    export interface NotFound extends _Utils {
+        statusCode: 404;
+        content: string;
+    }
+
+    export interface _Unknown extends _Utils {
+        statusCode: void;
+        content: Fetcher.Error;
+    }
+
+    export interface _Utils {
+        _visit: <_Result>(visitor: EndpointError._Visitor<_Result>) => _Result;
+    }
+
+    export interface _Visitor<_Result> {
+        notFound: (value: string) => _Result;
+        _other: (value: Fetcher.Error) => _Result;
+    }
+}
+
+export const Error = {
+        notFound: (value: string): EndpointError.NotFound => {
+            return {
+                content: value,
+                statusCode: 404,
+                "_visit": function <_Result>(this: EndpointError.NotFound, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _unknown: (fetcherError: Fetcher.Error): EndpointError._Unknown => {
+            return {
+                statusCode: undefined,
+                content: fetcherError,
+                "_visit": function <_Result>(this: EndpointError._Unknown, visitor: EndpointError._Visitor<_Result>) {
+                    return EndpointError._visit(this, visitor);
+                }
+            };
+        },
+
+        _visit: <_Result>(value: EndpointError, visitor: EndpointError._Visitor<_Result>): _Result => {
+            switch (value.statusCode) {
+                case 404: return visitor.notFound(value.content);
+                default: return visitor._other(value.content);
+            }
+        },
+    } as const;
+"
+`;
+
+exports[`GeneratedEndpointErrorUnionImpl > writeToFile > writes error union without serde layer 1`] = `
+"export type Error = 
+    | EndpointError.NotFound
+    | EndpointError._Unknown;
+
+export namespace Error {
+    export interface NotFound {
+        statusCode: 404;
+        content: string;
+    }
+
+    export interface _Unknown {
+        statusCode: void;
+        content: Fetcher.Error;
+    }
+
+    export interface _Visitor<_Result> {
+        notFound: (value: string) => _Result;
+        _other: (value: Fetcher.Error) => _Result;
+    }
+}
+
+export const Error = {
+        notFound: (value: string): EndpointError.NotFound => {
+            return {
+                content: value,
+                statusCode: 404
+            };
+        },
+
+        _unknown: (fetcherError: Fetcher.Error): EndpointError._Unknown => {
+            return {
+                statusCode: undefined,
+                content: fetcherError
+            };
+        },
+
+        _visit: <_Result>(value: EndpointError, visitor: EndpointError._Visitor<_Result>): _Result => {
+            switch (value.statusCode) {
+                case 404: return visitor.notFound(value.content);
+                default: return visitor._other(value.content);
+            }
+        },
+    } as const;
+"
+`;
+
+exports[`UnknownErrorSingleUnionTypeGenerator > generateForInlineUnion returns content property with Fetcher.Error type 1`] = `
+"{
+    content: Fetcher.Error;
+}"
+`;
+
+exports[`UnknownErrorSingleUnionTypeGenerator > getParametersForBuilder returns single parameter 1`] = `"fetcherError: Fetcher.Error"`;

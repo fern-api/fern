@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using System.Text;
 
 namespace Usage;
 
@@ -13,8 +14,9 @@ public class Example36
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnStringAsync(
-            "string"
+        await client.Endpoints.Params.UploadWithPathAsync(
+            "upload-path",
+            new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
         );
     }
 

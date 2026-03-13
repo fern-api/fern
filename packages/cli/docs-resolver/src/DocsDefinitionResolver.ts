@@ -29,8 +29,7 @@ import { camelCase, kebabCase } from "lodash-es";
 
 // TODO: Remove this when the new fdr-sdk is integrated
 type SectionNodeWithNewCollapsibleConfig = FernNavigation.V1.SectionNode & {
-    collapsible?: boolean;
-    collapsedByDefault?: boolean;
+    collapsed?: boolean | "open-by-default";
 };
 
 /**
@@ -1189,11 +1188,7 @@ export class DocsDefinitionResolver {
                 return;
             }
 
-            // Temporary coercion to satisfy type checker until new fdr-sdk is integrated
-            const isCollapsible =
-                child.type === "section" &&
-                ((child as SectionNodeWithNewCollapsibleConfig).collapsible === true ||
-                    ((child as SectionNodeWithNewCollapsibleConfig).collapsible == null && child.collapsed === true));
+            const isCollapsible = child.type === "section" && child.collapsed != null;
 
             if (child.type === "section" && !isCollapsible) {
                 grouped.push(child);
@@ -1916,8 +1911,8 @@ export class DocsDefinitionResolver {
                     : item.title,
             icon: this.resolveIconFileId(item.icon),
             collapsed: item.collapsed,
-            collapsible: item.collapsible ?? (item.collapsed === true ? true : undefined),
-            collapsedByDefault: item.collapsedByDefault ?? (item.collapsed === true ? true : undefined),
+            collapsible: item.collapsible,
+            collapsedByDefault: item.collapsedByDefault,
             hidden: hiddenSection,
             viewers: item.viewers,
             orphaned: item.orphaned,
