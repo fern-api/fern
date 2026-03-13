@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.28.0
+  changelogEntry:
+    - summary: |
+        Add `coerce-consts-to` setting for controlling how OpenAPI/AsyncAPI
+        `const` values are represented. Set to `literals` to convert them directly
+        to literals with defaults; set to `enums` (the default, current behavior)
+        to convert them to single-valued and therefore extensible enums.
+
+        When `coerce-consts-to` is `enums`, the `coerce-enums-to-literals` setting
+        will not transitively apply to const-originated enums, keeping the two
+        concepts independent.
+
+        Usage:
+        ```yaml
+        api:
+          specs:
+            - asyncapi: ./asyncapi.yaml
+              settings:
+                coerce-consts-to: literals
+        ```
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
 - version: 4.27.0
   changelogEntry:
     - summary: |
