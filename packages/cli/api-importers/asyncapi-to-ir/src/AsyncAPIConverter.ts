@@ -1,7 +1,7 @@
 import { AuthScheme, FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { convertApiAuth } from "@fern-api/ir-utils";
 import { AbstractConverter, AbstractSpecConverter, Converters, Extensions } from "@fern-api/v3-importer-commons";
-import { OpenAPIV3 } from "openapi-types";
+import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { ChannelConverter2_X } from "./2.x/channel/ChannelConverter2_X.js";
 import { AsyncAPIV2 } from "./2.x/index.js";
 import { ServersConverter2_X } from "./2.x/servers/ServersConverter2_X.js";
@@ -47,16 +47,7 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
 
         this.convertChannels();
 
-        const finalIr = this.finalizeIr();
-
-        // Log the auth section of the final IR
-        if (finalIr.auth) {
-            this.context.logger.info("AsyncAPI Final IR Auth:", JSON.stringify(finalIr.auth, null, 2));
-        } else {
-            this.context.logger.info("AsyncAPI Final IR: No auth section found");
-        }
-
-        return finalIr;
+        return this.finalizeIr();
     }
 
     private isAsyncAPIV3(context: AsyncAPIConverterContext): boolean {
@@ -174,28 +165,10 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
 
     private convertSecuritySchemes(): void {
         if (this.context.authOverrides) {
-            // this.context.logger.info(
-            //     "AsyncAPI Processing authOverrides:",
-            //     JSON.stringify(this.context.authOverrides, null, 2)
-            // );
-
             const overrideAuth = convertApiAuth({
                 rawApiFileSchema: this.context.authOverrides,
                 casingsGenerator: this.context.casingsGenerator
             });
-
-            // this.context.logger.info(
-            //     "AsyncAPI Converted auth schemes:",
-            //     JSON.stringify(
-            //         {
-            //             requirement: overrideAuth.requirement,
-            //             schemes: overrideAuth.schemes,
-            //             docs: overrideAuth.docs
-            //         },
-            //         null,
-            //         2
-            //     )
-            // );
 
             this.addAuthToIR({
                 requirement: overrideAuth.requirement,
@@ -205,7 +178,6 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
             return;
         }
 
-        // Handle native AsyncAPI security schemes if no overrides provided
         const asyncApiSchemes = this.convertAsyncApiSecuritySchemes();
         if (asyncApiSchemes.length > 0) {
             this.addAuthToIR({
@@ -217,10 +189,86 @@ export class AsyncAPIConverter extends AbstractSpecConverter<AsyncAPIConverterCo
     }
 
     private convertAsyncApiSecuritySchemes(): AuthScheme[] {
-        // TODO: Implement conversion of native AsyncAPI security schemes
-        // This would parse this.context.spec.components?.securitySchemes
-        // For now, return empty array as authOverrides is the primary method
-        return [];
+        const securitySchemes: AuthScheme[] = [];
+
+        for (const [id, securityScheme] of Object.entries(this.context.spec.components?.securitySchemes ?? {})) {
+            const resolvedSecurityScheme = this.context.resolveMaybeReference<OpenAPIV3_1.SecuritySchemeObject>({
+                schemaOrReference: securityScheme,
+                breadcrumbs: ["components", "securitySchemes", id]
+            });
+            if (resolvedSecurityScheme == null) {
+                continue;
+            }
+
+            const convertedScheme = this.convertSecurityScheme({
+                securityScheme: resolvedSecurityScheme,
+                schemeId: id
+            });
+            if (convertedScheme != null) {
+                securitySchemes.push(convertedScheme);
+            }
+        }
+
+        return securitySchemes;
+    }
+
+    private convertSecurityScheme({
+        securityScheme,
+        schemeId
+    }: {
+        securityScheme: OpenAPIV3_1.SecuritySchemeObject;
+        schemeId: string;
+    }): AuthScheme | undefined {
+        switch (securityScheme.type) {
+            case "http": {
+                if (securityScheme.scheme?.toLowerCase() === "bearer") {
+                    return AuthScheme.bearer({
+                        key: schemeId,
+                        token: this.context.casingsGenerator.generateName("token"),
+                        tokenEnvVar: undefined,
+                        docs: securityScheme.description
+                    });
+                }
+                if (securityScheme.scheme?.toLowerCase() === "basic") {
+                    return AuthScheme.basic({
+                        key: schemeId,
+                        username: this.context.casingsGenerator.generateName("username"),
+                        password: this.context.casingsGenerator.generateName("password"),
+                        usernameEnvVar: undefined,
+                        passwordEnvVar: undefined,
+                        usernameOmit: false,
+                        passwordOmit: false,
+                        docs: securityScheme.description
+                    });
+                }
+                break;
+            }
+            case "apiKey": {
+                if (securityScheme.in === "header") {
+                    return AuthScheme.header({
+                        key: schemeId,
+                        name: {
+                            name: this.context.casingsGenerator.generateName("apiKey"),
+                            wireValue: securityScheme.name
+                        },
+                        valueType: AbstractConverter.OPTIONAL_STRING,
+                        prefix: undefined,
+                        headerEnvVar: undefined,
+                        docs: securityScheme.description
+                    });
+                }
+                break;
+            }
+            case "oauth2": {
+                return AuthScheme.bearer({
+                    key: schemeId,
+                    token: this.context.casingsGenerator.generateName("token"),
+                    tokenEnvVar: undefined,
+                    docs: securityScheme.description
+                });
+            }
+        }
+        return undefined;
     }
 
     private convertChannels(): void {
