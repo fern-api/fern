@@ -95,6 +95,17 @@ export class LocalTaskHandler {
         const priorChangelog =
             this.version != null && isAutoVersion(this.version) ? await this.readPriorChangelog(3) : "";
 
+        if (isFernIgnorePresent) {
+            const absolutePathToFernignore = AbsoluteFilePath.of(
+                join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
+            );
+            const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
+            const userPaths = fernIgnorePaths.filter((p) => p !== FERNIGNORE_FILENAME);
+            this.context.logger.debug(
+                `Detected ${FERNIGNORE_FILENAME} at ${absolutePathToFernignore} — preserving ${userPaths.length} path(s): ${userPaths.join(", ")}`
+            );
+        }
+
         if (isFernIgnorePresent && isExistingGitRepo) {
             await this.copyGeneratedFilesWithFernIgnoreInExistingRepo();
         } else if (isFernIgnorePresent && !isExistingGitRepo) {
