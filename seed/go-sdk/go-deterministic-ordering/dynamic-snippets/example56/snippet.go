@@ -1,9 +1,8 @@
 package example
 
 import (
-    client "github.com/exhaustive/fern/client"
-    option "github.com/exhaustive/fern/option"
-    fern "github.com/exhaustive/fern"
+    client "github.com/go-deterministic-ordering/fern/client"
+    option "github.com/go-deterministic-ordering/fern/option"
     context "context"
 )
 
@@ -16,13 +15,7 @@ func do() {
             "<token>",
         ),
     )
-    request := &fern.ReqWithHeaders{
-        XTestServiceHeader: "X-TEST-SERVICE-HEADER",
-        XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
-        Body: "string",
-    }
-    client.ReqWithHeaders.GetWithCustomHeader(
+    client.Endpoints.Urls.WithMixedCase(
         context.TODO(),
-        request,
     )
 }
