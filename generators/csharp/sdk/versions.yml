@@ -13,6 +13,14 @@
   createdAt: "2026-03-13"
   irVersion: 65
 
+- version: 2.27.1
+  changelogEntry:
+    - summary: |
+        Fix retry test assertions to match the SDK's indented JSON serialization.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 65
+
 - version: 2.27.0
   changelogEntry:
     - summary: |
