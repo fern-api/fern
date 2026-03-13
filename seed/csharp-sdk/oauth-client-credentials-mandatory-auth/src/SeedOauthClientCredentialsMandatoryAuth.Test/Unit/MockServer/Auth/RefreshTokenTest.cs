@@ -6,6 +6,7 @@ using SeedOauthClientCredentialsMandatoryAuth.Test.Utils;
 namespace SeedOauthClientCredentialsMandatoryAuth.Test.Unit.MockServer.Auth;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class RefreshTokenTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

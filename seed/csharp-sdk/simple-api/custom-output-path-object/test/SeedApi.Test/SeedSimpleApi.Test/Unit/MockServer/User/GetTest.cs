@@ -5,6 +5,7 @@ using SeedSimpleApi.Test.Utils;
 namespace SeedSimpleApi.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

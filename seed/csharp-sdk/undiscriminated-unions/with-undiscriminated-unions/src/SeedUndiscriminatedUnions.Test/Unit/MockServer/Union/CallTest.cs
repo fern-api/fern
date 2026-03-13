@@ -6,6 +6,7 @@ using SeedUndiscriminatedUnions.Test.Utils;
 namespace SeedUndiscriminatedUnions.Test.Unit.MockServer.Union;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class CallTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

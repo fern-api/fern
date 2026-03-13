@@ -6,6 +6,7 @@ using SeedLiteral.Test.Utils;
 namespace SeedLiteral.Test.Unit.MockServer.Reference;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class SendTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

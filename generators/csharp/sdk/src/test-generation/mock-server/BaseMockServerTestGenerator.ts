@@ -28,14 +28,12 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         const class_ = this.csharp.class_({
             reference: this.Types.BaseMockServerTest,
             partial: false,
-            access: ast.Access.Public,
-            annotations: [this.NUnit.Framework.SetUpFixture]
+            access: ast.Access.Public
         });
 
         class_.addField({
             origin: class_.explicit("Server"),
             access: ast.Access.Protected,
-            static_: true,
             type: this.WireMock.Server,
             get: true,
             initializer: this.csharp.codeblock("null!"),
@@ -45,7 +43,6 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         class_.addField({
             origin: class_.explicit("Client"),
             access: ast.Access.Protected,
-            static_: true,
             type: this.Types.RootClient,
             get: true,
             initializer: this.csharp.codeblock("null!"),
@@ -55,7 +52,6 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
         class_.addField({
             origin: class_.explicit("RequestOptions"),
             access: ast.Access.Protected,
-            static_: true,
             type: this.Types.RequestOptions,
             get: true,
             initializer: this.csharp.codeblock("new()"),
@@ -74,7 +70,6 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             class_.addField({
                 origin: class_.explicit("IdempotentRequestOptions"),
                 access: ast.Access.Protected,
-                static_: true,
                 type: this.Types.IdempotentRequestOptions,
                 get: true,
                 initializer,

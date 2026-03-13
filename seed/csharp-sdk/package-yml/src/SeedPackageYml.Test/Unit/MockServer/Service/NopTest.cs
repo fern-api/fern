@@ -4,6 +4,7 @@ using SeedPackageYml.Test.Unit.MockServer;
 namespace SeedPackageYml.Test.Unit.MockServer.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class NopTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
