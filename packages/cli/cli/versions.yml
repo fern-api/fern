@@ -4,7 +4,7 @@
     - summary: |
         Log detected .fernignore paths when copying generated files. When a
         .fernignore file is present in the output directory, the CLI now emits
-        an info-level message listing the preserved paths. This improves
+        a debug-level message listing the preserved paths. This improves
         observability for both `fern generate` and `pnpm seed run` workflows.
       type: feat
   createdAt: "2026-03-13"

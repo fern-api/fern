@@ -101,7 +101,7 @@ export class LocalTaskHandler {
             );
             const fernIgnorePaths = await getFernIgnorePaths({ absolutePathToFernignore });
             const userPaths = fernIgnorePaths.filter((p) => p !== FERNIGNORE_FILENAME);
-            this.context.logger.info(
+            this.context.logger.debug(
                 `Detected ${FERNIGNORE_FILENAME} at ${absolutePathToFernignore} — preserving ${userPaths.length} path(s): ${userPaths.join(", ")}`
             );
         }
