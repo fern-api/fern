@@ -321,7 +321,7 @@ public class RetriesTests
     [Test]
     public async SystemTask SendRequestAsync_ShouldPreserveJsonBody_OnRetry()
     {
-        const string expectedBody = """{"key":"value"}""";
+        const string expectedBody = "{\n  \"key\": \"value\"\n}";
 
         _server
             .Given(WireMockRequest.Create().WithPath("/test").UsingPost())
@@ -392,7 +392,7 @@ public class RetriesTests
 
             // Verify the retried request preserved the multipart body
             var retriedEntry = _server.LogEntries.ElementAt(1);
-            Assert.That(retriedEntry.RequestMessage.Body, Does.Contain("""{"key":"value"}"""));
+            Assert.That(retriedEntry.RequestMessage.Body, Does.Contain("\"key\": \"value\""));
         }
     }
 

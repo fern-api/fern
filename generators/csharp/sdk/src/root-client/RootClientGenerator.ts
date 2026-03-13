@@ -477,17 +477,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         })
                     );
                     if (this.grpcClientInfo != null) {
-                        innerWriter.writeLine("_grpc = _client.Grpc");
+                        innerWriter.writeLine(`${this.members.grpcClientName} = ${this.members.clientName}.Grpc;`);
                         innerWriter.write(this.grpcClientInfo.privatePropertyName);
                         innerWriter.write(" = ");
                         innerWriter.writeNodeStatement(
                             this.csharp.instantiateClass({
                                 classReference: this.grpcClientInfo.classReference,
-                                arguments_: [this.csharp.codeblock("_grpc.Channel")]
+                                arguments_: [this.csharp.codeblock(`${this.members.grpcClientName}.Channel`)]
                             })
                         );
                     }
-                    const arguments_ = [this.csharp.codeblock("_client")];
+                    const arguments_ = [this.csharp.codeblock(this.members.clientName)];
                     for (const subpackage of this.getSubpackages()) {
                         if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
                             innerWriter.writeLine(`${subpackage.name.pascalCase.safeName} = `);
