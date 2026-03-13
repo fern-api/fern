@@ -1103,6 +1103,121 @@ describe("upgrade", () => {
         });
     });
 
+    describe("wildcard and latest version handling", () => {
+        it("should resolve '*' config version to CLI version when rerunning at different version", async () => {
+            mockCliContext.environment.packageVersion = "3.72.0";
+            vi.mocked(isVersionAhead).mockReturnValue(true);
+            process.argv = ["node", "cli.js", "upgrade", "--version", "4.27.0"];
+
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "*",
+                rawConfig: { version: "*", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            // Mock git to also return * (since that's what's in the config)
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"*"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "4.27.0",
+                fromVersion: undefined
+            });
+
+            expect(rerunFernCliAtVersion).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    version: "4.27.0",
+                    args: expect.arrayContaining(["--from", "3.72.0", "--to", "4.27.0"])
+                })
+            );
+        });
+
+        it("should resolve 'latest' config version to CLI version when rerunning", async () => {
+            mockCliContext.environment.packageVersion = "3.72.0";
+            vi.mocked(isVersionAhead).mockReturnValue(true);
+            process.argv = ["node", "cli.js", "upgrade", "--version", "4.27.0"];
+
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "latest",
+                rawConfig: { version: "latest", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"latest"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "4.27.0",
+                fromVersion: undefined
+            });
+
+            expect(rerunFernCliAtVersion).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    version: "4.27.0",
+                    args: expect.arrayContaining(["--from", "3.72.0", "--to", "4.27.0"])
+                })
+            );
+        });
+
+        it("should resolve '*' to CLI version when running migrations directly (local dev)", async () => {
+            mockCliContext.environment.packageVersion = "0.0.0";
+
+            vi.mocked(loadProjectConfig).mockResolvedValue({
+                version: "*",
+                rawConfig: { version: "*", organization: "test-org" },
+                _absolutePath: "/test/fern/fern.config.json" as AbsoluteFilePath,
+                organization: "test-org"
+            });
+
+            vi.mocked(loggingExeca).mockResolvedValue({
+                stdout: '{"version":"*"}',
+                stderr: ""
+            } as loggingExeca.ReturnValue);
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "1.2.0",
+                fromVersion: undefined
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "0.0.0",
+                toVersion: "1.2.0",
+                context: {},
+                yes: false
+            });
+        });
+
+        it("should resolve '*' passed as --from flag to CLI version", async () => {
+            mockCliContext.environment.packageVersion = "4.27.0";
+
+            await upgrade({
+                cliContext: mockCliContext,
+                includePreReleases: false,
+                targetVersion: "4.27.0",
+                fromVersion: "*"
+            });
+
+            expect(runMigrations).toHaveBeenCalledWith({
+                fromVersion: "4.27.0",
+                toVersion: "4.27.0",
+                context: {},
+                yes: false
+            });
+        });
+    });
+
     describe("--from-git flag", () => {
         beforeEach(() => {
             mockCliContext.environment.packageVersion = "0.0.0"; // Local dev

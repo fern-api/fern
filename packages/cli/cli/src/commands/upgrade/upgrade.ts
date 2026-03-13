@@ -214,6 +214,15 @@ async function resolveSourceVersion({
         }
     }
 
+    // Handle wildcard/latest versions - these mean "use whatever CLI version is running"
+    // so the actual source version for migrations is the current CLI version
+    if (resolvedFromVersion === "*" || resolvedFromVersion === "latest") {
+        cliContext.logger.debug(
+            `Source version is "${resolvedFromVersion}", using current CLI version: ${cliContext.environment.packageVersion}`
+        );
+        return cliContext.environment.packageVersion;
+    }
+
     return resolvedFromVersion;
 }
 
