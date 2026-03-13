@@ -25,7 +25,7 @@ public final class ClientGeneratorContext
 
     @Override
     public boolean deserializeWithAdditionalProperties() {
-        return false;
+        return true;
     }
 
     @Override
