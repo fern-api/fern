@@ -1615,12 +1615,10 @@ func fileInfoForPackage(rootPackageName string, fernFilepath *common.FernFilepat
 
 func generatedNamesFromIR(ir *fernir.IntermediateRepresentation) map[string]struct{} {
 	generatedNames := make(map[string]struct{})
-	for _, typeId := range sortedMapKeys(ir.Types) {
-		irType := ir.Types[typeId]
+	for _, irType := range ir.Types {
 		generatedNames[irType.Name.Name.PascalCase.UnsafeName] = struct{}{}
 	}
-	for _, errorId := range sortedMapKeys(ir.Errors) {
-		irError := ir.Errors[errorId]
+	for _, irError := range ir.Errors {
 		generatedNames[irError.Name.Name.PascalCase.UnsafeName] = struct{}{}
 	}
 	for _, irVariable := range ir.Variables {
@@ -1634,8 +1632,7 @@ func generatedNamesFromIR(ir *fernir.IntermediateRepresentation) map[string]stru
 // in nested packages that define client types).
 func generatedPackagesFromIR(ir *fernir.IntermediateRepresentation) map[string]struct{} {
 	generatedPackages := make(map[string]struct{})
-	for _, serviceId := range sortedMapKeys(ir.Services) {
-		irService := ir.Services[serviceId]
+	for _, irService := range ir.Services {
 		fernFilepath := irService.Name.FernFilepath
 		if fernFilepath.File != nil {
 			generatedPackages[strings.ToLower(fernFilepath.File.CamelCase.SafeName)] = struct{}{}
@@ -1905,7 +1902,12 @@ func sortedFileInfoKeys[V any](m map[fileInfo]V) []fileInfo {
 	for k := range m {
 		keys = append(keys, k)
 	}
-	slices.SortFunc(keys, func(a, b fileInfo) int { return cmp.Compare(a.filename, b.filename) })
+	slices.SortFunc(keys, func(a, b fileInfo) int {
+		if c := cmp.Compare(a.filename, b.filename); c != 0 {
+			return c
+		}
+		return cmp.Compare(a.packageName, b.packageName)
+	})
 	return keys
 }
 
@@ -2010,8 +2012,7 @@ func generatorexecEndpointSnippetToString(endpointSnippet *generatorexec.Endpoin
 
 // needsPaginationHelpers returns true if at least endpoint specifies pagination.
 func needsPaginationHelpers(ir *fernir.IntermediateRepresentation) bool {
-	for _, serviceId := range sortedMapKeys(ir.Services) {
-		irService := ir.Services[serviceId]
+	for _, irService := range ir.Services {
 		for _, irEndpoint := range irService.Endpoints {
 			if irEndpoint.Pagination != nil {
 				return true
@@ -2023,8 +2024,7 @@ func needsPaginationHelpers(ir *fernir.IntermediateRepresentation) bool {
 
 // needsFileUploadHelpers returns true if at least endpoint specifies a file upload.
 func needsFileUploadHelpers(ir *fernir.IntermediateRepresentation) bool {
-	for _, serviceId := range sortedMapKeys(ir.Services) {
-		irService := ir.Services[serviceId]
+	for _, irService := range ir.Services {
 		for _, irEndpoint := range irService.Endpoints {
 			if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
 				return true
@@ -2079,7 +2079,7 @@ func sortedMapKeys[K ~string, V any](m map[K]V) []K {
 	for k := range m {
 		keys = append(keys, k)
 	}
-	slices.SortFunc(keys, func(a, b K) int { return cmp.Compare(string(a), string(b)) })
+	slices.SortFunc(keys, func(a, b K) int { return cmp.Compare(a, b) })
 	return keys
 }
 
