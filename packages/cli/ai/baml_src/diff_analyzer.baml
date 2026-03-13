@@ -618,3 +618,57 @@ function AnalyzeSdkDiff(
     - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
   "#
 }
+
+class ConsolidateChangelogResponse {
+    consolidated_changelog string
+        @description("The consolidated, well-formatted changelog text with category headers and emojis. Return ONLY the formatted changelog content.")
+}
+
+function ConsolidateChangelog(
+    raw_entries: string @description("Newline-separated raw changelog entries from chunked diff analysis"),
+    version_bump: string @description("The overall version bump: MAJOR, MINOR, or PATCH"),
+    language: string @description("The SDK programming language, e.g. 'typescript', 'python', 'java'")
+) -> ConsolidateChangelogResponse {
+  client DefaultClient
+
+  prompt #"
+    You are consolidating changelog entries for an SDK release. Multiple AI analyses of
+    different parts of a large code diff have produced these raw changelog entries:
+
+    ---
+    {{raw_entries}}
+    ---
+
+    Overall version bump: {{version_bump}}
+    SDK language: {{language}}
+
+    Consolidate these entries into a single, well-formatted changelog that:
+
+    1. REMOVE DUPLICATES: Many entries describe the same change (e.g. "New additionalProperty()
+       methods" repeated 20 times). Merge them into ONE bullet point.
+
+    2. GROUP under category headers with emojis (only include categories that have entries):
+       ### 💥 Breaking Changes
+       (removals, renames, type changes, removed methods/fields)
+
+       ### ✨ Enhancements
+       (new features, new methods, new types, new endpoints)
+
+       ### 🔧 Improvements
+       (refactoring, compatibility, internal changes, provider additions)
+
+    3. FORMAT each entry as a markdown bullet point:
+       - Use backticks for code references (`methodName()`, `ClassName`)
+       - Be concise: one sentence per bullet point
+       - Write for SDK consumers, not internal engineers
+       - Write in third person ("The SDK now supports..." not "Add support for...")
+
+    4. Keep it concise: aim for 5-15 bullet points total across all categories.
+       Aggressively deduplicate and merge related entries.
+
+    Return ONLY the formatted changelog text (the category headers and bullet points).
+    Do not include any preamble or explanation.
+
+    {{ ctx.output_format }}
+  "#
+}

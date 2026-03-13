@@ -192,13 +192,28 @@ export async function sdkDiffCommand({
             };
         }
 
+        let changelogEntry: string;
+        if (allChangelogEntries.length > 1) {
+            // Consolidate repetitive multi-chunk entries via AI rollup
+            const rawEntries = allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n");
+            try {
+                context.logger.debug(`Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`);
+                const rollup = await bamlClient.ConsolidateChangelog(rawEntries, bestBump, "unknown");
+                changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
+            } catch (rollupError) {
+                context.logger.warn(
+                    `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`
+                );
+                changelogEntry = rawEntries;
+            }
+        } else {
+            changelogEntry = allChangelogEntries[0] ?? "";
+        }
+
         return {
             version_bump: bestBump as VersionBump,
             message: bestMessage || "SDK regeneration",
-            changelog_entry:
-                allChangelogEntries.length > 1
-                    ? allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n")
-                    : (allChangelogEntries[0] ?? "")
+            changelog_entry: changelogEntry
         };
     } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);

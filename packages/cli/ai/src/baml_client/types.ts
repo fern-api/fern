@@ -65,3 +65,8 @@ export interface AnalyzeCommitDiffResponse {
   version_bump: VersionBump
   
 }
+
+export interface ConsolidateChangelogResponse {
+  consolidated_changelog: string
+  
+}

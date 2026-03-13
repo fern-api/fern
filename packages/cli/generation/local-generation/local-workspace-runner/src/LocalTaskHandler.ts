@@ -315,13 +315,34 @@ export class LocalTaskHandler {
                     if (bestBump === VersionBump.NO_CHANGE) {
                         analysis = null;
                     } else {
+                        let changelogEntry: string;
+                        if (allChangelogEntries.length > 1) {
+                            // Consolidate repetitive multi-chunk entries via AI rollup
+                            const rawEntries = allChangelogEntries
+                                .map((e) => (e.startsWith("- ") ? e : `- ${e}`))
+                                .join("\n");
+                            try {
+                                this.context.logger.debug(
+                                    `Consolidating ${allChangelogEntries.length} changelog entries via AI rollup`
+                                );
+                                const rollup = await BamlClient.withOptions({
+                                    clientRegistry: this.getClientRegistry()
+                                }).ConsolidateChangelog(rawEntries, bestBump, this.generatorLanguage ?? "unknown");
+                                changelogEntry = rollup.consolidated_changelog?.trim() || rawEntries;
+                            } catch (rollupError) {
+                                this.context.logger.warn(
+                                    `Changelog consolidation failed, using raw entries: ${rollupError instanceof Error ? rollupError.message : String(rollupError)}`
+                                );
+                                changelogEntry = rawEntries;
+                            }
+                        } else {
+                            changelogEntry = allChangelogEntries[0] ?? "";
+                        }
+
                         analysis = {
                             versionBump: bestBump as VersionBump,
                             message: bestMessage,
-                            changelogEntry:
-                                allChangelogEntries.length > 1
-                                    ? allChangelogEntries.map((e) => (e.startsWith("- ") ? e : `- ${e}`)).join("\n")
-                                    : (allChangelogEntries[0] ?? "")
+                            changelogEntry
                         };
                     }
                 }
