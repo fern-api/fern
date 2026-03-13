@@ -52,6 +52,9 @@ fixtures:
   examples:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: omit-fern-headers
+      customConfig:
+        omitFernHeaders: true
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true

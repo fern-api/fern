@@ -158,6 +158,9 @@ fixtures:
     - customConfig:
         include-exception-handler: true
       outputFolder: include-exception-handler
+    - customConfig:
+        omit-fern-headers: true
+      outputFolder: omit-fern-headers
   multi-url-environment:
     - customConfig:
         pascal-case-environments: false
