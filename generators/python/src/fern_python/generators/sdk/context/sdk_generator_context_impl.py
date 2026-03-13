@@ -277,12 +277,6 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
                 # Follow the alias chain to check the underlying type (e.g. single-value enum)
                 return self.get_literal_value(shape.alias_of)
         if type.type == "container":
-            container = type.container.get_as_union()
-            # Unwrap optional/nullable to check inner type
-            if container.type == "optional":
-                return self.get_literal_value(container.optional)
-            if container.type == "nullable":
-                return self.get_literal_value(container.nullable)
             return self._get_literal_value(type.container)
         return None
 
