@@ -61,7 +61,7 @@ function resolveCodeSamples(codeSamples: unknown, baseDir: string | undefined): 
                 resolvedSample.name = resolvedSample["sample-name"];
             }
             delete resolvedSample["sample-name"];
-            resolved.push(resolvedSample as RawSchemas.ExampleCodeSampleSchema);
+            resolved.push(resolvedSample as unknown as RawSchemas.ExampleCodeSampleSchema);
         }
     }
 
