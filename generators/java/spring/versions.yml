@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Generate `WrappedAlias.java` in the Spring generator output when
+        `wrapped-aliases` is enabled (the default). `NullableNonemptyFilter`
+        references `WrappedAlias` for alias-of-optional empty checks, causing
+        compilation errors when the class is missing.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 63
+  version: 2.0.0-rc7
+
+- changelogEntry:
+    - summary: |
         Generate `Nullable.java` and `NullableNonemptyFilter.java` core files
         in the Spring generator output. Previously, only `OptionalNullable.java`
         was generated, but the shared builder and type generation code references
