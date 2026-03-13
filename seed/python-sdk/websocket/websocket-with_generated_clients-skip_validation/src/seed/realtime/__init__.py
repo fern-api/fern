@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        ErrorEvent,
         ReceiveEvent,
         ReceiveEvent2,
         ReceiveEvent3,
@@ -16,6 +17,7 @@ if typing.TYPE_CHECKING:
         SendSnakeCase,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "ErrorEvent": ".types",
     "ReceiveEvent": ".types",
     "ReceiveEvent2": ".types",
     "ReceiveEvent3": ".types",
@@ -48,6 +50,7 @@ def __dir__():
 
 
 __all__ = [
+    "ErrorEvent",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
