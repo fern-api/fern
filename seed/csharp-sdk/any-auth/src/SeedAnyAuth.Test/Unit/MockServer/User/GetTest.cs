@@ -5,6 +5,7 @@ using SeedAnyAuth.Test.Utils;
 namespace SeedAnyAuth.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

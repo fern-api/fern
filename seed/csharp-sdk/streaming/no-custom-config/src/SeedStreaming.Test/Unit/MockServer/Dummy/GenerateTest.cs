@@ -6,6 +6,7 @@ using SeedStreaming.Test.Utils;
 namespace SeedStreaming.Test.Unit.MockServer.Dummy;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GenerateTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

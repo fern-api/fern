@@ -6,6 +6,7 @@ using SeedOauthClientCredentialsDefault.Test.Utils;
 namespace SeedOauthClientCredentialsDefault.Test.Unit.MockServer.Auth;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetTokenTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

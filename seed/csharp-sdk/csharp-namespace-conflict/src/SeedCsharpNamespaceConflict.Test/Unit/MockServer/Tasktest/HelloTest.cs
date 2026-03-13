@@ -4,6 +4,7 @@ using SeedCsharpNamespaceConflict.Test.Unit.MockServer;
 namespace SeedCsharpNamespaceConflict.Test.Unit.MockServer.Tasktest;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class HelloTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -6,6 +6,7 @@ using SeedMixedCase.Core;
 namespace SeedMixedCase.Test;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class OrganizationTest
 {
     [NUnit.Framework.Test]

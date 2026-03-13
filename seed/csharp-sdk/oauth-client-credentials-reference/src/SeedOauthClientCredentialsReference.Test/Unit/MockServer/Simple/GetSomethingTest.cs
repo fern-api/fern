@@ -4,6 +4,7 @@ using SeedOauthClientCredentialsReference.Test.Unit.MockServer;
 namespace SeedOauthClientCredentialsReference.Test.Unit.MockServer.Simple;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetSomethingTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

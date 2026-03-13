@@ -6,6 +6,7 @@ using SeedAudiences.Test.Utils;
 namespace SeedAudiences.Test.Unit.MockServer.FolderA.Service;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetDirectThreadTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

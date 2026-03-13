@@ -5,6 +5,7 @@ using SeedEndpointSecurityAuth.Test.Utils;
 namespace SeedEndpointSecurityAuth.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetWithBearerTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -5,6 +5,7 @@ using SeedTrace.Test_.Utils;
 namespace SeedTrace.Test_.Unit.MockServer.V2.V3.Problem;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetProblemVersionTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

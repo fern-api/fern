@@ -5,6 +5,7 @@ using SeedExhaustive.Test.Utils;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnBase64Test : BaseMockServerTest
 {
     [NUnit.Framework.Test]
