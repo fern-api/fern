@@ -85,7 +85,7 @@ export class Enum extends Node {
     }
 
     /**
-     * Enables generation of a companion JsonConverter class that uses switch statements
+     * Enables generation of a companion JsonConverter class that uses dictionary lookups
      * instead of reflection.
      */
     public enableSerializerGeneration(): ClassReference {
@@ -134,6 +134,30 @@ export class Enum extends Node {
         );
         writer.pushScope();
 
+        // Write string-to-enum dictionary
+        writer.writeLine(
+            `private static readonly global::System.Collections.Generic.Dictionary<string, ${this.name}> _stringToEnum = new()`
+        );
+        writer.pushScope();
+        for (const field of this.fields) {
+            writer.writeLine(`{ ${JSON.stringify(field.wireValue)}, ${this.name}.${field.name} },`);
+        }
+        writer.popScope(false);
+        writer.writeLine(";");
+        writer.newLine();
+
+        // Write enum-to-string dictionary
+        writer.writeLine(
+            `private static readonly global::System.Collections.Generic.Dictionary<${this.name}, string> _enumToString = new()`
+        );
+        writer.pushScope();
+        for (const field of this.fields) {
+            writer.writeLine(`{ ${this.name}.${field.name}, ${JSON.stringify(field.wireValue)} },`);
+        }
+        writer.popScope(false);
+        writer.writeLine(";");
+        writer.newLine();
+
         // Write Read method
         writer.writeLine(
             `public override ${this.name} Read(ref global::System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, global::System.Text.Json.JsonSerializerOptions options)`
@@ -142,14 +166,7 @@ export class Enum extends Node {
         writer.writeLine(
             `var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");`
         );
-        writer.writeLine("return stringValue switch");
-        writer.pushScope();
-        for (const field of this.fields) {
-            writer.writeLine(`${JSON.stringify(field.wireValue)} => ${this.name}.${field.name},`);
-        }
-        writer.writeLine(`_ => default`);
-        writer.popScope(false);
-        writer.writeLine(";");
+        writer.writeLine(`return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;`);
         writer.popScope();
         writer.newLine();
 
@@ -158,14 +175,9 @@ export class Enum extends Node {
             `public override void Write(global::System.Text.Json.Utf8JsonWriter writer, ${this.name} value, global::System.Text.Json.JsonSerializerOptions options)`
         );
         writer.pushScope();
-        writer.writeLine("writer.WriteStringValue(value switch");
-        writer.pushScope();
-        for (const field of this.fields) {
-            writer.writeLine(`${this.name}.${field.name} => ${JSON.stringify(field.wireValue)},`);
-        }
-        writer.writeLine(`_ => throw new global::System.ArgumentOutOfRangeException(nameof(value), value, null)`);
-        writer.popScope(false);
-        writer.writeLine(");");
+        writer.writeLine(
+            `writer.WriteStringValue(_enumToString.TryGetValue(value, out var stringValue) ? stringValue : null);`
+        );
         writer.popScope();
 
         writer.popScope();
