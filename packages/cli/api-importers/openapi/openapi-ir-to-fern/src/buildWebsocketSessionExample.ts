@@ -153,6 +153,8 @@ function convertPrimitive(primitiveExample: PrimitiveExample): RawSchemas.Exampl
             } catch (e) {
                 return "2024-01-15T09:30:00Z";
             }
+        case "datetimeRfc2822":
+            return primitiveExample.value;
         case "date":
             return primitiveExample.value;
         case "base64":

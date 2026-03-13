@@ -11,6 +11,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{AClient, FolderClient, ApiClient};
-pub use types::{*};
-
+pub use resources::{AClient, ApiClient, FolderClient};
+pub use types::*;

@@ -4,7 +4,7 @@ namespace SeedWebsocket.Empty;
 
 public partial class EmptyClient : IEmptyClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal EmptyClient(RawClient client)
     {

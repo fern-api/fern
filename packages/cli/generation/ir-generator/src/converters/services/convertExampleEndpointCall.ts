@@ -2,6 +2,7 @@ import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
     isInlineRequestBody,
+    isRawDiscriminatedUnionDefinition,
     parseBytesRequest,
     parseRawFileType,
     RawSchemas,
@@ -29,6 +30,7 @@ import { TypeResolver } from "../../resolvers/TypeResolver.js";
 import { VariableResolver } from "../../resolvers/VariableResolver.js";
 import { getEndpointPathParameters } from "../../utils/getEndpointPathParameters.js";
 import { parseErrorName } from "../../utils/parseErrorName.js";
+import { getUnionDiscriminant } from "../type-declarations/convertDiscriminatedUnionTypeDeclaration.js";
 import {
     convertTypeReferenceExample,
     convertUnknownExample,
@@ -548,8 +550,35 @@ function convertExampleResponse({
                                 return undefined;
                             }
 
+                            // For protocol-discriminated unions, the discriminant travels as the SSE
+                            // `event:` field rather than inside the data payload. Inject the event
+                            // value as the discriminant key so that convertTypeReferenceExample can
+                            // resolve the correct union variant.
+                            let effectiveData: RawSchemas.ExampleTypeReferenceSchema = data;
+                            const resolvedType = typeResolver.resolveType({
+                                type: rawTypeBeingExemplified,
+                                file
+                            });
+                            if (
+                                resolvedType?._type === "named" &&
+                                isRawDiscriminatedUnionDefinition(resolvedType.declaration) &&
+                                typeof resolvedType.declaration.discriminant === "object" &&
+                                resolvedType.declaration.discriminant?.context === "protocol"
+                            ) {
+                                const discriminantField = getUnionDiscriminant(resolvedType.declaration);
+                                if (
+                                    isPlainObject(data) &&
+                                    (data as Record<string, unknown>)[discriminantField] == null
+                                ) {
+                                    effectiveData = {
+                                        [discriminantField]: event,
+                                        ...(data as Record<string, unknown>)
+                                    };
+                                }
+                            }
+
                             const convertedExample = convertTypeReferenceExample({
-                                example: data,
+                                example: effectiveData,
                                 rawTypeBeingExemplified,
                                 typeResolver,
                                 exampleResolver,

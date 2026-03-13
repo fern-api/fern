@@ -345,6 +345,22 @@
       ],
       "additionalProperties": false
     },
+    "docs.CollapsedStringValue": {
+      "type": "string",
+      "enum": [
+        "open-by-default"
+      ]
+    },
+    "docs.CollapsedValue": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/docs.CollapsedStringValue"
+        }
+      ]
+    },
     "docs.SectionConfiguration": {
       "type": "object",
       "properties": {
@@ -398,6 +414,26 @@
           }
         },
         "collapsed": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CollapsedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
           "oneOf": [
             {
               "type": "boolean"
@@ -931,6 +967,36 @@
             }
           ]
         },
+        "collapsed": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CollapsedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "availability": {
           "oneOf": [
             {
@@ -1339,7 +1405,7 @@
         "collapsed": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/docs.CollapsedValue"
             },
             {
               "type": "null"
@@ -1693,6 +1759,26 @@
           ]
         },
         "collapsed": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CollapsedValue"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collapsed-by-default": {
           "oneOf": [
             {
               "type": "boolean"

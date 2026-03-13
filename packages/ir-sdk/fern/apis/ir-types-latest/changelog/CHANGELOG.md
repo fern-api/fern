@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v65.5.0] - 2026-03-10
+- Feature: Add optional `forwardCompatible` field to `EnumTypeDeclaration`. When `true`, the enum is forward-compatible
+  (i.e., the API may return values not listed in `values`). This is inferred from OpenAPI specs that express an enum as
+  `oneOf: [enum, string]` or `anyOf: [enum, string]`, or from Fern Definition enums marked with `forward-compatible: true`.
+
+## [v65.4.0] - 2026-02-25
+- Feature: Add `originGitCommit` field to `GenerationMetadata` to track the git commit hash of the repository at generation time.
+  This field is populated with the HEAD commit hash when `fern generate` is executed in a git repository, allowing generators
+  to include source commit information in generated SDKs and documentation for better traceability and debugging.
+
+## [v65.3.0] - 2026-02-24
+- Feature: Add optional `connectMethodName` field to `WebSocketChannel` for custom WebSocket connection method naming.
+  Supports `x-fern-sdk-method-name` extension on AsyncAPI channels to customize the generated connection method name instead of using the default "connect".
+  This addresses confusing APIs where both the client wrapper creation and actual connection use "connect".
+
+## [v65.2.1] - 2026-02-24
+- Feature: Add document-level `webhook-signature` configuration to Fern definition files.
+  Allows specifying a default signature verification config that applies to all webhooks in a file,
+  with per-webhook `signature` overrides. The IR generator resolves defaults and stamps each webhook
+  with its final `signatureVerification` config.
+
 ## [v65.2.0] - 2026-02-23
 - Feature: Add `WebhookSignatureVerification` discriminated union to the `Webhook` type.
   Supports HMAC-based and asymmetric key signature verification with configurable algorithms,

@@ -1,12 +1,12 @@
 {
-    "$schema": "https://turbo.build/schema.json",
+    "$schema": "https://turborepo.dev/schema.json",
     "extends": ["//"],
     "tasks": {
         "test": {
-            "dependsOn": ["dist:cli"]
+            "dependsOn": ["compile"]
         },
         "test:update": {
-            "dependsOn": ["dist:cli"]
+            "dependsOn": ["compile"]
         }
     }
 }

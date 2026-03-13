@@ -13,6 +13,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Exception Handling](#exception-handling)
 - [Binary Response](#binary-response)
 - [Advanced](#advanced)
+  - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
   - [Retries](#retries)
@@ -454,6 +455,16 @@ const text = new TextDecoder().decode(bytes);
 </details>
 
 ## Advanced
+
+### Subpackage Exports
+
+This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+```typescript
+import { ServiceClient } from '@fern/bytes-download/service';
+
+const client = new ServiceClient({...});
+```
 
 ### Additional Headers
 

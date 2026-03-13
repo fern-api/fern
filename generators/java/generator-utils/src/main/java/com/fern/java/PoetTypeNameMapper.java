@@ -185,6 +185,11 @@ public final class PoetTypeNameMapper {
         }
 
         @Override
+        public TypeName visitDateTimeRfc2822() {
+            return ClassName.get(OffsetDateTime.class);
+        }
+
+        @Override
         public TypeName visitDate() {
             if (useLocalDateForDates) {
                 return ClassName.get(LocalDate.class);

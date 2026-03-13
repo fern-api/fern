@@ -13,7 +13,7 @@ export const AsyncApiSpecSchema = z.object({
     origin: z.string().optional(),
 
     /** Path to overrides file for the AsyncAPI spec. */
-    overrides: z.string().optional(),
+    overrides: z.union([z.string(), z.array(z.string()).nonempty()]).optional(),
 
     /** Namespace for the API (used in multi-API configurations). */
     namespace: z.string().optional(),

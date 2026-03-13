@@ -42,17 +42,28 @@ export class ReadmeGenerator {
     }
 
     public async generateReadme({ output }: { output: fs.WriteStream | NodeJS.Process["stdout"] }): Promise<void> {
+        const writer = new StreamWriter(output);
+        await this.writeReadmeContent({ writer });
+        await writer.end();
+    }
+
+    public async generateReadmeToString(): Promise<string> {
+        const writer = new StringWriter();
+        await this.writeReadmeContent({ writer });
+        await writer.end();
+        return writer.toString();
+    }
+
+    private async writeReadmeContent({ writer }: { writer: Writer }): Promise<void> {
         const blocks = await this.generateBlocks();
         const mergedBlocks = await this.mergeBlocks({ blocks });
 
-        const writer = new StreamWriter(output);
         await this.writeHeader({ writer });
         await this.writeTableOfContents({ writer, blocks: mergedBlocks });
         await this.writeBlocks({
             writer,
             blocks: mergedBlocks
         });
-        await writer.end();
     }
 
     private async generateBlocks(): Promise<Block[]> {

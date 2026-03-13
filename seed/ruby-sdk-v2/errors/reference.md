@@ -143,3 +143,4 @@ client.simple.foo_with_examples(bar: "hello")
 </dd>
 </dl>
 </details>
+

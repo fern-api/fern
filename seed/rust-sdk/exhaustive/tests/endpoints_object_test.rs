@@ -8,7 +8,7 @@ mod wire_test_utils;
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_object_get_and_return_with_optional_field_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -60,7 +60,7 @@ async fn test_endpoints_object_get_and_return_with_optional_field_with_wiremock(
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_object_get_and_return_with_required_field_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -96,7 +96,7 @@ async fn test_endpoints_object_get_and_return_with_required_field_with_wiremock(
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_object_get_and_return_with_map_of_map_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -135,7 +135,7 @@ async fn test_endpoints_object_get_and_return_with_map_of_map_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_object_get_and_return_nested_with_optional_field_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -190,7 +190,7 @@ async fn test_endpoints_object_get_and_return_nested_with_optional_field_with_wi
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_object_get_and_return_nested_with_required_field_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -246,7 +246,7 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_with_wi
 #[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_object_get_and_return_nested_with_required_field_as_list_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),
@@ -331,9 +331,81 @@ async fn test_endpoints_object_get_and_return_nested_with_required_field_as_list
 
 #[tokio::test]
 #[allow(unused_variables, unreachable_code)]
+async fn test_endpoints_object_get_and_return_with_unknown_field_with_wiremock() {
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
+
+    let mut config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    config.base_url = wiremock_base_url.to_string();
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+
+    let result = client
+        .endpoints
+        .object
+        .get_and_return_with_unknown_field(
+            &ObjectWithUnknownField {
+                unknown: serde_json::json!({"$ref":"https://example.com/schema"}),
+            },
+            None,
+        )
+        .await;
+
+    assert!(result.is_ok(), "Client method call should succeed");
+
+    wire_test_utils::verify_request_count(
+        "POST",
+        "/object/get-and-return-with-unknown-field",
+        None,
+        1,
+    )
+    .await
+    .unwrap();
+}
+
+#[tokio::test]
+#[allow(unused_variables, unreachable_code)]
+async fn test_endpoints_object_get_and_return_with_documented_unknown_type_with_wiremock() {
+    wire_test_utils::reset_wiremock_requests().await.unwrap();
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
+
+    let mut config = ClientConfig {
+        token: Some("<token>".to_string()),
+        ..Default::default()
+    };
+    config.base_url = wiremock_base_url.to_string();
+    let client = ExhaustiveClient::new(config).expect("Failed to build client");
+
+    let result = client
+        .endpoints
+        .object
+        .get_and_return_with_documented_unknown_type(
+            &ObjectWithDocumentedUnknownType {
+                documented_unknown_type: DocumentedUnknownType(serde_json::json!({"key":"value"})),
+            },
+            None,
+        )
+        .await;
+
+    assert!(result.is_ok(), "Client method call should succeed");
+
+    wire_test_utils::verify_request_count(
+        "POST",
+        "/object/get-and-return-with-documented-unknown-type",
+        None,
+        1,
+    )
+    .await
+    .unwrap();
+}
+
+#[tokio::test]
+#[allow(unused_variables, unreachable_code)]
 async fn test_endpoints_object_get_and_return_with_datetime_like_string_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         token: Some("<token>".to_string()),

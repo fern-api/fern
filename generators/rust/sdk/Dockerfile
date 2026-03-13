@@ -13,6 +13,4 @@ COPY generators/rust/sdk/dist /dist
 COPY generators/rust/sdk/dist/asIs /asIs
 COPY generators/rust/sdk/features.yml /assets/features.yml
 
-RUN npm install -f -g @fern-api/generator-cli@0.5.3
-
 ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "rust-sdk"]

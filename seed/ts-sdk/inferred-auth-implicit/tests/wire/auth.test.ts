@@ -25,6 +25,7 @@ describe("AuthClient", () => {
             scope: "scope",
         };
         const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
+
         server
             .mockEndpoint()
             .post("/token")
@@ -69,6 +70,7 @@ describe("AuthClient", () => {
             scope: "scope",
         };
         const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
+
         server
             .mockEndpoint()
             .post("/token/refresh")

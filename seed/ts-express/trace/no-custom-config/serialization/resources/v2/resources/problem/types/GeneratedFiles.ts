@@ -8,15 +8,15 @@ export const GeneratedFiles: core.serialization.ObjectSchema<
     serializers.v2.GeneratedFiles.Raw,
     SeedTrace.v2.GeneratedFiles
 > = core.serialization.object({
-    generatedTestCaseFiles: core.serialization.record(
+    generatedTestCaseFiles: core.serialization.partialRecord(
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),
-    generatedTemplateFiles: core.serialization.record(
+    generatedTemplateFiles: core.serialization.partialRecord(
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),
-    other: core.serialization.record(
+    other: core.serialization.partialRecord(
         core.serialization.lazy(() => serializers.Language),
         core.serialization.lazyObject(() => serializers.v2.Files).optional(),
     ),

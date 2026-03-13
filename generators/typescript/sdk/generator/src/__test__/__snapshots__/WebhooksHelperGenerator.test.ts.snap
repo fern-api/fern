@@ -1,0 +1,381 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC SHA1 algorithm variant 1`] = `
+"/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const payload = requestBody;
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha1", encoding: "hex" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC SHA512 class with base64 encoding 1`] = `
+"/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Webhook-Signature" header and pass it as the signatureHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const payload = requestBody;
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha512", encoding: "base64" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with ISO8601 timestamp format 1`] = `
+"const TIMESTAMP_TOLERANCE_SECONDS = 300;
+
+/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ * Extract the timestamp from the "X-Timestamp" header and pass it as the timestampHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, timestampHeader: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        if (timestampHeader == null || timestampHeader === "") {
+            throw new Error("Missing timestamp header 'X-Timestamp' for webhook signature verification");
+        }
+
+        const timestampMs = new Date(timestampHeader).getTime();
+        if (Number.isNaN(timestampMs)) {
+            throw new Error("Invalid timestamp format: expected ISO 8601 date string");
+        }
+
+        if (Math.abs(Date.now() - timestampMs) > TIMESTAMP_TOLERANCE_SECONDS * 1000) {
+            return false;
+        }
+
+        const payload = requestBody;
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with NOTIFICATION_URL payload component 1`] = `
+"/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, notificationUrl: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const payload = [notificationUrl, requestBody].join("|");
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with UNIX_MILLIS timestamp format 1`] = `
+"const TIMESTAMP_TOLERANCE_SECONDS = 600;
+
+/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ * Extract the timestamp from the "X-Timestamp" header and pass it as the timestampHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, timestampHeader: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        if (timestampHeader == null || timestampHeader === "") {
+            throw new Error("Missing timestamp header 'X-Timestamp' for webhook signature verification");
+        }
+
+        const timestampValue = parseInt(timestampHeader, 10);
+        if (Number.isNaN(timestampValue)) {
+            throw new Error("Invalid timestamp format: expected unix milliseconds");
+        }
+        const timestampMs = timestampValue;
+
+        if (Math.abs(Date.now() - timestampMs) > TIMESTAMP_TOLERANCE_SECONDS * 1000) {
+            return false;
+        }
+
+        const payload = requestBody;
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with UNIX_SECONDS timestamp validation 1`] = `
+"const TIMESTAMP_TOLERANCE_SECONDS = 300;
+
+/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ * Extract the timestamp from the "X-Timestamp" header and pass it as the timestampHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, timestampHeader: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        if (timestampHeader == null || timestampHeader === "") {
+            throw new Error("Missing timestamp header 'X-Timestamp' for webhook signature verification");
+        }
+
+        const timestampValue = parseInt(timestampHeader, 10);
+        if (Number.isNaN(timestampValue)) {
+            throw new Error("Invalid timestamp format: expected unix seconds");
+        }
+        const timestampMs = timestampValue * 1000;
+
+        if (Math.abs(Date.now() - timestampMs) > TIMESTAMP_TOLERANCE_SECONDS * 1000) {
+            return false;
+        }
+
+        const payload = requestBody;
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with multi-component payload format 1`] = `
+"const TIMESTAMP_TOLERANCE_SECONDS = 300;
+
+/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ * Extract the timestamp from the "X-Timestamp" header and pass it as the timestampHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string, messageId: string, timestampHeader: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        if (timestampHeader == null || timestampHeader === "") {
+            throw new Error("Missing timestamp header 'X-Timestamp' for webhook signature verification");
+        }
+
+        const timestampValue = parseInt(timestampHeader, 10);
+        if (Number.isNaN(timestampValue)) {
+            throw new Error("Invalid timestamp format: expected unix seconds");
+        }
+        const timestampMs = timestampValue * 1000;
+
+        if (Math.abs(Date.now() - timestampMs) > TIMESTAMP_TOLERANCE_SECONDS * 1000) {
+            return false;
+        }
+
+        const payload = [messageId, timestampHeader, requestBody].join(".");
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > HMAC verification > writes HMAC class with signature prefix 1`] = `
+"const SIGNATURE_PREFIX = "sha256=";
+
+/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const sig = signatureHeader.startsWith(SIGNATURE_PREFIX)
+            ? signatureHeader.slice(SIGNATURE_PREFIX.length)
+            : signatureHeader;
+
+        const payload = requestBody;
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+
+        return webhookCrypto.timingSafeEqual(sig, expected);
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > HMAC verification > writes basic HMAC SHA256 class with hex encoding 1`] = `
+"/**
+ * Verify an HMAC webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, signatureKey: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || signatureKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const payload = requestBody;
+
+        const expected = webhookCrypto.computeHmacSignature({ payload: payload, secret: signatureKey, algorithm: "sha256", encoding: "hex" });
+
+        return webhookCrypto.timingSafeEqual(signatureHeader, expected);
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > asymmetric verification > writes asymmetric RSA_SHA256 class with static key 1`] = `
+"/**
+ * Verify an asymmetric webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, publicKey: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || publicKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const payload = requestBody;
+
+        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: publicKey, algorithm: "RSA_SHA256", encoding: "base64" });
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > asymmetric verification > writes asymmetric class with JWKS key source 1`] = `
+"/**
+ * Verify an asymmetric webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ * Public keys are fetched from the JWKS endpoint at https://example.com/.well-known/jwks.json.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const payload = requestBody;
+
+        const resolvedKey = await webhookCrypto.fetchJwks({ url: "https://example.com/.well-known/jwks.json" });
+
+        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: resolvedKey, algorithm: "RSA_SHA256", encoding: "base64" });
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > asymmetric verification > writes asymmetric class with JWKS key source and keyIdHeader 1`] = `
+"/**
+ * Verify an asymmetric webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ * Public keys are fetched from the JWKS endpoint at https://example.com/.well-known/jwks.json.
+ * Extract the key ID from the "X-Key-Id" header and pass it as the keyIdHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, keyIdHeader: string | undefined): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        const payload = requestBody;
+
+        const resolvedKey = await webhookCrypto.fetchJwks({ url: "https://example.com/.well-known/jwks.json", keyId: keyIdHeader });
+
+        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: signatureHeader, publicKey: resolvedKey, algorithm: "RSA_SHA256", encoding: "base64" });
+    }
+}
+"
+`;
+
+exports[`WebhooksHelperGenerator > asymmetric verification > writes asymmetric class with timestamp validation 1`] = `
+"const TIMESTAMP_TOLERANCE_SECONDS = 300;
+const SIGNATURE_PREFIX = "v1=";
+
+/**
+ * Verify an asymmetric webhook signature.
+ *
+ * Extract the signature from the "X-Signature" header and pass it as the signatureHeader parameter.
+ * Extract the timestamp from the "X-Timestamp" header and pass it as the timestampHeader parameter.
+ */
+export class WebhooksHelper {
+    public static async verifySignature(requestBody: string, signatureHeader: string, publicKey: string, timestampHeader: string): Promise<boolean> {
+        if (requestBody == null || signatureHeader == null || publicKey == null) {
+            throw new Error("Missing required parameters for webhook signature verification");
+        }
+
+        if (timestampHeader == null || timestampHeader === "") {
+            throw new Error("Missing timestamp header 'X-Timestamp' for webhook signature verification");
+        }
+
+        const timestampValue = parseInt(timestampHeader, 10);
+        if (Number.isNaN(timestampValue)) {
+            throw new Error("Invalid timestamp format: expected unix seconds");
+        }
+        const timestampMs = timestampValue * 1000;
+
+        if (Math.abs(Date.now() - timestampMs) > TIMESTAMP_TOLERANCE_SECONDS * 1000) {
+            return false;
+        }
+
+        const sig = signatureHeader.startsWith(SIGNATURE_PREFIX)
+            ? signatureHeader.slice(SIGNATURE_PREFIX.length)
+            : signatureHeader;
+
+        const payload = requestBody;
+
+        return webhookCrypto.verifyAsymmetricSignature({ payload: payload, signature: sig, publicKey: publicKey, algorithm: "ECDSA_SHA256", encoding: "base64" });
+    }
+}
+"
+`;

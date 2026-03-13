@@ -1,9 +1,6 @@
 import { z } from "zod";
-import { GitOutputSchema } from "./GitOutputSchema.js";
+import { OutputObjectSchema } from "./OutputObjectSchema.js";
 
-export const OutputSchema = z.object({
-    path: z.string().optional(),
-    git: GitOutputSchema.optional()
-});
+export const OutputSchema = z.union([z.string(), OutputObjectSchema]);
 
 export type OutputSchema = z.infer<typeof OutputSchema>;

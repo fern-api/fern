@@ -5,7 +5,7 @@ namespace SeedApi.A.C;
 
 public partial class CClient : ICClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal CClient(RawClient client)
     {
@@ -30,7 +30,6 @@ public partial class CClient : ICClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "",
                     Headers = _headers,
@@ -44,7 +43,9 @@ public partial class CClient : ICClient
             return;
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedApiApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

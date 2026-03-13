@@ -10,11 +10,11 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .params
-        .get_with_query(
-            &GetWithQueryQueryRequest {
-                query: "query".to_string(),
-                number: 1,
+        .pagination
+        .list_items(
+            &ListItemsQueryRequest {
+                cursor: Some("cursor".to_string()),
+                limit: Some(1),
             },
             None,
         )

@@ -89,3 +89,4 @@ client.completions().streamEvents(
 </dd>
 </dl>
 </details>
+

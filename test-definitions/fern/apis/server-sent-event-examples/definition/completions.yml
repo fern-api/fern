@@ -21,6 +21,11 @@ types:
       completion: CompletionEvent
       error: ErrorEvent
 
+errors:
+  BadRequestError:
+    status-code: 400
+    type: string
+
 service:
   auth: false
   base-path: ""
@@ -37,20 +42,28 @@ service:
         type: StreamedCompletion
         format: sse
         terminator: "[[DONE]]"
+      errors:
+        - BadRequestError
       examples:
         - name: "Stream completions"
           request:
             query: "foo"
           response:
             stream:
-              - event: discriminant-1
+              - event: completion
                 data:
                   delta: "foo"
                   tokens: 1
-              - event: discriminant-2
+              - event: completion
                 data:
                   delta: "bar"
                   tokens: 2
+        - name: "Bad request"
+          request:
+            query: ""
+          response:
+            error: BadRequestError
+            body: "bad request"
 
     streamEvents:
       method: POST
@@ -64,3 +77,20 @@ service:
         type: StreamEvent
         format: sse
         terminator: "[DONE]"
+      errors:
+        - BadRequestError
+      examples:
+        - name: "Stream events"
+          request:
+            query: "query"
+          response:
+            stream:
+              - event: completion
+                data:
+                  content: "content"
+        - name: "Bad request"
+          request:
+            query: ""
+          response:
+            error: BadRequestError
+            body: "bad request"

@@ -14,6 +14,7 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Exception Handling](#exception-handling)
 - [File Uploads](#file-uploads)
 - [Advanced](#advanced)
+  - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
   - [Retries](#retries)
@@ -125,6 +126,16 @@ For example, `fs.ReadStream` has a `path` property which the SDK uses to retriev
 
 
 ## Advanced
+
+### Subpackage Exports
+
+This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+```typescript
+import { FileUploadExampleClient } from '@fern/file-upload-openapi/fileUploadExample';
+
+const client = new FileUploadExampleClient({...});
+```
 
 ### Additional Headers
 

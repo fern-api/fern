@@ -56,9 +56,9 @@ export function parseAsyncAPIV2({
 
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
+        const serverNameOverride = getExtension<string>(server, FernAsyncAPIExtension.FERN_SERVER_NAME);
         servers[serverId] = {
-            // Always preserve server names from AsyncAPI spec
-            name: serverId,
+            name: serverNameOverride ?? serverId,
             url: constructServerUrl(server.protocol, server.url)
         };
     }
@@ -367,6 +367,7 @@ export function parseAsyncAPIV2({
                         name: server.name as string
                     })),
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
+                connectMethodName: getExtension<string>(channel, FernAsyncAPIExtension.FERN_SDK_METHOD_NAME),
                 path,
                 description: channel.description,
                 examples,

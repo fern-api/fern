@@ -1007,6 +1007,14 @@ async function expandFolderConfiguration({
         context.failAndThrow(`Folder not found: ${rawConfig.folder}`);
     }
 
+    validateCollapsibleConfig({
+        context,
+        sectionTitle: rawConfig.folder,
+        collapsed: rawConfig.collapsed ?? undefined,
+        collapsible: rawConfig.collapsible ?? undefined,
+        collapsedByDefault: rawConfig.collapsedByDefault ?? undefined
+    });
+
     const effectiveTitleSource = rawConfig.titleSource ?? folderTitleSource;
 
     const contents = await buildNavigationForDirectory({
@@ -1039,6 +1047,8 @@ async function expandFolderConfiguration({
         contents: filteredContents,
         slug,
         collapsed: rawConfig.collapsed ?? undefined,
+        collapsible: rawConfig.collapsible ?? undefined,
+        collapsedByDefault: rawConfig.collapsedByDefault ?? undefined,
         hidden: rawConfig.hidden ?? undefined,
         skipUrlSlug: rawConfig.skipSlug ?? false,
         overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,
@@ -1066,6 +1076,13 @@ async function convertNavigationItem({
         return parsePageConfig(rawConfig, absolutePathToConfig);
     }
     if (isRawSectionConfig(rawConfig)) {
+        validateCollapsibleConfig({
+            context,
+            sectionTitle: rawConfig.section,
+            collapsed: rawConfig.collapsed ?? undefined,
+            collapsible: rawConfig.collapsible ?? undefined,
+            collapsedByDefault: rawConfig.collapsedByDefault ?? undefined
+        });
         return {
             type: "section",
             title: rawConfig.section,
@@ -1083,6 +1100,8 @@ async function convertNavigationItem({
             ),
             slug: rawConfig.slug ?? undefined,
             collapsed: rawConfig.collapsed ?? undefined,
+            collapsible: rawConfig.collapsible ?? undefined,
+            collapsedByDefault: rawConfig.collapsedByDefault ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
             skipUrlSlug: rawConfig.skipSlug ?? false,
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
@@ -1112,7 +1131,8 @@ async function convertNavigationItem({
                     : undefined,
             postman: rawConfig.postman,
             navigation:
-                rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig)) ?? [],
+                rawConfig.layout?.flatMap((item) => parseApiReferenceLayoutItem(item, absolutePathToConfig, context)) ??
+                [],
             overviewAbsolutePath: resolveFilepath(rawConfig.summary, absolutePathToConfig),
             collapsed: rawConfig.collapsed ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
@@ -1204,7 +1224,8 @@ function parsePageConfig(
 
 function parseApiReferenceLayoutItem(
     item: docsYml.RawSchemas.ApiReferenceLayoutItem,
-    absolutePathToConfig: AbsoluteFilePath
+    absolutePathToConfig: AbsoluteFilePath,
+    context?: TaskContext
 ): docsYml.ParsedApiReferenceLayoutItem[] {
     if (typeof item === "string") {
         return [{ type: "item", value: item }];
@@ -1223,6 +1244,15 @@ function parseApiReferenceLayoutItem(
             }
         ];
     } else if (isRawApiRefSectionConfiguration(item)) {
+        if (context != null) {
+            validateCollapsibleConfig({
+                context,
+                sectionTitle: item.section,
+                collapsed: item.collapsed ?? undefined,
+                collapsible: item.collapsible ?? undefined,
+                collapsedByDefault: item.collapsedByDefault ?? undefined
+            });
+        }
         return [
             {
                 type: "section",
@@ -1230,10 +1260,15 @@ function parseApiReferenceLayoutItem(
                 referencedSubpackages: item.referencedPackages ?? [],
                 overviewAbsolutePath: resolveFilepath(item.summary, absolutePathToConfig),
                 contents:
-                    item.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
+                    item.contents?.flatMap((value) =>
+                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
+                    ) ?? [],
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
+                collapsed: item.collapsed ?? undefined,
+                collapsible: item.collapsible ?? undefined,
+                collapsedByDefault: item.collapsedByDefault ?? undefined,
                 availability: item.availability,
                 icon: resolveIconPath(item.icon, absolutePathToConfig),
                 playground: item.playground,
@@ -1281,7 +1316,9 @@ function parseApiReferenceLayoutItem(
                 package: key,
                 overviewAbsolutePath: resolveFilepath(value.summary, absolutePathToConfig),
                 contents:
-                    value.contents?.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)) ?? [],
+                    value.contents?.flatMap((value) =>
+                        parseApiReferenceLayoutItem(value, absolutePathToConfig, context)
+                    ) ?? [],
                 slug: value.slug,
                 hidden: value.hidden,
                 skipUrlSlug: value.skipSlug,
@@ -1298,7 +1335,7 @@ function parseApiReferenceLayoutItem(
             title: undefined,
             package: key,
             overviewAbsolutePath: undefined,
-            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig)),
+            contents: value.flatMap((value) => parseApiReferenceLayoutItem(value, absolutePathToConfig, context)),
             hidden: false,
             slug: undefined,
             skipUrlSlug: false,
@@ -1577,6 +1614,8 @@ async function convertMetadata(
         "twitter:site": metadata.twitterSite,
         "twitter:url": metadata.twitterUrl,
         "twitter:card": metadata.twitterCard,
+        "og:dynamic": metadata.ogDynamic,
+        "og:background-image": await convertFilepathOrUrl(metadata.ogBackgroundImage, absoluteFilepathToDocsConfig),
         nofollow: undefined,
         noindex: undefined,
         canonicalHost: metadata.canonicalHost
@@ -1635,4 +1674,32 @@ export function parseAudiences(raw: string | string[] | undefined): string[] | u
     }
 
     return raw;
+}
+
+function validateCollapsibleConfig({
+    context,
+    sectionTitle,
+    collapsed,
+    collapsible,
+    collapsedByDefault
+}: {
+    context: TaskContext;
+    sectionTitle: string;
+    collapsed: boolean | "open-by-default" | undefined;
+    collapsible: boolean | undefined;
+    collapsedByDefault: boolean | undefined;
+}): void {
+    if (collapsible != null && collapsed != null) {
+        context.failAndThrow(
+            `Section "${sectionTitle}": cannot use both "collapsible" and the deprecated "collapsed" property. ` +
+                `Please use "collapsible" and "collapsed-by-default" instead.`
+        );
+    }
+
+    if (collapsedByDefault != null && collapsible !== true) {
+        context.failAndThrow(
+            `Section "${sectionTitle}": "collapsed-by-default" requires "collapsible: true". ` +
+                `"collapsed-by-default" has no effect on a non-collapsible section.`
+        );
+    }
 }

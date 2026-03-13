@@ -1,6 +1,7 @@
 import { noop, SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
+    deduplicateExamples,
     generateInlinePropertiesModule,
     getExampleEndpointCalls,
     getPropertyKey,
@@ -310,20 +311,19 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     private getDocs(context: SdkContext): string | undefined {
-        const examples = getExampleEndpointCalls(this.endpoint);
-        if (examples.length === 0) {
+        const exampleCalls = getExampleEndpointCalls(this.endpoint);
+        if (exampleCalls.length === 0) {
             return undefined;
         }
 
-        return examples
-            .map((example) => {
-                const generatedExample = this.generateExample(example);
-                const exampleStr =
-                    "@example\n" +
-                    getTextOfTsNode(generatedExample.build(context, { isForComment: true, isForRequest: true }));
-                return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
-            })
-            .join("\n\n");
+        const allExamples = exampleCalls.map((example) => {
+            const generatedExample = this.generateExample(example);
+            const exampleStr =
+                "@example\n" +
+                getTextOfTsNode(generatedExample.build(context, { isForComment: true, isForRequest: true }));
+            return exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
+        });
+        return deduplicateExamples(allExamples).join("\n\n");
     }
 
     private getInlineProperty(

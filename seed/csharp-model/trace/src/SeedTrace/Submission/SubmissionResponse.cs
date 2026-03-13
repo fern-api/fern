@@ -358,23 +358,29 @@ public record SubmissionResponse
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "serverInitialized" => new { },
                 "problemInitialized" => json.GetProperty("value").Deserialize<string?>(options)
                     ?? throw new JsonException("Failed to deserialize string"),
                 "workspaceInitialized" => new { },
-                "serverErrored" => json.Deserialize<SeedTrace.ExceptionInfo?>(options)
-                    ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
+                "serverErrored" => jsonWithoutDiscriminator.Deserialize<SeedTrace.ExceptionInfo?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.ExceptionInfo"),
                 "codeExecutionUpdate" => json.GetProperty("value")
                     .Deserialize<SeedTrace.CodeExecutionUpdate?>(options)
                     ?? throw new JsonException(
                         "Failed to deserialize SeedTrace.CodeExecutionUpdate"
                     ),
-                "terminated" => json.Deserialize<SeedTrace.TerminatedResponse?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.TerminatedResponse"
-                    ),
+                "terminated" => jsonWithoutDiscriminator.Deserialize<SeedTrace.TerminatedResponse?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.TerminatedResponse"),
                 _ => json.Deserialize<object?>(options),
             };
             return new SubmissionResponse(discriminator, value);

@@ -15,7 +15,7 @@ export async function createSampleGeneratorContext(pathToDefinition: string): Pr
         _visit: (visitor) => visitor.local()
     });
     return new ModelGeneratorContext(
-        ir as FernIr.IntermediateRepresentation,
+        ir as unknown as FernIr.IntermediateRepresentation,
         generatorConfig,
         customConfig,
         notificationService

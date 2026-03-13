@@ -13,6 +13,7 @@ types:
     properties:
       name: WebSocketName
       displayName: optional<string>
+      connectMethodName: optional<string>
       baseUrl: optional<environment.EnvironmentBaseUrlId>
       path: http.HttpPath
       auth: boolean

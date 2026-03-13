@@ -13,6 +13,7 @@ export type ExamplePrimitive =
     | FernIr.ExamplePrimitive.String
     | FernIr.ExamplePrimitive.Date_
     | FernIr.ExamplePrimitive.Datetime
+    | FernIr.ExamplePrimitive.DatetimeRfc2822
     | FernIr.ExamplePrimitive.Uuid
     | FernIr.ExamplePrimitive.Base64
     | FernIr.ExamplePrimitive.BigInteger;
@@ -67,6 +68,10 @@ export namespace ExamplePrimitive {
         type: "datetime";
     }
 
+    export interface DatetimeRfc2822 extends FernIr.ExampleDatetimeRfc2822, _Utils {
+        type: "datetimeRfc2822";
+    }
+
     export interface Uuid extends _Utils {
         type: "uuid";
         uuid: string;
@@ -97,6 +102,7 @@ export namespace ExamplePrimitive {
         string: (value: FernIr.EscapedString) => _Result;
         date: (value: string) => _Result;
         datetime: (value: FernIr.ExampleDatetime) => _Result;
+        datetimeRfc2822: (value: FernIr.ExampleDatetimeRfc2822) => _Result;
         uuid: (value: string) => _Result;
         base64: (value: string) => _Result;
         bigInteger: (value: string) => _Result;
@@ -235,6 +241,19 @@ export const ExamplePrimitive = {
         };
     },
 
+    datetimeRfc2822: (value: FernIr.ExampleDatetimeRfc2822): FernIr.ExamplePrimitive.DatetimeRfc2822 => {
+        return {
+            ...value,
+            type: "datetimeRfc2822",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.DatetimeRfc2822,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>,
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
     uuid: (value: string): FernIr.ExamplePrimitive.Uuid => {
         return {
             uuid: value,
@@ -296,6 +315,8 @@ export const ExamplePrimitive = {
                 return visitor.date(value.date);
             case "datetime":
                 return visitor.datetime(value);
+            case "datetimeRfc2822":
+                return visitor.datetimeRfc2822(value);
             case "uuid":
                 return visitor.uuid(value.uuid);
             case "base64":

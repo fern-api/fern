@@ -350,7 +350,8 @@ export function generateIntermediateRepresentation({
                     file,
                     typeResolver,
                     exampleResolver,
-                    workspace
+                    workspace,
+                    defaultSignature: file.definitionFile["webhook-signature"]
                 });
 
                 const webhooksByOriginalName: Record<string, Webhook> = {};
@@ -371,6 +372,7 @@ export function generateIntermediateRepresentation({
                 intermediateRepresentation.webhookGroups[webhookGroupId] = convertedWebhookGroup;
                 packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
             },
+            "webhook-signature": noop,
             channel: (channel) => {
                 if (channel == null) {
                     return;

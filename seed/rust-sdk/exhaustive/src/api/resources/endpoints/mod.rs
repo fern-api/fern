@@ -1,3 +1,4 @@
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient};
 
 pub mod container;
@@ -36,21 +37,22 @@ pub struct EndpointsClient {
     pub union_: UnionClient,
     pub urls: UrlsClient,
 }
+
 impl EndpointsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
-    Ok(Self {
-        http_client: HttpClient::new(config.clone())?,
-        container: ContainerClient::new(config.clone())?,
-        content_type: ContentTypeClient::new(config.clone())?,
-        enum_: EnumClient::new(config.clone())?,
-        http_methods: HttpMethodsClient::new(config.clone())?,
-        object: ObjectClient::new(config.clone())?,
-        pagination: PaginationClient::new(config.clone())?,
-        params: ParamsClient::new(config.clone())?,
-        primitive: PrimitiveClient::new(config.clone())?,
-        put: PutClient::new(config.clone())?,
-        union_: UnionClient::new(config.clone())?,
-        urls: UrlsClient::new(config.clone())?
-    })
-}
+        Ok(Self {
+            http_client: HttpClient::new(config.clone())?,
+            container: ContainerClient::new(config.clone())?,
+            content_type: ContentTypeClient::new(config.clone())?,
+            enum_: EnumClient::new(config.clone())?,
+            http_methods: HttpMethodsClient::new(config.clone())?,
+            object: ObjectClient::new(config.clone())?,
+            pagination: PaginationClient::new(config.clone())?,
+            params: ParamsClient::new(config.clone())?,
+            primitive: PrimitiveClient::new(config.clone())?,
+            put: PutClient::new(config.clone())?,
+            union_: UnionClient::new(config.clone())?,
+            urls: UrlsClient::new(config.clone())?,
+        })
+    }
 }

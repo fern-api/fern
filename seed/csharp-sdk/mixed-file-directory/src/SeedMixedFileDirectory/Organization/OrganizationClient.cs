@@ -5,7 +5,7 @@ namespace SeedMixedFileDirectory;
 
 public partial class OrganizationClient : IOrganizationClient
 {
-    private RawClient _client;
+    private readonly RawClient _client;
 
     internal OrganizationClient(RawClient client)
     {
@@ -28,7 +28,6 @@ public partial class OrganizationClient : IOrganizationClient
             .SendRequestAsync(
                 new JsonRequest
                 {
-                    BaseUrl = _client.Options.BaseUrl,
                     Method = HttpMethod.Post,
                     Path = "/organizations/",
                     Body = request,
@@ -40,7 +39,9 @@ public partial class OrganizationClient : IOrganizationClient
             .ConfigureAwait(false);
         if (response.StatusCode is >= 200 and < 400)
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             try
             {
                 var responseData = JsonUtils.Deserialize<Organization>(responseBody)!;
@@ -66,7 +67,9 @@ public partial class OrganizationClient : IOrganizationClient
             }
         }
         {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            var responseBody = await response
+                .Raw.Content.ReadAsStringAsync(cancellationToken)
+                .ConfigureAwait(false);
             throw new SeedMixedFileDirectoryApiException(
                 $"Error with status code {response.StatusCode}",
                 response.StatusCode,

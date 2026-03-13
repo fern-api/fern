@@ -1,4 +1,3 @@
-import { fail } from "node:assert";
 import { Literal } from "../ast/code/Literal.js";
 import { AstNode } from "../ast/core/AstNode.js";
 import { ClassReference } from "../ast/types/ClassReference.js";
@@ -6,6 +5,7 @@ import { Type } from "../ast/types/IType.js";
 import { BaseType, Collection, Optional, OptionalWrapper, Primitive, Value } from "../ast/types/Type.js";
 import { type Provenance } from "../context/model-navigator.js";
 import { is as DynamicIR } from "./dynamic-ir-type-guards.js";
+import { fail } from "./fail.js";
 import { is as IR } from "./ir-type-guards.js";
 
 const ISO_8601_DATE_REGEX = /^[+-]?\d{4}-(0?[1-9]|1[0-2])-(0?[1-9]|[12]\d|3[01])$/;

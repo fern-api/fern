@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.Environment;
+import com.seed.api.core.LogConfig;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -20,6 +21,8 @@ public class AsyncSeedApiClientBuilder {
     private Environment environment = Environment.REGIONAL_API_SERVER;
 
     private OkHttpClient httpClient;
+
+    private Optional<LogConfig> logging = Optional.empty();
 
     private String region;
 
@@ -55,6 +58,14 @@ public class AsyncSeedApiClientBuilder {
     }
 
     /**
+     * Configure logging for the SDK. Silent by default — no log output unless explicitly configured.
+     */
+    public AsyncSeedApiClientBuilder logging(LogConfig logging) {
+        this.logging = Optional.of(logging);
+        return this;
+    }
+
+    /**
      * Add a custom header to be sent with all requests.
      * For headers that need to be computed dynamically or conditionally, use the setAdditional() method override instead.
      *
@@ -83,6 +94,7 @@ public class AsyncSeedApiClientBuilder {
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
+        setLogging(builder);
         for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
             builder.addHeader(header.getKey(), header.getValue());
         }
@@ -145,6 +157,18 @@ public class AsyncSeedApiClientBuilder {
     protected void setHttpClient(ClientOptions.Builder builder) {
         if (this.httpClient != null) {
             builder.httpClient(this.httpClient);
+        }
+    }
+
+    /**
+     * Sets the logging configuration for the SDK.
+     * Override this method to customize logging behavior.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setLogging(ClientOptions.Builder builder) {
+        if (this.logging.isPresent()) {
+            builder.logging(this.logging.get());
         }
     }
 

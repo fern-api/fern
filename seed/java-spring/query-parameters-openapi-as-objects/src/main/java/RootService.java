@@ -34,7 +34,8 @@ public interface RootService {
       @RequestParam("nestedUser") Optional<NestedUser> nestedUser,
       @RequestParam("optionalUser") Optional<User> optionalUser,
       @RequestParam("excludeUser") Optional<User> excludeUser,
-      @RequestParam("filter") Optional<String> filter,
+      @RequestParam("filter") Optional<String> filter, @RequestParam("tags") Optional<String> tags,
+      @RequestParam("optionalTags") Optional<String> optionalTags,
       @RequestParam("neighbor") Optional<SearchRequestNeighbor> neighbor,
       @RequestParam("neighborRequired") SearchRequestNeighborRequired neighborRequired);
 }

@@ -19,6 +19,7 @@ describe("no-duplicate-enum-values", () => {
                 message: "Duplicated enum value: A.",
                 nodePath: ["types", "MyEnum"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "no-duplicate-enum-values",
                 severity: "fatal"
             }
         ]);

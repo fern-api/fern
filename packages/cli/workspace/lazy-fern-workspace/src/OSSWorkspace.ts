@@ -41,6 +41,30 @@ export declare namespace OSSWorkspace {
     export type Settings = BaseOpenAPIWorkspace.Settings;
 }
 
+/**
+ * Collapses a boolean per-spec setting into a single workspace-level value.
+ *
+ * - If no spec explicitly defines the setting (all undefined) → returns undefined (defaults apply)
+ * - If at least one spec defines it → returns true only if no spec explicitly sets it to false
+ *   (undefined specs are treated as neutral / "don't care")
+ *
+ * This ensures that enabling a setting on a subset of specs works correctly,
+ * without breaking users who don't set it at all. See https://github.com/fern-api/fern/issues/6408
+ */
+function collapseSpecBooleanSetting(
+    specs: (OpenAPISpec | ProtobufSpec)[],
+    getter: (settings: ParseOpenAPIOptions | undefined) => boolean | undefined
+): boolean | undefined {
+    const values = specs.map((spec) => getter(spec.settings));
+    const hasAnyExplicit = values.some((v) => v != null);
+    if (!hasAnyExplicit) {
+        return undefined;
+    }
+    // If at least one spec explicitly defines the setting, treat undefined as neutral.
+    // Only return false if a spec explicitly sets it to false.
+    return values.every((v) => v == null || v === true);
+}
+
 function convertRemoveDiscriminantsFromSchemas(
     specs: (OpenAPISpec | ProtobufSpec)[]
 ): generatorsYml.RemoveDiscriminantsFromSchemas {
@@ -71,34 +95,39 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     private graphqlTypes: Record<FdrAPI.TypeId, FdrAPI.api.v1.register.TypeDefinition> = {};
 
     constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
+        const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
         super({
             ...superArgs,
-            respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas),
-            respectNullableSchemas: specs.every((spec) => spec.settings?.respectNullableSchemas),
-            wrapReferencesToNullableInOptional: specs.every(
-                (spec) => spec.settings?.wrapReferencesToNullableInOptional
+            respectReadonlySchemas: collapseSpecBooleanSetting(specs, (s) => s?.respectReadonlySchemas),
+            respectNullableSchemas: collapseSpecBooleanSetting(specs, (s) => s?.respectNullableSchemas),
+            wrapReferencesToNullableInOptional: collapseSpecBooleanSetting(
+                specs,
+                (s) => s?.wrapReferencesToNullableInOptional
             ),
             removeDiscriminantsFromSchemas: convertRemoveDiscriminantsFromSchemas(specs),
-            coerceOptionalSchemasToNullable: specs.every((spec) => spec.settings?.coerceOptionalSchemasToNullable),
-            coerceEnumsToLiterals: specs.every((spec) => spec.settings?.coerceEnumsToLiterals),
-            onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
-            inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
-            objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
-            useBytesForBinaryResponse: specs
-                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
-
-                // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
-                .some((spec) => spec.settings?.useBytesForBinaryResponse),
-            respectForwardCompatibleEnums: specs
-                .filter((spec) => spec.type === "openapi" && spec.source.type === "openapi")
-
-                // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
-                .some((spec) => spec.settings?.respectForwardCompatibleEnums),
-            inlineAllOfSchemas: specs.every((spec) => spec.settings?.inlineAllOfSchemas),
+            coerceOptionalSchemasToNullable: collapseSpecBooleanSetting(
+                specs,
+                (s) => s?.coerceOptionalSchemasToNullable
+            ),
+            coerceEnumsToLiterals: collapseSpecBooleanSetting(specs, (s) => s?.coerceEnumsToLiterals),
+            onlyIncludeReferencedSchemas: collapseSpecBooleanSetting(specs, (s) => s?.onlyIncludeReferencedSchemas),
+            inlinePathParameters: collapseSpecBooleanSetting(specs, (s) => s?.inlinePathParameters),
+            objectQueryParameters: collapseSpecBooleanSetting(specs, (s) => s?.objectQueryParameters),
+            useBytesForBinaryResponse: collapseSpecBooleanSetting(openapiSpecs, (s) => s?.useBytesForBinaryResponse),
+            respectForwardCompatibleEnums: collapseSpecBooleanSetting(
+                openapiSpecs,
+                (s) => s?.respectForwardCompatibleEnums
+            ),
+            inlineAllOfSchemas: collapseSpecBooleanSetting(specs, (s) => s?.inlineAllOfSchemas),
             resolveAliases: (() => {
-                // Require that resolveAliases is true/provided for all specs
-                const allHaveResolveAliases = specs.every((spec) => spec.settings?.resolveAliases);
-                if (!allHaveResolveAliases) {
+                // Only collapse if at least one spec explicitly defines resolveAliases
+                const values = specs.map((spec) => spec.settings?.resolveAliases);
+                const hasAnyExplicit = values.some((v) => v != null);
+                if (!hasAnyExplicit) {
+                    return undefined;
+                }
+                // If any spec explicitly sets it to false, return false
+                if (values.some((v) => v === false)) {
                     return false;
                 }
 
@@ -265,12 +294,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
             switch (document.type) {
                 case "openapi": {
+                    const spec = document.value as OpenAPIV3_1.Document;
+                    const namespace =
+                        document.namespace ??
+                        ((spec as Record<string, unknown>)["x-fern-sdk-namespace"] as string | undefined);
                     const converterContext = new OpenAPIConverterContext3_1({
-                        namespace: document.namespace,
+                        namespace,
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
-                        spec: document.value as OpenAPIV3_1.Document,
+                        spec,
                         exampleGenerationArgs: { disabled: false },
                         errorCollector,
                         authOverrides,
@@ -286,8 +319,13 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     break;
                 }
                 case "asyncapi": {
+                    const asyncApiNamespace =
+                        document.namespace ??
+                        ((document.value as unknown as Record<string, unknown>)["x-fern-sdk-namespace"] as
+                            | string
+                            | undefined);
                     const converterContext = new AsyncAPIConverterContext({
-                        namespace: document.namespace,
+                        namespace: asyncApiNamespace,
                         generationLanguage: "typescript",
                         logger: context.logger,
                         smartCasing: false,
@@ -505,7 +543,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
     }
 
-    private async convertSpecsOverrideToSpecs(
+    protected async convertSpecsOverrideToSpecs(
         specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<Spec[]> {
         // Handle conjure schema case
@@ -518,9 +556,28 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         for (const spec of specsOverride) {
             if (generatorsYml.isOpenApiSpecSchema(spec)) {
                 const absoluteFilepath = join(this.absoluteFilePath, RelativeFilePath.of(spec.openapi));
-                const absoluteFilepathToOverrides = spec.overrides
-                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides))
-                    : undefined;
+                // Handle both single override path and array of override paths
+                let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+                const specOverridePaths: AbsoluteFilePath[] = [];
+
+                // Add spec-level overrides
+                if (spec.overrides != null) {
+                    if (Array.isArray(spec.overrides)) {
+                        specOverridePaths.push(
+                            ...spec.overrides.map((override) =>
+                                join(this.absoluteFilePath, RelativeFilePath.of(override))
+                            )
+                        );
+                    } else {
+                        specOverridePaths.push(join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides)));
+                    }
+                }
+
+                // Set the final overrides array
+                if (specOverridePaths.length > 0) {
+                    absoluteFilepathToOverrides =
+                        specOverridePaths.length === 1 ? specOverridePaths[0] : specOverridePaths;
+                }
                 const absoluteFilepathToOverlays = spec.overlays
                     ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overlays))
                     : undefined;
@@ -556,10 +613,17 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         return [
             this.absoluteFilePath,
             ...this.allSpecs
-                .flatMap((spec) => [
-                    spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,
-                    spec.absoluteFilepathToOverrides
-                ])
+                .flatMap((spec) => {
+                    const mainPath =
+                        spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath;
+                    // Handle both single override path and array of override paths
+                    const overridePaths = Array.isArray(spec.absoluteFilepathToOverrides)
+                        ? spec.absoluteFilepathToOverrides
+                        : spec.absoluteFilepathToOverrides != null
+                          ? [spec.absoluteFilepathToOverrides]
+                          : [];
+                    return [mainPath, ...overridePaths];
+                })
                 .filter(isNonNullish)
         ];
     }
@@ -580,7 +644,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 acc.push({
                     type: spec.type,
                     id: uuidv4(),
-                    absoluteFilePath
+                    absoluteFilePath,
+                    absoluteFilePathToOverrides: spec.type === "openapi" ? spec.absoluteFilepathToOverrides : undefined
                 });
             }
 

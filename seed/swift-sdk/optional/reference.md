@@ -120,7 +120,7 @@ try await main()
 </dl>
 </details>
 
-<details><summary><code>client.optional.<a href="/Sources/Resources/Optional/OptionalClient.swift">sendOptionalNullableWithAllOptionalProperties</a>(actionId: String, id: String, request: Nullable<DeployParams>?, requestOptions: RequestOptions?) -> DeployResponse</code></summary>
+<details><summary><code>client.optional.<a href="/Sources/Resources/Optional/OptionalClient.swift">sendOptionalNullableWithAllOptionalProperties</a>(actionId: String, id: String, request: Nullable&lt;DeployParams&gt;?, requestOptions: RequestOptions?) -> DeployResponse</code></summary>
 <dl>
 <dd>
 

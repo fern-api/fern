@@ -133,7 +133,7 @@ export class StatusCommand {
     }
 }
 
-export function addStatusCommand(cli: Argv<GlobalArgs>): void {
+export function addStatusCommand(cli: Argv<GlobalArgs>, parentPath?: string): void {
     const cmd = new StatusCommand();
     command(
         cli,
@@ -151,6 +151,7 @@ export function addStatusCommand(cli: Argv<GlobalArgs>): void {
                     type: "boolean",
                     default: false,
                     description: "Show active account only"
-                })
+                }),
+        parentPath
     );
 }

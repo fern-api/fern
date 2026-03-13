@@ -8,5 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.endpoints.urls.with_ending_slash(None).await;
+    client.endpoints.put.add(&"id".to_string(), None).await;
 }

@@ -12,10 +12,10 @@ RUN corepack prepare yarn@1.22.22
 
 RUN pnpm add -g typescript@~5.7.2 \
   prettier@3.7.4 \
-  oxfmt@0.27.0 \
+  oxfmt@0.35.0 \
   @biomejs/biome@2.4.3 \
-  oxlint@1.42.0 \
-  oxlint-tsgolint@0.11.4 \
+  oxlint@1.50.0 \
+  oxlint-tsgolint@0.14.2 \
   @types/node@^18.19.70 \
   webpack@^5.97.1 \
   msw@2.11.2 \

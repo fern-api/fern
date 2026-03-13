@@ -25,6 +25,7 @@
             }
           }
         },
+        "x-fern-availability": "pre-release",
         "requestBody": {
           "required": true,
           "content": {
@@ -74,7 +75,8 @@
               }
             }
           }
-        }
+        },
+        "x-fern-availability": "deprecated"
       }
     }
   },
@@ -97,14 +99,16 @@
           "rating": {
             "type": "number",
             "format": "double",
-            "description": "The rating scale is one to five stars"
+            "description": "The rating scale is one to five stars",
+            "x-fern-availability": "deprecated"
           }
         },
         "required": [
           "id",
           "title",
           "rating"
-        ]
+        ],
+        "x-fern-availability": "generally-available"
       },
       "CreateMovieRequest": {
         "title": "CreateMovieRequest",

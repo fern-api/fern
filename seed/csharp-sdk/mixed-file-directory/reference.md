@@ -218,3 +218,4 @@ await client.User.Events.Metadata.GetMetadataAsync(new GetEventMetadataRequest {
 </dd>
 </dl>
 </details>
+

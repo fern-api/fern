@@ -49,7 +49,7 @@ class CompletionsClient:
             base_url="https://yourhost.com/path/to/api",
         )
         response = client.completions.stream(
-            query="query",
+            query="foo",
         )
         for chunk in response:
             yield chunk
@@ -132,7 +132,7 @@ class AsyncCompletionsClient:
 
         async def main() -> None:
             response = await client.completions.stream(
-                query="query",
+                query="foo",
             )
             async for chunk in response:
                 yield chunk

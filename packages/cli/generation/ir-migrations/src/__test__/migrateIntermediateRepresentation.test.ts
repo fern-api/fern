@@ -53,13 +53,38 @@ describe("migrateIntermediateRepresentation", () => {
             context: createMockTaskContext(),
             targetGenerator: {
                 name: "fernapi/fern-typescript-sdk",
-                version: "0.0.246"
+                version: "0.38.0-rc0"
             }
         });
+        // Access first error by getting the first object value, not by array index
+        const castedMigrated = migrated as IrVersions.V53.ir.IntermediateRepresentation;
+        const firstError = castedMigrated?.errors ? Object.values(castedMigrated.errors)[0] : undefined;
+
         expect(
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            (migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue
-        ).toBeUndefined();
+            firstError?.discriminantValue
+        ).toEqual({
+            name: {
+                camelCase: {
+                    safeName: "blogNotFoundError",
+                    unsafeName: "blogNotFoundError"
+                },
+                originalName: "BlogNotFoundError",
+                pascalCase: {
+                    safeName: "BlogNotFoundError",
+                    unsafeName: "BlogNotFoundError"
+                },
+                screamingSnakeCase: {
+                    safeName: "BLOG_NOT_FOUND_ERROR",
+                    unsafeName: "BLOG_NOT_FOUND_ERROR"
+                },
+                snakeCase: {
+                    safeName: "blog_not_found_error",
+                    unsafeName: "blog_not_found_error"
+                }
+            },
+            wireValue: "BlogNotFoundError"
+        });
     });
 
     it("runs migration if generator (dev) version is less than migration's 'minVersiontoExclude'", async () => {
@@ -68,16 +93,35 @@ describe("migrateIntermediateRepresentation", () => {
             context: createMockTaskContext(),
             targetGenerator: {
                 name: "fernapi/fern-typescript-sdk",
-                version: "0.0.245-1-ga1ce47f"
+                version: "0.37.0-1-ga1ce47f"
             }
         });
+
+        // Access first error by getting the first object value, not by array index
+        const castedMigrated = migrated as IrVersions.V53.ir.IntermediateRepresentation;
+        const firstError = castedMigrated?.errors ? Object.values(castedMigrated.errors)[0] : undefined;
+
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
-            camelCase: "blogNotFoundError",
-            originalValue: "BlogNotFoundError",
-            pascalCase: "BlogNotFoundError",
-            screamingSnakeCase: "BLOG_NOT_FOUND_ERROR",
-            snakeCase: "blog_not_found_error",
+        expect(firstError?.discriminantValue).toEqual({
+            name: {
+                camelCase: {
+                    safeName: "blogNotFoundError",
+                    unsafeName: "blogNotFoundError"
+                },
+                originalName: "BlogNotFoundError",
+                pascalCase: {
+                    safeName: "BlogNotFoundError",
+                    unsafeName: "BlogNotFoundError"
+                },
+                screamingSnakeCase: {
+                    safeName: "BLOG_NOT_FOUND_ERROR",
+                    unsafeName: "BLOG_NOT_FOUND_ERROR"
+                },
+                snakeCase: {
+                    safeName: "blog_not_found_error",
+                    unsafeName: "blog_not_found_error"
+                }
+            },
             wireValue: "BlogNotFoundError"
         });
     });
@@ -88,16 +132,34 @@ describe("migrateIntermediateRepresentation", () => {
             context: createMockTaskContext(),
             targetGenerator: {
                 name: "fernapi/fern-typescript-sdk",
-                version: "0.0.245"
+                version: "0.37.0"
             }
         });
+        // Access first error by getting the first object value, not by array index
+        const castedMigrated = migrated as IrVersions.V53.ir.IntermediateRepresentation;
+        const firstError = castedMigrated?.errors ? Object.values(castedMigrated.errors)[0] : undefined;
+
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation)?.errors?.[0]?.discriminantValue).toEqual({
-            camelCase: "blogNotFoundError",
-            originalValue: "BlogNotFoundError",
-            pascalCase: "BlogNotFoundError",
-            screamingSnakeCase: "BLOG_NOT_FOUND_ERROR",
-            snakeCase: "blog_not_found_error",
+        expect(firstError?.discriminantValue).toEqual({
+            name: {
+                camelCase: {
+                    safeName: "blogNotFoundError",
+                    unsafeName: "blogNotFoundError"
+                },
+                originalName: "BlogNotFoundError",
+                pascalCase: {
+                    safeName: "BlogNotFoundError",
+                    unsafeName: "BlogNotFoundError"
+                },
+                screamingSnakeCase: {
+                    safeName: "BLOG_NOT_FOUND_ERROR",
+                    unsafeName: "BLOG_NOT_FOUND_ERROR"
+                },
+                snakeCase: {
+                    safeName: "blog_not_found_error",
+                    unsafeName: "blog_not_found_error"
+                }
+            },
             wireValue: "BlogNotFoundError"
         });
     });
@@ -112,7 +174,32 @@ describe("migrateIntermediateRepresentation", () => {
             }
         });
 
-        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
+        // Access first error by getting the first object value, not by array index
+        const castedMigrated = migrated as IrVersions.V53.ir.IntermediateRepresentation;
+        const firstError = castedMigrated?.errors ? Object.values(castedMigrated.errors)[0] : undefined;
+
+        expect(firstError?.discriminantValue).toEqual({
+            name: {
+                camelCase: {
+                    safeName: "blogNotFoundError",
+                    unsafeName: "blogNotFoundError"
+                },
+                originalName: "BlogNotFoundError",
+                pascalCase: {
+                    safeName: "BlogNotFoundError",
+                    unsafeName: "BlogNotFoundError"
+                },
+                screamingSnakeCase: {
+                    safeName: "BLOG_NOT_FOUND_ERROR",
+                    unsafeName: "BLOG_NOT_FOUND_ERROR"
+                },
+                snakeCase: {
+                    safeName: "blog_not_found_error",
+                    unsafeName: "blog_not_found_error"
+                }
+            },
+            wireValue: "BlogNotFoundError"
+        });
     });
 
     it("does not run migration if generator (release) version is greater than migration's 'minVersiontoExclude'", async () => {
@@ -125,7 +212,32 @@ describe("migrateIntermediateRepresentation", () => {
             }
         });
 
-        expect((migrated as IrVersions.V1.ir.IntermediateRepresentation).errors[0]?.discriminantValue).toBeUndefined();
+        // Access first error by getting the first object value, not by array index
+        const castedMigrated = migrated as IrVersions.V53.ir.IntermediateRepresentation;
+        const firstError = castedMigrated?.errors ? Object.values(castedMigrated.errors)[0] : undefined;
+
+        expect(firstError?.discriminantValue).toEqual({
+            name: {
+                camelCase: {
+                    safeName: "blogNotFoundError",
+                    unsafeName: "blogNotFoundError"
+                },
+                originalName: "BlogNotFoundError",
+                pascalCase: {
+                    safeName: "BlogNotFoundError",
+                    unsafeName: "BlogNotFoundError"
+                },
+                screamingSnakeCase: {
+                    safeName: "BLOG_NOT_FOUND_ERROR",
+                    unsafeName: "BLOG_NOT_FOUND_ERROR"
+                },
+                snakeCase: {
+                    safeName: "blog_not_found_error",
+                    unsafeName: "blog_not_found_error"
+                }
+            },
+            wireValue: "BlogNotFoundError"
+        });
     });
 });
 

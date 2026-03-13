@@ -1,0 +1,34 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeneratedWebsocketResponseSchemaImpl > deserializeResponse > respects omitUndefined flag 1`] = `"WebsocketResponse.parse(rawData, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: false, breadcrumbsPrefix: "", omitUndefined: true })"`;
+
+exports[`GeneratedWebsocketResponseSchemaImpl > deserializeResponse > respects skipResponseValidation flag 1`] = `"WebsocketResponse.parse(rawData, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: "", omitUndefined: false })"`;
+
+exports[`GeneratedWebsocketResponseSchemaImpl > deserializeResponse > returns parsed expression when includeSerdeLayer is true 1`] = `"WebsocketResponse.parse(rawData, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: false, breadcrumbsPrefix: "", omitUndefined: false })"`;
+
+exports[`GeneratedWebsocketResponseSchemaImpl > writeToFile > writes schema for channel with multiple receive messages 1`] = `
+"export const WebsocketResponseSchema: Schema<WebsocketResponse.Raw, string | string> = z.undiscriminatedUnion([schema, schema]);
+
+export declare namespace WebsocketResponseSchema {
+    export type Raw = string | string;
+}
+"
+`;
+
+exports[`GeneratedWebsocketResponseSchemaImpl > writeToFile > writes schema for channel with no receive messages 1`] = `
+"export const WebsocketResponseSchema: Schema<WebsocketResponse.Raw, never> = z.never;
+
+export declare namespace WebsocketResponseSchema {
+    export type Raw = never;
+}
+"
+`;
+
+exports[`GeneratedWebsocketResponseSchemaImpl > writeToFile > writes schema for channel with single receive message 1`] = `
+"export const WebsocketResponseSchema: Schema<WebsocketResponse.Raw, string> = z.undiscriminatedUnion([schema]);
+
+export declare namespace WebsocketResponseSchema {
+    export type Raw = string;
+}
+"
+`;

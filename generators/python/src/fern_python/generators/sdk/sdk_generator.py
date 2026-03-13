@@ -1,9 +1,8 @@
-import os
 import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
 from .client_generator.client_generator import ClientGenerator
-from .client_generator.generated_root_client import GeneratedRootClient
+from .client_generator.generated_root_client import GeneratedRootClient, RootClient
 from .client_generator.inferred_auth_token_provider_generator import InferredAuthTokenProviderGenerator
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.raw_client_generator import RawClientGenerator
@@ -25,8 +24,6 @@ from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
-from fern_python.generator_cli import README_FILENAME, GeneratorCli
-from fern_python.generator_cli.generator_cli import REFERENCE_FILENAME
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
 from fern_python.generators.sdk import as_is_copier
@@ -250,6 +247,17 @@ class SdkGenerator(AbstractGenerator):
             oauth_scheme=oauth_scheme,
         )
 
+        # If exported_filename differs from filename, generate an inheritance-based wrapper
+        actual_filename = custom_config.client_filename or custom_config.client.filename
+        if custom_config.client.exported_filename != actual_filename:
+            self._generate_exported_client_wrapper(
+                context=context,
+                custom_config=custom_config,
+                project=project,
+                generated_root_client=generated_root_client,
+                generator_exec_wrapper=generator_exec_wrapper,
+            )
+
         # Since you can customize the client export, we handle it here to capture the generated
         # and non-generated cases. If we were to base this off exporting the class declaration
         # we would have to handle the case where the exported client is not generated.
@@ -272,7 +280,6 @@ class SdkGenerator(AbstractGenerator):
             ],
         )
 
-        write_websocket_snippets = False
         for subpackage_id in ir.subpackages.keys():
             subpackage = ir.subpackages[subpackage_id]
             if subpackage.has_endpoints_in_tree or (
@@ -283,8 +290,6 @@ class SdkGenerator(AbstractGenerator):
                     if ir.websocket_channels and subpackage.websocket
                     else None
                 )
-                if channel_websocket is not None and context.custom_config.should_generate_websocket_clients:
-                    write_websocket_snippets = True
                 self._generate_subpackage_client(
                     context=context,
                     generator_exec_wrapper=generator_exec_wrapper,
@@ -310,16 +315,6 @@ class SdkGenerator(AbstractGenerator):
         output_mode = generator_config.output.mode.get_as_union().type
         print(f"Output mode: {output_mode}")
 
-        generator_cli = GeneratorCli(
-            organization=generator_config.organization,
-            project_config=project._project_config,
-            ir=ir,
-            generator_exec_wrapper=generator_exec_wrapper,
-            context=context,
-            endpoint_metadata=endpoint_metadata_collector,
-            skip_install=True,
-        )
-
         snippets = snippet_registry.snippets()
         if snippets is not None and (
             generator_config.output.mode.get_as_union().type != "downloadFiles" or ir.self_hosted
@@ -329,42 +324,6 @@ class SdkGenerator(AbstractGenerator):
                 snippets=snippets,
                 project=project,
             )
-
-            try:
-                self._write_readme(
-                    context=context,
-                    generator_cli=generator_cli,
-                    snippets=snippets,
-                    project=project,
-                    generated_root_client=generated_root_client,
-                    write_websocket_snippets=write_websocket_snippets,
-                )
-            except Exception as e:
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(
-                            level=LogLevel.DEBUG,
-                            message=f"Failed to generate README.md. Email support@buildwithfern.com with the error: \n{e}\n",
-                        )
-                    )
-                )
-
-            try:
-                self._write_reference(
-                    context=context,
-                    generator_cli=generator_cli,
-                    snippets=snippets,
-                    project=project,
-                )
-            except Exception as e:
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(
-                            level=LogLevel.DEBUG,
-                            message=f"Failed to generate reference.md. Email support@buildwithfern.com with the error: \n{e}\n",
-                        ),
-                    )
-                )
 
         context.core_utilities.copy_to_project(project=project)
 
@@ -558,6 +517,95 @@ class SdkGenerator(AbstractGenerator):
             project.write_source_file(source_file=raw_client_source_file, filepath=raw_client_filepath)
         return generated_root_client
 
+    def _generate_exported_client_wrapper(
+        self,
+        context: SdkGeneratorContext,
+        custom_config: SDKCustomConfig,
+        project: Project,
+        generated_root_client: GeneratedRootClient,
+        generator_exec_wrapper: GeneratorExecWrapper,
+    ) -> None:
+        exported_module = custom_config.client.exported_filename.removesuffix(".py")
+        exported_sync_class = context.get_class_name_for_exported_root_client()
+        exported_async_class = "Async" + exported_sync_class
+
+        filepath = Filepath(
+            directories=(),
+            file=Filepath.FilepathPart(module_name=exported_module),
+        )
+        source_file = context.source_file_factory.create(
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+        )
+
+        generated_filepath = context.get_filepath_for_generated_root_client()
+        generated_sync_name = context.get_class_name_for_generated_root_client()
+        generated_async_name = "Async" + generated_sync_name
+
+        sync_base_class_ref = AST.ClassReference(
+            import_=AST.ReferenceImport(
+                module=generated_filepath.to_module(),
+                named_import=generated_sync_name,
+            ),
+            qualified_name_excluding_import=(),
+        )
+        async_base_class_ref = AST.ClassReference(
+            import_=AST.ReferenceImport(
+                module=generated_filepath.to_module(),
+                named_import=generated_async_name,
+            ),
+            qualified_name_excluding_import=(),
+        )
+
+        sync_class = self._create_wrapper_class_declaration(
+            class_name=exported_sync_class,
+            base_class_ref=sync_base_class_ref,
+            root_client=generated_root_client.sync_client,
+        )
+        async_class = self._create_wrapper_class_declaration(
+            class_name=exported_async_class,
+            base_class_ref=async_base_class_ref,
+            root_client=generated_root_client.async_client,
+        )
+
+        source_file.add_class_declaration(declaration=sync_class, should_export=True)
+        source_file.add_class_declaration(declaration=async_class, should_export=True)
+
+        project.write_source_file(source_file=source_file, filepath=filepath)
+
+    @staticmethod
+    def _create_wrapper_class_declaration(
+        *,
+        class_name: str,
+        base_class_ref: AST.ClassReference,
+        root_client: "RootClient",
+    ) -> AST.ClassDeclaration:
+        params = root_client.init_parameters if root_client.init_parameters is not None else root_client.parameters
+
+        named_params = [
+            AST.NamedFunctionParameter(
+                name=param.constructor_parameter_name,
+                type_hint=param.type_hint,
+                initializer=param.initializer,
+            )
+            for param in params
+        ]
+
+        def write_super_init(writer: AST.NodeWriter) -> None:
+            writer.write_line("super().__init__(")
+            with writer.indent():
+                for param in params:
+                    writer.write_line(f"{param.constructor_parameter_name}={param.constructor_parameter_name},")
+            writer.write_line(")")
+
+        return AST.ClassDeclaration(
+            name=class_name,
+            extends=[base_class_ref],
+            constructor=AST.ClassConstructor(
+                signature=AST.FunctionSignature(named_parameters=named_params),
+                body=AST.CodeWriter(write_super_init),
+            ),
+        )
+
     def _generate_subpackage_client(
         self,
         context: SdkGeneratorContext,
@@ -669,51 +717,6 @@ __version__ = metadata.version("{project._project_config.package_name}")
     ) -> None:
         if context.generator_config.output.snippet_filepath is not None:
             project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
-
-    def _write_readme(
-        self,
-        context: SdkGeneratorContext,
-        generator_cli: GeneratorCli,
-        snippets: Snippets,
-        project: Project,
-        generated_root_client: GeneratedRootClient,
-        write_websocket_snippets: bool,
-    ) -> None:
-        contents = generator_cli.generate_readme(
-            snippets=snippets,
-            github_repo_url=project._github_output_mode.repo_url if project._github_output_mode is not None else None,
-            github_installation_token=(
-                project._github_output_mode.installation_token if project._github_output_mode is not None else None
-            ),
-            pagination_enabled=context.generator_config.generate_paginated_clients,
-            websocket_enabled=write_websocket_snippets,
-            generated_root_client=generated_root_client,
-        )
-        project.add_file(
-            os.path.join(
-                context.generator_config.output.path,
-                README_FILENAME,
-            ),
-            contents,
-        )
-        project.set_generate_readme(False)
-
-    def _write_reference(
-        self,
-        context: SdkGeneratorContext,
-        generator_cli: GeneratorCli,
-        snippets: Snippets,
-        project: Project,
-    ) -> None:
-        contents = generator_cli.generate_reference(snippets=snippets, project=project)
-        if contents is not None:
-            project.add_file(
-                os.path.join(
-                    context.generator_config.output.path,
-                    REFERENCE_FILENAME,
-                ),
-                contents,
-            )
 
     def _write_snippet_tests(
         self,

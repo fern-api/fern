@@ -16,7 +16,7 @@
 client.completions().stream(
     StreamCompletionRequest
         .builder()
-        .query("query")
+        .query("foo")
         .build()
 );
 ```
@@ -89,3 +89,4 @@ client.completions().streamWithoutTerminator(
 </dd>
 </dl>
 </details>
+

@@ -34,5 +34,4 @@ tokio-test = "0.4"
 
 [features]
 default = ["sse"]
-multipart = []
 sse = ["reqwest-sse", "pin-project"]

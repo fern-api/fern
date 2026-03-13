@@ -18,6 +18,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieId'
+      x-fern-availability: pre-release
       requestBody:
         required: true
         content:
@@ -48,6 +49,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MovieId'
+      x-fern-availability: deprecated
 components:
   schemas:
     MovieId:
@@ -65,10 +67,12 @@ components:
           type: number
           format: double
           description: The rating scale is one to five stars
+          x-fern-availability: deprecated
       required:
         - id
         - title
         - rating
+      x-fern-availability: generally-available
     CreateMovieRequest:
       title: CreateMovieRequest
       type: object

@@ -14,5 +14,6 @@ func do() {
     )
     client.Service.Post(
         context.TODO(),
+        "<endpointParam>",
     )
 }

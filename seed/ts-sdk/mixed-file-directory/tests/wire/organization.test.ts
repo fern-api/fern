@@ -16,6 +16,7 @@ describe("OrganizationClient", () => {
                 { id: "id", name: "name", age: 1 },
             ],
         };
+
         server
             .mockEndpoint()
             .post("/organizations/")

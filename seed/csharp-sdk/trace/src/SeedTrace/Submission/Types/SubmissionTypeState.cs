@@ -178,16 +178,24 @@ public record SubmissionTypeState
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "test" => json.Deserialize<SeedTrace.TestSubmissionState?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.TestSubmissionState"
-                    ),
-                "workspace" => json.Deserialize<SeedTrace.WorkspaceSubmissionState?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.WorkspaceSubmissionState"
-                    ),
+                "test" => jsonWithoutDiscriminator.Deserialize<SeedTrace.TestSubmissionState?>(
+                    options
+                ) ?? throw new JsonException("Failed to deserialize SeedTrace.TestSubmissionState"),
+                "workspace" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.WorkspaceSubmissionState?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.WorkspaceSubmissionState"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new SubmissionTypeState(discriminator, value);

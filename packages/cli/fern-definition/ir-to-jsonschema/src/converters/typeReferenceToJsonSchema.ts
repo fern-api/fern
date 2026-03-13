@@ -120,6 +120,10 @@ function convertPrimitiveTypeReferenceToJsonSchema(primitive: PrimitiveTypeV1): 
                 type: "string",
                 pattern: "^-?[0-9]+$"
             };
+        case PrimitiveTypeV1.DateTimeRfc2822:
+            return {
+                type: "string"
+            };
         default:
             assertNever(primitive);
     }

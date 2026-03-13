@@ -360,6 +360,12 @@ public record TestSubmissionUpdateInfo
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "running" => json.GetProperty("value")
@@ -370,14 +376,16 @@ public record TestSubmissionUpdateInfo
                 "stopped" => new { },
                 "errored" => json.GetProperty("value").Deserialize<SeedTrace.ErrorInfo?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.ErrorInfo"),
-                "gradedTestCase" => json.Deserialize<SeedTrace.GradedTestCaseUpdate?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.GradedTestCaseUpdate"
-                    ),
-                "recordedTestCase" => json.Deserialize<SeedTrace.RecordedTestCaseUpdate?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.RecordedTestCaseUpdate"
-                    ),
+                "gradedTestCase" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.GradedTestCaseUpdate?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.GradedTestCaseUpdate"
+                        ),
+                "recordedTestCase" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.RecordedTestCaseUpdate?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.RecordedTestCaseUpdate"
+                        ),
                 "finished" => new { },
                 _ => json.Deserialize<object?>(options),
             };

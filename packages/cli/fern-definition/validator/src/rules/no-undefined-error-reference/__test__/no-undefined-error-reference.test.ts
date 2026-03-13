@@ -15,18 +15,21 @@ describe("no-undefined-error-reference", () => {
         });
         expect(violations).toEqual([
             {
+                name: "no-undefined-error-reference",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("api.yml"),
                 nodePath: ["errors", "MadeUpError"],
                 message: "Error is not defined."
             },
             {
+                name: "no-undefined-error-reference",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 nodePath: ["service", "endpoints", "referenceNonExistentError", "errors", "NonExistentError"],
                 message: "Error is not defined."
             },
             {
+                name: "no-undefined-error-reference",
                 severity: "fatal",
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 nodePath: [

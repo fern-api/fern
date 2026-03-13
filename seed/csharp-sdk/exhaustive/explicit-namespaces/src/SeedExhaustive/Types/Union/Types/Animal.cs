@@ -176,13 +176,23 @@ public record Animal
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'animal' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("animal");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "dog" => json.Deserialize<SeedExhaustive.Types.Union.Dog?>(options)
+                "dog" => jsonWithoutDiscriminator.Deserialize<SeedExhaustive.Types.Union.Dog?>(
+                    options
+                )
                     ?? throw new JsonException(
                         "Failed to deserialize SeedExhaustive.Types.Union.Dog"
                     ),
-                "cat" => json.Deserialize<SeedExhaustive.Types.Union.Cat?>(options)
+                "cat" => jsonWithoutDiscriminator.Deserialize<SeedExhaustive.Types.Union.Cat?>(
+                    options
+                )
                     ?? throw new JsonException(
                         "Failed to deserialize SeedExhaustive.Types.Union.Cat"
                     ),

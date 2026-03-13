@@ -227,16 +227,25 @@ public record SubmissionStatusForTestCase
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "graded" => json.Deserialize<SeedTrace.TestCaseResultWithStdout?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.TestCaseResultWithStdout"
-                    ),
+                "graded" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.TestCaseResultWithStdout?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.TestCaseResultWithStdout"
+                        ),
                 "gradedV2" => json.GetProperty("value")
                     .Deserialize<SeedTrace.TestCaseGrade?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.TestCaseGrade"),
-                "traced" => json.Deserialize<SeedTrace.TracedTestCase?>(options)
+                "traced" => jsonWithoutDiscriminator.Deserialize<SeedTrace.TracedTestCase?>(options)
                     ?? throw new JsonException("Failed to deserialize SeedTrace.TracedTestCase"),
                 _ => json.Deserialize<object?>(options),
             };

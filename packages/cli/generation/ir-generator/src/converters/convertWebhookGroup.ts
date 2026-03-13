@@ -47,13 +47,15 @@ export function convertWebhookGroup({
     file,
     typeResolver,
     exampleResolver,
-    workspace
+    workspace,
+    defaultSignature
 }: {
     webhooks: Record<string, RawSchemas.WebhookSchema>;
     file: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
+    defaultSignature?: RawSchemas.WebhookSignatureSchema;
 }): WebhookGroup {
     const webhookGroup: Webhook[] = [];
     for (const [webhookId, webhook] of Object.entries(webhooks)) {
@@ -71,7 +73,10 @@ export function convertWebhookGroup({
                       )
                     : [],
             payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),
-            signatureVerification: convertWebhookSignatureSchema({ signature: webhook.signature, file }),
+            signatureVerification: convertWebhookSignatureSchema({
+                signature: webhook.signature ?? defaultSignature,
+                file
+            }),
             fileUploadPayload: undefined,
             responses: convertWebhookResponses({ webhook, file, typeResolver }),
             examples:

@@ -8,6 +8,11 @@ api:
 
 sdks:
   targets:
+    go:
+      version: 1.24.0
+      output:
+        path: ./sdks/go
+
     typescript:
       version: 3.45.1
       output:

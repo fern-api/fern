@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from .datetime_utils import serialize_datetime
+from .datetime_utils import Rfc2822DateTime, parse_rfc2822_datetime, serialize_datetime
 from .exceptions import (
     FernHTTPException,
     UnauthorizedException,
@@ -26,6 +26,7 @@ __all__ = [
     "BearerToken",
     "FernHTTPException",
     "FieldMetadata",
+    "Rfc2822DateTime",
     "UnauthorizedException",
     "UniversalBaseModel",
     "UniversalRootModel",
@@ -34,6 +35,7 @@ __all__ = [
     "fern_http_exception_handler",
     "http_exception_handler",
     "parse_obj_as",
+    "parse_rfc2822_datetime",
     "route_args",
     "serialize_datetime",
     "universal_field_validator",

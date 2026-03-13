@@ -13,25 +13,12 @@ import { execSync } from "child_process";
 import inquirer from "inquirer";
 import path from "path";
 import type { FernYmlBuilder } from "../config/fern-yml/FernYmlBuilder";
+import { FETCH_API_SPEC_REQUEST_TIMEOUT_MS } from "../constants";
 import { TaskContextAdapter } from "../context/adapter/TaskContextAdapter";
 import type { Context } from "../context/Context";
-import type { Language } from "../sdk/config/Language";
+import { LANGUAGE_DISPLAY_NAMES, LANGUAGE_ORDER, type Language } from "../sdk/config/Language";
 import { Icons } from "../ui/format";
 import { withSpinner } from "../ui/withSpinner";
-
-const LANGUAGE_DISPLAY_NAMES: Record<Language, string> = {
-    typescript: "TypeScript",
-    python: "Python",
-    go: "Go",
-    java: "Java",
-    csharp: "C#",
-    ruby: "Ruby",
-    php: "PHP",
-    rust: "Rust",
-    swift: "Swift"
-};
-
-const LANGUAGE_ORDER: Language[] = ["typescript", "python", "go", "java", "csharp", "ruby", "php", "rust", "swift"];
 
 const FERN_BANNER = [
     "███████╗███████╗██████╗ ███╗   ██╗",
@@ -257,13 +244,12 @@ export class Wizard {
 
                 case "not-found": {
                     const taskContext = new TaskContextAdapter({ context: this.context });
-                    const created = await withSpinner("Creating organization...", () =>
-                        createOrganizationIfDoesNotExist({
-                            organization,
-                            token,
-                            context: taskContext
-                        })
-                    );
+                    const created = await withSpinner({
+                        message: `Creating organization "${organization}"`,
+                        operation: () =>
+                            createOrganizationIfDoesNotExist({ organization, token, context: taskContext }),
+                        indent: 2
+                    });
                     if (created) {
                         this.context.stderr.info(`  ${Icons.success} Created organization "${organization}"\n`);
                     }
@@ -722,7 +708,7 @@ export class Wizard {
     }
 
     private async fetchApiFromUrl(url: string, specFormat: FernYmlBuilder.SpecFormat): Promise<Wizard.ApiSource> {
-        const response = await fetch(url);
+        const response = await fetch(url, { signal: AbortSignal.timeout(FETCH_API_SPEC_REQUEST_TIMEOUT_MS) });
         if (!response.ok) {
             throw new Error(`HTTP ${response.status} ${response.statusText}`);
         }

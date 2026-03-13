@@ -244,6 +244,29 @@
         },
         {
             "id": {
+                "path": "/object/get-and-return-with-unknown-field",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithUnknownField"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"./src/Client\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithUnknownField({\n    unknown: {\n        \"$ref\": \"https://example.com/schema\"\n    }\n});\n"
+            },
+            "example_identifier": "BackslashExample"
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-documented-unknown-type",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/object.getAndReturnWithDocumentedUnknownType"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExhaustiveClient } from \"./src/Client\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.object.getAndReturnWithDocumentedUnknownType({\n    documentedUnknownType: {\n        \"key\": \"value\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/object/get-and-return-with-datetime-like-string",
                 "method": "POST",
                 "identifier_override": "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString"
@@ -351,6 +374,17 @@
             "snippet": {
                 "type": "typescript",
                 "client": "import { SeedExhaustiveClient } from \"./src/Client\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.modifyWithInlinePath({\n    param: \"param\",\n    body: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "POST",
+                "identifier_override": "endpoint_endpoints/params.uploadWithPath"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { createReadStream } from \"fs\";\nimport { SeedExhaustiveClient } from \"./src/Client\";\n\nconst client = new SeedExhaustiveClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.endpoints.params.uploadWithPath(createReadStream(\"path/to/file\"), \"upload-path\");\n"
             }
         },
         {

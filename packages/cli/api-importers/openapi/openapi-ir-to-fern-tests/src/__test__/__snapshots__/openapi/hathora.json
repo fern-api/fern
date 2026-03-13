@@ -2507,7 +2507,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2554,7 +2553,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2598,7 +2596,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2688,7 +2685,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           response:
             body: string
     CreatePublicLobbyDeprecated:
@@ -2719,7 +2715,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           response:
             body: string
     ListActivePublicLobbiesDeprecated:
@@ -2747,7 +2742,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           response:
             body:
               - state:
@@ -2787,7 +2781,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2860,7 +2853,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -2931,7 +2923,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -3002,7 +2993,6 @@ service:
               ],
               "examples": [
                 {
-                  "headers": {},
                   "path-parameters": {
                     "appId": "appId",
                   },
@@ -3283,7 +3273,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           request:
             initialConfig:
               key: value
@@ -3331,7 +3320,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           request:
             initialConfig:
               key: value
@@ -3379,7 +3367,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           request:
             initialConfig:
               key: value
@@ -3427,7 +3414,6 @@ service:
       examples:
         - path-parameters:
             appId: appId
-          headers: {}
           request:
             visibility: public
             initialConfig:

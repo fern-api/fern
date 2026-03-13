@@ -6,7 +6,7 @@ mod wire_test_utils;
 #[allow(unused_variables, unreachable_code)]
 async fn test_completions_stream_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         ..Default::default()
@@ -18,7 +18,7 @@ async fn test_completions_stream_with_wiremock() {
         .completions
         .stream(
             &StreamCompletionRequest {
-                query: "query".to_string(),
+                query: "foo".to_string(),
             },
             None,
         )
@@ -35,7 +35,7 @@ async fn test_completions_stream_with_wiremock() {
 #[allow(unused_variables, unreachable_code)]
 async fn test_completions_stream_without_terminator_with_wiremock() {
     wire_test_utils::reset_wiremock_requests().await.unwrap();
-    let wiremock_base_url = wire_test_utils::WIREMOCK_BASE_URL;
+    let wiremock_base_url = wire_test_utils::get_wiremock_base_url();
 
     let mut config = ClientConfig {
         ..Default::default()

@@ -45,7 +45,7 @@ class EndpointsUnionWireTest extends WireMockTestCase
         $this->client = new SeedClient(
             token: 'test-token',
         options: [
-            'baseUrl' => 'http://localhost:8080',
+            'baseUrl' => getenv('WIREMOCK_URL') ?: 'http://localhost:8080',
         ],
         );
     }

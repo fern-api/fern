@@ -1355,3 +1355,4 @@ client.NullableOptional.GetSearchResults(
 </dd>
 </dl>
 </details>
+

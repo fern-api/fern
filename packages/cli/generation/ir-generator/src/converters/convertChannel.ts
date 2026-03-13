@@ -71,6 +71,7 @@ export function convertChannel({
         // since there's only 1 channel per file, we can use the file name as the channel's name
         name: file.fernFilepath.file ?? file.casingsGenerator.generateName(channel["display-name"] ?? channel.path),
         displayName: channel["display-name"],
+        connectMethodName: channel["connect-method-name"],
         headers:
             channel.headers != null
                 ? Object.entries(channel.headers).map(([headerKey, header]) =>

@@ -1242,6 +1242,100 @@ client.endpoints().object().getAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
+<details><summary><code>client.endpoints.object.getAndReturnWithUnknownField(request) -> ObjectWithUnknownField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithUnknownField(
+    ObjectWithUnknownField
+        .builder()
+        .unknown(new 
+            HashMap<String, Object>() {{put("$ref", "https://example.com/schema");
+            }})
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithUnknownField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.object.getAndReturnWithDocumentedUnknownType(request) -> ObjectWithDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().object().getAndReturnWithDocumentedUnknownType(
+    ObjectWithDocumentedUnknownType
+        .builder()
+        .documentedUnknownType(new 
+            HashMap<String, Object>() {{put("key", "value");
+            }})
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.endpoints.object.getAndReturnWithDatetimeLikeString(request) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
@@ -1867,6 +1961,60 @@ client.endpoints().params().modifyWithPath("param", "string");
 <dd>
 
 **request:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.endpoints.params.uploadWithPath(param, request) -> ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.endpoints().params().uploadWithPath("upload-path", "".getBytes());
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**param:** `String` 
     
 </dd>
 </dl>
@@ -2705,3 +2853,4 @@ client.reqWithHeaders().getWithCustomHeader(
 </dd>
 </dl>
 </details>
+

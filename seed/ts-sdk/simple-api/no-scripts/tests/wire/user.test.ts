@@ -10,6 +10,7 @@ describe("UserClient", () => {
         const client = new SeedSimpleApiClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
         
         const rawResponseBody = { "id" : "id" , "name" : "name" , "email" : "email" };
+        
         server
             .mockEndpoint()
             .get("/users/id").respondWith()
@@ -17,15 +18,15 @@ describe("UserClient", () => {
                 .build();
 
         
-                    
-                            const response = await client.user.get("id");
-                            expect(response).toEqual({
+                        
+                                const response = await client.user.get("id");
+                                expect(response).toEqual({
     id: "id",
     name: "name",
     email: "email"
 });
-                          
-                
+                              
+                    
     });
           
 });

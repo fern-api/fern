@@ -27,13 +27,17 @@ export const NoNonComponentRefsRule: Rule = {
                                     );
 
                                     // Skip OpenAPI v2 files - they should be handled by the v2 rule first
-                                    const isOpenApiV2 =
+                                    // Check both YAML format (swagger: "2.0") and JSON format ("swagger": "2.0")
+                                    const isOpenApiV2Yaml =
                                         contents.includes("swagger:") &&
                                         (contents.includes('swagger: "2.0"') ||
                                             contents.includes("swagger: '2.0'") ||
                                             contents.includes("swagger: 2.0"));
+                                    const isOpenApiV2Json =
+                                        contents.includes('"swagger":') &&
+                                        (contents.includes('"swagger":"2.0"') || contents.includes('"swagger": "2.0"'));
 
-                                    if (isOpenApiV2) {
+                                    if (isOpenApiV2Yaml || isOpenApiV2Json) {
                                         continue; // Skip v2 files
                                     }
 

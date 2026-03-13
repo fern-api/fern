@@ -4,16 +4,12 @@ vi.mock("@fern-api/login", () => ({
     askToLogin: vi.fn()
 }));
 
-vi.mock("@fern-api/core", () => ({
-    createFdrService: vi.fn()
-}));
-
 vi.mock("@fern-api/library-docs-generator", () => ({
-    generate: vi.fn()
+    generate: vi.fn(),
+    generateCpp: vi.fn()
 }));
 
-import { createFdrService } from "@fern-api/core";
-import { generate } from "@fern-api/library-docs-generator";
+import { generate, generateCpp } from "@fern-api/library-docs-generator";
 import { askToLogin } from "@fern-api/login";
 import { type GenerateLibraryDocsOptions, generateLibraryDocs } from "../generateLibraryDocs.js";
 
@@ -53,7 +49,10 @@ function makeMockCliContext() {
                     runInteractiveTask: vi.fn(async ({ name }, taskFn) => {
                         logs.push(`Starting task: ${name}`);
                         await taskFn({
-                            logger: { debug: (m: string) => logs.push(`[DEBUG] ${m}`) },
+                            logger: {
+                                info: (m: string) => logs.push(m),
+                                debug: (m: string) => logs.push(`[DEBUG] ${m}`)
+                            },
                             setSubtitle: (subtitle: string) => logs.push(`[SUBTITLE] ${subtitle}`),
                             failAndThrow: fail
                         });
@@ -84,33 +83,94 @@ function makeMockProject({
     };
 }
 
-function makeMockFdr({
+/**
+ * Creates a mock fetch that routes requests based on URL to simulate the
+ * library docs API endpoints and S3 IR download.
+ *
+ * The new oRPC-style client uses plain fetch, so we intercept all fetch calls
+ * and dispatch based on the URL pattern.
+ */
+function makeMockFetch({
     startResponse,
     statusResponses,
-    resultResponse
+    resultResponse,
+    irResponse
 }: {
-    startResponse: unknown;
-    statusResponses: unknown[];
-    resultResponse?: unknown;
+    /** Direct return value for POST /library-docs/generate */
+    startResponse: { body: unknown; ok?: boolean };
+    /** Sequential return values for GET /library-docs/status/* */
+    statusResponses: { body: unknown; ok?: boolean }[];
+    /** Return value for GET /library-docs/result/* */
+    resultResponse?: { body: unknown; ok?: boolean };
+    /** Return value for the S3 IR download */
+    irResponse?: unknown;
 }) {
     let statusCallIndex = 0;
-    return {
-        docs: {
-            v2: {
-                write: {
-                    startLibraryDocsGeneration: vi.fn().mockResolvedValue(startResponse),
-                    getLibraryDocsGenerationStatus: vi.fn().mockImplementation(async () => {
-                        return statusResponses[statusCallIndex++];
-                    }),
-                    getLibraryDocsResult: vi
-                        .fn()
-                        .mockResolvedValue(
-                            resultResponse ?? { ok: true, body: { resultUrl: "https://s3.example.com/ir.json" } }
-                        )
-                }
+    const startCalls: unknown[] = [];
+
+    const mockFn = vi.fn().mockImplementation(async (url: string, init?: RequestInit) => {
+        const urlStr = String(url);
+
+        // POST /library-docs/generate
+        if (urlStr.includes("/library-docs/generate") && init?.method === "POST") {
+            const body = init.body ? JSON.parse(String(init.body)) : undefined;
+            startCalls.push(body);
+            const resp = startResponse;
+            if (resp.ok === false) {
+                return {
+                    ok: false,
+                    status: 401,
+                    text: async () => JSON.stringify(resp.body),
+                    json: async () => resp.body
+                };
             }
+            return {
+                ok: true,
+                status: 200,
+                json: async () => resp.body,
+                text: async () => JSON.stringify(resp.body)
+            };
         }
-    };
+
+        // GET /library-docs/status/*
+        if (urlStr.includes("/library-docs/status/")) {
+            const resp = statusResponses[statusCallIndex++];
+            if (!resp || resp.ok === false) {
+                return {
+                    ok: false,
+                    status: 500,
+                    text: async () => JSON.stringify(resp?.body ?? {}),
+                    json: async () => resp?.body ?? {}
+                };
+            }
+            return {
+                ok: true,
+                status: 200,
+                json: async () => resp.body,
+                text: async () => JSON.stringify(resp.body)
+            };
+        }
+
+        // GET /library-docs/result/*
+        if (urlStr.includes("/library-docs/result/")) {
+            const resp = resultResponse ?? { body: { resultUrl: "https://s3.example.com/ir.json" }, ok: true };
+            return {
+                ok: resp.ok !== false,
+                status: resp.ok !== false ? 200 : 500,
+                json: async () => resp.body,
+                text: async () => JSON.stringify(resp.body)
+            };
+        }
+
+        // S3 IR download (any other URL)
+        return {
+            ok: true,
+            status: 200,
+            json: async () => irResponse ?? { ir: mockIr }
+        };
+    });
+
+    return { mockFn, startCalls };
 }
 
 const mockIr = {
@@ -124,6 +184,7 @@ describe("generateLibraryDocs", () => {
         vi.clearAllMocks();
         vi.useFakeTimers();
         originalFetch = globalThis.fetch;
+        // Default fetch mock — individual tests override via makeMockFetch
         globalThis.fetch = vi.fn().mockResolvedValue({
             ok: true,
             json: async () => ({ ir: mockIr })
@@ -214,15 +275,15 @@ describe("generateLibraryDocs", () => {
 
         (askToLogin as Mock).mockResolvedValue({ type: "user", value: "tok-123" });
 
-        const mockFdr = makeMockFdr({
-            startResponse: { ok: true, body: { jobId: "job-1" } },
+        const { mockFn, startCalls } = makeMockFetch({
+            startResponse: { body: { jobId: "job-1" } },
             statusResponses: [
-                { ok: true, body: { status: "PENDING" } },
-                { ok: true, body: { status: "PARSING" } },
-                { ok: true, body: { status: "COMPLETED" } }
+                { body: { status: "PENDING", jobId: "job-1", progress: "", createdAt: "", updatedAt: "" } },
+                { body: { status: "PARSING", jobId: "job-1", progress: "", createdAt: "", updatedAt: "" } },
+                { body: { status: "COMPLETED", jobId: "job-1", progress: "", createdAt: "", updatedAt: "" } }
             ]
         });
-        (createFdrService as Mock).mockReturnValue(mockFdr);
+        globalThis.fetch = mockFn as unknown as typeof fetch;
 
         (generate as Mock).mockReturnValue({
             navigation: [],
@@ -244,11 +305,18 @@ describe("generateLibraryDocs", () => {
 
         await promise;
 
-        expect(createFdrService).toHaveBeenCalledWith({ token: "tok-123" });
-
-        const startCall = mockFdr.docs.v2.write.startLibraryDocsGeneration.mock.calls[0]?.[0];
+        // Verify the start call sent correct language and githubUrl
+        expect(startCalls.length).toBeGreaterThan(0);
+        const startCall = startCalls[0] as Record<string, unknown>;
         expect(startCall.language).toBe("PYTHON");
         expect(startCall.githubUrl).toBe("https://github.com/acme/sdk");
+
+        // Verify the fetch was called with auth header containing the token
+        const fetchCalls = mockFn.mock.calls as Array<[string, RequestInit | undefined]>;
+        const authHeaders = fetchCalls
+            .filter(([, init]) => init?.headers != null)
+            .map(([, init]) => (init?.headers as Record<string, string>)?.Authorization);
+        expect(authHeaders.some((h: string | undefined) => h === "Bearer tok-123")).toBe(true);
 
         expect(generate).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -275,13 +343,22 @@ describe("generateLibraryDocs", () => {
 
         (askToLogin as Mock).mockResolvedValue({ type: "user", value: "tok" });
 
-        const mockFdr = makeMockFdr({
-            startResponse: { ok: true, body: { jobId: "job-fail" } },
+        const { mockFn } = makeMockFetch({
+            startResponse: { body: { jobId: "job-fail" } },
             statusResponses: [
-                { ok: true, body: { status: "FAILED", error: { code: "PARSE_FAILED", message: "Bad syntax" } } }
+                {
+                    body: {
+                        status: "FAILED",
+                        jobId: "job-fail",
+                        progress: "",
+                        error: { code: "PARSE_FAILED", message: "Bad syntax" },
+                        createdAt: "",
+                        updatedAt: ""
+                    }
+                }
             ]
         });
-        (createFdrService as Mock).mockReturnValue(mockFdr);
+        globalThis.fetch = mockFn as unknown as typeof fetch;
 
         const promise = generateLibraryDocs({
             project: project as unknown as GenerateLibraryDocsOptions["project"],
@@ -311,11 +388,11 @@ describe("generateLibraryDocs", () => {
 
         (askToLogin as Mock).mockResolvedValue({ type: "user", value: "tok" });
 
-        const mockFdr = makeMockFdr({
-            startResponse: { ok: false, error: { error: "UnauthorizedError" } },
+        const { mockFn } = makeMockFetch({
+            startResponse: { body: { error: "UnauthorizedError" }, ok: false },
             statusResponses: []
         });
-        (createFdrService as Mock).mockReturnValue(mockFdr);
+        globalThis.fetch = mockFn as unknown as typeof fetch;
 
         await expect(
             generateLibraryDocs({
@@ -340,13 +417,19 @@ describe("generateLibraryDocs", () => {
 
         (askToLogin as Mock).mockResolvedValue({ type: "user", value: "tok" });
 
-        const mockFdr = makeMockFdr({
-            startResponse: { ok: true, body: { jobId: "job-cpp" } },
-            statusResponses: [{ ok: true, body: { status: "COMPLETED" } }]
+        const cppMockIr = {
+            rootNamespace: { name: "acme", namespaces: [], classes: [], functions: [], enums: [], typedefs: [] }
+        };
+        const { mockFn, startCalls } = makeMockFetch({
+            startResponse: { body: { jobId: "job-cpp" } },
+            statusResponses: [
+                { body: { status: "COMPLETED", jobId: "job-cpp", progress: "", createdAt: "", updatedAt: "" } }
+            ],
+            irResponse: { ir: cppMockIr }
         });
-        (createFdrService as Mock).mockReturnValue(mockFdr);
+        globalThis.fetch = mockFn as unknown as typeof fetch;
 
-        (generate as Mock).mockReturnValue({
+        (generateCpp as Mock).mockReturnValue({
             navigation: [],
             rootPageId: "cpp-lib/lib.mdx",
             writtenFiles: [],
@@ -363,7 +446,8 @@ describe("generateLibraryDocs", () => {
         await advancePolling();
         await promise;
 
-        const startCall = mockFdr.docs.v2.write.startLibraryDocsGeneration.mock.calls[0]?.[0];
+        expect(startCalls.length).toBeGreaterThan(0);
+        const startCall = startCalls[0] as Record<string, unknown>;
         expect(startCall.language).toBe("CPP");
     });
 });

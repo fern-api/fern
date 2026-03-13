@@ -49,9 +49,12 @@ fixtures:
         includeLegacyClientOptions: true
 
 scripts:
-  - image: golang:1.23.8-alpine3.20
+  - image: fernapi/go-seed:2.0.0
     commands:
-      - CGO_ENABLED=0 go test ./...
+      build:
+        - golangci-lint run --timeout=5m --allow-parallel-runners
+      test:
+        - CGO_ENABLED=0 go test ./...
 
 allowedFailures:
   - enum

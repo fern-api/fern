@@ -79,6 +79,7 @@ export * from "./SupportedSdkLanguage.js";
 export * from "./Tags.js";
 export * from "./TextResponse.js";
 export * from "./UnDiscriminatedOneOfSchema.js";
+export * from "./UnknownSchema.js";
 export * from "./UriPagination.js";
 export * from "./Webhook.js";
 export * from "./WebhookExampleCall.js";

@@ -3,11 +3,11 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 #[serde(untagged)]
 pub enum UnionWithTypeAliases {
-        String(String),
+    String(String),
 
-        UserId(UserId),
+    UserId(UserId),
 
-        Name(Name),
+    Name(Name),
 }
 
 impl UnionWithTypeAliases {
@@ -23,57 +23,63 @@ impl UnionWithTypeAliases {
         matches!(self, Self::Name(_))
     }
 
-
     pub fn as_string(&self) -> Option<&String> {
         match self {
-                    Self::String(value) => Some(value),
-                    _ => None,
-                }
+            Self::String(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_string(self) -> Option<String> {
         match self {
-                    Self::String(value) => Some(value),
-                    _ => None,
-                }
+            Self::String(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_userid(&self) -> Option<&UserId> {
         match self {
-                    Self::UserId(value) => Some(value),
-                    _ => None,
-                }
+            Self::UserId(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_userid(self) -> Option<UserId> {
         match self {
-                    Self::UserId(value) => Some(value),
-                    _ => None,
-                }
+            Self::UserId(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn as_name(&self) -> Option<&Name> {
         match self {
-                    Self::Name(value) => Some(value),
-                    _ => None,
-                }
+            Self::Name(value) => Some(value),
+            _ => None,
+        }
     }
 
     pub fn into_name(self) -> Option<Name> {
         match self {
-                    Self::Name(value) => Some(value),
-                    _ => None,
-                }
+            Self::Name(value) => Some(value),
+            _ => None,
+        }
     }
-
 }
 
 impl fmt::Display for UnionWithTypeAliases {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::String(value) => write!(f, "{}", value),
-            Self::UserId(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
-            Self::Name(value) => write!(f, "{}", serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))),
+            Self::UserId(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
+            Self::Name(value) => write!(
+                f,
+                "{}",
+                serde_json::to_string(value).unwrap_or_else(|_| format!("{:?}", value))
+            ),
         }
     }
 }

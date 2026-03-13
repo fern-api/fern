@@ -14,7 +14,7 @@
 
 ```go
 request := &sse.StreamCompletionRequest{
-        Query: "query",
+        Query: "foo",
     }
 client.Completions.Stream(
         context.TODO(),
@@ -93,3 +93,4 @@ client.Completions.StreamWithoutTerminator(
 </dd>
 </dl>
 </details>
+

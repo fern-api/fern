@@ -33,13 +33,19 @@ import com.fern.java.client.generators.AsyncRootClientGenerator;
 import com.fern.java.client.generators.AsyncSubpackageClientGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
+import com.fern.java.client.generators.ConsoleLoggerGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.ErrorGenerator;
 import com.fern.java.client.generators.FileStreamGenerator;
 import com.fern.java.client.generators.HttpResponseGenerator;
+import com.fern.java.client.generators.ILoggerGenerator;
 import com.fern.java.client.generators.InferredAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
+import com.fern.java.client.generators.LogConfigGenerator;
+import com.fern.java.client.generators.LogLevelGenerator;
+import com.fern.java.client.generators.LoggerGenerator;
+import com.fern.java.client.generators.LoggingInterceptorGenerator;
 import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
@@ -69,6 +75,7 @@ import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.OptionalNullableGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
 import com.fern.java.generators.QueryStringMapperGenerator;
+import com.fern.java.generators.Rfc2822DateTimeDeserializerGenerator;
 import com.fern.java.generators.SseEventGenerator;
 import com.fern.java.generators.SseEventParserGenerator;
 import com.fern.java.generators.StreamGenerator;
@@ -83,6 +90,7 @@ import com.fern.java.output.GeneratedResourcesJavaFile;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
+import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
@@ -109,6 +117,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
     private final List<String> subprojects = new ArrayList<>();
 
     private final List<AbstractGradleDependency> dependencies = new ArrayList<>();
+
+    private final List<GradlePlugin> customPlugins = new ArrayList<>();
 
     public Cli() {
         this.dependencies.addAll(List.of(
@@ -168,6 +178,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .useNullableAnnotation(customConfig.useNullableAnnotation())
                 .collapseOptionalNullable(customConfig.collapseOptionalNullable())
                 .gradleCentralDependencyManagement(customConfig.gradleCentralDependencyManagement())
+                .customInterceptors(customConfig.customInterceptors())
+                .customPlugins(customConfig.customPlugins())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
@@ -323,6 +335,24 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         RetryInterceptorGenerator retryInterceptorGenerator = new RetryInterceptorGenerator(context);
         this.addGeneratedFile(retryInterceptorGenerator.generateFile());
 
+        LogLevelGenerator logLevelGenerator = new LogLevelGenerator(context);
+        this.addGeneratedFile(logLevelGenerator.generateFile());
+
+        ILoggerGenerator iLoggerGenerator = new ILoggerGenerator(context);
+        this.addGeneratedFile(iLoggerGenerator.generateFile());
+
+        ConsoleLoggerGenerator consoleLoggerGenerator = new ConsoleLoggerGenerator(context);
+        this.addGeneratedFile(consoleLoggerGenerator.generateFile());
+
+        LogConfigGenerator logConfigGenerator = new LogConfigGenerator(context);
+        this.addGeneratedFile(logConfigGenerator.generateFile());
+
+        LoggerGenerator loggerGenerator = new LoggerGenerator(context);
+        this.addGeneratedFile(loggerGenerator.generateFile());
+
+        LoggingInterceptorGenerator loggingInterceptorGenerator = new LoggingInterceptorGenerator(context);
+        this.addGeneratedFile(loggingInterceptorGenerator.generateFile());
+
         ResponseBodyInputStreamGenerator responseBodyInputStreamGenerator =
                 new ResponseBodyInputStreamGenerator(context);
         this.addGeneratedFile(responseBodyInputStreamGenerator.generateFile());
@@ -367,6 +397,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
         this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
+
+        Rfc2822DateTimeDeserializerGenerator rfc2822DateTimeDeserializerGenerator =
+                new Rfc2822DateTimeDeserializerGenerator(context);
+        this.addGeneratedFile(rfc2822DateTimeDeserializerGenerator.generateFile());
 
         StreamGenerator streamGenerator = new StreamGenerator(context);
         this.addGeneratedFile(streamGenerator.generateFile());
@@ -677,12 +711,27 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 dependencies.add(GradleDependency.of(dep));
             }
         });
+
+        context.getCustomConfig().customPlugins().ifPresent(plugins -> {
+            for (String plugin : plugins) {
+                try {
+                    customPlugins.add(GradlePlugin.of(plugin));
+                } catch (IllegalArgumentException e) {
+                    throw new RuntimeException("Failed to parse custom-plugins configuration: " + e.getMessage(), e);
+                }
+            }
+        });
         return generatedAsyncRootClient;
     }
 
     @Override
     public List<AbstractGradleDependency> getBuildGradleDependencies() {
         return dependencies;
+    }
+
+    @Override
+    public List<GradlePlugin> getCustomPlugins() {
+        return customPlugins;
     }
 
     @Override

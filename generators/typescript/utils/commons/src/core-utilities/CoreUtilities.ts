@@ -10,6 +10,7 @@ import { Runtime } from "./Runtime.js";
 import { Stream } from "./Stream.js";
 import { UrlUtils } from "./UrlUtils.js";
 import { Utils } from "./Utils.js";
+import { WebhookCrypto } from "./WebhookCrypto.js";
 import { Websocket } from "./Websocket.js";
 import { Zurg } from "./Zurg.js";
 
@@ -28,4 +29,5 @@ export interface CoreUtilities {
     fileUtils: FileUtils;
     urlUtils: UrlUtils;
     logging: Logging;
+    webhookCrypto: WebhookCrypto;
 }

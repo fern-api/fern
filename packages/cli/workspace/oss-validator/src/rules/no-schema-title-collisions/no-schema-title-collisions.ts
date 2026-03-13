@@ -70,6 +70,7 @@ export const NoSchemaTitleCollisionsRule: Rule = {
                 const existing = titleRegistry.get(title);
                 if (existing != null) {
                     violations.push({
+                        name: "no-schema-title-collisions",
                         severity: "error",
                         relativeFilepath,
                         nodePath: ["components", "schemas", schemaId, "title"],

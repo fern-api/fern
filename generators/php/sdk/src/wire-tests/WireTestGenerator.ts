@@ -190,7 +190,7 @@ export class WireTestGenerator {
                     }
                     writer.writeLine("options: [");
                     writer.indent();
-                    writer.writeLine("'baseUrl' => 'http://localhost:8080',");
+                    writer.writeLine("'baseUrl' => getenv('WIREMOCK_URL') ?: 'http://localhost:8080',");
                     writer.dedent();
                     writer.write("]");
                     if (authParams.length === 0) {

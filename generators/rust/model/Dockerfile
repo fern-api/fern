@@ -8,6 +8,4 @@ RUN rustfmt --version  # Verify rustfmt is available
 
 COPY generators/rust/model/dist /dist
 
-RUN npm install -f -g @fern-api/generator-cli@0.5.3
-
 ENTRYPOINT ["node", "--enable-source-maps", "/dist/cli.cjs", "rust-model"]

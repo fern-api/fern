@@ -63,6 +63,10 @@ export function buildChannel({
         convertedChannel["display-name"] = channel.summary;
     }
 
+    if (channel.connectMethodName != null) {
+        convertedChannel["connect-method-name"] = channel.connectMethodName;
+    }
+
     if (channel.description != null) {
         convertedChannel.docs = channel.description;
     }

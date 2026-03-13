@@ -1176,6 +1176,98 @@ $client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithUnknownField($request) -> ObjectWithUnknownField</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnWithUnknownField(
+    new ObjectWithUnknownField([
+        'unknown' => [
+            '$ref' => "https://example.com/schema",
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `ObjectWithUnknownField` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDocumentedUnknownType($request) -> ObjectWithDocumentedUnknownType</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->object->getAndReturnWithDocumentedUnknownType(
+    new ObjectWithDocumentedUnknownType([
+        'documentedUnknownType' => [
+            'key' => "value",
+        ],
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `ObjectWithDocumentedUnknownType` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;endpoints-&gt;object-&gt;getAndReturnWithDatetimeLikeString($request) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
@@ -1805,6 +1897,63 @@ $client->endpoints->params->modifyWithPath(
 <dd>
 
 **$request:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;endpoints-&gt;params-&gt;uploadWithPath($param) -> ObjectWithRequiredField</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+POST bytes with path param returning object
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->params->uploadWithPath(
+    'upload-path',
+    ,
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$param:** `string` 
     
 </dd>
 </dl>
@@ -2647,3 +2796,4 @@ $client->reqWithHeaders->getWithCustomHeader(
 </dd>
 </dl>
 </details>
+

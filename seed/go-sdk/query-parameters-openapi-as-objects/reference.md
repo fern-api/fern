@@ -92,6 +92,16 @@ request := &fern.SearchRequest{
                 "filter",
             ),
         },
+        Tags: []*string{
+            fern.String(
+                "tags",
+            ),
+        },
+        OptionalTags: []*string{
+            fern.String(
+                "optionalTags",
+            ),
+        },
         Neighbor: &fern.SearchRequestNeighbor{
             User: &fern.User{
                 Name: fern.String(
@@ -246,6 +256,22 @@ client.Search(
 <dl>
 <dd>
 
+**tags:** `*string` — List of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optionalTags:** `*string` — Optional list of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **neighbor:** `*fern.SearchRequestNeighbor` 
     
 </dd>
@@ -265,3 +291,4 @@ client.Search(
 </dd>
 </dl>
 </details>
+

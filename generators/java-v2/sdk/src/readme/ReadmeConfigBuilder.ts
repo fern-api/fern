@@ -27,12 +27,14 @@ export class ReadmeConfigBuilder {
 
         for (const feature of featureConfig.features) {
             const snippetsForFeature = snippetsByFeatureId[feature.id];
+            const addendumForFeature = addendumsByFeatureId[feature.id];
 
-            if (snippetsForFeature == null || !snippetsForFeature.length) {
+            // Skip features that have no snippets and no addendum
+            const hasSnippets = snippetsForFeature != null && snippetsForFeature.length > 0;
+            const hasAddendum = addendumForFeature != null;
+            if (!hasSnippets && !hasAddendum) {
                 continue;
             }
-
-            const addendumForFeature = addendumsByFeatureId[feature.id];
 
             // Customize description for Pagination when using custom pagination
             let description = feature.description;
@@ -56,9 +58,9 @@ export class ReadmeConfigBuilder {
                 id: feature.id,
                 advanced: feature.advanced,
                 description,
-                snippets: snippetsForFeature,
+                snippets: hasSnippets ? snippetsForFeature : undefined,
                 addendum: addendumForFeature,
-                snippetsAreOptional: false
+                snippetsAreOptional: !hasSnippets
             });
         }
 

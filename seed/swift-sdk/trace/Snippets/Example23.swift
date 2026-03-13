@@ -10,27 +10,15 @@ private func main() async throws {
     _ = try await client.problem.getDefaultStarterFiles(request: .init(
         inputParams: [
             VariableTypeAndName(
-                variableType: VariableType.integerType(
-                    .init(
-
-                    )
-                ),
+                variableType: VariableType.integerType,
                 name: "name"
             ),
             VariableTypeAndName(
-                variableType: VariableType.integerType(
-                    .init(
-
-                    )
-                ),
+                variableType: VariableType.integerType,
                 name: "name"
             )
         ],
-        outputType: VariableType.integerType(
-            .init(
-
-            )
-        ),
+        outputType: VariableType.integerType,
         methodName: "methodName"
     ))
 }

@@ -75,7 +75,7 @@ export class ErrorGenerator {
     }
 
     private getStandardVariants(): EnumVariant[] {
-        return [
+        const variants = [
             this.buildStandardVariant("Http", "HTTP error {status}: {message}", [
                 { name: "status", type: Type.primitive(PrimitiveType.U16) },
                 { name: "message", type: Type.string() }
@@ -92,6 +92,14 @@ export class ErrorGenerator {
             this.buildStandardVariant("StreamTerminated", "SSE stream terminated"),
             this.buildStandardVariant("SseParseError", "SSE parse error: {0}", undefined, [Type.string()])
         ];
+
+        if (this.context.hasWebSocketChannels()) {
+            variants.push(
+                this.buildStandardVariant("WebSocketError", "WebSocket error: {0}", undefined, [Type.string()])
+            );
+        }
+
+        return variants;
     }
 
     private buildStandardVariant(

@@ -64,9 +64,18 @@ export class StructGenerator {
         // Add inheritance fields first (with serde flatten)
         fields.push(...this.generateInheritanceFields());
 
+        // Determine if this type is a WebSocket server message body type.
+        // If so, skip the `type` property because the parent enum uses
+        // #[serde(tag = "type")] which consumes that field for dispatch.
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
+        const skipTypeField = typeId != null && this.context.websocketServerMessageTypeIds.has(typeId);
+
         // Add regular properties
+        const properties = skipTypeField
+            ? this.objectTypeDeclaration.properties.filter((p) => p.name.wireValue !== "type")
+            : this.objectTypeDeclaration.properties;
         fields.push(
-            ...this.objectTypeDeclaration.properties.map((property) => this.generateRustFieldForProperty(property))
+            ...properties.map((property) => this.generateRustFieldForProperty(property))
         );
 
         return rust.struct({

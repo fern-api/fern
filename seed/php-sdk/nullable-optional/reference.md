@@ -1123,3 +1123,4 @@ $client->nullableOptional->getSearchResults(
 </dd>
 </dl>
 </details>
+

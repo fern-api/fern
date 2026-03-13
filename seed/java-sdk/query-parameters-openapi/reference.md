@@ -73,6 +73,12 @@ client.search(
         .filter(
             Arrays.asList("filter")
         )
+        .tags(
+            Arrays.asList("tags")
+        )
+        .optionalTags(
+            Arrays.asList("optionalTags")
+        )
         .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .keyValue(
             new HashMap<String, String>() {{
@@ -249,6 +255,22 @@ client.search(
 <dl>
 <dd>
 
+**tags:** `Optional<String>` — List of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optionalTags:** `Optional<String>` — Optional list of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **neighbor:** `Optional<SearchRequestNeighbor>` 
     
 </dd>
@@ -268,3 +290,4 @@ client.search(
 </dd>
 </dl>
 </details>
+

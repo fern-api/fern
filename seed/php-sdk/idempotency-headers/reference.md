@@ -94,3 +94,4 @@ $client->payment->delete(
 </dd>
 </dl>
 </details>
+

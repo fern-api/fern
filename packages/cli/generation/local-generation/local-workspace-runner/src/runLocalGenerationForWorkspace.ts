@@ -1,13 +1,21 @@
-import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
+import {
+    checkVersionDoesNotAlreadyExist,
+    computeSemanticVersion,
+    getOriginGitCommit,
+    getPackageNameFromGeneratorConfig
+} from "@fern-api/api-workspace-commons";
+import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-validator";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
-import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
-import { assertNever, ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/github";
+import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { logReplaySummary, type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli";
+import { cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -15,12 +23,12 @@ import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
-import { Octokit } from "@octokit/rest";
 import chalk from "chalk";
 import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+import { AutoVersioningCache } from "./AutoVersioningCache.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 import { isAutoVersion } from "./VersionUtils.js";
 
@@ -35,7 +43,10 @@ export async function runLocalGenerationForWorkspace({
     context,
     absolutePathToPreview,
     runner,
-    ai
+    ai,
+    replay,
+    noReplay,
+    validateWorkspace
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -48,7 +59,33 @@ export async function runLocalGenerationForWorkspace({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     ai: generatorsYml.AiServicesSchema | undefined;
+    replay?: generatorsYml.ReplayConfigSchema | undefined;
+    noReplay?: boolean;
+    validateWorkspace?: boolean;
 }): Promise<void> {
+    // Fail fast: check all generators for version conflicts BEFORE starting any IR generation.
+    // This avoids wasted work when one generator would fail the version check.
+    const userProvidedVersion = version;
+    if (userProvidedVersion != null) {
+        if (absolutePathToPreview != null) {
+            context.logger.warn(
+                "Skipping version availability check in preview mode. " +
+                    `Version ${userProvidedVersion} may already exist on the package registry.`
+            );
+        } else {
+            for (const generatorInvocation of generatorGroup.generators) {
+                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                await checkVersionDoesNotAlreadyExist({
+                    version: userProvidedVersion,
+                    packageName,
+                    generatorInvocation,
+                    context
+                });
+            }
+        }
+    }
+
+    const autoVersioningCache = new AutoVersioningCache();
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
@@ -62,6 +99,15 @@ export async function runLocalGenerationForWorkspace({
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
                     generatorInvocation.apiOverride?.specs
                 );
+
+                if (validateWorkspace) {
+                    await validateAPIWorkspaceAndLogIssues({
+                        workspace: fernWorkspace,
+                        context,
+                        logWarnings: false,
+                        ossWorkspace: workspace instanceof OSSWorkspace ? workspace : undefined
+                    });
+                }
 
                 const dynamicGeneratorConfig = getDynamicGeneratorConfig({
                     apiName: fernWorkspace.definition.rootApiFile.contents.name,
@@ -92,7 +138,8 @@ export async function runLocalGenerationForWorkspace({
                         cliVersion: workspace.cliVersion,
                         generatorName: generatorInvocation.name,
                         generatorVersion: generatorInvocation.version,
-                        generatorConfig: generatorInvocation.config
+                        generatorConfig: generatorInvocation.config,
+                        originGitCommit: getOriginGitCommit()
                     }
                 });
 
@@ -250,43 +297,92 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
-                const { shouldCommit, autoVersioningCommitMessage } = await writeFilesToDiskAndRunGenerator({
-                    organization: projectConfig.organization,
-                    absolutePathToFernConfig: projectConfig._absolutePath,
-                    workspace: fernWorkspace,
-                    generatorInvocation,
-                    absolutePathToLocalOutput,
-                    absolutePathToLocalSnippetJSON,
-                    absolutePathToLocalSnippetTemplateJSON: undefined,
-                    version,
-                    audiences: generatorGroup.audiences,
-                    workspaceTempDir,
-                    keepDocker,
-                    context: interactiveTaskContext,
-                    irVersionOverride: generatorInvocation.irVersionOverride,
-                    outputVersionOverride: version,
-                    writeUnitTests: true,
-                    generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
-                    generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
-                    includeOptionalRequestPropertyExamples: false,
-                    inspect,
-                    executionEnvironment: undefined, // This should use the Docker fallback with proper image name
-                    ir: intermediateRepresentation,
-                    whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
-                    runner,
-                    ai
-                });
+                const { shouldCommit, autoVersioningCommitMessage, autoVersioningChangelogEntry } =
+                    await writeFilesToDiskAndRunGenerator({
+                        organization: projectConfig.organization,
+                        absolutePathToFernConfig: projectConfig._absolutePath,
+                        workspace: fernWorkspace,
+                        generatorInvocation,
+                        absolutePathToLocalOutput,
+                        absolutePathToLocalSnippetJSON,
+                        absolutePathToLocalSnippetTemplateJSON: undefined,
+                        version,
+                        audiences: generatorGroup.audiences,
+                        workspaceTempDir,
+                        keepDocker,
+                        context: interactiveTaskContext,
+                        irVersionOverride: generatorInvocation.irVersionOverride,
+                        outputVersionOverride: version,
+                        writeUnitTests: true,
+                        generateOauthClients: organization.ok
+                            ? (organization?.body.oauthClientEnabled ?? false)
+                            : false,
+                        generatePaginatedClients: organization.ok
+                            ? (organization?.body.paginationEnabled ?? false)
+                            : false,
+                        includeOptionalRequestPropertyExamples: false,
+                        inspect,
+                        executionEnvironment: undefined, // This should use the Docker fallback with proper image name
+                        ir: intermediateRepresentation,
+                        whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
+                        runner,
+                        ai,
+                        autoVersioningCache,
+                        absolutePathToSpecRepo: dirname(workspace.absoluteFilePath)
+                    });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
+                // Run post-generation pipeline (replay + GitHub) when outputting to a self-hosted GitHub repo
                 if (selfhostedGithubConfig != null && shouldCommit) {
-                    await postProcessGithubSelfHosted(
-                        interactiveTaskContext,
-                        selfhostedGithubConfig,
-                        absolutePathToLocalOutput,
-                        autoVersioningCommitMessage,
-                        generatorInvocation.name
+                    const pipelineLogger: PipelineLogger = {
+                        debug: (msg) => interactiveTaskContext.logger.debug(msg),
+                        info: (msg) => interactiveTaskContext.logger.info(msg),
+                        warn: (msg) => interactiveTaskContext.logger.warn(msg),
+                        error: (msg) => interactiveTaskContext.logger.error(msg)
+                    };
+
+                    const pipeline = new PostGenerationPipeline(
+                        {
+                            outputDir: absolutePathToLocalOutput,
+                            replay: { enabled: replay?.enabled === true, skipApplication: noReplay, stageOnly: false },
+                            github: {
+                                enabled: true,
+                                uri: selfhostedGithubConfig.uri,
+                                token: selfhostedGithubConfig.token,
+                                mode: selfhostedGithubConfig.mode ?? "push",
+                                branch: selfhostedGithubConfig.branch,
+                                commitMessage: autoVersioningCommitMessage,
+                                changelogEntry: autoVersioningChangelogEntry,
+                                previewMode: selfhostedGithubConfig.previewMode,
+                                generatorName: generatorInvocation.name
+                            },
+                            cliVersion: workspace.cliVersion ?? "unknown",
+                            generatorVersions: {
+                                [generatorInvocation.name]: generatorInvocation.version
+                            },
+                            generatorName: generatorInvocation.name
+                        },
+                        pipelineLogger
                     );
+
+                    const pipelineResult = await pipeline.run();
+
+                    // Log replay summary
+                    if (pipelineResult.steps.replay != null) {
+                        logReplaySummary(pipelineResult.steps.replay, {
+                            debug: (msg) => interactiveTaskContext.logger.debug(msg),
+                            info: (msg) => interactiveTaskContext.logger.info(chalk.cyan(msg)),
+                            warn: (msg) => interactiveTaskContext.logger.warn(chalk.yellow(msg)),
+                            error: (msg) => interactiveTaskContext.logger.error(chalk.red(msg))
+                        });
+                    }
+
+                    if (!pipelineResult.success) {
+                        interactiveTaskContext.failAndThrow(
+                            `Post-generation pipeline failed: ${pipelineResult.errors?.join(", ")}`
+                        );
+                    }
                 }
             });
         })
@@ -297,39 +393,9 @@ export async function runLocalGenerationForWorkspace({
     }
 }
 
-function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
-    // Check output.package-name for npm/PyPI/etc.
-    if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
-        const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
-        if (packageName != null) {
-            return packageName;
-        }
-
-        // Check output.coordinate for Maven (Java)
-        const coordinate = (generatorInvocation.raw.output as { coordinate?: string }).coordinate;
-        if (coordinate != null) {
-            return coordinate;
-        }
-    }
-
-    // Check config.package_name if output.package-name is not set
-    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
-        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
-        if (packageName != null) {
-            return packageName;
-        }
-
-        // go-sdk generator uses module.path to set the package name
-        const modulePath = (generatorInvocation.raw.config as { module?: { path?: string } }).module?.path;
-        if (modulePath != null) {
-            return modulePath;
-        }
-    }
-    return undefined;
-}
 function resolveAbsolutePathToLocalPreview(
     absolutePathToPreview: AbsoluteFilePath | undefined,
-    generatorInvocation: GeneratorInvocation
+    generatorInvocation: generatorsYml.GeneratorInvocation
 ): AbsoluteFilePath | undefined {
     if (absolutePathToPreview == null) {
         return undefined;
@@ -338,300 +404,6 @@ function resolveAbsolutePathToLocalPreview(
     const subfolderName = generatorName.replace(/[^a-zA-Z0-9-_]/g, "_");
 
     return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
-}
-
-function parseCommitMessageForPR(commitMessage: string): { prTitle: string; prBody: string } {
-    const lines = commitMessage.split("\n");
-    const prTitle = lines[0]?.trim() || "SDK Generation";
-    const prBody = lines.slice(1).join("\n").trim() || "Automated SDK generation by Fern";
-    return { prTitle, prBody };
-}
-
-const FERN_BOT_NAME = "fern-api";
-const FERN_BOT_EMAIL = "115122769+fern-api[bot]@users.noreply.github.com";
-const FERN_BOT_LOGIN = "fern-api[bot]";
-
-interface ExistingPullRequest {
-    number: number;
-    headBranch: string;
-    htmlUrl: string;
-}
-
-async function findExistingUpdatablePR(
-    octokit: Octokit,
-    owner: string,
-    repo: string,
-    baseBranch: string,
-    context: TaskContext,
-    branchPrefix: string
-): Promise<ExistingPullRequest | undefined> {
-    try {
-        const { data: pulls } = await octokit.pulls.list({
-            owner,
-            repo,
-            state: "open",
-            base: baseBranch,
-            sort: "updated",
-            direction: "desc",
-            per_page: 20
-        });
-
-        for (const pr of pulls) {
-            const prAuthor = pr.user?.login;
-            if (prAuthor !== FERN_BOT_LOGIN) {
-                context.logger.debug(`PR #${pr.number} skipped: author ${prAuthor} is not ${FERN_BOT_LOGIN}`);
-                continue;
-            }
-
-            if (!pr.head.ref.startsWith(branchPrefix)) {
-                context.logger.debug(
-                    `PR #${pr.number} skipped: branch ${pr.head.ref} does not start with ${branchPrefix}`
-                );
-                continue;
-            }
-
-            const hasOnlyGenerationCommits = await checkPRHasOnlyGenerationCommits(
-                octokit,
-                owner,
-                repo,
-                pr.number,
-                context
-            );
-
-            if (hasOnlyGenerationCommits) {
-                context.logger.debug(`Found existing updatable PR #${pr.number} with branch ${pr.head.ref}`);
-                return {
-                    number: pr.number,
-                    headBranch: pr.head.ref,
-                    htmlUrl: pr.html_url
-                };
-            } else {
-                context.logger.debug(`PR #${pr.number} skipped: contains non-generation commits`);
-            }
-        }
-
-        return undefined;
-    } catch (error) {
-        context.logger.debug(`Error finding existing PRs: ${error instanceof Error ? error.message : String(error)}`);
-        return undefined;
-    }
-}
-
-async function checkPRHasOnlyGenerationCommits(
-    octokit: Octokit,
-    owner: string,
-    repo: string,
-    pullNumber: number,
-    context: TaskContext
-): Promise<boolean> {
-    try {
-        const { data: commits } = await octokit.pulls.listCommits({
-            owner,
-            repo,
-            pull_number: pullNumber,
-            per_page: 100
-        });
-
-        for (const commit of commits) {
-            const authorLogin = commit.author?.login;
-            const authorEmail = commit.commit.author?.email;
-
-            const isGenerationCommit =
-                authorLogin === FERN_BOT_LOGIN ||
-                authorEmail === FERN_BOT_EMAIL ||
-                commit.commit.author?.name === FERN_BOT_NAME;
-
-            if (!isGenerationCommit) {
-                context.logger.debug(
-                    `Commit ${commit.sha.substring(0, 7)} is not a generation commit: ` +
-                        `author=${authorLogin}, email=${authorEmail}`
-                );
-                return false;
-            }
-        }
-
-        return true;
-    } catch (error) {
-        context.logger.debug(`Error checking PR commits: ${error instanceof Error ? error.message : String(error)}`);
-        return false;
-    }
-}
-
-function sanitizeGeneratorNameForBranch(generatorName: string): string {
-    return generatorName.replace(/\//g, "-");
-}
-
-async function postProcessGithubSelfHosted(
-    context: TaskContext,
-    selfhostedGithubConfig: SelhostedGithubConfig,
-    absolutePathToLocalOutput: AbsoluteFilePath,
-    commitMessage?: string,
-    generatorName?: string
-): Promise<void> {
-    try {
-        context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
-        const repository = ClonedRepository.createAtPath(absolutePathToLocalOutput);
-        const now = new Date();
-        const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace("Z", "").replace(".", "_");
-        const sanitizedName = generatorName != null ? sanitizeGeneratorNameForBranch(generatorName) : undefined;
-        const branchPrefix = sanitizedName != null ? `fern-bot/${sanitizedName}/` : "fern-bot/";
-        const newPrBranch = `${branchPrefix}${formattedDate}`;
-        // Ensure git commits are attributed to a bot user so pushes/PRs have a consistent author.
-        try {
-            // Use repository helper to set git user/email if available
-            await repository.setUserAndEmail({
-                name: FERN_BOT_NAME,
-                email: FERN_BOT_EMAIL
-            });
-        } catch (_other) {
-            // pass
-        }
-
-        const mode = selfhostedGithubConfig.mode ?? "push";
-        switch (mode) {
-            case "pull-request": {
-                const baseBranch = selfhostedGithubConfig.branch ?? (await repository.getDefaultBranch());
-
-                const octokit = new Octokit({
-                    auth: selfhostedGithubConfig.token
-                });
-                const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
-                const { owner, repo } = parsedRepo;
-
-                const existingPR = await findExistingUpdatablePR(
-                    octokit,
-                    owner,
-                    repo,
-                    baseBranch,
-                    context,
-                    branchPrefix
-                );
-
-                let prBranch: string;
-                let isUpdatingExistingPR = false;
-
-                if (existingPR != null) {
-                    context.logger.info(
-                        `Found existing updatable PR #${existingPR.number}, will update branch ${existingPR.headBranch}`
-                    );
-                    prBranch = existingPR.headBranch;
-                    isUpdatingExistingPR = true;
-                    await repository.checkoutRemoteBranch(prBranch);
-                } else {
-                    context.logger.debug(`No existing updatable PR found, creating new branch ${newPrBranch}`);
-                    prBranch = newPrBranch;
-                    await repository.checkout(prBranch);
-                }
-
-                context.logger.debug("Checking for .fernignore file...");
-                const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
-                try {
-                    await fs.access(fernignorePath);
-                    context.logger.debug(".fernignore already exists");
-                } catch {
-                    context.logger.debug("Creating .fernignore file...");
-                    await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
-                }
-
-                context.logger.debug("Committing changes...");
-                const finalCommitMessage = commitMessage ?? "SDK Generation";
-                await repository.commitAllChanges(finalCommitMessage);
-                context.logger.debug(
-                    `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
-                );
-
-                if (!selfhostedGithubConfig.previewMode) {
-                    await repository.push();
-                    const pushedBranch = await repository.getCurrentBranch();
-                    context.logger.info(
-                        `Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`
-                    );
-                }
-
-                if (isUpdatingExistingPR && existingPR != null) {
-                    context.logger.info(`Updated existing pull request: ${existingPR.htmlUrl}`);
-
-                    const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
-                    try {
-                        await octokit.pulls.update({
-                            owner,
-                            repo,
-                            pull_number: existingPR.number,
-                            title: prTitle,
-                            body: prBody
-                        });
-                        context.logger.debug(`Updated PR #${existingPR.number} title and body`);
-                    } catch (error) {
-                        context.logger.debug(
-                            `Failed to update PR title/body: ${error instanceof Error ? error.message : String(error)}`
-                        );
-                    }
-                } else {
-                    const head = `${owner}:${prBranch}`;
-                    const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
-
-                    try {
-                        const { data: pullRequest } = await octokit.pulls.create({
-                            owner,
-                            repo,
-                            title: prTitle,
-                            body: prBody,
-                            head,
-                            base: baseBranch,
-                            draft: false
-                        });
-
-                        context.logger.info(`Created pull request: ${pullRequest.html_url}`);
-                    } catch (error) {
-                        const message = error instanceof Error ? error.message : String(error);
-                        if (message.includes("A pull request already exists for")) {
-                            context.failWithoutThrowing(`A pull request already exists for ${head}`);
-                        } else {
-                            throw error;
-                        }
-                    }
-                }
-                break;
-            }
-            case "push": {
-                if (selfhostedGithubConfig.branch != null) {
-                    context.logger.debug(`Checking out branch ${selfhostedGithubConfig.branch}`);
-                    await repository.checkout(selfhostedGithubConfig.branch);
-                }
-
-                context.logger.debug("Checking for .fernignore file...");
-                const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
-                try {
-                    await fs.access(fernignorePath);
-                    context.logger.debug(".fernignore already exists");
-                } catch {
-                    context.logger.debug("Creating .fernignore file...");
-                    await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
-                }
-
-                context.logger.debug("Committing changes...");
-                const finalCommitMessage = commitMessage ?? "SDK Generation";
-                await repository.commitAllChanges(finalCommitMessage);
-                context.logger.debug(
-                    `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
-                );
-
-                if (!selfhostedGithubConfig.previewMode) {
-                    await repository.pushWithRebasingRemote();
-
-                    const pushedBranch = await repository.getCurrentBranch();
-                    context.logger.info(
-                        `Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`
-                    );
-                }
-                break;
-            }
-            default:
-                assertNever(mode);
-        }
-    } catch (error) {
-        context.failAndThrow(`Error during GitHub self-hosted flow: ${String(error)}`);
-    }
 }
 
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {

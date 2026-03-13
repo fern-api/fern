@@ -133,7 +133,13 @@ function multipartRequestHasFile(
           };
     return (
         Object.entries(resolvedMultipartSchema.schema.properties ?? {}).find(([_, definition]) => {
-            return !isReferenceObject(definition) && definition.type === "string" && definition.format === "binary";
+            return (
+                !isReferenceObject(definition) &&
+                definition.type === "string" &&
+                (definition.format === "binary" ||
+                    (definition.format == null &&
+                        (definition as Record<string, unknown>).contentMediaType === "application/octet-stream"))
+            );
         }) != null
     );
 }

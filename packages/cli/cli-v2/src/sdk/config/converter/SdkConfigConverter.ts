@@ -62,9 +62,11 @@ export class SdkConfigConverter {
         const config: SdkConfig = {
             org: fernYml.data.org,
             defaultGroup: sdks.defaultGroup,
+            defaultGroupLocation: sourced.defaultGroup?.$loc,
             targets: this.convertTargets({
                 targetsConfig: sdks.targets,
-                sourced: sourced.targets
+                sourced: sourced.targets,
+                globalReadme: sdks.readme
             })
         };
         if (this.issues.length > 0) {
@@ -81,10 +83,12 @@ export class SdkConfigConverter {
 
     private convertTargets({
         targetsConfig,
-        sourced
+        sourced,
+        globalReadme
     }: {
         targetsConfig: Record<string, schemas.SdkTargetSchema>;
         sourced: Sourced<Record<string, schemas.SdkTargetSchema>>;
+        globalReadme: schemas.ReadmeSchema | undefined;
     }): Target[] {
         const targets: Target[] = [];
         for (const [name, target] of Object.entries(targetsConfig)) {
@@ -95,7 +99,8 @@ export class SdkConfigConverter {
             const converted = this.convertTarget({
                 name,
                 target,
-                sourced: sourcedTarget
+                sourced: sourcedTarget,
+                globalReadme
             });
             if (converted != null) {
                 targets.push(converted);
@@ -107,16 +112,19 @@ export class SdkConfigConverter {
     private convertTarget({
         name,
         target,
-        sourced
+        sourced,
+        globalReadme
     }: {
         name: string;
         target: schemas.SdkTargetSchema;
         sourced: Sourced<schemas.SdkTargetSchema>;
+        globalReadme: schemas.ReadmeSchema | undefined;
     }): Target | undefined {
         const generatorInfo = this.resolveGeneratorInfo({ name, target, sourced });
         if (generatorInfo == null) {
             return undefined;
         }
+        const readme = this.mergeReadme({ globalReadme, targetReadme: target.readme });
         return {
             name,
             lang: generatorInfo.lang,
@@ -125,11 +133,35 @@ export class SdkConfigConverter {
             api: this.resolveApi({ api: target.api }),
             sourceLocation: sourced.$loc,
             config: target.config != null ? this.convertConfig(target.config) : undefined,
-            output: target.output,
+            output: schemas.resolveOutputObjectSchema(target.output),
             publish: target.publish,
             groups: target.group ?? [],
-            metadata: target.metadata
+            metadata: target.metadata,
+            readme
         };
+    }
+
+    private mergeReadme({
+        globalReadme,
+        targetReadme
+    }: {
+        globalReadme: schemas.ReadmeSchema | undefined;
+        targetReadme: schemas.ReadmeSchema | undefined;
+    }): schemas.ReadmeSchema | undefined {
+        if (globalReadme == null && targetReadme == null) {
+            return undefined;
+        }
+        if (globalReadme == null) {
+            return targetReadme;
+        }
+        if (targetReadme == null) {
+            return globalReadme;
+        }
+        const merged: schemas.ReadmeSchema = { ...globalReadme, ...targetReadme };
+        if (globalReadme.customSections != null || targetReadme.customSections != null) {
+            merged.customSections = [...(globalReadme.customSections ?? []), ...(targetReadme.customSections ?? [])];
+        }
+        return merged;
     }
 
     private resolveApi({ api }: { api: string | undefined }): string {

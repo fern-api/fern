@@ -23,6 +23,7 @@ describe("ServiceClient", () => {
             },
             revenue: 1000000,
         };
+
         server
             .mockEndpoint()
             .get("/movie/movie-c06a4ad7")
@@ -71,6 +72,7 @@ describe("ServiceClient", () => {
             revenue: 1000000,
         };
         const rawResponseBody = "movie-c06a4ad7";
+
         server
             .mockEndpoint()
             .post("/movie")
@@ -111,6 +113,7 @@ describe("ServiceClient", () => {
             tags: ["development", "public"],
             value: "<head>...</head>",
         };
+
         server
             .mockEndpoint()
             .get("/metadata")
@@ -234,6 +237,7 @@ describe("ServiceClient", () => {
                 { type: "primitive", value: "value", label: "label" },
             ],
         };
+
         server
             .mockEndpoint()
             .post("/big-entity")

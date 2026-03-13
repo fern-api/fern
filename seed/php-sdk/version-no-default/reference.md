@@ -41,3 +41,4 @@ $client->user->getUser(
 </dd>
 </dl>
 </details>
+

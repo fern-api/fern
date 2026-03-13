@@ -1,8 +1,7 @@
-import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
+import { Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { EnumWithAssociatedValues, LiteralEnum, sanitizeSelf, swift } from "@fern-api/swift-codegen";
-
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
 export declare namespace DynamicTypeLiteralMapper {
@@ -230,58 +229,15 @@ export class DynamicTypeLiteralMapper {
             return swift.Expression.nop();
         }
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
-        const unionProperties = this.convertDiscriminatedUnionProperties({
-            fromSymbol,
-            discriminatedUnionTypeInstance,
-            unionVariant
-        });
-        if (unionProperties == null) {
-            return swift.Expression.nop();
-        }
-        const variants = this.context.nameRegistry.getAllDiscriminatedUnionVariantsOrThrow(unionSymbol);
-        const matchingVariant = variants.find(
-            (v) => v.discriminantWireValue === unionVariant.discriminantValue.wireValue
+        const caseName = EnumWithAssociatedValues.sanitizeToCamelCase(
+            unionVariant.discriminantValue.name.camelCase.unsafeName
         );
-        if (matchingVariant == null) {
-            return swift.Expression.nop();
-        }
-        return swift.Expression.methodCall({
-            target: swift.Expression.reference(unionSymbol.name),
-            methodName: matchingVariant.caseName,
-            arguments_: [
-                swift.functionArgument({
-                    value: swift.Expression.contextualMethodCall({
-                        methodName: "init",
-                        arguments_: unionProperties,
-                        multiline: true
-                    })
-                })
-            ],
-            multiline: true
-        });
-    }
 
-    private convertDiscriminatedUnionProperties({
-        fromSymbol,
-        discriminatedUnionTypeInstance,
-        unionVariant
-    }: {
-        fromSymbol: swift.Symbol;
-        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
-        unionVariant: FernIr.dynamic.SingleDiscriminatedUnionType;
-    }): swift.FunctionArgument[] | undefined {
-        const baseFields = this.getBaseFields({
-            fromSymbol,
-            discriminatedUnionTypeInstance,
-            singleDiscriminatedUnionType: unionVariant
-        });
         switch (unionVariant.type) {
             case "samePropertiesAsObject": {
-                const named = this.context.resolveNamedType({
-                    typeId: unionVariant.typeId
-                });
+                const named = this.context.resolveNamedType({ typeId: unionVariant.typeId });
                 if (named == null) {
-                    return undefined;
+                    return swift.Expression.nop();
                 }
                 const converted = this.convertNamed({
                     fromSymbol,
@@ -289,77 +245,43 @@ export class DynamicTypeLiteralMapper {
                     named,
                     value: discriminatedUnionTypeInstance.value
                 });
-                if (!converted.isStructInitialization()) {
-                    this.context.errors.add({
-                        severity: Severity.Critical,
-                        message: "Internal error; expected union value to be a struct"
-                    });
-                    return undefined;
-                }
-                const structInitialization = converted.asStructInitializationOrThrow();
-                return [...baseFields, ...(structInitialization.arguments_ ?? [])];
+                return swift.Expression.methodCall({
+                    target: swift.Expression.reference(unionSymbol.name),
+                    methodName: caseName,
+                    arguments_: [swift.functionArgument({ value: converted })],
+                    multiline: true
+                });
             }
             case "singleProperty": {
                 try {
                     this.context.errors.scope(unionVariant.discriminantValue.wireValue);
                     const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
                     if (record == null) {
-                        return [...baseFields];
+                        return swift.Expression.nop();
                     }
-                    return [
-                        ...baseFields,
-                        swift.functionArgument({
-                            label: sanitizeSelf(
-                                EnumWithAssociatedValues.sanitizeToCamelCase(
-                                    unionVariant.discriminantValue.name.camelCase.unsafeName
-                                )
-                            ),
-                            value: this.convert({
-                                fromSymbol,
-                                typeReference: unionVariant.typeReference,
-                                value: record[unionVariant.discriminantValue.wireValue]
-                            })
-                        })
-                    ];
+                    const converted = this.convert({
+                        fromSymbol,
+                        typeReference: unionVariant.typeReference,
+                        value: record[unionVariant.discriminantValue.wireValue]
+                    });
+                    return swift.Expression.methodCall({
+                        target: swift.Expression.reference(unionSymbol.name),
+                        methodName: caseName,
+                        arguments_: [swift.functionArgument({ value: converted })],
+                        multiline: true
+                    });
                 } finally {
                     this.context.errors.unscope();
                 }
             }
             case "noProperties":
-                return baseFields;
+                return swift.Expression.memberAccess({
+                    target: swift.Expression.reference(unionSymbol.name),
+                    memberName: caseName
+                });
             default:
                 assertNever(unionVariant);
         }
-    }
-
-    private getBaseFields({
-        fromSymbol,
-        discriminatedUnionTypeInstance,
-        singleDiscriminatedUnionType
-    }: {
-        fromSymbol: swift.Symbol;
-        discriminatedUnionTypeInstance: DiscriminatedUnionTypeInstance;
-        singleDiscriminatedUnionType: FernIr.dynamic.SingleDiscriminatedUnionType;
-    }): swift.FunctionArgument[] {
-        const properties = this.context.getExampleObjectProperties({
-            parameters: singleDiscriminatedUnionType.properties ?? [],
-            snippetObject: discriminatedUnionTypeInstance.value
-        });
-        return properties.map((property) => {
-            this.context.errors.scope(property.name.wireValue);
-            try {
-                return swift.functionArgument({
-                    label: sanitizeSelf(property.name.name.camelCase.unsafeName),
-                    value: this.convert({
-                        fromSymbol,
-                        typeReference: property.typeReference,
-                        value: property.value
-                    })
-                });
-            } finally {
-                this.context.errors.unscope();
-            }
-        });
     }
 
     private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): swift.Expression {

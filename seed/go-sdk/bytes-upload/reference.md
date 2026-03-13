@@ -15,7 +15,7 @@
 ```go
 client.Service.Upload(
         context.TODO(),
-        nil,
+        request,
     )
 }
 ```
@@ -28,3 +28,4 @@ client.Service.Upload(
 </dd>
 </dl>
 </details>
+

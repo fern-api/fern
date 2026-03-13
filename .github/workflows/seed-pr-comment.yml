@@ -211,7 +211,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ steps.parse.outputs.pr-ref }}
-          fetch-depth: 0
+          fetch-tags: false
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install

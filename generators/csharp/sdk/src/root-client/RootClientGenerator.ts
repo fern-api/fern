@@ -256,24 +256,26 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
 
         // Platform headers (no auth)
         const platformHeaderEntries: ast.Dictionary.MapEntry[] = [];
-        const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
-        platformHeaderEntries.push({
-            key: this.csharp.codeblock(`"${platformHeaders.language}"`),
-            value: this.csharp.codeblock('"C#"')
-        });
-        platformHeaderEntries.push({
-            key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
-            value: this.csharp.codeblock(`"${this.namespaces.root}"`)
-        });
-        platformHeaderEntries.push({
-            key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
-            value: this.context.getCurrentVersionValueAccess()
-        });
-        if (platformHeaders.userAgent != null) {
+        if (!this.settings.omitFernHeaders) {
+            const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
             platformHeaderEntries.push({
-                key: this.csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
-                value: this.csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
+                key: this.csharp.codeblock(`"${platformHeaders.language}"`),
+                value: this.csharp.codeblock('"C#"')
             });
+            platformHeaderEntries.push({
+                key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
+                value: this.csharp.codeblock(`"${this.namespaces.root}"`)
+            });
+            platformHeaderEntries.push({
+                key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
+                value: this.context.getCurrentVersionValueAccess()
+            });
+            if (platformHeaders.userAgent != null) {
+                platformHeaderEntries.push({
+                    key: this.csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
+                    value: this.csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
+                });
+            }
         }
 
         const platformHeaderDictionary = this.csharp.dictionary({
@@ -403,7 +405,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                                 arguments_: [this.csharp.codeblock("clientOptions")]
                             })
                         ];
+                        const oauthAdditionalParams = this.getOAuthAdditionalParamNames();
                         innerWriter.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
+                        for (const param of oauthAdditionalParams) {
+                            innerWriter.write(`${param}, `);
+                        }
                         innerWriter.writeNode(
                             this.csharp.instantiateClass({
                                 classReference: authClientClassReference,
@@ -471,17 +477,17 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         })
                     );
                     if (this.grpcClientInfo != null) {
-                        innerWriter.writeLine("_grpc = _client.Grpc");
+                        innerWriter.writeLine(`${this.members.grpcClientName} = ${this.members.clientName}.Grpc;`);
                         innerWriter.write(this.grpcClientInfo.privatePropertyName);
                         innerWriter.write(" = ");
                         innerWriter.writeNodeStatement(
                             this.csharp.instantiateClass({
                                 classReference: this.grpcClientInfo.classReference,
-                                arguments_: [this.csharp.codeblock("_grpc.Channel")]
+                                arguments_: [this.csharp.codeblock(`${this.members.grpcClientName}.Channel`)]
                             })
                         );
                     }
-                    const arguments_ = [this.csharp.codeblock("_client")];
+                    const arguments_ = [this.csharp.codeblock(this.members.clientName)];
                     for (const subpackage of this.getSubpackages()) {
                         if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
                             innerWriter.writeLine(`${subpackage.name.pascalCase.safeName} = `);
@@ -723,7 +729,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                         type: this.Primitive.string,
                         environmentVariable: scheme.configuration.clientSecretEnvVar,
                         exampleValue: "client_secret"
-                    }
+                    },
+                    ...this.getOAuthAdditionalConstructorParams(scheme, isOptional)
                 ];
             } else {
                 this.context.logger.warn(
@@ -824,6 +831,62 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         return this.context.getSubpackages(this.context.ir.rootPackage.subpackages);
     }
 
+    private getOAuthAdditionalConstructorParams(scheme: OAuthScheme, isOptional: boolean): ConstructorParameter[] {
+        const params: ConstructorParameter[] = [];
+        // Include required, non-literal custom properties, matching Java's approach of
+        // skipping only literals. Keep the optional guard to avoid adding optional-typed
+        // properties as required constructor parameters.
+        for (const customProperty of scheme.configuration.tokenEndpoint.requestProperties.customProperties ?? []) {
+            if (isLiteralTypeReference(customProperty.property.valueType)) {
+                continue;
+            }
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: customProperty.property.valueType
+            });
+            if (typeRef.isOptional) {
+                continue;
+            }
+            const name = customProperty.property.name.name.camelCase.safeName;
+            params.push({
+                name,
+                docs: `The ${name} for OAuth authentication.`,
+                isOptional,
+                typeReference: customProperty.property.valueType,
+                type: typeRef,
+                exampleValue: name
+            });
+        }
+        const scopes = scheme.configuration.tokenEndpoint.requestProperties.scopes;
+        if (scopes && !isLiteralTypeReference(scopes.property.valueType)) {
+            const typeRef = this.context.csharpTypeMapper.convert({
+                reference: scopes.property.valueType
+            });
+            if (!typeRef.isOptional) {
+                const name = scopes.property.name.name.camelCase.safeName;
+                params.push({
+                    name,
+                    docs: `The ${name} for OAuth authentication.`,
+                    isOptional,
+                    typeReference: scopes.property.valueType,
+                    type: typeRef,
+                    exampleValue: name
+                });
+            }
+        }
+        return params;
+    }
+
+    /**
+     * Gets the parameter names for additional OAuth fields (custom properties and scopes)
+     * that need to be passed to the OAuthTokenProvider constructor.
+     */
+    private getOAuthAdditionalParamNames(): string[] {
+        if (this.oauth == null) {
+            return [];
+        }
+        return this.getOAuthAdditionalConstructorParams(this.oauth, false).map((p) => p.name);
+    }
+
     private getInferredAuthCredentialParams(): string[] {
         if (this.inferred == null) {
             return [];
@@ -840,4 +903,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         const credentials = collectInferredAuthCredentials(this.context, tokenEndpoint);
         return credentials.map((credential) => credential.camelName);
     }
+}
+
+/**
+ * Checks if a type reference is a literal type (container with literal value).
+ * Literal properties are hardcoded in the request class and should not be
+ * propagated as constructor parameters.
+ */
+function isLiteralTypeReference(typeReference: FernIr.TypeReference): boolean {
+    return typeReference.type === "container" && typeReference.container.type === "literal";
 }

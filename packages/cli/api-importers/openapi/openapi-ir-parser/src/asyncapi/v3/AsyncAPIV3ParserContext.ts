@@ -6,7 +6,22 @@ import { AsyncAPIV3 } from "../v3/index.js";
 
 export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<AsyncAPIV3.DocumentV3> {
     public getExampleMessageReference(message: WebsocketSessionExampleMessage): string {
-        return `#/channels/${message.channelId}/messages/${message.messageId}`;
+        const channelId = message.channelId ?? this.getDefaultChannelId();
+        if (channelId == null) {
+            throw new Error(
+                `Cannot resolve example message reference: no channelId provided and no channels found in document`
+            );
+        }
+        return `#/channels/${channelId}/messages/${message.messageId}`;
+    }
+
+    /**
+     * Returns the first channel ID from the document as a fallback when
+     * x-fern-examples messages omit `channelId`.
+     */
+    private getDefaultChannelId(): string | undefined {
+        const channelIds = Object.keys(this.document.channels ?? {});
+        return channelIds[0];
     }
 
     public resolveParameterReference(parameter: OpenAPIV3.ReferenceObject): AsyncAPIV3.ChannelParameter {

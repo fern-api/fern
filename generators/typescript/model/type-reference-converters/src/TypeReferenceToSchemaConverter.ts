@@ -109,7 +109,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         params: ConvertTypeReferenceParams
     ): Zurg.Schema {
         const valueSchema = this.convert({ ...params, typeReference: valueType });
-        return this.zurg.record({
+        return this.zurg.partialRecord({
             keySchema: this.convert({ ...params, typeReference: keyType }),
             valueSchema: valueSchema.isOptional ? valueSchema : valueSchema.optional()
         });

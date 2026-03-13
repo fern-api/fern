@@ -4,5 +4,5 @@ import { commandGroup } from "../_internal/commandGroup.js";
 import { addMigrateCommand } from "./migrate/index.js";
 
 export function addConfigCommand(cli: Argv<GlobalArgs>): void {
-    commandGroup(cli, "config <command>", "Configure, edit, and inspect your settings", [addMigrateCommand]);
+    commandGroup(cli, "config", "Configure, edit, and inspect your settings", [addMigrateCommand]);
 }

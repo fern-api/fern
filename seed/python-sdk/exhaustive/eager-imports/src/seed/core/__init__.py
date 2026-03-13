@@ -4,13 +4,14 @@
 
 from .api_error import ApiError
 from .client_wrapper import AsyncClientWrapper, BaseClientWrapper, SyncClientWrapper
-from .datetime_utils import serialize_datetime
+from .datetime_utils import Rfc2822DateTime, parse_rfc2822_datetime, serialize_datetime
 from .file import File, convert_file_dict_to_httpx_tuples, with_content_type
 from .http_client import AsyncHttpClient, HttpClient
 from .http_response import AsyncHttpResponse, HttpResponse
 from .jsonable_encoder import jsonable_encoder
 from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
 from .pagination import AsyncPager, SyncPager
+from .parse_error import ParsingError
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
@@ -42,7 +43,9 @@ __all__ = [
     "LogConfig",
     "LogLevel",
     "Logger",
+    "ParsingError",
     "RequestOptions",
+    "Rfc2822DateTime",
     "SyncClientWrapper",
     "SyncPager",
     "UniversalBaseModel",
@@ -53,6 +56,7 @@ __all__ = [
     "encode_query",
     "jsonable_encoder",
     "parse_obj_as",
+    "parse_rfc2822_datetime",
     "remove_none_from_dict",
     "serialize_datetime",
     "universal_field_validator",

@@ -12,8 +12,9 @@ public class Example35
             }
         );
 
-        await client.Endpoints.Primitive.GetAndReturnLongAsync(
-            1000000L
+        await client.Endpoints.Params.ModifyWithPathAsync(
+            "param",
+            "string"
         );
     }
 

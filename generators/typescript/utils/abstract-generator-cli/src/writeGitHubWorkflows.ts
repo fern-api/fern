@@ -53,6 +53,10 @@ function constructWorkflowYaml({
 
 on: [push]
 
+concurrency:
+  group: \${{ github.workflow }}-\${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   compile:
     runs-on: ubuntu-latest
@@ -157,7 +161,15 @@ jobs:
           elif [[ \${GITHUB_REF} == *beta* ]]; then
             publish --access ${access} --tag beta
           else
-            publish --access ${access}
+            PKG_NAME=$(node -p "require('./package.json').name")
+            PKG_VERSION=$(node -p "require('./package.json').version")
+            CURRENT_LATEST=$(npm view "\${PKG_NAME}" dist-tags.latest 2>/dev/null || echo "0.0.0")
+            if npx -y semver "\${PKG_VERSION}" -r "<\${CURRENT_LATEST}" > /dev/null 2>&1; then
+              echo "Publishing \${PKG_VERSION} with --tag backport (current latest is \${CURRENT_LATEST})"
+              publish --access ${access} --tag backport
+            else
+              publish --access ${access}
+            fi
           fi${
               useOidc
                   ? ""

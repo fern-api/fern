@@ -1,5 +1,10 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { RawSchemas, visitExampleResponseSchema } from "@fern-api/fern-definition-schema";
+import { isPlainObject } from "@fern-api/core-utils";
+import {
+    isRawDiscriminatedUnionDefinition,
+    RawSchemas,
+    visitExampleResponseSchema
+} from "@fern-api/fern-definition-schema";
 import {
     ErrorResolver,
     ExampleResolver,
@@ -224,14 +229,32 @@ function validateSseResponse({
             message: "Unexpected streaming response in example. Endpoint's schema is missing `response-stream` key."
         });
     } else if (typeof endpoint["response-stream"] !== "string" && endpoint["response-stream"].format === "sse") {
+        const rawTypeRef =
+            typeof endpoint["response-stream"] !== "string"
+                ? endpoint["response-stream"].type
+                : endpoint["response-stream"];
+
+        let isProtocolDiscriminated = false;
+        let discriminantName: string | undefined;
+        const resolvedType = typeResolver.resolveType({ type: rawTypeRef, file });
+        if (resolvedType?._type === "named" && isRawDiscriminatedUnionDefinition(resolvedType.declaration)) {
+            const disc = resolvedType.declaration.discriminant;
+            if (typeof disc === "object" && disc.context === "protocol") {
+                isProtocolDiscriminated = true;
+                discriminantName = disc.value;
+            }
+        }
+
         for (const event of example.stream) {
+            const exampleData =
+                isProtocolDiscriminated && discriminantName != null && isPlainObject(event.data)
+                    ? { [discriminantName]: event.event, ...(event.data as Record<string, unknown>) }
+                    : event.data;
+
             violations.push(
                 ...ExampleValidators.validateTypeReferenceExample({
-                    rawTypeReference:
-                        typeof endpoint["response-stream"] !== "string"
-                            ? endpoint["response-stream"].type
-                            : endpoint["response-stream"],
-                    example: event.data,
+                    rawTypeReference: rawTypeRef,
+                    example: exampleData,
                     typeResolver,
                     exampleResolver,
                     file,

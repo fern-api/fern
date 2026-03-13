@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { Base64Type } from "./Base64Type.js";
 import { BigIntegerType } from "./BigIntegerType.js";
 import { BooleanType } from "./BooleanType.js";
+import { DateTimeRfc2822Type } from "./DateTimeRfc2822Type.js";
 import { DateTimeType } from "./DateTimeType.js";
 import { DateType } from "./DateType.js";
 import { DoubleType } from "./DoubleType.js";
@@ -30,6 +31,7 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
             string: StringType,
             date: DateType,
             dateTime: DateTimeType,
+            dateTimeRfc2822: DateTimeRfc2822Type,
             uuid: UuidType,
             base64: Base64Type,
             bigInteger: BigIntegerType,
@@ -57,6 +59,8 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
                         return FernIr.PrimitiveTypeV2.date(value);
                     case "dateTime":
                         return FernIr.PrimitiveTypeV2.dateTime(value);
+                    case "dateTimeRfc2822":
+                        return FernIr.PrimitiveTypeV2.dateTimeRfc2822(value);
                     case "uuid":
                         return FernIr.PrimitiveTypeV2.uuid(value);
                     case "base64":
@@ -82,6 +86,7 @@ export declare namespace PrimitiveTypeV2 {
         | PrimitiveTypeV2.String
         | PrimitiveTypeV2.Date
         | PrimitiveTypeV2.DateTime
+        | PrimitiveTypeV2.DateTimeRfc2822
         | PrimitiveTypeV2.Uuid
         | PrimitiveTypeV2.Base64
         | PrimitiveTypeV2.BigInteger;
@@ -124,6 +129,10 @@ export declare namespace PrimitiveTypeV2 {
 
     export interface DateTime extends DateTimeType.Raw {
         type: "dateTime";
+    }
+
+    export interface DateTimeRfc2822 extends DateTimeRfc2822Type.Raw {
+        type: "dateTimeRfc2822";
     }
 
     export interface Uuid extends UuidType.Raw {

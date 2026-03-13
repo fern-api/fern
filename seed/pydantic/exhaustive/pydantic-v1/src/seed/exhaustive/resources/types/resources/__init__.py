@@ -6,13 +6,16 @@ from . import docs, enum, object, union
 from .docs import ObjectWithDocs
 from .enum import WeatherReport
 from .object import (
+    DocumentedUnknownType,
     DoubleOptional,
     NestedObjectWithOptionalField,
     NestedObjectWithRequiredField,
     ObjectWithDatetimeLikeString,
+    ObjectWithDocumentedUnknownType,
     ObjectWithMapOfMap,
     ObjectWithOptionalField,
     ObjectWithRequiredField,
+    ObjectWithUnknownField,
     OptionalAlias,
 )
 from .union import Animal, Animal_Cat, Animal_Dog, Cat, Dog, MixedType
@@ -22,6 +25,7 @@ __all__ = [
     "Animal_Cat",
     "Animal_Dog",
     "Cat",
+    "DocumentedUnknownType",
     "Dog",
     "DoubleOptional",
     "MixedType",
@@ -29,9 +33,11 @@ __all__ = [
     "NestedObjectWithRequiredField",
     "ObjectWithDatetimeLikeString",
     "ObjectWithDocs",
+    "ObjectWithDocumentedUnknownType",
     "ObjectWithMapOfMap",
     "ObjectWithOptionalField",
     "ObjectWithRequiredField",
+    "ObjectWithUnknownField",
     "OptionalAlias",
     "WeatherReport",
     "docs",

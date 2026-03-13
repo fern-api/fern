@@ -42,3 +42,4 @@ client.GetAccount(
 </dd>
 </dl>
 </details>
+

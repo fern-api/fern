@@ -177,6 +177,8 @@ export async function buildNavigationForDirectory({
                     icon: undefined,
                     contents: filteredContents,
                     collapsed: undefined,
+                    collapsible: undefined,
+                    collapsedByDefault: undefined,
                     hidden: undefined,
                     skipUrlSlug: false,
                     overviewAbsolutePath: indexPage?.type === "page" ? indexPage.absolutePath : undefined,

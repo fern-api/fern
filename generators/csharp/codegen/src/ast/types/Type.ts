@@ -1,7 +1,6 @@
-import { fail } from "node:assert";
 import { FernIr } from "@fern-fern/ir-sdk";
-
 import { type Generation } from "../../context/generation-info.js";
+import { fail } from "../../utils/fail.js";
 import { hash, uniqueId } from "../../utils/text.js";
 import { Literal } from "../code/Literal.js";
 import { AstNode } from "../core/AstNode.js";

@@ -1,5 +1,7 @@
 import type { schemas } from "@fern-api/config";
 
+import { isGitUrl } from "../utils/gitUrl.js";
+
 /**
  * Parses the --output argument into an OutputSchema.
  *
@@ -7,7 +9,7 @@ import type { schemas } from "@fern-api/config";
  *   produce a self-hosted git output with token from GITHUB_TOKEN or GIT_TOKEN env vars.
  * - Anything else is treated as a local path.
  */
-export function parseOutputArg(outputArg: string): schemas.OutputSchema {
+export function parseOutputArg(outputArg: string): schemas.OutputObjectSchema {
     if (isGitUrl(outputArg)) {
         const token = process.env.GITHUB_TOKEN ?? process.env.GIT_TOKEN;
         if (token == null) {
@@ -29,13 +31,4 @@ export function parseOutputArg(outputArg: string): schemas.OutputSchema {
     }
 
     return { path: outputArg };
-}
-
-function isGitUrl(value: string): boolean {
-    return (
-        value.endsWith(".git") ||
-        value.startsWith("https://github.com/") ||
-        value.startsWith("https://gitlab.com/") ||
-        value.startsWith("git@")
-    );
 }

@@ -2,7 +2,7 @@
     "types": {},
     "endpoints": [
         {
-            "example_identifier": null,
+            "example_identifier": "Stream completions",
             "id": {
                 "path": "/stream",
                 "method": "POST",
@@ -10,11 +10,11 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nvar items = client.Completions.StreamAsync(new StreamCompletionRequest { Query = \"query\" });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+                "client": "using SeedServerSentEvents;\n\nvar client = new SeedServerSentEventsClient();\nvar items = client.Completions.StreamAsync(new StreamCompletionRequest { Query = \"foo\" });\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
             }
         },
         {
-            "example_identifier": null,
+            "example_identifier": "Stream without terminator",
             "id": {
                 "path": "/stream-no-terminator",
                 "method": "POST",

@@ -44,22 +44,32 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     public override shouldGenerate(): boolean {
-        if (this.endpoint.pagination?.type === "custom") {
+        if (
+            this.endpoint.pagination?.type === "custom" ||
+            this.endpoint.pagination?.type === "uri" ||
+            this.endpoint.pagination?.type === "path"
+        ) {
             return false;
         }
         return super.shouldGenerate();
     }
 
-    private getTestNamespace(): string {
+    private getServiceNamespaceSegments(): string[] {
         const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
         if (!subpackage) {
+            return [];
+        }
+        // Use allParts (not packagePath) to include the service name itself,
+        // ensuring each service gets its own subdirectory and namespace.
+        return subpackage.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+    }
+
+    private getTestNamespace(): string {
+        const segments = this.getServiceNamespaceSegments();
+        if (segments.length === 0) {
             return this.namespaces.mockServerTest;
         }
-
-        return [
-            this.namespaces.mockServerTest,
-            ...this.context.getChildNamespaceSegments(subpackage.fernFilepath)
-        ].join(".");
+        return [this.namespaces.mockServerTest, ...segments].join(".");
     }
 
     protected doGenerate(): CSharpFile {
@@ -188,14 +198,11 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkGenera
     }
 
     private getDirectory(): RelativeFilePath {
-        const subpackage = this.context.getSubpackageForServiceId(this.serviceId);
-        if (!subpackage) {
+        const segments = this.getServiceNamespaceSegments();
+        if (segments.length === 0) {
             return this.constants.folders.mockServerTests;
         }
-        return join(
-            this.constants.folders.mockServerTests,
-            ...this.context.getChildNamespaceSegments(subpackage.fernFilepath).map(RelativeFilePath.of)
-        );
+        return join(this.constants.folders.mockServerTests, ...segments.map(RelativeFilePath.of));
     }
 
     protected getFilepath(): RelativeFilePath {

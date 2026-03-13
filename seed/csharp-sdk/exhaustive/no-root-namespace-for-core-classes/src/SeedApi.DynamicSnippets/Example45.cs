@@ -13,7 +13,9 @@ public class Example45
             }
         );
 
-        await client.Endpoints.Urls.NoEndingSlashAsync();
+        await client.Endpoints.Primitive.GetAndReturnBase64Async(
+            "SGVsbG8gd29ybGQh"
+        );
     }
 
 }

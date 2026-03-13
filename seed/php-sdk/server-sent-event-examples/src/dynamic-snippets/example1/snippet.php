@@ -12,6 +12,6 @@ $client = new SeedClient(
 );
 $client->completions->stream(
     new StreamCompletionRequest([
-        'query' => 'query',
+        'query' => '',
     ]),
 );

@@ -27,18 +27,21 @@
     "compile:debug": "tsc --sourceMap",
     "depcheck": "knip --config ../../../../knip.json --no-config-hints",
     "test": "vitest --passWithNoTests --run",
+    "test:coverage": "vitest --passWithNoTests --run --coverage",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
-    "@fern-fern/ir-sdk": "^64.0.0",
+    "@fern-fern/ir-sdk": "^65.3.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "ts-morph": "catalog:"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@fern-typescript/test-utils": "workspace:*",
     "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

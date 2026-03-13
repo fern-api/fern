@@ -18,6 +18,7 @@ package com.fern.java;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.List;
 import java.util.Optional;
 import org.immutables.value.Value;
 
@@ -130,6 +131,9 @@ public interface ICustomConfig {
     default Boolean gradleCentralDependencyManagement() {
         return false;
     }
+
+    @JsonProperty("custom-plugins")
+    Optional<List<String>> customPlugins();
 
     enum PackageLayout {
         NESTED("nested"),

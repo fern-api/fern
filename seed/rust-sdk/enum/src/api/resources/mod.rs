@@ -9,7 +9,7 @@
 //! - **QueryParam**
 //! - **Unknown**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod headers;
 pub mod inlined_request;
@@ -34,10 +34,9 @@ impl EnumClient {
             inlined_request: InlinedRequestClient::new(config.clone())?,
             multipart_form: MultipartFormClient::new(config.clone())?,
             path_param: PathParamClient::new(config.clone())?,
-            query_param: QueryParamClient::new(config.clone())?
+            query_param: QueryParamClient::new(config.clone())?,
         })
     }
-
 }
 
 pub use headers::HeadersClient;

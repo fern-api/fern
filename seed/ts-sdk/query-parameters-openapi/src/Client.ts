@@ -62,6 +62,8 @@ export class SeedApiClient {
      *             tags: ["tags", "tags"]
      *         },
      *         filter: "filter",
+     *         tags: "tags",
+     *         optionalTags: "optionalTags",
      *         neighbor: {
      *             name: "name",
      *             tags: ["tags", "tags"]
@@ -98,6 +100,8 @@ export class SeedApiClient {
             optionalUser,
             excludeUser,
             filter,
+            tags,
+            optionalTags,
             neighbor,
             neighborRequired,
         } = request;
@@ -116,6 +120,8 @@ export class SeedApiClient {
             optionalUser,
             excludeUser,
             filter,
+            tags,
+            optionalTags,
             neighbor: neighbor != null ? (typeof neighbor === "string" ? neighbor : toJson(neighbor)) : undefined,
             neighborRequired: typeof neighborRequired === "string" ? neighborRequired : toJson(neighborRequired),
         };

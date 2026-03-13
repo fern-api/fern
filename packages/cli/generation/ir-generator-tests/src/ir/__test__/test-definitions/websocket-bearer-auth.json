@@ -1601,6 +1601,7 @@
                 }
             },
             "displayName": null,
+            "connectMethodName": null,
             "headers": [],
             "pathParameters": [
                 {
@@ -2318,6 +2319,7 @@
                 }
             },
             "displayName": null,
+            "connectMethodName": null,
             "headers": [],
             "pathParameters": [
                 {

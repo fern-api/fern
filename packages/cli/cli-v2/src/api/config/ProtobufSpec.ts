@@ -12,8 +12,8 @@ export interface ProtobufDefinition {
     /** Target proto file (optional) */
     target?: AbsoluteFilePath;
 
-    /** Path to the overrides file */
-    overrides?: AbsoluteFilePath;
+    /** Path to the overrides file(s) */
+    overrides?: AbsoluteFilePath | AbsoluteFilePath[];
 
     /** Whether to use local generation */
     localGeneration?: boolean;

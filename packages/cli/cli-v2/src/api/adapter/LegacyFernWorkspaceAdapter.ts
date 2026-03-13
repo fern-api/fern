@@ -21,8 +21,8 @@ export namespace LegacyFernWorkspaceAdapter {
         /** CLI version for workspace metadata */
         cliVersion: string;
 
-        /** The current task */
-        task: Task;
+        /** Optional task for log display */
+        task?: Task;
     }
 }
 
@@ -146,6 +146,7 @@ export class LegacyFernWorkspaceAdapter {
             groups: [],
             whitelabel: undefined,
             ai: undefined,
+            replay: undefined,
             rawConfiguration: {}
         };
     }

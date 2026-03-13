@@ -181,10 +181,12 @@ public record CreateProblemResponse
             var value = discriminator switch
             {
                 "success" => json.GetProperty("value").Deserialize<string?>(options)
-                ?? throw new JsonException("Failed to deserialize string"),
+                    ?? throw new JsonException("Failed to deserialize string"),
                 "error" => json.GetProperty("value")
                     .Deserialize<SeedTrace.CreateProblemError?>(options)
-                ?? throw new JsonException("Failed to deserialize SeedTrace.CreateProblemError"),
+                    ?? throw new JsonException(
+                        "Failed to deserialize SeedTrace.CreateProblemError"
+                    ),
                 _ => json.Deserialize<object?>(options),
             };
             return new CreateProblemResponse(discriminator, value);

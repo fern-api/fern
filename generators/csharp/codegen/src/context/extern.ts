@@ -771,6 +771,14 @@ export class Extern {
                     this.csharp.classReference({
                         name: "SetUpFixture",
                         namespace: "NUnit.Framework"
+                    }),
+                /**
+                 * Reference to NUnit.Framework.ParallelizableAttribute class.
+                 */
+                Parallelizable: () =>
+                    this.csharp.classReference({
+                        name: "Parallelizable",
+                        namespace: "NUnit.Framework"
                     })
             })
     });

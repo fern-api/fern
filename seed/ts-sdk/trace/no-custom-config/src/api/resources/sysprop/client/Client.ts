@@ -96,13 +96,13 @@ export class SyspropClient {
      */
     public getNumWarmInstances(
         requestOptions?: SyspropClient.RequestOptions,
-    ): core.HttpResponsePromise<Record<SeedTrace.Language, number | undefined>> {
+    ): core.HttpResponsePromise<Partial<Record<SeedTrace.Language, number>>> {
         return core.HttpResponsePromise.fromPromise(this.__getNumWarmInstances(requestOptions));
     }
 
     private async __getNumWarmInstances(
         requestOptions?: SyspropClient.RequestOptions,
-    ): Promise<core.WithRawResponse<Record<SeedTrace.Language, number | undefined>>> {
+    ): Promise<core.WithRawResponse<Partial<Record<SeedTrace.Language, number>>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -128,7 +128,7 @@ export class SyspropClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as Record<SeedTrace.Language, number | undefined>,
+                data: _response.body as Partial<Record<SeedTrace.Language, number>>,
                 rawResponse: _response.rawResponse,
             };
         }

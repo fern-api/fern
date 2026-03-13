@@ -179,19 +179,28 @@ public record TestCaseFunction
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
                 "withActualResult" =>
-                    json.Deserialize<SeedTrace.V2.V3.TestCaseWithActualResultImplementation?>(
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.TestCaseWithActualResultImplementation?>(
                         options
                     )
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.V2.V3.TestCaseWithActualResultImplementation"
                         ),
-                "custom" => json.Deserialize<SeedTrace.V2.V3.VoidFunctionDefinition?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.V2.V3.VoidFunctionDefinition"
-                    ),
+                "custom" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.V2.V3.VoidFunctionDefinition?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.V2.V3.VoidFunctionDefinition"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new TestCaseFunction(discriminator, value);

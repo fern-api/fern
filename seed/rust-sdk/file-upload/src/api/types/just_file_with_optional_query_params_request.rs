@@ -13,27 +13,28 @@ pub struct JustFileWithOptionalQueryParamsRequest {
 }
 impl JustFileWithOptionalQueryParamsRequest {
     pub fn to_multipart(self) -> reqwest::multipart::Form {
-    let mut form = reqwest::multipart::Form::new();
+        let mut form = reqwest::multipart::Form::new();
 
-    form = form.part(
-        "file",
-        reqwest::multipart::Part::bytes(self.file.clone())
-            .file_name("file")
-            .mime_str("application/octet-stream").unwrap()
-    );
+        form = form.part(
+            "file",
+            reqwest::multipart::Part::bytes(self.file.clone())
+                .file_name("file")
+                .mime_str("application/octet-stream")
+                .unwrap(),
+        );
 
-    if let Some(ref value) = self.maybe_string {
-        if let Ok(json_str) = serde_json::to_string(value) {
-            form = form.text("maybeString", json_str);
+        if let Some(ref value) = self.maybe_string {
+            if let Ok(json_str) = serde_json::to_string(value) {
+                form = form.text("maybeString", json_str);
+            }
         }
-    }
 
-    if let Some(ref value) = self.maybe_integer {
-        if let Ok(json_str) = serde_json::to_string(value) {
-            form = form.text("maybeInteger", json_str);
+        if let Some(ref value) = self.maybe_integer {
+            if let Ok(json_str) = serde_json::to_string(value) {
+                form = form.text("maybeInteger", json_str);
+            }
         }
-    }
 
-    form
-}
+        form
+    }
 }

@@ -1,4 +1,13 @@
-import { FernIr } from "@fern-fern/ir-sdk";
+export interface EndpointPathInput {
+    fullPath: {
+        head: string;
+        parts: Array<{ pathParameter: string; tail: string }>;
+    };
+    allPathParameters: Array<{
+        name: { originalName: string; camelCase: { unsafeName: string } };
+        docs: string | undefined;
+    }>;
+}
 
 type PathPart =
     | {
@@ -15,7 +24,7 @@ export type ParseEndpointPathResult = {
     pathParts: PathPart[];
 };
 
-export function parseEndpointPath(endpoint: FernIr.HttpEndpoint): ParseEndpointPathResult {
+export function parseEndpointPath(endpoint: EndpointPathInput): ParseEndpointPathResult {
     const pathParts: PathPart[] = [];
 
     const pathParameterInfosByOriginalName = Object.fromEntries(

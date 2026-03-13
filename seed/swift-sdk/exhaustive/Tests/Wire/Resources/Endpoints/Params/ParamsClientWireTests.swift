@@ -92,4 +92,31 @@ import Exhaustive
         )
         try #require(response == expectedResponse)
     }
+
+    @Test func uploadWithPath1() async throws -> Void {
+        let stub = HTTPStub()
+        stub.setResponse(
+            body: Data(
+                """
+                {
+                  "string": "uploaded"
+                }
+                """.utf8
+            )
+        )
+        let client = ExhaustiveClient(
+            baseURL: "https://api.fern.com",
+            token: "<token>",
+            urlSession: stub.urlSession
+        )
+        let expectedResponse = ObjectWithRequiredField(
+            string: "uploaded"
+        )
+        let response = try await client.endpoints.params.uploadWithPath(
+            param: "upload-path",
+            request: Data("data".utf8),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
+        try #require(response == expectedResponse)
+    }
 }

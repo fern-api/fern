@@ -111,6 +111,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         schema: OpenAPIV3_1.SchemaObject;
     }): SchemaOrReferenceConverter.Output | undefined {
         const schemaId = this.schemaIdOverride ?? this.context.convertBreadcrumbsToName(this.breadcrumbs);
+        const namespacedSchemaId = this.context.getNamespacedSchemaId(schemaId);
         const schemaConverter = new SchemaConverter({
             context: this.context,
             breadcrumbs: this.breadcrumbs,
@@ -137,7 +138,7 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
                 schema: convertedSchema.convertedSchema,
                 inlinedTypes: {
                     ...convertedSchema.inlinedTypes,
-                    [schemaId]: convertedSchema.convertedSchema
+                    [namespacedSchemaId]: convertedSchema.convertedSchema
                 },
                 availability
             };

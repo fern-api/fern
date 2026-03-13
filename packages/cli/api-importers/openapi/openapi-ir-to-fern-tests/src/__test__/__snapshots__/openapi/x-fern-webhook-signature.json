@@ -29,6 +29,18 @@
               "openapi": "../openapi.yml",
             },
           },
+          "RefundEvent": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "amount": "double",
+              "reason": "optional<string>",
+              "refundId": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
           "UserEvent": {
             "docs": undefined,
             "inline": undefined,
@@ -60,6 +72,13 @@
       paymentId: string
       amount: double
       currency: optional<string>
+    source:
+      openapi: ../openapi.yml
+  RefundEvent:
+    properties:
+      refundId: string
+      amount: double
+      reason: optional<string>
     source:
       openapi: ../openapi.yml
 ",
@@ -134,6 +153,33 @@
                 "header": "x-timestamp",
                 "tolerance": undefined,
               },
+              "type": "asymmetric",
+            },
+          },
+          "refundProcessed": {
+            "audiences": [],
+            "display-name": undefined,
+            "examples": [
+              {
+                "docs": undefined,
+                "name": undefined,
+                "payload": {
+                  "amount": 1.1,
+                  "refundId": "refundId",
+                },
+              },
+            ],
+            "headers": {},
+            "method": "POST",
+            "payload": "root.RefundEvent",
+            "signature": {
+              "asymmetric-algorithm": "ecdsa-sha256",
+              "encoding": "hex",
+              "header": "x-refund-signature",
+              "jwks-url": undefined,
+              "key-id-header": undefined,
+              "signature-prefix": undefined,
+              "timestamp": undefined,
               "type": "asymmetric",
             },
           },
@@ -244,6 +290,20 @@ webhooks:
     examples:
       - payload:
           paymentId: paymentId
+          amount: 1.1
+  refundProcessed:
+    audiences: []
+    method: POST
+    headers: {}
+    payload: root.RefundEvent
+    signature:
+      type: asymmetric
+      header: x-refund-signature
+      asymmetric-algorithm: ecdsa-sha256
+      encoding: hex
+    examples:
+      - payload:
+          refundId: refundId
           amount: 1.1
 ",
     },

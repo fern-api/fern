@@ -11,7 +11,9 @@ The Seed TypeScript library provides convenient access to the Seed APIs from Typ
 - [Reference](#reference)
 - [Usage](#usage)
 - [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
 - [Advanced](#advanced)
+  - [Subpackage Exports](#subpackage-exports)
   - [Additional Headers](#additional-headers)
   - [Additional Query String Parameters](#additional-query-string-parameters)
   - [Retries](#retries)
@@ -40,7 +42,19 @@ Instantiate and use the client with the following:
 import { SeedPaginationUriPathClient } from "@fern/pagination-uri-path";
 
 const client = new SeedPaginationUriPathClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
-await client.users.listWithUriPagination();
+const pageableResponse = await client.users.listWithUriPagination();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.users.listWithUriPagination();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
 ```
 
 ## Exception Handling
@@ -63,7 +77,40 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { SeedPaginationUriPathClient } from "@fern/pagination-uri-path";
+
+const client = new SeedPaginationUriPathClient({ environment: "YOUR_BASE_URL", token: "YOUR_TOKEN" });
+const pageableResponse = await client.users.listWithUriPagination();
+for await (const item of pageableResponse) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.users.listWithUriPagination();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+
+// You can also access the underlying response
+const response = page.response;
+```
+
 ## Advanced
+
+### Subpackage Exports
+
+This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
+```typescript
+import { UsersClient } from '@fern/pagination-uri-path/users';
+
+const client = new UsersClient({...});
+```
 
 ### Additional Headers
 

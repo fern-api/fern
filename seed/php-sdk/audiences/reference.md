@@ -145,3 +145,4 @@ $client->foo->find(
 </dd>
 </dl>
 </details>
+

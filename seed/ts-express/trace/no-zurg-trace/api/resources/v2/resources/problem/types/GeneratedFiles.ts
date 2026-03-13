@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../../index";
 
 export interface GeneratedFiles {
-    generatedTestCaseFiles: Record<SeedTrace.Language, SeedTrace.v2.Files | undefined>;
-    generatedTemplateFiles: Record<SeedTrace.Language, SeedTrace.v2.Files | undefined>;
-    other: Record<SeedTrace.Language, SeedTrace.v2.Files | undefined>;
+    generatedTestCaseFiles: Partial<Record<SeedTrace.Language, SeedTrace.v2.Files>>;
+    generatedTemplateFiles: Partial<Record<SeedTrace.Language, SeedTrace.v2.Files>>;
+    other: Partial<Record<SeedTrace.Language, SeedTrace.v2.Files>>;
 }

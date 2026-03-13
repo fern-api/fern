@@ -220,6 +220,7 @@ export abstract class AbstractParameterConverter<
      *
      * OpenAPI defaults:
      * - form style (default for query): explode = true
+     * - deepObject style: explode = true (only valid value per the OpenAPI spec)
      * - All other styles: explode = false
      */
     private getExplodeForQueryParameter(): boolean | undefined {
@@ -231,13 +232,15 @@ export abstract class AbstractParameterConverter<
             return undefined;
         }
 
-        // For form style, default explode is true
-        // Only preserve explode if it differs from the default
-        if (style === "form") {
+        // For form and deepObject styles, default explode is true.
+        // deepObject only supports explode=true per the OpenAPI spec serialization table,
+        // so we treat true as the default for deepObject as well.
+        // Only preserve explode if it differs from the default.
+        if (style === "form" || style === "deepObject") {
             return explode === true ? undefined : explode;
         }
 
-        // For all other styles (spaceDelimited, pipeDelimited, deepObject), default explode is false
+        // For all other styles (spaceDelimited, pipeDelimited), default explode is false
         return explode === false ? undefined : explode;
     }
 

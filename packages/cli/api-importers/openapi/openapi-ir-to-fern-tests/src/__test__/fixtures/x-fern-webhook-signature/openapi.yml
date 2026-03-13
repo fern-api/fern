@@ -48,7 +48,7 @@ paths:
             schema:
               $ref: "#/components/schemas/OrderEvent"
 
-  # Webhook that overrides with asymmetric signature
+  # Webhook that overrides with asymmetric RSA signature via JWKS
   /webhooks/payment-processed:
     post:
       operationId: paymentProcessed
@@ -71,6 +71,24 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/PaymentEvent"
+
+  # Webhook that overrides with asymmetric ECDSA signature using static public key
+  /webhooks/refund-processed:
+    post:
+      operationId: refundProcessed
+      x-fern-webhook: true
+      x-fern-sdk-group-name: webhooks
+      x-fern-sdk-method-name: refundProcessed
+      x-fern-webhook-signature:
+        type: asymmetric
+        header: x-refund-signature
+        asymmetric-algorithm: ecdsa-sha256
+        encoding: hex
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RefundEvent"
 
 components:
   schemas:
@@ -106,4 +124,17 @@ components:
           type: string
       required:
         - paymentId
+        - amount
+
+    RefundEvent:
+      type: object
+      properties:
+        refundId:
+          type: string
+        amount:
+          type: number
+        reason:
+          type: string
+      required:
+        - refundId
         - amount

@@ -1,4 +1,11 @@
-import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    dirname,
+    doesPathExist,
+    join,
+    RelativeFilePath,
+    streamObjectToFile
+} from "@fern-api/fs-utils";
 import type { Logger } from "@fern-api/logger";
 import crypto from "crypto";
 import fs from "fs/promises";
@@ -19,11 +26,6 @@ import { formatBytes } from "../../ui/format.js";
  * └── v62/
  *     └── sha256/...
  * ```
- *
- * TODO: The given 'hash' needs to account for everything that can influence the IR content, such as:
- *  - Any distinctions between a specific version of the CLI and the same IR version.
- *  - Whether or not the user specified smart-casing (which affects the safe and unsafe names in the IR).
- *  - etc.
  */
 export declare namespace IrCache {
     /** A cached IR entry */
@@ -141,6 +143,9 @@ export class IrCache {
 
     /**
      * Store IR content in the cache with an atomic write.
+     *
+     * Streams the object to JSON on disk without building the full string
+     * in memory (IR files can be 50MB+).
      */
     public async store({
         hash,
@@ -149,7 +154,7 @@ export class IrCache {
     }: {
         hash: string;
         irVersion: string;
-        content: string;
+        content: unknown;
     }): Promise<IrCache.Entry> {
         const entryPath = this.getEntryPath({ irVersion, hash });
         const entryDir = dirname(entryPath);
@@ -160,7 +165,7 @@ export class IrCache {
         await fs.mkdir(this.tempPath, { recursive: true });
 
         try {
-            await fs.writeFile(tempFile, content, "utf-8");
+            await streamObjectToFile(tempFile, content, { pretty: true });
             await fs.rename(tempFile, entryPath);
         } catch (error) {
             // Clean up temp file if rename fails.

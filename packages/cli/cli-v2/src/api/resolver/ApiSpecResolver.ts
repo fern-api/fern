@@ -2,6 +2,7 @@ import { AbsoluteFilePath, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { mkdtemp, readFile, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
+import { FETCH_API_SPEC_REQUEST_TIMEOUT_MS } from "../../constants.js";
 import type { Context } from "../../context/Context.js";
 import type { ApiSpec, ApiSpecType } from "../config/ApiSpec.js";
 import { ApiSpecDetector } from "./ApiSpecDetector.js";
@@ -71,7 +72,7 @@ export class ApiSpecResolver {
     }
 
     private async fetchContent({ url }: { url: string }): Promise<{ content: string; contentType: string }> {
-        const response = await fetch(url);
+        const response = await fetch(url, { signal: AbortSignal.timeout(FETCH_API_SPEC_REQUEST_TIMEOUT_MS) });
         if (!response.ok) {
             throw new Error(`Failed to fetch "${url}": HTTP ${response.status} ${response.statusText}`);
         }

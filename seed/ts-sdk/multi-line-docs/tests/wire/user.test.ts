@@ -19,6 +19,7 @@ describe("UserClient", () => {
         const client = new SeedMultiLineDocsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { name: "name", age: 1 };
         const rawResponseBody = { id: "id", name: "name", age: 1 };
+
         server
             .mockEndpoint()
             .post("/users")

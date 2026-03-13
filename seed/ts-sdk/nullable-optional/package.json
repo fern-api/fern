@@ -12,7 +12,6 @@
     "types": "./dist/cjs/index.d.ts",
     "exports": {
         ".": {
-            "types": "./dist/cjs/index.d.ts",
             "import": {
                 "types": "./dist/esm/index.d.mts",
                 "default": "./dist/esm/index.mjs"
@@ -22,6 +21,17 @@
                 "default": "./dist/cjs/index.js"
             },
             "default": "./dist/cjs/index.js"
+        },
+        "./nullableOptional": {
+            "import": {
+                "types": "./dist/esm/api/resources/nullableOptional/exports.d.mts",
+                "default": "./dist/esm/api/resources/nullableOptional/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/nullableOptional/exports.d.ts",
+                "default": "./dist/cjs/api/resources/nullableOptional/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/nullableOptional/exports.js"
         },
         "./package.json": "./package.json"
     },
@@ -59,7 +69,8 @@
         "fs": false,
         "os": false,
         "path": false,
-        "stream": false
+        "stream": false,
+        "crypto": false
     },
     "packageManager": "pnpm@10.20.0",
     "engines": {

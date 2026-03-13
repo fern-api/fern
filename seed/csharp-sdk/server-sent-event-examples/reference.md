@@ -79,3 +79,4 @@ client.Completions.StreamEventsAsync(new StreamEventsRequest { Query = "query" }
 </dd>
 </dl>
 </details>
+

@@ -103,6 +103,16 @@
         }
       ]
     },
+    "replay": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/replay.ReplayConfigSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "ai": {
       "oneOf": [
         {
@@ -754,6 +764,19 @@
     "generators.APIDefinitionPathSchema": {
       "type": "string"
     },
+    "generators.OverridesSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
     "generators.UnionSettingsSchema": {
       "type": "string",
       "enum": [
@@ -926,7 +949,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -981,7 +1004,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -2149,7 +2172,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -2337,7 +2360,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -2391,7 +2414,7 @@
         "overrides": {
           "oneOf": [
             {
-              "type": "string"
+              "$ref": "#/definitions/generators.OverridesSchema"
             },
             {
               "type": "null"
@@ -3922,6 +3945,19 @@
             }
           ]
         },
+        "headers": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.service.HttpHeaderSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "settings": {
           "oneOf": [
             {
@@ -4136,6 +4172,18 @@
       },
       "required": [
         "generators"
+      ],
+      "additionalProperties": false
+    },
+    "replay.ReplayConfigSchema": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "enabled"
       ],
       "additionalProperties": false
     },

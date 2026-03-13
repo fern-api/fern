@@ -64,8 +64,12 @@ export async function registerApi({
 
     if (aiEnhancerConfig) {
         const sources = workspace.getSources();
-        const openApiSource = sources.find((source) => source.type === "openapi");
-        const sourceFilePath = openApiSource?.absoluteFilePath;
+        const openApiSources = sources
+            .filter((source) => source.type === "openapi")
+            .map((source) => ({
+                absoluteFilePath: source.absoluteFilePath,
+                absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
+            }));
 
         apiDefinition = await enhanceExamplesWithAI(
             apiDefinition,
@@ -73,7 +77,7 @@ export async function registerApi({
             context,
             token,
             organization,
-            sourceFilePath,
+            openApiSources.length > 0 ? openApiSources : undefined,
             ir.apiName.originalName
         );
     }

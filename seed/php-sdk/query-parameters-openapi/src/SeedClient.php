@@ -115,6 +115,12 @@ class SeedClient
         if ($request->filter != null) {
             $query['filter'] = $request->filter;
         }
+        if ($request->tags != null) {
+            $query['tags'] = $request->tags;
+        }
+        if ($request->optionalTags != null) {
+            $query['optionalTags'] = $request->optionalTags;
+        }
         if ($request->neighbor != null) {
             $query['neighbor'] = JsonSerializer::serializeUnion($request->neighbor, new Union(User::class, NestedUser::class, 'string', 'integer'));
         }

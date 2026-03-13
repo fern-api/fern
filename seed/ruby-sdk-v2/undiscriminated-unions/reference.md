@@ -330,3 +330,4 @@ client.union.test_camel_case_properties(payment_method: {
 </dd>
 </dl>
 </details>
+

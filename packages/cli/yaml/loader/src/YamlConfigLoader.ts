@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, RelativeFilePath, relative } from "@fern-api/fs-utils";
-import type { Sourced } from "@fern-api/source";
+import { type Sourced, SourceLocation } from "@fern-api/source";
 import { z } from "zod";
+import { deepStrict } from "./deepStrict.js";
 import { ReferenceResolver } from "./ReferenceResolver.js";
 import { ValidationIssue } from "./ValidationIssue.js";
 import type { YamlDocument } from "./YamlDocument.js";
@@ -61,13 +62,23 @@ export class YamlConfigLoader {
     public async load<S extends z.ZodSchema>({
         absoluteFilePath,
         schema,
-        resolveReferences = true
+        resolveReferences = true,
+        strict = false
     }: {
         absoluteFilePath: AbsoluteFilePath;
         schema: S;
         resolveReferences?: boolean;
+        /** When true, recursively applies `.strict()` to all objects in the schema,
+         *  causing validation errors for unrecognized keys at any depth. */
+        strict?: boolean;
     }): Promise<YamlConfigLoader.Result<z.infer<S>>> {
         const document = await this.parseDocument(absoluteFilePath);
+
+        const yamlErrors = this.getYamlErrors(document);
+        if (yamlErrors.length > 0) {
+            return { success: false, issues: yamlErrors };
+        }
+
         const resolved = await this.resolveReferences({ document, resolveReferences });
         if (!resolved.success) {
             return {
@@ -75,7 +86,8 @@ export class YamlConfigLoader {
                 issues: resolved.issues
             };
         }
-        const parseResult = schema.safeParse(resolved.data);
+        const effectiveSchema = strict ? deepStrict(schema) : schema;
+        const parseResult = effectiveSchema.safeParse(resolved.data);
         if (!parseResult.success) {
             const issues = parseResult.error.issues.map((issue) => {
                 // Zod paths are PropertyKey[] but YAML paths are string | number
@@ -138,6 +150,25 @@ export class YamlConfigLoader {
             };
         }
         return resolveResult;
+    }
+
+    private getYamlErrors(document: YamlDocument): ValidationIssue[] {
+        if (document.errors.length === 0) {
+            return [];
+        }
+        return document.errors.map((error) => {
+            const line = error.linePos?.[0]?.line ?? 1;
+            const col = error.linePos?.[0]?.col ?? 1;
+            return new ValidationIssue({
+                message: error.message,
+                location: new SourceLocation({
+                    absoluteFilePath: document.absoluteFilePath,
+                    relativeFilePath: document.relativeFilePath,
+                    line,
+                    column: col
+                })
+            });
+        });
     }
 
     private formatZodIssue(issue: z.core.$ZodIssue): string {

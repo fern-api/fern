@@ -496,7 +496,7 @@ export class MockEndpointGenerator extends WithGeneration {
 
             case "union":
                 // For unions, we need to handle the discriminant and the union value
-                return this.filterUnionExample(innerShape, options);
+                return this.filterUnionExample(typeId, innerShape, options);
 
             case "undiscriminatedUnion":
                 return this.filterExampleTypeReference(innerShape.singleUnionType, options);
@@ -545,11 +545,12 @@ export class MockEndpointGenerator extends WithGeneration {
      * Filters properties from a union example.
      */
     private filterUnionExample(
+        typeId: TypeId,
         unionShape: { discriminant: { wireValue: string }; singleUnionType: unknown },
         options: { filterWriteOnly?: boolean } = {}
     ): unknown {
-        // Union examples have a complex structure - for now, return the JSON example
-        // and rely on the SDK's serialization to handle read-only properties
+        // Union examples have a complex structure
+        // The singleUnionType has a wireDiscriminantValue and a shape that describes the variant
         const singleUnionType = unionShape.singleUnionType as {
             wireDiscriminantValue: { wireValue: string };
             shape:
@@ -558,7 +559,7 @@ export class MockEndpointGenerator extends WithGeneration {
                       typeId: TypeId;
                       object: { properties: Array<{ name: { wireValue: string }; value: ExampleTypeReference }> };
                   }
-                | { type: "singleProperty"; jsonExample: unknown; typeReference: ExampleTypeReference }
+                | ({ type: "singleProperty" } & ExampleTypeReference)
                 | { type: "noProperties" };
         };
 
@@ -574,14 +575,40 @@ export class MockEndpointGenerator extends WithGeneration {
             );
             Object.assign(result, filteredProps);
         } else if (singleUnionType.shape.type === "singleProperty") {
-            // Single property unions have a nested value
-            const filteredValue = this.filterExampleTypeReference(singleUnionType.shape.typeReference, options);
-            // The property name for single property unions is typically the variant name
-            // but we need to check the union definition for the actual wire name
-            Object.assign(result, filteredValue);
+            // For singleProperty, the shape itself extends ExampleTypeReference
+            // so it has shape and jsonExample fields directly on it
+            const filteredValue = this.filterExampleTypeReference(singleUnionType.shape, options);
+            // Look up the union type definition to get the correct property wire name
+            // for singleProperty variants (e.g., "value")
+            const propertyWireName = this.getSinglePropertyWireName(
+                typeId,
+                singleUnionType.wireDiscriminantValue.wireValue
+            );
+            result[propertyWireName] = filteredValue;
         }
 
         return result;
+    }
+
+    /**
+     * Looks up the union type definition to find the wire name for a singleProperty variant.
+     * Falls back to the discriminant wire value if the type definition can't be found.
+     */
+    private getSinglePropertyWireName(typeId: TypeId, discriminantWireValue: string): string {
+        try {
+            const typeDeclaration = this.context.model.dereferenceType(typeId).typeDeclaration;
+            if (typeDeclaration.shape.type === "union") {
+                const matchingType = typeDeclaration.shape.types.find(
+                    (t) => t.discriminantValue.wireValue === discriminantWireValue
+                );
+                if (matchingType?.shape.propertiesType === "singleProperty") {
+                    return matchingType.shape.name.wireValue;
+                }
+            }
+        } catch {
+            // Fall through to default
+        }
+        return discriminantWireValue;
     }
 
     /**

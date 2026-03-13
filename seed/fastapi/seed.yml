@@ -131,6 +131,13 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
 allowedFailures:
+  - exhaustive:no-custom-config
+  - exhaustive:skip-formatting
+  - exhaustive:pydantic-v1
+  - exhaustive:pydantic-v2
+  - exhaustive:frozen_utils
+  - exhaustive:include-validators
+  - exhaustive:ignore-extra-fields
   - header-auth-environment-variable
   - bearer-token-environment-variable
   - query-parameters

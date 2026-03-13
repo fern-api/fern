@@ -231,23 +231,33 @@ public record InvalidRequestCause
                 discriminatorElement.GetString()
                 ?? throw new JsonException("Discriminator property 'type' is null");
 
+            // Strip the discriminant property to prevent it from leaking into AdditionalProperties
+            var jsonObject = System.Text.Json.Nodes.JsonObject.Create(json);
+            jsonObject?.Remove("type");
+            var jsonWithoutDiscriminator =
+                jsonObject != null ? JsonSerializer.SerializeToElement(jsonObject, options) : json;
+
             var value = discriminator switch
             {
-                "submissionIdNotFound" => json.Deserialize<SeedTrace.SubmissionIdNotFound?>(options)
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.SubmissionIdNotFound"
-                    ),
+                "submissionIdNotFound" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.SubmissionIdNotFound?>(options)
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.SubmissionIdNotFound"
+                        ),
                 "customTestCasesUnsupported" =>
-                    json.Deserialize<SeedTrace.CustomTestCasesUnsupported?>(options)
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.CustomTestCasesUnsupported?>(
+                        options
+                    )
                         ?? throw new JsonException(
                             "Failed to deserialize SeedTrace.CustomTestCasesUnsupported"
                         ),
-                "unexpectedLanguage" => json.Deserialize<SeedTrace.UnexpectedLanguageError?>(
-                    options
-                )
-                    ?? throw new JsonException(
-                        "Failed to deserialize SeedTrace.UnexpectedLanguageError"
-                    ),
+                "unexpectedLanguage" =>
+                    jsonWithoutDiscriminator.Deserialize<SeedTrace.UnexpectedLanguageError?>(
+                        options
+                    )
+                        ?? throw new JsonException(
+                            "Failed to deserialize SeedTrace.UnexpectedLanguageError"
+                        ),
                 _ => json.Deserialize<object?>(options),
             };
             return new InvalidRequestCause(discriminator, value);

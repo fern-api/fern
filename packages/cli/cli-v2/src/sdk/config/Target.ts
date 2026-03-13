@@ -16,7 +16,7 @@ export interface Target {
     /** Source location of this target in fern.yml (for error reporting) */
     sourceLocation: SourceLocation;
     /** Output configuration for local/git publishing */
-    output: schemas.OutputSchema;
+    output: schemas.OutputObjectSchema;
     /** Target-specific configuration */
     config?: Record<string, unknown>;
     /** Publish configuration for package registries */

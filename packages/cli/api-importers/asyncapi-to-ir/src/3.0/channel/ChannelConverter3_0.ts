@@ -3,6 +3,7 @@ import { constructHttpPath } from "@fern-api/ir-utils";
 import { Converters } from "@fern-api/v3-importer-commons";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractChannelConverter } from "../../converters/AbstractChannelConverter.js";
+import { AbstractServerConverter } from "../../converters/AbstractServerConverter.js";
 import { ParameterConverter } from "../../converters/ParameterConverter.js";
 import { DisplayNameExtension } from "../../extensions/x-fern-display-name.js";
 import { AsyncAPIV3 } from "../index.js";
@@ -93,8 +94,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
         }
 
         const baseUrl =
-            this.resolveChannelServersFromReference(this.channel.servers ?? []) ??
-            Object.keys(this.context.spec.servers ?? {})[0];
+            this.resolveChannelServersFromReference(this.channel.servers ?? []) ?? this.resolveFirstServerName();
 
         const channelAddress = this.transformToValidPath(this.channel.address ?? this.channelPath);
         const path = constructHttpPath(channelAddress);
@@ -111,6 +111,7 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             channel: {
                 name: this.context.casingsGenerator.generateName(displayName),
                 displayName,
+                connectMethodName: undefined, // This will be populated from OpenAPI IR layer
                 baseUrl,
                 path,
                 auth,
@@ -266,15 +267,38 @@ export class ChannelConverter3_0 extends AbstractChannelConverter<AsyncAPIV3.Cha
             });
             return undefined;
         }
-        const serverName = serverRef.$ref.substring(SERVER_REFERENCE_PREFIX.length);
-        if (serverName == null) {
+        const serverKey = serverRef.$ref.substring(SERVER_REFERENCE_PREFIX.length);
+        if (serverKey == null) {
             this.context.errorCollector.collect({
-                message: `Failed to find server with name ${serverName}`,
+                message: `Failed to find server with name ${serverKey}`,
                 path: this.breadcrumbs
             });
             return undefined;
         }
-        return serverName;
+        // Check for x-fern-server-name extension on the referenced server
+        const specServers = this.context.spec.servers;
+        if (specServers != null && serverKey in specServers) {
+            const server = specServers[serverKey];
+            return AbstractServerConverter.getServerName(serverKey, server);
+        }
+        return serverKey;
+    }
+
+    /**
+     * Resolves the effective name of the first server in the spec,
+     * checking for x-fern-server-name extension.
+     */
+    private resolveFirstServerName(): string | undefined {
+        const specServers = this.context.spec.servers;
+        if (specServers == null) {
+            return undefined;
+        }
+        const firstServerKey = Object.keys(specServers)[0];
+        if (firstServerKey == null) {
+            return undefined;
+        }
+        const server = specServers[firstServerKey];
+        return AbstractServerConverter.getServerName(firstServerKey, server);
     }
 
     private getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {

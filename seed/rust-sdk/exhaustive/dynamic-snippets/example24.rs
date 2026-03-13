@@ -10,11 +10,10 @@ async fn main() {
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
         .endpoints
-        .pagination
-        .list_items(
-            &ListItemsQueryRequest {
-                cursor: Some("cursor".to_string()),
-                limit: Some(1),
+        .object
+        .get_and_return_with_documented_unknown_type(
+            &ObjectWithDocumentedUnknownType {
+                documented_unknown_type: DocumentedUnknownType(serde_json::json!({"key":"value"})),
             },
             None,
         )

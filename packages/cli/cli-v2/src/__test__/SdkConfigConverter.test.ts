@@ -383,6 +383,78 @@ sdks:
             }
         });
 
+        it("converts string shorthand output to path", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  targets:
+    typescript:
+      version: "3.0.0"
+      output: ./sdks/typescript
+    go:
+      version: "2.0.0"
+      output: ./sdks/go
+`
+            );
+
+            const fernYml = await loadFernYml({ cwd: testDir });
+            const result = converter.convert({ fernYml });
+
+            expect(result.success).toBe(true);
+            if (result.success) {
+                expect(result.config.targets).toHaveLength(2);
+
+                const targetsByName = Object.fromEntries(result.config.targets.map((t: Target) => [t.name, t]));
+                expect(targetsByName["typescript"]?.output.path).toBe("./sdks/typescript");
+                expect(targetsByName["typescript"]?.output.git).toBeUndefined();
+                expect(targetsByName["go"]?.output.path).toBe("./sdks/go");
+                expect(targetsByName["go"]?.output.git).toBeUndefined();
+            }
+        });
+
+        it("string shorthand output is equivalent to object with path", async () => {
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  targets:
+    python:
+      output: ./sdks/python
+`
+            );
+
+            const fernYml1 = await loadFernYml({ cwd: testDir });
+            const result1 = converter.convert({ fernYml: fernYml1 });
+
+            await writeFile(
+                join(testDir, "fern.yml"),
+                `
+edition: 2026-01-01
+org: acme
+sdks:
+  targets:
+    python:
+      output:
+        path: ./sdks/python
+`
+            );
+
+            const fernYml2 = await loadFernYml({ cwd: testDir });
+            const result2 = converter.convert({ fernYml: fernYml2 });
+
+            expect(result1.success).toBe(true);
+            expect(result2.success).toBe(true);
+            if (result1.success && result2.success) {
+                expect(result1.config.targets[0]?.output.path).toBe(result2.config.targets[0]?.output.path);
+                expect(result1.config.targets[0]?.output.git).toEqual(result2.config.targets[0]?.output.git);
+            }
+        });
+
         it("converts git output configuration", async () => {
             await writeFile(
                 join(testDir, "fern.yml"),

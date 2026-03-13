@@ -44,6 +44,7 @@ import { ValidStreamConditionRule } from "./rules/valid-stream-condition/index.j
 import { ValidTypeNameRule } from "./rules/valid-type-name/index.js";
 import { ValidTypeReferenceWithDefaultAndValidationRule } from "./rules/valid-type-reference-with-default-and-validation/index.js";
 import { ValidVersionRule } from "./rules/valid-version/index.js";
+import { ValidWebhookSignatureRule } from "./rules/valid-webhook-signature/index.js";
 
 export function getAllRules(): Rule[] {
     return [
@@ -91,7 +92,8 @@ export function getAllRules(): Rule[] {
         ValidGenericRule,
         ContentTypeOnlyForMultipartRule,
         ValidPathParametersConfigurationRule,
-        ExplodedFormDataIsArrayRule
+        ExplodedFormDataIsArrayRule,
+        ValidWebhookSignatureRule
     ];
 }
 

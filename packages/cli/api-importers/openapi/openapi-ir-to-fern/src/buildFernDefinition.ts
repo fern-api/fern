@@ -9,9 +9,10 @@ import { buildEnvironments } from "./buildEnvironments.js";
 import { buildGlobalHeaders } from "./buildGlobalHeaders.js";
 import { buildIdempotencyHeaders } from "./buildIdempotencyHeaders.js";
 import { buildServices } from "./buildServices.js";
-import { buildTypeDeclaration } from "./buildTypeDeclaration.js";
+import { buildObjectTypeDeclaration, buildTypeDeclaration } from "./buildTypeDeclaration.js";
 import { buildVariables } from "./buildVariables.js";
 import { buildWebhooks } from "./buildWebhooks.js";
+import { computeSchemaReachability, computeVariantPlan } from "./computeSchemaReachability.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { State } from "./State.js";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName.js";
@@ -30,22 +31,89 @@ function addSchemas({
     context
 }: {
     schemas: Record<string, Schema>;
-    schemaIdsToExclude: string[];
+    schemaIdsToExclude: Set<string>;
     namespace: string | undefined;
     context: OpenApiIrConverterContext;
 }): void {
     for (const [id, schema] of Object.entries(schemas)) {
-        if (schemaIdsToExclude.includes(id)) {
+        if (schemaIdsToExclude.has(id)) {
             continue;
         }
 
         const declarationFile = getDeclarationFileForSchema(schema);
+
+        // Variant-plan-based logic for readonly schemas
+        if (context.options.respectReadonlySchemas && context.needsBothVariants(id) && schema.type === "object") {
+            // Generate Read variant (all properties, "Read" suffix)
+            const readDeclaration = buildObjectTypeDeclaration({
+                schema,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth: 0,
+                variant: "read"
+            });
+            context.builder.addType(declarationFile, {
+                name: readDeclaration.name ?? id,
+                schema: readDeclaration.schema
+            });
+
+            // Generate Write variant (without readOnly properties, original name)
+            const writeDeclaration = buildObjectTypeDeclaration({
+                schema,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth: 0,
+                skipReadonlyProperties: true,
+                variant: "write"
+            });
+            context.builder.addType(declarationFile, {
+                name: writeDeclaration.name ?? id,
+                schema: writeDeclaration.schema
+            });
+
+            continue;
+        }
+
+        if (
+            context.options.respectReadonlySchemas &&
+            context.isRequestOnlyWithReadonly(id) &&
+            schema.type === "object"
+        ) {
+            // Single Write variant (strip readonly properties)
+            const writeDeclaration = buildObjectTypeDeclaration({
+                schema,
+                context,
+                declarationFile,
+                namespace,
+                declarationDepth: 0,
+                skipReadonlyProperties: true,
+                variant: "write"
+            });
+            context.builder.addType(declarationFile, {
+                name: writeDeclaration.name ?? id,
+                schema: writeDeclaration.schema
+            });
+
+            continue;
+        }
+
+        // Default path: determine variant based on reachability
+        // Request-only schemas resolve references to Write variants,
+        // everything else resolves to Read variants
+        let variant: "read" | "write" | undefined;
+        if (context.options.respectReadonlySchemas) {
+            variant = context.isRequestOnly(id) ? "write" : "read";
+        }
+
         const typeDeclaration = buildTypeDeclaration({
             schema,
             context,
             declarationFile,
             namespace,
-            declarationDepth: 0
+            declarationDepth: 0,
+            variant
         });
 
         // HACKHACK: Skip self-referencing schemas. I'm not sure if this is the right way to do this.
@@ -104,6 +172,15 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
         context,
         schemaIdsToExcludeFromServices: convertedServices.schemaIdsToExclude
     });
+
+    // Compute reachability-based variant plan for readonly schema handling
+    if (context.options.respectReadonlySchemas) {
+        const reachability = computeSchemaReachability(context.ir);
+        const variantPlan = computeVariantPlan(context.ir, reachability);
+        context.setVariantPlan(variantPlan, reachability);
+    }
+
+    // Build type declarations
     addSchemas({ schemas: context.ir.groupedSchemas.rootSchemas, schemaIdsToExclude, namespace: undefined, context });
     for (const [namespace, schemas] of Object.entries(context.ir.groupedSchemas.namespacedSchemas)) {
         addSchemas({ schemas, schemaIdsToExclude, namespace, context });
@@ -131,12 +208,12 @@ function getSchemaIdsToExclude({
 }: {
     context: OpenApiIrConverterContext;
     schemaIdsToExcludeFromServices: string[];
-}): string[] {
+}): Set<string> {
     const referencedSchemaIds = context.getReferencedSchemaIds();
     if (referencedSchemaIds == null) {
         // No further filtering is required; we can return the
         // excluded schemas as-is.
-        return schemaIdsToExcludeFromServices;
+        return new Set(schemaIdsToExcludeFromServices);
     }
 
     // Retrieve all the schema IDs, then exclude all the schemas that
@@ -153,5 +230,5 @@ function getSchemaIdsToExclude({
         }
     }
 
-    return Array.from(schemaIdsToExcludeSet);
+    return schemaIdsToExcludeSet;
 }

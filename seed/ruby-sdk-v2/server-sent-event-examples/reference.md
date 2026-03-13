@@ -95,3 +95,4 @@ client.completions.stream_events(query: "query")
 </dd>
 </dl>
 </details>
+

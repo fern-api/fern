@@ -20,6 +20,7 @@ export interface Zurg {
     list: (itemSchema: Zurg.Schema) => Zurg.Schema;
     set: (itemSchema: Zurg.Schema) => Zurg.Schema;
     record: (args: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => Zurg.Schema;
+    partialRecord: (args: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => Zurg.Schema;
     enum: (values: string[]) => Zurg.Schema;
     string: () => Zurg.Schema;
     stringLiteral: (literal: string) => Zurg.Schema;
@@ -440,6 +441,27 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                     isNullable: false,
                     toExpression: () =>
                         ts.factory.createCallExpression(record.getExpression(), undefined, [
+                            keySchema.toExpression(),
+                            valueSchema.toExpression()
+                        ])
+                };
+
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema)
+                };
+            }
+    );
+
+    public partialRecord = this.withExportedName(
+        "partialRecord",
+        (partialRecord: Reference) =>
+            ({ keySchema, valueSchema }: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    isNullable: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(partialRecord.getExpression(), undefined, [
                             keySchema.toExpression(),
                             valueSchema.toExpression()
                         ])

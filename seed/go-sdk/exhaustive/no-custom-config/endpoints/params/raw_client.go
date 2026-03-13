@@ -8,6 +8,8 @@ import (
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
+	types "github.com/exhaustive/fern/types"
+	io "io"
 	http "net/http"
 )
 
@@ -386,6 +388,51 @@ func (r *RawClient) ModifyWithInlinePath(
 		return nil, err
 	}
 	return &core.Response[string]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) UploadWithPath(
+	ctx context.Context,
+	param string,
+	request io.Reader,
+	opts ...option.RequestOption,
+) (*core.Response[*types.ObjectWithRequiredField], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/params/path/%v",
+		param,
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *types.ObjectWithRequiredField
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodPost,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Request:         request,
+			Response:        &response,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*types.ObjectWithRequiredField]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

@@ -79,9 +79,7 @@ export class FernYmlBuilder {
 
     private buildOutput(output: FernYmlBuilder.OutputConfig): schemas.OutputSchema {
         if (output.type === "local") {
-            return {
-                path: output.path
-            };
+            return output.path ?? "./sdks";
         }
         return {
             git: {

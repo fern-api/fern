@@ -63,7 +63,8 @@ function createMockContext(ir: FernIr.IntermediateRepresentation): SdkGeneratorC
     return {
         ir,
         getClientName: () => "TestClient",
-        customConfig: {}
+        customConfig: {},
+        hasWebSocketChannels: () => false
     } as SdkGeneratorContext;
 }
 

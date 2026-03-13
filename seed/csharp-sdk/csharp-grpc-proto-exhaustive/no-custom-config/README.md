@@ -15,7 +15,8 @@ The Seed C# library provides convenient access to the Seed APIs from C#.
 - [Advanced](#advanced)
   - [Retries](#retries)
   - [Timeouts](#timeouts)
-  - [Raw Response](#raw-response)
+  - [Additional Headers](#additional-headers)
+  - [Forward Compatible Enums](#forward-compatible-enums)
 - [Contributing](#contributing)
 
 ## Requirements
@@ -97,32 +98,49 @@ var response = await client.Dataservice.FooAsync(
 );
 ```
 
-### Raw Response
+### Additional Headers
 
-Access raw HTTP response data (status code, headers, URL) alongside parsed response data using the `.WithRawResponse()` method.
+If you would like to send additional headers as part of the request, use the `AdditionalHeaders` request option.
+
+```csharp
+var response = await client.Dataservice.FooAsync(
+    ...,
+    new RequestOptions {
+        AdditionalHeaders = new Dictionary<string, string?>
+        {
+            { "X-Custom-Header", "custom-value" }
+        }
+    }
+);
+```
+
+### Forward Compatible Enums
+
+This SDK uses forward-compatible enums that can handle unknown values gracefully.
 
 ```csharp
 using SeedApi;
 
-// Access raw response data (status code, headers, etc.) alongside the parsed response
-var result = await client.Dataservice.FooAsync(...).WithRawResponse();
+// Using a built-in value
+var indexType = IndexType.IndexTypeInvalid;
 
-// Access the parsed data
-var data = result.Data;
+// Using a custom value
+var customIndexType = IndexType.FromCustom("custom-value");
 
-// Access raw response metadata
-var statusCode = result.RawResponse.StatusCode;
-var headers = result.RawResponse.Headers;
-var url = result.RawResponse.Url;
-
-// Access specific headers (case-insensitive)
-if (headers.TryGetValue("X-Request-Id", out var requestId))
+// Using in a switch statement
+switch (indexType.Value)
 {
-    System.Console.WriteLine($"Request ID: {requestId}");
+    case IndexType.Values.IndexTypeInvalid:
+        Console.WriteLine("IndexTypeInvalid");
+        break;
+    default:
+        Console.WriteLine($"Unknown value: {indexType.Value}");
+        break;
 }
 
-// For the default behavior, simply await without .WithRawResponse()
-var data = await client.Dataservice.FooAsync(...);
+// Explicit casting
+string indexTypeString = (string)IndexType.IndexTypeInvalid;
+IndexType indexTypeFromString = (IndexType)"INDEX_TYPE_INVALID";
 ```
 
 ## Contributing

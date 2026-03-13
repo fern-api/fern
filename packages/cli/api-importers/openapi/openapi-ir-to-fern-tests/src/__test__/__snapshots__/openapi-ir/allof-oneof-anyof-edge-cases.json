@@ -872,9 +872,130 @@
             "type": "reference"
           }
         ],
-        "properties": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "complexTypeA",
+            "key": "typeA",
+            "schema": {
+              "generatedName": "ComplexTypeA",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ComplexTypeA",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "complexTypeB",
+            "key": "typeB",
+            "schema": {
+              "generatedName": "ComplexTypeB",
+              "value": {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "ComplexTypeB",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
         "allOfPropertyConflicts": [],
         "generatedName": "Complex",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "SendTransacSms": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "sendTransacSmsRecipient",
+            "key": "recipient",
+            "schema": {
+              "description": "Mobile number to send SMS with the country code",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SendTransacSmsRecipient",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sendTransacSmsSender",
+            "key": "sender",
+            "schema": {
+              "description": "Name of the sender",
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "SendTransacSmsSender",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sendTransacSmsTemplateId",
+            "key": "templateId",
+            "schema": {
+              "generatedName": "",
+              "value": {
+                "description": "Template ID to send SMS",
+                "schema": {
+                  "type": "int"
+                },
+                "generatedName": "SendTransacSmsTemplateId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sendTransacSmsContent",
+            "key": "content",
+            "schema": {
+              "generatedName": "",
+              "value": {
+                "description": "Content of the message",
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "SendTransacSmsContent",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "SendTransacSms",
         "groupName": [],
         "additionalProperties": false,
         "source": {

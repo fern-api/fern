@@ -113,18 +113,20 @@ function evaluateRuntime(): Runtime {
 
     /**
      * A constant that indicates whether the environment the code is running is Node.JS.
+     *
+     * We assign `process` to a local variable first to avoid being flagged by
+     * bundlers that perform static analysis on `process.versions` (e.g. Next.js
+     * Edge Runtime warns about Node.js APIs even when they are guarded).
      */
+    const _process = typeof process !== "undefined" ? process : undefined;
     const isNode =
-        typeof process !== "undefined" &&
-        "version" in process &&
-        !!process.version &&
-        "versions" in process &&
-        !!process.versions?.node;
+        typeof _process !== "undefined" &&
+        typeof _process.versions?.node === "string";
     if (isNode) {
         return {
             type: "node",
-            version: process.versions.node,
-            parsedVersion: Number(process.versions.node.split(".")[0]),
+            version: _process.versions.node,
+            parsedVersion: Number(_process.versions.node.split(".")[0]),
         };
     }
 

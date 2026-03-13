@@ -173,6 +173,22 @@ client.search(
 <dl>
 <dd>
 
+**tags:** `String` — List of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**optional_tags:** `String` — Optional list of tags. Serialized as a comma-separated list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **neighbor:** `Seed::Types::SearchRequestNeighbor` 
     
 </dd>
@@ -200,3 +216,4 @@ client.search(
 </dd>
 </dl>
 </details>
+

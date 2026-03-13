@@ -41,7 +41,7 @@ func do() {
             "<token>",
         ),
     )
-    request := "Hello world!\n\nwith\n\tnewlines"
+    request := "Hello world!\\n\\nwith\\n\\tnewlines"
     client.Echo(
         context.TODO(),
         request,

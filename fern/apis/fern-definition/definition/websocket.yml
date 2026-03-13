@@ -13,6 +13,7 @@ types:
       auth: boolean
       url: optional<string>
       path: string
+      connect-method-name: optional<string>
       headers: optional<map<string, service.HttpHeaderSchema>>
       path-parameters: optional<map<string, service.HttpPathParameterSchema>>
       query-parameters: optional<map<string, service.HttpQueryParameterSchema>>

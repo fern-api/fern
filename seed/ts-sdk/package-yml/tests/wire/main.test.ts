@@ -9,6 +9,7 @@ describe("SeedPackageYmlClient", () => {
         const client = new SeedPackageYmlClient({ maxRetries: 0, id: "id-ksfd9c1", environment: server.baseUrl });
         const rawRequestBody = { name: "Hello world!", size: 20 };
         const rawResponseBody = "Hello world!";
+
         server
             .mockEndpoint()
             .post("/id-ksfd9c1/")

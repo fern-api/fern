@@ -25,25 +25,31 @@ var (
 	searchRequestFieldOptionalUser     = big.NewInt(1 << 11)
 	searchRequestFieldExcludeUser      = big.NewInt(1 << 12)
 	searchRequestFieldFilter           = big.NewInt(1 << 13)
-	searchRequestFieldNeighbor         = big.NewInt(1 << 14)
-	searchRequestFieldNeighborRequired = big.NewInt(1 << 15)
+	searchRequestFieldTags             = big.NewInt(1 << 14)
+	searchRequestFieldOptionalTags     = big.NewInt(1 << 15)
+	searchRequestFieldNeighbor         = big.NewInt(1 << 16)
+	searchRequestFieldNeighborRequired = big.NewInt(1 << 17)
 )
 
 type SearchRequest struct {
-	Limit            int                            `json:"-" url:"limit"`
-	Id               string                         `json:"-" url:"id"`
-	Date             time.Time                      `json:"-" url:"date" format:"date"`
-	Deadline         time.Time                      `json:"-" url:"deadline"`
-	Bytes            string                         `json:"-" url:"bytes"`
-	User             *User                          `json:"-" url:"user"`
-	UserList         []*User                        `json:"-" url:"userList,omitempty"`
-	OptionalDeadline *time.Time                     `json:"-" url:"optionalDeadline,omitempty"`
-	KeyValue         map[string]string              `json:"-" url:"keyValue,omitempty"`
-	OptionalString   *string                        `json:"-" url:"optionalString,omitempty"`
-	NestedUser       *NestedUser                    `json:"-" url:"nestedUser,omitempty"`
-	OptionalUser     *User                          `json:"-" url:"optionalUser,omitempty"`
-	ExcludeUser      []*User                        `json:"-" url:"excludeUser,omitempty"`
-	Filter           []*string                      `json:"-" url:"filter,omitempty"`
+	Limit            int               `json:"-" url:"limit"`
+	Id               string            `json:"-" url:"id"`
+	Date             time.Time         `json:"-" url:"date" format:"date"`
+	Deadline         time.Time         `json:"-" url:"deadline"`
+	Bytes            string            `json:"-" url:"bytes"`
+	User             *User             `json:"-" url:"user"`
+	UserList         []*User           `json:"-" url:"userList,omitempty"`
+	OptionalDeadline *time.Time        `json:"-" url:"optionalDeadline,omitempty"`
+	KeyValue         map[string]string `json:"-" url:"keyValue,omitempty"`
+	OptionalString   *string           `json:"-" url:"optionalString,omitempty"`
+	NestedUser       *NestedUser       `json:"-" url:"nestedUser,omitempty"`
+	OptionalUser     *User             `json:"-" url:"optionalUser,omitempty"`
+	ExcludeUser      []*User           `json:"-" url:"excludeUser,omitempty"`
+	Filter           []*string         `json:"-" url:"filter,omitempty"`
+	// List of tags. Serialized as a comma-separated list.
+	Tags []*string `json:"-" url:"tags,omitempty"`
+	// Optional list of tags. Serialized as a comma-separated list.
+	OptionalTags     []*string                      `json:"-" url:"optionalTags,omitempty"`
 	Neighbor         *SearchRequestNeighbor         `json:"-" url:"neighbor,omitempty"`
 	NeighborRequired *SearchRequestNeighborRequired `json:"-" url:"neighborRequired"`
 
@@ -154,6 +160,20 @@ func (s *SearchRequest) SetExcludeUser(excludeUser []*User) {
 func (s *SearchRequest) SetFilter(filter []*string) {
 	s.Filter = filter
 	s.require(searchRequestFieldFilter)
+}
+
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchRequest) SetTags(tags []*string) {
+	s.Tags = tags
+	s.require(searchRequestFieldTags)
+}
+
+// SetOptionalTags sets the OptionalTags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchRequest) SetOptionalTags(optionalTags []*string) {
+	s.OptionalTags = optionalTags
+	s.require(searchRequestFieldOptionalTags)
 }
 
 // SetNeighbor sets the Neighbor field and marks it as non-optional;

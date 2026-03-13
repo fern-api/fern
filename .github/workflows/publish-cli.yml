@@ -27,7 +27,9 @@ env:
   DO_NOT_TRACK: "1"
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
   TURBO_TEAM: "buildwithfern"
-  TURBO_REMOTE_CACHE_TIMEOUT: 60
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
 
 jobs:
   detect-release-bump:
@@ -203,7 +205,7 @@ jobs:
             echo "CLI_VERSION=${{ inputs.version }}" >> $GITHUB_OUTPUT
           else
             # Automatic publish - extract from versions.yml
-            version=$(head -n 20 packages/cli/cli/versions.yml | grep -m 1 "version:" | awk '{print $2}')
+            version=$(head -n 20 packages/cli/cli/versions.yml | grep -m 1 "version:" | awk '{print $3}')
             echo "CLI_VERSION=${version}" >> $GITHUB_OUTPUT
           fi
 

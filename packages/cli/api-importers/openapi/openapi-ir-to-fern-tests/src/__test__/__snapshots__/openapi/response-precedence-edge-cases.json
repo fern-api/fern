@@ -67,6 +67,21 @@
                 "openapi": "../openapi.yml",
               },
             },
+            "getCsvData": {
+              "auth": undefined,
+              "docs": undefined,
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/csv-only",
+              "response": {
+                "docs": "Ids in textual format, one id per line.",
+                "status-code": 200,
+                "type": "text",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
             "getData": {
               "auth": undefined,
               "docs": undefined,
@@ -287,6 +302,15 @@ service:
             body:
               data:
                 - key: value
+    getCsvData:
+      path: /csv-only
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      response:
+        docs: Ids in textual format, one id per line.
+        type: text
+        status-code: 200
     getItems:
       path: /items
       method: GET

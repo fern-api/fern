@@ -19,6 +19,7 @@ describe("valid-path-parameters-configuration", () => {
                 message: "path-parameters cannot be defined in both endpoint and request.",
                 nodePath: ["service", "endpoints", "conflict"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
+                name: "valid-path-parameters-configuration",
                 severity: "fatal"
             }
         ]);

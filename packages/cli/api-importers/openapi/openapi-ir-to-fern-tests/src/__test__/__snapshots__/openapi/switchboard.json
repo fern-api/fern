@@ -1137,6 +1137,7 @@ types:
                 "query-parameters": {
                   "name": {
                     "docs": "Name to search for, supports regex, case insensitive",
+                    "explode": false,
                     "type": "optional<string>",
                   },
                 },
@@ -1200,6 +1201,7 @@ types:
                 "query-parameters": {
                   "name": {
                     "docs": "Name to search for, supports regex, case insensitive",
+                    "explode": false,
                     "type": "optional<string>",
                   },
                 },
@@ -1380,6 +1382,7 @@ service:
         query-parameters:
           name:
             type: optional<string>
+            explode: false
             docs: Name to search for, supports regex, case insensitive
       response:
         docs: OK
@@ -1463,6 +1466,7 @@ service:
         query-parameters:
           name:
             type: optional<string>
+            explode: false
             docs: Name to search for, supports regex, case insensitive
       examples:
         - query-parameters:
@@ -1550,10 +1554,12 @@ service:
                 "query-parameters": {
                   "name": {
                     "docs": "Name to search for, supports regex, case insensitive",
+                    "explode": false,
                     "type": "optional<string>",
                   },
                   "tags": {
                     "docs": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
+                    "explode": false,
                     "type": "optional<nullable<list<string>>>",
                   },
                 },
@@ -1620,10 +1626,12 @@ service:
                 "query-parameters": {
                   "name": {
                     "docs": "Name to search for, supports regex, case insensitive",
+                    "explode": false,
                     "type": "optional<string>",
                   },
                   "tags": {
                     "docs": "a comma separated list of tags to filter by (joined by OR, e.g. tag is red OR blue)",
+                    "explode": false,
                     "type": "optional<nullable<list<string>>>",
                   },
                 },
@@ -1820,9 +1828,11 @@ service:
         query-parameters:
           name:
             type: optional<string>
+            explode: false
             docs: Name to search for, supports regex, case insensitive
           tags:
             type: optional<nullable<list<string>>>
+            explode: false
             docs: >-
               a comma separated list of tags to filter by (joined by OR, e.g.
               tag is red OR blue)
@@ -1918,9 +1928,11 @@ service:
         query-parameters:
           name:
             type: optional<string>
+            explode: false
             docs: Name to search for, supports regex, case insensitive
           tags:
             type: optional<nullable<list<string>>>
+            explode: false
             docs: >-
               a comma separated list of tags to filter by (joined by OR, e.g.
               tag is red OR blue)
@@ -2216,19 +2228,23 @@ service:
                   "limit": {
                     "default": 0,
                     "docs": "limit for pagination",
+                    "explode": false,
                     "type": "optional<long>",
                   },
                   "offset": {
                     "default": -1,
                     "docs": "offset for pagination",
+                    "explode": false,
                     "type": "optional<long>",
                   },
                   "sessionIds": {
                     "docs": "a comma separated list of UUIDs of the session to get",
+                    "explode": false,
                     "type": "optional<nullable<list<string>>>",
                   },
                   "status": {
                     "docs": "status of the session to get",
+                    "explode": false,
                     "type": "optional<SessionsListRequestStatus>",
                   },
                 },
@@ -2503,17 +2519,21 @@ service:
         query-parameters:
           sessionIds:
             type: optional<nullable<list<string>>>
+            explode: false
             docs: a comma separated list of UUIDs of the session to get
           status:
             type: optional<SessionsListRequestStatus>
+            explode: false
             docs: status of the session to get
           offset:
             type: optional<long>
             default: -1
+            explode: false
             docs: offset for pagination
           limit:
             type: optional<long>
             default: 0
+            explode: false
             docs: limit for pagination
       response:
         docs: OK
@@ -2816,14 +2836,17 @@ service:
                 "query-parameters": {
                   "Screen resolution": {
                     "docs": "Ex: Screen resolution of the live view in format wxh, e.g. 1920x1080. When this value is provided the live view won't adapt it's resolution to the live view window size",
+                    "explode": false,
                     "type": "optional<string>",
                   },
                   "disableResize": {
                     "docs": "By default browsers will adapt its resolution to the live view window size. This flag disables that behavior",
+                    "explode": false,
                     "type": "optional<boolean>",
                   },
                   "includeNavigationBar": {
                     "docs": "Renders a navigation bar as part of the live view session",
+                    "explode": false,
                     "type": "optional<boolean>",
                   },
                 },
@@ -3144,14 +3167,17 @@ service:
         query-parameters:
           includeNavigationBar:
             type: optional<boolean>
+            explode: false
             docs: Renders a navigation bar as part of the live view session
           disableResize:
             type: optional<boolean>
+            explode: false
             docs: >-
               By default browsers will adapt its resolution to the live view
               window size. This flag disables that behavior
           Screen resolution:
             type: optional<string>
+            explode: false
             docs: >-
               Ex: Screen resolution of the live view in format wxh, e.g.
               1920x1080. When this value is provided the live view won't adapt

@@ -4,4 +4,5 @@ export { CoreUtilitiesManager } from "./CoreUtilitiesManager.js";
 export { type CustomPagination } from "./CustomPagination.js";
 export { type Fetcher } from "./Fetcher.js";
 export { type Stream } from "./Stream.js";
+export { type WebhookCrypto } from "./WebhookCrypto.js";
 export { type Zurg } from "./Zurg.js";

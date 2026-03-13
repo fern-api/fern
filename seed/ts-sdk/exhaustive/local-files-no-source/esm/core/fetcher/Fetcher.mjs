@@ -202,7 +202,7 @@ export function fetcherImpl(args) {
         }
         try {
             const response = yield requestWithRetries(() => __awaiter(this, void 0, void 0, function* () {
-                return makeRequest(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex);
+                return makeRequest(fetchFn, url, args.method, headers, requestBody, args.timeoutMs, args.abortSignal, args.withCredentials, args.duplex, args.responseType === "streaming" || args.responseType === "sse");
             }), args.maxRetries);
             if (response.status >= 200 && response.status < 400) {
                 if (logger.isDebug()) {
