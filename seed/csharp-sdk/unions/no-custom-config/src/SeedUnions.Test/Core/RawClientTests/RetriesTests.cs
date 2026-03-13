@@ -353,7 +353,7 @@ public class RetriesTests
 
             // Verify the retried request preserved the JSON body (compare parsed to ignore formatting differences)
             var retriedEntry = _server.LogEntries.ElementAt(1);
-            var actualJson = JsonDocument.Parse(retriedEntry.RequestMessage.Body!);
+            using var actualJson = JsonDocument.Parse(retriedEntry.RequestMessage.Body!);
             Assert.That(actualJson.RootElement.GetProperty("key").GetString(), Is.EqualTo("value"));
         }
     }
