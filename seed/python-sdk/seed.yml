@@ -74,6 +74,9 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        omit_fern_headers: true
+      outputFolder: omit-fern-headers
+    - customConfig:
         additional_init_exports:
           - from: types.types
             imports:
