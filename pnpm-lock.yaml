@@ -597,9 +597,6 @@ catalogs:
     xml2js:
       specifier: ^0.6.2
       version: 0.6.2
-    yauzl:
-      specifier: ^3.2.1
-      version: 3.2.1
     yazl:
       specifier: ^3.3.1
       version: 3.3.1
@@ -627,6 +624,7 @@ overrides:
   form-data: ^4.0.4
   '@fern-api/ui-core-utils': 0.145.12-b50d999d1
   vite: ^7.0.0
+  yauzl: ^3.2.1
 
 importers:
 
@@ -6591,7 +6589,7 @@ importers:
         specifier: ^4.0.1
         version: 4.0.1
       yauzl:
-        specifier: 'catalog:'
+        specifier: ^3.2.1
         version: 3.2.1
     devDependencies:
       '@fern-api/configs':
@@ -11931,9 +11929,6 @@ packages:
   fd-package-json@2.0.0:
     resolution: {integrity: sha512-jKmm9YtsNXN789RS/0mSzOC1NUq9mkVd65vbSSVsKdjGvYXBuE4oWe2QOEoFeRmJg+lPuZxpmrfFclNhoRMneQ==}
 
-  fd-slicer@1.1.0:
-    resolution: {integrity: sha512-cE1qsB/VwyQozZ+q1dGxR8LBYNZeofhEdUNGSMbQD3Gw2lAzX9Zb3uIU6Ebc/Fmyjo9AWWfnn0AUCHqtevs/8g==}
-
   fdir@6.5.0:
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
     engines: {node: '>=12.0.0'}
@@ -14809,9 +14804,6 @@ packages:
   yargs@17.7.2:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
-
-  yauzl@2.10.0:
-    resolution: {integrity: sha512-p4a9I6X6nu6IhoGmBqAcbJy1mlC4j27vEPZX9F4L4/vZT3Lyq1VkFHw/V/PUcB9Buo+DG3iHkT0x3Qya58zc3g==}
 
   yauzl@3.2.1:
     resolution: {integrity: sha512-k1isifdbpNSFEHFJ1ZY4YDewv0IH9FR61lDetaRMD3j2ae3bIXGV+7c+LHCqtQGofSd8PIyV4X6+dHMAnSr60A==}
@@ -18190,7 +18182,7 @@ snapshots:
       file-type: 3.9.0
       get-stream: 2.3.1
       pify: 2.3.0
-      yauzl: 2.10.0
+      yauzl: 3.2.1
 
   decompress@4.2.1:
     dependencies:
@@ -18639,7 +18631,7 @@ snapshots:
     dependencies:
       debug: 4.4.3
       get-stream: 5.2.0
-      yauzl: 2.10.0
+      yauzl: 3.2.1
     optionalDependencies:
       '@types/yauzl': 2.10.3
     transitivePeerDependencies:
@@ -18686,10 +18678,6 @@ snapshots:
   fd-package-json@2.0.0:
     dependencies:
       walk-up-path: 4.0.0
-
-  fd-slicer@1.1.0:
-    dependencies:
-      pend: 1.2.0
 
   fdir@6.5.0(picomatch@4.0.3):
     optionalDependencies:
@@ -22207,11 +22195,6 @@ snapshots:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
-
-  yauzl@2.10.0:
-    dependencies:
-      buffer-crc32: 0.2.13
-      fd-slicer: 1.1.0
 
   yauzl@3.2.1:
     dependencies:
