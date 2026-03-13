@@ -112,6 +112,8 @@ export async function writeFilesToDiskAndRunGenerator({
     shouldCommit: boolean;
     autoVersioningCommitMessage?: string;
     autoVersioningChangelogEntry?: string;
+    autoVersioningPrDescription?: string;
+    autoVersioningVersionBumpReason?: string;
 }> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,

@@ -297,7 +297,13 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
-                const { shouldCommit, autoVersioningCommitMessage, autoVersioningChangelogEntry } =
+                const {
+                    shouldCommit,
+                    autoVersioningCommitMessage,
+                    autoVersioningChangelogEntry,
+                    autoVersioningPrDescription,
+                    autoVersioningVersionBumpReason
+                } =
                     await writeFilesToDiskAndRunGenerator({
                         organization: projectConfig.organization,
                         absolutePathToFernConfig: projectConfig._absolutePath,
@@ -354,6 +360,8 @@ export async function runLocalGenerationForWorkspace({
                                 branch: selfhostedGithubConfig.branch,
                                 commitMessage: autoVersioningCommitMessage,
                                 changelogEntry: autoVersioningChangelogEntry,
+                                prDescription: autoVersioningPrDescription,
+                                versionBumpReason: autoVersioningVersionBumpReason,
                                 previewMode: selfhostedGithubConfig.previewMode,
                                 generatorName: generatorInvocation.name
                             },

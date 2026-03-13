@@ -87,6 +87,8 @@ export class LocalTaskHandler {
         shouldCommit: boolean;
         autoVersioningCommitMessage?: string;
         autoVersioningChangelogEntry?: string;
+        autoVersioningPrDescription?: string;
+        autoVersioningVersionBumpReason?: string;
     }> {
         const isFernIgnorePresent = await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
@@ -136,7 +138,9 @@ export class LocalTaskHandler {
                 return {
                     shouldCommit: false,
                     autoVersioningCommitMessage: undefined,
-                    autoVersioningChangelogEntry: undefined
+                    autoVersioningChangelogEntry: undefined,
+                    autoVersioningPrDescription: undefined,
+                    autoVersioningVersionBumpReason: undefined
                 };
             }
             // Replace placeholder version with computed version
@@ -148,7 +152,9 @@ export class LocalTaskHandler {
             return {
                 shouldCommit: true,
                 autoVersioningCommitMessage: autoVersionResult.commitMessage,
-                autoVersioningChangelogEntry: autoVersionResult.changelogEntry
+                autoVersioningChangelogEntry: autoVersionResult.changelogEntry,
+                autoVersioningPrDescription: autoVersionResult.prDescription,
+                autoVersioningVersionBumpReason: autoVersionResult.versionBumpReason
             };
         }
         return { shouldCommit: true, autoVersioningCommitMessage: undefined };
