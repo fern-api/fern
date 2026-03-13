@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from . import empty, realtime
     from .client import AsyncSeedWebsocket, SeedWebsocket
     from .realtime import (
+        ErrorEvent,
         ReceiveEvent,
         ReceiveEvent2,
         ReceiveEvent3,
@@ -20,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedWebsocket": ".client",
+    "ErrorEvent": ".realtime",
     "ReceiveEvent": ".realtime",
     "ReceiveEvent2": ".realtime",
     "ReceiveEvent3": ".realtime",
@@ -57,6 +59,7 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedWebsocket",
+    "ErrorEvent",
     "ReceiveEvent",
     "ReceiveEvent2",
     "ReceiveEvent3",
