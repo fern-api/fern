@@ -42,16 +42,16 @@ export class SeedExhaustiveClient {
     /**
      * Make a passthrough request using the SDK's configured auth, retry, logging, etc.
      * This is useful for making requests to endpoints not yet supported in the SDK.
-     * The URL can be a full URL or a relative path (resolved against the configured base URL).
+     * The input can be a URL string, URL object, or Request object. Relative paths are resolved against the configured base URL.
      *
-     * @param {string} url - The URL or path to request.
+     * @param {Request | string | URL} input - The URL, path, or Request object.
      * @param {RequestInit} init - Standard fetch RequestInit options.
      * @param {core.PassthroughRequest.RequestOptions} requestOptions - Per-request overrides (timeout, retries, headers, abort signal).
      * @returns {Promise<Response>} A standard Response object.
      */
-    fetch(url, init, requestOptions) {
+    fetch(input, init, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
-            return core.makePassthroughRequest(url, init, {
+            return core.makePassthroughRequest(input, init, {
                 environment: this._options.environment,
                 baseUrl: this._options.baseUrl,
                 headers: this._options.headers,

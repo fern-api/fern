@@ -71,6 +71,14 @@ describe("makePassthroughRequest", () => {
             const [calledUrl] = mockFetch.mock.calls[0];
             expect(calledUrl).toBe("https://other.example.com/path");
         });
+
+        it("should accept a URL object", async () => {
+            await makePassthroughRequest(new URL("https://api.example.com/v1/users"), undefined, {
+                fetch: mockFetch,
+            });
+            const [calledUrl] = mockFetch.mock.calls[0];
+            expect(calledUrl).toBe("https://api.example.com/v1/users");
+        });
     });
 
     describe("header merge order", () => {
@@ -330,6 +338,46 @@ describe("makePassthroughRequest", () => {
                 fetch: mockFetch,
             });
             expect(response.status).toBe(404);
+        });
+    });
+
+    describe("Request object input", () => {
+        it("should extract URL from Request object", async () => {
+            const request = new Request("https://api.example.com/v1/resource", { method: "POST" });
+            await makePassthroughRequest(request, undefined, {
+                fetch: mockFetch,
+            });
+            const [calledUrl, calledOptions] = mockFetch.mock.calls[0];
+            expect(calledUrl).toBe("https://api.example.com/v1/resource");
+            expect(calledOptions.method).toBe("POST");
+        });
+
+        it("should extract headers from Request object when no init provided", async () => {
+            const request = new Request("https://api.example.com", {
+                headers: { "X-From-Request": "request-value" },
+            });
+            await makePassthroughRequest(request, undefined, {
+                fetch: mockFetch,
+            });
+            const [, calledOptions] = mockFetch.mock.calls[0];
+            expect(calledOptions.headers["x-from-request"]).toBe("request-value");
+        });
+
+        it("should use explicit init over Request object properties", async () => {
+            const request = new Request("https://api.example.com", {
+                method: "POST",
+                headers: { "X-From-Request": "request-value" },
+            });
+            await makePassthroughRequest(
+                request,
+                { method: "PUT", headers: { "X-From-Init": "init-value" } },
+                { fetch: mockFetch },
+            );
+            const [, calledOptions] = mockFetch.mock.calls[0];
+            expect(calledOptions.method).toBe("PUT");
+            expect(calledOptions.headers["x-from-init"]).toBe("init-value");
+            // Request headers should NOT be present since explicit init was provided
+            expect(calledOptions.headers["x-from-request"]).toBeUndefined();
         });
     });
 

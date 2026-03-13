@@ -18,16 +18,40 @@ import { Supplier } from "./Supplier.mjs";
  * Makes a passthrough HTTP request using the SDK's configuration (auth, retry, logging, etc.)
  * while mimicking the standard `fetch` API.
  *
- * @param url - The URL or path to request. If a relative path, it will be resolved against the configured base URL.
+ * @param input - The URL, path, or Request object. If a relative path, it will be resolved against the configured base URL.
  * @param init - Standard RequestInit options (method, headers, body, signal, etc.)
  * @param clientOptions - SDK client options (auth, default headers, logging, etc.)
  * @param requestOptions - Per-request overrides (timeout, retries, extra headers, abort signal).
  * @returns A standard Response object.
  */
-export function makePassthroughRequest(url, init, clientOptions, requestOptions) {
+export function makePassthroughRequest(input, init, clientOptions, requestOptions) {
     return __awaiter(this, void 0, void 0, function* () {
         var _a, _b, _c, _d, _e, _f, _g;
         const logger = createLogger(clientOptions.logging);
+        // Extract URL and default init properties from Request object if provided
+        let url;
+        let effectiveInit = init;
+        if (input instanceof Request) {
+            url = input.url;
+            // If no explicit init provided, extract properties from the Request object
+            if (init == null) {
+                effectiveInit = {
+                    method: input.method,
+                    headers: Object.fromEntries(input.headers.entries()),
+                    body: input.body,
+                    signal: input.signal,
+                    credentials: input.credentials,
+                    cache: input.cache,
+                    redirect: input.redirect,
+                    referrer: input.referrer,
+                    integrity: input.integrity,
+                    mode: input.mode,
+                };
+            }
+        }
+        else {
+            url = input instanceof URL ? input.toString() : input;
+        }
         // Resolve the base URL
         const baseUrl = (_a = (clientOptions.baseUrl != null ? yield Supplier.get(clientOptions.baseUrl) : undefined)) !== null && _a !== void 0 ? _a : (clientOptions.environment != null ? yield Supplier.get(clientOptions.environment) : undefined);
         // Determine the full URL
@@ -60,12 +84,12 @@ export function makePassthroughRequest(url, init, clientOptions, requestOptions)
             }
         }
         // Apply user-provided headers from init
-        if ((init === null || init === void 0 ? void 0 : init.headers) != null) {
-            const initHeaders = init.headers instanceof Headers
-                ? Object.fromEntries(init.headers.entries())
-                : Array.isArray(init.headers)
-                    ? Object.fromEntries(init.headers)
-                    : init.headers;
+        if ((effectiveInit === null || effectiveInit === void 0 ? void 0 : effectiveInit.headers) != null) {
+            const initHeaders = effectiveInit.headers instanceof Headers
+                ? Object.fromEntries(effectiveInit.headers.entries())
+                : Array.isArray(effectiveInit.headers)
+                    ? Object.fromEntries(effectiveInit.headers)
+                    : effectiveInit.headers;
             for (const [key, value] of Object.entries(initHeaders)) {
                 if (value != null) {
                     mergedHeaders[key.toLowerCase()] = value;
@@ -78,12 +102,12 @@ export function makePassthroughRequest(url, init, clientOptions, requestOptions)
                 mergedHeaders[key.toLowerCase()] = value;
             }
         }
-        const method = (_b = init === null || init === void 0 ? void 0 : init.method) !== null && _b !== void 0 ? _b : "GET";
-        const body = init === null || init === void 0 ? void 0 : init.body;
+        const method = (_b = effectiveInit === null || effectiveInit === void 0 ? void 0 : effectiveInit.method) !== null && _b !== void 0 ? _b : "GET";
+        const body = effectiveInit === null || effectiveInit === void 0 ? void 0 : effectiveInit.body;
         const timeoutInSeconds = (_c = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) !== null && _c !== void 0 ? _c : clientOptions.timeoutInSeconds;
         const timeoutMs = timeoutInSeconds != null ? timeoutInSeconds * 1000 : undefined;
         const maxRetries = (_d = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _d !== void 0 ? _d : clientOptions.maxRetries;
-        const abortSignal = (_f = (_e = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal) !== null && _e !== void 0 ? _e : init === null || init === void 0 ? void 0 : init.signal) !== null && _f !== void 0 ? _f : undefined;
+        const abortSignal = (_f = (_e = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal) !== null && _e !== void 0 ? _e : effectiveInit === null || effectiveInit === void 0 ? void 0 : effectiveInit.signal) !== null && _f !== void 0 ? _f : undefined;
         const fetchFn = (_g = clientOptions.fetch) !== null && _g !== void 0 ? _g : (yield getFetchFn());
         if (logger.isDebug()) {
             logger.debug("Making passthrough HTTP request", {
@@ -93,7 +117,7 @@ export function makePassthroughRequest(url, init, clientOptions, requestOptions)
             });
         }
         const response = yield requestWithRetries(() => __awaiter(this, void 0, void 0, function* () {
-            return makeRequest(fetchFn, fullUrl, method, mergedHeaders, body !== null && body !== void 0 ? body : undefined, timeoutMs, abortSignal, (init === null || init === void 0 ? void 0 : init.credentials) === "include", undefined, // duplex
+            return makeRequest(fetchFn, fullUrl, method, mergedHeaders, body !== null && body !== void 0 ? body : undefined, timeoutMs, abortSignal, (effectiveInit === null || effectiveInit === void 0 ? void 0 : effectiveInit.credentials) === "include", undefined, // duplex
             false);
         }), maxRetries);
         if (logger.isDebug()) {

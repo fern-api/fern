@@ -48,19 +48,43 @@ export declare namespace PassthroughRequest {
  * Makes a passthrough HTTP request using the SDK's configuration (auth, retry, logging, etc.)
  * while mimicking the standard `fetch` API.
  *
- * @param url - The URL or path to request. If a relative path, it will be resolved against the configured base URL.
+ * @param input - The URL, path, or Request object. If a relative path, it will be resolved against the configured base URL.
  * @param init - Standard RequestInit options (method, headers, body, signal, etc.)
  * @param clientOptions - SDK client options (auth, default headers, logging, etc.)
  * @param requestOptions - Per-request overrides (timeout, retries, extra headers, abort signal).
  * @returns A standard Response object.
  */
 export async function makePassthroughRequest(
-    url: string,
+    input: Request | string | URL,
     init: RequestInit | undefined,
     clientOptions: PassthroughRequest.ClientOptions,
     requestOptions?: PassthroughRequest.RequestOptions,
 ): Promise<Response> {
     const logger = createLogger(clientOptions.logging);
+
+    // Extract URL and default init properties from Request object if provided
+    let url: string;
+    let effectiveInit: RequestInit | undefined = init;
+    if (input instanceof Request) {
+        url = input.url;
+        // If no explicit init provided, extract properties from the Request object
+        if (init == null) {
+            effectiveInit = {
+                method: input.method,
+                headers: Object.fromEntries(input.headers.entries()),
+                body: input.body,
+                signal: input.signal,
+                credentials: input.credentials,
+                cache: input.cache as RequestCache,
+                redirect: input.redirect,
+                referrer: input.referrer,
+                integrity: input.integrity,
+                mode: input.mode,
+            };
+        }
+    } else {
+        url = input instanceof URL ? input.toString() : input;
+    }
 
     // Resolve the base URL
     const baseUrl =
@@ -99,13 +123,13 @@ export async function makePassthroughRequest(
     }
 
     // Apply user-provided headers from init
-    if (init?.headers != null) {
+    if (effectiveInit?.headers != null) {
         const initHeaders =
-            init.headers instanceof Headers
-                ? Object.fromEntries(init.headers.entries())
-                : Array.isArray(init.headers)
-                  ? Object.fromEntries(init.headers)
-                  : init.headers;
+            effectiveInit.headers instanceof Headers
+                ? Object.fromEntries(effectiveInit.headers.entries())
+                : Array.isArray(effectiveInit.headers)
+                  ? Object.fromEntries(effectiveInit.headers)
+                  : effectiveInit.headers;
         for (const [key, value] of Object.entries(initHeaders)) {
             if (value != null) {
                 mergedHeaders[key.toLowerCase()] = value;
@@ -120,12 +144,12 @@ export async function makePassthroughRequest(
         }
     }
 
-    const method = init?.method ?? "GET";
-    const body = init?.body;
+    const method = effectiveInit?.method ?? "GET";
+    const body = effectiveInit?.body;
     const timeoutInSeconds = requestOptions?.timeoutInSeconds ?? clientOptions.timeoutInSeconds;
     const timeoutMs = timeoutInSeconds != null ? timeoutInSeconds * 1000 : undefined;
     const maxRetries = requestOptions?.maxRetries ?? clientOptions.maxRetries;
-    const abortSignal = requestOptions?.abortSignal ?? init?.signal ?? undefined;
+    const abortSignal = requestOptions?.abortSignal ?? effectiveInit?.signal ?? undefined;
     const fetchFn = clientOptions.fetch ?? (await getFetchFn());
 
     if (logger.isDebug()) {
@@ -146,7 +170,7 @@ export async function makePassthroughRequest(
                 body ?? undefined,
                 timeoutMs,
                 abortSignal,
-                init?.credentials === "include",
+                effectiveInit?.credentials === "include",
                 undefined, // duplex
                 false, // disableCache
             ),

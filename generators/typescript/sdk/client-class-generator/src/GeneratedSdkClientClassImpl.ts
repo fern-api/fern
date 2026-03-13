@@ -884,7 +884,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const environmentCode = isMultiUrlEnvironment ? "" : "environment: this._options.environment,";
 
         const fetchMethodBody = `
-return core.makePassthroughRequest(url, init, {
+return core.makePassthroughRequest(input, init, {
     ${environmentCode}
     baseUrl: this._options.baseUrl,
     headers: this._options.headers,
@@ -903,14 +903,14 @@ return core.makePassthroughRequest(url, init, {
             docs: [
                 "Make a passthrough request using the SDK's configured auth, retry, logging, etc.\n" +
                     "This is useful for making requests to endpoints not yet supported in the SDK.\n" +
-                    "The URL can be a full URL or a relative path (resolved against the configured base URL).\n\n" +
-                    "@param {string} url - The URL or path to request.\n" +
+                    "The input can be a URL string, URL object, or Request object. Relative paths are resolved against the configured base URL.\n\n" +
+                    "@param {Request | string | URL} input - The URL, path, or Request object.\n" +
                     "@param {RequestInit} init - Standard fetch RequestInit options.\n" +
                     "@param {core.PassthroughRequest.RequestOptions} requestOptions - Per-request overrides (timeout, retries, headers, abort signal).\n" +
                     "@returns {Promise<Response>} A standard Response object."
             ],
             parameters: [
-                { name: "url", type: "string" },
+                { name: "input", type: "Request | string | URL" },
                 { name: "init", type: "RequestInit", hasQuestionToken: true },
                 { name: "requestOptions", type: "core.PassthroughRequest.RequestOptions", hasQuestionToken: true }
             ],

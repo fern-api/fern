@@ -2,10 +2,7 @@
     "name": "@fern/oauth-client-credentials-custom",
     "version": "0.0.1",
     "private": false,
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/oauth-client-credentials-custom/fern.git"
-    },
+    "repository": "git+https://github.com/oauth-client-credentials-custom/fern",
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",

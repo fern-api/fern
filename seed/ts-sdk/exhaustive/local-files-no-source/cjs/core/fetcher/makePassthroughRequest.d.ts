@@ -40,10 +40,10 @@ export declare namespace PassthroughRequest {
  * Makes a passthrough HTTP request using the SDK's configuration (auth, retry, logging, etc.)
  * while mimicking the standard `fetch` API.
  *
- * @param url - The URL or path to request. If a relative path, it will be resolved against the configured base URL.
+ * @param input - The URL, path, or Request object. If a relative path, it will be resolved against the configured base URL.
  * @param init - Standard RequestInit options (method, headers, body, signal, etc.)
  * @param clientOptions - SDK client options (auth, default headers, logging, etc.)
  * @param requestOptions - Per-request overrides (timeout, retries, extra headers, abort signal).
  * @returns A standard Response object.
  */
-export declare function makePassthroughRequest(url: string, init: RequestInit | undefined, clientOptions: PassthroughRequest.ClientOptions, requestOptions?: PassthroughRequest.RequestOptions): Promise<Response>;
+export declare function makePassthroughRequest(input: Request | string | URL, init: RequestInit | undefined, clientOptions: PassthroughRequest.ClientOptions, requestOptions?: PassthroughRequest.RequestOptions): Promise<Response>;
