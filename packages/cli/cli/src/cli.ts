@@ -437,6 +437,34 @@ function addDiffCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     }
                 }),
         async (argv) => {
+            // Large IR files (>2 GB) can exceed Node's default heap limit.
+            // If either file exceeds 1 GB and we haven't already re-spawned,
+            // re-spawn with --max-old-space-size so that the full IR can be
+            // parsed and validated in memory.
+            if (process.env.__FERN_DIFF_HEAP_RESPAWNED == null) {
+                const fs = await import("node:fs");
+                const ONE_GB = 1024 * 1024 * 1024;
+                const fromPath = resolve(cwd(), argv.from);
+                const toPath = resolve(cwd(), argv.to);
+                const fromSize = fs.statSync(fromPath, { throwIfNoEntry: false })?.size ?? 0;
+                const toSize = fs.statSync(toPath, { throwIfNoEntry: false })?.size ?? 0;
+
+                if (fromSize > ONE_GB || toSize > ONE_GB) {
+                    const { spawnSync } = await import("child_process");
+                    const HEAP_SIZE_MB = 8192;
+                    const child = spawnSync(
+                        process.execPath,
+                        [`--max-old-space-size=${HEAP_SIZE_MB}`, ...process.execArgv, ...process.argv.slice(1)],
+                        {
+                            env: { ...process.env, __FERN_DIFF_HEAP_RESPAWNED: "1" },
+                            stdio: "inherit"
+                        }
+                    );
+                    await cliContext.exit({ code: child.status ?? 1 });
+                    return;
+                }
+            }
+
             const fromVersion = undefinedIfNullish(argv.fromVersion);
             const generatorVersions = undefinedIfSomeNullish({
                 from: argv.fromGeneratorVersion,

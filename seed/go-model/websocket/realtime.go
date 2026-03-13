@@ -420,3 +420,62 @@ func (r *ReceiveEvent3) String() string {
 	}
 	return fmt.Sprintf("%#v", r)
 }
+
+type ErrorEvent struct {
+	ErrorCode    int    `json:"errorCode" url:"errorCode"`
+	ErrorMessage string `json:"errorMessage" url:"errorMessage"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (e *ErrorEvent) GetErrorCode() int {
+	if e == nil {
+		return 0
+	}
+	return e.ErrorCode
+}
+
+func (e *ErrorEvent) GetErrorMessage() string {
+	if e == nil {
+		return ""
+	}
+	return e.ErrorMessage
+}
+
+func (e *ErrorEvent) GetExtraProperties() map[string]any {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *ErrorEvent) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler ErrorEvent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = ErrorEvent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *ErrorEvent) String() string {
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}

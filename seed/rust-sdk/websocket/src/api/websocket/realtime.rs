@@ -14,6 +14,8 @@ pub enum RealtimeServerMessage {
     ReceiveEvent2(ReceiveEvent2),
     #[serde(rename = "receive3")]
     ReceiveEvent3(ReceiveEvent3),
+    #[serde(rename = "error")]
+    ErrorEvent(ErrorEvent),
 }
 pub struct RealtimeClient {
     ws: WebSocketClient,

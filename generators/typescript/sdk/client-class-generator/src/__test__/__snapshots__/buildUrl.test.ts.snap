@@ -8,4 +8,10 @@ exports[`buildUrl > generates template literal with trailing path after paramete
 
 exports[`buildUrl > retains original casing when retainOriginalCasing is true 1`] = `"\`/users/\${user_id}\`"`;
 
+exports[`buildUrl > serializes named type path parameter with includeSerdeLayer 1`] = `"\`/users/\${serializer.jsonOrThrow(userId)}\`"`;
+
+exports[`buildUrl > uses request reference when shouldInlinePathParameters is true 1`] = `"\`/users/\${request.userId}\`"`;
+
 exports[`buildUrl > uses root path parameter reference for ROOT location 1`] = `"\`/tenants/\${this.tenantId}/data\`"`;
+
+exports[`buildUrl > uses variable reference when path parameter has variable property 1`] = `"\`/users/\${this._userId}\`"`;
