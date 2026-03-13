@@ -43,14 +43,13 @@ export function resolveNaming({
         version?: string;
     };
 }): ResolvedNaming {
-    const pascalNamespace = upperFirst(camelCase(namespaceExport));
     return {
         namespace: namespaceExport,
-        client: naming?.client ?? `${pascalNamespace}Client`,
-        error: naming?.error ?? `${pascalNamespace}Error`,
-        timeoutError: naming?.timeoutError ?? `${pascalNamespace}TimeoutError`,
-        environment: naming?.environment ?? `${pascalNamespace}Environment`,
-        environmentUrls: naming?.environmentUrls ?? `${pascalNamespace}EnvironmentUrls`,
-        version: naming?.version ?? `${pascalNamespace}Version`
+        client: naming?.client ?? `${namespaceExport}Client`,
+        error: naming?.error ?? `${namespaceExport}Error`,
+        timeoutError: naming?.timeoutError ?? `${namespaceExport}TimeoutError`,
+        environment: naming?.environment ?? `${namespaceExport}Environment`,
+        environmentUrls: naming?.environmentUrls ?? `${namespaceExport}EnvironmentUrls`,
+        version: naming?.version ?? `${namespaceExport}Version`
     };
 }
