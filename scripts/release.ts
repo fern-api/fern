@@ -280,14 +280,14 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
         process.exit(1);
     }
 
-    // Checkout main and pull latest
-    console.log("🔄 Checking out main and pulling latest...");
+    // Detect and pull latest for the current branch (caller controls which branch to release from)
+    const currentBranch = execSync("git rev-parse --abbrev-ref HEAD", { encoding: "utf-8" }).trim();
+    console.log(`🔄 Pulling latest for branch "${currentBranch}"...`);
     try {
-        execSync("git checkout main", { stdio: "inherit" });
-        execSync("git pull origin main", { stdio: "inherit" });
-        console.log("   ✅ On main with latest changes\n");
+        execSync(`git pull origin ${currentBranch}`, { stdio: "inherit" });
+        console.log(`   ✅ Up to date on ${currentBranch}\n`);
     } catch (error) {
-        console.error("❌ Error updating main branch:", error);
+        console.error(`❌ Error pulling latest for ${currentBranch}:`, error);
         process.exit(1);
     }
 
@@ -337,11 +337,11 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
     // Pull again to check for conflicts
     console.log("🔄 Checking for remote changes...");
     try {
-        execSync("git pull origin main", { stdio: "inherit" });
+        execSync(`git pull origin ${currentBranch}`, { stdio: "inherit" });
         const afterCommit = execSync("git rev-parse HEAD~1", { encoding: "utf-8" }).trim();
 
         if (beforeCommit !== afterCommit) {
-            console.error("\n❌ Error: Someone else committed to main while preparing this release.");
+            console.error(`\n❌ Error: Someone else committed to ${currentBranch} while preparing this release.`);
             console.error("   Rolling back changes...");
             execSync("git reset --hard HEAD~1", { stdio: "inherit" });
             console.error("   ✅ Changes rolled back. Please try again.");
@@ -349,7 +349,7 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
         }
         console.log("   ✅ No conflicts detected\n");
     } catch (error) {
-        console.error("❌ Error pulling from main:", error);
+        console.error(`❌ Error pulling from ${currentBranch}:`, error);
         console.error("   Rolling back changes...");
         try {
             execSync("git reset --hard HEAD~1", { stdio: "inherit" });
@@ -368,14 +368,14 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
     console.log("\n📝 Changed files:");
     console.log(`   - ${config.versionsFile}`);
     console.log(`   - ${getChangelogFolder(config)}/${nextVersion}/`);
-    console.log("\n⚠️  This will push directly to main!");
+    console.log(`\n⚠️  This will push directly to ${currentBranch}!`);
 
     const rl = readline.createInterface({
         input: process.stdin,
         output: process.stdout
     });
 
-    rl.question("\n❓ Do you want to push these changes to main? (yes/no): ", (answer: string) => {
+    rl.question(`\n❓ Do you want to push these changes to ${currentBranch}? (yes/no): `, (answer: string) => {
         rl.close();
 
         if (answer.toLowerCase() !== "yes") {
@@ -389,16 +389,15 @@ function prepareRelease(softwareName: string, config: SoftwareConfig): void {
             process.exit(0);
         }
 
-        // Push to main
-        console.log("\n📤 Pushing to main...");
+        console.log(`\n📤 Pushing to ${currentBranch}...`);
         try {
-            execSync("git push origin main", { stdio: "inherit" });
-            console.log("   ✅ Successfully pushed to main\n");
+            execSync(`git push origin ${currentBranch}`, { stdio: "inherit" });
+            console.log(`   ✅ Successfully pushed to ${currentBranch}\n`);
             console.log(`🎉 Release ${nextVersion} completed successfully!`);
         } catch (error) {
-            console.error("❌ Error pushing to main:", error);
-            console.error("\n⚠️  The commit is still on your local main branch.");
-            console.error("   You can manually push with: git push origin main");
+            console.error(`❌ Error pushing to ${currentBranch}:`, error);
+            console.error(`\n⚠️  The commit is still on your local ${currentBranch} branch.`);
+            console.error(`   You can manually push with: git push origin ${currentBranch}`);
             process.exit(1);
         }
     });
