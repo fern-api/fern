@@ -24,6 +24,7 @@ import { readFile } from "fs/promises";
 import { chunk } from "lodash-es";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
+import { getChangedPageSlugs } from "./getChangedPageSlugs.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { asyncPool } from "./utils/asyncPool.js";
@@ -518,6 +519,33 @@ export async function publishDocs({
 
         const link = terminalLink(url, url);
         context.logger.info(chalk.green(`Published docs to ${link}`));
+
+        // For preview deployments, try to detect changed pages and log direct links
+        if (preview) {
+            try {
+                const changedSlugs = await getChangedPageSlugs({
+                    previewUrl: urlToOutput,
+                    token: token.value,
+                    docsWorkspacePath: docsWorkspace.absoluteFilePath,
+                    context
+                });
+                if (changedSlugs != null && changedSlugs.length > 0) {
+                    context.logger.info(chalk.cyan("Changed pages:"));
+                    for (const slug of changedSlugs) {
+                        const pageUrl = wrapWithHttps(`${urlToOutput}/${slug}`);
+                        const pageLink = terminalLink(pageUrl, pageUrl);
+                        context.logger.info(chalk.cyan(`  ${pageLink}`));
+                    }
+                    // Return URL pointing to the first changed page
+                    return wrapWithHttps(`${urlToOutput}/${changedSlugs[0]}`);
+                }
+            } catch (error) {
+                context.logger.debug(
+                    `Failed to detect changed pages: ${error instanceof Error ? error.message : String(error)}`
+                );
+            }
+        }
+
         return url;
     } else {
         switch (registerDocsResponse.error.error) {
