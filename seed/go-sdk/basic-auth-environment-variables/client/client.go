@@ -26,6 +26,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.AccessToken == "" {
 		options.AccessToken = os.Getenv("PASSWORD")
 	}
+	if options.Logging != nil && !options.Logging.Silent() {
+		options.HTTPClient = core.NewLoggingHTTPClient(options.HTTPClient, options.Logging)
+	}
 	return &Client{
 		BasicAuth: basicauth.NewClient(options),
 		options:   options,

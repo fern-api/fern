@@ -23,6 +23,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.ApiKey == "" {
 		options.ApiKey = os.Getenv("COURIER_API_KEY")
 	}
+	if options.Logging != nil && !options.Logging.Silent() {
+		options.HTTPClient = core.NewLoggingHTTPClient(options.HTTPClient, options.Logging)
+	}
 	return &Client{
 		Service: service.NewClient(options),
 		options: options,

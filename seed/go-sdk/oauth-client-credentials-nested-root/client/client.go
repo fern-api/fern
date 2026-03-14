@@ -57,6 +57,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 			return response.AccessToken, expiresIn, nil
 		})
 	})
+	if options.Logging != nil && !options.Logging.Silent() {
+		options.HTTPClient = core.NewLoggingHTTPClient(options.HTTPClient, options.Logging)
+	}
 	return &Client{
 		Auth:         client.NewClient(options),
 		NestedNoAuth: nestednoauthclient.NewClient(options),

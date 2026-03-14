@@ -26,6 +26,9 @@ type Acme struct {
 
 func New(opts ...option.RequestOption) *Acme {
 	options := core.NewRequestOptions(opts...)
+	if options.Logging != nil && !options.Logging.Silent() {
+		options.HTTPClient = core.NewLoggingHTTPClient(options.HTTPClient, options.Logging)
+	}
 	return &Acme{
 		File:            client.NewClient(options),
 		Health:          healthclient.NewClient(options),

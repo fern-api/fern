@@ -24,6 +24,7 @@ type RequestOptions struct {
 	QueryParameters url.Values
 	MaxAttempts     uint
 	MaxBufSize      int
+	Logging         *LogConfig
 	Token           string
 }
 
@@ -151,6 +152,19 @@ func (m *MaxBufSizeOption) applyRequestOptions(opts *RequestOptions) {
 
 func (m *MaxBufSizeOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.MaxBufSize = m.MaxBufSize
+}
+
+// LoggingOption implements the RequestOption interface.
+type LoggingOption struct {
+	Logging *LogConfig
+}
+
+func (l *LoggingOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Logging = l.Logging
+}
+
+func (l *LoggingOption) applyIdempotentRequestOptions(opts *RequestOptions) {
+	opts.Logging = l.Logging
 }
 
 // TokenOption implements the RequestOption interface.

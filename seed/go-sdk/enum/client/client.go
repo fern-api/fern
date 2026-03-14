@@ -27,6 +27,9 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+	if options.Logging != nil && !options.Logging.Silent() {
+		options.HTTPClient = core.NewLoggingHTTPClient(options.HTTPClient, options.Logging)
+	}
 	return &Client{
 		Headers:        headers.NewClient(options),
 		InlinedRequest: inlinedrequest.NewClient(options),

@@ -20,6 +20,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.ApiKey == "" {
 		options.ApiKey = os.Getenv("SEED_API_KEY")
 	}
+	if options.Logging != nil && !options.Logging.Silent() {
+		options.HTTPClient = core.NewLoggingHTTPClient(options.HTTPClient, options.Logging)
+	}
 	return &Client{
 		options: options,
 		baseURL: options.BaseURL,

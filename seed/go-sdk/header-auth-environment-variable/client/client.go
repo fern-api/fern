@@ -23,6 +23,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.HeaderTokenAuth == "" {
 		options.HeaderTokenAuth = os.Getenv("HEADER_TOKEN_ENV_VAR")
 	}
+	if options.Logging != nil && !options.Logging.Silent() {
+		options.HTTPClient = core.NewLoggingHTTPClient(options.HTTPClient, options.Logging)
+	}
 	return &Client{
 		Service: service.NewClient(options),
 		options: options,
