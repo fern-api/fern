@@ -168,7 +168,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             organization: config.organization,
             workspaceName: config.workspaceName,
             namespaceExport: customConfig.namespaceExport,
-            namingNamespace: customConfig.naming?.namespace
+            naming: customConfig.naming
         });
         const resolvedNaming = resolveNaming({
             namespaceExport,

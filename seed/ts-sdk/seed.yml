@@ -451,6 +451,9 @@ fixtures:
           environment: AcmeApiEnvironment
           environmentUrls: AcmeApiEnvironmentUrls
           version: AcmeApiVersion
+    - outputFolder: naming-shorthand
+      customConfig:
+        naming: acme
   enum:
     - outputFolder: no-custom-config
       customConfig: null

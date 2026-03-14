@@ -4,13 +4,14 @@ export function getNamespaceExport({
     organization,
     workspaceName,
     namespaceExport,
-    namingNamespace
+    naming
 }: {
     organization: string;
     workspaceName: string;
     namespaceExport?: string;
-    namingNamespace?: string;
+    naming?: string | { namespace?: string };
 }): string {
+    const namingNamespace = typeof naming === "string" ? naming : naming?.namespace;
     return (
         namingNamespace ??
         namespaceExport ??
@@ -33,16 +34,20 @@ export function resolveNaming({
     naming
 }: {
     namespaceExport: string;
-    naming?: {
-        namespace?: string;
-        client?: string;
-        error?: string;
-        timeoutError?: string;
-        environment?: string;
-        environmentUrls?: string;
-        version?: string;
-    };
+    naming?:
+        | string
+        | {
+              namespace?: string;
+              client?: string;
+              error?: string;
+              timeoutError?: string;
+              environment?: string;
+              environmentUrls?: string;
+              version?: string;
+          };
 }): ResolvedNaming {
+    // Normalize string shorthand to object form
+    const namingObj = typeof naming === "string" ? {} : naming;
     // When naming config is explicitly provided, PascalCase the namespace for deriving
     // default suffix names (e.g., namespace: "xai" → XaiClient). When no naming config
     // is provided, use namespaceExport as-is to preserve backwards compatibility
@@ -50,11 +55,11 @@ export function resolveNaming({
     const suffixBase = naming != null ? upperFirst(camelCase(namespaceExport)) : namespaceExport;
     return {
         namespace: namespaceExport,
-        client: naming?.client ?? `${suffixBase}Client`,
-        error: naming?.error ?? `${suffixBase}Error`,
-        timeoutError: naming?.timeoutError ?? `${suffixBase}TimeoutError`,
-        environment: naming?.environment ?? `${suffixBase}Environment`,
-        environmentUrls: naming?.environmentUrls ?? `${suffixBase}EnvironmentUrls`,
-        version: naming?.version ?? `${suffixBase}Version`
+        client: namingObj?.client ?? `${suffixBase}Client`,
+        error: namingObj?.error ?? `${suffixBase}Error`,
+        timeoutError: namingObj?.timeoutError ?? `${suffixBase}TimeoutError`,
+        environment: namingObj?.environment ?? `${suffixBase}Environment`,
+        environmentUrls: namingObj?.environmentUrls ?? `${suffixBase}EnvironmentUrls`,
+        version: namingObj?.version ?? `${suffixBase}Version`
     };
 }

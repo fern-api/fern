@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
-export const NamingConfigSchema = z.strictObject({
+export const NamingObjectSchema = z.strictObject({
     namespace: z.optional(z.string()),
     client: z.optional(z.string()),
     error: z.optional(z.string()),
@@ -10,6 +10,12 @@ export const NamingConfigSchema = z.strictObject({
     environmentUrls: z.optional(z.string()),
     version: z.optional(z.string())
 });
+
+export type NamingObjectSchema = z.infer<typeof NamingObjectSchema>;
+
+// Accepts either a string shorthand (e.g., `naming: acme`) or a full object.
+// The string form is equivalent to `naming: { namespace: "acme" }`.
+export const NamingConfigSchema = z.union([z.string(), NamingObjectSchema]);
 
 export type NamingConfigSchema = z.infer<typeof NamingConfigSchema>;
 
@@ -63,6 +69,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     inlineFileProperties: z.optional(z.boolean()),
     inlinePathParameters: z.optional(z.boolean()),
     naming: z.optional(NamingConfigSchema),
+    // @deprecated Use naming.namespace instead
+    // namespaceExport is kept for backwards compatibility
     namespaceExport: z.optional(z.string()),
     noSerdeLayer: z.optional(z.boolean()),
     private: z.optional(z.boolean()),

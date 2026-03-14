@@ -37,7 +37,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             organization: config.organization,
             workspaceName: config.workspaceName,
             namespaceExport: this.customConfig?.namespaceExport,
-            namingNamespace: this.customConfig?.naming?.namespace
+            naming: this.customConfig?.naming
         });
         const resolved = resolveNaming({
             namespaceExport: this.namespaceExport,
