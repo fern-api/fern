@@ -2152,39 +2152,37 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 }
 
 function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("sdk", false, (yargs) => {
+        addSdkPreviewCommand(yargs, cliContext);
+        return yargs.demandCommand();
+    });
+}
+
+function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "sdk",
+        "preview",
         false, // hidden
-        (yargs) => {
-            yargs.command(
-                "preview",
-                false, // hidden
-                (innerYargs) =>
-                    innerYargs
-                        .option("group", {
-                            type: "string",
-                            description: "The generator group to preview"
-                        })
-                        .option("json", {
-                            boolean: true,
-                            default: false,
-                            description: "Output result as JSON"
-                        }),
-                async (argv) => {
-                    await cliContext.instrumentPostHogEvent({
-                        command: "fern sdk preview"
-                    });
-                    await sdkPreview({
-                        cliContext,
-                        groupName: argv.group,
-                        json: argv.json
-                    });
-                }
-            );
-            return yargs.demandCommand();
-        },
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        () => {}
+        (yargs) =>
+            yargs
+                .option("group", {
+                    type: "string",
+                    description: "The generator group to preview"
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Output result as JSON"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern sdk preview"
+            });
+            await sdkPreview({
+                cliContext,
+                groupName: argv.group,
+                json: argv.json
+            });
+        }
     );
 }
 

@@ -3,6 +3,20 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 
 import { PREVIEW_REGISTRY_URL } from "./computePreviewVersion.js";
 
+const SUPPORTED_TYPESCRIPT_GENERATORS = new Set([
+    "fernapi/fern-typescript-node-sdk",
+    "fernapi/fern-typescript-browser-sdk",
+    "fernapi/fern-typescript-sdk"
+]);
+
+/**
+ * Returns true if the generator is a TypeScript/npm generator.
+ * SDK preview v1 only supports npm publishing.
+ */
+export function isNpmGenerator(generatorName: string): boolean {
+    return SUPPORTED_TYPESCRIPT_GENERATORS.has(generatorName) || generatorName.includes("typescript");
+}
+
 /**
  * Overrides a generator group's output mode to publish to the preview registry.
  *
@@ -10,16 +24,17 @@ import { PREVIEW_REGISTRY_URL } from "./computePreviewVersion.js";
  * clone the group with modified generators that have their outputMode replaced.
  *
  * Only supports npm (TypeScript) generators for v1.
+ *
+ * @param token - The Fern org token (FERN_TOKEN). The preview registry must
+ *   accept this token for publish authentication.
  */
 export function overrideGroupOutputForPreview({
     group,
     packageName,
-    previewVersion,
     token
 }: {
     group: generatorsYml.GeneratorGroup;
     packageName: string;
-    previewVersion: string;
     token: string;
 }): generatorsYml.GeneratorGroup {
     const modifiedGenerators = group.generators.map((generator) => {

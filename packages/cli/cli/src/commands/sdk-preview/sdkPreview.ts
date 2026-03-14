@@ -9,7 +9,7 @@ import { loadProjectAndRegisterWorkspacesWithContext } from "../../cliCommons.js
 import { GROUP_CLI_OPTION } from "../../constants.js";
 import { computePreviewVersion, PREVIEW_REGISTRY_URL } from "./computePreviewVersion.js";
 import { getPreviewId } from "./getPreviewId.js";
-import { overrideGroupOutputForPreview } from "./overrideOutputForPreview.js";
+import { isNpmGenerator, overrideGroupOutputForPreview } from "./overrideOutputForPreview.js";
 
 export interface SdkPreviewResult {
     status: "success" | "error";
@@ -91,6 +91,15 @@ export async function sdkPreview({
 
         // For each generator in the group, extract package name and compute preview version
         for (const generator of group.generators) {
+            // SDK preview v1 only supports TypeScript/npm generators
+            if (!isNpmGenerator(generator.name)) {
+                cliContext.failAndThrow(
+                    `SDK preview currently only supports TypeScript/npm generators. ` +
+                        `Generator '${generator.name}' is not supported.`
+                );
+                return;
+            }
+
             const packageName = getPackageNameFromGeneratorConfig(generator);
             if (packageName == null) {
                 cliContext.failAndThrow(
@@ -103,15 +112,20 @@ export async function sdkPreview({
             const previewVersion = await computePreviewVersion({ packageName, previewId });
             cliContext.logger.info(`Preview version: ${previewVersion}`);
 
-            // Override group output to publish to preview registry
+            // Override group output to publish to preview registry.
+            // token.value is the Fern org token (FERN_TOKEN) — the preview registry
+            // must accept this token for publish authentication.
             const modifiedGroup = overrideGroupOutputForPreview({
                 group: { ...group, generators: [generator] },
                 packageName,
-                previewVersion,
                 token: token.value
             });
 
-            // Run generation with the modified group
+            // Run generation locally via Docker. We use local generation (not remote/Fiddle)
+            // because we programmatically override the output config, which requires direct
+            // control over the generator invocation. Docker must be installed.
+            // absolutePathToPreview is undefined — this is NOT preview-to-disk mode,
+            // we want the generator to actually publish to the preview registry.
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 await runLocalGenerationForWorkspace({
                     token,
@@ -121,7 +135,7 @@ export async function sdkPreview({
                     version: previewVersion,
                     keepDocker: false,
                     context,
-                    absolutePathToPreview: undefined, // Not preview mode — we want actual publishing
+                    absolutePathToPreview: undefined,
                     runner: undefined,
                     inspect: false,
                     ai: workspace.generatorsConfiguration?.ai,
