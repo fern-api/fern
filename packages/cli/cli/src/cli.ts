@@ -68,6 +68,7 @@ import { mockServer } from "./commands/mock/mockServer.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
+import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
 import { generateToken } from "./commands/token/token.js";
@@ -245,6 +246,8 @@ async function tryRunCli(cliContext: CliContext) {
     addExportCommand(cli, cliContext);
     addReplayCommand(cli, cliContext);
     addBetaCommand(cli, cliContext);
+
+    addSdkCommand(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -2145,6 +2148,43 @@ function addEnrichCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 cliContext
             });
         }
+    );
+}
+
+function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "sdk",
+        false, // hidden
+        (yargs) => {
+            yargs.command(
+                "preview",
+                false, // hidden
+                (innerYargs) =>
+                    innerYargs
+                        .option("group", {
+                            type: "string",
+                            description: "The generator group to preview"
+                        })
+                        .option("json", {
+                            boolean: true,
+                            default: false,
+                            description: "Output result as JSON"
+                        }),
+                async (argv) => {
+                    await cliContext.instrumentPostHogEvent({
+                        command: "fern sdk preview"
+                    });
+                    await sdkPreview({
+                        cliContext,
+                        groupName: argv.group,
+                        json: argv.json
+                    });
+                }
+            );
+            return yargs.demandCommand();
+        },
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        () => {}
     );
 }
 
