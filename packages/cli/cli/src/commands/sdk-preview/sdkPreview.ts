@@ -37,7 +37,7 @@ export async function sdkPreview({
         return askToLogin(context);
     });
     if (token == null) {
-        cliContext.failAndThrow("Authentication required. Run 'fern login' or set FERN_TOKEN.");
+        return cliContext.failAndThrow("Authentication required. Run 'fern login' or set FERN_TOKEN.");
     }
 
     // 2. Load project
@@ -74,14 +74,14 @@ export async function sdkPreview({
         // Resolve group
         const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration.defaultGroup;
         if (groupNameOrDefault == null) {
-            cliContext.failAndThrow(
+            return cliContext.failAndThrow(
                 `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
             );
         }
 
         const group = workspace.generatorsConfiguration.groups.find((g) => g.groupName === groupNameOrDefault);
         if (group == null) {
-            cliContext.failAndThrow(
+            return cliContext.failAndThrow(
                 `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`
             );
         }
@@ -90,7 +90,7 @@ export async function sdkPreview({
         for (const generator of group.generators) {
             // SDK preview v1 only supports TypeScript/npm generators
             if (!isNpmGenerator(generator.name)) {
-                cliContext.failAndThrow(
+                return cliContext.failAndThrow(
                     `SDK preview currently only supports TypeScript/npm generators. ` +
                         `Generator '${generator.name}' is not supported.`
                 );
@@ -98,7 +98,7 @@ export async function sdkPreview({
 
             const packageName = getPackageNameFromGeneratorConfig(generator);
             if (packageName == null) {
-                cliContext.failAndThrow(
+                return cliContext.failAndThrow(
                     `Could not determine package name for generator '${generator.name}'. ` +
                         `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`
                 );
