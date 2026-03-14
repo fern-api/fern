@@ -1284,8 +1284,6 @@ func newOAuthFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-
-
 // func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {
 // 	content := replaceCoreImportPath(errorDecoderFile, baseImportPath)
 // 	return NewFile(

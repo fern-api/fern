@@ -58,17 +58,19 @@ func (c *LoggingHTTPClient) Do(req *http.Request) (*http.Response, error) {
 	// Perform the request
 	resp, err := c.client.Do(req)
 
-	// Log the response if debug is enabled
+	// Log the full response at debug level (includes headers, status, url).
 	if c.logger.IsDebug() && resp != nil {
 		c.logResponse(resp)
 	}
 
-	// Log errors if error logging is enabled
+	// Log transport errors at error level.
 	if c.logger.IsError() && err != nil {
 		c.logger.Error(fmt.Sprintf("HTTP Error: url=%s error=%v", req.URL, err))
 	}
 
-	// Log 4xx/5xx responses if error logging is enabled
+	// Log 4xx/5xx responses at error level as a concise alert.
+	// This is intentionally separate from the debug-level response log above,
+	// which includes full headers. Consistent with Java/Python SDK implementations.
 	if c.logger.IsError() && resp != nil && resp.StatusCode >= 400 {
 		c.logger.Error(fmt.Sprintf("HTTP Error: status=%d url=%s", resp.StatusCode, req.URL))
 	}

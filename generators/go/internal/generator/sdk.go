@@ -577,6 +577,10 @@ func (f *fileWriter) writeRequestOptionStructs(
 	f.P("opts.Logging = l.Logging")
 	f.P("}")
 	f.P()
+	f.P("func (l *LoggingOption) applyIdempotentRequestOptions(opts *RequestOptions) {")
+	f.P("opts.Logging = l.Logging")
+	f.P("}")
+	f.P()
 	if isMultiURL {
 		if err := f.writeOptionStruct("Environment", "interface{}", true, asIdempotentRequestOption); err != nil {
 			return err

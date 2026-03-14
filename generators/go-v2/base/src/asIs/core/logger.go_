@@ -94,5 +94,5 @@ func (l *Logger) shouldLog(level LogLevel) bool {
 	return level >= l.level
 }
 
-// Ensure Logger implements ILogger interface.
-var _ ILogger = (*Logger)(nil)
+// Note: Logger intentionally does not implement ILogger to prevent
+// nested wrapping, which would apply level filtering twice.
