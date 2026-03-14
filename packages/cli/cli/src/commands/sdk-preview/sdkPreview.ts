@@ -11,7 +11,7 @@ import { computePreviewVersion, PREVIEW_REGISTRY_URL } from "./computePreviewVer
 import { getPreviewId } from "./getPreviewId.js";
 import { isNpmGenerator, overrideGroupOutputForPreview } from "./overrideOutputForPreview.js";
 
-export interface SdkPreviewResult {
+interface SdkPreviewResult {
     status: "success" | "error";
     org: string;
     previews: Array<{
@@ -38,7 +38,6 @@ export async function sdkPreview({
     });
     if (token == null) {
         cliContext.failAndThrow("Authentication required. Run 'fern login' or set FERN_TOKEN.");
-        return;
     }
 
     // 2. Load project
@@ -78,7 +77,6 @@ export async function sdkPreview({
             cliContext.failAndThrow(
                 `No group specified. Use the --${GROUP_CLI_OPTION} option, or set "${DEFAULT_GROUP_GENERATORS_CONFIG_KEY}" in ${GENERATORS_CONFIGURATION_FILENAME}`
             );
-            return;
         }
 
         const group = workspace.generatorsConfiguration.groups.find((g) => g.groupName === groupNameOrDefault);
@@ -86,7 +84,6 @@ export async function sdkPreview({
             cliContext.failAndThrow(
                 `Group '${groupNameOrDefault}' does not exist in ${GENERATORS_CONFIGURATION_FILENAME}`
             );
-            return;
         }
 
         // For each generator in the group, extract package name and compute preview version
@@ -97,7 +94,6 @@ export async function sdkPreview({
                     `SDK preview currently only supports TypeScript/npm generators. ` +
                         `Generator '${generator.name}' is not supported.`
                 );
-                return;
             }
 
             const packageName = getPackageNameFromGeneratorConfig(generator);
@@ -106,7 +102,6 @@ export async function sdkPreview({
                     `Could not determine package name for generator '${generator.name}'. ` +
                         `Ensure 'output.package-name' is set in ${GENERATORS_CONFIGURATION_FILENAME}.`
                 );
-                return;
             }
 
             const previewVersion = await computePreviewVersion({ packageName, previewId });

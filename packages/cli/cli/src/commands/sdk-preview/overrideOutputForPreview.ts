@@ -14,7 +14,7 @@ const SUPPORTED_TYPESCRIPT_GENERATORS = new Set([
  * SDK preview v1 only supports npm publishing.
  */
 export function isNpmGenerator(generatorName: string): boolean {
-    return SUPPORTED_TYPESCRIPT_GENERATORS.has(generatorName) || generatorName.includes("typescript");
+    return SUPPORTED_TYPESCRIPT_GENERATORS.has(generatorName);
 }
 
 /**

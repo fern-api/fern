@@ -9,8 +9,8 @@ describe("isNpmGenerator", () => {
         expect(isNpmGenerator("fernapi/fern-typescript-sdk")).toBe(true);
     });
 
-    it("recognizes generators with 'typescript' in the name", () => {
-        expect(isNpmGenerator("custom/my-typescript-generator")).toBe(true);
+    it("rejects unknown typescript generators not in the set", () => {
+        expect(isNpmGenerator("custom/my-typescript-generator")).toBe(false);
     });
 
     it("rejects Python generators", () => {
