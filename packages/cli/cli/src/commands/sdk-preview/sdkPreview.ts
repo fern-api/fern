@@ -26,12 +26,12 @@ interface SdkPreviewResult {
 export async function sdkPreview({
     cliContext,
     groupName,
-    generatorName,
+    generatorFilter,
     json
 }: {
     cliContext: CliContext;
     groupName: string | undefined;
-    generatorName: string | undefined;
+    generatorFilter: string | undefined;
     json: boolean;
 }): Promise<void> {
     // 1. Auth
@@ -90,11 +90,11 @@ export async function sdkPreview({
 
         // Filter to a specific generator if --generator is provided
         const generators =
-            generatorName != null ? group.generators.filter((g) => g.name === generatorName) : group.generators;
+            generatorFilter != null ? group.generators.filter((g) => g.name === generatorFilter) : group.generators;
 
-        if (generatorName != null && generators.length === 0) {
+        if (generatorFilter != null && generators.length === 0) {
             return cliContext.failAndThrow(
-                `Generator '${generatorName}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`
+                `Generator '${generatorFilter}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`
             );
         }
 

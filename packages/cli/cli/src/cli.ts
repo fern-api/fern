@@ -2181,10 +2181,12 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             await cliContext.instrumentPostHogEvent({
                 command: "fern sdk preview"
             });
+            const generatorFilter =
+                argv.generator != null ? warnAndCorrectIncorrectDockerOrg(argv.generator, cliContext) : undefined;
             await sdkPreview({
                 cliContext,
                 groupName: argv.group,
-                generatorName: argv.generator,
+                generatorFilter,
                 json: argv.json
             });
         }
