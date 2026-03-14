@@ -26,10 +26,12 @@ interface SdkPreviewResult {
 export async function sdkPreview({
     cliContext,
     groupName,
+    generatorName,
     json
 }: {
     cliContext: CliContext;
     groupName: string | undefined;
+    generatorName: string | undefined;
     json: boolean;
 }): Promise<void> {
     // 1. Auth
@@ -86,8 +88,17 @@ export async function sdkPreview({
             );
         }
 
-        // For each generator in the group, extract package name and compute preview version
-        for (const generator of group.generators) {
+        // Filter to a specific generator if --generator is provided
+        const generators =
+            generatorName != null ? group.generators.filter((g) => g.name === generatorName) : group.generators;
+
+        if (generatorName != null && generators.length === 0) {
+            return cliContext.failAndThrow(
+                `Generator '${generatorName}' not found in group '${groupNameOrDefault}' in ${GENERATORS_CONFIGURATION_FILENAME}`
+            );
+        }
+
+        for (const generator of generators) {
             // SDK preview v1 only supports TypeScript/npm generators
             if (!isNpmGenerator(generator.name)) {
                 return cliContext.failAndThrow(

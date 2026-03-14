@@ -2168,6 +2168,10 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     type: "string",
                     description: "The generator group to preview"
                 })
+                .option("generator", {
+                    type: "string",
+                    description: "The name of a specific generator to run"
+                })
                 .option("json", {
                     boolean: true,
                     default: false,
@@ -2180,6 +2184,7 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             await sdkPreview({
                 cliContext,
                 groupName: argv.group,
+                generatorName: argv.generator,
                 json: argv.json
             });
         }
