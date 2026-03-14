@@ -1,7 +1,7 @@
 import { getLatestVersionFromNpm, RegistryInfo } from "@fern-api/api-workspace-commons";
 import semver from "semver";
 
-const PREVIEW_REGISTRY_URL = "https://npm.buildwithfern.com";
+const PREVIEW_REGISTRY_URL = process.env.FERN_PREVIEW_REGISTRY_URL ?? "https://npm.buildwithfern.com";
 const DEFAULT_BASE_VERSION = "0.0.1";
 
 /**

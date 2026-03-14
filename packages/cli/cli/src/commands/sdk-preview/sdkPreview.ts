@@ -27,11 +27,13 @@ export async function sdkPreview({
     cliContext,
     groupName,
     generatorFilter,
+    apiName,
     json
 }: {
     cliContext: CliContext;
     groupName: string | undefined;
     generatorFilter: string | undefined;
+    apiName: string | undefined;
     json: boolean;
 }): Promise<void> {
     // 1. Auth
@@ -44,7 +46,7 @@ export async function sdkPreview({
 
     // 2. Load project
     const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-        commandLineApiWorkspace: undefined,
+        commandLineApiWorkspace: apiName,
         defaultToAllApiWorkspaces: false
     });
 
@@ -147,7 +149,8 @@ export async function sdkPreview({
                     ai: workspace.generatorsConfiguration?.ai,
                     replay: undefined,
                     noReplay: true,
-                    validateWorkspace: true
+                    validateWorkspace: true,
+                    publishToRegistry: true
                 });
             });
 

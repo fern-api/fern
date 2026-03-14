@@ -2172,6 +2172,10 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     type: "string",
                     description: "The name of a specific generator to run"
                 })
+                .option("api", {
+                    type: "string",
+                    description: "Only run the command on the provided API"
+                })
                 .option("json", {
                     boolean: true,
                     default: false,
@@ -2187,6 +2191,7 @@ function addSdkPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 cliContext,
                 groupName: argv.group,
                 generatorFilter,
+                apiName: argv.api,
                 json: argv.json
             });
         }
