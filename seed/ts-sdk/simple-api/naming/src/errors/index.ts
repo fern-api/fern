@@ -1,2 +1,2 @@
-export { XAiError } from "./XAiError.js";
-export { XAiTimeoutError } from "./XAiTimeoutError.js";
+export { AcmeApiError } from "./AcmeApiError.js";
+export { AcmeRequestTimeoutError } from "./AcmeRequestTimeoutError.js";

@@ -39,9 +39,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { XAiClient, XAiEnvironment } from "@fern/simple-api";
+import { AcmeApiEnvironment, AcmeSdkClient } from "@fern/simple-api";
 
-const client = new XAiClient({ environment: XAiEnvironment.Production, token: "YOUR_TOKEN" });
+const client = new AcmeSdkClient({ environment: AcmeApiEnvironment.Production, token: "YOUR_TOKEN" });
 await client.user.get("id");
 ```
 
@@ -51,12 +51,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { XAiError } from "@fern/simple-api";
+import { AcmeApiError } from "@fern/simple-api";
 
 try {
     await client.user.get(...);
 } catch (err) {
-    if (err instanceof XAiError) {
+    if (err instanceof AcmeApiError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -82,9 +82,9 @@ const client = new UserClient({...});
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-import { XAiClient } from "@fern/simple-api";
+import { AcmeSdkClient } from "@fern/simple-api";
 
-const client = new XAiClient({
+const client = new AcmeSdkClient({
     ...
     headers: {
         'X-Custom-Header': 'custom value'
@@ -169,9 +169,9 @@ console.log(rawResponse.headers['X-My-Header']);
 The SDK supports logging. You can configure the logger by passing in a `logging` object to the client options.
 
 ```typescript
-import { XAiClient, logging } from "@fern/simple-api";
+import { AcmeSdkClient, logging } from "@fern/simple-api";
 
-const client = new XAiClient({
+const client = new AcmeSdkClient({
     ...
     logging: {
         level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info
@@ -267,9 +267,9 @@ The SDK provides a way for you to customize the underlying HTTP client / Fetch f
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { XAiClient } from "@fern/simple-api";
+import { AcmeSdkClient } from "@fern/simple-api";
 
-const client = new XAiClient({
+const client = new AcmeSdkClient({
     ...
     fetcher: // provide your implementation here
 });

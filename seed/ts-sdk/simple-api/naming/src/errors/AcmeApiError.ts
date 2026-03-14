@@ -3,7 +3,7 @@
 import type * as core from "../core/index.js";
 import { toJson } from "../core/json.js";
 
-export class XAiError extends Error {
+export class AcmeApiError extends Error {
     public readonly statusCode?: number;
     public readonly body?: unknown;
     public readonly rawResponse?: core.RawResponse;

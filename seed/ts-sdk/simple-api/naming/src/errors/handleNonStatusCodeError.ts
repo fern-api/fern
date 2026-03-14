@@ -11,25 +11,25 @@ export function handleNonStatusCodeError(
 ): never {
     switch (error.reason) {
         case "non-json":
-            throw new errors.XAiError({
+            throw new errors.AcmeApiError({
                 statusCode: error.statusCode,
                 body: error.rawBody,
                 rawResponse: rawResponse,
             });
         case "body-is-null":
-            throw new errors.XAiError({
+            throw new errors.AcmeApiError({
                 statusCode: error.statusCode,
                 rawResponse: rawResponse,
             });
         case "timeout":
-            throw new errors.XAiTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
+            throw new errors.AcmeRequestTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
         case "unknown":
-            throw new errors.XAiError({
+            throw new errors.AcmeApiError({
                 message: error.errorMessage,
                 rawResponse: rawResponse,
             });
         default:
-            throw new errors.XAiError({
+            throw new errors.AcmeApiError({
                 message: "Unknown error",
                 rawResponse: rawResponse,
             });

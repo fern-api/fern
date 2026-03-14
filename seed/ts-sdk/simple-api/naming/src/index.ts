@@ -1,6 +1,6 @@
-export * as xai from "./api/index.js";
+export * as acme from "./api/index.js";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-export { XAiClient } from "./Client.js";
-export { XAiEnvironment } from "./environments.js";
-export { XAiError, XAiTimeoutError } from "./errors/index.js";
+export { AcmeSdkClient } from "./Client.js";
+export { AcmeApiEnvironment } from "./environments.js";
+export { AcmeApiError, AcmeRequestTimeoutError } from "./errors/index.js";
 export * from "./exports.js";

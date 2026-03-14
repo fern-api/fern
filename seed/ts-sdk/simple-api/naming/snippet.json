@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { XAiClient, XAiEnvironment } from \"@fern/simple-api\";\n\nconst client = new XAiClient({ environment: XAiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
+                "client": "import { AcmeApiEnvironment, AcmeSdkClient } from \"@fern/simple-api\";\n\nconst client = new AcmeSdkClient({ environment: AcmeApiEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.user.get(\"id\");\n"
             }
         }
     ],

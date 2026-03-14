@@ -444,13 +444,13 @@ fixtures:
     - outputFolder: naming
       customConfig:
         naming:
-          namespace: xai
-          client: XAiClient
-          error: XAiError
-          timeoutError: XAiTimeoutError
-          environment: XAiEnvironment
-          environmentUrls: XAiEnvironmentUrls
-          version: XAiVersion
+          namespace: acme
+          client: AcmeSdkClient
+          error: AcmeApiError
+          timeoutError: AcmeRequestTimeoutError
+          environment: AcmeApiEnvironment
+          environmentUrls: AcmeApiEnvironmentUrls
+          version: AcmeApiVersion
   enum:
     - outputFolder: no-custom-config
       customConfig: null
