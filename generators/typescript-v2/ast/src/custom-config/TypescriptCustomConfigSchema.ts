@@ -1,8 +1,13 @@
 import { z } from "zod";
 import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema.js";
 
+const JS_IDENTIFIER_REGEX = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
+const jsIdentifier = z.string().refine((val) => JS_IDENTIFIER_REGEX.test(val), {
+    message: "Must be a valid JavaScript identifier (e.g., 'acme', 'MySDK')"
+});
+
 export const NamingObjectSchema = z.strictObject({
-    namespace: z.optional(z.string()),
+    namespace: z.optional(jsIdentifier),
     client: z.optional(z.string()),
     error: z.optional(z.string()),
     timeoutError: z.optional(z.string()),
@@ -15,7 +20,7 @@ export type NamingObjectSchema = z.infer<typeof NamingObjectSchema>;
 
 // Accepts either a string shorthand (e.g., `naming: acme`) or a full object.
 // The string form is equivalent to `naming: { namespace: "acme" }`.
-export const NamingConfigSchema = z.union([z.string(), NamingObjectSchema]);
+export const NamingConfigSchema = z.union([jsIdentifier, NamingObjectSchema]);
 
 export type NamingConfigSchema = z.infer<typeof NamingConfigSchema>;
 
