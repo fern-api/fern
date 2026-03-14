@@ -6,6 +6,7 @@ using SeedTrace.Test_.Utils;
 namespace SeedTrace.Test_.Unit.MockServer.Playlist;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetPlaylistsTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.3.0
+  changelogEntry:
+    - summary: |
+        Rework enum JSON serialization to eliminate reflection. Each enum now gets
+        a generated serializer with static dictionary lookups instead of the generic
+        `EnumSerializer<T>` / `StringEnumSerializer<T>` that used `Enum.GetValues`,
+        `GetField`, `GetCustomAttributes`, and `Activator.CreateInstance` at runtime.
+        Serializer initialization is ~1,000x faster (18 ns vs 18 us) and allocates
+        160x less memory; steady-state throughput is unchanged. The generated code is
+        also NativeAOT and IL-trimming compatible.
+      type: feat
+  createdAt: "2026-03-13"
+  irVersion: 65
+
 - version: 0.2.0
   changelogEntry:
     - summary: |

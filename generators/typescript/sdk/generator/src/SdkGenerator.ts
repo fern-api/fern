@@ -82,9 +82,20 @@ interface WebhookVerificationEntry {
     webhookNames: [FernIr.WebhookName, ...FernIr.WebhookName[]];
 }
 
+export interface ResolvedNaming {
+    namespace: string;
+    client: string;
+    error: string;
+    timeoutError: string;
+    environment: string;
+    environmentUrls: string;
+    version: string;
+}
+
 export declare namespace SdkGenerator {
     export interface Init {
         namespaceExport: string;
+        naming: ResolvedNaming;
         intermediateRepresentation: FernIr.IntermediateRepresentation;
         context: GeneratorContext;
         npmPackage: NpmPackage | undefined;
@@ -163,6 +174,7 @@ export declare namespace SdkGenerator {
 
 export class SdkGenerator {
     private namespaceExport: string;
+    private naming: ResolvedNaming;
     private context: GeneratorContext;
     private intermediateRepresentation: FernIr.IntermediateRepresentation;
     private rawConfig: FernGeneratorExec.GeneratorConfig;
@@ -248,6 +260,7 @@ export class SdkGenerator {
 
     constructor({
         namespaceExport,
+        naming,
         intermediateRepresentation,
         context,
         npmPackage,
@@ -261,6 +274,7 @@ export class SdkGenerator {
 
         this.context = context;
         this.namespaceExport = namespaceExport;
+        this.naming = naming;
         this.intermediateRepresentation = intermediateRepresentation;
 
         // Auto-enable generateEndpointMetadata when ENDPOINT_SECURITY is set
@@ -320,6 +334,7 @@ export class SdkGenerator {
         this.versionDeclarationReferencer = new VersionDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
+            namingOverride: naming.version,
             apiVersion: this.intermediateRepresentation.apiVersion,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath
@@ -344,6 +359,7 @@ export class SdkGenerator {
         this.sdkClientClassDeclarationReferencer = new SdkClientClassDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
+            namingOverride: naming.client,
             packageResolver: this.packageResolver
         });
         this.endpointErrorUnionDeclarationReferencer = new EndpointDeclarationReferencer({
@@ -370,6 +386,8 @@ export class SdkGenerator {
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
+            namingOverride: naming.environment,
+            environmentUrlsNamingOverride: naming.environmentUrls,
             npmPackage: this.npmPackage,
             environmentsConfig: intermediateRepresentation.environments ?? undefined,
             relativePackagePath: this.relativePackagePath,
@@ -393,11 +411,13 @@ export class SdkGenerator {
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            namingOverride: naming.error
         });
         this.timeoutSdkErrorDeclarationReferencer = new TimeoutSdkErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            namingOverride: naming.timeoutError
         });
         this.nonStatusCodeErrorHandlerDeclarationReferencer = new NonStatusCodeErrorHandlerDeclarationReferencer({
             containingDirectory: [],

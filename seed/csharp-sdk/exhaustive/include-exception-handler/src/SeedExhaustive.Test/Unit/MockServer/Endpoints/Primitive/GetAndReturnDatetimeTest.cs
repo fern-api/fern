@@ -6,6 +6,7 @@ using SeedExhaustive.Test.Utils;
 namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.Primitive;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetAndReturnDatetimeTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

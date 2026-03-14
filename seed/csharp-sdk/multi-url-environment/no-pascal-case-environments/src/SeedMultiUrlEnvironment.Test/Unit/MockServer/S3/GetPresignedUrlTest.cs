@@ -6,6 +6,7 @@ using SeedMultiUrlEnvironment.Test.Utils;
 namespace SeedMultiUrlEnvironment.Test.Unit.MockServer.S3;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetPresignedUrlTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

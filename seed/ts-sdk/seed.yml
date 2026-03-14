@@ -441,6 +441,19 @@ fixtures:
     - outputFolder: allow-custom-fetcher
       customConfig:
         allowCustomFetcher: true
+    - outputFolder: naming
+      customConfig:
+        naming:
+          namespace: acme
+          client: AcmeSdkClient
+          error: AcmeApiError
+          timeoutError: AcmeRequestTimeoutError
+          environment: AcmeApiEnvironment
+          environmentUrls: AcmeApiEnvironmentUrls
+          version: AcmeApiVersion
+    - outputFolder: naming-shorthand
+      customConfig:
+        naming: acme
   enum:
     - outputFolder: no-custom-config
       customConfig: null

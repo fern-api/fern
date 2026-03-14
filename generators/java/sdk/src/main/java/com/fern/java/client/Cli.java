@@ -180,6 +180,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .gradleCentralDependencyManagement(customConfig.gradleCentralDependencyManagement())
                 .customInterceptors(customConfig.customInterceptors())
                 .customPlugins(customConfig.customPlugins())
+                .enableForwardCompatibleEnum(customConfig.enableForwardCompatibleEnums())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()

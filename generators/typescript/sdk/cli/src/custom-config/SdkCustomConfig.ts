@@ -1,3 +1,17 @@
+export interface NamingObjectConfig {
+    namespace?: string;
+    client?: string;
+    error?: string;
+    timeoutError?: string;
+    environment?: string;
+    environmentUrls?: string;
+    version?: string;
+}
+
+// Accepts either a string shorthand (e.g., "acme") or a full object.
+// The string form is equivalent to { namespace: "acme" }.
+export type NamingConfig = string | NamingObjectConfig;
+
 // this is the parsed config shape. to view the allowed options for generators.yml,
 // see SdkCustomConfigSchema.ts
 export interface SdkCustomConfig {
@@ -5,6 +19,7 @@ export interface SdkCustomConfig {
     isPackagePrivate: boolean;
     neverThrowErrors: boolean;
     namespaceExport: string | undefined;
+    naming: NamingConfig | undefined;
     outputEsm: boolean;
     outputSourceFiles: boolean;
     outputSrcOnly: boolean;

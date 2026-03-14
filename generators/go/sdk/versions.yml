@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.30.0
+- version: 1.31.0
   changelogEntry:
     - summary: |
         Add support for configurable logging to the generated SDK.
@@ -29,6 +29,27 @@
         Authorization are redacted). Error responses (4xx/5xx) are logged at error level.
       type: feat
   createdAt: "2026-03-13"
+  irVersion: 61
+
+- version: 1.30.1
+  changelogEntry:
+    - summary: |
+        Fix non-deterministic ordering in generated requests.go and requests_test.go.
+        Go maps randomize iteration order, causing type ordering to vary across runs
+        when exportAllRequestsAtRoot is enabled. Map keys are now sorted before
+        iteration to ensure deterministic output.
+      type: fix
+  createdAt: "2026-03-13"
+  irVersion: 61
+
+- version: 1.30.0
+  changelogEntry:
+    - summary: |
+        Add `omitFernHeaders` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, User-Agent) are omitted
+        from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
   irVersion: 61
 
 - version: 1.29.3

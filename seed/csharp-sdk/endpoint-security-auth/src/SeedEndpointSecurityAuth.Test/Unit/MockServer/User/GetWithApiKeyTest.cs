@@ -5,6 +5,7 @@ using SeedEndpointSecurityAuth.Test.Utils;
 namespace SeedEndpointSecurityAuth.Test.Unit.MockServer.User;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class GetWithApiKeyTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

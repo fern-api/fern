@@ -212,8 +212,12 @@ export class Generation {
             this.customConfig["root-client-class-access"] == "internal" ? ast.Access.Internal : ast.Access.Public,
         /** Additional NuGet package dependencies to include in the generated project. Default: {}. */
         extraDependencies: () => this.customConfig["extra-dependencies"] ?? {},
+        /** When true, omits Fern platform headers (X-Fern-Language, SDK name/version, User-Agent) from generated SDK requests. Default: false. */
+        omitFernHeaders: () => this.customConfig["omit-fern-headers"] ?? false,
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
+        /** Solution file format: "sln" generates both .sln and .slnx, "slnx" (default) generates only .slnx. */
+        slnFormat: () => this.customConfig["sln-format"] ?? "slnx",
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
         explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
         /**

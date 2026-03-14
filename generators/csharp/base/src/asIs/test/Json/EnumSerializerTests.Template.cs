@@ -49,7 +49,7 @@ public class DummyObject
     public DummyEnum EnumProperty { get; set; }
 }
 
-[JsonConverter(typeof(EnumSerializer<DummyEnum>))]
+[JsonConverter(typeof(DummyEnumSerializer))]
 public enum DummyEnum
 {
     [EnumMember(Value = "known_value1")]
@@ -57,4 +57,30 @@ public enum DummyEnum
 
     [EnumMember(Value = "known_value2")]
     KnownValue2
+}
+
+internal class DummyEnumSerializer : JsonConverter<DummyEnum>
+{
+    private static readonly Dictionary<string, DummyEnum> _stringToEnum = new()
+    {
+        { "known_value1", DummyEnum.KnownValue1 },
+        { "known_value2", DummyEnum.KnownValue2 },
+    };
+
+    private static readonly Dictionary<DummyEnum, string> _enumToString = new()
+    {
+        { DummyEnum.KnownValue1, "known_value1" },
+        { DummyEnum.KnownValue2, "known_value2" },
+    };
+
+    public override DummyEnum Read(ref System.Text.Json.Utf8JsonReader reader, global::System.Type typeToConvert, JsonSerializerOptions options)
+    {
+        var stringValue = reader.GetString() ?? throw new global::System.Exception("The JSON value could not be read as a string.");
+        return _stringToEnum.TryGetValue(stringValue, out var enumValue) ? enumValue : default;
+    }
+
+    public override void Write(System.Text.Json.Utf8JsonWriter writer, DummyEnum value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(_enumToString.TryGetValue(value, out var stringValue) ? stringValue : null);
+    }
 }

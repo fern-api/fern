@@ -5,6 +5,7 @@ using SeedPagination.Test.Unit.MockServer;
 namespace SeedPagination.Test.Unit.MockServer.Complex;
 
 [TestFixture]
+[Parallelizable(ParallelScope.Self)]
 public class SearchTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]

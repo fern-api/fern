@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.64.0
+  changelogEntry:
+    - summary: |
+        Add `omit_fern_headers` configuration option. When enabled, Fern platform headers
+        (X-Fern-Language, X-Fern-SDK-Name, X-Fern-SDK-Version, X-Fern-Runtime,
+        X-Fern-Platform, User-Agent) are omitted from generated SDK requests.
+      type: feat
+  createdAt: "2026-03-12"
+  irVersion: 65
+
 - version: 4.63.6
   changelogEntry:
     - summary: |
@@ -11,7 +21,6 @@
       type: fix
   createdAt: "2026-03-12"
   irVersion: 65
-
 - version: 4.63.5
   changelogEntry:
     - summary: |
