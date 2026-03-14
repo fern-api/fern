@@ -87,7 +87,7 @@ api:
 sdks:
   targets:
     go:
-      version: 1.24.0
+      version: 1.23.3
       output:
         path: ./sdks/go
 `,
@@ -148,7 +148,7 @@ api:
 sdks:
   targets:
     go:
-      version: 1.24.0
+      version: 1.23.3
       output:
         path: ./sdks/go
 `,
