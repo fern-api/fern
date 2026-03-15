@@ -364,12 +364,20 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.zipDirectoryContents(join(this.directory, this.distDirectory), {
-            logger,
-            destinationPath,
-            zipFilename,
-            unzipOutput
-        });
+        const tmpZipLocation = join(AbsoluteFilePath.of((await tmp.dir()).path), RelativeFilePath.of("output.zip"));
+        const zip = createLoggingExecutable("zip", { cwd: this.directory, logger, doNotPipeOutput: true });
+        
+        // zip dist and md files
+        const distItems = (await readdir(join(this.directory, this.distDirectory))).map(item => join(this.distDirectory, RelativeFilePath.of(item)));
+        const rootItems = (await readdir(this.directory)).filter(item => item.endsWith('.md'));
+        await zip(["-r", tmpZipLocation, ...distItems, ...rootItems]);
+
+        const destinationZip = join(destinationPath, RelativeFilePath.of(zipFilename));
+        await cp(tmpZipLocation, destinationZip);
+        if (unzipOutput) {
+            await decompress(destinationZip, destinationPath, { strip: 0 });
+            await rm(destinationZip);
+        }
     }
 
     private async zipDirectoryContents(
